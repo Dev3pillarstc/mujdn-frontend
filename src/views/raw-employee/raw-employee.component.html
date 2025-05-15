@@ -1,1 +1,6 @@
-<p>raw-employee works!</p>
+<a [routerLink]="['/employees']">employee</a>
+<ul>
+  @for (employee of list; track employee.id) {
+    <li>{{ employee.getFullName() }} {{employee.hiringDate}}</li>
+  }
+</ul>

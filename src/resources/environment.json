@@ -1,0 +1,16 @@
+{
+  "ENVIRONMENTS_URLS": {
+    "DEV": "http://localhost:3000",
+    "TEST": "http://localhost:3000"
+  },
+  "API_VERSION": "",
+  "BASE_ENVIRONMENT": "DEV",
+  "DEV_VARIABLES": {
+    "INTEGRATION1": "http//dev/integration1",
+    "INTEGRATION2": "http//dev/integration2"
+  },
+  "TEST_VARIABLES": {
+    "INTEGRATION1": "http//test/integration1",
+    "INTEGRATION2": "http//test/integration2"
+  }
+}

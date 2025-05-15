@@ -1,0 +1,51 @@
+{
+  "examples": [
+    {
+      "id": "1",
+      "name": "example 1"
+    },
+    {
+      "id": "2",
+      "name": "example 2"
+    },
+    {
+      "id": "3",
+      "name": "example 3"
+    },
+    {
+      "id": "4",
+      "name": "example 4"
+    },
+    {
+      "id": "5",
+      "name": "example 5"
+    }
+  ],
+  "employees": [
+    {
+      "id": "1",
+      "firstName": "Ahmed",
+      "lastName": "Ali"
+    },
+    {
+      "id": "2",
+      "firstName": "Mostafa",
+      "lastName":  "Mohamed"
+    },
+    {
+      "id": "3",
+      "firstName": "Walid",
+      "lastName":  "Sayed"
+    },
+    {
+      "id": "4",
+      "firstName": "Magdy",
+      "lastName":  "Hussien"
+    },
+    {
+      "id": "5",
+      "firstName": "Mohamed",
+      "lastName":  "Ali"
+    }
+  ]
+}

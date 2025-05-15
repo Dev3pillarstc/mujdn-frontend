@@ -15,6 +15,10 @@ export const routes: Routes = [
     loadComponent: () => import('../views/employees/employees.component')
   },
   {
+    path: 'raw-employee',
+    loadComponent: () => import('../views/employees/employees.component')
+  },
+  {
     path: 'login',
     loadComponent: () => import('../views/login/login.component'),
   },

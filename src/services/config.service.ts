@@ -17,15 +17,6 @@ export class ConfigService {
       .pipe(tap((res) => (this.CONFIG = { ...this.CONFIG, ...res })))
       .pipe(tap(() => this.prepareBaseUrl()))
       .pipe(tap((c) => console.log(c)))
-      .pipe(tap((x) => {
-        const env = this.CONFIG.BASE_ENVIRONMENT;
-        if (env === 'DEV') {
-          console.log('xxxxxxxxxxxxxxx', this.CONFIG.DEV_VARIABLES.INTEGRATION1)
-        } else {
-          console.log('xxxxxxxxxxxxxxx', this.CONFIG.TEST_VARIABLES.INTEGRATION1)
-        }
-        // console.log('config', this.CONFIG[env+'_VARIABLES'].INTEGRATION1);
-      }))
   }
 
   private prepareBaseUrl(): string {

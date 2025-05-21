@@ -20,37 +20,5 @@
       "id": "5",
       "name": "example 5"
     }
-  ],
-  "employees": [
-    {
-      "id": "1",
-      "firstName": "Ahmed",
-      "lastName": "Ali",
-      "hiringDate": "2025-05-06T14:30:00"
-    },
-    {
-      "id": "2",
-      "firstName": "Mostafa",
-      "lastName":  "Mohamed",
-      "hiringDate": "2025-05-07T15:00:00"
-    },
-    {
-      "id": "3",
-      "firstName": "Walid",
-      "lastName":  "Sayed",
-      "hiringDate": "2025-05-08T15:30:00"
-    },
-    {
-      "id": "4",
-      "firstName": "Magdy",
-      "lastName":  "Hussien",
-      "hiringDate": "2025-05-09T16:00:00"
-    },
-    {
-      "id": "5",
-      "firstName": "Mohamed",
-      "lastName":  "Ali",
-      "hiringDate": "2025-05-10T16:30:00"
-    }
   ]
 }

@@ -1,4 +1,3 @@
-<a [routerLink]="['/employees']">ghfhfh</a>
 <ul>
   @for (example of examples$ | async; track example.id) {
     <li>{{ example.name }} <button (click)="delete(example)">X</button></li>

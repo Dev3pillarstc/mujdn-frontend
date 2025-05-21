@@ -11,14 +11,6 @@ export const routes: Routes = [
     loadComponent: () => import('../views/home/home.component'),
   },
   {
-    path: 'employees',
-    loadComponent: () => import('../views/employees/employees.component')
-  },
-  {
-    path: 'raw-employees',
-    loadComponent: () => import('../views/raw-employee/raw-employee.component')
-  },
-  {
     path: 'login',
     loadComponent: () => import('../views/login/login.component'),
   },

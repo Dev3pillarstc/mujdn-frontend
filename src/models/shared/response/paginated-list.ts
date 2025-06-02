@@ -1,4 +1,4 @@
-import {PaginationInfo} from '@/models/pagination-info';
+import {PaginationInfo} from '@/models/shared/response/pagination-info';
 
 export abstract class PaginatedList<T> {
   declare list: T[];

@@ -2,8 +2,8 @@ import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject, catchError, tap, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {SingleResponseData} from '@/models/single-response-data';
-import {User} from '@/models/user';
+import {SingleResponseData} from '@/models/shared/response/single-response-data';
+import {User} from '@/models/auth/user';
 import {BaseCrudService} from '@/abstracts/base-crud-service';
 
 @Injectable({

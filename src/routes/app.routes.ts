@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router'
+import HomeComponent from '@/views/home/home.component';
 
 export const routes: Routes = [
   {
@@ -7,16 +8,23 @@ export const routes: Routes = [
     redirectTo: 'home',
   },
   {
-    path: 'home',
-    loadComponent: () => import('../views/home/home.component'),
+    path: '',
+    loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', loadComponent: () => import('../views/home/home.component') }
+    ],
   },
   {
-    path: 'login',
-    loadComponent: () => import('../views/login/login.component'),
+    path: '',
+    loadComponent: () => import('@/views/layout/auth/auth-layout/auth-layout.component'),
+    children: [
+      { path: 'login', loadComponent: () => import('../views/auth/login/login.component') }
+    ],
   },
   {
     path: '404',
-    loadComponent: () => import('../views/not-found/not-found.component'),
+    loadComponent: () => import('@/views/shared/not-found/not-found.component'),
   },
   { path: '**', redirectTo: '404' },
 ]

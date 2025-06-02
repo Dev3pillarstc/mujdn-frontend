@@ -7,9 +7,9 @@ import {UrlService} from '@/services/url.service'
 import {CastResponse, HasInterception, InterceptParam} from 'cast-response'
 import {ServiceContract} from '@/contracts/service-contract'
 import {RegisterServiceMixin} from '@/mixins/register-service-mixin'
-import {ListResponseData} from '@/models/list-response-data';
-import {PaginatedListResponseData} from '@/models/paginated-list-response-data';
-import {PaginatedList} from '@/models/paginated-list';
+import {ListResponseData} from '@/models/shared/response/list-response-data';
+import {PaginatedListResponseData} from '@/models/shared/response/paginated-list-response-data';
+import {PaginatedList} from '@/models/shared/response/paginated-list';
 
 export abstract class BaseCrudService<Model, PrimaryKey = number>
   extends RegisterServiceMixin(class {

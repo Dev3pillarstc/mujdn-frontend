@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     configInit,
     provideHttpClient(withFetch()),
     provideRouter(routes),
-    provideClientHydration(),
+    // provideClientHydration(),
     provideInterceptors([GeneralInterceptor]),
   ],
 }

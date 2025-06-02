@@ -1,5 +1,5 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model'
-import { ExampleService } from '@/services/example.service'
+import { ExampleService } from '@/services/features/example.service'
 import { InterceptModel } from 'cast-response'
 import { ExampleInterceptor } from '@/model-interceptors/example-interceptor'
 

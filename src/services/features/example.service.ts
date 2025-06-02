@@ -1,10 +1,9 @@
-import {inject, Injectable} from '@angular/core'
+import {Injectable} from '@angular/core'
 import {BaseCrudService} from '@/abstracts/base-crud-service'
 import {Example} from '@/models/example'
 import {CastResponse, CastResponseContainer} from 'cast-response'
 import {Department, Person} from '@/models/person';
 import {of} from 'rxjs';
-import {ConfigService} from '@/services/config.service';
 
 @CastResponseContainer({
   $default: {
@@ -15,8 +14,7 @@ import {ConfigService} from '@/services/config.service';
   providedIn: 'root',
 })
 export class ExampleService extends BaseCrudService<Example> {
-  override serviceName: string = 'ExampleService'
-  configService = inject(ConfigService);
+  override serviceName: string = 'ExampleService';
 
   override getUrlSegment(): string {
     return this.urlService.URLS.EXAMPLES

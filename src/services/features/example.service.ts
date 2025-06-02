@@ -3,8 +3,7 @@ import {BaseCrudService} from '@/abstracts/base-crud-service'
 import {Example} from '@/models/example'
 import {CastResponse, CastResponseContainer} from 'cast-response'
 import {Department, Person} from '@/models/person';
-import {OptionsContract} from '@/contracts/options-contract';
-import {Observable, of} from 'rxjs';
+import {of} from 'rxjs';
 import {ConfigService} from '@/services/config.service';
 
 @CastResponseContainer({
@@ -25,7 +24,9 @@ export class ExampleService extends BaseCrudService<Example> {
 
   @CastResponse(() => Person, {shape: {'department': () => Department}, unwrap: 'response.data'})
   getPersons() {
-    return of({response: {data: [{
+    return of({
+      response: {
+        data: [{
           name: "Ahmed",
           age: 38,
           department: {
@@ -54,6 +55,8 @@ export class ExampleService extends BaseCrudService<Example> {
             department: {
               title: 'It'
             }
-          }]}})
+          }]
+      }
+    })
   }
 }

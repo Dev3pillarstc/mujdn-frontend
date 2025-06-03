@@ -1,1 +1,25 @@
-<p>login works!</p>
+<section class="custom-container">
+    <div class="px-8 py-6 sm:px-28 sm:py-20 max-w-[722px] rounded-xl bg-white">
+        <header>
+            <img src="/assets/shared/logo.webp" alt=""> 
+            <h1 class="text-[#161616] text-2xl sm:text-4xl font-bold mt-4 mb-8">تسجيل الدخول</h1>
+        </header>
+        <article>
+            <form>
+                <div class="relative mb-6">
+                    <label for="userName" class="label">اسم المستخدم</label>
+                    <input id="userName" class="peer" type="text" pInputText placeholder="اسم المستخدم" fluid="true" />
+                    <span
+                        class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
+                </div>
+                <div class="relative mb-10">
+                    <label for="password" class="label">كلمة المرور</label>
+                    <input class="peer" id="password" type="password" pInputText placeholder="كلمة المرور" fluid="true" />
+                    <span
+                        class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
+                </div>
+                <button class="btn green-btn min-w-[148px]">دخول الان</button>
+            </form>
+        </article>
+    </div>
+</section>

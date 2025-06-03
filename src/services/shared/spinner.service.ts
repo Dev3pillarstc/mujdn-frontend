@@ -1,0 +1,35 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class spinnerService {
+
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  private loadingCount = 0;
+
+  loading$ = this.loadingSubject.asObservable();
+
+  show(): void {
+    this.loadingCount++;
+    if (this.loadingCount === 1) {
+    this.loadingSubject.next(true);
+    }
+  }
+
+  hide(): void {
+    this.loadingCount--;
+    if (this.loadingCount <= 0) {
+      this.loadingCount = 0;
+      this.loadingSubject.next(false);
+    }
+
+  }
+
+  // Force hide (useful for error scenarios)
+  forceHide(): void {
+    this.loadingCount = 0;
+    this.loadingSubject.next(false);
+  }
+}

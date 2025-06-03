@@ -4,18 +4,33 @@ import {routes} from '@/routes/app.routes'
 import {provideInterceptors} from 'cast-response'
 import {GeneralInterceptor} from '@/model-interceptors/general-interceptor'
 import configInit from '../inits/config.init'
-import {provideHttpClient, withFetch} from '@angular/common/http'
+import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptors} from '@angular/common/http'
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {providePrimeNG} from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { loadingInterceptor } from '@/http-interceptors/loading.interceptor'
+import { spinnerService } from '@/services/shared/spinner.service'
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    configInit,
-    provideHttpClient(withFetch()),
+    // configInit, // your config
+    spinnerService, // or SpinnerService if that's what you're using
+    
+    // Use both approaches
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([loadingInterceptor]) // Functional interceptor
+    ),
+    
+    // Class-based interceptor
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GeneralInterceptor,
+      multi: true
+    },
+    
     provideRouter(routes),
     // provideClientHydration(),
-    provideInterceptors([GeneralInterceptor]),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
@@ -23,4 +38,4 @@ export const appConfig: ApplicationConfig = {
       }
     })
   ],
-}
+};

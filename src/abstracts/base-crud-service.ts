@@ -1,17 +1,20 @@
-import { BaseCrudServiceContract } from '@/contracts/base-crud-service-contract'
-import { OptionsContract } from '@/contracts/options-contract'
-import { Observable } from 'rxjs'
-import { inject } from '@angular/core'
-import { HttpClient, HttpParams } from '@angular/common/http'
-import { UrlService } from '@/services/url.service'
-import { CastResponse, HasInterception, InterceptParam } from 'cast-response'
-import { ServiceContract } from '@/contracts/service-contract'
-import { RegisterServiceMixin } from '@/mixins/register-service-mixin'
+import {BaseCrudServiceContract} from '@/contracts/base-crud-service-contract'
+import {OptionsContract} from '@/contracts/options-contract'
+import {map, Observable} from 'rxjs'
+import {inject} from '@angular/core'
+import {HttpClient, HttpParams} from '@angular/common/http'
+import {UrlService} from '@/services/url.service'
+import {CastResponse, HasInterception, InterceptParam} from 'cast-response'
+import {ServiceContract} from '@/contracts/service-contract'
+import {RegisterServiceMixin} from '@/mixins/register-service-mixin'
+import {ListResponseData} from '@/models/shared/response/list-response-data';
+import {PaginatedListResponseData} from '@/models/shared/response/paginated-list-response-data';
+import {PaginatedList} from '@/models/shared/response/paginated-list';
 
 export abstract class BaseCrudService<Model, PrimaryKey = number>
-  extends RegisterServiceMixin(class {})
-  implements BaseCrudServiceContract<Model, PrimaryKey>, ServiceContract
-{
+  extends RegisterServiceMixin(class {
+  })
+  implements BaseCrudServiceContract<Model, PrimaryKey>, ServiceContract {
   abstract serviceName: string
 
   abstract getUrlSegment(): string
@@ -21,11 +24,25 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
 
   @CastResponse()
   load(options?: OptionsContract | undefined): Observable<Model[]> {
-    return this.http.get<Model[]>(this.getUrlSegment(), {
+    return this.http.get<ListResponseData<Model>>(this.getUrlSegment(), {
       params: new HttpParams({
         fromObject: options as never,
       }),
-    })
+    }).pipe(map(response => response.data as Model[]))
+  }
+
+  @CastResponse()
+  loadPaginated(options?: OptionsContract | undefined): Observable<PaginatedList<Model>> {
+    return this.http.get<PaginatedListResponseData<Model>>(this.getUrlSegment(), {
+      params: new HttpParams({
+        fromObject: options as never,
+      }),
+    }).pipe(map(response => {
+      return {
+        list: response.data.list as Model[],
+        paginationInfo: response.data.paginationInfo
+      }
+    }))
   }
 
   @CastResponse()

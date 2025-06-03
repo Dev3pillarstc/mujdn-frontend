@@ -1,0 +1,10 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: calc(100% - 256px);
+
+    .content {
+        flex: 1;
+    }
+}

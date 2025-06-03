@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use "tailwindcss" as *;
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap");
+@import 'primeicons/primeicons.css';
 
 body {
   font-family: "IBM Plex Sans Arabic", sans-serif;
@@ -12,9 +13,11 @@ body {
   // Select
   --p-select-border-color: #9da4ae !important;
   --p-select-focus-border-color: #9da4ae !important;
+  --p-select-padding-x: 16px !important;
   // Inputs
   --p-inputtext-border-color: #9da4ae !important;
   --p-inputtext-focus-border-color: #9da4ae !important;
+  --p-inputtext-padding-x: 16px !important;
   // Date Picker
   --p-datepicker-today-background: #fff !important;
   --p-datepicker-date-selected-background: #1b8354 !important;
@@ -31,19 +34,56 @@ body {
   --p-rating-icon-active-color: #dba102 !important;
   --p-rating-focus-ring-color: #dba102 !important;
   --p-rating-icon-hover-color: #dba102 !important;
+  //table
+  --p-datatable-column-title-font-weight: 600 !important;
+  --p-datatable-header-cell-color: #384250 !important;
+  --p-datatable-header-cell-border-color: #d2d6db !important;
+  --p-datatable-header-cell-background: #f3f4f6 !important;
+  --p-datatable-header-cell-padding: 16px !important;
+  --p-datatable-body-cell-padding: 16px !important;
+  //pagination
+  --p-paginator-nav-button-selected-color: #161616;
+  --p-paginator-nav-button-selected-background: #fff !important;
+  --p-paginator-nav-button-border-radius: 4px;
+  --p-paginator-nav-button-selected-background: #fff;
+  --p-paginator-padding: 24px 0 0 !important;
+}
+//pagination
+.p-paginator-page.p-paginator-page-selected {
+  border-bottom: 3px solid #1b8354;
+  border-radius: 0;
 }
 
+//breadcrumb
+.p-breadcrumb-list {
+  flex-wrap: wrap !important;
+}
+//table
 
+.p-datatable-thead > tr > th {
+  &:not(:first-child) {
+    border-width: 0 1px 1px 0 !important;
+  }
+  font-size: 12px;
+}
+.p-datatable-table {
+  border: 1px solid #d2d6db !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+.p-datatable-tbody > tr > td {
+  color: #161616;
+  text-wrap: nowrap;
+}
 // Date Picker
 .p-datepicker {
   width: 100%;
   height: 100%;
 }
 
-.p-datepicker-today>.p-datepicker-day {
+.p-datepicker-today > .p-datepicker-day {
   border-color: #1b8354;
 }
-
 
 .custom-container {
   @apply px-4 sm:px-6 md:px-8 lg:px-[80px];
@@ -54,7 +94,7 @@ body {
 }
 
 .btn {
-  @apply text-white px-4 py-2 rounded cursor-pointer font-[500];
+  @apply text-sm md:text-base gap-2 text-white px-2 py-1 md:py-2 md:px-4 rounded cursor-pointer font-[500];
 }
 
 .green-btn {
@@ -68,3 +108,26 @@ body {
 .gray-btn {
   @apply text-[#161616] bg-[#f3f4f6] hover:bg-[#e5e7eb];
 }
+
+
+
+// Start SideMenu
+.p-drawer-header {
+  display: none !important;
+}
+
+.sidebar-header {
+  background: #14573a !important;
+}
+
+.p-drawer-content {
+  padding: 0 !important;
+}
+
+.p-drawer-left,
+.p-drawer {
+  width: 256px !important;
+  border: unset !important;
+}
+
+// End SideMenu

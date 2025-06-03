@@ -1,6 +1,7 @@
 button {
     position: relative;
     min-width: 100px;
+    height: 100%;
 
     &::after {
         position: absolute;

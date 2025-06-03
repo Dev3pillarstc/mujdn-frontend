@@ -1,7 +1,5 @@
-import { InputTextModule } from 'primeng/inputtext';
-import {Component, inject, OnInit} from '@angular/core';
-import { LocalStorageService } from '@/services/shared/local-storage.service';
-import { LOCALSTORAGE_ENUM } from '@/enums/local-storage-enum';
+import {InputTextModule} from 'primeng/inputtext';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +7,5 @@ import { LOCALSTORAGE_ENUM } from '@/enums/local-storage-enum';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export default class LoginComponent implements OnInit {
-  localStorageService = inject(LocalStorageService);
-  ngOnInit() {
-  }
+export default class LoginComponent {
 }

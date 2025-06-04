@@ -15,4 +15,8 @@ export default class LoginComponent implements OnInit {
   authService = inject(AuthService);
   ngOnInit() {
   }
+
+  login() {
+    this.authService.login('', '').subscribe();
+  }
 }

@@ -33,7 +33,8 @@
               "src/resources"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/rtl.scss"
             ],
             "scripts": []
           },

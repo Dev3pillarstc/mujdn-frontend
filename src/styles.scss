@@ -43,6 +43,13 @@ body {
     --p-datatable-header-cell-padding: 16px !important;
     --p-datatable-body-cell-padding: 16px !important;
 
+    .p-datatable-thead>tr>th:not(:first-child) {
+        border-inline-start-width: 1px !important;
+        border-inline-end-width: 0 !important;
+        border-top-width: 0 !important;
+        border-bottom-width: 1px !important;
+    }
+
     .p-datatable-tbody>tr>td {
         background-color: #fff;
     }
@@ -143,6 +150,7 @@ body {
     justify-content: space-between;
     scrollbar-width: none;
     -ms-overflow-style: none;
+
     &::-webkit-scrollbar {
         width: 0;
         height: 0;
@@ -153,6 +161,7 @@ body {
 .p-drawer {
 
     border: unset !important;
+
     @media(min-width: 768px) {
         width: 256px !important;
     }
@@ -239,10 +248,12 @@ body {
 }
 
 .p-drawer-right .p-drawer {
-  align-self: baseline !important;
-  transform: unset !important;
+    align-self: baseline !important;
+    transform: unset !important;
 }
+
 .p-drawer-mask {
-  position: static !important;
+    position: static !important;
 }
+
 // End SideMenu

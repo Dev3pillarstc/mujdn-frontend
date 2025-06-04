@@ -67,6 +67,7 @@
                         <tr>
                             <th>معرف الموظف</th>
                             <th>اسم الموظف</th>
+                            <th>الإدارة</th>
                             <th>الوظيفة</th>
                             <th>نوع الدوام</th>
                             <th>الإجراء</th>
@@ -75,6 +76,7 @@
                     <ng-template #body let-attendance>
                         <tr>
                             <td>{{ attendance.serialNumber }}</td>
+                            <td>{{ attendance.employeeName }}</td>
                             <td>{{ attendance.employeeName }}</td>
                             <td>{{ attendance.employeeName }}</td>
                             <td>{{ attendance.workType }}</td>

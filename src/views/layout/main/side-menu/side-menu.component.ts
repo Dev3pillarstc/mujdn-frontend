@@ -23,6 +23,46 @@ export class SideMenuComponent {
       routerLink: ['/dashboard'],
     },
     {
+      label: 'تقرير الحضور و الانصراف',
+      iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'حركات الحضور و الانصراف',
+      iconUrl: 'assets/icons/menu-icons/icon.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'الادارات',
+      iconUrl: 'assets/icons/menu-icons/tools.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'قائمة الموظفين',
+      iconUrl: 'assets/icons/menu-icons/employees.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'مسائلات توثيق التواجد',
+      iconUrl: 'assets/icons/menu-icons/icon2.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'الاستئذانات',
+      iconUrl: 'assets/icons/menu-icons/permissions.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'الموظفون المُكلفون',
+      iconUrl: 'assets/icons/menu-icons/icon3.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'قائمة الاجازات و الأعياد',
+      iconUrl: 'assets/icons/menu-icons/vacations.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
       label: 'الإعدادات',
       iconUrl: 'assets/icons/menu-icons/settings.svg',
       children: [

@@ -14,6 +14,7 @@ body {
     --p-select-border-color: #9da4ae !important;
     --p-select-focus-border-color: #9da4ae !important;
     --p-select-padding-x: 16px !important;
+    --p-select-background: #fff !important;
     // Inputs
     --p-inputtext-border-color: #9da4ae !important;
     --p-inputtext-focus-border-color: #9da4ae !important;
@@ -41,6 +42,11 @@ body {
     --p-datatable-header-cell-background: #f3f4f6 !important;
     --p-datatable-header-cell-padding: 16px !important;
     --p-datatable-body-cell-padding: 16px !important;
+
+    .p-datatable-tbody>tr>td {
+        background-color: #fff;
+    }
+
     //pagination
     --p-paginator-nav-button-selected-color: #161616;
     --p-paginator-nav-button-selected-background: #fff !important;
@@ -135,22 +141,21 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     &::-webkit-scrollbar {
         width: 0;
         height: 0;
     }
-
-    scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 
 .p-drawer-left,
 .p-drawer {
+
+    border: unset !important;
     @media(min-width: 768px) {
         width: 256px !important;
     }
-    border: unset !important;
 }
 
 .menu-list {
@@ -187,7 +192,7 @@ body {
             &::before {
                 position: absolute;
                 top: 50%;
-                left: 0;
+                inset-inline-start: 0;
                 width: 6px;
                 height: 80%;
                 background-color: #fff;
@@ -221,7 +226,7 @@ body {
         &::before {
             position: absolute;
             top: 50%;
-            left: 0;
+            inset-inline-start: 0;
             width: 6px;
             height: 80%;
             background-color: #fff;

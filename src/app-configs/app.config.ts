@@ -12,6 +12,7 @@ import {SpinnerService} from '@/services/shared/spinner.service'
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpLoaderFactory} from '@/configs/translate-loader';
 import {LANGUAGE_ENUM} from '@/enums/language-enum';
+import {provideInterceptors} from 'cast-response';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,12 +26,12 @@ export const appConfig: ApplicationConfig = {
     ),
     provideRouter(routes),
     // provideClientHydration(),
-    // provideInterceptors([GeneralInterceptor]),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: GeneralInterceptor,
-      multi: true
-    },
+    provideInterceptors([GeneralInterceptor]),
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: GeneralInterceptor,
+    //   multi: true
+    // },
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {

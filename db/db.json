@@ -1,35 +1,27 @@
 {
   "examples": {
-    "data": {
-      "list": [
-        {
-          "id": "1",
-          "name": "example 1"
-        },
-        {
-          "id": "2",
-          "name": "example 2"
-        },
-        {
-          "id": "3",
-          "name": "example 3"
-        },
-        {
-          "id": "4",
-          "name": "example 4"
-        },
-        {
-          "id": "5",
-          "name": "example 5"
-        }
-      ],
-      "paginationInfo": {
-        "totalPages": 5,
-        "currentPage": 1,
-        "pageSize": 1,
-        "totalRows": 5
+    "data": [
+      {
+        "id": "1",
+        "name": "example 1"
+      },
+      {
+        "id": "2",
+        "name": "example 2"
+      },
+      {
+        "id": "3",
+        "name": "example 3"
+      },
+      {
+        "id": "4",
+        "name": "example 4"
+      },
+      {
+        "id": "5",
+        "name": "example 5"
       }
-    },
+    ],
     "error": {
       "code": null,
       "error": null

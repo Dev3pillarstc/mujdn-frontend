@@ -1,4 +1,4 @@
-import {Routes} from '@angular/router'
+import {Routes} from '@angular/router';
 
 export const routes: Routes = [
   {
@@ -11,7 +11,8 @@ export const routes: Routes = [
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'home', loadComponent: () => import('../views/home/home.component')}
+      {path: 'home', loadComponent: () => import('../views/home/home.component')},
+      {path: 'employees', loadComponent: () => import('../views/features/employee/employee-list/employee-list.component')}
     ],
   },
   {

@@ -2,7 +2,11 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    width: calc(100% - 256px);
+    width: 100%;
+
+    @media(min-width: 768px) {
+        width: calc(100% - 256px);
+    }
 
     .content {
         flex: 1;

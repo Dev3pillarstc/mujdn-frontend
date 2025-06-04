@@ -23,7 +23,7 @@ export class LocalStorageService {
     localStorage.removeItem(key);
   }
 
-  clearLocalStorage() {
+  clear() {
     localStorage.clear();
   }
 }

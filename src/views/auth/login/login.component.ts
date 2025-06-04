@@ -1,22 +1,13 @@
-import { InputTextModule } from 'primeng/inputtext';
-import {Component, inject, OnInit} from '@angular/core';
-import { LocalStorageService } from '@/services/shared/local-storage.service';
-import { LOCALSTORAGE_ENUM } from '@/enums/local-storage-enum';
+import {InputTextModule} from 'primeng/inputtext';
+import {Component} from '@angular/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [InputTextModule],
+  imports: [InputTextModule, TranslatePipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export default class LoginComponent implements OnInit {
-  localStorageService = inject(LocalStorageService);
-  authService = inject(AuthService);
-  ngOnInit() {
-  }
-
-  login() {
-    this.authService.login('', '').subscribe();
-  }
+export default class LoginComponent {
 }

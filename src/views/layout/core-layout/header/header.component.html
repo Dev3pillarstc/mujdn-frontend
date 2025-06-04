@@ -14,7 +14,7 @@
             </button>
         </div>
         <div>
-            <button class="py-3 text-[#161616] font-medium cursor-pointer text-sm sm:text-base">عربي</button>
+            <button (click)="changeLanguage()" class="py-3 text-[#161616] font-medium cursor-pointer text-sm sm:text-base">{{getLanguageButtonText()}}</button>
         </div>
     </div>
 </div>

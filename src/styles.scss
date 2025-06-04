@@ -238,4 +238,11 @@ body {
     }
 }
 
+.p-drawer-right .p-drawer {
+  align-self: baseline !important;
+  transform: unset !important;
+}
+.p-drawer-mask {
+  position: static !important;
+}
 // End SideMenu

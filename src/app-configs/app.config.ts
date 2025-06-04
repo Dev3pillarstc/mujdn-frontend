@@ -9,12 +9,11 @@ import {provideAnimationsAsync} from '@angular/platform-browser/animations/async
 import {providePrimeNG} from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { loadingInterceptor } from '@/http-interceptors/loading.interceptor'
-import { spinnerService } from '@/services/shared/spinner.service'
+import { SpinnerService } from '@/services/shared/spinner.service'
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    // configInit, // your config
-    spinnerService, // or SpinnerService if that's what you're using
+    SpinnerService,
     
     // Use both approaches
     provideHttpClient(

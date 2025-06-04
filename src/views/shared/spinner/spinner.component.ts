@@ -1,4 +1,4 @@
-import { spinnerService } from '@/services/shared/spinner.service';
+import { SpinnerService } from '@/services/shared/spinner.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProgressSpinner } from 'primeng/progressspinner';
@@ -14,7 +14,7 @@ export class SpinnerComponent implements OnInit, OnDestroy {
   isLoading = false;
   private subscription: Subscription = new Subscription();
 
-  constructor(private SpinnerService: spinnerService) {}
+  constructor(private SpinnerService: SpinnerService) {}
 
   ngOnInit(): void {
     this.subscription = this.SpinnerService.loading$.subscribe(

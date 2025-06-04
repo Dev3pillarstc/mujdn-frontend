@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core'
 import {RouterOutlet} from '@angular/router'
 import {VersionComponent} from '@/components/version/version.component'
 import {AuthService} from '@/services/auth/auth.service';
-import { spinnerService } from '@/services/shared/spinner.service';
+import { SpinnerService } from '@/services/shared/spinner.service';
 import { SpinnerComponent } from "../shared/spinner/spinner.component";
 import { CommonModule } from '@angular/common';
 
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   authService = inject(AuthService);
-  spinnerService = inject(spinnerService);
+  spinnerService = inject(SpinnerService);
   showSpinner = false;
   ngOnInit() {
     this.spinnerService.loading$.subscribe(loading => this.showSpinner = loading);

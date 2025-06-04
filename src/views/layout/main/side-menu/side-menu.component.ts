@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuItem } from 'primeng/api';
@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './side-menu.component.html',
 })
 export class SideMenuComponent {
+  @ViewChild('sidebarContainer', { static: true }) sidebarContainer!: ElementRef;
   sidebarVisible = false;
   isMobile = window.innerWidth <= 768;
   openedSubmenus = new Set<MenuItem>();

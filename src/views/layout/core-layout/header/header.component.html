@@ -1,20 +1,29 @@
 <div class="px-6 bg-white">
-    <div class="flex justify-end gap-2">
+    <div class="flex justify-between gap-2">
         <div>
-            <button class="py-3 px-2 font-medium cursor-pointer flex items-center gap-2 text-sm sm:text-base text-[#384250]">
-                <img src="/assets/icons/user.svg" alt="">
-                <span class="flex flex-col justify-start items-start">
-                    <strong>
-                        عبدالعزيز محمد
-                    </strong>
-                    <span class="font-normal">
-                        مسؤول النظام - ادارة خارجية
-                    </span>
-                </span>
+            <button class="menu-button md:hidden h-full">
+                <i class="pi pi-bars"></i>
             </button>
         </div>
-        <div>
-            <button (click)="changeLanguage()" class="py-3 text-[#161616] font-medium cursor-pointer text-sm sm:text-base">{{getLanguageButtonText()}}</button>
+        <div class="flex actions">
+            <div>
+                <button
+                    class="py-3 px-2 font-medium cursor-pointer flex items-center gap-2 text-sm sm:text-base text-[#384250]">
+                    <img src="/assets/icons/user.svg" alt="">
+                    <span class="flex flex-col justify-start items-start">
+                        <strong>
+                            عبدالعزيز محمد
+                        </strong>
+                        <span class="font-normal">
+                            مسؤول النظام - ادارة خارجية
+                        </span>
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button (click)="changeLanguage()"
+                    class="py-3 text-[#161616] font-medium cursor-pointer text-sm sm:text-base">{{getLanguageButtonText()}}</button>
+            </div>
         </div>
     </div>
 </div>

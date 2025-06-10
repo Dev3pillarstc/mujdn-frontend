@@ -52,7 +52,7 @@
                 inputId="icondisplay"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="assets/icons/calender-icon.svg" alt="" />
+                  <img src="/assets/icons/calender-icon.svg" alt="" />
                 </ng-template>
               </p-datepicker>
               <span
@@ -143,13 +143,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button>
-              <img src="assets/icons/excel.svg" alt="" />
+              <img src="/assets/icons/excel.svg" alt="" />
             </button>
             <button>
-              <img src="assets/icons/print.svg" alt="" />
+              <img src="/assets/icons/print.svg" alt="" />
             </button>
-            <button class="btn green-btn flex items-center">
-              <img src="assets/icons/plus.svg" alt="" />
+            <button (click)="openDialog()" class="btn green-btn flex items-center">
+              <img src="/assets/icons/plus.svg" alt="" />
               <span>إضافة حركة جديدة</span>
             </button>
           </div>
@@ -189,18 +189,18 @@
               <td>
                 <div
                   [ngClass]="[
-                    'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
+                    `px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2`,
                     attendance.treatmentStatus === 'تمت المعالجة'
-                      ? 'bg-[#ecfdf3] text-[#085d3a]'
-                      : 'bg-[#fffaeb] text-[#93370d]'
+                      ? `bg-[#ecfdf3] text-[#085d3a]`
+                      : `bg-[#fffaeb] text-[#93370d]`
                   ]"
                 >
                   <span
                     [ngClass]="[
-                      'block w-[10px] h-[10px] rounded-full',
+                      `block w-[10px] h-[10px] rounded-full`,
                       attendance.treatmentStatus === 'تمت المعالجة'
-                        ? 'bg-[#085d3a] '
-                        : 'bg-[#93370d] '
+                        ? `bg-[#085d3a]`
+                        : `bg-[#93370d]`
                     ]"
                   ></span>
                   <span>
@@ -213,12 +213,12 @@
                   <button
                     class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center"
                   >
-                    <img src="assets/icons/edit-action.svg" alt="" />
+                    <img src="/assets/icons/edit-action.svg" alt="" />
                   </button>
                   <button
                     class="bg-[#fef3f2] rounded p-2 flex items-center justify-center"
                   >
-                    <img src="assets/icons/delete-action.svg" alt="" />
+                    <img src="/assets/icons/delete-action.svg" alt="" />
                   </button>
                 </div>
               </td>

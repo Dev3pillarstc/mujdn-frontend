@@ -11,17 +11,26 @@ import {LocalStorageService} from "@/services/shared/local-storage.service";
 export class LanguageService {
   translateService = inject(TranslateService);
   localStorageService = inject(LocalStorageService);
-  getCurrentLanguage() {
-    return this.translateService.currentLang;
+  private _currentLanguage: string = LANGUAGE_ENUM.ENGLISH.toString();
+  languageChanged$: BehaviorSubject<string> = new BehaviorSubject(this._currentLanguage);
+
+  constructor() {
+    // Initialize _currentLanguage from localStorage if it exists
+    const storedLanguage = this.localStorageService.get(LOCALSTORAGE_ENUM.LANGUAGE);
+    if (storedLanguage) {
+      this._currentLanguage = storedLanguage;
+      this.translateService.use(storedLanguage);
+    }
+  }
+
+  getCurrentLanguage(): string {
+    return this._currentLanguage;
   }
 
   setLanguage(lang: any) {
-    if(lang) {
-      this.translateService.use(lang);
-      this.localStorageService.set(LOCALSTORAGE_ENUM.LANGUAGE, lang);
-    } else {
-      this.translateService.use(LANGUAGE_ENUM.ENGLISH);
-      this.localStorageService.set(LOCALSTORAGE_ENUM.LANGUAGE, LANGUAGE_ENUM.ENGLISH);
-    }
+    this._currentLanguage = lang;
+    this.translateService.use(lang);
+    this.localStorageService.set(LOCALSTORAGE_ENUM.LANGUAGE, lang);
+    this.languageChanged$.next(this._currentLanguage);
   }
 }

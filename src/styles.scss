@@ -57,7 +57,7 @@ body {
     //pagination
     --p-paginator-nav-button-selected-color: #161616;
     --p-paginator-nav-button-selected-background: #fff !important;
-    --p-paginator-nav-button-border-radius: 4px;
+    --p-paginator-nav-button-border-radius: 4px !important;
     --p-paginator-nav-button-selected-background: #fff;
     --p-paginator-padding: 24px 0 0 !important;
 }
@@ -164,6 +164,8 @@ body {
 
     @media(min-width: 768px) {
         width: 256px !important;
+        position: fixed !important;
+        height: 100vh !important;
     }
 }
 

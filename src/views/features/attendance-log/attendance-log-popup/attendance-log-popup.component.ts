@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {BasePopupComponent} from '@/components/base-popup/base-popup.component';
 
 @Component({
   selector: 'app-attendance-log-popup',
@@ -6,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './attendance-log-popup.component.html',
   styleUrl: './attendance-log-popup.component.scss'
 })
-export class AttendanceLogPopupComponent {
+export class AttendanceLogPopupComponent extends BasePopupComponent {
 
 }

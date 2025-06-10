@@ -127,3 +127,15 @@
 }
 
 // End SideMenu
+//start kareem new
+.p-datepicker-input-icon-container{
+  inset-inline-end: unset !important;
+  inset-inline-start: 16px !important;
+  pointer-events: none;
+}
+.p-datepicker:has(.p-datepicker-input-icon-container) .p-datepicker-input{
+  padding-inline-end: 0 !important;
+  padding-inline-start: 44px !important;
+  cursor: pointer;
+}
+// en kareem new

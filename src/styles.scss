@@ -141,4 +141,18 @@ button,
 a {
   cursor: pointer;
 }
+.p-breadcrumb {
+  padding: 0;
+  padding-bottom: 24px;
+
+  ol {
+    li {
+      &:last-child {
+        span {
+          color: #9da4ae;
+        }
+      }
+    }
+  }
+}
 // en kareem new

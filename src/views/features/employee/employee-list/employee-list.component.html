@@ -14,7 +14,7 @@
                     </h5>
                 </div>
                 <div class="pt-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
                         <div class="relative">
                             <label for="" class="label">الادارة</label>
                             <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
@@ -30,6 +30,24 @@
                                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                         </div>
                         <div class="relative">
+                            <label for="" class="label">تاريخ الالتحاق</label>
+                            <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true"
+                                placeholder="تاريخ الالتحاق" class="peer block w-full" inputId="icondisplay">
+                                <ng-template pTemplate="inputicon">
+                                    <img src="assets/icons/calender-icon.svg" alt="" />
+                                </ng-template>
+                            </p-datepicker>
+                            <span
+                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                        </div>
+                        <div class="relative">
+                            <label for="" class="label">حالة الحساب</label>
+                            <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                                placeholder="اسم الموظف" class="w-full peer"></p-select>
+                            <span
+                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                        </div>
+                        <div class="relative">
                             <label for="" class="label">الوظيفة</label>
                             <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
                                 placeholder="الوظيفة" class="w-full peer"></p-select>
@@ -38,6 +56,13 @@
                         </div>
                         <div class="relative">
                             <label for="" class="label">نوع الدوام</label>
+                            <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                                placeholder="نوع الدوام" class="w-full peer"></p-select>
+                            <span
+                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                        </div>
+                        <div class="relative">
+                            <label for="" class="label">الإعفاء من البصمة</label>
                             <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
                                 placeholder="نوع الدوام" class="w-full peer"></p-select>
                             <span
@@ -58,8 +83,16 @@
                        قائمة الموظفين
                     </h4>
                     <div class="actions flex items-center gap-4 ms-auto">
-                        <img src="assets/icons/excel.svg" alt="" />
-                        <img src="assets/icons/print.svg" alt="" />
+                        <button>
+                            <img src="assets/icons/excel.svg" alt="" />
+                        </button>
+                        <button class="cursor-pointer">
+                            <img src="assets/icons/print.svg" alt="" />
+                        </button>
+                        <button class="btn green-btn flex items-center">
+                            <img src="assets/icons/plus.svg" alt="" />
+                            <span>إضافة موظف جديد</span>
+                        </button>
                     </div>
                 </div>
                 <p-table [value]="attendance">
@@ -68,8 +101,11 @@
                             <th>معرف الموظف</th>
                             <th>اسم الموظف</th>
                             <th>الإدارة</th>
+                            <th>الاعفاء من البصمة</th>
                             <th>الوظيفة</th>
                             <th>نوع الدوام</th>
+                            <th>تاريخ الالتحاق</th>
+                            <th>حالة الحساب</th>
                             <th>الإجراء</th>
                         </tr>
                     </ng-template>
@@ -78,13 +114,19 @@
                             <td>{{ attendance.serialNumber }}</td>
                             <td>{{ attendance.employeeName }}</td>
                             <td>{{ attendance.employeeName }}</td>
-                            <td>{{ attendance.employeeName }}</td>
+                            <td></td>
                             <td>{{ attendance.workType }}</td>
+                            <td>{{ attendance.employeeName }}</td>
+                            <td>12/12/2024</td>
+                            <td></td>
                             <td>
-                                <button class="btn gray-btn flex align-items gap-4">
-                                    <img src="/assets/icons/edit.svg" alt="">
-                                    <span class="text-sm">تعديل الصلاحية</span>
-                                </button>
+                                <div class="flex gap-4">
+                                    <button class="btn gray-btn flex align-items gap-4">
+                                        <img src="/assets/icons/edit.svg" alt="">
+                                        <span class="text-sm">تعديل الصلاحية</span>
+                                    </button>
+                                    <p-splitbutton dropdownIcon="pi pi-ellipsis-v" [model]="itemsList" />
+                                </div>
                             </td>
                         </tr>
                     </ng-template>

@@ -9,6 +9,8 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { MessageService } from 'primeng/api';
 
 interface Adminstration {
   type: string;
@@ -26,13 +28,16 @@ interface Adminstration {
     CommonModule,
     RouterModule,
     CommonModule,
-    PaginatorModule,
+    SplitButtonModule,
+    PaginatorModule
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
+    providers: [MessageService]
 })
 export default class EmployeeListComponent {
   items: MenuItem[] | undefined;
+  itemsList: MenuItem[];
 
   home: MenuItem | undefined;
   adminstrations: Adminstration[] | undefined;
@@ -42,6 +47,45 @@ export default class EmployeeListComponent {
   attendance!: any[];
   first: number = 0;
   rows: number = 10;
+
+  constructor(private messageService: MessageService) {
+        this.itemsList = [
+            {
+                label: 'تعديل بيانات الموظف'
+            },
+            {
+                separator: true,
+            },
+            {
+                label: 'عرض تقرير الحضور و الانصراف'
+            },
+            {
+                separator: true,
+            },
+            {
+                label: 'اسنادة مهمة'
+            },
+            {
+                separator: true,
+            },
+            {
+                label: 'اسناد وردية'
+            },
+            {
+                separator: true,
+            },
+            {
+                label: 'سجل المهمات المسندة للموظف'
+            },
+            {
+                separator: true,
+            },
+            {
+                label: 'حذف الموظف',
+                styleClass: 'p-menuitem-danger'
+            }
+        ];
+    }
 
   ngOnInit() {
     this.items = [
@@ -112,4 +156,5 @@ export default class EmployeeListComponent {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
   }
+  
 }

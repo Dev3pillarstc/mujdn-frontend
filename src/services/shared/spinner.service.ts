@@ -22,9 +22,7 @@ export class SpinnerService {
     this.loadingCount--;
     if (this.loadingCount <= 0) {
       this.loadingCount = 0;
-      setTimeout(() => {
-          this.loadingSubject.next(false);
-      }, 5000);
+      this.loadingSubject.next(false);
     }
 
   }

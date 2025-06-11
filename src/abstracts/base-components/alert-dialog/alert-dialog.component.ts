@@ -23,7 +23,7 @@ export class AlertDialogComponent {
 
   get iconPath(): string {
     switch (this.data.icon) {
-      case 'success': return '/assets/icons/success.svg';
+      case 'success': return '/assets/icons/checkmark.svg';
       case 'error': return '/assets/icons/error.svg';
       case 'info': return '/assets/icons/info.svg';
       case 'warning': return '/assets/icons/warning.svg';

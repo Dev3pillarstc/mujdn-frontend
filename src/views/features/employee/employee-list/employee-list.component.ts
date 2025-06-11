@@ -167,10 +167,9 @@ export default class EmployeeListComponent {
   }
   openConfirmation() {
   const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-    width: '400px',
+    width: '600px',
     data: <ConfirmationDialogData>{
-      title: 'Delete Item',
-      messages: ['Are you sure you want to delete this item?', 'This action cannot be undone.'],
+      messages: ['هل أنت متأكد من حذف الحركة؟'],
       confirmText: 'COMMON.OK',
       cancelText: 'COMMON.CANCEL'
     }
@@ -188,7 +187,7 @@ export default class EmployeeListComponent {
 }
 showSuccessMessage() {
   this.matDialog.open(AlertDialogComponent, {
-    width: '350px',
+    width: '400px',
     data: <AlertDialogData>{
       icon: 'success',
       messages: ['تمت العملية بنجاح!'],
@@ -198,7 +197,7 @@ showSuccessMessage() {
 }  
 showErrorMessage() {
   this.matDialog.open(AlertDialogComponent, {
-    width: '350px',
+    width: '400px',
     data: <AlertDialogData>{
       icon: 'error',
       messages: ['حدث خطأ أثناء تنفيذ العملية.'],

@@ -1,3 +1,7 @@
+.red-btn {
+  @apply text-[#fff] bg-[#d92d20] hover:bg-[#bf2318];
+}
+
 // Start SideMenu
 .p-drawer-header {
   display: none !important;

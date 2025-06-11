@@ -1,0 +1,240 @@
+<div class="bg-white">
+  <div class="bg-[#f9fafb] p-3 sm:p-6">
+    <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        حركات حضور و انصراف الموظفين
+      </h3>
+    </div>
+    <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
+      <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
+        <div class="flex items-center justify-between">
+          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+            تصفية البحث
+          </h5>
+        </div>
+        <div class="pt-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+            <div class="relative">
+              <label for="" class="label">الادارة</label>
+              <p-select
+                [options]="adminstrations"
+                [(ngModel)]="selectedAdminstration"
+                optionLabel="type"
+                placeholder="الادارة"
+                class="w-full peer"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="" class="label">اسم الموظف</label>
+              <p-select
+                [options]="adminstrations"
+                [(ngModel)]="selectedAdminstration"
+                optionLabel="type"
+                placeholder="اسم الموظف"
+                class="w-full peer"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="" class="label">التاريخ</label>
+              <p-datepicker
+                [(ngModel)]="date2"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                placeholder="التاريخ"
+                class="peer block w-full"
+                inputId="icondisplay"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img src="/assets/icons/calender-icon.svg" alt="" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="" class="label">نوع الدوام</label>
+              <p-select
+                [options]="adminstrations"
+                [(ngModel)]="selectedAdminstration"
+                optionLabel="type"
+                placeholder="نوع الدوام"
+                class="w-full peer"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="" class="label">نوع الحركة</label>
+              <p-select
+                [options]="adminstrations"
+                [(ngModel)]="selectedAdminstration"
+                optionLabel="type"
+                placeholder="نوع الحركة"
+                class="w-full peer"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="" class="label">جهاز البصمة</label>
+              <p-select
+                [options]="adminstrations"
+                [(ngModel)]="selectedAdminstration"
+                optionLabel="type"
+                placeholder="جهاز البصمة"
+                class="w-full peer"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="" class="label">حالة المعالجة</label>
+              <p-select
+                [options]="adminstrations"
+                [(ngModel)]="selectedAdminstration"
+                optionLabel="type"
+                placeholder="حالة المعالجة"
+                class="w-full peer"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="" class="label">منشئ الحركة</label>
+              <p-select
+                [options]="adminstrations"
+                [(ngModel)]="selectedAdminstration"
+                optionLabel="type"
+                placeholder="منشئ الحركة"
+                class="w-full peer"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+          </div>
+
+          <div class="actions flex items-center gap-4 pt-6">
+            <button class="btn black-btn">بحث</button>
+            <button class="btn gray-btn border border-[#d2d6db]">
+              إعادة تعيين
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div
+          class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+            قائمة حركات الحضور و الانصراف للموظفين
+          </h4>
+          <div class="actions flex items-center gap-4 ms-auto">
+            <button>
+              <img src="/assets/icons/excel.svg" alt="" />
+            </button>
+            <button>
+              <img src="/assets/icons/print.svg" alt="" />
+            </button>
+            <button (click)="openDialog()" class="btn green-btn flex items-center">
+              <img src="/assets/icons/plus.svg" alt="" />
+              <span>إضافة حركة جديدة</span>
+            </button>
+          </div>
+        </div>
+        <p-table [value]="attendance">
+          <ng-template #header>
+            <tr>
+              <th>الرقم التسلسلي</th>
+              <th>اسم الموظف</th>
+              <th>التاريخ - الوقت</th>
+              <th>نوع الدوام</th>
+              <th>نوع الحركة</th>
+              <th>جهاز البصمة</th>
+              <th>منشئ الحركة</th>
+              <th>حالة المعالجة</th>
+              <th>الإجراء</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-attendance>
+            <tr>
+              <td>{{ attendance.serialNumber }}</td>
+              <td>{{ attendance.employeeName }}</td>
+              <td>
+                <div class="flex flex-col items-center">
+                  <span>
+                    {{ attendance.date }}
+                  </span>
+                  <span class="text-[#64748b]">
+                    {{ attendance.time }}
+                  </span>
+                </div>
+              </td>
+              <td>{{ attendance.workType }}</td>
+              <td>{{ attendance.attendanceStatus }}</td>
+              <td>{{ attendance.department }}</td>
+              <td>{{ attendance.movement }}</td>
+              <td>
+                <div
+                  [ngClass]="[
+                    `px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2`,
+                    attendance.treatmentStatus === 'تمت المعالجة'
+                      ? `bg-[#ecfdf3] text-[#085d3a]`
+                      : `bg-[#fffaeb] text-[#93370d]`
+                  ]"
+                >
+                  <span
+                    [ngClass]="[
+                      `block w-[10px] h-[10px] rounded-full`,
+                      attendance.treatmentStatus === 'تمت المعالجة'
+                        ? `bg-[#085d3a]`
+                        : `bg-[#93370d]`
+                    ]"
+                  ></span>
+                  <span>
+                    {{ attendance.treatmentStatus }}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="actions flex gap-2">
+                  <button
+                    class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center"
+                  >
+                    <img src="/assets/icons/edit-action.svg" alt="" />
+                  </button>
+                  <button
+                    class="bg-[#fef3f2] rounded p-2 flex items-center justify-center"
+                  >
+                    <img src="/assets/icons/delete-action.svg" alt="" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-paginator
+          class="mt-6"
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rows]="rows"
+          [totalRecords]="120"
+          [rowsPerPageOptions]="[10, 20, 30]"
+        />
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>

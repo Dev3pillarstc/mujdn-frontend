@@ -1,4 +1,4 @@
-<p-sidebar [visible]="sidebarVisible" [modal]="isMobile" [showCloseIcon]="isMobile" position="left"
+<p-sidebar [position]="'right'" [appendTo]="sidebarContainer" [visible]="sidebarVisible" [modal]="isMobile" [showCloseIcon]="isMobile" position="left"
     [style]="{ width: isMobile ? '80%' : '250px' }" styleClass="custom-sidebar" [baseZIndex]="1000">
     <div>
         <div class="sidebar-header p-3 border-bottom-1 surface-border flex justify-between items-center">

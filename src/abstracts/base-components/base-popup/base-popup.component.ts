@@ -1,8 +1,8 @@
-import {LANGUAGE_ENUM} from '@/enums/language-enum';
-import {LAYOUT_DIRECTION_ENUM} from '@/enums/layout-direction-enum';
-import {LanguageService} from '@/services/shared/language.service';
-import {inject} from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
+import { LanguageService } from '@/services/shared/language.service';
+import { inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 export class BasePopupComponent {
   declare direction: LAYOUT_DIRECTION_ENUM;
@@ -10,7 +10,10 @@ export class BasePopupComponent {
   dialogRef = inject(MatDialogRef);
 
   constructor() {
-    this.direction = this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? LAYOUT_DIRECTION_ENUM.LTR : LAYOUT_DIRECTION_ENUM.RTL;
+    this.direction =
+      this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+        ? LAYOUT_DIRECTION_ENUM.LTR
+        : LAYOUT_DIRECTION_ENUM.RTL;
   }
 
   close() {

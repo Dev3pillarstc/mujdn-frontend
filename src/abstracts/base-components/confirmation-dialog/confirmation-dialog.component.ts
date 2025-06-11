@@ -4,16 +4,19 @@ import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { ConfirmationDialogData } from '@/models/shared/confirmation-dialog-data';
 import { LanguageService } from '@/services/shared/language.service';
 import { Component, inject, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogContent,
+  MatDialogActions,
+} from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-confirmation-dialog',
-  imports: [MatDialogContent
-    , MatDialogActions
-    , TranslatePipe],
+  imports: [MatDialogContent, MatDialogActions, TranslatePipe],
   templateUrl: './confirmation-dialog.component.html',
-  styleUrl: './confirmation-dialog.component.scss'
+  styleUrl: './confirmation-dialog.component.scss',
 })
 export class ConfirmationDialogComponent {
   declare direction: LAYOUT_DIRECTION_ENUM;
@@ -23,7 +26,10 @@ export class ConfirmationDialogComponent {
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogData
   ) {
-    this.direction = this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? LAYOUT_DIRECTION_ENUM.LTR : LAYOUT_DIRECTION_ENUM.RTL;
+    this.direction =
+      this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+        ? LAYOUT_DIRECTION_ENUM.LTR
+        : LAYOUT_DIRECTION_ENUM.RTL;
   }
 
   onConfirm(): void {

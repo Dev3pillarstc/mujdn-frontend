@@ -1,12 +1,10 @@
-<h2 mat-dialog-title class="text-center">{{ data.title || 'تنبيه' }}</h2>
-<mat-dialog-content class="flex flex-col items-center text-center p-4">
+<!-- <h2 mat-dialog-title class="text-center">{{ data.title || 'تنبيه' }}</h2> -->
+<div class="flex flex-col items-center p-6">
     <img [src]="iconPath" alt="icon" class="w-16 h-16 mb-4" />
     @for (item of data.messages; track $index) {
-    <p class="text-base">{{ item }}</p>
+    <p class="text-[#1f2a37] text-[18px] font-semibold mb-2">{{ item }}</p>
     }
-</mat-dialog-content>
-<mat-dialog-actions align="center">
-    <button mat-raised-button color="primary" (click)="onClose()">
+    <button mat-raised-button class="btn green-btn mt-2 w-full" (click)="onClose()">
         {{ (data.okText || 'COMMON.OK') | translate }}
     </button>
-</mat-dialog-actions>
+</div>

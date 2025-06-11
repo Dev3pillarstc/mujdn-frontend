@@ -1,8 +1,9 @@
-<h2 mat-dialog-title class="text-center">{{ data.title || 'تنبيه' }}</h2>
+<h2 mat-dialog-title class="text-center">{{ (data.title || 'COMMON.ALERT') | translate }}</h2>
 <mat-dialog-content class="flex flex-col items-center text-center p-4">
     <img [src]="iconPath" alt="icon" class="w-16 h-16 mb-4" />
     @for (item of data.messages; track $index) {
-    <p class="text-base">{{ item }}</p>
+    <p class="text-base"> {{ item | translate }}
+    </p>
     }
 </mat-dialog-content>
 <mat-dialog-actions align="center">

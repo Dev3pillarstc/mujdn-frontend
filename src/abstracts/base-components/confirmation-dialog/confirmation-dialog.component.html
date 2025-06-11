@@ -2,7 +2,7 @@
     <h2 mat-dialog-title>{{ (data.title || 'COMMON.OK') | translate }}</h2>
     <mat-dialog-content>
         @for (item of data.messages; track $index) {
-        <p>{{ item }}</p>
+        <p>{{ item | translate }}</p>
         }
     </mat-dialog-content>
     <mat-dialog-actions align="end">

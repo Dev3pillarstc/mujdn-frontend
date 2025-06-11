@@ -34,10 +34,7 @@ export default class NationalityListComponent
   rows: number = 10;
 
   ngOnInit() {
-    this.items = [
-      { label: 'لوحة المعلومات' },
-      { label: 'حركات حضور و انصراف الموظفين' },
-    ];
+    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
     // Updated dummy data to match your Arabic table structure
     this.nationalities = [
       {

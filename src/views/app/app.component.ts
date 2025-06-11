@@ -1,18 +1,15 @@
-import {Component, inject, OnInit} from '@angular/core'
-import {RouterOutlet} from '@angular/router'
-import {VersionComponent} from '@/components/version/version.component'
-import {AuthService} from '@/services/auth/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {SpinnerComponent} from '../shared/spinner/spinner.component';
+import {CommonModule} from '@angular/common';
+import {BaseAppComponent} from '@/views/app/base-app/base-app.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, VersionComponent],
+  imports: [RouterOutlet, SpinnerComponent, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
-  authService = inject(AuthService);
+export class AppComponent extends BaseAppComponent implements OnInit {
 
-  ngOnInit() {
-    // this.authService.autoLogin();
-  }
 }

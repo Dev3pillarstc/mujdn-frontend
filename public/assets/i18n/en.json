@@ -1,0 +1,14 @@
+{
+  "COMMON": {
+
+  },
+  "FOOTER": {
+    "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
+  },
+  "LOGIN_PAGE": {
+    "LOGIN_LBL": "Login",
+    "USERNAME_LBL": "Username",
+    "PASSWORD_LBL": "Password",
+    "LOGIN_BTN": "Login"
+  }
+}

@@ -1,0 +1,4 @@
+export enum LANGUAGE_BUTTON_LABEL_ENUM {
+  ENGLISH = 'ENGLISH',
+  ARABIC = 'عربي'
+}

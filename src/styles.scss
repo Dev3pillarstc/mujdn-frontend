@@ -1,68 +1,158 @@
-/* You can add global styles to this file, and also import other style files */
-@use "tailwindcss" as *;
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap");
-
-body {
-  font-family: "IBM Plex Sans Arabic", sans-serif;
+// Start SideMenu
+.p-drawer-header {
+  display: none !important;
 }
 
-:root {
-  // Select
-  --p-select-border-color: #9da4ae !important;
-  --p-select-focus-border-color: #9da4ae !important;
-  // Inputs
-  --p-inputtext-border-color: #9da4ae !important;
-  --p-inputtext-focus-border-color: #9da4ae !important;
-  // Date Picker
-  --p-datepicker-today-background: #fff !important;
-  --p-datepicker-date-selected-background: #1b8354 !important;
-  --p-datepicker-today-color: #1b8354;
-  --p-datepicker-date-width: 40px !important;
-  --p-datepicker-date-height: 40px !important;
-  --p-datepicker-date-hover-background: #e5e7eb !important;
-  // Carousel
-  --p-carousel-indicator-width: 12px !important;
-  --p-carousel-indicator-height: 12px !important;
-  --p-carousel-indicator-background: #e5e7eb !important;
-  --p-carousel-indicator-list-padding: 0 !important;
-  // Rating
-  --p-rating-icon-active-color: #dba102 !important;
-  --p-rating-focus-ring-color: #dba102 !important;
-  --p-rating-icon-hover-color: #dba102 !important;
+.sidebar-header {
+  background: #14573a !important;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 9;
 }
 
+.p-drawer-content {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
-// Date Picker
-.p-datepicker {
-  width: 100%;
-  height: 100%;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }
 
-.p-datepicker-today>.p-datepicker-day {
-  border-color: #1b8354;
+.p-drawer-left,
+.p-drawer {
+  border: unset !important;
+
+  @media (min-width: 768px) {
+    width: 256px !important;
+    position: fixed !important;
+    height: 100vh !important;
+  }
 }
 
+.menu-list {
+  font-size: 14px;
+  font-weight: 600;
+  color: #161616;
 
-.custom-container {
-  @apply px-4 sm:px-6 md:px-8 lg:px-[80px];
+  & > li {
+    margin-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #d2d6db;
+
+    &:last-child {
+      border: unset;
+    }
+
+    .menu-item {
+      padding: 8px 16px;
+      border-radius: 4px;
+      background-color: #fff;
+      font-weight: 600;
+      position: relative;
+      transition: 0.2s;
+
+      &:hover,
+      &.active {
+        background-color: #e5e7eb;
+
+        &::before {
+          background-color: #1b8354;
+        }
+      }
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        inset-inline-start: 0;
+        width: 6px;
+        height: 80%;
+        background-color: #fff;
+        border-radius: 10px;
+        transition: 0.2s;
+        transform: translateY(-50%);
+        content: "";
+      }
+    }
+  }
+
+  .sub-links {
+    border: unset;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-top: 8px;
+    font-weight: 600;
+    position: relative;
+    transition: 0.2s;
+
+    &:hover,
+    &.active {
+      background-color: #e5e7eb;
+
+      &::before {
+        background-color: #1b8354;
+      }
+    }
+
+    &::before {
+      position: absolute;
+      top: 50%;
+      inset-inline-start: 0;
+      width: 6px;
+      height: 80%;
+      background-color: #fff;
+      border-radius: 10px;
+      transition: 0.2s;
+      transform: translateY(-50%);
+      content: "";
+    }
+  }
 }
 
-.label {
-  @apply block text-[#161616] text-sm font-normal mb-2;
+.p-drawer-right .p-drawer {
+  align-self: baseline !important;
+  transform: unset !important;
 }
 
-.btn {
-  @apply text-white px-4 py-2 rounded cursor-pointer font-[500];
+.p-drawer-mask {
+  position: static !important;
 }
 
-.green-btn {
-  @apply bg-[#1b8354] hover:bg-[#166a45];
+// End SideMenu
+//start kareem new
+.p-datepicker-input-icon-container {
+  inset-inline-end: unset !important;
+  inset-inline-start: 16px !important;
+  pointer-events: none;
 }
+.p-datepicker:has(.p-datepicker-input-icon-container) .p-datepicker-input {
+  padding-inline-end: 0 !important;
+  padding-inline-start: 44px !important;
+  cursor: pointer;
+}
+button,
+a {
+  cursor: pointer;
+}
+.p-breadcrumb {
+  padding: 0;
+  padding-bottom: 24px;
 
-.black-btn {
-  @apply bg-[#0d121c] hover:bg-[#1f2a37];
+  ol {
+    li {
+      &:last-child {
+        span {
+          color: #9da4ae;
+        }
+      }
+    }
+  }
 }
-
-.gray-btn {
-  @apply text-[#161616] bg-[#f3f4f6] hover:bg-[#e5e7eb];
-}
+// en kareem new

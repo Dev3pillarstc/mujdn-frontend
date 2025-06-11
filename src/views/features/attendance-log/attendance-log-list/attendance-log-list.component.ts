@@ -12,7 +12,7 @@ import {PaginatorModule, PaginatorState} from 'primeng/paginator';
 import {
   AttendanceLogPopupComponent
 } from '@/views/features/attendance-log/attendance-log-popup/attendance-log-popup.component';
-import {BaseListComponent} from '@/components/base-list/base-list.component';
+import {BaseListComponent} from '@/abstracts/base-components/base-list/base-list.component';
 
 interface Adminstration {
   type: string;

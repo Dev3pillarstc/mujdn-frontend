@@ -19,15 +19,14 @@ export class AuthService extends BaseCrudService<User, string> {
     return this.urlService.URLS.AUTH;
   }
 
-  login(email: string, password: string) {
+  login(username: string, password: string) {
     return this.http
       .post<SingleResponseData<User>>(
         this.getUrlSegment() + '/login',
         {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
+          username: username,
+          password: password
+        }, { withCredentials: true }
       )
       .pipe(
         catchError(this.handleError),
@@ -74,7 +73,7 @@ export class AuthService extends BaseCrudService<User, string> {
 
   private handleAuthentication(user: User) {
     this.user.next(user);
-    this.autoLogout(5 * 1000);
+    this.autoLogout(5000 * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 

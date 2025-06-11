@@ -5,6 +5,8 @@ import { Component } from '@angular/core';
   selector: 'app-attendance-log-popup',
   imports: [],
   templateUrl: './attendance-log-popup.component.html',
-  styleUrl: './attendance-log-popup.component.scss',
+  styleUrl: './attendance-log-popup.component.scss'
 })
-export class AttendanceLogPopupComponent extends BasePopupComponent {}
+export class AttendanceLogPopupComponent extends BasePopupComponent {
+
+}

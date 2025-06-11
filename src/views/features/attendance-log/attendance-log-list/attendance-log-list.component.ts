@@ -1,18 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuItem} from 'primeng/api';
-import {Breadcrumb} from 'primeng/breadcrumb';
-import {FormsModule} from '@angular/forms';
-import {Select} from 'primeng/select';
-import {DatePickerModule} from 'primeng/datepicker';
-import {FluidModule} from 'primeng/fluid';
-import {TableModule} from 'primeng/table';
-import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
-import {PaginatorModule, PaginatorState} from 'primeng/paginator';
-import {
-  AttendanceLogPopupComponent
-} from '@/views/features/attendance-log/attendance-log-popup/attendance-log-popup.component';
-import {BaseListComponent} from '@/abstracts/base-components/base-list/base-list.component';
+import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
+import { Breadcrumb } from 'primeng/breadcrumb';
+import { FormsModule } from '@angular/forms';
+import { Select } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FluidModule } from 'primeng/fluid';
+import { TableModule } from 'primeng/table';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { AttendanceLogPopupComponent } from '@/views/features/attendance-log/attendance-log-popup/attendance-log-popup.component';
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 
 interface Adminstration {
   type: string;
@@ -35,7 +33,14 @@ interface Adminstration {
   templateUrl: './attendance-log-list.component.html',
   styleUrl: './attendance-log-list.component.scss',
 })
-export default class AttendanceLogListComponent extends BaseListComponent<AttendanceLogPopupComponent> implements OnInit {
+export default class AttendanceLogListComponent
+  extends BaseListComponent<AttendanceLogPopupComponent>
+  implements OnInit
+{
+  override dialogSize = {
+    width: '100%',
+    maxWidth: '600px',
+  };
   items: MenuItem[] | undefined;
 
   home: MenuItem | undefined;
@@ -49,10 +54,10 @@ export default class AttendanceLogListComponent extends BaseListComponent<Attend
 
   ngOnInit() {
     this.items = [
-      {label: 'لوحة المعلومات'},
-      {label: 'حركات حضور و انصراف الموظفين'},
+      { label: 'لوحة المعلومات' },
+      { label: 'حركات حضور و انصراف الموظفين' },
     ];
-    this.adminstrations = [{type: 'عام'}, {type: 'خاص'}];
+    this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [
       {

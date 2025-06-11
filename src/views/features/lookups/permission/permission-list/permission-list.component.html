@@ -16,9 +16,10 @@
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
-              <label for="nationality" class="label">الجنسية</label>
+              <label for="permission" class="label">سبب الأذن</label>
               <input
-                id="nationality"
+                id="permission"
+                placeholder="سبب الأذن"
                 type="text"
                 pInputText
                 class="peer"
@@ -52,22 +53,27 @@
             <button>
               <img src="assets/icons/print.svg" alt="" />
             </button>
-            <button class="btn green-btn flex items-center">
+            <button
+              class="btn green-btn flex items-center"
+              (click)="openDialog()"
+            >
               <img src="assets/icons/plus.svg" alt="" />
-              <span>إضافة حركة جديدة</span>
+              <span>إضافة سبب جديد</span>
             </button>
           </div>
         </div>
-        <p-table [value]="nationalities">
+        <p-table [value]="permissions">
           <ng-template #header>
             <tr>
+              <th class="w-[100px]">معرف السبب</th>
               <th>الجنسية</th>
               <th class="w-[100px]">الإجراء</th>
             </tr>
           </ng-template>
-          <ng-template #body let-nationalities>
+          <ng-template #body let-permissions>
             <tr>
-              <td>{{ nationalities.nationality }}</td>
+              <td>{{ permissions.id }}</td>
+              <td>{{ permissions.reason }}</td>
 
               <td>
                 <div class="actions flex gap-2">

@@ -37,6 +37,13 @@ export const routes: Routes = [
             '../views/features/lookups/nationality/nationality-list/nationality-list.component'
           ),
       },
+      {
+        path: 'permissions',
+        loadComponent: () =>
+          import(
+            '../views/features/lookups/permission/permission-list/permission-list.component'
+          ),
+      },
     ],
   },
   {

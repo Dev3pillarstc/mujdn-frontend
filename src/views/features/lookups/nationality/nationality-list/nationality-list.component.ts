@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
-import { FormsModule } from '@angular/forms';
-import { Select } from 'primeng/select';
-import { DatePickerModule } from 'primeng/datepicker';
-import { FluidModule } from 'primeng/fluid';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -15,20 +9,14 @@ import { InputTextModule } from 'primeng/inputtext';
   selector: 'app-nationality-list',
   imports: [
     Breadcrumb,
-    FormsModule,
-    DatePickerModule,
-    FluidModule,
     TableModule,
-    CommonModule,
-    RouterModule,
-    CommonModule,
     PaginatorModule,
     InputTextModule,
   ],
   templateUrl: './nationality-list.component.html',
   styleUrl: './nationality-list.component.scss',
 })
-export default class NationalityListComponent {
+export default class NationalityListComponent implements OnInit {
   items: MenuItem[] | undefined;
 
   home: MenuItem | undefined;

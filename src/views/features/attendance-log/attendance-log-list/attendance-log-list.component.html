@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb class="max-w-full" [model]="items" [home]="home"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         حركات حضور و انصراف الموظفين
       </h3>
@@ -16,14 +16,14 @@
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
-              <label for="" class="label">الادارة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="الادارة"
-                class="w-full peer"
-              ></p-select>
+                <label for="" class="label">الادارة</label>
+                <p-select
+                  [options]="adminstrations"
+                  [(ngModel)]="selectedAdminstration"
+                  optionLabel="type"
+                  placeholder="الادارة"
+                  class="w-full peer"
+                ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -52,7 +52,7 @@
                 inputId="icondisplay"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="/assets/icons/calender-icon.svg" alt="" />
+                  <img src="/assets/icons/calender-icon.svg" alt=""/>
                 </ng-template>
               </p-datepicker>
               <span
@@ -143,13 +143,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button>
-              <img src="/assets/icons/excel.svg" alt="" />
+              <img src="/assets/icons/excel.svg" alt=""/>
             </button>
             <button>
-              <img src="/assets/icons/print.svg" alt="" />
+              <img src="/assets/icons/print.svg" alt=""/>
             </button>
             <button (click)="openDialog()" class="btn green-btn flex items-center">
-              <img src="/assets/icons/plus.svg" alt="" />
+              <img src="/assets/icons/plus.svg" alt=""/>
               <span>إضافة حركة جديدة</span>
             </button>
           </div>
@@ -213,12 +213,12 @@
                   <button
                     class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center"
                   >
-                    <img src="/assets/icons/edit-action.svg" alt="" />
+                    <img src="/assets/icons/edit-action.svg" alt=""/>
                   </button>
                   <button
                     class="bg-[#fef3f2] rounded p-2 flex items-center justify-center"
                   >
-                    <img src="/assets/icons/delete-action.svg" alt="" />
+                    <img src="/assets/icons/delete-action.svg" alt=""/>
                   </button>
                 </div>
               </td>

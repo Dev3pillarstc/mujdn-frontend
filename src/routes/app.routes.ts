@@ -37,6 +37,13 @@ export const routes: Routes = [
             '../views/features/lookups/nationality/nationality-list/nationality-list.component'
           ),
       },
+      {
+        path: 'notification-settings',
+        loadComponent: () =>
+          import(
+            '../views/features/settings/notification-settings/notification-settings.component'
+          ),
+      },
     ],
   },
   {

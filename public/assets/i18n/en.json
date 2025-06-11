@@ -1,6 +1,7 @@
 {
   "COMMON": {
-
+    "OK": "Ok",
+    "CANCEL": "Cancel"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

@@ -44,6 +44,13 @@ export const routes: Routes = [
             '../views/features/lookups/permission/permission-list/permission-list.component'
           ),
       },
+      {
+        path: 'notification-settings',
+        loadComponent: () =>
+          import(
+            '../views/features/settings/notification-settings/notification-settings.component'
+          ),
+      },
     ],
   },
   {

@@ -33,6 +33,7 @@
     width: 256px !important;
     position: fixed !important;
     height: 100vh !important;
+    top: 0;
   }
 }
 
@@ -154,5 +155,8 @@ a {
       }
     }
   }
+}
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+  margin: 0 16px;
 }
 // en kareem new

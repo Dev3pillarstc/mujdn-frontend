@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
@@ -11,6 +11,12 @@ import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MessageService } from 'primeng/api';
+import { ConfirmationDialogData } from '@/models/shared/confirmation-dialog-data';
+import { ConfirmationDialogComponent } from '@/abstracts/base-components/confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from '@/abstracts/base-components/alert-dialog/alert-dialog.component';
+import { AlertDialogData } from '@/models/shared/alert-dialog-data';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
 interface Adminstration {
   type: string;
@@ -47,8 +53,9 @@ export default class EmployeeListComponent {
   attendance!: any[];
   first: number = 0;
   rows: number = 10;
+  matDialog = inject(MatDialog);
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService , ) {
         this.itemsList = [
             {
                 label: 'تعديل بيانات الموظف'
@@ -82,7 +89,9 @@ export default class EmployeeListComponent {
             },
             {
                 label: 'حذف الموظف',
-                styleClass: 'p-menuitem-danger'
+                styleClass: 'p-menuitem-danger',
+                command: () => this.openConfirmation()
+
             }
         ];
     }
@@ -156,5 +165,45 @@ export default class EmployeeListComponent {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
   }
-  
+  openConfirmation() {
+  const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
+    width: '400px',
+    data: <ConfirmationDialogData>{
+      title: 'Delete Item',
+      messages: ['Are you sure you want to delete this item?', 'This action cannot be undone.'],
+      confirmText: 'COMMON.OK',
+      cancelText: 'COMMON.CANCEL'
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result == DIALOG_ENUM.OK) {
+      // User confirmed
+      this.showSuccessMessage();
+  } else {
+      // User canceled
+      this.showErrorMessage();
+    }
+  });
+}
+showSuccessMessage() {
+  this.matDialog.open(AlertDialogComponent, {
+    width: '350px',
+    data: <AlertDialogData>{
+      icon: 'success',
+      messages: ['تمت العملية بنجاح!'],
+      title: 'نجاح'
+    }
+  });
+}  
+showErrorMessage() {
+  this.matDialog.open(AlertDialogComponent, {
+    width: '350px',
+    data: <AlertDialogData>{
+      icon: 'error',
+      messages: ['حدث خطأ أثناء تنفيذ العملية.'],
+      title: 'خطأ'
+    }
+  });
+}
 }

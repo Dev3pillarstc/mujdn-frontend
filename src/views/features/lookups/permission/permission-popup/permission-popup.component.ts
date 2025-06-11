@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'app-nationality-popup',
+  selector: 'app-permission-popup',
   imports: [InputTextModule],
-  templateUrl: './nationality-popup.component.html',
-  styleUrl: './nationality-popup.component.scss',
+  templateUrl: './permission-popup.component.html',
+  styleUrl: './permission-popup.component.scss',
 })
-export class NationalityPopupComponent extends BasePopupComponent {}
+export class PermissionPopupComponent extends BasePopupComponent {}

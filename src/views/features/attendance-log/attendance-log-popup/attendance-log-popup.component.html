@@ -1,97 +1,76 @@
 <div [dir]="direction">
-  <div class="p-6">
-    <button class="block ms-auto" (click)="close()">
-      <i class="pi pi-times"></i>
-    </button>
-    <div class="mt-6">
-      <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة حركة جديدة</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-        <div class="relative lg:col-span-3">
-          <label for="adminstrations-popup" class="label">الادارة</label>
-          <p-select
-            [options]="adminstrations"
-            [(ngModel)]="selectedAdminstration"
-            optionLabel="type"
-            placeholder="الادارة"
-            class="w-full peer"
-            id="adminstrations-popup"
-          ></p-select>
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
-        </div>
-        <div class="relative lg:col-span-3">
-          <label for="empoyeeName-popup" class="label">اسم الموظف</label>
-          <p-select
-            [options]="adminstrations"
-            [(ngModel)]="selectedAdminstration"
-            optionLabel="type"
-            placeholder="اسم الموظف"
-            class="w-full peer"
-            id="empoyeeName-popup"
-          ></p-select>
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
-        </div>
-        <div class="relative lg:col-span-2">
-          <label for="movment-popup" class="label">نوع الحركة</label>
-          <p-select
-            [options]="adminstrations"
-            [(ngModel)]="selectedAdminstration"
-            optionLabel="type"
-            placeholder="نوع الحركة"
-            class="w-full peer"
-            id="movment-popup"
-          ></p-select>
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
-        </div>
-        <div class="relative lg:col-span-2">
-          <label for="date-pick" class="label">التاريخ</label>
-          <p-datepicker
-            [(ngModel)]="date2"
-            [iconDisplay]="'input'"
-            [showIcon]="true"
-            placeholder="التاريخ"
-            class="peer block w-full"
-            inputId="icondisplay"
-            id="date-pick"
-          >
-            <ng-template pTemplate="inputicon">
-              <img src="/assets/icons/calender-icon.svg" alt="" />
-            </ng-template>
-          </p-datepicker>
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
-        </div>
-        <div class="relative lg:col-span-2">
-          <label for="time-pick" class="label">الوقت</label>
-          <p-datepicker
-            [(ngModel)]="date2"
-            [iconDisplay]="'input'"
-            [showIcon]="true"
-            placeholder="الوقت"
-            class="peer block w-full"
-            inputId="icondisplay"
-            [timeOnly]="true"
-            id="time-pick"
-          >
-            <ng-template pTemplate="inputicon">
-              <img src="/assets/icons/time-icon.svg" alt="" />
-            </ng-template>
-          </p-datepicker>
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
-        </div>
-      </div>
-      <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn" (click)="close()">الغاء</button>
-        <button class="btn green-btn">إضافة</button>
-      </div>
+    <div class="p-6">
+        <button class="block ms-auto" (click)="close()">
+            <i class="pi pi-times"></i>
+        </button>
+        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+            إضافة حركة جديدة
+        </h3>
+        <form class="mt-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
+                <div class="lg:col-span-3">
+                    <label for="adminstrations-popup" class="label">الادارة</label>
+                    <div class="relative">
+                        <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                            placeholder="الادارة" class="w-full peer" id="adminstrations-popup"></p-select>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div class="lg:col-span-3">
+                    <label for="empoyeeName-popup" class="label">اسم الموظف</label>
+                    <div class="relative">
+                        <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                            placeholder="اسم الموظف" class="w-full peer" id="empoyeeName-popup"></p-select>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div class="lg:col-span-2">
+                    <label for="movment-popup" class="label">نوع الحركة</label>
+                    <div class="relative">
+                        <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                            placeholder="نوع الحركة" class="w-full peer" id="movment-popup"></p-select>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div class="lg:col-span-2">
+                    <label for="date-pick" class="label">التاريخ</label>
+                    <div class="relative">
+                        <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" placeholder="التاريخ"
+                            class="peer block w-full" inputId="icondisplay" id="date-pick">
+                            <ng-template pTemplate="inputicon">
+                                <img src="/assets/icons/calender-icon.svg" alt="" />
+                            </ng-template>
+                        </p-datepicker>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div class="lg:col-span-2">
+                    <label for="time-pick" class="label">الوقت</label>
+                    <div class="relative">
+                        <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" placeholder="الوقت"
+                            class="peer block w-full" inputId="icondisplay" [timeOnly]="true" id="time-pick">
+                            <ng-template pTemplate="inputicon">
+                                <img src="/assets/icons/time-icon.svg" alt="" />
+                            </ng-template>
+                        </p-datepicker>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+            </div>
+            <div class="actions mt-6 flex items-center justify-end gap-4">
+                <button class="btn gray-btn" (click)="close()">الغاء</button>
+                <button class="btn green-btn">إضافة</button>
+            </div>
+        </form>
     </div>
-  </div>
 </div>

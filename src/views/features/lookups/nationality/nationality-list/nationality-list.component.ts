@@ -40,10 +40,12 @@ export default class NationalityListComponent
     // Updated dummy data to match your Arabic table structure
     this.nationalities = [
       {
-        nationality: 'اسم الجنسية',
+        nationalityAr: 'اسم الجنسية',
+        nationalityEn: 'nationality name',
       },
       {
-        nationality: 'اسم الجنسية',
+        nationalityAr: 'اسم الجنسية',
+        nationalityEn: 'nationality name',
       },
     ];
   }

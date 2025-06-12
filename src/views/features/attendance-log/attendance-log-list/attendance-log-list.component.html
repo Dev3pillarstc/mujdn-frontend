@@ -15,112 +15,70 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
               <label for="" class="label">الادارة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="الادارة"
-                class="w-full peer"
-              ></p-select>
+              <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                placeholder="الادارة" class="w-full peer"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
-              <label for="" class="label">اسم الموظف</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="اسم الموظف"
-                class="w-full peer"
-              ></p-select>
+              <label for="" class="label">اسم الموظف عربي</label>
+              <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                placeholder="اسم الموظف" class="w-full peer"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+            </div>
+            <div class="relative">
+              <label for="" class="label">اسم الموظف انجليزي</label>
+              <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                placeholder="اسم الموظف" class="w-full peer"></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
               <label for="" class="label">التاريخ</label>
-              <p-datepicker
-                [(ngModel)]="date2"
-                [iconDisplay]="'input'"
-                [showIcon]="true"
-                placeholder="التاريخ"
-                class="peer block w-full"
-                inputId="icondisplay"
-              >
+              <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" placeholder="التاريخ"
+                class="peer block w-full" inputId="icondisplay">
                 <ng-template pTemplate="inputicon">
                   <img src="/assets/icons/calender-icon.svg" alt="" />
                 </ng-template>
               </p-datepicker>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
               <label for="" class="label">نوع الدوام</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="نوع الدوام"
-                class="w-full peer"
-              ></p-select>
+              <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                placeholder="نوع الدوام" class="w-full peer"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
               <label for="" class="label">نوع الحركة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="نوع الحركة"
-                class="w-full peer"
-              ></p-select>
+              <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                placeholder="نوع الحركة" class="w-full peer"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
               <label for="" class="label">جهاز البصمة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="جهاز البصمة"
-                class="w-full peer"
-              ></p-select>
+              <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                placeholder="جهاز البصمة" class="w-full peer"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
               <label for="" class="label">حالة المعالجة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="حالة المعالجة"
-                class="w-full peer"
-              ></p-select>
+              <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                placeholder="حالة المعالجة" class="w-full peer"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
               <label for="" class="label">منشئ الحركة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="منشئ الحركة"
-                class="w-full peer"
-              ></p-select>
+              <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
+                placeholder="منشئ الحركة" class="w-full peer"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
           </div>
 
@@ -132,8 +90,7 @@
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
-        >
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
             قائمة حركات الحضور و الانصراف للموظفين
           </h4>
@@ -154,7 +111,8 @@
           <ng-template #header>
             <tr>
               <th>الرقم التسلسلي</th>
-              <th>اسم الموظف</th>
+              <th>اسم الموظف عربي </th>
+              <th>اسم الموظف انجليزي </th>
               <th>التاريخ - الوقت</th>
               <th>نوع الدوام</th>
               <th>نوع الحركة</th>
@@ -167,7 +125,8 @@
           <ng-template #body let-attendance>
             <tr>
               <td>{{ attendance.serialNumber }}</td>
-              <td>{{ attendance.employeeName }}</td>
+              <td>علي جمال</td>
+              <td>Ali Gamal</td>
               <td>
                 <div class="flex flex-col items-center">
                   <span>
@@ -183,22 +142,18 @@
               <td>{{ attendance.department }}</td>
               <td>{{ attendance.movement }}</td>
               <td>
-                <div
-                  [ngClass]="[
+                <div [ngClass]="[
                     `px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2`,
                     attendance.treatmentStatus === 'تمت المعالجة'
                       ? `bg-[#ecfdf3] text-[#085d3a]`
                       : `bg-[#fffaeb] text-[#93370d]`
-                  ]"
-                >
-                  <span
-                    [ngClass]="[
+                  ]">
+                  <span [ngClass]="[
                       `block w-[10px] h-[10px] rounded-full`,
                       attendance.treatmentStatus === 'تمت المعالجة'
                         ? `bg-[#085d3a]`
                         : `bg-[#93370d]`
-                    ]"
-                  ></span>
+                    ]"></span>
                   <span>
                     {{ attendance.treatmentStatus }}
                   </span>
@@ -217,14 +172,8 @@
             </tr>
           </ng-template>
         </p-table>
-        <p-paginator
-          class="mt-6"
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
-        />
+        <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+          [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]" />
         <div></div>
       </div>
     </div>

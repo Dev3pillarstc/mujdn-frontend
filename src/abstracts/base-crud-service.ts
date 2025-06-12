@@ -16,11 +16,10 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   implements BaseCrudServiceContract<Model, PrimaryKey>, ServiceContract
 {
   abstract serviceName: string;
-
-  abstract getUrlSegment(): string;
-
   protected urlService = inject(UrlService);
   protected http = inject(HttpClient);
+
+  abstract getUrlSegment(): string;
 
   @CastResponse()
   load(options?: OptionsContract | undefined): Observable<Model[]> {
@@ -34,9 +33,27 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   }
 
   @CastResponse()
+  loadPaginatedSP(options?: OptionsContract | undefined): Observable<PaginatedList<Model>> {
+    return this.http
+      .get<PaginatedListResponseData<Model>>(this.getUrlSegment() + '/GetWithPagingSP', {
+        params: new HttpParams({
+          fromObject: options as never,
+        }),
+      })
+      .pipe(
+        map((response) => {
+          return {
+            list: response.data.list as Model[],
+            paginationInfo: response.data.paginationInfo,
+          };
+        })
+      );
+  }
+
+  @CastResponse()
   loadPaginated(options?: OptionsContract | undefined): Observable<PaginatedList<Model>> {
     return this.http
-      .get<PaginatedListResponseData<Model>>(this.getUrlSegment(), {
+      .get<PaginatedListResponseData<Model>>(this.getUrlSegment() + '/GetWithPaging', {
         params: new HttpParams({
           fromObject: options as never,
         }),

@@ -82,7 +82,7 @@
         border-radius: 10px;
         transition: 0.2s;
         transform: translateY(-50%);
-        content: "";
+        content: '';
       }
     }
   }
@@ -116,7 +116,7 @@
       border-radius: 10px;
       transition: 0.2s;
       transform: translateY(-50%);
-      content: "";
+      content: '';
     }
   }
 }
@@ -132,7 +132,7 @@
 
 // End SideMenu
 //start kareem new
-:root{
+:root {
   --p-button-text-primary-color: #1b8354 !important;
   --p-button-text-primary-hover-background: #e5e7eb !important;
   --p-button-text-primary-active-background: #e5e7eb !important;
@@ -173,8 +173,6 @@ a {
   overflow: visible;
 }
 // en kareem new
-
-
 
 .p-inputtext.ng-invalid.ng-dirty {
   border-color: #f87171 !important;

@@ -1,3 +1,3 @@
 export interface OptionsContract {
-  [index: string]: unknown
+  [index: string]: unknown;
 }

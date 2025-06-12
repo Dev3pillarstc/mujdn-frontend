@@ -8,8 +8,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () =>
-      import('@/views/layout/main/main-layout/main-layout.component'),
+    loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
@@ -19,9 +18,7 @@ export const routes: Routes = [
       {
         path: 'employees',
         loadComponent: () =>
-          import(
-            '../views/features/employee/employee-list/employee-list.component'
-          ),
+          import('../views/features/employee/employee-list/employee-list.component'),
       },
       {
         path: 'attendance-logs',
@@ -40,9 +37,7 @@ export const routes: Routes = [
       {
         path: 'permissions',
         loadComponent: () =>
-          import(
-            '../views/features/lookups/permission/permission-list/permission-list.component'
-          ),
+          import('../views/features/lookups/permission/permission-list/permission-list.component'),
       },
       {
         path: 'notification-channels',
@@ -55,8 +50,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () =>
-      import('@/views/layout/auth/auth-layout/auth-layout.component'),
+    loadComponent: () => import('@/views/layout/auth/auth-layout/auth-layout.component'),
     children: [
       {
         path: 'login',

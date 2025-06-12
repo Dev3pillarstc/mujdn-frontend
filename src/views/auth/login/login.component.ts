@@ -1,14 +1,14 @@
-import {InputTextModule} from 'primeng/inputtext';
-import {Component, inject, OnInit} from '@angular/core';
-import {TranslatePipe} from '@ngx-translate/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthService} from '@/services/auth/auth.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { Component, inject, OnInit } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
   imports: [InputTextModule, TranslatePipe, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export default class LoginComponent implements OnInit {
   declare loginForm: FormGroup;
@@ -31,7 +31,7 @@ export default class LoginComponent implements OnInit {
   buildForm() {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
@@ -41,11 +41,9 @@ export default class LoginComponent implements OnInit {
       return;
     }
 
-    const {username, password} = this.loginForm.value;
+    const { username, password } = this.loginForm.value;
     this.errorMessage = null;
 
-    this.authService.login(username, password).subscribe(result => {
-
-    });
+    this.authService.login(username, password).subscribe((result) => {});
   }
 }

@@ -1,13 +1,13 @@
-import {inject, Injectable} from '@angular/core';
-import {BehaviorSubject, catchError, tap, throwError} from 'rxjs';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {SingleResponseData} from '@/models/shared/response/single-response-data';
-import {User} from '@/models/auth/user';
-import {BaseCrudService} from '@/abstracts/base-crud-service';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { SingleResponseData } from '@/models/shared/response/single-response-data';
+import { User } from '@/models/auth/user';
+import { BaseCrudService } from '@/abstracts/base-crud-service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService extends BaseCrudService<User, string> {
   serviceName: string = 'AuthService';
@@ -25,32 +25,32 @@ export class AuthService extends BaseCrudService<User, string> {
         this.getUrlSegment() + '/login',
         {
           username: username,
-          password: password
-        }, { withCredentials: true }
+          password: password,
+        },
+        { withCredentials: true }
       )
       .pipe(
         catchError(this.handleError),
-        tap(resData => {
-          this.handleAuthentication(
-            resData.data
-          );
+        tap((resData) => {
+          this.handleAuthentication(resData.data);
         })
       );
   }
 
   autoLogin() {
-    const userData: User = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')!) : null;
+    const userData: User = localStorage.getItem('userData')
+      ? JSON.parse(localStorage.getItem('userData')!)
+      : null;
     if (!userData) {
       return;
     }
 
-    const loadedUser = Object.assign(new User(), {...userData});
+    const loadedUser = Object.assign(new User(), { ...userData });
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
       const expirationDuration =
-        new Date(userData.tokenExpirationDate).getTime() -
-        new Date().getTime();
+        new Date(userData.tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationDuration);
     }
   }

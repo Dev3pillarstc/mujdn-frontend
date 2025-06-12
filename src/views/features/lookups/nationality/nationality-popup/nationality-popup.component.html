@@ -7,14 +7,27 @@
             إضافة جنسية جديدة
         </h3>
         <form [formGroup]="form" class="mt-6">
-            <div class="grid sm:grid-cols-8">
-                <div class="sm:col-span-6">
-                    <label for="nationality-popup" class="label">
-                        الجنسية
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="nationalityAr-popup" class="label">
+                         الجنسية بالعربية
                         <span class="text-[#b42318]"> * </span>
                     </label>
                     <div class="relative">
-                        <input formControlName="name" id="nationality-popup" placeholder="الجنسية" type="text"
+                        <input formControlName="nameAr" id="nationalityAr-popup" placeholder="الجنسية بالعربية" type="text"
+                            pInputText class="peer" fluid="true" />
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div>
+                    <label for="nationalityEn-popup" class="label">
+                        الجنسية بالانجليزية
+                        <span class="text-[#b42318]"> * </span>
+                    </label>
+                    <div class="relative">
+                        <input formControlName="nameEn" id="nationalityEn-popup" placeholder="الجنسية بالانجليزية" type="text"
                             pInputText class="peer" fluid="true" />
                         <span
                             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>

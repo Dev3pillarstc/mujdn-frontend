@@ -17,6 +17,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from '@/abstracts/base-components/alert-dialog/alert-dialog.component';
 import { AlertDialogData } from '@/models/shared/alert-dialog-data';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { AuthService } from '@/services/auth/auth.service';
+import { ExampleService } from '@/services/features/example.service';
+import { ConfirmationService } from '@/services/shared/confirmation.service';
+import { AlertService } from '@/services/shared/alert.service';
 
 interface Adminstration {
   type: string;
@@ -165,44 +169,20 @@ export default class EmployeeListComponent {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
   }
+  service = inject(ConfirmationService);
+  alertService = inject(AlertService);
   openConfirmation() {
-  const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-    width: '600px',
-    data: <ConfirmationDialogData>{
-      messages: ['هل أنت متأكد من حذف الحركة؟'],
-      confirmText: 'COMMON.OK',
-      cancelText: 'COMMON.CANCEL'
-    }
-  });
+  const dialogRef = this.service.open(['COMMON.CONFIRM_DELETE'], 'COMMON.OK', 'COMMON.CANCEL');
 
   dialogRef.afterClosed().subscribe(result => {
     if (result == DIALOG_ENUM.OK) {
       // User confirmed
-      this.showSuccessMessage();
+      this.alertService.showSuccessMessage( 'error', ['COMMON.DELETED_SUCCESSFULLY'], 'COMMON.OK');
   } else {
       // User canceled
-      this.showErrorMessage();
+      this.alertService.showErrorMessage( 'error', ['COMMON.DELETION_FAILED'], 'COMMON.OK');
     }
   });
 }
-showSuccessMessage() {
-  this.matDialog.open(AlertDialogComponent, {
-    width: '400px',
-    data: <AlertDialogData>{
-      icon: 'success',
-      messages: ['تمت العملية بنجاح!'],
-      title: 'نجاح'
-    }
-  });
-}  
-showErrorMessage() {
-  this.matDialog.open(AlertDialogComponent, {
-    width: '400px',
-    data: <AlertDialogData>{
-      icon: 'error',
-      messages: ['حدث خطأ أثناء تنفيذ العملية.'],
-      title: 'خطأ'
-    }
-  });
-}
+
 }

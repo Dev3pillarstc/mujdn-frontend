@@ -2,7 +2,7 @@
 <div class="flex flex-col items-center p-6">
     <img [src]="iconPath" alt="icon" class="w-16 h-16 mb-4" />
     @for (item of data.messages; track $index) {
-    <p class="text-[#1f2a37] text-[18px] font-semibold mb-2">{{ item }}</p>
+    <p class="text-[#1f2a37] text-[18px] font-semibold mb-2"> {{ item | translate }}</p>
     }
     <button mat-raised-button class="btn green-btn mt-2 w-full" (click)="onClose()">
         {{ (data.okText || 'COMMON.OK') | translate }}

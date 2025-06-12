@@ -1,7 +1,15 @@
 {
   "COMMON": {
     "OK": "نعم",
-    "CANCEL": "إلغاء"
+    "CANCEL": "إلغاء",
+    "ERROR": "خطأ",
+    "SUCCESS": "نجاح",
+    "ALERT": "تنبيه",
+    "CONFIRM_DELETE": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+    "SAVED_SUCCESSFULLY": "تم الحفظ بنجاح",
+    "UPDATED_SUCCESSFULLY": "تم التحديث بنجاح",
+    "DELETED_SUCCESSFULLY": "تم الحذف بنجاح",
+    "DELETION_FAILED": "فشل في حذف العنصر"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"

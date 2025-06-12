@@ -12,7 +12,7 @@
         </div>
         <img class="mb-2" src="/assets/icons/alert.svg" alt="">
         @for (item of data.messages; track $index) {
-        <p class="text-[#1f2a37] text-[18px] font-semibold mb-2">{{ item }}</p>
+        <p class="text-[#1f2a37] text-[18px] font-semibold mb-2"> {{ item | translate }}</p>
         }
         <div class="flex gap-4 mt-2 justify-end">
             <button mat-button class="btn gray-btn" (click)="onCancel()">{{ data.cancelText || 'COMMON.CANCEL' |

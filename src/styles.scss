@@ -194,7 +194,7 @@ a {
 .ng-touched.ng-invalid {
   border-color: #b42318 !important;
 
-  ::placeholder {
+  &::placeholder {
     color: #b42318 !important;
   }
 }

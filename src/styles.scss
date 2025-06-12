@@ -1,4 +1,3 @@
-
 // Start SideMenu
 .p-drawer-header {
   display: none !important;
@@ -43,7 +42,7 @@
   font-weight: 600;
   color: #161616;
 
-  &>li {
+  & > li {
     margin-top: 8px;
     padding-bottom: 8px;
     border-bottom: 1px solid #d2d6db;
@@ -129,15 +128,6 @@
 
 // End SideMenu
 
-
-
-
-
-
-
-
-
-
 //start kareem new
 :root {
   --p-button-text-primary-color: #1b8354 !important;
@@ -202,7 +192,6 @@ a {
 .ng-touched.ng-invalid + span {
   background-color: #b42318 !important;
 }
-
 
 .validation-message {
   @apply text-[14px] block text-[#b42318] mt-[8px];

@@ -4,12 +4,12 @@ import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 
 @Component({
-  selector: 'app-notification-settings',
+  selector: 'app-notification-channels',
   imports: [MatDialogModule, Breadcrumb],
-  templateUrl: './notification-settings.component.html',
-  styleUrl: './notification-settings.component.scss'
+  templateUrl: './notification-channels.component.html',
+  styleUrl: './notification-channels.component.scss'
 })
-export default class NotificationSettingsComponent {
+export default class NotificationChannelsComponent {
 items: MenuItem[] | undefined;
   ngOnInit() {
     this.items = [

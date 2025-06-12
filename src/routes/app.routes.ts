@@ -45,10 +45,10 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'notification-settings',
+        path: 'notification-channels',
         loadComponent: () =>
           import(
-            '../views/features/settings/notification-settings/notification-settings.component'
+            '../views/features/settings/notification-channels/notification-channels.component'
           ),
       },
     ],

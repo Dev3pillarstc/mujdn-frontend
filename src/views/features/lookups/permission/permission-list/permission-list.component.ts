@@ -38,11 +38,13 @@ export default class PermissionListComponent
     this.permissions = [
       {
         id: 1,
-        reason: 'يوجد مشكلة ما و لظرف طارئ',
+        reasonAr: 'يوجد مشكلة ما و لظرف طارئ',
+        reasonEn: 'threre are issue',
       },
       {
         id: 2,
-        reason: 'يوجد مشكلة ما و لظرف طارئ',
+        reasonAr: 'يوجد مشكلة ما و لظرف طارئ',
+        reasonEn: 'threre are issue',
       },
     ];
   }

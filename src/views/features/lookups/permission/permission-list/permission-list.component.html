@@ -12,10 +12,24 @@
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
-              <label for="permission" class="label">سبب الأذن</label>
+              <label for="permissionAr" class="label">سبب الأذن بالعربية</label>
               <input
-                id="permission"
-                placeholder="سبب الأذن"
+                id="permissionAr"
+                placeholder="سبب الأذن بالعربية"
+                type="text"
+                pInputText
+                class="peer"
+                fluid="true"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="permissionEn" class="label">سبب الأذن بالانجليزية</label>
+              <input
+                id="permissionEn"
+                placeholder="سبب الأذن بالانجليزية" 
                 type="text"
                 pInputText
                 class="peer"
@@ -57,14 +71,16 @@
           <ng-template #header>
             <tr>
               <th class="w-[100px]">معرف السبب</th>
-              <th>الجنسية</th>
+              <th>سبب الأذن بالعربية</th>
+              <th>سبب الأذن بالانجليزية</th>
               <th class="w-[100px]">الإجراء</th>
             </tr>
           </ng-template>
           <ng-template #body let-permissions>
             <tr>
               <td>{{ permissions.id }}</td>
-              <td>{{ permissions.reason }}</td>
+              <td>{{ permissions.reasonAr }}</td>
+              <td>{{ permissions.reasonEn }}</td>
 
               <td>
                 <div class="actions flex gap-2">

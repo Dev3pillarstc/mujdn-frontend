@@ -4,7 +4,7 @@
       <i class="pi pi-times"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة جنسية جديدة</h3>
-    <form [formGroup]="form" class="mt-6">
+    <form class="mt-6">
       <div class="grid sm:grid-cols-2 gap-4">
         <div>
           <label for="nationalityAr-popup" class="label">
@@ -13,7 +13,6 @@
           </label>
           <div class="relative">
             <input
-              formControlName="nameAr"
               id="nationalityAr-popup"
               placeholder="الجنسية بالعربية"
               type="text"
@@ -34,7 +33,6 @@
           </label>
           <div class="relative">
             <input
-              formControlName="nameEn"
               id="nationalityEn-popup"
               placeholder="الجنسية بالانجليزية"
               type="text"

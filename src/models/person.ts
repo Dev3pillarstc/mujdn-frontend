@@ -1,8 +1,6 @@
-
 export class Department {
   declare title: string;
 }
-
 
 export class Person {
   declare name: string;

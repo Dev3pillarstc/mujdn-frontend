@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-employee-popup',
   imports: [],
   templateUrl: './employee-popup.component.html',
-  styleUrl: './employee-popup.component.scss'
+  styleUrl: './employee-popup.component.scss',
 })
-export class EmployeePopupComponent {
-
-}
+export class EmployeePopupComponent {}

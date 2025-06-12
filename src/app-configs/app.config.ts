@@ -1,18 +1,18 @@
-import {ApplicationConfig, importProvidersFrom} from '@angular/core'
-import {provideRouter} from '@angular/router'
-import {routes} from '@/routes/app.routes'
-import {GeneralInterceptor} from '@/model-interceptors/general-interceptor'
-import configInit from '../inits/config.init'
-import {HttpClient, provideHttpClient, withFetch, withInterceptors} from '@angular/common/http'
-import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {providePrimeNG} from 'primeng/config';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from '@/routes/app.routes';
+import { GeneralInterceptor } from '@/model-interceptors/general-interceptor';
+import configInit from '../inits/config.init';
+import { HttpClient, provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
-import {loadingInterceptor} from '@/http-interceptors/loading.interceptor'
-import {SpinnerService} from '@/services/shared/spinner.service'
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {HttpLoaderFactory} from '@/configs/translate-loader';
-import {LANGUAGE_ENUM} from '@/enums/language-enum';
-import {provideInterceptors} from 'cast-response';
+import { loadingInterceptor } from '@/http-interceptors/loading.interceptor';
+import { SpinnerService } from '@/services/shared/spinner.service';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpLoaderFactory } from '@/configs/translate-loader';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { provideInterceptors } from 'cast-response';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,8 +30,8 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Aura
-      }
+        preset: Aura,
+      },
     }),
     importProvidersFrom(
       TranslateModule.forRoot({
@@ -39,9 +39,9 @@ export const appConfig: ApplicationConfig = {
         loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-        }
+          deps: [HttpClient],
+        },
       })
-    )
+    ),
   ],
 };

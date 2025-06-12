@@ -1,12 +1,11 @@
-import {TranslateService} from '@ngx-translate/core';
-import {LocalStorageService} from '@/services/shared/local-storage.service';
-import {LANGUAGE_ENUM} from '@/enums/language-enum';
-import {LOCALSTORAGE_ENUM} from '@/enums/local-storage-enum';
+import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from '@/services/shared/local-storage.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { LOCALSTORAGE_ENUM } from '@/enums/local-storage-enum';
 
 export function languageInitializer(
   translate: TranslateService,
-  localStorage: LocalStorageService,
-
+  localStorage: LocalStorageService
 ) {
   return () => {
     const languages = [LANGUAGE_ENUM.ENGLISH, LANGUAGE_ENUM.ARABIC];

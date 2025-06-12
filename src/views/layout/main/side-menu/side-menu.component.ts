@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuItem } from 'primeng/api';

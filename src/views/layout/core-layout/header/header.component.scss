@@ -1,25 +1,25 @@
 .actions button {
-    position: relative;
-    min-width: 100px;
-    height: 100%;
+  position: relative;
+  min-width: 100px;
+  height: 100%;
+  &::after {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    height: 6px;
+    background-color: #fff;
+    border-radius: 10px;
+    transition: 0.2s;
+    content: '';
+  }
+
+  &:hover {
+    background: #f1f5f9;
+
     &::after {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 85%;
-        height: 6px;
-        background-color: #fff;
-        border-radius: 10px;
-        transition: 0.2s;
-        content: "";
+      background-color: #9da4ae;
     }
-
-    &:hover {
-        background: #f1f5f9;
-
-        &::after {
-            background-color: #9da4ae;
-        }
-    }
+  }
 }

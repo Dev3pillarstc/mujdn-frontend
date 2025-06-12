@@ -15,15 +15,13 @@
               <label for="nationalityAr" class="label">الجنسية بالعربية</label>
               <input id="nationalityAr" type="text" pInputText class="peer" fluid="true" />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
               <label for="nationalityEn" class="label">الجنسية بالانجليزية</label>
               <input id="nationalityEn" type="text" pInputText class="peer" fluid="true" />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
           </div>
 
@@ -35,8 +33,7 @@
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
-        >
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">قائمة الجنسيات</h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button>
@@ -66,14 +63,16 @@
 
               <td>
                 <div class="actions flex gap-2">
-                  <button
-                    class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center w-[32px]"
-                  >
+                  <button class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center w-[32px]">
                     <img src="/assets/icons/edit-action.svg" alt="" />
                   </button>
-                  <button
-                    class="bg-[#fef3f2] rounded p-2 flex items-center justify-center w-[32px]"
-                  >
+                  <button class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center w-[32px]">
+                    <img src="/assets/icons/edit-action.svg" alt="" />
+                  </button>
+                  <button class="bg-[#fef3f2] rounded p-2 flex items-center justify-center w-[32px]">
+                    <img src="/assets/icons/delete-action.svg" alt="" />
+                  </button>
+                  <button class="bg-[#fef3f2] rounded p-2 flex items-center justify-center w-[32px]">
                     <img src="/assets/icons/delete-action.svg" alt="" />
                   </button>
                 </div>
@@ -81,14 +80,8 @@
             </tr>
           </ng-template>
         </p-table>
-        <p-paginator
-          class="mt-6"
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
-        />
+        <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+          [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]" />
       </div>
     </div>
   </div>

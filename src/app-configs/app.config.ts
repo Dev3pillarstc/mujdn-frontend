@@ -3,7 +3,7 @@ import {provideRouter} from '@angular/router'
 import {routes} from '@/routes/app.routes'
 import {GeneralInterceptor} from '@/model-interceptors/general-interceptor'
 import configInit from '../inits/config.init'
-import {HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch, withInterceptors} from '@angular/common/http'
+import {HttpClient, provideHttpClient, withFetch, withInterceptors} from '@angular/common/http'
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {providePrimeNG} from 'primeng/config';
 import Aura from '@primeng/themes/aura';
@@ -27,11 +27,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     // provideClientHydration(),
     provideInterceptors([GeneralInterceptor]),
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: GeneralInterceptor,
-    //   multi: true
-    // },
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {

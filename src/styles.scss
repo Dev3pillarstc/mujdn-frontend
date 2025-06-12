@@ -173,3 +173,14 @@ a {
   overflow: visible;
 }
 // en kareem new
+
+
+
+.p-inputtext.ng-invalid.ng-dirty {
+  border-color: #f87171 !important;
+}
+
+.ng-touched.ng-invalid {
+  color: #f87171 !important;
+  border-color: #f87171 !important;
+}

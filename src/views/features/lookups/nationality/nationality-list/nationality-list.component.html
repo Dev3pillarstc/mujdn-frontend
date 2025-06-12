@@ -1,9 +1,9 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb class="max-w-full" [model]="items" [home]="home"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        قائمة الجنسيات      </h3>
+        قائمة الجنسيات </h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
       <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
@@ -46,13 +46,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button>
-              <img src="assets/icons/excel.svg" alt="" />
+              <img src="/assets/icons/excel.svg" alt=""/>
             </button>
             <button>
-              <img src="assets/icons/print.svg" alt="" />
+              <img src="/assets/icons/print.svg" alt=""/>
             </button>
             <button class="btn green-btn flex items-center" (click)="openDialog()">
-              <img src="assets/icons/plus.svg" alt="" />
+              <img src="/assets/icons/plus.svg" alt=""/>
               <span>إضافة جنسية جديدة</span>
             </button>
           </div>
@@ -73,12 +73,12 @@
                   <button
                     class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center w-[32px]"
                   >
-                    <img src="assets/icons/edit-action.svg" alt="" />
+                    <img src="/assets/icons/edit-action.svg" alt=""/>
                   </button>
                   <button
                     class="bg-[#fef3f2] rounded p-2 flex items-center justify-center w-[32px]"
                   >
-                    <img src="assets/icons/delete-action.svg" alt="" />
+                    <img src="/assets/icons/delete-action.svg" alt=""/>
                   </button>
                 </div>
               </td>
@@ -93,7 +93,6 @@
           [totalRecords]="120"
           [rowsPerPageOptions]="[10, 20, 30]"
         />
-        <div></div>
       </div>
     </div>
   </div>

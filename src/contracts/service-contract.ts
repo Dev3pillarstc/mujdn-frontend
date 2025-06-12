@@ -1,3 +1,3 @@
 export interface ServiceContract {
-  serviceName: string
+  serviceName: string;
 }

@@ -1,13 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuItem} from 'primeng/api';
-import {Breadcrumb} from 'primeng/breadcrumb';
-import {TableModule} from 'primeng/table';
-import {PaginatorModule, PaginatorState} from 'primeng/paginator';
-import {InputTextModule} from 'primeng/inputtext';
-import {BaseListComponent} from '@/abstracts/base-components/base-list/base-list.component';
-import {
-  NationalityPopupComponent
-} from '@/views/features/lookups/nationality/nationality-popup/nationality-popup.component';
+import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
+import { Breadcrumb } from 'primeng/breadcrumb';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { InputTextModule } from 'primeng/inputtext';
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { NationalityPopupComponent } from '@/views/features/lookups/nationality/nationality-popup/nationality-popup.component';
 
 @Component({
   selector: 'app-nationality-list',
@@ -17,7 +15,8 @@ import {
 })
 export default class NationalityListComponent
   extends BaseListComponent<NationalityPopupComponent>
-  implements OnInit {
+  implements OnInit
+{
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -37,14 +36,16 @@ export default class NationalityListComponent
   rows: number = 10;
 
   ngOnInit() {
-    this.items = [{label: 'لوحة المعلومات'}, {label: 'قائمة الجنسيات'}];
+    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
     // Updated dummy data to match your Arabic table structure
     this.nationalities = [
       {
-        nationality: 'اسم الجنسية',
+        nationalityAr: 'اسم الجنسية',
+        nationalityEn: 'nationality name',
       },
       {
-        nationality: 'اسم الجنسية',
+        nationalityAr: 'اسم الجنسية',
+        nationalityEn: 'nationality name',
       },
     ];
   }

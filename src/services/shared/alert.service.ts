@@ -4,30 +4,37 @@ import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertService {
-
   matDialog = inject(MatDialog);
 
-  showSuccessMessage(icon: string = 'success', messages: string[] = ['COMMON.SAVED_SUCCESSFULLY'], okText: string = 'COMMON.OK') {
-  this.matDialog.open(AlertDialogComponent, {
-    width: '350px',
-    data: <AlertDialogData>{
-      icon: icon,
-      messages: messages,
-      okText: okText
-    }
-  });
-}
-showErrorMessage(icon: string = 'error', messages: string[] = ['COMMON.ERROR_OCCURRED'], okText: string = 'COMMON.OK') {
-  this.matDialog.open(AlertDialogComponent, {
-    width: '350px',
-    data: <AlertDialogData>{
-      icon: icon,
-      messages: messages,
-      okText: okText
-    }
-  });
-}
+  showSuccessMessage(
+    icon: string = 'success',
+    messages: string[] = ['COMMON.SAVED_SUCCESSFULLY'],
+    okText: string = 'COMMON.OK'
+  ) {
+    this.matDialog.open(AlertDialogComponent, {
+      width: '350px',
+      data: <AlertDialogData>{
+        icon: icon,
+        messages: messages,
+        okText: okText,
+      },
+    });
+  }
+  showErrorMessage(
+    icon: string = 'error',
+    messages: string[] = ['COMMON.ERROR_OCCURRED'],
+    okText: string = 'COMMON.OK'
+  ) {
+    this.matDialog.open(AlertDialogComponent, {
+      width: '350px',
+      data: <AlertDialogData>{
+        icon: icon,
+        messages: messages,
+        okText: okText,
+      },
+    });
+  }
 }

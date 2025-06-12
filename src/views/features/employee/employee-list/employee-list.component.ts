@@ -39,11 +39,11 @@ interface Adminstration {
     RouterModule,
     CommonModule,
     SplitButtonModule,
-    PaginatorModule
+    PaginatorModule,
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
-    providers: [MessageService]
+  providers: [MessageService],
 })
 export default class EmployeeListComponent {
   items: MenuItem[] | undefined;
@@ -59,52 +59,48 @@ export default class EmployeeListComponent {
   rows: number = 10;
   matDialog = inject(MatDialog);
 
-  constructor(private messageService: MessageService , ) {
-        this.itemsList = [
-            {
-                label: 'تعديل بيانات الموظف'
-            },
-            {
-                separator: true,
-            },
-            {
-                label: 'عرض تقرير الحضور و الانصراف'
-            },
-            {
-                separator: true,
-            },
-            {
-                label: 'اسنادة مهمة'
-            },
-            {
-                separator: true,
-            },
-            {
-                label: 'اسناد وردية'
-            },
-            {
-                separator: true,
-            },
-            {
-                label: 'سجل المهمات المسندة للموظف'
-            },
-            {
-                separator: true,
-            },
-            {
-                label: 'حذف الموظف',
-                styleClass: 'p-menuitem-danger',
-                command: () => this.openConfirmation()
-
-            }
-        ];
-    }
+  constructor(private messageService: MessageService) {
+    this.itemsList = [
+      {
+        label: 'تعديل بيانات الموظف',
+      },
+      {
+        separator: true,
+      },
+      {
+        label: 'عرض تقرير الحضور و الانصراف',
+      },
+      {
+        separator: true,
+      },
+      {
+        label: 'اسنادة مهمة',
+      },
+      {
+        separator: true,
+      },
+      {
+        label: 'اسناد وردية',
+      },
+      {
+        separator: true,
+      },
+      {
+        label: 'سجل المهمات المسندة للموظف',
+      },
+      {
+        separator: true,
+      },
+      {
+        label: 'حذف الموظف',
+        styleClass: 'p-menuitem-danger',
+        command: () => this.openConfirmation(),
+      },
+    ];
+  }
 
   ngOnInit() {
-    this.items = [
-      { label: 'لوحة المعلومات' },
-      { label: 'قائمة الموظفين' },
-    ];
+    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الموظفين' }];
     this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [
@@ -172,17 +168,16 @@ export default class EmployeeListComponent {
   service = inject(ConfirmationService);
   alertService = inject(AlertService);
   openConfirmation() {
-  const dialogRef = this.service.open(['COMMON.CONFIRM_DELETE'], 'COMMON.OK', 'COMMON.CANCEL');
+    const dialogRef = this.service.open(['COMMON.CONFIRM_DELETE'], 'COMMON.OK', 'COMMON.CANCEL');
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result == DIALOG_ENUM.OK) {
-      // User confirmed
-      this.alertService.showSuccessMessage( 'error', ['COMMON.DELETED_SUCCESSFULLY'], 'COMMON.OK');
-  } else {
-      // User canceled
-      this.alertService.showErrorMessage( 'error', ['COMMON.DELETION_FAILED'], 'COMMON.OK');
-    }
-  });
-}
-
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == DIALOG_ENUM.OK) {
+        // User confirmed
+        this.alertService.showSuccessMessage('error', ['COMMON.DELETED_SUCCESSFULLY'], 'COMMON.OK');
+      } else {
+        // User canceled
+        this.alertService.showErrorMessage('error', ['COMMON.DELETION_FAILED'], 'COMMON.OK');
+      }
+    });
+  }
 }

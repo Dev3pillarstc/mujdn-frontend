@@ -53,10 +53,7 @@ export default class AttendanceLogListComponent
   rows: number = 10;
 
   ngOnInit() {
-    this.items = [
-      { label: 'لوحة المعلومات' },
-      { label: 'حركات حضور و انصراف الموظفين' },
-    ];
+    this.items = [{ label: 'لوحة المعلومات' }, { label: 'حركات حضور و انصراف الموظفين' }];
     this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [

@@ -4,7 +4,7 @@ import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConfirmationService {
   matDialog = inject(MatDialog);
@@ -15,8 +15,9 @@ export class ConfirmationService {
       data: <ConfirmationDialogData>{
         messages: messages || ['COMMON.CONFIRM_DELETE'],
         confirmText: confirmText || 'COMMON.OK',
-        cancelText: cancelText || 'COMMON.CANCEL'
-      }
+        cancelText: cancelText || 'COMMON.CANCEL',
+      },
     });
     return dialogRef;
-  }}
+  }
+}

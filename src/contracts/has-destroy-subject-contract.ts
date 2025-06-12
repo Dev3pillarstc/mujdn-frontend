@@ -1,6 +1,6 @@
-import { OnDestroy } from '@angular/core'
-import { Subject } from 'rxjs'
+import { OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 
 export interface HasDestroySubjectContract extends OnDestroy {
-  destroy$: Subject<void>
+  destroy$: Subject<void>;
 }

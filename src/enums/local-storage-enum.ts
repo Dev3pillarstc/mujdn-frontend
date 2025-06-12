@@ -1,3 +1,3 @@
 export enum LOCALSTORAGE_ENUM {
-    LANGUAGE = 'LANGUAGE'
+  LANGUAGE = 'LANGUAGE',
 }

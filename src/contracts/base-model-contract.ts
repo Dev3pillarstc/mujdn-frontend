@@ -1,3 +1,3 @@
-import { HasServiceNameContract } from '@/contracts/has-service-name-contract'
+import { HasServiceNameContract } from '@/contracts/has-service-name-contract';
 
 export interface BaseModelContract extends HasServiceNameContract {}

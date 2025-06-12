@@ -7,14 +7,11 @@ import { Breadcrumb } from 'primeng/breadcrumb';
   selector: 'app-notification-channels',
   imports: [MatDialogModule, Breadcrumb],
   templateUrl: './notification-channels.component.html',
-  styleUrl: './notification-channels.component.scss'
+  styleUrl: './notification-channels.component.scss',
 })
 export default class NotificationChannelsComponent {
-items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
   ngOnInit() {
-    this.items = [
-      { label: 'لوحة المعلومات' },
-      { label: 'اعدادات الاشعارات' },
-    ];
+    this.items = [{ label: 'لوحة المعلومات' }, { label: 'اعدادات الاشعارات' }];
   }
 }

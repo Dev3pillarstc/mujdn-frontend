@@ -1,6 +1,3 @@
-.red-btn {
-  @apply text-[#fff] bg-[#d92d20] hover:bg-[#bf2318];
-}
 
 // Start SideMenu
 .p-drawer-header {
@@ -46,7 +43,7 @@
   font-weight: 600;
   color: #161616;
 
-  & > li {
+  &>li {
     margin-top: 8px;
     padding-bottom: 8px;
     border-bottom: 1px solid #d2d6db;
@@ -131,26 +128,40 @@
 }
 
 // End SideMenu
+
+
+
+
+
+
+
+
+
+
 //start kareem new
-:root{
+:root {
   --p-button-text-primary-color: #1b8354 !important;
   --p-button-text-primary-hover-background: #e5e7eb !important;
   --p-button-text-primary-active-background: #e5e7eb !important;
 }
+
 .p-datepicker-input-icon-container {
   inset-inline-end: unset !important;
   inset-inline-start: 16px !important;
   pointer-events: none;
 }
+
 .p-datepicker:has(.p-datepicker-input-icon-container) .p-datepicker-input {
   padding-inline-end: 0 !important;
   padding-inline-start: 44px !important;
   cursor: pointer;
 }
+
 button,
 a {
   cursor: pointer;
 }
+
 .p-breadcrumb {
   padding: 0;
   padding-bottom: 24px;
@@ -165,6 +176,7 @@ a {
     }
   }
 }
+
 .cdk-overlay-pane.mat-mdc-dialog-panel {
   margin: 0 16px;
 }
@@ -172,15 +184,30 @@ a {
 .mat-mdc-dialog-surface.mdc-dialog__surface {
   overflow: visible;
 }
+
 // en kareem new
 
-
-
 .p-inputtext.ng-invalid.ng-dirty {
-  border-color: #f87171 !important;
+  border-color: #b42318 !important;
 }
 
 .ng-touched.ng-invalid {
-  color: #f87171 !important;
-  border-color: #f87171 !important;
+  border-color: #b42318 !important;
+
+  ::placeholder {
+    color: #b42318 !important;
+  }
+}
+
+.ng-touched.ng-invalid + span {
+  background-color: #b42318 !important;
+}
+
+
+.validation-message {
+  @apply text-[14px] block text-[#b42318] mt-[8px];
+}
+
+.red-btn {
+  @apply text-[#fff] bg-[#d92d20] hover:bg-[#bf2318];
 }

@@ -1,20 +1,15 @@
-import { DIALOG_ENUM } from '@/enums/dialog-enum';
-import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
-import { ConfirmationDialogData } from '@/models/shared/confirmation-dialog-data';
-import { LanguageService } from '@/services/shared/language.service';
-import { Component, inject, Inject } from '@angular/core';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatDialogContent,
-  MatDialogActions,
-} from '@angular/material/dialog';
-import { TranslatePipe } from '@ngx-translate/core';
+import {DIALOG_ENUM} from '@/enums/dialog-enum';
+import {LANGUAGE_ENUM} from '@/enums/language-enum';
+import {LAYOUT_DIRECTION_ENUM} from '@/enums/layout-direction-enum';
+import {ConfirmationDialogData} from '@/models/shared/confirmation-dialog-data';
+import {LanguageService} from '@/services/shared/language.service';
+import {Component, inject, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef,} from '@angular/material/dialog';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-confirmation-dialog',
-  imports: [MatDialogContent, MatDialogActions, TranslatePipe],
+  imports: [TranslatePipe],
   templateUrl: './confirmation-dialog.component.html',
   styleUrl: './confirmation-dialog.component.scss',
 })

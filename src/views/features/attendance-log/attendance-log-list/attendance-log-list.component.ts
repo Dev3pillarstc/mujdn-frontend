@@ -39,7 +39,7 @@ export default class AttendanceLogListComponent
 {
   override dialogSize = {
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '1024px',
   };
   items: MenuItem[] | undefined;
 

@@ -132,6 +132,11 @@
 
 // End SideMenu
 //start kareem new
+:root{
+  --p-button-text-primary-color: #1b8354 !important;
+  --p-button-text-primary-hover-background: #e5e7eb !important;
+  --p-button-text-primary-active-background: #e5e7eb !important;
+}
 .p-datepicker-input-icon-container {
   inset-inline-end: unset !important;
   inset-inline-start: 16px !important;
@@ -162,5 +167,9 @@ a {
 }
 .cdk-overlay-pane.mat-mdc-dialog-panel {
   margin: 0 16px;
+}
+
+.mat-mdc-dialog-surface.mdc-dialog__surface {
+  overflow: visible;
 }
 // en kareem new

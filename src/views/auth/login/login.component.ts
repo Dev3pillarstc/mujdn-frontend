@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '@/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +13,9 @@ import { AuthService } from '@/services/auth/auth.service';
 })
 export default class LoginComponent implements OnInit {
   declare loginForm: FormGroup;
-  errorMessage: string | null = null;
   fb = inject(FormBuilder);
   authService = inject(AuthService);
-
-  ngOnInit() {
-    this.buildForm();
-  }
+  router = inject(Router);
 
   get usernameControl() {
     return this.loginForm.get('username');
@@ -26,6 +23,10 @@ export default class LoginComponent implements OnInit {
 
   get passwordControl() {
     return this.loginForm.get('password');
+  }
+
+  ngOnInit() {
+    this.buildForm();
   }
 
   buildForm() {
@@ -42,8 +43,11 @@ export default class LoginComponent implements OnInit {
     }
 
     const { username, password } = this.loginForm.value;
-    this.errorMessage = null;
 
-    this.authService.login(username, password).subscribe((result) => {});
+    this.authService.login(username, password).subscribe((result) => {
+      if (!result.error) {
+        this.router.navigate(['home']);
+      }
+    });
   }
 }

@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '@/guards/auth-guard';
+import { ROLES_ENUM } from '@/enums/roles-enum';
 
 export const routes: Routes = [
   {
@@ -13,6 +15,8 @@ export const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
         loadComponent: () => import('../views/home/home.component'),
       },
       {

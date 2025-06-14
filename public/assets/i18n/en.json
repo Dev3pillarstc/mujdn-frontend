@@ -9,7 +9,8 @@
     "SAVED_SUCCESSFULLY": "Saved successfully",
     "UPDATED_SUCCESSFULLY": "Updated successfully",
     "DELETED_SUCCESSFULLY": "Deleted successfully",
-    "DELETION_FAILED": "Failed to delete the item"
+    "DELETION_FAILED": "Failed to delete the item",
+    "NOT_AUTHORIZED": "You do not have permission to access this page"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

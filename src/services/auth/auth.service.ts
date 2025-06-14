@@ -12,9 +12,8 @@ import { LoggedInUser } from '@/models/auth/logged-in-user';
 export class AuthService extends BaseCrudService<User, string> {
   serviceName: string = 'AuthService';
   router = inject(Router);
-  loggedInUser: BehaviorSubject<LoggedInUser | null> = new BehaviorSubject<LoggedInUser | null>(
-    null
-  );
+  private loggedInUser: BehaviorSubject<LoggedInUser | null> =
+    new BehaviorSubject<LoggedInUser | null>(null);
 
   getUrlSegment(): string {
     return this.urlService.URLS.AUTH;
@@ -31,25 +30,16 @@ export class AuthService extends BaseCrudService<User, string> {
     );
   }
 
-  // autoLogin() {
-  //   const userData: User = localStorage.getItem('userData')
-  //     ? JSON.parse(localStorage.getItem('userData')!)
-  //     : null;
-  //   if (!userData) {
-  //     return;
-  //   }
-  //
-  //   const loadedUser = Object.assign(new User(), { ...userData });
-  //
-  //   if (loadedUser.token) {
-  //     this.user.next(loadedUser);
-  //     const expirationDuration =
-  //       new Date(userData.tokenExpirationDate).getTime() - new Date().getTime();
-  //     this.autoLogout(expirationDuration);
-  //   }
-  // }
-
   logout() {
     // call logout backend
+  }
+
+  setUser(loggedInUser: LoggedInUser | null) {
+    const user = Object.assign(new LoggedInUser(), loggedInUser);
+    this.loggedInUser.next(user);
+  }
+
+  getUser(): BehaviorSubject<LoggedInUser | null> {
+    return this.loggedInUser;
   }
 }

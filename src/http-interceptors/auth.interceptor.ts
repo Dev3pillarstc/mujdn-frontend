@@ -33,26 +33,27 @@ export const AuthInterceptor: HttpInterceptorFn = (
     tap((response) => {
       if (response instanceof HttpResponse) {
         if (req.url.includes('logout')) {
-          authService.loggedInUser.next(null);
+          authService.setUser(null);
           router.navigate(['/login']);
           return; // ✅ optional, now safely exits from this block
         } else {
           const userDataCookie = cookieService.getCookie(COOKIE_ENUM.USER_DATA);
           if (userDataCookie && userDataCookie.version) {
             if (
-              !authService.loggedInUser.value ||
-              authService.loggedInUser.value.version !== userDataCookie.version
+              !authService.getUser().value ||
+              !(authService.getUser().value!.version == userDataCookie.version) ||
+              !authService.getUser().value!.isSameUser(userDataCookie)
             ) {
-              authService.loggedInUser.next(userDataCookie);
+              authService.setUser(userDataCookie);
             }
           } else {
-            authService.loggedInUser.next(null);
+            authService.setUser(null);
             authService.logout();
           }
         }
 
         console.log(`[Interceptor] Response from ${req.url}:`, response);
-        console.log(`user from service`, authService.loggedInUser.value);
+        console.log(`user from service`, authService.getUser().value);
       }
     }),
     catchError((error) => {

@@ -19,5 +19,16 @@
     "USERNAME_LBL": "اسم المستخدم",
     "PASSWORD_LBL": "كلمة المرور",
     "LOGIN_BTN": "دخول الآن"
+  },
+  "NATIONALITIES_PAGE": {
+    "NATIONALITIES_LIST": "قائمة الجنسيات",
+    "SEARCH_FILTERS": "تصفية البحث",
+    "NATIONALITY_IN_ARABIC": "الجنسية بالعربية",
+    "NATIONALITY_IN_ENGLISH": "الجنسية بالانجليزية",
+    "SEARCH": "بحث",
+    "RESET_SEARCH": "إعادة تعيين",
+    "ADD_NEW_NATIONALITY": "إضافة جنسية جديدة",
+    "ACTIONS": "الإجراء",
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   }
 }

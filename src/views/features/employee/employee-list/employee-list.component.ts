@@ -58,6 +58,8 @@ export default class EmployeeListComponent {
   first: number = 0;
   rows: number = 10;
   matDialog = inject(MatDialog);
+  service = inject(ConfirmationService);
+  alertService = inject(AlertService);
 
   constructor(private messageService: MessageService) {
     this.itemsList = [
@@ -161,22 +163,22 @@ export default class EmployeeListComponent {
       },
     ];
   }
+
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
   }
-  service = inject(ConfirmationService);
-  alertService = inject(AlertService);
+
   openConfirmation() {
     const dialogRef = this.service.open(['COMMON.CONFIRM_DELETE'], 'COMMON.OK', 'COMMON.CANCEL');
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result == DIALOG_ENUM.OK) {
         // User confirmed
-        this.alertService.showSuccessMessage('error', ['COMMON.DELETED_SUCCESSFULLY'], 'COMMON.OK');
+        this.alertService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
       } else {
         // User canceled
-        this.alertService.showErrorMessage('error', ['COMMON.DELETION_FAILED'], 'COMMON.OK');
+        this.alertService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
       }
     });
   }

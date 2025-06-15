@@ -1,16 +1,101 @@
-import { inject } from '@angular/core';
+import { Directive, inject, OnInit } from '@angular/core';
+import { PaginationInfo } from '@/models/shared/response/pagination-info';
+import { MenuItem } from 'primeng/api';
+import { BaseCrudService } from '@/abstracts/base-crud-service';
+import { PaginationParams } from '@/models/shared/pagination-params';
+import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { NationalityFilter } from '@/models/features/lookups/Nationality-filter';
+import { PaginatorState } from 'primeng/paginator';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 
-export abstract class BaseListComponent<T> {
-  abstract openDialog(): void;
+@Directive()
+export abstract class BaseListComponent<
+  Model,
+  PopupModel,
+  TService extends BaseCrudService<Model>,
+  FilterModel,
+> implements OnInit
+{
   abstract dialogSize: any;
-  dialog = inject(MatDialog);
+  first: number = 0;
+  rows: number = 10;
+  declare paginationInfo: PaginationInfo;
+  items: MenuItem[] | undefined;
+  list: Model[] = [];
+  paginationParams: PaginationParams = new PaginationParams();
+  matDialog = inject(MatDialog);
+  activatedRoute = inject(ActivatedRoute);
 
-  openBaseDialog(popupComponent: T) {
-    const dialogRef = this.dialog.open(popupComponent as any, this.dialogSize);
+  abstract get filterModel(): FilterModel;
+
+  abstract set filterModel(val: FilterModel);
+
+  abstract get service(): TService;
+
+  abstract openDialog(): void;
+
+  openBaseDialog(popupComponent: PopupModel) {
+    const dialogRef = this.matDialog.open(popupComponent as any, this.dialogSize);
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  ngOnInit() {
+    this.list = this.activatedRoute.snapshot.data['list'].list;
+    this.paginationInfo = this.activatedRoute.snapshot.data['list'].paginationInfo;
+    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
+  }
+
+  loadList() {
+    this.service.loadPaginated(this.paginationParams, { ...this.filterModel! }).subscribe({
+      next: (response) => {
+        this.list = response.list || [];
+
+        if (response.paginationInfo) {
+          this.paginationInfoMap(response);
+        } else {
+          this.paginationInfo.totalItems = this.list.length;
+        }
+      },
+      error: (_) => {
+        this.list = [];
+        this.paginationInfo.totalItems = 0;
+      },
+    });
+  }
+
+  search() {
+    this.paginationParams.pageNumber = 1;
+    this.first = 0;
+    this.loadList();
+  }
+
+  resetSearch() {
+    this.filterModel = new NationalityFilter() as FilterModel;
+    this.paginationParams.pageNumber = 1;
+    this.paginationParams.pageSize = 10;
+    this.first = 0;
+    this.loadList();
+  }
+
+  onPageChange(event: PaginatorState) {
+    this.first = event.first!;
+    this.rows = event.rows!;
+    this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
+    this.paginationParams.pageSize = this.rows;
+    this.loadList();
+  }
+
+  private paginationInfoMap(response: PaginatedList<Model>) {
+    const paginationInfo = response.paginationInfo;
+    this.paginationInfo.totalItems = paginationInfo.totalItems || 0;
+    this.paginationParams.pageSize = paginationInfo.pageSize || 10;
+    this.paginationParams.pageNumber = paginationInfo.currentPage || 1;
+
+    this.rows = this.paginationParams.pageSize;
+    this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
@@ -9,8 +9,8 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { AttendanceLogPopupComponent } from '@/views/features/attendance-log/attendance-log-popup/attendance-log-popup.component';
-import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { PermissionPopupComponent } from '@/views/features/lookups/permission/permission-popup/permission-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Adminstration {
   type: string;
@@ -33,16 +33,13 @@ interface Adminstration {
   templateUrl: './attendance-log-list.component.html',
   styleUrl: './attendance-log-list.component.scss',
 })
-export default class AttendanceLogListComponent
-  extends BaseListComponent<AttendanceLogPopupComponent>
-  implements OnInit
-{
-  override dialogSize = {
+export default class AttendanceLogListComponent implements OnInit {
+  dialogSize = {
     width: '100%',
     maxWidth: '1024px',
   };
   items: MenuItem[] | undefined;
-
+  dialog = inject(MatDialog);
   home: MenuItem | undefined;
   adminstrations: Adminstration[] | undefined;
 
@@ -120,7 +117,11 @@ export default class AttendanceLogListComponent
     this.rows = event.rows ?? 10;
   }
 
-  override openDialog(): void {
-    this.openBaseDialog(AttendanceLogPopupComponent as any);
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PermissionPopupComponent as any, this.dialogSize);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

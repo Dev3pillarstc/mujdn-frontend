@@ -1,7 +1,5 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { Nationality } from '@/models/features/lookups/Nationality';
-import { NationalityFilter } from '@/models/features/lookups/Nationality-filter';
-import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { Injectable } from '@angular/core';
 import { CastResponseContainer } from 'cast-response';
 import { PaginatedList } from '@/models/shared/response/paginated-list';

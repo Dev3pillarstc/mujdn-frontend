@@ -9,24 +9,24 @@ import { MatDialog } from '@angular/material/dialog';
 export class AlertService {
   matDialog = inject(MatDialog);
 
-  showSuccessMessage(params: { icon?: string; messages?: string[]; okText?: string }) {
+  showSuccessMessage(params: { icon?: string; messages?: string[]; buttonLabel?: string }) {
     this.matDialog.open(AlertDialogComponent, {
       width: '350px',
       data: <AlertDialogData>{
         icon: params.icon || 'success',
         messages: params.messages || ['COMMON.SAVED_SUCCESSFULLY'],
-        okText: params.okText || 'COMMON.OK',
+        buttonLabel: params.buttonLabel || 'COMMON.OK',
       },
     });
   }
 
-  showErrorMessage(params: { icon?: string; messages?: string[]; okText?: string }) {
+  showErrorMessage(params: { icon?: string; messages?: string[]; buttonLabel?: string }) {
     this.matDialog.open(AlertDialogComponent, {
       width: '350px',
       data: <AlertDialogData>{
         icon: params.icon || 'error',
         messages: params.messages || ['COMMON.ERROR_OCCURRED'],
-        okText: params.okText || 'COMMON.OK',
+        buttonLabel: params.buttonLabel || 'COMMON.OK',
       },
     });
   }

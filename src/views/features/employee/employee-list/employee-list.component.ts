@@ -163,7 +163,12 @@ export default class EmployeeListComponent {
   }
 
   openConfirmation() {
-    const dialogRef = this.service.open(['COMMON.CONFIRM_DELETE'], 'COMMON.OK', 'COMMON.CANCEL');
+    const dialogRef = this.service.open({
+      icon: 'warning',
+      messages: ['COMMON.CONFIRM_DELETE'],
+      confirmText: 'COMMON.OK',
+      cancelText: 'COMMON.CANCEL',
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result == DIALOG_ENUM.OK) {

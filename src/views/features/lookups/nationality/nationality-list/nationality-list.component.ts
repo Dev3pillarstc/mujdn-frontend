@@ -12,6 +12,13 @@ import { Nationality } from '@/models/features/lookups/Nationality';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
+import { ActivatedRoute } from '@angular/router';
+import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { PaginationInfo } from '@/models/shared/response/pagination-info';
+import { PaginationParams } from '@/models/shared/pagination-params';
+import { catchError, of } from 'rxjs';
+import { OptionsContract } from '@/contracts/options-contract';
+
 @Component({
   selector: 'app-nationality-list',
   imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
@@ -26,93 +33,78 @@ export default class NationalityListComponent
     width: '100%',
     maxWidth: '600px',
   };
+  activatedRoute = inject(ActivatedRoute);
+  nationalityService = inject(NationalityService);
+  declare paginationInfo: PaginationInfo;
+  paginationParams: PaginationParams = new PaginationParams();
+  items: MenuItem[] | undefined;
+  home: MenuItem | undefined;
+  list: Nationality[] = [];
+  // Pagination properties
+  first: number = 0;
+  rows: number = 10;
+  // Filter properties
+  filterModel: NationalityFilter = new NationalityFilter();
 
   override openDialog(): void {
     this.openBaseDialog(NationalityPopupComponent as any);
   }
 
-  nationalityService = inject(NationalityService);
-  items: MenuItem[] | undefined;
-  home: MenuItem | undefined;
-  date2: Date | undefined;
-
-  // Data properties
-  nationalities: Nationality[] = [];
-
-  // Pagination properties
-  first: number = 0;
-  rows: number = 10;
-  pageNumber: number = 1;
-  pageSize: number = 10;
-  totalRecords: number = 0;
-
-  // Sorting properties
-  orderBy: string = 'NameEn';
-  sortDir: string = 'asc';
-
-  // Filter properties
-  filterModel: NationalityFilter = new NationalityFilter();
-
   ngOnInit() {
+    this.list = this.activatedRoute.snapshot.data['list'].list;
+    this.paginationInfo = this.activatedRoute.snapshot.data['list'].paginationInfo;
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
-    this.getAllNationalities();
   }
 
-  getAllNationalities() {
+  loadList() {
     this.nationalityService
-      .getAllNationalities(
-        this.pageNumber,
-        this.pageSize,
-        this.orderBy,
-        this.sortDir,
-        this.filterModel
-      )
+      .loadPaginated(this.paginationParams, { ...this.filterModel })
       .subscribe({
         next: (response) => {
-          this.nationalities = response.data.list || [];
+          this.list = response.list || [];
 
-          if (response.data.paginationInfo) {
+          if (response.paginationInfo) {
             this.paginationInfoMap(response);
           } else {
-            this.totalRecords = this.nationalities.length;
+            this.paginationInfo.totalItems = this.list.length;
           }
         },
         error: (error) => {
-          this.nationalities = [];
-          this.totalRecords = 0;
+          this.list = [];
+          this.paginationInfo.totalItems = 0;
         },
       });
   }
 
-  private paginationInfoMap(response: PaginatedListResponseData<Nationality>) {
-    const paginationInfo = response.data.paginationInfo;
-    this.totalRecords = paginationInfo.totalItems || 0;
-    this.pageSize = paginationInfo.pageSize || 10;
-    this.pageNumber = paginationInfo.currentPage || 1;
-
-    this.rows = this.pageSize;
-    this.first = (this.pageNumber - 1) * this.pageSize;
-  }
-
   search() {
-    this.pageNumber = 1;
+    this.paginationParams.pageNumber = 1;
     this.first = 0;
-    this.getAllNationalities();
+    this.loadList();
   }
 
   resetSearch() {
     this.filterModel = new NationalityFilter();
-    this.pageNumber = 1;
-    this.pageSize = 10;
+    this.paginationParams.pageNumber = 1;
+    this.paginationParams.pageSize = 10;
     this.first = 0;
-    this.getAllNationalities();
+    this.loadList();
   }
 
   onPageChange(event: PaginatorState) {
     this.first = event.first!;
     this.rows = event.rows!;
-    this.pageNumber = Math.floor(this.first / this.rows) + 1;
-    this.pageSize = this.rows;
-    this.getAllNationalities();
+    this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
+    this.paginationParams.pageSize = this.rows;
+    this.loadList();
+  }
+
+  private paginationInfoMap(response: PaginatedList<Nationality>) {
+    const paginationInfo = response.paginationInfo;
+    this.paginationInfo.totalItems = paginationInfo.totalItems || 0;
+    this.paginationParams.pageSize = paginationInfo.pageSize || 10;
+    this.paginationParams.pageNumber = paginationInfo.currentPage || 1;
+
+    this.rows = this.paginationParams.pageSize;
+    this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
   }
 }

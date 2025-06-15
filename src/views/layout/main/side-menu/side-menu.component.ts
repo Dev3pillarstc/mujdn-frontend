@@ -82,7 +82,7 @@ export class SideMenuComponent {
         {
           label: 'قائمة الجنسيات',
           // iconUrl: 'assets/icons/nationality.svg',
-          routerLink: ['/settings/nationalities'],
+          routerLink: ['/nationalities'],
         },
       ],
     },

@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'NATIONALITIES_PAGE.NATIONALITIES_LIST' | translate }}
       </h3>
@@ -16,34 +16,34 @@
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
-              <label for="nationalityAr" class="label">{{
-                'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate
-              }}</label>
+              <label class="label" for="nationalityAr">{{
+                  'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate
+                }}</label>
               <input
-                id="nationalityAr"
-                type="text"
-                pInputText
+                [(ngModel)]="filterModel.nameAr"
+                [placeholder]="'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate"
                 class="peer"
                 fluid="true"
-                [placeholder]="'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate"
-                [(ngModel)]="filterModel.nameAr"
+                id="nationalityAr"
+                pInputText
+                type="text"
               />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="nationalityEn" class="label">{{
-                'NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate
-              }}</label>
+              <label class="label" for="nationalityEn">{{
+                  'NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate
+                }}</label>
               <input
-                id="nationalityEn"
+                [(ngModel)]="filterModel.nameEn"
                 [placeholder]="'NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate"
-                type="text"
-                pInputText
                 class="peer"
                 fluid="true"
-                [(ngModel)]="filterModel.nameEn"
+                id="nationalityEn"
+                pInputText
+                type="text"
               />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -52,10 +52,10 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button class="btn black-btn" (click)="search()">
+            <button (click)="search()" class="btn black-btn">
               {{ 'NATIONALITIES_PAGE.SEARCH' | translate }}
             </button>
-            <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">
+            <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
               {{ 'NATIONALITIES_PAGE.RESET_SEARCH' | translate }}
             </button>
           </div>
@@ -70,19 +70,19 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button>
-              <img src="/assets/icons/excel.svg" alt="" />
+              <img alt="" src="/assets/icons/excel.svg"/>
             </button>
             <button>
-              <img src="/assets/icons/print.svg" alt="" />
+              <img alt="" src="/assets/icons/print.svg"/>
             </button>
-            <button class="btn green-btn flex items-center" (click)="openDialog()">
-              <img src="/assets/icons/plus.svg" alt="" />
+            <button (click)="openDialog()" class="btn green-btn flex items-center">
+              <img alt="" src="/assets/icons/plus.svg"/>
               <span>{{ 'NATIONALITIES_PAGE.ADD_NEW_NATIONALITY' | translate }}</span>
             </button>
           </div>
         </div>
-        @if (nationalities.length > 0) {
-          <p-table [value]="nationalities">
+        @if (list && list.length > 0) {
+          <p-table [value]="list">
             <ng-template pTemplate="header">
               <tr>
                 <th>{{ 'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate }}</th>
@@ -97,10 +97,10 @@
                 <td>
                   <div class="actions flex gap-2">
                     <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
-                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                      <img src="/assets/icons/edit-action.svg" alt="تعديل"/>
                     </button>
                     <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
-                      <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                      <img src="/assets/icons/delete-action.svg" alt="حذف"/>
                     </button>
                   </div>
                 </td>
@@ -112,15 +112,17 @@
             <p class="text-gray-500">{{ 'NATIONALITIES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
           </div>
         }
-        <p-paginator
-          class="mt-6"
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="totalRecords"
-          [rowsPerPageOptions]="[10, 20, 30]"
-          [showCurrentPageReport]="false"
-        />
+        @if (paginationInfo) {
+          <p-paginator
+            (onPageChange)="onPageChange($event)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
+        }
       </div>
     </div>
   </div>

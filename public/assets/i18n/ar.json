@@ -9,7 +9,8 @@
     "SAVED_SUCCESSFULLY": "تم الحفظ بنجاح",
     "UPDATED_SUCCESSFULLY": "تم التحديث بنجاح",
     "DELETED_SUCCESSFULLY": "تم الحذف بنجاح",
-    "DELETION_FAILED": "فشل في حذف العنصر"
+    "DELETION_FAILED": "فشل في حذف العنصر",
+    "NOT_AUTHORIZED": "ليس لديك صلاحية الوصول إلى هذه الصفحة"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"

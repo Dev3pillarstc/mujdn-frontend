@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '@/guards/auth-guard';
+import { ROLES_ENUM } from '@/enums/roles-enum';
 
 export const routes: Routes = [
   {
@@ -8,11 +10,15 @@ export const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [authGuard],
+    data: { roles: [ROLES_ENUM.EMPLOYEE] },
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
         loadComponent: () => import('../views/home/home.component'),
       },
       {
@@ -22,6 +28,8 @@ export const routes: Routes = [
       },
       {
         path: 'attendance-logs',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER] },
         loadComponent: () =>
           import(
             '../views/features/attendance-log/attendance-log-list/attendance-log-list.component'

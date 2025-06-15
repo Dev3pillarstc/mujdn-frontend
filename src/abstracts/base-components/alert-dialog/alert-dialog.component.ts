@@ -1,7 +1,8 @@
 import { AlertDialogData } from '@/models/shared/alert-dialog-data';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
+import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 
 @Component({
   selector: 'app-alert-dialog',
@@ -9,14 +10,9 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './alert-dialog.component.html',
   styleUrl: './alert-dialog.component.scss',
 })
-export class AlertDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<AlertDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: AlertDialogData
-  ) {}
-
-  onClose(): void {
-    this.dialogRef.close();
+export class AlertDialogComponent extends BasePopupComponent {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: AlertDialogData) {
+    super();
   }
 
   get iconPath(): string {
@@ -32,5 +28,9 @@ export class AlertDialogComponent {
       default:
         return '';
     }
+  }
+
+  onClose(): void {
+    this.dialogRef.close();
   }
 }

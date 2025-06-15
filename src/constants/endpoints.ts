@@ -4,6 +4,7 @@ export const EndPoints = {
   PAGINATED_EXAMPLES: '/paginatedExamples',
   AUTH: '/auth',
   CITIES: 'cities',
+  NATIONALITIES: '/nationalities',
 };
 
 export type EndpointsType = typeof EndPoints;

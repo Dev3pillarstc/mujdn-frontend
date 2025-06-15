@@ -13,6 +13,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '@/configs/translate-loader';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { provideInterceptors } from 'cast-response';
+import { AuthInterceptor } from '@/http-interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     // Use both approaches
     provideHttpClient(
       withFetch(),
-      withInterceptors([loadingInterceptor]) // Functional interceptor
+      withInterceptors([loadingInterceptor, AuthInterceptor]) // Functional interceptor
     ),
     provideRouter(routes),
     // provideClientHydration(),

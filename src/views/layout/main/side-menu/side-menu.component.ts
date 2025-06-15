@@ -1,9 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuItem } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -16,6 +17,7 @@ export class SideMenuComponent {
   sidebarVisible = false;
   isMobile = window.innerWidth <= 768;
   openedSubmenus = new Set<MenuItem>();
+  authService = inject(AuthService);
 
   menuItems = [
     {
@@ -117,5 +119,9 @@ export class SideMenuComponent {
 
   closeSidebar() {
     this.sidebarVisible = false;
+  }
+
+  logout() {
+    this.authService.logout().subscribe();
   }
 }

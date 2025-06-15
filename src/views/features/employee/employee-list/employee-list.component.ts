@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Component, inject } from '@angular/core';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
@@ -10,15 +10,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { MessageService } from 'primeng/api';
-import { ConfirmationDialogData } from '@/models/shared/confirmation-dialog-data';
-import { ConfirmationDialogComponent } from '@/abstracts/base-components/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertDialogComponent } from '@/abstracts/base-components/alert-dialog/alert-dialog.component';
-import { AlertDialogData } from '@/models/shared/alert-dialog-data';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
-import { AuthService } from '@/services/auth/auth.service';
-import { ExampleService } from '@/services/features/example.service';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 
@@ -58,8 +51,10 @@ export default class EmployeeListComponent {
   first: number = 0;
   rows: number = 10;
   matDialog = inject(MatDialog);
+  service = inject(ConfirmationService);
+  alertService = inject(AlertService);
 
-  constructor(private messageService: MessageService) {
+  constructor() {
     this.itemsList = [
       {
         label: 'تعديل بيانات الموظف',
@@ -161,22 +156,22 @@ export default class EmployeeListComponent {
       },
     ];
   }
+
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
   }
-  service = inject(ConfirmationService);
-  alertService = inject(AlertService);
+
   openConfirmation() {
     const dialogRef = this.service.open(['COMMON.CONFIRM_DELETE'], 'COMMON.OK', 'COMMON.CANCEL');
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result == DIALOG_ENUM.OK) {
         // User confirmed
-        this.alertService.showSuccessMessage('error', ['COMMON.DELETED_SUCCESSFULLY'], 'COMMON.OK');
+        this.alertService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
       } else {
         // User canceled
-        this.alertService.showErrorMessage('error', ['COMMON.DELETION_FAILED'], 'COMMON.OK');
+        this.alertService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
       }
     });
   }

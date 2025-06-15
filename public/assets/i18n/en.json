@@ -9,7 +9,8 @@
     "SAVED_SUCCESSFULLY": "Saved successfully",
     "UPDATED_SUCCESSFULLY": "Updated successfully",
     "DELETED_SUCCESSFULLY": "Deleted successfully",
-    "DELETION_FAILED": "Failed to delete the item"
+    "DELETION_FAILED": "Failed to delete the item",
+    "NOT_AUTHORIZED": "You do not have permission to access this page"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -19,5 +20,16 @@
     "USERNAME_LBL": "Username",
     "PASSWORD_LBL": "Password",
     "LOGIN_BTN": "Login"
+  },
+  "NATIONALITIES_PAGE": {
+    "NATIONALITIES_LIST": "Nationalities List",
+    "SEARCH_FILTERS": "Search Filters",
+    "NATIONALITY_IN_ARABIC": "Nationality in Arabic",
+    "NATIONALITY_IN_ENGLISH": "Nationality in English",
+    "SEARCH": "Search",
+    "RESET_SEARCH": "Reset",
+    "ADD_NEW_NATIONALITY": "Add New Nationality",
+    "ACTIONS": "Actions",
+    "NO_DATA_TO_SHOW": "No data to display"
   }
 }

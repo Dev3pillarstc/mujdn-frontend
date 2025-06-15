@@ -1,19 +1,19 @@
 <p-sidebar
-  [position]="'right'"
   [appendTo]="sidebarContainer"
-  [visible]="sidebarVisible"
-  [modal]="isMobile"
-  [showCloseIcon]="isMobile"
-  position="left"
-  [style]="{ width: isMobile ? '80%' : '250px' }"
-  styleClass="custom-sidebar"
   [baseZIndex]="1000"
+  [modal]="isMobile"
+  [position]="'right'"
+  [showCloseIcon]="isMobile"
+  [style]="{ width: isMobile ? '80%' : '250px' }"
+  [visible]="sidebarVisible"
+  position="left"
+  styleClass="custom-sidebar"
 >
   <div>
     <div
       class="sidebar-header p-3 border-bottom-1 surface-border flex justify-between items-center"
     >
-      <img src="/assets/shared/gov-logo-gam-light.png" alt="" />
+      <img alt="" src="/assets/shared/gov-logo-gam-light.png"/>
       <div>
         <button
           (click)="closeSidebar()"
@@ -25,7 +25,7 @@
     </div>
     <ul class="menu-list px-4 m-0 list-none">
       <li *ngFor="let item of menuItems">
-        <div class="menu-item flex items-center gap-3 cursor-pointer" (click)="toggleSubmenu(item)">
+        <div (click)="toggleSubmenu(item)" class="menu-item flex items-center gap-3 cursor-pointer">
           <img
             *ngIf="item.iconUrl"
             [src]="item.iconUrl"
@@ -33,37 +33,37 @@
             class="w-5 h-5"
           />
           <a *ngIf="!item.children" [routerLink]="item.routerLink" class="flex-1 truncate block">{{
-            item.label
-          }}</a>
+              item.label
+            }}</a>
           <span *ngIf="item.children" class="flex-1 truncate block">{{ item.label }}</span>
           <svg
             *ngIf="item.children && !isSubmenuOpen(item)"
-            xmlns="http://www.w3.org/2000/svg"
             class="h-4 w-4 inline"
             fill="none"
-            viewBox="0 0 24 24"
             stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M19 9l-7 7-7-7"
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M19 9l-7 7-7-7"
             />
           </svg>
           <svg
             *ngIf="item.children && isSubmenuOpen(item)"
-            xmlns="http://www.w3.org/2000/svg"
             class="h-4 w-4 inline"
             fill="none"
-            viewBox="0 0 24 24"
             stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M5 15l7-7 7 7"
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M5 15l7-7 7 7"
             />
           </svg>
         </div>
@@ -81,8 +81,8 @@
     </ul>
   </div>
   <div class="px-3">
-    <button
-      class="min-h-[32px] py-2 rounded bg-gray-100 w-full mb-2 text-[#b42318] text-sm font-medium cursor-pointer hover:bg-[#e5e7eb]"
+    <button (click)="logout()"
+            class="min-h-[32px] py-2 rounded bg-gray-100 w-full mb-2 text-[#b42318] text-sm font-medium cursor-pointer hover:bg-[#e5e7eb]"
     >
       تسجيل خروج
     </button>

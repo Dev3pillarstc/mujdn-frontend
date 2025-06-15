@@ -31,7 +31,9 @@ export class AuthService extends BaseCrudService<User, string> {
   }
 
   logout() {
-    // call logout backend
+    return this.http.get<SingleResponseData<User>>(this.getUrlSegment() + '/logout', {
+      withCredentials: true,
+    });
   }
 
   setUser(loggedInUser: LoggedInUser | null) {

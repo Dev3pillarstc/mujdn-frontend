@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { AuthService } from '@/services/auth/auth.service';
 import { AlertService } from '@/services/shared/alert.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const authGuard: CanActivateFn = (route) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const alertService = inject(AlertService);
@@ -25,6 +25,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
       const userHasRole = user.roles.some((role) => expectedRoles.includes(role));
       if (!userHasRole) {
+        router.navigate(['/login']);
         alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
         return false;
       }

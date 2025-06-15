@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Component, inject } from '@angular/core';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
@@ -10,15 +10,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { MessageService } from 'primeng/api';
-import { ConfirmationDialogData } from '@/models/shared/confirmation-dialog-data';
-import { ConfirmationDialogComponent } from '@/abstracts/base-components/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertDialogComponent } from '@/abstracts/base-components/alert-dialog/alert-dialog.component';
-import { AlertDialogData } from '@/models/shared/alert-dialog-data';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
-import { AuthService } from '@/services/auth/auth.service';
-import { ExampleService } from '@/services/features/example.service';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 
@@ -61,7 +54,7 @@ export default class EmployeeListComponent {
   service = inject(ConfirmationService);
   alertService = inject(AlertService);
 
-  constructor(private messageService: MessageService) {
+  constructor() {
     this.itemsList = [
       {
         label: 'تعديل بيانات الموظف',

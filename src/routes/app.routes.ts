@@ -43,9 +43,17 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'permissions',
+        path: 'cities',
+        loadComponent: () => import('../views/features/lookups/city/city-list/city-list.component'),
+      },
+      {
+        path: 'permission-reasons',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
         loadComponent: () =>
-          import('../views/features/lookups/permission/permission-list/permission-list.component'),
+          import(
+            '../views/features/lookups/permission/permission-reason-list/permission-reason-list.component'
+          ),
       },
       {
         path: 'notification-channels',

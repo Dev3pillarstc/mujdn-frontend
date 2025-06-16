@@ -31,5 +31,16 @@
     "ADD_NEW_NATIONALITY": "Add New Nationality",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
+  },
+  "PERMISSIONREASONS_PAGE": {
+    "PERMISSIONREASONS_LIST": "Permission Reasons List",
+    "SEARCH_FILTERS": "Search Filters",
+    "PERMISSIONREASON_IN_ARABIC": "Permission Reason in Arabic",
+    "PERMISSIONREASON_IN_ENGLISH": "Permission Reason in English",
+    "SEARCH": "Search",
+    "RESET_SEARCH": "Reset",
+    "ADD_NEW_PERMISSIONREASON": "Add New Permission Reason",
+    "ACTIONS": "Actions",
+    "NO_DATA_TO_SHOW": "No data to display"
   }
 }

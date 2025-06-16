@@ -174,7 +174,18 @@ a {
 .mat-mdc-dialog-surface.mdc-dialog__surface {
   overflow: visible;
 }
-
+.cdk-overlay-container,
+.cdk-global-overlay-wrapper {
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+}
+body:has(.cdk-overlay-backdrop) {
+  &::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+}
 // en kareem new
 
 .p-inputtext.ng-invalid.ng-dirty {

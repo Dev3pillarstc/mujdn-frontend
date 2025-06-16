@@ -1,3 +1,4 @@
+import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,6 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './city-popup.component.html',
   styleUrl: './city-popup.component.scss'
 })
-export class CityPopupComponent {
-
-}
+export class CityPopupComponent extends BasePopupComponent {}

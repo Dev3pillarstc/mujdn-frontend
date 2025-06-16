@@ -42,6 +42,11 @@ export const routes: Routes = [
             '../views/features/lookups/nationality/nationality-list/nationality-list.component'
           ),
       },
+       {
+         path: 'cities',
+          loadComponent: () =>
+          import('../views/features/lookups/city/city-list/city-list.component'),
+        },
       {
         path: 'permissions',
         loadComponent: () =>

@@ -14,6 +14,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
+import { EmployeePermissionPopupComponent } from '../popups/employee-permission-popup/employee-permission-popup.component';
+import { AssignShiftPopupComponent } from '../popups/assign-shift-popup/assign-shift-popup.component';
+import { AddNewEmployeePopupComponent } from '../popups/add-new-employee-popup/add-new-employee-popup.component';
+import { AddTaskPopupComponent } from '../popups/add-task-popup/add-task-popup.component';
+import { TasksAssignedToEmployeePopupComponent } from '../popups/tasks-assigned-to-employee-popup/tasks-assigned-to-employee-popup.component';
+import { AttendanceReportPopupComponent } from '../popups/attendance-report-popup/attendance-report-popup.component';
 
 interface Adminstration {
   type: string;
@@ -54,6 +60,74 @@ export default class EmployeeListComponent {
   service = inject(ConfirmationService);
   alertService = inject(AlertService);
 
+  // openMainModal() {
+  //   const dialogRef = this.matDialog.open(EmployeePopupComponent, this.dialogSize);
+
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     console.log(`Dialog result: ${result}`);
+  //   });
+  // }
+  openEmployeePermissionModal() {
+    const dialogRef = this.matDialog.open(EmployeePermissionPopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  assignShiftPopup() {
+    const dialogRef = this.matDialog.open(AssignShiftPopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  addNewEmployeePopup() {
+    const dialogRef = this.matDialog.open(AddNewEmployeePopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  assignTaskPopup() {
+    const dialogRef = this.matDialog.open(AddTaskPopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  tasksAssignedToEmployee() {
+    const dialogRef = this.matDialog.open(TasksAssignedToEmployeePopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  attendanceReportPopup() {
+    const dialogRef = this.matDialog.open(AttendanceReportPopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   constructor() {
     this.itemsList = [
       {
@@ -64,24 +138,28 @@ export default class EmployeeListComponent {
       },
       {
         label: 'عرض تقرير الحضور و الانصراف',
+        command: () => this.attendanceReportPopup(),
       },
       {
         separator: true,
       },
       {
         label: 'اسنادة مهمة',
+        command: () => this.assignTaskPopup(),
       },
       {
         separator: true,
       },
       {
         label: 'اسناد وردية',
+        command: () => this.assignShiftPopup(),
       },
       {
         separator: true,
       },
       {
         label: 'سجل المهمات المسندة للموظف',
+        command: () => this.tasksAssignedToEmployee(),
       },
       {
         separator: true,
@@ -101,58 +179,12 @@ export default class EmployeeListComponent {
     this.attendance = [
       {
         serialNumber: 1,
-        employeeName: 'محمد أحمد طه',
-        date: '12/12/2023',
-        time: '08:00 ص',
-        workType: 'دوام كلي',
-        attendanceStatus: 'حضور',
-        department: 'الإدارة الرئيسية',
-        movement: 'محمود ',
-        treatmentStatus: 'تمت المعالجة',
-      },
-      {
-        serialNumber: 2,
-        employeeName: 'محمد أحمد طه',
-        date: '12/12/2023',
-        time: '12:00 م',
-        workType: 'دوام كلي',
-        attendanceStatus: 'انصراف',
-        department: 'مجهول',
-        movement: 'محمود ',
-        treatmentStatus: 'تمت المعالجة',
-      },
-      {
-        serialNumber: 3,
-        employeeName: 'محمد أحمد طه',
-        date: '12/12/2023',
-        time: '08:00 ص',
-        workType: 'دوام جزئي',
-        attendanceStatus: 'حضور',
-        department: 'الإدارة الرئيسية',
-        movement: 'محمود',
-        treatmentStatus: 'قيد المعالجة',
-      },
-      {
-        serialNumber: 4,
-        employeeName: 'فاطمة علي محمد',
-        date: '13/12/2023',
-        time: '08:30 ص',
-        workType: 'دوام كلي',
-        attendanceStatus: 'حضور',
-        department: 'الإدارة الرئيسية',
-        movement: 'محمود ',
-        treatmentStatus: 'تمت المعالجة',
-      },
-      {
-        serialNumber: 5,
-        employeeName: 'أحمد محمود سالم',
-        date: '13/12/2023',
-        time: '09:00 ص',
-        workType: 'دوام كلي',
-        attendanceStatus: 'غياب',
-        department: 'الإدارة الفرعية',
-        movement: 'محمود',
-        treatmentStatus: 'تمت المعالجة',
+        employeeNameAr: 'محمد أحمد طه',
+        employeeNameEn: 'mohamed taha',
+        adminstration: 'إدارة الموارد',
+        jop: 'موظف',
+        PermanentType: 'دوام كلي',
+        date: '12/12/2024',
       },
     ];
   }

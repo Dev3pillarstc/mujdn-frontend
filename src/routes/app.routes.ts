@@ -50,6 +50,8 @@ export const routes: Routes = [
       },
       {
         path: 'permission-reasons',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
         loadComponent: () =>
           import(
             '../views/features/lookups/permission/permission-reason-list/permission-reason-list.component'

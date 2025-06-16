@@ -1,5 +1,5 @@
-import { City } from "@/models/features/lookups/city";
-import { ModelInterceptorContract } from "cast-response";
+import { City } from '@/models/features/lookups/City/city';
+import { ModelInterceptorContract } from 'cast-response';
 
 export class CityInterceptor implements ModelInterceptorContract<City> {
   send(model: City): City {

@@ -7,57 +7,38 @@ import { InputTextModule } from 'primeng/inputtext';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { PermissionReasonPopupComponent } from '../permission-reason-popup/permission-reason-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PermissionReason } from '@/models/features/lookups/permission-reason/permission-reason';
+import { PermissionReasonFilter } from '@/models/features/lookups/permission-reason/permission-reason-filter';
+import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
+import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-permission-list',
-  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule],
+  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
   templateUrl: './permission-reason-list.component.html',
   styleUrl: './permission-reason-list.component.scss',
 })
 export default class PermissionReasonListComponent
-  extends BaseListComponent<PermissionReasonPopupComponent>
+  extends BaseListComponent<    PermissionReason,
+      PermissionReasonPopupComponent,
+      PermissionReasonService,
+      PermissionReasonFilter>
   implements OnInit
 {
-
-  dialogSize = {
+  override dialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
-  dialog = inject(MatDialog);
-  items: MenuItem[] | undefined;
+  permissionReasonService = inject(PermissionReasonService);
   home: MenuItem | undefined;
-  date2: Date | undefined;
-  permissions!: any[];
-  first: number = 0;
-  rows: number = 10;
+  filterModel: PermissionReasonFilter = new PermissionReasonFilter();
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(PermissionPopupComponent as any, this.dialogSize);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+  override get service() {
+    return this.permissionReasonService;
   }
 
-  ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'إعدادات الأذونات' }];
-    // Updated dummy data to match your Arabic table structure
-    this.permissions = [
-      {
-        id: 1,
-        reasonAr: 'يوجد مشكلة ما و لظرف طارئ',
-        reasonEn: 'threre are issue',
-      },
-      {
-        id: 2,
-        reasonAr: 'يوجد مشكلة ما و لظرف طارئ',
-        reasonEn: 'threre are issue',
-      },
-    ];
-  }
-
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
+  override openDialog(): void {
+    this.openBaseDialog(PermissionReasonPopupComponent as any);
   }
 }

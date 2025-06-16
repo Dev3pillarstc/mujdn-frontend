@@ -4,16 +4,16 @@ import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
-import { PermissionPopupComponent } from '../permission-popup/permission-popup.component';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { PermissionReasonPopupComponent } from '../permission-reason-popup/permission-reason-popup.component';
 @Component({
   selector: 'app-permission-list',
   imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule],
-  templateUrl: './permission-list.component.html',
-  styleUrl: './permission-list.component.scss',
+  templateUrl: './permission-reason-list.component.html',
+  styleUrl: './permission-reason-list.component.scss',
 })
-export default class PermissionListComponent
-  extends BaseListComponent<PermissionPopupComponent>
+export default class PermissionReasonListComponent
+  extends BaseListComponent<PermissionReasonPopupComponent>
   implements OnInit
 {
   override dialogSize = {
@@ -21,7 +21,7 @@ export default class PermissionListComponent
     maxWidth: '600px',
   };
   override openDialog(): void {
-    this.openBaseDialog(PermissionPopupComponent as any);
+    this.openBaseDialog(PermissionReasonPopupComponent as any);
   }
   items: MenuItem[] | undefined;
 

@@ -42,15 +42,16 @@ export const routes: Routes = [
             '../views/features/lookups/nationality/nationality-list/nationality-list.component'
           ),
       },
-       {
-         path: 'cities',
-          loadComponent: () =>
-          import('../views/features/lookups/city/city-list/city-list.component'),
-        },
       {
-        path: 'permissions',
+        path: 'cities',
+        loadComponent: () => import('../views/features/lookups/city/city-list/city-list.component'),
+      },
+      {
+        path: 'permission-reasons',
         loadComponent: () =>
-          import('../views/features/lookups/permission/permission-list/permission-list.component'),
+          import(
+            '../views/features/lookups/permission/permission-reason-list/permission-reason-list.component'
+          ),
       },
       {
         path: 'notification-channels',

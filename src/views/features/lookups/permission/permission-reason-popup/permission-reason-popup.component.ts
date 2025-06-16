@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-permission-popup',
   imports: [InputTextModule],
-  templateUrl: './permission-popup.component.html',
-  styleUrl: './permission-popup.component.scss',
+  templateUrl: './permission-reason-popup.component.html',
+  styleUrl: './permission-reason-popup.component.scss',
 })
-export class PermissionPopupComponent extends BasePopupComponent {}
+export class PermissionReasonPopupComponent extends BasePopupComponent {}

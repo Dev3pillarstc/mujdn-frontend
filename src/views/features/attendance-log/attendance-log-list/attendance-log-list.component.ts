@@ -9,8 +9,8 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { PermissionPopupComponent } from '@/views/features/lookups/permission/permission-popup/permission-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PermissionReasonPopupComponent } from '../../lookups/permission/permission-reason-popup/permission-reason-popup.component';
 
 interface Adminstration {
   type: string;
@@ -118,7 +118,7 @@ export default class AttendanceLogListComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(PermissionPopupComponent as any, this.dialogSize);
+    const dialogRef = this.dialog.open(PermissionReasonPopupComponent as any, this.dialogSize);
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);

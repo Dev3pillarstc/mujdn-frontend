@@ -31,5 +31,17 @@
     "ADD_NEW_NATIONALITY": "إضافة جنسية جديدة",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+  },
+  "PERMISSIONREASONS_PAGE": {
+    "PERMISSIONREASONS_LIST": "قائمة أسباب الإذن",
+    "SEARCH_FILTERS": "تصفية البحث",
+    "PERMISSIONREASON_IN_ARABIC": "سبب الإذن بالعربية",
+    "PERMISSIONREASON_IN_ENGLISH": "سبب الإذن بالانجليزية",
+    "SEARCH": "بحث",
+    "RESET_SEARCH": "إعادة تعيين",
+    "ADD_NEW_PERMISSIONREASON": "إضافة سبب إذن جديد",
+    "ACTIONS": "الإجراء",
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   }
+
 }

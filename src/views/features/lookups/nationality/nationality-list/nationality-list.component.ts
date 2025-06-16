@@ -40,7 +40,12 @@ export default class NationalityListComponent
     return this.nationalityService;
   }
 
-  override openDialog(): void {
-    this.openBaseDialog(NationalityPopupComponent as any);
+  override openDialog(nationality: Nationality): void {
+    this.openBaseDialog(NationalityPopupComponent as any, nationality);
+  }
+
+  addOrEditModel(nationality?: Nationality) {
+    nationality = nationality || new Nationality();
+    this.openDialog(nationality);
   }
 }

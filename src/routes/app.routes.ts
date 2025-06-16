@@ -18,8 +18,6 @@ export const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
-        canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.ADMIN] },
         loadComponent: () => import('../views/home/home.component'),
       },
       {

@@ -1,4 +1,3 @@
-import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -8,4 +7,4 @@ import { InputTextModule } from 'primeng/inputtext';
   templateUrl: './permission-popup.component.html',
   styleUrl: './permission-popup.component.scss',
 })
-export class PermissionPopupComponent extends BasePopupComponent {}
+export class PermissionPopupComponent {}

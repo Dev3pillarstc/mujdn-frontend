@@ -9,9 +9,16 @@ import { MatDialog } from '@angular/material/dialog';
 export class AlertService {
   matDialog = inject(MatDialog);
 
-  showSuccessMessage(params: { icon?: string; messages?: string[]; buttonLabel?: string }) {
+  showSuccessMessage(
+    params: { icon?: string; messages?: string[]; okText?: string },
+    dialogSize?: {
+      width: string;
+      maxWidth: string;
+    }
+  ) {
     this.matDialog.open(AlertDialogComponent, {
-      width: '350px',
+      width: dialogSize?.width || '100%',
+      maxWidth: dialogSize?.maxWidth || '600px',
       data: <AlertDialogData>{
         icon: params.icon || 'success',
         messages: params.messages || ['COMMON.SAVED_SUCCESSFULLY'],

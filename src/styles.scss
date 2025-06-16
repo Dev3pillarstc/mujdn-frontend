@@ -211,3 +211,9 @@ body:has(.cdk-overlay-backdrop) {
 .red-btn {
   @apply text-[#fff] bg-[#d92d20] hover:bg-[#bf2318];
 }
+
+label.required::after {
+  content: ' *';
+  color: #b42318;
+  font-weight: bold;
+}

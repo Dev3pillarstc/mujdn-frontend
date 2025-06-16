@@ -8,4 +8,4 @@ import { InputTextModule } from 'primeng/inputtext';
   templateUrl: './permission-reason-popup.component.html',
   styleUrl: './permission-reason-popup.component.scss',
 })
-export class PermissionReasonPopupComponent extends BasePopupComponent {}
+export class PermissionPopupComponent {}

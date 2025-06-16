@@ -6,13 +6,14 @@ import { PaginationParams } from '@/models/shared/pagination-params';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { NationalityFilter } from '@/models/features/lookups/Nationality-filter';
 import { PaginatorState } from 'primeng/paginator';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { Nationality } from '@/models/features/lookups/Nationality';
 
 @Directive()
 export abstract class BaseListComponent<
   Model,
-  PopupModel,
+  PopupComponent,
   TService extends BaseCrudService<Model>,
   FilterModel,
 > implements OnInit
@@ -26,6 +27,7 @@ export abstract class BaseListComponent<
   paginationParams: PaginationParams = new PaginationParams();
   matDialog = inject(MatDialog);
   activatedRoute = inject(ActivatedRoute);
+  declare selectedModel: Model;
 
   abstract get filterModel(): FilterModel;
 
@@ -33,13 +35,15 @@ export abstract class BaseListComponent<
 
   abstract get service(): TService;
 
-  abstract openDialog(): void;
+  abstract openDialog(nationality: Model): void;
 
-  openBaseDialog(popupComponent: PopupModel) {
-    const dialogRef = this.matDialog.open(popupComponent as any, this.dialogSize);
+  openBaseDialog(popupComponent: PopupComponent, model: Model) {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = { model: model, dialogSize: this.dialogSize };
+    const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+      this.loadList();
     });
   }
 

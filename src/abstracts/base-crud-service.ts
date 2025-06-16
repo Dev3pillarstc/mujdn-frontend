@@ -10,6 +10,7 @@ import { RegisterServiceMixin } from '@/mixins/register-service-mixin';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { PaginationParams } from '@/models/shared/pagination-params';
 
 export abstract class BaseCrudService<Model, PrimaryKey = number>
   extends RegisterServiceMixin(class {})
@@ -28,17 +29,19 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
         params: new HttpParams({
           fromObject: options as never,
         }),
+        withCredentials: true,
       })
       .pipe(map((response) => response.data as Model[]));
   }
 
-  @CastResponse()
+  @CastResponse(undefined, { fallback: '$pagination' })
   loadPaginatedSP(options?: OptionsContract | undefined): Observable<PaginatedList<Model>> {
     return this.http
       .get<PaginatedListResponseData<Model>>(this.getUrlSegment() + '/GetWithPagingSP', {
         params: new HttpParams({
           fromObject: options as never,
         }),
+        withCredentials: true,
       })
       .pipe(
         map((response) => {
@@ -50,14 +53,23 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
       );
   }
 
-  @CastResponse()
-  loadPaginated(options?: OptionsContract | undefined): Observable<PaginatedList<Model>> {
+  @CastResponse(undefined, { fallback: '$pagination' })
+  loadPaginated(
+    paginationParams?: PaginationParams,
+    filterOptions?: OptionsContract | undefined
+  ): Observable<PaginatedList<Model>> {
+    const httpParams = new HttpParams({
+      fromObject: paginationParams as unknown as never,
+    });
     return this.http
-      .get<PaginatedListResponseData<Model>>(this.getUrlSegment() + '/GetWithPaging', {
-        params: new HttpParams({
-          fromObject: options as never,
-        }),
-      })
+      .post<PaginatedListResponseData<Model>>(
+        this.getUrlSegment() + '/GetWithPaging',
+        filterOptions || {},
+        {
+          params: httpParams, // <-- query string
+          withCredentials: true,
+        }
+      )
       .pipe(
         map((response) => {
           return {
@@ -71,22 +83,22 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   @CastResponse()
   @HasInterception
   create(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.post<Model>(this.getUrlSegment(), model);
+    return this.http.post<Model>(this.getUrlSegment(), model, { withCredentials: true });
   }
 
   @CastResponse()
   @HasInterception
   update(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.put<Model>(this.getUrlSegment(), model);
+    return this.http.put<Model>(this.getUrlSegment(), model, { withCredentials: true });
   }
 
   @CastResponse()
   delete(id: PrimaryKey): Observable<Model> {
-    return this.http.delete<Model>(this.getUrlSegment() + '/' + id);
+    return this.http.delete<Model>(this.getUrlSegment() + '/' + id, { withCredentials: true });
   }
 
   @CastResponse()
   getById(id: PrimaryKey): Observable<Model> {
-    return this.http.get<Model>(this.getUrlSegment() + '/' + id);
+    return this.http.get<Model>(this.getUrlSegment() + '/' + id, { withCredentials: true });
   }
 }

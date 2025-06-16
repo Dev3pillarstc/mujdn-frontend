@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@/guards/auth-guard';
 import { ROLES_ENUM } from '@/enums/roles-enum';
+import { nationalitiesResolver } from '@/resolvers/lookups/nationalities.resolver';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,7 @@ export const routes: Routes = [
       },
       {
         path: 'nationalities',
+        resolve: { list: nationalitiesResolver },
         loadComponent: () =>
           import(
             '../views/features/lookups/nationality/nationality-list/nationality-list.component'

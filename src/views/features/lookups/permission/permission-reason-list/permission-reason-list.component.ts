@@ -39,7 +39,12 @@ export default class PermissionReasonListComponent
     return this.permissionReasonService;
   }
 
-  override openDialog(): void {
-    // this.openBaseDialog(PermissionReasonPopupComponent as any);
+  override openDialog(permissionReason: PermissionReason): void {
+    this.openBaseDialog(PermissionReasonPopupComponent as any, permissionReason);
+  }
+
+  addOrEditModel(permissionReason?: PermissionReason) {
+    permissionReason = permissionReason || new PermissionReason();
+    this.openDialog(permissionReason);
   }
 }

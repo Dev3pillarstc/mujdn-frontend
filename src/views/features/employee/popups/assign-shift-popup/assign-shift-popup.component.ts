@@ -29,9 +29,7 @@ export class AssignShiftPopupComponent implements OnInit {
       maxWidth: '1024px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   ngOnInit() {

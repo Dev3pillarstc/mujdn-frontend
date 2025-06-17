@@ -6,7 +6,6 @@ import { PermissionReasonInterceptor } from '@/model-interceptors/features/looku
 const { send, receive } = new PermissionReasonInterceptor();
 
 @InterceptModel({ send, receive })
-
 export class PermissionReason extends BaseCrudModel<PermissionReason, PermissionReasonService> {
   override $$__service_name__$$: string = 'PermissionReasonService';
   declare nameAr: string;

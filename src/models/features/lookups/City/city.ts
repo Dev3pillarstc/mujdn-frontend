@@ -1,8 +1,8 @@
-import { BaseCrudModel } from "@/abstracts/base-crud-model";
-import { CityInterceptor } from "@/model-interceptors/features/lookups/city.interceptor";
-import { CityService } from "@/services/features/lookups/city.service";
-import { Validators } from "@angular/forms";
-import { InterceptModel } from "cast-response";
+import { BaseCrudModel } from '@/abstracts/base-crud-model';
+import { CityInterceptor } from '@/model-interceptors/features/lookups/city.interceptor';
+import { CityService } from '@/services/features/lookups/city.service';
+import { Validators } from '@angular/forms';
+import { InterceptModel } from 'cast-response';
 
 const { send, receive } = new CityInterceptor();
 

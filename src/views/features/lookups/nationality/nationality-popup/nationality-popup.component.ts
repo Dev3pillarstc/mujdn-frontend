@@ -2,13 +2,14 @@ import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Nationality } from '@/models/features/lookups/Nationality';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { Observable } from 'rxjs';
 import { AlertService } from '@/services/shared/alert.service';
-import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { NationalityService } from '@/services/features/lookups/nationality.service';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-nationality-popup',

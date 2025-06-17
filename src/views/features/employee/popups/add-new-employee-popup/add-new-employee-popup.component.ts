@@ -8,6 +8,7 @@ import { Select } from 'primeng/select';
 import { User } from '@/models/auth/user';
 import { DialogRef } from '@angular/cdk/dialog';
 import { Observable } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
 
 interface Adminstration {
   type: string;
@@ -32,7 +33,7 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
 
   override saveFail(error: Error): void {}
 
-  override afterSave(model: User, dialogRef: DialogRef): void {}
+  override afterSave(model: User, dialogRef: MatDialogRef<any, any>): void {}
 
   override beforeSave(model: User, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;

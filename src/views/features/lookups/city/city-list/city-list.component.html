@@ -1,39 +1,49 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
-      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">قائمة المدن</h3>
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'CITIES_PAGE.CITIES_LIST' | translate }}
+      </h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
       <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
         <div class="flex items-center justify-between">
-          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+            {{ 'CITIES_PAGE.SEARCH_FILTERS' | translate }}
+          </h5>
         </div>
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
-              <label for="cityAr" class="label">المدينة بالعربية</label>
+              <label class="label" for="cittyAr">{{
+                'CITIES_PAGE.CITY_IN_ARABIC' | translate
+              }}</label>
               <input
-                id="cityAr"
-                type="text"
-                pInputText
+                [(ngModel)]="filterModel.nameAr"
+                [placeholder]="'CITIES_PAGE.CITY_IN_ARABIC' | translate"
                 class="peer"
                 fluid="true"
-                placeholder="المدينة بالعربية"
+                id="cittyAr"
+                pInputText
+                type="text"
               />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="cityEn" class="label">المدينة بالانجليزية</label>
+              <label class="label" for="cittyEn">{{
+                'CITIES_PAGE.CITY_IN_ENGLISH' | translate
+              }}</label>
               <input
-                id="cityEn"
-                placeholder="المدينة بالانجليزية"
-                type="text"
-                pInputText
+                [(ngModel)]="filterModel.nameEn"
+                [placeholder]="'CITIES_PAGE.CITY_IN_ENGLISH' | translate"
                 class="peer"
                 fluid="true"
+                id="cittyEn"
+                pInputText
+                type="text"
               />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -42,8 +52,12 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button class="btn black-btn">بحث</button>
-            <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+            <button (click)="search()" class="btn black-btn">
+              {{ 'CITIES_PAGE.SEARCH' | translate }}
+            </button>
+            <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
+              {{ 'CITIES_PAGE.RESET_SEARCH' | translate }}
+            </button>
           </div>
         </div>
       </div>
@@ -51,68 +65,64 @@
         <div
           class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
         >
-          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">قائمة المدن</h4>
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+            {{ 'CITIES_PAGE.CITIES_LIST' | translate }}
+          </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button>
-              <img src="/assets/icons/excel.svg" alt="" />
+              <img alt="" src="/assets/icons/excel.svg" />
             </button>
             <button>
-              <img src="/assets/icons/print.svg" alt="" />
+              <img alt="" src="/assets/icons/print.svg" />
             </button>
-            <button class="btn green-btn flex items-center" (click)="openDialog()">
-              <img src="/assets/icons/plus.svg" alt="" />
-              <span>إضافة مدينة جديدة</span>
+            <button (click)="openDialog()" class="btn green-btn flex items-center">
+              <img alt="" src="/assets/icons/plus.svg" />
+              <span>{{ 'CITIES_PAGE.ADD_NEW_CITY' | translate }}</span>
             </button>
           </div>
         </div>
-        <p-table [value]="list">
-          <ng-template #header>
-            <tr>
-              <th>المدينة بالعربية</th>
-              <th>المدينة بالانجليزية</th>
-              <th class="w-[100px]">الإجراء</th>
-            </tr>
-          </ng-template>
-          <ng-template #body let-cities>
-            <tr>
-              <td>{{ cities.cityAr }}</td>
-              <td>{{ cities.cityEn }}</td>
-
-              <td>
-                <div class="actions flex gap-2">
-                  <button
-                    class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center w-[32px]"
-                  >
-                    <img src="/assets/icons/edit-action.svg" alt="" />
-                  </button>
-                  <button
-                    class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center w-[32px]"
-                  >
-                    <img src="/assets/icons/edit-action.svg" alt="" />
-                  </button>
-                  <button
-                    class="bg-[#fef3f2] rounded p-2 flex items-center justify-center w-[32px]"
-                  >
-                    <img src="/assets/icons/delete-action.svg" alt="" />
-                  </button>
-                  <button
-                    class="bg-[#fef3f2] rounded p-2 flex items-center justify-center w-[32px]"
-                  >
-                    <img src="/assets/icons/delete-action.svg" alt="" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-        <p-paginator
-          class="mt-6"
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
-        />
+        @if (list && list.length > 0) {
+          <p-table [value]="list">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>{{ 'CITIES_PAGE.CITY_IN_ARABIC' | translate }}</th>
+                <th>{{ 'CITIES_PAGE.CITY_IN_ENGLISH' | translate }}</th>
+                <th class="w-[100px]">{{ 'CITIES_PAGE.ACTIONS' | translate }}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-city>
+              <tr>
+                <td>{{ city.nameAr }}</td>
+                <td>{{ city.nameEn }}</td>
+                <td>
+                  <div class="actions flex gap-2">
+                    <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
+                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                    </button>
+                    <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
+                      <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        } @else {
+          <div class="flex items-center justify-center h-64">
+            <p class="text-gray-500">{{ 'CITIES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+          </div>
+        }
+        @if (paginationInfo) {
+          <p-paginator
+            (onPageChange)="onPageChange($event)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
+        }
       </div>
     </div>
   </div>

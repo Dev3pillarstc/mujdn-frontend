@@ -6,14 +6,24 @@
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">بيانات طلب الاستئذان</h3>
 
     <div class="p-6 rounded-2xl bg-[#f3f4f6]">
-      <div class="bg-white rounded-2xl py-4 px-6 flex gap-2 items-center">
-        <span class="text-[#6c737f] text-sm">حالة الطلب</span>
-        <div class="bg-[#067647] py-1 px-4 rounded-full text-white flex gap-2 items-center">
-          <span class="block w-[10px] rounded-full h-[10px] bg-[#ffffff99]"> </span>
-          <span>موافقة</span>
+      <div class="flex flex-col sm:flex-row justify-between bg-white rounded-2xl py-4 px-6 gap-4">
+        <div class=" flex gap-2 items-center">
+          <span class="text-[#6c737f] text-sm">حالة الطلب</span>
+          <div class="bg-[#067647] px-4 rounded-full text-white flex gap-2 items-center">
+            <span class="block w-[10px] rounded-full h-[10px] bg-[#ffffff99]"> </span>
+            <span>موافقة</span>
+          </div>
+          <div class="bg-[#1570ef] px-4 rounded-full text-white flex gap-2 items-center">
+            <span class="block w-[10px] rounded-full h-[10px] bg-[#ffffff99]"> </span>
+            <span>جديد</span>
+          </div>
+        </div>
+        <div class="flex gap-2 items-center">
+          <span class="text-[#6c737f] text-sm">تاريخ الموافقة</span>
+          <span class="text-[#161616] font-semibold">12/12/2024</span>
         </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 ">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]">نوع الاذن</span>
           <span class="font-semibold text-[#161616]">صباحي</span>
@@ -36,8 +46,12 @@
         </div>
       </div>
     </div>
-    <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn" (click)="close()">الغاء</button>
+    <div class="actions mt-6 flex items-center justify-between gap-4">
+      <button class="btn gray-btn" (click)="close()">الغاء</button>
+      <div class="flex gap-2">
+        <button class="btn red-btn-action" (click)="close()">رفض</button>
+        <button class="btn green-btn" (click)="close()">قبول</button>
       </div>
+    </div>
   </div>
 </div>

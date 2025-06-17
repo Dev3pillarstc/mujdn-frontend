@@ -132,6 +132,7 @@ export default class EmployeeListComponent {
     this.itemsList = [
       {
         label: 'تعديل بيانات الموظف',
+        command: () => this.addNewEmployeePopup(),
       },
       {
         separator: true,

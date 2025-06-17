@@ -62,6 +62,11 @@ export const routes: Routes = [
             '../views/features/settings/notification-channels/notification-channels.component'
           ),
       },
+      {
+        path: 'permissions',
+        loadComponent: () =>
+          import('../views/features/permissions/permissions-list/permissions-list.component'),
+      },
     ],
   },
   {

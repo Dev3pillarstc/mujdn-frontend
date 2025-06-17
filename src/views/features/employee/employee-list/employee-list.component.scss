@@ -1,19 +1,4 @@
 ::ng-deep {
-  .p-breadcrumb {
-    padding: 0;
-    padding-bottom: 24px;
-
-    ol {
-      li {
-        &:last-child {
-          span {
-            color: #9da4ae;
-          }
-        }
-      }
-    }
-  }
-
   p-splitbutton {
     button {
       background-color: #f3f4f6 !important;

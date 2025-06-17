@@ -1,8 +1,8 @@
-import { BaseCrudModel } from "@/abstracts/base-crud-model";
-import { CityInterceptor } from "@/model-interceptors/features/lookups/city.interceptor";
-import { CityService } from "@/services/features/lookups/city.service";
-import { Validators } from "@angular/forms";
-import { InterceptModel } from "cast-response";
+import { BaseCrudModel } from '@/abstracts/base-crud-model';
+import { CityInterceptor } from '@/model-interceptors/features/lookups/city.interceptor';
+import { CityService } from '@/services/features/lookups/city.service';
+import { Validators } from '@angular/forms';
+import { InterceptModel } from 'cast-response';
 
 const { send, receive } = new CityInterceptor();
 
@@ -13,9 +13,9 @@ export class City extends BaseCrudModel<City, CityService> {
   isActive?: boolean = false;
   fkCountryId!: number;
   fkRegionId!: number;
-  key?:string;
-  countryName?:string;
-  regionName?:string;
+  key?: string;
+  countryName?: string;
+  regionName?: string;
   buildForm() {
     let { name, isActive, fkCountryId, fkRegionId } = this;
 

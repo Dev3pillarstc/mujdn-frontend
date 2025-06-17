@@ -177,7 +177,6 @@ a {
 .cdk-overlay-container,
 .cdk-global-overlay-wrapper {
   overflow-y: auto;
-
 }
 body:has(.cdk-overlay-backdrop) {
   &::-webkit-scrollbar {

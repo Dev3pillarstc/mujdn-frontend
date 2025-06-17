@@ -50,9 +50,6 @@ export const AuthInterceptor: HttpInterceptorFn = (
             authService.logout();
           }
         }
-
-        console.log(`[Interceptor] Response from ${req.url}:`, response);
-        console.log(`user from service`, authService.getUser().value);
       }
     }),
     catchError((error) => {

@@ -38,7 +38,6 @@ export class Nationality extends BaseCrudModel<Nationality, NationalityService> 
       isActive: [isActive, []],
     };
 
-    console.log('form', form);
     return form;
   }
 }

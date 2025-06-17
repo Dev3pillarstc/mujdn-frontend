@@ -120,8 +120,6 @@ export default class AttendanceLogListComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(PermissionReasonPopupComponent as any, this.dialogSize);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

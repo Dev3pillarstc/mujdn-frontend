@@ -5,7 +5,7 @@ export const EndPoints = {
   AUTH: '/auth',
   CITIES: 'cities',
   NATIONALITIES: '/nationalities',
-  PERMISSION_REASONS: '/permission-reasons',
+  PERMISSION_REASONS: '/permissionreasons',
 };
 
 export type EndpointsType = typeof EndPoints;

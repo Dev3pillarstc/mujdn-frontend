@@ -36,7 +36,6 @@ export function ignoreErrors<T>(debug = false): MonoTypeOperatorFunction<T> {
     return source
       .pipe(
         catchError((error) => {
-          debug && console.log(error);
           return of('CUSTOM_ERROR' as T);
         })
       )

@@ -69,10 +69,12 @@
             {{ 'NATIONALITIES_PAGE.NATIONALITIES_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
+
             <button  class="p-2 bg-[#f3f4f6] rounded hover:bg-transparent">
               <img alt="" src="/assets/icons/excel.svg" />
             </button>
             <button  class="p-2 bg-[#f3f4f6] rounded hover:bg-transparent">
+
               <img alt="" src="/assets/icons/print.svg" />
             </button>
             <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
@@ -97,14 +99,15 @@
                 <td>
                   <div class="actions flex gap-2">
                     <button
+
+                      (click)="addOrEditModel(nationality)"
                       class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center min-w-[36px] hover:bg-[#e5e7eb]"
                     >
-                      <img src="/assets/icons/edit-action.svg" alt="" />
+                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                     </button>
-                    <button
-                      class="bg-[#fef3f2] rounded p-2 flex items-center justify-center min-w-[36px] hover:bg-[#fee4e2]"
-                    >
-                      <img src="/assets/icons/delete-action.svg" alt="" />
+                    <button class="bg-[#fef3f2] rounded p-2 flex items-center justify-center min-w-[36px] hover:bg-[#fee4e2]">
+                      <img src="/assets/icons/delete-action.svg" alt="حذف" />
+
                     </button>
                   </div>
                 </td>

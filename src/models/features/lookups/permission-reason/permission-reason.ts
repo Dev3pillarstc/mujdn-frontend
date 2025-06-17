@@ -8,7 +8,6 @@ import { Validators } from '@angular/forms';
 const { send, receive } = new PermissionReasonInterceptor();
 
 @InterceptModel({ send, receive })
-
 export class PermissionReason extends BaseCrudModel<PermissionReason, PermissionReasonService> {
   override $$__service_name__$$: string = 'PermissionReasonService';
   declare nameAr: string;

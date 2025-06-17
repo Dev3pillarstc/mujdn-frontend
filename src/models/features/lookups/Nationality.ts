@@ -16,7 +16,7 @@ export class Nationality extends BaseCrudModel<Nationality, NationalityService> 
 
   buildForm() {
     const { nameAr, nameEn, isActive } = this;
-    const form = {
+    return {
       nameAr: [
         nameAr,
         [
@@ -37,8 +37,5 @@ export class Nationality extends BaseCrudModel<Nationality, NationalityService> 
       ],
       isActive: [isActive, []],
     };
-
-    console.log('form', form);
-    return form;
   }
 }

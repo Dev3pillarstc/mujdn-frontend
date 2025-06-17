@@ -64,69 +64,8 @@ export default class EmployeeListComponent {
   //   const dialogRef = this.matDialog.open(EmployeePopupComponent, this.dialogSize);
 
   //   dialogRef.afterClosed().subscribe((result) => {
-  //     console.log(`Dialog result: ${result}`);
+
   //   });
-  // }
-  openEmployeePermissionModal() {
-    const dialogRef = this.matDialog.open(EmployeePermissionPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  assignShiftPopup() {
-    const dialogRef = this.matDialog.open(AssignShiftPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  addNewEmployeePopup() {
-    const dialogRef = this.matDialog.open(AddNewEmployeePopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  assignTaskPopup() {
-    const dialogRef = this.matDialog.open(AddTaskPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  tasksAssignedToEmployee() {
-    const dialogRef = this.matDialog.open(TasksAssignedToEmployeePopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-  attendanceReportPopup() {
-    const dialogRef = this.matDialog.open(AttendanceReportPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
 
   constructor() {
     this.itemsList = [
@@ -171,6 +110,61 @@ export default class EmployeeListComponent {
         command: () => this.openConfirmation(),
       },
     ];
+  }
+
+  // }
+  openEmployeePermissionModal() {
+    const dialogRef = this.matDialog.open(EmployeePermissionPopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe();
+  }
+
+  assignShiftPopup() {
+    const dialogRef = this.matDialog.open(AssignShiftPopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe();
+  }
+
+  addNewEmployeePopup() {
+    const dialogRef = this.matDialog.open(AddNewEmployeePopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe();
+  }
+
+  assignTaskPopup() {
+    const dialogRef = this.matDialog.open(AddTaskPopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe();
+  }
+
+  tasksAssignedToEmployee() {
+    const dialogRef = this.matDialog.open(TasksAssignedToEmployeePopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe();
+  }
+
+  attendanceReportPopup() {
+    const dialogRef = this.matDialog.open(AttendanceReportPopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe();
   }
 
   ngOnInit() {

@@ -42,6 +42,17 @@
     "ADD_NEW_PERMISSIONREASON": "إضافة سبب إذن جديد",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+  },
+  "CITIES_PAGE": {
+    "CITIES_LIST": "قائمة المدن",
+    "SEARCH_FILTERS": "تصفية البحث",
+    "CITY_IN_ARABIC": "المدينة بالعربية",
+    "CITY_IN_ENGLISH": "المدينة بالانجليزية",
+    "SEARCH": "بحث",
+    "RESET_SEARCH": "إعادة تعيين",
+    "ADD_NEW_CITY": "إضافة مدينة جديدة",
+    "ACTIONS": "الإجراء",
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   }
 
 }

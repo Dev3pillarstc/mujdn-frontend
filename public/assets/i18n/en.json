@@ -42,5 +42,16 @@
     "ADD_NEW_PERMISSIONREASON": "Add New Permission Reason",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
+  },
+  "CITIES_PAGE": {
+    "CITIES_LIST": "Cities List",
+    "SEARCH_FILTERS": "Search Filters",
+    "CITY_IN_ARABIC": "City in Arabic",
+    "CITY_IN_ENGLISH": "City in English",
+    "SEARCH": "Search",
+    "RESET_SEARCH": "Reset",
+    "ADD_NEW_CITY": "Add New City",
+    "ACTIONS": "Actions",
+    "NO_DATA_TO_SHOW": "No data to display"
   }
 }

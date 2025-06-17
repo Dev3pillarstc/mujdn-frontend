@@ -7,16 +7,15 @@ import { Config, ConfigType } from '@/constants/config';
   providedIn: 'root',
 })
 export class ConfigService {
-  private http = inject(HttpClient);
   CONFIG: ConfigType = Config;
   BASE_URL = '';
+  private http = inject(HttpClient);
 
   load(): Observable<ConfigType> {
     return this.http
       .get<ConfigType>('resources/environment.json')
       .pipe(tap((res) => (this.CONFIG = { ...this.CONFIG, ...res })))
-      .pipe(tap(() => this.prepareBaseUrl()))
-      .pipe(tap((c) => console.log(c)));
+      .pipe(tap(() => this.prepareBaseUrl()));
   }
 
   private prepareBaseUrl(): string {

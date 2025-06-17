@@ -9,9 +9,16 @@ import { MatDialog } from '@angular/material/dialog';
 export class ConfirmationService {
   matDialog = inject(MatDialog);
 
-  open(params: { icon?: string; messages?: string[]; confirmText?: string; cancelText?: string; }) {
-    const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-      width: '400px',
+  open(
+    params: { icon?: string; messages?: string[]; confirmText?: string; cancelText?: string },
+    dialogSize?: {
+      width: string;
+      maxWidth: string;
+    }
+  ) {
+    return this.matDialog.open(ConfirmationDialogComponent, {
+      width: dialogSize?.width || '100%',
+      maxWidth: dialogSize?.maxWidth || '600px',
       data: <ConfirmationDialogData>{
         icon: params.icon || 'warning',
         messages: params.messages || ['COMMON.CONFIRM_DELETE'],
@@ -19,6 +26,5 @@ export class ConfirmationService {
         cancelText: params.cancelText || 'COMMON.CANCEL',
       },
     });
-    return dialogRef;
   }
 }

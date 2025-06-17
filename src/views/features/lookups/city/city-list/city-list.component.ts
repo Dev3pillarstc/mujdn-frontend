@@ -35,6 +35,6 @@ export default class CityListComponent
   }
 
   override openDialog(): void {
-    this.openBaseDialog(CityPopupComponent as any);
+    // this.openBaseDialog(CityPopupComponent as any);
   }
 }

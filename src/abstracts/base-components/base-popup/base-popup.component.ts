@@ -2,10 +2,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { Directive, inject, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { Service } from 'json-server/lib/service';
-import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { DialogRef } from '@angular/cdk/dialog';
 import { FormGroup } from '@angular/forms';
 import {
@@ -21,7 +18,9 @@ import {
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
 @Directive()
-export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any>> implements OnInit {
+export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, any>>
+  implements OnInit
+{
   abstract model: Model;
   abstract form: FormGroup;
   declare direction: LAYOUT_DIRECTION_ENUM;

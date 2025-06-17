@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     data: { roles: [ROLES_ENUM.EMPLOYEE] },
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
@@ -60,6 +60,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import(
             '../views/features/settings/notification-channels/notification-channels.component'
+          ),
+      },
+      {
+        path: 'holidays-list',
+        loadComponent: () =>
+          import('../views/features/lookups/holidays/holidays-list/holidays-list.component'),
+      },
+      {
+        path: 'employee-holidays',
+        loadComponent: () =>
+          import(
+            '../views/features/lookups/holidays/employee-holidays/employee-holidays.component'
           ),
       },
     ],

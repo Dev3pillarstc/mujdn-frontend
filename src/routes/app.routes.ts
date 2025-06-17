@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { authGuard } from '@/guards/auth-guard';
 import { ROLES_ENUM } from '@/enums/roles-enum';
 import { nationalitiesResolver } from '@/resolvers/lookups/nationalities.resolver';
+import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.resolver';
+import { cityResolver } from '@/resolvers/lookups/city.resolver';
 
 export const routes: Routes = [
   {
@@ -11,7 +13,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
     data: { roles: [ROLES_ENUM.EMPLOYEE] },
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
@@ -44,12 +46,16 @@ export const routes: Routes = [
       },
       {
         path: 'cities',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
+        resolve: { list: cityResolver },
         loadComponent: () => import('../views/features/lookups/city/city-list/city-list.component'),
       },
       {
         path: 'permission-reasons',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN] },
+        resolve: { list: permissionReasonResolver },
         loadComponent: () =>
           import(
             '../views/features/lookups/permission/permission-reason-list/permission-reason-list.component'
@@ -61,6 +67,11 @@ export const routes: Routes = [
           import(
             '../views/features/settings/notification-channels/notification-channels.component'
           ),
+      },
+      {
+        path: 'permissions',
+        loadComponent: () =>
+          import('../views/features/permissions/permissions-list/permissions-list.component'),
       },
       {
         path: 'holidays-list',

@@ -8,12 +8,13 @@ import { CityService } from '@/services/features/lookups/city.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { CityPopupComponent } from '../city-popup/city-popup.component';
 import { City } from '@/models/features/lookups/City/city';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CityFilter } from '@/models/features/lookups/City/city-filter';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-city-list',
-  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, ReactiveFormsModule],
+  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
   providers: [CityService],
   templateUrl: './city-list.component.html',
   styleUrl: './city-list.component.scss',

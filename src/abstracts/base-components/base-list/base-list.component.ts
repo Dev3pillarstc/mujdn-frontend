@@ -8,7 +8,6 @@ import { NationalityFilter } from '@/models/features/lookups/Nationality-filter'
 import { PaginatorState } from 'primeng/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Nationality } from '@/models/features/lookups/Nationality';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -39,7 +38,7 @@ export abstract class BaseListComponent<
 
   openBaseDialog(popupComponent: PopupComponent, model: Model) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = { model: model, dialogSize: this.dialogSize };
+    dialogConfig.data = { model: model };
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result) => {

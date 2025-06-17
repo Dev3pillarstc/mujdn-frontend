@@ -10,15 +10,15 @@ export class AlertService {
   matDialog = inject(MatDialog);
 
   showSuccessMessage(
-    params: { icon?: string; messages?: string[]; okText?: string },
+    params: { icon?: string; messages?: string[]; buttonLabel?: string },
     dialogSize?: {
       width: string;
       maxWidth: string;
     }
   ) {
-    this.matDialog.open(AlertDialogComponent, {
+    return this.matDialog.open(AlertDialogComponent, {
       width: dialogSize?.width || '100%',
-      maxWidth: dialogSize?.maxWidth || '600px',
+      maxWidth: dialogSize?.maxWidth || '400px',
       data: <AlertDialogData>{
         icon: params.icon || 'success',
         messages: params.messages || ['COMMON.SAVED_SUCCESSFULLY'],
@@ -27,9 +27,16 @@ export class AlertService {
     });
   }
 
-  showErrorMessage(params: { icon?: string; messages?: string[]; buttonLabel?: string }) {
-    this.matDialog.open(AlertDialogComponent, {
-      width: '350px',
+  showErrorMessage(
+    params: { icon?: string; messages?: string[]; buttonLabel?: string },
+    dialogSize?: {
+      width: string;
+      maxWidth: string;
+    }
+  ) {
+    return this.matDialog.open(AlertDialogComponent, {
+      width: dialogSize?.width || '100%',
+      maxWidth: dialogSize?.maxWidth || '400px',
       data: <AlertDialogData>{
         icon: params.icon || 'error',
         messages: params.messages || ['COMMON.ERROR_OCCURRED'],

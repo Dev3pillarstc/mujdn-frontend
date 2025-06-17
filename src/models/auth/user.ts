@@ -1,19 +1,13 @@
-export class User {
-  declare id?: string;
-  declare name?: string;
+import { BaseCrudModel } from '@/abstracts/base-crud-model';
+import { AuthService } from '@/services/auth/auth.service';
+
+export class User extends BaseCrudModel<User, AuthService, string> {
+  override $$__service_name__$$: string = 'AuthService';
   declare email?: string;
   declare identificationNumber?: number;
-  declare private _token: string;
-  declare private _tokenExpirationDate: Date;
-
-  get token() {
-    if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
-      return null;
-    }
-    return this._token;
-  }
-
-  get tokenExpirationDate() {
-    return this._tokenExpirationDate;
-  }
+  declare version?: string;
+  declare isActive?: string;
+  declare fullNameAr?: string;
+  declare fullNameEn?: string;
+  declare profilePhotoId?: string;
 }

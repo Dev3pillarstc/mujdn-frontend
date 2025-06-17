@@ -1,48 +1,48 @@
-<div [dir]="direction">
+<div>
   <div class="p-6">
-    <button class="block ms-auto" (click)="close()">
+    <button class="block ms-auto">
       <i class="pi pi-times"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة سبب جديد</h3>
-    <form  class="mt-6">
+    <form class="mt-6">
       <div class="grid sm:grid-cols-2 gap-4">
         <div>
-          <label for="permissionAr-popup" class="label">سبب الأذن بالعربية</label>
+          <label class="label" for="permissionAr-popup">سبب الأذن بالعربية</label>
           <div class="relative">
             <input
-              id="permissionAr-popup"
-              placeholder="سبب الأذن بالعربية" 
-              type="text"
-              pInputText
               class="peer"
               fluid="true"
+              id="permissionAr-popup"
+              pInputText
+              placeholder="سبب الأذن بالعربية"
+              type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message" >هذا الحقل مطلوب</span>
+          <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="permissionEn-popup" class="label">سبب الأذن بالانجليزية</label>
+          <label class="label" for="permissionEn-popup">سبب الأذن بالانجليزية</label>
           <div class="relative">
             <input
-              id="permissionAr-popup"
-              placeholder="سبب الأذن بالانجليزية"
-              type="text"
-              pInputText
               class="peer"
               fluid="true"
+              id="permissionAr-popup"
+              pInputText
+              placeholder="سبب الأذن بالانجليزية"
+              type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message" >هذا الحقل مطلوب</span>
+          <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn" (click)="close()">الغاء</button>
+        <button class="btn gray-btn">الغاء</button>
         <button class="btn green-btn">إضافة</button>
       </div>
     </form>

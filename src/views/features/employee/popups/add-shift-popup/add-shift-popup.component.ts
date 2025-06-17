@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { Select } from 'primeng/select';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
-import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { DialogRef } from '@angular/cdk/dialog';
 
 interface Adminstration {
@@ -12,20 +12,18 @@ interface Adminstration {
 }
 
 @Component({
-  selector: 'app-attendance-popup',
+  selector: 'app-add-shift-popup',
   imports: [Select, DatePickerModule, FormsModule],
-  templateUrl: './attendance-log-popup.component.html',
-  styleUrl: './attendance-log-popup.component.scss',
+  templateUrl: './add-shift-popup.component.html',
+  styleUrl: './add-shift-popup.component.scss',
 })
-export class AttendanceLogPopupComponent implements OnInit {
+export class AddShiftPopupComponent implements OnInit {
+  adminstrations: Adminstration[] | undefined;
+  selectedAdminstration: Adminstration | undefined;
+  date2: Date | undefined;
   declare direction: LAYOUT_DIRECTION_ENUM;
   languageService = inject(LanguageService);
   dialogRef = inject(DialogRef);
-  adminstrations: Adminstration[] | undefined;
-
-  date2: Date | undefined;
-
-  selectedAdminstration: Adminstration | undefined;
 
   ngOnInit() {
     this.direction =

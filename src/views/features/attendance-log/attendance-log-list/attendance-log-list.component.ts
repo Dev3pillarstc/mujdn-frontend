@@ -17,7 +17,7 @@ interface Adminstration {
 }
 
 @Component({
-  selector: 'app-attendance-log-list',
+  selector: 'app-attendance-list',
   imports: [
     Breadcrumb,
     FormsModule,

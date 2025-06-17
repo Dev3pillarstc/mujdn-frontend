@@ -1,0 +1,133 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <button class="block ms-auto" (click)="close()">
+      <i class="pi pi-times"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">تقرير الحضور و الانصراف</h3>
+    <div class="bg-[#074d31] p-6 rounded-2xl">
+      <div class="flex flex-col sm:flex-row justify-between pb-4">
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-white">اسم الموظف:</span>
+          <span class="font-semibold text-white">محمد أحمد محمود</span>
+        </div>
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-[#fae996]">معرف الموظف:</span>
+          <span class="font-semibold text-[#fae996]">1234</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-6">
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">الادارة</span>
+          <span class="font-semibold text-white">ادارة الموارد البشرية</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">نوع الدوام</span>
+          <span class="font-semibold text-white">دوام كلي</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex items-start sm:items-center justify-between justify-between flex-col sm:flex-row gap-4 mt-6"
+    >
+      <div>
+        <label for="Date" class="label">الفترة الزمنية</label>
+        <div class="relative">
+          <p-datepicker
+            name="endDate"
+            [(ngModel)]="date2"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            placeholder="الفترة الزمنية"
+            class="peer block w-full"
+            inputId="Date"
+            id="Date"
+          >
+            <ng-template pTemplate="inputicon">
+              <img src="/assets/icons/calender-icon.svg" alt="" />
+            </ng-template>
+          </p-datepicker>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+      </div>
+      <div class="actions flex items-center gap-4 ms-auto">
+        <button>
+          <img alt="" src="/assets/icons/excel.svg" />
+        </button>
+        <button>
+          <img alt="" src="/assets/icons/print.svg" />
+        </button>
+      </div>
+    </div>
+    <div class="mt-6">
+      <p-table [value]="attendance">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>اليوم</th>
+            <th>التاريخ</th>
+            <th>وقت الدخول</th>
+            <th>وقت الخروج</th>
+            <th>الاستئذان</th>
+            <th>التقصير</th>
+            <th>مرات التوثيق</th>
+            <th>عدم الاستجابة</th>
+            <th>حالة الدوام</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-record>
+          <tr>
+            <td>{{ record.day }}</td>
+            <td>{{ record.date }}</td>
+            <td>{{ record.checkIn }}</td>
+            <td>{{ record.checkOut }}</td>
+            <td>{{ record.permission }}</td>
+            <td>{{ record.delay }}</td>
+            <td>{{ record.permissionCount }}</td>
+            <td>{{ record.noResponseCount }}</td>
+            <td>
+              <div
+                [ngClass]="[
+                  'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
+                  record.status === 'دوام'
+                    ? 'bg-[#ecfdf3] text-[#085d3a]'
+                    : record.status === 'عطلة'
+                      ? 'bg-[#f9fafb] text-[#1f2a37]'
+                      : record.status === 'غياب'
+                        ? 'bg-[#fef3f2] text-[#912018]'
+                        : 'bg-[#eff8ff] text-[#1849a9]',
+                ]"
+              >
+                <span
+                  [ngClass]="[
+                    'block w-[10px] h-[10px] rounded-full',
+                    record.status === 'دوام'
+                      ? 'bg-[#085d3a]'
+                      : record.status === 'عطلة'
+                        ? 'bg-[#4d5761]'
+                        : record.status === 'غياب'
+                          ? 'bg-[#912018]'
+                          : 'bg-[#1849a9]',
+                  ]"
+                ></span>
+                <span>{{ record.status }}</span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-paginator
+        class="mt-6"
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rows]="rows"
+        [totalRecords]="120"
+        [rowsPerPageOptions]="[10, 20, 30]"
+      />
+      <div></div>
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button class="btn gray-btn" (click)="close()">الغاء</button>
+      </div>
+    </div>
+  </div>
+</div>

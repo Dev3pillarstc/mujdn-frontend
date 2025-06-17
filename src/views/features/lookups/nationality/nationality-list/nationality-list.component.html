@@ -75,7 +75,7 @@
             <button>
               <img alt="" src="/assets/icons/print.svg"/>
             </button>
-            <button (click)="openDialog()" class="btn green-btn flex items-center">
+            <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
               <img alt="" src="/assets/icons/plus.svg"/>
               <span>{{ 'NATIONALITIES_PAGE.ADD_NEW_NATIONALITY' | translate }}</span>
             </button>
@@ -96,7 +96,7 @@
                 <td>{{ nationality.nameEn }}</td>
                 <td>
                   <div class="actions flex gap-2">
-                    <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
+                    <button (click)="addOrEditModel(nationality)" class="bg-[#f3f4f6] rounded p-2 w-[32px]">
                       <img src="/assets/icons/edit-action.svg" alt="تعديل"/>
                     </button>
                     <button class="bg-[#fef3f2] rounded p-2 w-[32px]">

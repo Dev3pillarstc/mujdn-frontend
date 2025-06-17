@@ -5,12 +5,12 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Component({
-  selector: 'app-city-popup',
+  selector: 'app-employee-permission-popup',
   imports: [],
-  templateUrl: './city-popup.component.html',
-  styleUrl: './city-popup.component.scss',
+  templateUrl: './employee-permission-popup.component.html',
+  styleUrl: './employee-permission-popup.component.scss',
 })
-export class CityPopupComponent implements OnInit {
+export class EmployeePermissionPopupComponent implements OnInit {
   declare direction: LAYOUT_DIRECTION_ENUM;
   languageService = inject(LanguageService);
   dialogRef = inject(DialogRef);

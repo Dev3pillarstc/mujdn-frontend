@@ -84,7 +84,13 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
           );
         })
       )
-      .pipe(filter((value) => !value.hasOwnProperty('error')))
+      .pipe(
+        filter((value) => {
+          return (
+            !value.hasOwnProperty('error') || (value.hasOwnProperty('error') && value.error == null)
+          );
+        })
+      )
       .subscribe((model: Model) => {
         this.afterSave(model, this.dialogRef);
         this.dialogRef.close(DIALOG_ENUM.OK);

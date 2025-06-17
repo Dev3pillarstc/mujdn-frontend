@@ -73,6 +73,18 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../views/features/permissions/permissions-list/permissions-list.component'),
       },
+      {
+        path: 'holidays-list',
+        loadComponent: () =>
+          import('../views/features/lookups/holidays/holidays-list/holidays-list.component'),
+      },
+      {
+        path: 'employee-holidays',
+        loadComponent: () =>
+          import(
+            '../views/features/lookups/holidays/employee-holidays/employee-holidays.component'
+          ),
+      },
     ],
   },
   {

@@ -15,7 +15,7 @@ interface Adminstration {
 
 @Component({
   selector: 'app-holidays-popup',
-  imports: [Select, DatePickerModule, InputTextModule, CommonModule, FormsModule],
+  imports: [DatePickerModule, InputTextModule, CommonModule, FormsModule],
   templateUrl: './holidays-popup.component.html',
   styleUrl: './holidays-popup.component.scss',
 })

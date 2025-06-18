@@ -133,8 +133,32 @@
   --p-button-text-primary-color: #1b8354 !important;
   --p-button-text-primary-hover-background: #e5e7eb !important;
   --p-button-text-primary-active-background: #e5e7eb !important;
+  --p-tabs-tablist-background: transparent !important;
+  --p-tabs-tab-active-background: transparent !important;
+  --p-tabs-tab-active-color: #161616 !important;
+  --p-tabs-tab-active-border-color: #1b8354 !important;
+  --p-tabs-tab-hover-border-color: #161616 !important;
+  --p-tabs-tab-background: transparent !important;
+  --p-tabs-tablist-border-color: #d2d6db !important;
+  --p-tabs-tablist-border-width: 0 0 3px 0 !important;
+  --p-tabs-tab-border-color: #d2d6db !important;
+  --p-tabs-tab-color: #384250 !important;
+  --p-tabs-tab-padding: 16px !important;
+  --p-tabs-tab-border-width: 0 0 3px 0 !important;
+  --p-tabs-tab-font-weight: 500 !important;
 }
-
+.p-tab {
+  font-size: 14px;
+}
+.p-tab-active {
+  font-weight: bold !important;
+}
+.p-ripple {
+  top: 1.5px;
+}
+.p-tablist-active-bar {
+  display: none !important;
+}
 .p-datepicker-input-icon-container {
   inset-inline-end: unset !important;
   inset-inline-start: 16px !important;
@@ -183,9 +207,50 @@ body:has(.cdk-overlay-backdrop) {
     display: none; /* Chrome/Safari */
   }
 }
-:root .p-datatable-thead > tr > th {
+.p-datatable-thead > tr > th {
   white-space: nowrap;
 }
+.red-btn-action {
+  background-color: #fef3f2;
+  color: #b42318;
+  &:hover {
+    background-color: #fee4e2;
+  }
+}
+.table-head-action-btn {
+  // p-2 bg-[#f3f4f6] rounded hover:bg-transparent
+  padding: 8px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  &:hover {
+    background-color: transparent;
+  }
+}
+.table-action-gray-btn {
+  background-color: #f3f4f6;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  &:hover {
+    background-color: #e5e7eb;
+  }
+}
+.table-action-red-btn {
+  background-color: #fef3f2;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  &:hover {
+    background-color: #fee4e2;
+  }
+}
+
 // en kareem new
 
 .p-inputtext.ng-invalid.ng-dirty {

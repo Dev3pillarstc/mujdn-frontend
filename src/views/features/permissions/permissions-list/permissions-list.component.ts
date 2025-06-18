@@ -10,8 +10,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { PermissionReasonPopupComponent } from '../../lookups/permission/permission-reason-popup/permission-reason-popup.component';
 import { AddPermissionPopupComponent } from '../popups/add-permission-popup/add-permission-popup.component';
+import { TabsModule } from 'primeng/tabs';
 import { PermissionsDataPopupComponent } from '../popups/permissions-data-popup/permissions-data-popup.component';
 interface Adminstration {
   type: string;
@@ -29,6 +29,7 @@ interface Adminstration {
     RouterModule,
     CommonModule,
     PaginatorModule,
+    TabsModule,
   ],
   templateUrl: './permissions-list.component.html',
   styleUrl: './permissions-list.component.scss',
@@ -46,6 +47,7 @@ export default class PermissionsListComponent implements OnInit {
   selectedAdminstration: Adminstration | undefined;
   date2: Date | undefined;
   permissions!: any[];
+  permissionsRequest!: any[];
   first: number = 0;
   rows: number = 10;
   ngOnInit() {
@@ -56,7 +58,7 @@ export default class PermissionsListComponent implements OnInit {
       {
         id: 1,
         requestType: 'محدود المدة',
-        employeeName: 'محمد محمود أحمد يس',
+        managerName: 'محمد محمود أحمد يس',
         requestDate: '12/12/2024',
         duration: '30 دقيقة',
         status: 'موافقة',
@@ -67,7 +69,7 @@ export default class PermissionsListComponent implements OnInit {
       {
         id: 2,
         requestType: 'محدود المدة',
-        employeeName: 'محمد محمود أحمد يس',
+        managerName: 'محمد محمود أحمد يس',
         requestDate: '12/12/2024',
         duration: '30 دقيقة',
         status: 'تحت المعالجة',
@@ -78,13 +80,48 @@ export default class PermissionsListComponent implements OnInit {
       {
         id: 3,
         requestType: 'محدود المدة',
-        employeeName: 'محمد محمود أحمد يس',
+        managerName: 'محمد محمود أحمد يس',
         requestDate: '12/12/2024',
         duration: '30 دقيقة',
         status: 'مرفوض',
         canEdit: false,
         canDelete: false,
         canView: true,
+      },
+    ];
+    this.permissionsRequest = [
+      {
+        id: 1,
+        requestType: 'محدود المدة',
+        employeeName: 'محمد محمود أحمد يس',
+        requestDate: '12/12/2024',
+        duration: '30 دقيقة',
+        status: 'جديد',
+        canEdit: true,
+        canDelete: false,
+        canView: false,
+      },
+      {
+        id: 2,
+        requestType: 'محدود المدة',
+        employeeName: 'محمد محمود أحمد يس',
+        requestDate: '12/12/2024',
+        duration: '30 دقيقة',
+        status: 'مرفوض',
+        canView: true,
+        canDelete: false,
+        canEdit: false,
+      },
+      {
+        id: 3,
+        requestType: 'محدود المدة',
+        employeeName: 'محمد محمود أحمد يس',
+        requestDate: '12/12/2024',
+        duration: '30 دقيقة',
+        status: 'موافقة',
+        canView: true,
+        canDelete: false,
+        canEdit: false,
       },
     ];
   }

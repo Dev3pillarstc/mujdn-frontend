@@ -14,8 +14,8 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [authGuard],
-    data: { roles: [ROLES_ENUM.EMPLOYEE] },
+    // canActivate: [authGuard],
+    // data: { roles: [ROLES_ENUM.EMPLOYEE] },
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -57,9 +57,11 @@ export const routes: Routes = [
       },
       {
         path: 'permission-reasons',
+
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN] },
         resolve: { list: permissionReasonResolver },
+
         loadComponent: () =>
           import(
             '../views/features/lookups/permission/permission-reason-list/permission-reason-list.component'

@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASONS_LIST' | translate }}
       </h3>
@@ -17,7 +17,9 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="permissionreasonAr">{{
-                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
+
+                'PERMISIIONREASONS_PAGE.PERMISIIONREASON_IN_ARABIC' | translate
+
               }}</label>
               <input
                 [(ngModel)]="filterModel.nameAr"
@@ -34,7 +36,8 @@
             </div>
             <div class="relative">
               <label class="label" for="permissionreasonEn">{{
-                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
+                'PERMISIIONREASONS_PAGE.PERMISIIONREASON_IN_ENGLISH' | translate
+
               }}</label>
               <input
                 [(ngModel)]="filterModel.nameEn"
@@ -69,10 +72,11 @@
             {{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASONS_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button>
+
+            <button  class="table-head-action-btn">
               <img alt="" src="/assets/icons/excel.svg" />
             </button>
-            <button>
+            <button   class="table-head-action-btn">
               <img alt="" src="/assets/icons/print.svg" />
             </button>
             <button (click)="addOrEditModel()"  class="btn green-btn flex items-center">
@@ -96,11 +100,14 @@
                 <td>{{ permissionreason.nameEn }}</td>
                 <td>
                   <div class="actions flex gap-2">
-                    <button (click)="addOrEditModel(permissionreason)" class="bg-[#f3f4f6] rounded p-2 w-[32px]">
+
+                    <button (click)="addOrEditModel(permissionreason)" class="table-action-gray-btn">
                       <img src="/assets/icons/edit-action.svg" alt="تعديل"/>
                     </button>
-                    <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
-                      <img src="/assets/icons/delete-action.svg" alt="حذف"/>
+                    <button
+                      class="table-action-red-btn"
+                    >
+                      <img src="/assets/icons/delete-action.svg" alt="" />
                     </button>
                   </div>
                 </td>

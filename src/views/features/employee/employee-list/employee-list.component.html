@@ -162,27 +162,33 @@
                 <th>الإجراء</th>
               </tr>
             </ng-template>
-            <ng-template #body let-attendance>
+            <ng-template #body let-user>
               <tr>
-                <td>{{ attendance.serialNumber }}</td>
-                <td>{{ attendance.employeeNameAr }}</td>
-                <td>{{ attendance.employeeNameEn }}</td>
-                <td>{{ attendance.adminstration }}</td>
+                <td>{{ user.nationalId }}</td>
+                <td>{{ user.fullNameAr }}</td>
+                <td>{{ user.fullNameEn }}</td>
+                <td>{{ user.departmentAr }}</td>
                 <td>
                   <div class="flex justify-center gap-2">
-                    <img src="assets/icons/right-icon.svg" alt="" />
-                    <img src="assets/icons/wrong-icon.svg" alt="" />
+                    @if (user.isFingerprintExempted) {
+                      <img src="assets/icons/right-icon.svg" alt="" />
+                    } @else {
+                      <img src="assets/icons/wrong-icon.svg" alt="" />
+                    }
                   </div>
                 </td>
-                <td>{{ attendance.jop }}</td>
-                <td>{{ attendance.date }}</td>
+                <td>{{ user.jobTitleEn }}</td>
+                <td>morning</td>
                 <td>
                   <div class="flex justify-center gap-2">
-                    <img src="assets/icons/right-icon.svg" alt="" />
-                    <img src="assets/icons/wrong-icon.svg" alt="" />
+                    @if (user.isActive) {
+                      <img src="assets/icons/right-icon.svg" alt="" />
+                    } @else {
+                      <img src="assets/icons/wrong-icon.svg" alt="" />
+                    }
                   </div>
                 </td>
-                <td>12/12/2024</td>
+                <td>{{ user.joinDate | date }}</td>
                 <td>
                   <div class="flex gap-4">
                     <button

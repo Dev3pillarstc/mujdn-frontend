@@ -77,19 +77,16 @@ export default class EmployeeListComponent
     maxWidth: '1024px',
   };
 
-  // override get filterModel(): UserFilter {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // override set filterModel(val: UserFilter) {
-  //   throw new Error('Method not implemented.');
-  // }
   override openDialog(user: User): void {
     this.openBaseDialog(AddNewEmployeePopupComponent as any, user);
   }
 
   override get service() {
     return this.userService;
+  }
+  addOrEditModel(nationality?: User) {
+    nationality = nationality || new User();
+    this.openDialog(nationality);
   }
 
   // constructor() {

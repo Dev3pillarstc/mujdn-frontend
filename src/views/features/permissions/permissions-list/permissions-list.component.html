@@ -81,26 +81,7 @@
                       class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                     ></span>
                   </div>
-                  <div class="relative">
-                    <label for="permission-time-picker" class="label">وقت الاستئذان</label>
-                    <p-datepicker
-                      id="permission-time-picker"
-                      [(ngModel)]="date2"
-                      [iconDisplay]="'input'"
-                      [showIcon]="true"
-                      [timeOnly]="true"
-                      placeholder="وقت الاستئذان"
-                      class="peer block w-full"
-                      inputId="permission-time-picker"
-                    >
-                      <ng-template pTemplate="inputicon">
-                        <img src="/assets/icons/time-icon.svg" alt="" />
-                      </ng-template>
-                    </p-datepicker>
-                    <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                    ></span>
-                  </div>
+
                   <div class="relative">
                     <label for="request-status-select" class="label">حالة الطلب</label>
                     <p-select
@@ -251,20 +232,7 @@
                       class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                     ></span>
                   </div>
-                  <div class="relative">
-                    <label for="manager-name-select" class="label">اسم المدير</label>
-                    <p-select
-                      id="manager-name-select"
-                      [options]="adminstrations"
-                      [(ngModel)]="selectedAdminstration"
-                      optionLabel="type"
-                      placeholder="اسم المدير"
-                      class="w-full peer"
-                    ></p-select>
-                    <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                    ></span>
-                  </div>
+
                   <div class="relative">
                     <label for="permission-date-picker" class="label">تاريخ الاستئذان</label>
                     <p-datepicker
@@ -334,7 +302,6 @@
                 <tr>
                   <th>الرقم التسلسلي</th>
                   <th>نوع الطلب</th>
-                  <th>اسم المدير</th>
                   <th>تاريخ الاستئذان</th>
                   <th>مدة الاستئذان</th>
                   <th>حالة الطلب</th>
@@ -345,7 +312,6 @@
                 <tr>
                   <td>{{ permission.id }}</td>
                   <td>{{ permission.requestType }}</td>
-                  <td>{{ permission.employeeName }}</td>
                   <td>{{ permission.requestDate }}</td>
                   <td>{{ permission.duration }}</td>
                   <td>

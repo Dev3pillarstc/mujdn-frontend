@@ -75,7 +75,7 @@
             <button>
               <img alt="" src="/assets/icons/print.svg" />
             </button>
-            <button (click)="openDialog()" class="btn green-btn flex items-center">
+            <button (click)="addOrEditModel()"  class="btn green-btn flex items-center">
               <img alt="" src="/assets/icons/plus.svg" />
               <span>{{ 'PERMISSIONREASONS_PAGE.ADD_NEW_PERMISSIONREASON' | translate }}</span>
             </button>
@@ -96,11 +96,11 @@
                 <td>{{ permissionreason.nameEn }}</td>
                 <td>
                   <div class="actions flex gap-2">
-                    <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
-                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                    <button (click)="addOrEditModel(permissionreason)" class="bg-[#f3f4f6] rounded p-2 w-[32px]">
+                      <img src="/assets/icons/edit-action.svg" alt="تعديل"/>
                     </button>
                     <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
-                      <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                      <img src="/assets/icons/delete-action.svg" alt="حذف"/>
                     </button>
                   </div>
                 </td>

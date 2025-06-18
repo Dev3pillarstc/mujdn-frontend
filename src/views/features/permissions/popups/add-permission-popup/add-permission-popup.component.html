@@ -1,21 +1,21 @@
-<div [dir]="direction">
+<div dir="rtl">
   <div class="p-6">
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة وردية للموظف</h3>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">طلب استئذان جديد</h3>
 
     <form class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
-          <label for="shiftName" class="label">اسم المهمة</label>
+          <label for="shiftName" class="label">نوع الاذن</label>
           <div class="relative">
             <p-select
               name="shiftName"
               [options]="adminstrations"
               [(ngModel)]="selectedAdminstration"
               optionLabel="type"
-              placeholder="اسم المهمة"
+              placeholder="نوع الاذن"
               class="w-full peer"
               id="shiftName"
             ></p-select>
@@ -26,37 +26,14 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="startDate" class="label">تاريخ البداية</label>
-          <div class="relative">
-            <p-datepicker
-              name="startDate"
-              [(ngModel)]="date2"
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              placeholder="تاريخ البداية"
-              class="peer block w-full"
-              inputId="startDate"
-              id="startDate"
-            >
-              <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
-              </ng-template>
-            </p-datepicker>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
-        </div>
-        <div>
-          <label for="endDate" class="label">تاريخ النهاية</label>
+          <label for="endDate" class="label">تاريخ الاذن</label>
           <div class="relative">
             <p-datepicker
               name="endDate"
               [(ngModel)]="date2"
               [iconDisplay]="'input'"
               [showIcon]="true"
-              placeholder="تاريخ النهاية"
+              placeholder="تاريخ الاذن"
               class="peer block w-full"
               inputId="endDate"
               id="endDate"
@@ -71,26 +48,44 @@
           </div>
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
+        <div>
+          <label for="shiftName" class="label">سبب الأذن </label>
+          <div class="relative">
+            <p-select
+              name="shiftName"
+              [options]="adminstrations"
+              [(ngModel)]="selectedAdminstration"
+              optionLabel="type"
+              placeholder="سبب الأذن
+
+                "
+              class="w-full peer"
+              id="shiftName"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
         <div class="md:col-span-2 lg:col-span-3">
-          <label for="" class="text-sm font-normal text-[#9da4ae]">وصف المهمة</label>
+          <label for="" class="text-sm font-normal">وصف المهمة</label>
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
-              rows="5"
-              cols="30"
               pTextarea
               placeholder="وصف المهمة"
             ></textarea>
-
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
             ></span>
           </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button class="btn gray-btn" (click)="close()">الغاء</button>
-        <button class="btn green-btn">اسناد</button>
+        <button class="btn green-btn">ارسال الطلب</button>
       </div>
     </form>
   </div>

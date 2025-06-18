@@ -74,6 +74,23 @@ export const routes: Routes = [
             '../views/features/settings/notification-channels/notification-channels.component'
           ),
       },
+      {
+        path: 'permissions',
+        loadComponent: () =>
+          import('../views/features/permissions/permissions-list/permissions-list.component'),
+      },
+      {
+        path: 'holidays-list',
+        loadComponent: () =>
+          import('../views/features/lookups/holidays/holidays-list/holidays-list.component'),
+      },
+      {
+        path: 'employee-holidays',
+        loadComponent: () =>
+          import(
+            '../views/features/lookups/holidays/employee-holidays/employee-holidays.component'
+          ),
+      },
     ],
   },
   {

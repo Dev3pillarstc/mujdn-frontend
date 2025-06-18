@@ -183,6 +183,9 @@ body:has(.cdk-overlay-backdrop) {
     display: none; /* Chrome/Safari */
   }
 }
+:root .p-datatable-thead > tr > th {
+  white-space: nowrap;
+}
 // en kareem new
 
 .p-inputtext.ng-invalid.ng-dirty {

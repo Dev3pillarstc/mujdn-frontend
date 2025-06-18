@@ -217,6 +217,39 @@ body:has(.cdk-overlay-backdrop) {
     background-color: #fee4e2;
   }
 }
+.table-head-action-btn {
+  // p-2 bg-[#f3f4f6] rounded hover:bg-transparent
+  padding: 8px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  &:hover {
+    background-color: transparent;
+  }
+}
+.table-action-gray-btn {
+  background-color: #f3f4f6;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  &:hover {
+    background-color: #e5e7eb;
+  }
+}
+.table-action-red-btn {
+  background-color: #fef3f2;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  &:hover {
+    background-color: #fee4e2;
+  }
+}
 
 // en kareem new
 

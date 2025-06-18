@@ -111,10 +111,10 @@
                   قائمة الاستئذانات
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
-                  <button class="p-2 bg-[#f3f4f6] rounded hover:bg-transparent">
+                  <button class="table-head-action-btn">
                     <img src="/assets/icons/excel.svg" alt="" />
                   </button>
-                  <button class="p-2 bg-[#f3f4f6] rounded hover:bg-transparent">
+                  <button class="table-head-action-btn">
                     <img src="/assets/icons/print.svg" alt="" />
                   </button>
                   <button
@@ -175,22 +175,19 @@
                       <button
                         *ngIf="permissionsRequest.canView"
                         (click)="openPermissionsDataDialog()"
-                        class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center min-w-[36px] hover:bg-[#e5e7eb]"
+                        class="table-action-gray-btn"
                       >
                         <img src="/assets/icons/view-action.svg" alt="" />
                       </button>
                       <button
                         *ngIf="permissionsRequest.canEdit"
-                        class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center gap-2 min-w-[75px] hover:bg-[#e5e7eb] text-[161616] font-medium"
+                        class="table-action-gray-btn !min-w-[75px] text-[161616] font-medium"
                         (click)="openAddpermissionDialog()"
                       >
                         <img src="/assets/icons/edit-action.svg" alt="" />
                         <span>اجراء</span>
                       </button>
-                      <button
-                        *ngIf="permissionsRequest.canDelete"
-                        class="bg-[#fef3f2] rounded p-2 flex items-center justify-center min-w-[36px] hover:bg-[#fee4e2]"
-                      >
+                      <button *ngIf="permissionsRequest.canDelete" class="table-action-red-btn">
                         <img src="/assets/icons/delete-action.svg" alt="" />
                       </button>
                     </div>
@@ -281,10 +278,10 @@
                   قائمة الاستئذانات
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
-                  <button class="p-2 bg-[#f3f4f6] rounded hover:bg-transparent">
+                  <button class="table-head-action-btn">
                     <img src="/assets/icons/excel.svg" alt="" />
                   </button>
-                  <button class="p-2 bg-[#f3f4f6] rounded hover:bg-transparent">
+                  <button class="table-head-action-btn">
                     <img src="/assets/icons/print.svg" alt="" />
                   </button>
                   <button
@@ -343,21 +340,18 @@
                       <button
                         *ngIf="permission.canView"
                         (click)="openPermissionsDataDialog()"
-                        class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center min-w-[36px] hover:bg-[#e5e7eb] hover-[#e5e7eb]"
+                        class="table-action-gray-btn"
                       >
                         <img src="/assets/icons/view-action.svg" alt="" />
                       </button>
                       <button
                         *ngIf="permission.canEdit"
-                        class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center min-w-[36px] hover:bg-[#e5e7eb]"
+                        class="table-action-gray-btn"
                         (click)="openAddpermissionDialog()"
                       >
                         <img src="/assets/icons/edit-action.svg" alt="" />
                       </button>
-                      <button
-                        *ngIf="permission.canDelete"
-                        class="bg-[#fef3f2] rounded p-2 flex items-center justify-center min-w-[36px] hover:bg-[#fee4e2]"
-                      >
+                      <button *ngIf="permission.canDelete" class="table-action-red-btn">
                         <img src="/assets/icons/delete-action.svg" alt="" />
                       </button>
                     </div>

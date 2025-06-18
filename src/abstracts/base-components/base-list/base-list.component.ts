@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export abstract class BaseListComponent<
   Model,
   PopupComponent,
-  TService extends BaseCrudService<Model>,
+  TService extends BaseCrudService<Model, string | number>,
   FilterModel,
 > implements OnInit
 {

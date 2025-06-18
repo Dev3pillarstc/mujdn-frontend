@@ -53,7 +53,7 @@
             <div class="relative">
               <label for="" class="label">تاريخ الالتحاق</label>
               <p-datepicker
-                [(ngModel)]="date2"
+                [(ngModel)]="joinDate"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
                 placeholder="تاريخ الالتحاق"
@@ -146,65 +146,74 @@
             </button>
           </div>
         </div>
-        <p-table [value]="attendance">
-          <ng-template #header>
-            <tr>
-              <th>معرف الموظف</th>
-              <th>اسم الموظف عربي</th>
-              <th>اسم الموظف انجليزي</th>
-              <th>الإدارة</th>
-              <th>الاعفاء من البصمة</th>
-              <th>الوظيفة</th>
-              <th>نوع الدوام</th>
-              <th>تاريخ الالتحاق</th>
-              <th>حالة الحساب</th>
-              <th>الإجراء</th>
-            </tr>
-          </ng-template>
-          <ng-template #body let-attendance>
-            <tr>
-              <td>{{ attendance.serialNumber }}</td>
-              <td>{{ attendance.employeeNameAr }}</td>
-              <td>{{ attendance.employeeNameEn }}</td>
-              <td>{{ attendance.adminstration }}</td>
-              <td>
-                <div class="flex justify-center gap-2">
-                  <img src="assets/icons/right-icon.svg" alt="" />
-                  <img src="assets/icons/wrong-icon.svg" alt="" />
-                </div>
-              </td>
-              <td>{{ attendance.jop }}</td>
-              <td>{{ attendance.date }}</td>
-              <td>
-                <div class="flex justify-center gap-2">
-                  <img src="assets/icons/right-icon.svg" alt="" />
-                  <img src="assets/icons/wrong-icon.svg" alt="" />
-                </div>
-              </td>
-              <td>12/12/2024</td>
-              <td>
-                <div class="flex gap-4">
-                  <button
-                    class="btn gray-btn flex align-items gap-4 min-w-[144px]"
-                    (click)="openEmployeePermissionModal()"
-                  >
-                    <img src="/assets/icons/edit.svg" alt="" />
-                    <span class="text-sm">تعديل الصلاحية</span>
-                  </button>
-                  <p-splitbutton dropdownIcon="pi pi-ellipsis-v" [model]="itemsList" />
-                </div>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-        <p-paginator
-          class="mt-6"
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
-        />
+        @if (list && list.length > 0) {
+          <p-table [value]="list">
+            <ng-template #header>
+              <tr>
+                <th>معرف الموظف</th>
+                <th>اسم الموظف عربي</th>
+                <th>اسم الموظف انجليزي</th>
+                <th>الإدارة</th>
+                <th>الاعفاء من البصمة</th>
+                <th>الوظيفة</th>
+                <th>نوع الدوام</th>
+                <th>حالة الحساب</th>
+                <th>تاريخ الالتحاق</th>
+                <th>الإجراء</th>
+              </tr>
+            </ng-template>
+            <ng-template #body let-attendance>
+              <tr>
+                <td>{{ attendance.serialNumber }}</td>
+                <td>{{ attendance.employeeNameAr }}</td>
+                <td>{{ attendance.employeeNameEn }}</td>
+                <td>{{ attendance.adminstration }}</td>
+                <td>
+                  <div class="flex justify-center gap-2">
+                    <img src="assets/icons/right-icon.svg" alt="" />
+                    <img src="assets/icons/wrong-icon.svg" alt="" />
+                  </div>
+                </td>
+                <td>{{ attendance.jop }}</td>
+                <td>{{ attendance.date }}</td>
+                <td>
+                  <div class="flex justify-center gap-2">
+                    <img src="assets/icons/right-icon.svg" alt="" />
+                    <img src="assets/icons/wrong-icon.svg" alt="" />
+                  </div>
+                </td>
+                <td>12/12/2024</td>
+                <td>
+                  <div class="flex gap-4">
+                    <button
+                      class="btn gray-btn flex align-items gap-4 min-w-[144px]"
+                      (click)="openEmployeePermissionModal()"
+                    >
+                      <img src="/assets/icons/edit.svg" alt="" />
+                      <span class="text-sm">تعديل الصلاحية</span>
+                    </button>
+                    <p-splitbutton dropdownIcon="pi pi-ellipsis-v" [model]="" />
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        } @else {
+          <div class="flex items-center justify-center h-64">
+            <p class="text-gray-500">{{ 'NATIONALITIES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+          </div>
+        }
+        @if (paginationInfo) {
+          <p-paginator
+            (onPageChange)="onPageChange($event)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
+        }
         <div></div>
       </div>
     </div>

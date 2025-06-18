@@ -4,6 +4,7 @@ import { ROLES_ENUM } from '@/enums/roles-enum';
 import { nationalitiesResolver } from '@/resolvers/lookups/nationalities.resolver';
 import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.resolver';
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
+import { userResolver } from '@/resolvers/user.resolver';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,9 @@ export const routes: Routes = [
       },
       {
         path: 'employees',
+        // canActivate: [authGuard],
+        // data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER] },
+        resolve: { list: userResolver },
         loadComponent: () =>
           import('../views/features/employee/employee-list/employee-list.component'),
       },

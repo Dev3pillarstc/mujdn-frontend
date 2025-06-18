@@ -9,9 +9,9 @@ import { Tree } from 'primeng/tree';
   templateUrl: './department-tree.component.html',
   styleUrl: './department-tree.component.scss',
 })
-export class DepartmentTreeComponent {
+export class DepartmentTreeComponent implements OnInit {
   files: any[] = [];
-
+  OnInit() {}
   private mockData = [
     {
       label: 'الإدارة العامة لتقنية المعلومات',
@@ -153,6 +153,16 @@ export class DepartmentTreeComponent {
 
   constructor() {
     this.loadFiles();
+  }
+
+  ngOnInit() {
+    // Set aria-expanded="false" on all .p-tree-node elements after view is initialized
+    setTimeout(() => {
+      const nodes = document.querySelectorAll('.p-tree-node');
+      nodes.forEach((node) => {
+        (node as HTMLElement).setAttribute('aria-expanded', 'false');
+      });
+    }, 0);
   }
 
   loadFiles() {

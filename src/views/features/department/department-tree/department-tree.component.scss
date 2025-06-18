@@ -1,0 +1,63 @@
+aside {
+    border-bottom: solid 1px #d2d6db;
+    background: white;
+    padding: 16px;
+    border-radius: 16px;
+    border: solid 1px #d2d6db;
+
+    @media(min-width: 800px) {
+        width: 250px;
+    }
+}
+
+::ng-deep {
+    .p-tree {
+        padding: 0 !important;
+        width: 100%;
+    }
+
+
+    .p-tree-node-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #161616;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .p-tree-node-content {
+        padding: 8px 16px !important;
+        border-radius: 4px;
+        background-color: #fff;
+        padding-inline-start: 8px !important;
+        cursor: pointer;
+        position: relative;
+
+        &::before {
+            position: absolute;
+            top: 50%;
+            inset-inline-start: 0;
+            width: 6px;
+            height: 80%;
+            background-color: #fff;
+            border-radius: 10px;
+            transition: 0.2s;
+            transform: translateY(-50%);
+            content: '';
+            background-color: #fff;
+        }
+
+        &:hover {
+            background-color: #e5e7eb;
+
+            &::before {
+                background-color: #1b8354;
+            }
+        }
+    }
+
+    .p-tree-node-leaf>.p-tree-node-content .p-tree-node-toggle-button {
+        width: 0px !important;
+    }
+}

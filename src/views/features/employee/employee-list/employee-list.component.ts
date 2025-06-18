@@ -59,7 +59,48 @@ export default class EmployeeListComponent
   home: MenuItem | undefined;
   filterModel: UserFilter = new UserFilter();
   // items: MenuItem[] | undefined;
-  // itemsList: MenuItem[];
+  itemsList: MenuItem[] = [
+    {
+      label: 'تعديل بيانات الموظف',
+      command: () => this.addNewEmployeePopup(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'عرض تقرير الحضور و الانصراف',
+      command: () => this.attendanceReportPopup(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'اسنادة مهمة',
+      command: () => this.assignTaskPopup(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'اسناد وردية',
+      command: () => this.assignShiftPopup(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'سجل المهمات المسندة للموظف',
+      command: () => this.tasksAssignedToEmployee(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'حذف الموظف',
+      styleClass: 'p-menuitem-danger',
+      // command: () => this.openConfirmation(),
+    },
+  ];
 
   adminstrations: Adminstration[] | undefined;
 

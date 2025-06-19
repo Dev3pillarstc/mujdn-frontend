@@ -1,3 +1,4 @@
+import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { GeneralInterceptorContract } from 'cast-response';
 
 export class GeneralInterceptor implements GeneralInterceptorContract {

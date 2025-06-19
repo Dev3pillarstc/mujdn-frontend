@@ -3,8 +3,8 @@ export class UserFilter {
   declare fullNameAr?: string;
   declare jobTitleEn?: string;
   declare jobTitleAr?: string;
+  declare joinDate?: Date | string;
   // declare fkDepartmentId?: number;
-  // declare joinDate?: string;
   // declare isActive?: boolean;
   // declare isFingerprintExempted?: boolean;
 }

@@ -62,6 +62,12 @@ export default class EmployeeListComponent
   userService = inject(UserService);
   home: MenuItem | undefined;
   filterModel: UserFilter = new UserFilter();
+
+  formatDateOnly(date: Date): string {
+    console.log(date);
+    // this.filterModel.joinDate.toISOString().split('T')[0];
+    return date.toISOString().split('T')[0]; // "2025-06-19"
+  }
   // items: MenuItem[] | undefined;
   selectedDepartment: BaseLookupModel | undefined;
   joinDate: Date | undefined;

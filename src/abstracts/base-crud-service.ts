@@ -61,6 +61,8 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
     const httpParams = new HttpParams({
       fromObject: paginationParams as unknown as never,
     });
+    filterOptions = trimTime(filterOptions);
+    console.log('filterOptions', { ...filterOptions });
     return this.http
       .post<PaginatedListResponseData<Model>>(
         this.getUrlSegment() + '/GetWithPaging',
@@ -102,3 +104,18 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
     return this.http.get<Model>(this.getUrlSegment() + '/' + id, { withCredentials: true });
   }
 }
+
+export const trimTime = function (model: any) {
+  if (model) {
+    Object.keys(model).forEach((key) => {
+      if (model[key] instanceof Date) {
+        const year = model[key].getFullYear();
+        const month = `${model[key].getMonth() + 1}`.padStart(2, '0');
+        const day = `${model[key].getDate()}`.padStart(2, '0');
+        model[key] = `${year}-${month}-${day}`;
+      }
+    });
+  }
+
+  return model;
+};

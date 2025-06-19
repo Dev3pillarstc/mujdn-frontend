@@ -4,9 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
-import { Select } from 'primeng/select';
 import { User } from '@/models/auth/user';
-import { DialogRef } from '@angular/cdk/dialog';
 import { Observable } from 'rxjs';
 
 interface Adminstration {
@@ -15,7 +13,7 @@ interface Adminstration {
 
 @Component({
   selector: 'app-holidays-popup',
-  imports: [Select, DatePickerModule, InputTextModule, CommonModule, FormsModule],
+  imports: [DatePickerModule, InputTextModule, CommonModule, FormsModule],
   templateUrl: './holidays-popup.component.html',
   styleUrl: './holidays-popup.component.scss',
 })
@@ -32,7 +30,7 @@ export class HolidaysPopupComponent extends BasePopupComponent<User> implements 
 
   override saveFail(error: Error): void {}
 
-  override afterSave(model: User, dialogRef: DialogRef): void {}
+  override afterSave(): void {}
 
   override beforeSave(model: User, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;

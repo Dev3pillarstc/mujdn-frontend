@@ -1,4 +1,4 @@
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
 import { ModelInterceptorContract } from 'cast-response';
 
 export class CityInterceptor implements ModelInterceptorContract<City> {

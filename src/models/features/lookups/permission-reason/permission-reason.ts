@@ -16,7 +16,7 @@ export class PermissionReason extends BaseCrudModel<PermissionReason, Permission
 
   buildForm() {
     const { nameAr, nameEn, isActive } = this;
-    const form = {
+    return {
       nameAr: [
         nameAr,
         [
@@ -37,7 +37,5 @@ export class PermissionReason extends BaseCrudModel<PermissionReason, Permission
       ],
       isActive: [isActive, []],
     };
-
-    return form;
   }
 }

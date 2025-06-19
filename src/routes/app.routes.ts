@@ -4,6 +4,7 @@ import { ROLES_ENUM } from '@/enums/roles-enum';
 import { nationalitiesResolver } from '@/resolvers/lookups/nationalities.resolver';
 import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.resolver';
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
+import { notificationChannelResolver } from '@/resolvers/setting/notification-channel.resolver';
 
 export const routes: Routes = [
   {
@@ -13,7 +14,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
     data: { roles: [ROLES_ENUM.EMPLOYEE] },
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
@@ -63,6 +64,11 @@ export const routes: Routes = [
       },
       {
         path: 'notification-channels',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
+        resolve: {
+          channel: notificationChannelResolver,
+        },
         loadComponent: () =>
           import(
             '../views/features/settings/notification-channels/notification-channels.component'

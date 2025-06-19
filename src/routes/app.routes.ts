@@ -13,7 +13,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     data: { roles: [ROLES_ENUM.EMPLOYEE] },
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
@@ -84,6 +84,11 @@ export const routes: Routes = [
           import(
             '../views/features/lookups/holidays/employee-holidays/employee-holidays.component'
           ),
+      },
+      {
+        path: 'department-list',
+        loadComponent: () =>
+          import('../views/features/department/department-list/department-list.component'),
       },
     ],
   },

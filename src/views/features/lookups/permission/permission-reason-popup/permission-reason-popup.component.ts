@@ -15,7 +15,10 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
   templateUrl: './permission-reason-popup.component.html',
   styleUrl: './permission-reason-popup.component.scss',
 })
-export class PermissionReasonPopupComponent extends BasePopupComponent<PermissionReason> implements OnInit {
+export class PermissionReasonPopupComponent
+  extends BasePopupComponent<PermissionReason>
+  implements OnInit
+{
   declare model: PermissionReason;
   declare form: FormGroup;
   alertService = inject(AlertService);

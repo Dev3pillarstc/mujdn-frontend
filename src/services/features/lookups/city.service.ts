@@ -2,7 +2,7 @@ import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { City } from '@/models/features/lookups/City/city';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Injectable } from '@angular/core';
-import { CastResponseContainer} from 'cast-response';
+import { CastResponseContainer } from 'cast-response';
 
 @CastResponseContainer({
   $default: {
@@ -17,7 +17,6 @@ import { CastResponseContainer} from 'cast-response';
 @Injectable({
   providedIn: 'root',
 })
-
 export class CityService extends BaseCrudService<City> {
   override serviceName: string = 'CityService';
 

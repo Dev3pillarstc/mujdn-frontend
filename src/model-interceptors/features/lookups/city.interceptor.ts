@@ -6,7 +6,7 @@ export class CityInterceptor implements ModelInterceptorContract<City> {
     // Here you can modify the model after receiving it from the server
     return model;
   }
-    send(model: Partial<City>): Partial<City> {
-      return model;
-    }
+  send(model: Partial<City>): Partial<City> {
+    return model;
+  }
 }

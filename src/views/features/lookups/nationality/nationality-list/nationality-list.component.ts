@@ -45,7 +45,10 @@ export default class NationalityListComponent
   }
 
   addOrEditModel(nationality?: Nationality) {
-    nationality = nationality || new Nationality();
-    this.openDialog(nationality);
+    const nationalityCopy = nationality
+      ? new Nationality().clone(nationality) // assuming a `clone` method exists
+      : new Nationality();
+
+    this.openDialog(nationalityCopy);
   }
 }

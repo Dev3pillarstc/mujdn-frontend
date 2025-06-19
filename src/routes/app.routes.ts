@@ -5,6 +5,7 @@ import { nationalitiesResolver } from '@/resolvers/lookups/nationalities.resolve
 import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.resolver';
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
 import { regionResolver } from '@/resolvers/lookups/region.resolver';
+import { notificationChannelResolver } from '@/resolvers/setting/notification-channel.resolver';
 
 export const routes: Routes = [
   {
@@ -74,6 +75,11 @@ export const routes: Routes = [
       },
       {
         path: 'notification-channels',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
+        resolve: {
+          channel: notificationChannelResolver,
+        },
         loadComponent: () =>
           import(
             '../views/features/settings/notification-channels/notification-channels.component'
@@ -95,6 +101,11 @@ export const routes: Routes = [
           import(
             '../views/features/lookups/holidays/employee-holidays/employee-holidays.component'
           ),
+      },
+      {
+        path: 'department-list',
+        loadComponent: () =>
+          import('../views/features/department/department-list/department-list.component'),
       },
     ],
   },

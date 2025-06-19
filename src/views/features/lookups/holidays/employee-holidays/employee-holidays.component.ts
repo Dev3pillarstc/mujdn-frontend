@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
-import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FluidModule } from 'primeng/fluid';
 import { TableModule } from 'primeng/table';
@@ -10,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-employee-holidays',
@@ -36,6 +34,7 @@ export default class EmployeeHolidaysComponent {
   home: MenuItem | undefined;
   date2: Date | undefined;
   attendance!: any[];
+
   ngOnInit() {
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الاجازات' }];
     this.attendance = [
@@ -61,6 +60,7 @@ export default class EmployeeHolidaysComponent {
       },
     ];
   }
+
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;

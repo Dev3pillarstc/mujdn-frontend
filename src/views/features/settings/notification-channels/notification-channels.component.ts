@@ -16,8 +16,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./notification-channels.component.scss'],
 })
 export default class NotificationChannelsComponent implements OnInit {
-  private fb: FormBuilder = inject(FormBuilder);
-  private service: NotificationChannelService = inject(NotificationChannelService);
+  fb: FormBuilder = inject(FormBuilder);
+  service: NotificationChannelService = inject(NotificationChannelService);
 
   items: MenuItem[] | undefined;
   model = new NotificationChannel();
@@ -25,32 +25,15 @@ export default class NotificationChannelsComponent implements OnInit {
   loading = false;
   route = inject(ActivatedRoute);
   ngOnInit(): void {
-    this.items = [
-      { label: 'لوحة المعلومات' },
-      { label: 'إعدادات الإشعارات' },
-    ];
-   this.model = this.route.snapshot.data['channel'];
-  this.form = this.fb.group(this.model.buildForm())
-  }
-  
-  loadData(): void {
-    this.loading = true;
-    this.service.getSingle().subscribe({
-      next: (channel : NotificationChannel) => {
-        this.model = Object.assign(new NotificationChannel(), channel);
-        this.form = this.fb.group(this.model.buildForm());
-      },
-      complete: () => (this.loading = false),
-    });
+    this.items = [{ label: 'لوحة المعلومات' }, { label: 'إعدادات الإشعارات' }];
+    this.model = this.route.snapshot.data['channel'];
+    this.form = this.fb.group(this.model.buildForm());
   }
 
   save(): void {
-    if (this.form.invalid) return;
-
-    const updatedModel = { ...this.model, ...this.form.value };
-
-    this.service.updateSingle(updatedModel).subscribe({
-      next: (result : NotificationChannel) => {
+    this.model = Object.assign(this.model, { ...this.form.value });
+    this.service.update(this.model).subscribe({
+      next: (result: NotificationChannel) => {
         this.model = Object.assign(new NotificationChannel(), result);
       },
     });

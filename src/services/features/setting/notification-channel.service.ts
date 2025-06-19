@@ -1,20 +1,23 @@
-
 import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { NotificationChannel } from '@/models/features/setting/notification-channel';
+import { ResponseData } from '@/models/shared/response/response-data';
 import { Injectable } from '@angular/core';
-import { CastResponse, CastResponseContainer, HasInterception, InterceptParam } from 'cast-response';
-import { Observable } from 'rxjs';
+import { CastResponse, CastResponseContainer, HasInterception } from 'cast-response';
+import { Observable, of, switchMap } from 'rxjs';
 
 @CastResponseContainer({
   $default: {
     model: () => NotificationChannel,
-  }
+  },
+  $get: {
+    model: () => NotificationChannel,
+    unwrap: 'data',
+    shape: { data: () => NotificationChannel },
+  },
 })
-
 @Injectable({
   providedIn: 'root',
 })
-
 export class NotificationChannelService extends BaseCrudService<NotificationChannel> {
   serviceName = 'NotificationChannelService';
 
@@ -22,28 +25,17 @@ export class NotificationChannelService extends BaseCrudService<NotificationChan
     return this.urlService.URLS.NOTIFICATION_CHANNELS;
   }
 
-
- @CastResponse()
-  getSingle(): Observable<NotificationChannel> {
-    return this.http.get<NotificationChannel>(this.getUrlSegment(), {
-      withCredentials: true,
-    });
-  }
-
-  @CastResponse()
+  @CastResponse(undefined, { fallback: '$get' })
   @HasInterception
-  updateSingle(@InterceptParam() model: NotificationChannel): Observable<NotificationChannel> {
-    return this.http.put<NotificationChannel>(this.getUrlSegment(), model, {
-      withCredentials: true,
-    });
-  }
-
-  @CastResponse()
-  ensure(): Observable<NotificationChannel> {
-    return this.http.post<NotificationChannel>(
-      this.getUrlSegment() + '/ensure',
-      {},
-      { withCredentials: true }
-    );
+  get(): Observable<NotificationChannel> {
+    return this.http
+      .get<ResponseData<NotificationChannel>>(this.getUrlSegment(), {
+        withCredentials: true,
+      })
+      .pipe(
+        switchMap((response: ResponseData<NotificationChannel>) => {
+          return of(response.data);
+        })
+      );
   }
 }

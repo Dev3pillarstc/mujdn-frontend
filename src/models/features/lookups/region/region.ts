@@ -1,22 +1,21 @@
-import { InterceptModel } from 'cast-response';
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
-import { PermissionReasonInterceptor } from '@/model-interceptors/features/lookups/permission-reason.interceptor';
+import { RegionInterceptor } from '@/model-interceptors/features/lookups/region.interceptor';
+import { RegionService } from '@/services/features/lookups/region.service';
 import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
+import { InterceptModel } from 'cast-response';
 
-const { send, receive } = new PermissionReasonInterceptor();
+const { send, receive } = new RegionInterceptor();
 
 @InterceptModel({ send, receive })
-export class PermissionReason extends BaseCrudModel<PermissionReason, PermissionReasonService> {
-  override $$__service_name__$$: string = 'PermissionReasonService';
+export class Region extends BaseCrudModel<Region, RegionService> {
+  override $$__service_name__$$: string = 'RegionService';
   declare nameAr: string;
   declare nameEn: string;
-  isActive: boolean = true;
-
+  isActive: boolean = false;
   buildForm() {
     const { nameAr, nameEn, isActive } = this;
-    const form = {
+    return {
       nameAr: [
         nameAr,
         [
@@ -37,7 +36,5 @@ export class PermissionReason extends BaseCrudModel<PermissionReason, Permission
       ],
       isActive: [isActive, []],
     };
-
-    return form;
   }
 }

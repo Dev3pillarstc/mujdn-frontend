@@ -16,7 +16,7 @@
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
-              <label class="label" for="cittyAr">{{
+              <label class="label" for="cityAr">{{
                 'CITIES_PAGE.CITY_IN_ARABIC' | translate
               }}</label>
               <input
@@ -24,7 +24,7 @@
                 [placeholder]="'CITIES_PAGE.CITY_IN_ARABIC' | translate"
                 class="peer"
                 fluid="true"
-                id="cittyAr"
+                id="cityAr"
                 pInputText
                 type="text"
               />
@@ -33,7 +33,7 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="cittyEn">{{
+              <label class="label" for="cityEn">{{
                 'CITIES_PAGE.CITY_IN_ENGLISH' | translate
               }}</label>
               <input
@@ -41,7 +41,7 @@
                 [placeholder]="'CITIES_PAGE.CITY_IN_ENGLISH' | translate"
                 class="peer"
                 fluid="true"
-                id="cittyEn"
+                id="cityEn"
                 pInputText
                 type="text"
               />
@@ -75,7 +75,7 @@
             <button>
               <img alt="" src="/assets/icons/print.svg" />
             </button>
-            <button (click)="openDialog()" class="btn green-btn flex items-center">
+            <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
               <img alt="" src="/assets/icons/plus.svg" />
               <span>{{ 'CITIES_PAGE.ADD_NEW_CITY' | translate }}</span>
             </button>
@@ -96,7 +96,10 @@
                 <td>{{ city.nameEn }}</td>
                 <td>
                   <div class="actions flex gap-2">
-                    <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
+                    <button
+                      (click)="addOrEditModel(city)"
+                      class="bg-[#f3f4f6] rounded p-2 w-[32px]"
+                    >
                       <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                     </button>
                     <button class="bg-[#fef3f2] rounded p-2 w-[32px]">

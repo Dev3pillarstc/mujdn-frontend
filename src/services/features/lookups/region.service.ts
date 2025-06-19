@@ -1,26 +1,26 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
-import { City } from '@/models/features/lookups/city/city';
+import { Region } from '@/models/features/lookups/region/region';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Injectable } from '@angular/core';
 import { CastResponseContainer } from 'cast-response';
 
 @CastResponseContainer({
   $default: {
-    model: () => City,
+    model: () => Region,
   },
   $pagination: {
-    model: () => PaginatedList<City>,
+    model: () => PaginatedList<Region>,
     unwrap: 'data',
-    shape: { 'list.*': () => City },
+    shape: { 'list.*': () => Region },
   },
 })
 @Injectable({
   providedIn: 'root',
 })
-export class CityService extends BaseCrudService<City> {
-  override serviceName: string = 'CityService';
+export class RegionService extends BaseCrudService<Region> {
+  serviceName: string = 'RegionService';
 
   override getUrlSegment(): string {
-    return this.urlService.URLS.CITIES;
+    return this.urlService.URLS.REGIONS;
   }
 }

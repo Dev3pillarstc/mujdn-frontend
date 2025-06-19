@@ -4,6 +4,7 @@ import { ROLES_ENUM } from '@/enums/roles-enum';
 import { nationalitiesResolver } from '@/resolvers/lookups/nationalities.resolver';
 import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.resolver';
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
+import { regionResolver } from '@/resolvers/lookups/region.resolver';
 
 export const routes: Routes = [
   {
@@ -50,6 +51,16 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.ADMIN] },
         resolve: { list: cityResolver },
         loadComponent: () => import('../views/features/lookups/city/city-list/city-list.component'),
+      },
+      {
+        path: 'regions',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
+        resolve: { list: regionResolver },
+        loadComponent: () =>
+          import('../views/features/lookups/region/region-list/region-list.component').then(
+            (m) => m.RegionListComponent
+          ),
       },
       {
         path: 'permission-reasons',

@@ -4,22 +4,22 @@
       <i class="pi pi-times"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'CITIES_PAGE.ADD_NEW_CITY' | translate }}
+      {{ 'REGIONS_PAGE.ADD_NEW_REGION' | translate }}
     </h3>
     <form [formGroup]="form" class="mt-6">
       <div class="grid sm:grid-cols-2 gap-4">
         <div>
-          <label class="label" for="cityAr-popup">{{
-            'CITIES_PAGE.CITY_IN_ARABIC' | translate
+          <label class="label" for="regionAr-popup">{{
+            'REGIONS_PAGE.REGION_IN_ARABIC' | translate
           }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
               formControlName="nameAr"
-              id="cityAr-popup"
+              id="regionAr-popup"
               pInputText
-              placeholder="{{ 'CITIES_PAGE.CITY_IN_ARABIC' | translate }}"
+              placeholder="{{ 'REGIONS_PAGE.REGION_IN_ARABIC' | translate }}"
               type="text"
             />
             <span
@@ -40,17 +40,17 @@
           }
         </div>
         <div>
-          <label class="label" for="cityEn-popup">{{
-            'CITIES_PAGE.CITY_IN_ENGLISH' | translate
+          <label class="label" for="regionEn-popup">{{
+            'REGIONS_PAGE.REGION_IN_ENGLISH' | translate
           }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
               formControlName="nameEn"
-              id="cityEn-popup"
+              id="regionEn-popup"
               pInputText
-              placeholder="{{ 'CITIES_PAGE.CITY_IN_ENGLISH' | translate }}"
+              placeholder="{{ 'REGIONS_PAGE.REGION_IN_ENGLISH' | translate }}"
               type="text"
             />
             <span

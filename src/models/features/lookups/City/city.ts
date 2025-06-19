@@ -1,6 +1,7 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { CityInterceptor } from '@/model-interceptors/features/lookups/city.interceptor';
 import { CityService } from '@/services/features/lookups/city.service';
+import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 
@@ -11,9 +12,29 @@ export class City extends BaseCrudModel<City, CityService> {
   override $$__service_name__$$: string = 'CityService';
   declare nameAr: string;
   declare nameEn: string;
-  declare isActive: boolean;
-
-  getName() {
-    return this.nameEn;
+  isActive: boolean = false;
+  buildForm() {
+    const { nameAr, nameEn, isActive } = this;
+    return {
+      nameAr: [
+        nameAr,
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
+          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
+          CustomValidators.pattern('AR_NUM'),
+        ],
+      ],
+      nameEn: [
+        nameEn,
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
+          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
+          CustomValidators.pattern('ENG_NUM'),
+        ],
+      ],
+      isActive: [isActive, []],
+    };
   }
 }

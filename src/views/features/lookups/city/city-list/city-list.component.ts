@@ -7,9 +7,9 @@ import { TableModule } from 'primeng/table';
 import { CityService } from '@/services/features/lookups/city.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { CityPopupComponent } from '../city-popup/city-popup.component';
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CityFilter } from '@/models/features/lookups/City/city-filter';
+import { CityFilter } from '@/models/features/lookups/city/city-filter';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -35,7 +35,12 @@ export default class CityListComponent
     return this.cityService;
   }
 
-  override openDialog(): void {
-    // this.openBaseDialog(CityPopupComponent as any);
+  override openDialog(city: City): void {
+    this.openBaseDialog(CityPopupComponent as any, city);
+  }
+
+  addOrEditModel(city?: City) {
+    city = city || new City();
+    this.openDialog(city);
   }
 }

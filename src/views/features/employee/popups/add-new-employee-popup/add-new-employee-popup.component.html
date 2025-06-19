@@ -5,16 +5,16 @@
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة موظف جديد</h3>
 
-    <form class="">
+    <form [formGroup]="form" class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
           <label for="department" class="label">الادارة</label>
           <div class="relative">
             <p-select
-              name="selectedAdminstration"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
+              name="selectedDepartment"
+              [options]="departments"
+              optionLabel="nameAr"
+              optionValue="id"
               placeholder="الادارة"
               class="w-full peer"
               id="department"
@@ -31,6 +31,7 @@
             <input
               id="employeeNameAr"
               placeholder=" اسم الموظف بالعربية"
+              formControlName="fullNameAr"
               type="text"
               pInputText
               class="peer"
@@ -43,11 +44,12 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="employeeNameAr" class="label"> اسم الموظف بالانجليزية</label>
+          <label for="employeeNameEn" class="label"> اسم الموظف بالانجليزية</label>
           <div class="relative">
             <input
-              id="employeeNameAr"
+              id="employeeNameEn"
               placeholder=" اسم الموظف بالانجليزية"
+              formControlName="fullNameEn"
               type="text"
               pInputText
               class="peer"
@@ -99,6 +101,7 @@
             <input
               id="mobile"
               placeholder="رقم الجوال"
+              formControlName="phoneNumber"
               type="text"
               pInputText
               class="peer"
@@ -116,6 +119,7 @@
             <input
               id="job"
               placeholder="الوظيفة"
+              formControlName="jobTitleEn"
               type="text"
               pInputText
               class="peer"
@@ -133,6 +137,7 @@
             <input
               id="email"
               placeholder="البريد الالكتروني"
+              formControlName="email"
               type="text"
               pInputText
               class="peer"
@@ -148,10 +153,10 @@
           <label for="workType" class="label">نوع الدوام</label>
           <div class="relative">
             <p-select
-              name="selectedAdminstration"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
+              name="selectedDepartment"
+              [options]="departments"
+              optionLabel="nameAr"
+              optionValue="id"
               placeholder="نوع الدوام"
               class="w-full peer"
               id="workType"
@@ -167,7 +172,7 @@
           <div class="relative">
             <p-datepicker
               name="joinDate"
-              [(ngModel)]="date2"
+              formControlName="joinDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
               placeholder="تاريخ الالتحاق"
@@ -190,9 +195,9 @@
           <div class="relative">
             <p-select
               name="accountStatus"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
+              [options]="departments"
+              optionLabel="nameAr"
+              optionValue="id"
               placeholder="حالة الحساب"
               class="w-full peer"
               id="accountStatus"
@@ -209,6 +214,7 @@
             <input
               id="username"
               placeholder="اسم المستخدم"
+              formControlName="nationalId"
               type="text"
               pInputText
               class="peer"
@@ -393,7 +399,7 @@
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button class="btn gray-btn" (click)="close()">الغاء</button>
-        <button class="btn green-btn">إضافة</button>
+        <button class="btn green-btn" (click)="save$.next()">إضافة</button>
       </div>
     </form>
   </div>

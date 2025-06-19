@@ -3,9 +3,14 @@ import { UserService } from '@/services/features/user.serice';
 import { Validators } from '@angular/forms';
 import { CustomValidators } from '@/validators/custom-validators';
 import { BaseLookupModel } from '../features/lookups/base-lookup-model';
+import { UserInterceptor } from '@/model-interceptors/auth/user.interceptor';
+import { InterceptModel } from 'cast-response';
 
+const { send, receive } = new UserInterceptor();
+
+@InterceptModel({ send, receive })
 export class User extends BaseCrudModel<User, UserService, string> {
-  override $$__service_name__$$: string = 'AuthService';
+  override $$__service_name__$$: string = 'UserService';
   declare email?: string;
   declare fullNameEn?: string;
   declare fullNameAr?: string;
@@ -23,7 +28,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
   declare isActive?: boolean;
   declare region?: BaseLookupModel;
   declare city?: BaseLookupModel;
-  declare departmentAr?: string;
+  declare department?: BaseLookupModel;
 
   buildForm() {
     const {
@@ -76,22 +81,22 @@ export class User extends BaseCrudModel<User, UserService, string> {
         [Validators.required, Validators.maxLength(14), Validators.minLength(14)],
       ],
       phoneNumber: [phoneNumber, [Validators.required]],
-      fkRegionId: [fkRegionId, [Validators.required]],
-      fkCityId: [fkCityId, [Validators.required]],
-      fkGenderId: [fkGenderId, [Validators.required]],
-      fkDepartmentId: [fkDepartmentId, [Validators.required]],
-      jobTitleEn: [
-        jobTitleEn,
-        [Validators.required, Validators.maxLength(100), CustomValidators.pattern('ENG_NUM')],
-      ],
-      jobTitleAr: [
-        jobTitleAr,
-        [Validators.required, Validators.maxLength(100), CustomValidators.pattern('AR_NUM')],
-      ],
-      profilePhotoKey: [profilePhotoKey],
+      // fkRegionId: [fkRegionId, [Validators.required]],
+      // fkCityId: [fkCityId, [Validators.required]],
+      // fkGenderId: [fkGenderId, [Validators.required]],
+      // fkDepartmentId: [fkDepartmentId, [Validators.required]],
+      // jobTitleEn: [
+      //   jobTitleEn,
+      //   [Validators.required, Validators.maxLength(100), CustomValidators.pattern('ENG_NUM')],
+      // ],
+      // jobTitleAr: [
+      //   jobTitleAr,
+      //   [Validators.required, Validators.maxLength(100), CustomValidators.pattern('AR_NUM')],
+      // ],
+      // profilePhotoKey: [profilePhotoKey],
       joinDate: [joinDate, [Validators.required]],
-      isFingerprintExempted: [isFingerprintExempted],
-      isActive: [isActive ?? true],
+      // isFingerprintExempted: [isFingerprintExempted],
+      // isActive: [isActive ?? true],
     };
   }
 }

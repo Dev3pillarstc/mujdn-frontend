@@ -26,11 +26,9 @@ import { User } from '@/models/auth/user';
 import { UserFilter } from '@/models/auth/user-filter';
 import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { TranslatePipe } from '@ngx-translate/core';
-
-interface Adminstration {
-  type: string;
-}
-
+import { Department } from '@/models/person';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { InputTextModule } from 'primeng/inputtext';
 @Component({
   selector: 'app-employee-list',
   imports: [
@@ -46,6 +44,7 @@ interface Adminstration {
     SplitButtonModule,
     PaginatorModule,
     TranslatePipe,
+    InputTextModule,
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
@@ -55,14 +54,23 @@ export default class EmployeeListComponent
   extends BaseListComponent<User, AddNewEmployeePopupComponent, UserService, UserFilter>
   implements OnInit
 {
+  departments: BaseLookupModel[] = [
+    { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
+    { id: 2, nameEn: 'name 2', nameAr: 'name 2' },
+  ];
+
   userService = inject(UserService);
   home: MenuItem | undefined;
   filterModel: UserFilter = new UserFilter();
   // items: MenuItem[] | undefined;
-  itemsList: MenuItem[] = [
+  selectedDepartment: BaseLookupModel | undefined;
+  joinDate: Date | undefined;
+  confirmationService = inject(ConfirmationService);
+  alertService = inject(AlertService);
+  actionList: MenuItem[] = [
     {
       label: 'تعديل بيانات الموظف',
-      command: () => this.addNewEmployeePopup(),
+      command: () => this.openDialog(),
     },
     {
       separator: true,
@@ -98,84 +106,24 @@ export default class EmployeeListComponent
     {
       label: 'حذف الموظف',
       styleClass: 'p-menuitem-danger',
-      // command: () => this.openConfirmation(),
+      command: () => this.openConfirmation(),
     },
   ];
-
-  adminstrations: Adminstration[] | undefined;
-
-  selectedAdminstration: Adminstration | undefined;
-  joinDate: Date | undefined;
-  // attendance!: any[];
-  // first: number = 0;
-  // rows: number = 10;
-  // matDialog = inject(MatDialog);
-  // confirmationService = inject(ConfirmationService);
-  // alertService = inject(AlertService);
 
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
   };
 
-  override openDialog(user: User): void {
+  override openDialog(): void {
+    const user = this.selectedModel || new User();
     this.openBaseDialog(AddNewEmployeePopupComponent as any, user);
   }
 
   override get service() {
     return this.userService;
   }
-  addOrEditModel(nationality?: User) {
-    nationality = nationality || new User();
-    this.openDialog(nationality);
-  }
 
-  // constructor() {
-  //   this.itemsList = [
-  //     {
-  //       label: 'تعديل بيانات الموظف',
-  //       command: () => this.addNewEmployeePopup(),
-  //     },
-  //     {
-  //       separator: true,
-  //     },
-  //     {
-  //       label: 'عرض تقرير الحضور و الانصراف',
-  //       command: () => this.attendanceReportPopup(),
-  //     },
-  //     {
-  //       separator: true,
-  //     },
-  //     {
-  //       label: 'اسنادة مهمة',
-  //       command: () => this.assignTaskPopup(),
-  //     },
-  //     {
-  //       separator: true,
-  //     },
-  //     {
-  //       label: 'اسناد وردية',
-  //       command: () => this.assignShiftPopup(),
-  //     },
-  //     {
-  //       separator: true,
-  //     },
-  //     {
-  //       label: 'سجل المهمات المسندة للموظف',
-  //       command: () => this.tasksAssignedToEmployee(),
-  //     },
-  //     {
-  //       separator: true,
-  //     },
-  //     {
-  //       label: 'حذف الموظف',
-  //       styleClass: 'p-menuitem-danger',
-  //       command: () => this.openConfirmation(),
-  //     },
-  //   ];
-  // }
-
-  // }
   openEmployeePermissionModal() {
     const dialogRef = this.matDialog.open(EmployeePermissionPopupComponent, {
       width: '100%',
@@ -187,15 +135,6 @@ export default class EmployeeListComponent
 
   assignShiftPopup() {
     const dialogRef = this.matDialog.open(AssignShiftPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe();
-  }
-
-  addNewEmployeePopup() {
-    const dialogRef = this.matDialog.open(AddNewEmployeePopupComponent, {
       width: '100%',
       maxWidth: '1024px',
     });
@@ -230,44 +169,26 @@ export default class EmployeeListComponent
     dialogRef.afterClosed().subscribe();
   }
 
-  // ngOnInit() {
-  //   this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الموظفين' }];
-  //   this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
-  //   // Updated dummy data to match your Arabic table structure
-  //   this.attendance = [
-  //     {
-  //       serialNumber: 1,
-  //       employeeNameAr: 'محمد أحمد طه',
-  //       employeeNameEn: 'mohamed taha',
-  //       adminstration: 'إدارة الموارد',
-  //       jop: 'موظف',
-  //       PermanentType: 'دوام كلي',
-  //       date: '12/12/2024',
-  //     },
-  //   ];
-  // }
+  openConfirmation() {
+    const dialogRef = this.confirmationService.open({
+      icon: 'warning',
+      messages: ['COMMON.CONFIRM_DELETE'],
+      confirmText: 'COMMON.OK',
+      cancelText: 'COMMON.CANCEL',
+    });
 
-  // onPageChange(event: PaginatorState) {
-  //   this.first = event.first ?? 0;
-  //   this.rows = event.rows ?? 10;
-  // }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == DIALOG_ENUM.OK) {
+        // User confirmed
+        this.alertService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
+      } else {
+        // User canceled
+        this.alertService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
+      }
+    });
+  }
 
-  // openConfirmation() {
-  //   const dialogRef = this.service.open({
-  //     icon: 'warning',
-  //     messages: ['COMMON.CONFIRM_DELETE'],
-  //     confirmText: 'COMMON.OK',
-  //     cancelText: 'COMMON.CANCEL',
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result == DIALOG_ENUM.OK) {
-  //       // User confirmed
-  //       this.alertService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
-  //     } else {
-  //       // User canceled
-  //       this.alertService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
-  //     }
-  //   });
-  // }
+  setSelectedModel(model: User) {
+    this.selectedModel = model;
+  }
 }

@@ -14,9 +14,10 @@
             <div class="relative">
               <label for="" class="label">الادارة</label>
               <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
+                [options]="departments"
+                [(ngModel)]="selectedDepartment"
+                optionLabel="nameEn"
+                optionValue="id"
                 placeholder="الادارة"
                 class="w-full peer"
               ></p-select>
@@ -25,27 +26,29 @@
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">اسم الموظف عربي</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="اسم الموظف"
-                class="w-full peer"
-              ></p-select>
+              <label for="employeeNameAr" class="label">اسم الموظف عربي</label>
+              <input
+                id="employeeNameAr"
+                placeholder=" اسم الموظف بالعربية"
+                type="text"
+                pInputText
+                class="peer"
+                fluid="true"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">اسم الموظف انجليزي </label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="اسم الموظف"
-                class="w-full peer"
-              ></p-select>
+              <label for="employeeNameEn" class="label">اسم الموظف انجليزي </label>
+              <input
+                id="employeeNameEn"
+                placeholder=" اسم الموظف بالعربية"
+                type="text"
+                pInputText
+                class="peer"
+                fluid="true"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -71,8 +74,8 @@
             <div class="relative">
               <label for="" class="label">حالة الحساب</label>
               <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
+                [options]="departments"
+                [(ngModel)]="selectedDepartment"
                 optionLabel="type"
                 placeholder="اسم الموظف"
                 class="w-full peer"
@@ -82,14 +85,15 @@
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">الوظيفة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="الوظيفة"
-                class="w-full peer"
-              ></p-select>
+              <label for="jobTitle" class="label">الوظيفة</label>
+              <input
+                id="jobTitle"
+                placeholder=" اسم الموظف بالعربية"
+                type="text"
+                pInputText
+                class="peer"
+                fluid="true"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -97,8 +101,8 @@
             <div class="relative">
               <label for="" class="label">نوع الدوام</label>
               <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
+                [options]="departments"
+                [(ngModel)]="selectedDepartment"
                 optionLabel="type"
                 placeholder="نوع الدوام"
                 class="w-full peer"
@@ -110,8 +114,8 @@
             <div class="relative">
               <label for="" class="label">الإعفاء من البصمة</label>
               <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
+                [options]="departments"
+                [(ngModel)]="selectedDepartment"
                 optionLabel="type"
                 placeholder="نوع الدوام"
                 class="w-full peer"
@@ -140,7 +144,7 @@
             <button class="table-head-action-btn">
               <img src="assets/icons/print.svg" alt="" />
             </button>
-            <button class="btn green-btn flex items-center" (click)="addNewEmployeePopup()">
+            <button class="btn green-btn flex items-center" (click)="openDialog()">
               <img src="assets/icons/plus.svg" alt="" />
               <span>إضافة موظف جديد</span>
             </button>
@@ -148,7 +152,7 @@
         </div>
         @if (list && list.length > 0) {
           <p-table [value]="list">
-            <ng-template #header>
+            <ng-template pTemplate="header">
               <tr>
                 <th>معرف الموظف</th>
                 <th>اسم الموظف عربي</th>
@@ -162,12 +166,12 @@
                 <th>الإجراء</th>
               </tr>
             </ng-template>
-            <ng-template #body let-user>
+            <ng-template pTemplate="body" let-user>
               <tr>
                 <td>{{ user.nationalId }}</td>
                 <td>{{ user.fullNameAr }}</td>
                 <td>{{ user.fullNameEn }}</td>
-                <td>{{ user.departmentAr }}</td>
+                <td>{{ user.department.nameAr }}</td>
                 <td>
                   <div class="flex justify-center gap-2">
                     @if (user.isFingerprintExempted) {
@@ -198,7 +202,11 @@
                       <img src="/assets/icons/edit.svg" alt="" />
                       <span class="text-sm">تعديل الصلاحية</span>
                     </button>
-                    <p-splitbutton dropdownIcon="pi pi-ellipsis-v" [model]="itemsList" />
+                    <p-splitbutton
+                      (click)="setSelectedModel(user)"
+                      dropdownIcon="pi pi-ellipsis-v"
+                      [model]="actionList"
+                    />
                   </div>
                 </td>
               </tr>

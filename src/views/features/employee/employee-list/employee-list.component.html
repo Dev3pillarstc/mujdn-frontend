@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">قائمة الموظفين</h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
@@ -12,56 +12,56 @@
         <div class="pt-6">
           <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
-              <label for="" class="label">الادارة</label>
+              <label class="label" for="">الادارة</label>
               <p-select
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
                 optionLabel="type"
                 placeholder="الادارة"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">اسم الموظف عربي</label>
+              <label class="label" for="">اسم الموظف عربي</label>
               <p-select
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
                 optionLabel="type"
                 placeholder="اسم الموظف"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">اسم الموظف انجليزي </label>
+              <label class="label" for="">اسم الموظف انجليزي </label>
               <p-select
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
                 optionLabel="type"
                 placeholder="اسم الموظف"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">تاريخ الالتحاق</label>
+              <label class="label" for="">تاريخ الالتحاق</label>
               <p-datepicker
                 [(ngModel)]="date2"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
-                placeholder="تاريخ الالتحاق"
                 class="peer block w-full"
                 inputId="icondisplay"
+                placeholder="تاريخ الالتحاق"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="assets/icons/calender-icon.svg" alt="" />
+                  <img alt="" src="/assets/icons/calender-icon.svg"/>
                 </ng-template>
               </p-datepicker>
               <span
@@ -69,52 +69,52 @@
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">حالة الحساب</label>
+              <label class="label" for="">حالة الحساب</label>
               <p-select
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
                 optionLabel="type"
                 placeholder="اسم الموظف"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">الوظيفة</label>
+              <label class="label" for="">الوظيفة</label>
               <p-select
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
                 optionLabel="type"
                 placeholder="الوظيفة"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">نوع الدوام</label>
+              <label class="label" for="">نوع الدوام</label>
               <p-select
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
                 optionLabel="type"
                 placeholder="نوع الدوام"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">الإعفاء من البصمة</label>
+              <label class="label" for="">الإعفاء من البصمة</label>
               <p-select
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
                 optionLabel="type"
                 placeholder="نوع الدوام"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -135,13 +135,13 @@
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">قائمة الموظفين</h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button class="table-head-action-btn">
-              <img src="assets/icons/excel.svg" alt="" />
+              <img alt="" src="/assets/icons/excel.svg"/>
             </button>
             <button class="table-head-action-btn">
-              <img src="assets/icons/print.svg" alt="" />
+              <img alt="" src="/assets/icons/print.svg"/>
             </button>
-            <button class="btn green-btn flex items-center" (click)="addNewEmployeePopup()">
-              <img src="assets/icons/plus.svg" alt="" />
+            <button (click)="addNewEmployeePopup()" class="btn green-btn flex items-center">
+              <img alt="" src="/assets/icons/plus.svg"/>
               <span>إضافة موظف جديد</span>
             </button>
           </div>
@@ -169,41 +169,41 @@
               <td>{{ attendance.adminstration }}</td>
               <td>
                 <div class="flex justify-center gap-2">
-                  <img src="assets/icons/right-icon.svg" alt="" />
-                  <img src="assets/icons/wrong-icon.svg" alt="" />
+                  <img alt="" src="/assets/icons/right-icon.svg"/>
+                  <img alt="" src="/assets/icons/wrong-icon.svg"/>
                 </div>
               </td>
               <td>{{ attendance.jop }}</td>
               <td>{{ attendance.date }}</td>
               <td>
                 <div class="flex justify-center gap-2">
-                  <img src="assets/icons/right-icon.svg" alt="" />
-                  <img src="assets/icons/wrong-icon.svg" alt="" />
+                  <img alt="" src="/assets/icons/right-icon.svg"/>
+                  <img alt="" src="/assets/icons/wrong-icon.svg"/>
                 </div>
               </td>
               <td>12/12/2024</td>
               <td>
                 <div class="flex gap-4">
                   <button
-                    class="btn gray-btn flex align-items gap-4 min-w-[144px]"
                     (click)="openEmployeePermissionModal()"
+                    class="btn gray-btn flex align-items gap-4 min-w-[144px]"
                   >
-                    <img src="/assets/icons/edit.svg" alt="" />
+                    <img alt="" src="/assets/icons/edit.svg"/>
                     <span class="text-sm">تعديل الصلاحية</span>
                   </button>
-                  <p-splitbutton dropdownIcon="pi pi-ellipsis-v" [model]="itemsList" />
+                  <p-splitbutton [model]="itemsList" dropdownIcon="pi pi-ellipsis-v"/>
                 </div>
               </td>
             </tr>
           </ng-template>
         </p-table>
         <p-paginator
-          class="mt-6"
           (onPageChange)="onPageChange($event)"
           [first]="first"
+          [rowsPerPageOptions]="[10, 20, 30]"
           [rows]="rows"
           [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
+          class="mt-6"
         />
         <div></div>
       </div>

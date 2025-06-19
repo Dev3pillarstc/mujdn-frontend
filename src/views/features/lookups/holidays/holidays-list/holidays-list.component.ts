@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
@@ -10,12 +10,12 @@ import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { HolidaysPopupComponent } from '../holidays-popup/holidays-popup.component';
-import { inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 
 interface Adminstration {
   type: string;
 }
+
 @Component({
   selector: 'app-holidays-list',
   imports: [
@@ -68,6 +68,7 @@ export default class HolidaysListComponent {
       console.log(`Dialog result: ${result}`);
     });
   }
+
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;

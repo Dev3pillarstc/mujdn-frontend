@@ -1,0 +1,111 @@
+<div dir="rtl">
+    <div class="p-6">
+        <button class="block ms-auto" (click)="close()">
+            <i class="pi pi-times"></i>
+        </button>
+        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">طلب استئذان جديد</h3>
+
+        <form class="">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div>
+                    <label for="departmentName" class="label"> اسم الإدارة</label>
+                    <div class="relative">
+                        <input id="departmentName" placeholder=" اسم الإدارة" type="text" pInputText class="peer"
+                            fluid="true" />
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div>
+                    <label for="regionSelect" class="label">المنطقة</label>
+                    <div class="relative">
+                        <p-select name="regionSelect" [options]="adminstrations" [(ngModel)]="selectedAdminstration"
+                            optionLabel="type" placeholder="المنطقة" class="w-full peer" id="regionSelect"></p-select>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div>
+                    <label for="citySelect" class="label">المدينة</label>
+                    <div class="relative">
+                        <p-select name="citySelect" [options]="adminstrations" [(ngModel)]="selectedAdminstration"
+                            optionLabel="type" placeholder="المدينة" class="w-full peer" id="citySelect"></p-select>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div>
+                    <label for="addressInput" class="label"> العنوان</label>
+                    <div class="relative">
+                        <input id="addressInput" placeholder=" العنوان" type="text" pInputText class="peer"
+                            fluid="true" />
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div>
+                    <label for="phoneInput" class="label"> الهاتف</label>
+                    <div class="relative">
+                        <input id="phoneInput" placeholder=" الهاتف" type="text" pInputText class="peer" fluid="true" />
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div>
+                    <label for="faxInput" class="label"> الفاكس</label>
+                    <div class="relative">
+                        <input id="faxInput" placeholder=" الفاكس" type="text" pInputText class="peer" fluid="true" />
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div>
+                    <label for="managerSelect" class="label">اسم المدير</label>
+                    <div class="relative">
+                        <p-select name="managerSelect" [options]="adminstrations" [(ngModel)]="selectedAdminstration"
+                            optionLabel="type" placeholder="اسم المدير" class="w-full peer"
+                            id="managerSelect"></p-select>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-[#d2d6db]">
+                <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">طلب استئذان جديد</h3>
+                <div class="flex flex-wrap gap-8 items-center">
+                    <label class="flex items-center cursor-pointer gap-2">
+                        <input type="radio" class="hidden peer" name="levelType" [(ngModel)]="levelType"
+                            [value]="'two-levels'" id="two-levels-radio" />
+                        <span
+                            class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]">
+                            <span class="w-4 h-4 rounded-full bg-[#22a06b] block peer-checked:block"
+                                *ngIf="levelType === 'two-levels'"></span>
+                        </span>
+                        <span>على مستويين</span>
+                    </label>
+                    <label class="flex items-center cursor-pointer gap-2">
+                        <input type="radio" class="hidden peer" name="levelType" [(ngModel)]="levelType"
+                            [value]="'one-level'" id="one-level-radio" />
+                        <span
+                            class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]">
+                            <span class="w-4 h-4 rounded-full bg-[#22a06b] block peer-checked:block"
+                                *ngIf="levelType === 'one-level'"></span>
+                        </span>
+                        <span>على مستوى واحد</span>
+                    </label>
+                </div>
+            </div>
+            <div class="actions mt-6 flex items-center justify-end gap-4">
+                <button class="btn gray-btn" (click)="close()">الغاء</button>
+                <button class="btn green-btn">تعديل</button>
+            </div>
+        </form>
+    </div>
+</div>

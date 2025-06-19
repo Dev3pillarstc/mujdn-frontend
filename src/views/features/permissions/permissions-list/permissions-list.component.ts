@@ -10,12 +10,13 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { PermissionReasonPopupComponent } from '../../lookups/permission/permission-reason-popup/permission-reason-popup.component';
 import { AddPermissionPopupComponent } from '../popups/add-permission-popup/add-permission-popup.component';
 import { PermissionsDataPopupComponent } from '../popups/permissions-data-popup/permissions-data-popup.component';
+
 interface Adminstration {
   type: string;
 }
+
 @Component({
   selector: 'app-permissions-list',
   imports: [
@@ -48,6 +49,7 @@ export default class PermissionsListComponent implements OnInit {
   permissions!: any[];
   first: number = 0;
   rows: number = 10;
+
   ngOnInit() {
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'الاستئذانات' }];
     this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
@@ -88,6 +90,7 @@ export default class PermissionsListComponent implements OnInit {
       },
     ];
   }
+
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;

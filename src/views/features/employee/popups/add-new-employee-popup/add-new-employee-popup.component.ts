@@ -6,7 +6,6 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
 import { User } from '@/models/auth/user';
-import { DialogRef } from '@angular/cdk/dialog';
 import { Observable } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 

@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">الاستئذانات</h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
@@ -12,46 +12,46 @@
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
-              <label for="permission-type-select" class="label">نوع الاذن</label>
+              <label class="label" for="permission-type-select">نوع الاذن</label>
               <p-select
-                id="permission-type-select"
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
+                id="permission-type-select"
                 optionLabel="type"
                 placeholder="نوع الاذن"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="manager-name-select" class="label">اسم المدير</label>
+              <label class="label" for="manager-name-select">اسم المدير</label>
               <p-select
-                id="manager-name-select"
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
+                id="manager-name-select"
                 optionLabel="type"
                 placeholder="اسم المدير"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="permission-date-picker" class="label">تاريخ الاستئذان</label>
+              <label class="label" for="permission-date-picker">تاريخ الاستئذان</label>
               <p-datepicker
-                id="permission-date-picker"
                 [(ngModel)]="date2"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
-                placeholder="تاريخ الاستئذان"
                 class="peer block w-full"
+                id="permission-date-picker"
                 inputId="permission-date-picker"
+                placeholder="تاريخ الاستئذان"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="/assets/icons/calender-icon.svg" alt="" />
+                  <img alt="" src="/assets/icons/calender-icon.svg"/>
                 </ng-template>
               </p-datepicker>
               <span
@@ -59,14 +59,14 @@
               ></span>
             </div>
             <div class="relative">
-              <label for="request-status-select" class="label">حالة الطلب</label>
+              <label class="label" for="request-status-select">حالة الطلب</label>
               <p-select
-                id="request-status-select"
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
+                id="request-status-select"
                 optionLabel="type"
                 placeholder="حالة الطلب"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -86,13 +86,13 @@
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">قائمة الاستئذانات</h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button>
-              <img src="/assets/icons/excel.svg" alt="" />
+              <img alt="" src="/assets/icons/excel.svg"/>
             </button>
             <button>
-              <img src="/assets/icons/print.svg" alt="" />
+              <img alt="" src="/assets/icons/print.svg"/>
             </button>
             <button (click)="openAddpermissionDialog()" class="btn green-btn flex items-center">
-              <img src="/assets/icons/plus.svg" alt="" />
+              <img alt="" src="/assets/icons/plus.svg"/>
               <span>إضافة طلب استئذان جديد</span>
             </button>
           </div>
@@ -120,9 +120,9 @@
             <td>
               <div
                 [ngClass]="[
-                  'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
+                  `px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2`,
                   permission.status === 'موافقة'
-                    ? 'bg-[#ecfdf3] text-[#085d3a]'
+                    ? `bg-[#ecfdf3] text-[#085d3a]`
                     : permission.status === 'تحت المعالجة'
                       ? 'bg-[#fffaeb] text-[#93370d]'
                       : 'bg-[#fef3f2] text-[#912018]',
@@ -130,9 +130,9 @@
               >
                 <span
                   [ngClass]="[
-                    'block w-[10px] h-[10px] rounded-full',
+                    `block w-[10px] h-[10px] rounded-full`,
                     permission.status === 'موافقة'
-                      ? 'bg-[#085d3a]'
+                      ? `bg-[#085d3a]`
                       : permission.status === 'تحت المعالجة'
                         ? 'bg-[#93370d]'
                         : 'bg-[#912018]',
@@ -144,24 +144,24 @@
             <td>
               <div class="actions flex gap-2">
                 <button
-                  *ngIf="permission.canView"
                   (click)="openPermissionsDataDialog()"
+                  *ngIf="permission.canView"
                   class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center min-w-[32px]"
                 >
-                  <img src="/assets/icons/view-action.svg" alt="" />
+                  <img alt="" src="/assets/icons/view-action.svg"/>
                 </button>
                 <button
+                  (click)="openPermissionsDataDialog()"
                   *ngIf="permission.canEdit"
                   class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center min-w-[32px]"
-                  (click)="openPermissionsDataDialog()"
                 >
-                  <img src="/assets/icons/edit-action.svg" alt="" />
+                  <img alt="" src="/assets/icons/edit-action.svg"/>
                 </button>
                 <button
                   *ngIf="permission.canDelete"
                   class="bg-[#fef3f2] rounded p-2 flex items-center justify-center min-w-[32px]"
                 >
-                  <img src="/assets/icons/delete-action.svg" alt="" />
+                  <img alt="" src="/assets/icons/delete-action.svg"/>
                 </button>
               </div>
             </td>
@@ -169,12 +169,12 @@
         </ng-template>
       </p-table>
       <p-paginator
-        class="mt-6"
         (onPageChange)="onPageChange($event)"
         [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
         [rows]="rows"
         [totalRecords]="120"
-        [rowsPerPageOptions]="[10, 20, 30]"
+        class="mt-6"
       />
     </div>
   </div>

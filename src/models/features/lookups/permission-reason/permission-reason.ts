@@ -12,18 +12,18 @@ export class PermissionReason extends BaseCrudModel<PermissionReason, Permission
   override $$__service_name__$$: string = 'PermissionReasonService';
   declare nameAr: string;
   declare nameEn: string;
-   isActive: boolean = true;
+  isActive: boolean = true;
 
-   buildForm() {
-     const { nameAr, nameEn, isActive } = this;
-     const form = {
-       nameAr: [
-         nameAr,
-         [
-           Validators.required,
-           Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
-           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
-           CustomValidators.pattern('AR_NUM'),
+  buildForm() {
+    const { nameAr, nameEn, isActive } = this;
+    return {
+      nameAr: [
+        nameAr,
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
+          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
+          CustomValidators.pattern('AR_NUM'),
         ],
       ],
       nameEn: [
@@ -37,8 +37,5 @@ export class PermissionReason extends BaseCrudModel<PermissionReason, Permission
       ],
       isActive: [isActive, []],
     };
-
-    return form;
   }
-
 }

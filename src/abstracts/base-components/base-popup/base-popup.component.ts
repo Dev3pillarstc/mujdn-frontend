@@ -3,7 +3,6 @@ import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { Directive, inject, OnInit } from '@angular/core';
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { DialogRef } from '@angular/cdk/dialog';
 import { FormGroup } from '@angular/forms';
 import {
   catchError,

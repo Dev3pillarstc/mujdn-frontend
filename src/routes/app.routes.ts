@@ -35,7 +35,7 @@ export const routes: Routes = [
       },
       {
         path: 'attendance-logs',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER] },
         loadComponent: () =>
           import(

@@ -12,6 +12,7 @@ import { UserService } from '@/services/features/user.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-new-employee-popup',
@@ -23,6 +24,7 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
     FormsModule,
     ReactiveFormsModule,
     RequiredMarkerDirective,
+    TranslatePipe,
   ],
   templateUrl: './add-new-employee-popup.component.html',
   styleUrl: './add-new-employee-popup.component.scss',

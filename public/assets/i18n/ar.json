@@ -59,7 +59,9 @@
     "RESET_SEARCH": "إعادة تعيين",
     "ADD_NEW_CITY": "إضافة مدينة جديدة",
     "ACTIONS": "الإجراء",
-    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
+    "SELECT_REGION": "اختر المنطقة",
+    "REGION": "المنطقة"
   },
   "REGIONS_PAGE": {
     "REGIONS_LIST": "قائمة المناطق",

@@ -9,10 +9,14 @@ import { Observable } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { RegionService } from '@/services/features/lookups/region.service';
+import { Region } from '@/models/features/lookups/region/region';
+import { Select } from 'primeng/select';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Component({
   selector: 'app-city-popup',
-  imports: [InputTextModule, ReactiveFormsModule, RequiredMarkerDirective, TranslatePipe],
+  imports: [Select, InputTextModule, ReactiveFormsModule, RequiredMarkerDirective, TranslatePipe],
   templateUrl: './city-popup.component.html',
   styleUrl: './city-popup.component.scss',
 })
@@ -21,7 +25,9 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
   declare form: FormGroup;
   alertService = inject(AlertService);
   service = inject(CityService);
+  regionService = inject(RegionService);
   fb = inject(FormBuilder);
+  regions: Region[] | undefined = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -37,6 +43,7 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
   }
   override initPopup() {
     this.model = this.data.model;
+    this.loadLookups();
   }
 
   override buildForm() {
@@ -58,5 +65,21 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
 
   get nameEnControl() {
     return this.form.get('nameEn') as FormControl;
+  }
+
+  get regionControl() {
+    return this.form.get('fkRegionId') as FormControl;
+  }
+
+  loadLookups() {
+    this.regionService.load().subscribe({
+      next: (result) => {
+        this.regions = result;
+      },
+    });
+  }
+
+  getRegionOptionName() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
 }

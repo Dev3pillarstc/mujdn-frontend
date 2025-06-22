@@ -12,9 +12,10 @@ export class City extends BaseCrudModel<City, CityService> {
   override $$__service_name__$$: string = 'CityService';
   declare nameAr: string;
   declare nameEn: string;
+  declare fkRegionId: number;
   isActive: boolean = false;
   buildForm() {
-    const { nameAr, nameEn, isActive } = this;
+    const { nameAr, nameEn, isActive, fkRegionId } = this;
     return {
       nameAr: [
         nameAr,
@@ -34,6 +35,7 @@ export class City extends BaseCrudModel<City, CityService> {
           CustomValidators.pattern('ENG_NUM'),
         ],
       ],
+      fkRegionId: [fkRegionId, [Validators.required]],
       isActive: [isActive, []],
     };
   }

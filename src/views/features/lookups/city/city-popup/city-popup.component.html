@@ -9,6 +9,28 @@
     <form [formGroup]="form" class="mt-6">
       <div class="grid sm:grid-cols-2 gap-4">
         <div>
+          <label for="regionSelect" class="label">{{ 'CITIES_PAGE.REGION' | translate }}</label>
+          <div class="relative">
+            <p-select
+              name="regionSelect"
+              [options]="regions"
+              formControlName="fkRegionId"
+              [optionLabel]="getRegionOptionName()"
+              optionValue="id"
+              placeholder="{{ 'CITIES_PAGE.REGION' | translate }}"
+              class="w-full peer"
+              id="regionSelect"
+            >
+            </p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          @if (regionControl.touched && regionControl.errors?.['required']) {
+            <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>
+          }
+        </div>
+        <div>
           <label class="label" for="cityAr-popup">{{
             'CITIES_PAGE.CITY_IN_ARABIC' | translate
           }}</label>
@@ -70,28 +92,26 @@
             <span class="validation-message">{{ 'COMMON.MAX_LENGTH' | translate }}</span>
           }
         </div>
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-            formControlName="isActive"
-            type="checkbox"
-          />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="3"
-            viewBox="0 0 24 24"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]">{{
-            'COMMON.ACTIVE' | translate
-          }}</span>
-        </label>
       </div>
+      <label class="flex items-center space-x-2 mb-4 cursor-pointer relative mt-4">
+        <input
+          class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+          formControlName="isActive"
+          type="checkbox"
+        />
+        <svg
+          class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="3"
+          viewBox="0 0 24 24"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+        <span class="text-base font-medium text-[#1f2a37]">{{ 'COMMON.ACTIVE' | translate }}</span>
+      </label>
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
         <button (click)="save$.next()" class="btn green-btn">

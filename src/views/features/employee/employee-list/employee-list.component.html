@@ -74,13 +74,16 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="">حالة الحساب</label>
+              <label class="label" for="accountStatus">حالة الحساب</label>
               <p-select
-                [options]="departments"
-                [(ngModel)]="selectedDepartment"
-                optionLabel="type"
+                name="accountStatus"
+                [options]="accountStatusOptions"
+                [(ngModel)]="filterModel.isActive"
+                optionLabel="nameAr"
+                optionValue="id"
                 placeholder="اسم الموظف"
                 class="w-full peer"
+                id="accountStatus"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -115,13 +118,15 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="">الإعفاء من البصمة</label>
+              <label class="label" for="fingerPrint">الإعفاء من البصمة</label>
               <p-select
-                [options]="departments"
-                [(ngModel)]="selectedDepartment"
-                optionLabel="type"
+                [options]="fingerprintExemptionOptions"
+                [(ngModel)]="filterModel.CanLeaveWithoutFingerPrint"
+                optionLabel="nameAr"
+                optionValue="id"
                 placeholder="نوع الدوام"
                 class="w-full peer"
+                id="fingerPrint"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"

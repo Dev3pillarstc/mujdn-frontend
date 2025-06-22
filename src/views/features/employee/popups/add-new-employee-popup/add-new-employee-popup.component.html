@@ -213,9 +213,10 @@
           <div class="relative">
             <p-select
               name="accountStatus"
-              [options]="departments"
+              [options]="accountStatusOptions"
               optionLabel="nameAr"
               optionValue="id"
+              formControlName="isActive"
               placeholder="حالة الحساب"
               class="w-full peer"
               id="accountStatus"
@@ -245,7 +246,7 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="password" class="label"> كلمة المرور</label>
+          <label for="password" class="label">كلمة المرور</label>
           <div class="relative">
             <input
               id="password"

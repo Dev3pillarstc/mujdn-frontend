@@ -28,6 +28,9 @@ import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { InputTextModule } from 'primeng/inputtext';
+import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/enums/account-status-enum'; // Import your enums
+import { FINGERPRINT_EXEMPTION_OPTIONS, BooleanOptionModel } from '@/enums/boolean-option-enum'; // Import your enums
+
 @Component({
   selector: 'app-employee-list',
   imports: [
@@ -61,12 +64,9 @@ export default class EmployeeListComponent
   userService = inject(UserService);
   home: MenuItem | undefined;
   filterModel: UserFilter = new UserFilter();
+  accountStatusOptions: AccountStatusOption[] = ACCOUNT_STATUS_OPTIONS;
+  fingerprintExemptionOptions: BooleanOptionModel[] = FINGERPRINT_EXEMPTION_OPTIONS;
 
-  formatDateOnly(date: Date): string {
-    console.log(date);
-    // this.filterModel.joinDate.toISOString().split('T')[0];
-    return date.toISOString().split('T')[0]; // "2025-06-19"
-  }
   // items: MenuItem[] | undefined;
   selectedDepartment: BaseLookupModel | undefined;
   joinDate: Date | undefined;

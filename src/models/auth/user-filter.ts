@@ -5,6 +5,6 @@ export class UserFilter {
   declare jobTitleAr?: string;
   declare joinDate?: Date | string;
   // declare fkDepartmentId?: number;
-  // declare isActive?: boolean;
-  // declare isFingerprintExempted?: boolean;
+  declare isActive?: boolean;
+  declare CanLeaveWithoutFingerPrint?: boolean;
 }

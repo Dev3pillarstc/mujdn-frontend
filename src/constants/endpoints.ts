@@ -9,6 +9,7 @@ export const EndPoints = {
   ATTENDANCE: '/attendance',
   REGIONS: '/regions',
   NOTIFICATION_CHANNELS: '/notificationchannels',
+  DEPARTMENTS: '/departments',
 };
 
 export type EndpointsType = typeof EndPoints;

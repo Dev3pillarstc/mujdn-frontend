@@ -59,7 +59,7 @@ export class PermissionReasonPopupComponent
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
   }
-    get nameArControl() {
+  get nameArControl() {
     return this.form.get('nameAr') as FormControl;
   }
 

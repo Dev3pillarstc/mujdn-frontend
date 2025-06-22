@@ -179,7 +179,7 @@
                 <td>{{ user.department.nameAr }}</td>
                 <td>
                   <div class="flex justify-center gap-2">
-                    @if (user.isFingerprintExempted) {
+                    @if (user.canLeaveWithoutFingerPrint) {
                       <img src="assets/icons/right-icon.svg" alt="" />
                     } @else {
                       <img src="assets/icons/wrong-icon.svg" alt="" />

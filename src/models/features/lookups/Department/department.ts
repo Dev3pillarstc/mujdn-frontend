@@ -17,6 +17,11 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
 	declare address?: string;
 	declare phoneNumber?: string;
 	declare fax?: string;
-	isActive: boolean = false;
-	isOneLevelApproval: boolean = false;
+	declare regionNameEn?: string;
+	declare regionNameAr?: string;
+	declare cityNameEn?: string;
+	declare cityNameAr?: string;
+	declare managerNameEn?: string;
+	declare managerNameAr?: string;
+	isOneLevelVerification: boolean = false;
 }

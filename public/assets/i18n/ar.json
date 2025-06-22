@@ -53,6 +53,9 @@
     "ADD_NEW_CITY": "إضافة مدينة جديدة",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+  },
+  "DEPARTMENTS_PAGE": {
+    "ONE_LEVEL_APPROVAL": "موافقه على مستوى واحد",
+    "TWO_LEVEL_APPROVAL": "موافقه على مستويين"
   }
-
 }

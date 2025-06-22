@@ -53,5 +53,9 @@
     "ADD_NEW_CITY": "Add New City",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
+  },
+  "DEPARTMENTS_PAGE": {
+    "ONE_LEVEL_APPROVAL": "One level approval",
+    "TWO_LEVEL_APPROVAL": "Two levels approval"
   }
 }

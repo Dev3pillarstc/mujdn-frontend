@@ -13,9 +13,8 @@ export class City extends BaseCrudModel<City, CityService> {
   declare nameAr: string;
   declare nameEn: string;
   declare fkRegionId: number;
-  isActive: boolean = false;
   buildForm() {
-    const { nameAr, nameEn, isActive, fkRegionId } = this;
+    const { nameAr, nameEn, fkRegionId } = this;
     return {
       nameAr: [
         nameAr,
@@ -36,7 +35,6 @@ export class City extends BaseCrudModel<City, CityService> {
         ],
       ],
       fkRegionId: [fkRegionId, [Validators.required]],
-      isActive: [isActive, []],
     };
   }
 }

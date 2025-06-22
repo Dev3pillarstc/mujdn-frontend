@@ -1,26 +1,26 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { City } from '@/models/features/lookups/city/city';
-import { CityService } from '@/services/features/lookups/city.service';
+import { RegionService } from '@/services/features/lookups/region.service';
 import { AlertService } from '@/services/shared/alert.service';
-import { FormGroup, FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { Component, inject, Inject, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { TranslatePipe } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
+import { Observable } from 'rxjs';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { Region } from '@/models/features/lookups/region/region';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-city-popup',
+  selector: 'app-region-popup',
   imports: [InputTextModule, ReactiveFormsModule, RequiredMarkerDirective, TranslatePipe],
-  templateUrl: './city-popup.component.html',
-  styleUrl: './city-popup.component.scss',
+  templateUrl: './region-popup.component.html',
+  styleUrl: './region-popup.component.scss',
 })
-export class CityPopupComponent extends BasePopupComponent<City> implements OnInit {
-  declare model: City;
+export class RegionPopupComponent extends BasePopupComponent<Region> implements OnInit {
+  declare model: Region;
   declare form: FormGroup;
   alertService = inject(AlertService);
-  service = inject(CityService);
+  service = inject(RegionService);
   fb = inject(FormBuilder);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
@@ -31,10 +31,11 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
     // logic after error if there
   }
 
-  override prepareModel(model: City, form: FormGroup): City | Observable<City> {
+  override prepareModel(model: Region, form: FormGroup): Region | Observable<Region> {
     this.model = Object.assign(model, { ...form.value });
     return this.model;
   }
+
   override initPopup() {
     this.model = this.data.model;
   }
@@ -43,7 +44,7 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
     this.form = this.fb.group(this.model.buildForm());
   }
 
-  beforeSave(model: City, form: FormGroup) {
+  beforeSave(model: Region, form: FormGroup) {
     // manipulation before save
     return form.valid;
   }

@@ -10,7 +10,14 @@
     "UPDATED_SUCCESSFULLY": "تم التحديث بنجاح",
     "DELETED_SUCCESSFULLY": "تم الحذف بنجاح",
     "DELETION_FAILED": "فشل في حذف العنصر",
-    "NOT_AUTHORIZED": "ليس لديك صلاحية الوصول إلى هذه الصفحة"
+    "NOT_AUTHORIZED": "ليس لديك صلاحية الوصول إلى هذه الصفحة",
+    "SAVE": "حفظ",
+    "ACTIVE": "نشط",
+    "REQUIRED_FIELD": "هذا الحقل مطلوب",
+    "MIN_LENGTH": "يجب أن يكون الحد الأدنى للحقل هو 3",
+    "MAX_LENGTH": "يجب أن يكون الحد الأقصى للحقل هو 300",
+    "ARABIC_ONLY": "يجب أن يحتوي هذا الحقل على أحرف عربية فقط",
+    "ENGLISH_ONLY": "يجب أن يحتوي هذا الحقل على أحرف إنجليزية فقط"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -57,5 +64,16 @@
   "DEPARTMENTS_PAGE": {
     "ONE_LEVEL_APPROVAL": "موافقه على مستوى واحد",
     "TWO_LEVEL_APPROVAL": "موافقه على مستويين"
+  }, 
+  "REGIONS_PAGE": {
+    "REGIONS_LIST": "قائمة المناطق",
+    "SEARCH_FILTERS": "تصفية البحث",
+    "REGION_IN_ARABIC": "المنطقة بالعربية",
+    "REGION_IN_ENGLISH": "المنطقة بالانجليزية",
+    "SEARCH": "بحث",
+    "RESET_SEARCH": "إعادة تعيين",
+    "ADD_NEW_REGION": "إضافة منطقة جديدة",
+    "ACTIONS": "الإجراء",
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   }
 }

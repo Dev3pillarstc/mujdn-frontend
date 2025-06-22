@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 import { AlertService } from '@/services/shared/alert.service';
 import { UserService } from '@/services/features/user.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Department } from '@/models/person';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 

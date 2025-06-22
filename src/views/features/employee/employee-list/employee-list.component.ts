@@ -26,7 +26,6 @@ import { User } from '@/models/auth/user';
 import { UserFilter } from '@/models/auth/user-filter';
 import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Department } from '@/models/person';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { InputTextModule } from 'primeng/inputtext';
 @Component({

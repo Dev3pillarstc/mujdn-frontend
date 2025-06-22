@@ -1,5 +1,5 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { UserService } from '@/services/features/user.serice';
+import { UserService } from '@/services/features/user.service';
 import { Validators } from '@angular/forms';
 import { CustomValidators } from '@/validators/custom-validators';
 import { BaseLookupModel } from '../features/lookups/base-lookup-model';
@@ -12,6 +12,7 @@ const { send, receive } = new UserInterceptor();
 export class User extends BaseCrudModel<User, UserService, string> {
   override $$__service_name__$$: string = 'UserService';
   declare email?: string;
+  declare password?: string;
   declare fullNameEn?: string;
   declare fullNameAr?: string;
   declare nationalId?: string;
@@ -23,8 +24,8 @@ export class User extends BaseCrudModel<User, UserService, string> {
   declare jobTitleEn?: string;
   declare jobTitleAr?: string;
   declare profilePhotoKey?: string;
-  declare joinDate?: string;
-  declare isFingerprintExempted?: boolean;
+  declare joinDate?: Date | string;
+  declare canLeaveWithoutFingerPrint?: boolean;
   declare isActive?: boolean;
   declare region?: BaseLookupModel;
   declare city?: BaseLookupModel;
@@ -33,6 +34,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
   buildForm() {
     const {
       email,
+      password,
       fullNameEn,
       fullNameAr,
       nationalId,
@@ -45,7 +47,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
       jobTitleAr,
       profilePhotoKey,
       joinDate,
-      isFingerprintExempted,
+      canLeaveWithoutFingerPrint,
       isActive,
     } = this;
 
@@ -56,6 +58,14 @@ export class User extends BaseCrudModel<User, UserService, string> {
           Validators.required,
           Validators.email,
           Validators.maxLength(CustomValidators.defaultLengths.EMAIL_MAX),
+        ],
+      ],
+      password: [
+        password,
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.PASSWORD_MAX),
+          Validators.minLength(CustomValidators.defaultLengths.PASSWORD_MIN),
         ],
       ],
       fullNameEn: [
@@ -76,26 +86,23 @@ export class User extends BaseCrudModel<User, UserService, string> {
           CustomValidators.pattern('AR_NUM'),
         ],
       ],
-      nationalId: [
-        nationalId,
-        [Validators.required, Validators.maxLength(14), Validators.minLength(14)],
-      ],
+      nationalId: [nationalId, [Validators.required]],
       phoneNumber: [phoneNumber, [Validators.required]],
       // fkRegionId: [fkRegionId, [Validators.required]],
       // fkCityId: [fkCityId, [Validators.required]],
       // fkGenderId: [fkGenderId, [Validators.required]],
       // fkDepartmentId: [fkDepartmentId, [Validators.required]],
-      // jobTitleEn: [
-      //   jobTitleEn,
-      //   [Validators.required, Validators.maxLength(100), CustomValidators.pattern('ENG_NUM')],
-      // ],
-      // jobTitleAr: [
-      //   jobTitleAr,
-      //   [Validators.required, Validators.maxLength(100), CustomValidators.pattern('AR_NUM')],
-      // ],
+      jobTitleEn: [
+        jobTitleEn,
+        [Validators.required, Validators.maxLength(100), CustomValidators.pattern('ENG_NUM')],
+      ],
+      jobTitleAr: [
+        jobTitleAr,
+        [Validators.required, Validators.maxLength(100), CustomValidators.pattern('AR_NUM')],
+      ],
       // profilePhotoKey: [profilePhotoKey],
       joinDate: [joinDate, [Validators.required]],
-      // isFingerprintExempted: [isFingerprintExempted],
+      canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint],
       // isActive: [isActive ?? true],
     };
   }

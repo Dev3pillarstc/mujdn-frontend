@@ -9,15 +9,11 @@ import { User } from '@/models/auth/user';
 import { DialogRef } from '@angular/cdk/dialog';
 import { Observable } from 'rxjs';
 import { AlertService } from '@/services/shared/alert.service';
-import { UserService } from '@/services/features/user.serice';
+import { UserService } from '@/services/features/user.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Department } from '@/models/person';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
-
-interface Adminstration {
-  type: string;
-}
 
 @Component({
   selector: 'app-add-new-employee-popup',

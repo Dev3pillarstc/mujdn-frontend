@@ -11,6 +11,7 @@ import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginationParams } from '@/models/shared/pagination-params';
+import { dateOnlyConvertor } from '@/utils/date-only';
 
 export abstract class BaseCrudService<Model, PrimaryKey = number>
   extends RegisterServiceMixin(class {})
@@ -61,8 +62,7 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
     const httpParams = new HttpParams({
       fromObject: paginationParams as unknown as never,
     });
-    filterOptions = trimTime(filterOptions);
-    console.log('filterOptions', { ...filterOptions });
+    filterOptions = dateOnlyConvertor(filterOptions);
     return this.http
       .post<PaginatedListResponseData<Model>>(
         this.getUrlSegment() + '/GetWithPaging',
@@ -85,12 +85,14 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   @CastResponse()
   @HasInterception
   create(@InterceptParam() model: Model): Observable<Model> {
+    model = dateOnlyConvertor(model);
     return this.http.post<Model>(this.getUrlSegment(), model, { withCredentials: true });
   }
 
   @CastResponse()
   @HasInterception
   update(@InterceptParam() model: Model): Observable<Model> {
+    model = dateOnlyConvertor(model);
     return this.http.put<Model>(this.getUrlSegment(), model, { withCredentials: true });
   }
 
@@ -104,18 +106,3 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
     return this.http.get<Model>(this.getUrlSegment() + '/' + id, { withCredentials: true });
   }
 }
-
-export const trimTime = function (model: any) {
-  if (model) {
-    Object.keys(model).forEach((key) => {
-      if (model[key] instanceof Date) {
-        const year = model[key].getFullYear();
-        const month = `${model[key].getMonth() + 1}`.padStart(2, '0');
-        const day = `${model[key].getDate()}`.padStart(2, '0');
-        model[key] = `${year}-${month}-${day}`;
-      }
-    });
-  }
-
-  return model;
-};

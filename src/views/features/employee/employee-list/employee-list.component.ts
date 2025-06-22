@@ -20,7 +20,7 @@ import { AddNewEmployeePopupComponent } from '../popups/add-new-employee-popup/a
 import { AddTaskPopupComponent } from '../popups/add-task-popup/add-task-popup.component';
 import { TasksAssignedToEmployeePopupComponent } from '../popups/tasks-assigned-to-employee-popup/tasks-assigned-to-employee-popup.component';
 import { AttendanceReportPopupComponent } from '../popups/attendance-report-popup/attendance-report-popup.component';
-import { UserService } from '@/services/features/user.serice';
+import { UserService } from '@/services/features/user.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { User } from '@/models/auth/user';
 import { UserFilter } from '@/models/auth/user-filter';

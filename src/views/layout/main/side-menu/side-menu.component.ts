@@ -38,12 +38,12 @@ export class SideMenuComponent {
     {
       label: 'الادارات',
       iconUrl: 'assets/icons/menu-icons/tools.svg',
-      routerLink: ['/dashboard'],
+      routerLink: ['/departments'],
     },
     {
       label: 'قائمة الموظفين',
       iconUrl: 'assets/icons/menu-icons/employees.svg',
-      routerLink: ['/dashboard'],
+      routerLink: ['/employees'],
     },
     {
       label: 'مسائلات توثيق التواجد',
@@ -53,7 +53,7 @@ export class SideMenuComponent {
     {
       label: 'الاستئذانات',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',
-      routerLink: ['/dashboard'],
+      routerLink: ['/permission-resons'],
     },
     {
       label: 'الموظفون المُكلفون',

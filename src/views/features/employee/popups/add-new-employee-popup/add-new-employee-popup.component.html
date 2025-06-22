@@ -114,11 +114,29 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="job" class="label"> الوظيفة</label>
+          <label for="job" class="label">الوظيفة بالعربية</label>
           <div class="relative">
             <input
               id="job"
-              placeholder="الوظيفة"
+              placeholder="الوظيفة بالعربية"
+              formControlName="jobTitleAr"
+              type="text"
+              pInputText
+              class="peer"
+              fluid="true"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label for="job" class="label">الوظيفة بالانجليزية</label>
+          <div class="relative">
+            <input
+              id="job"
+              placeholder=" الوظيفة بالانجليزية"
               formControlName="jobTitleEn"
               type="text"
               pInputText
@@ -209,11 +227,11 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="username" class="label"> اسم المستخدم</label>
+          <label for="nationalId" class="label">رقم الهوية</label>
           <div class="relative">
             <input
-              id="username"
-              placeholder="اسم المستخدم"
+              id="nationalId"
+              placeholder="رقم الهوية"
               formControlName="nationalId"
               type="text"
               pInputText
@@ -232,6 +250,7 @@
             <input
               id="password"
               placeholder="كلمة المرور"
+              formControlName="password"
               type="password"
               pInputText
               class="peer"
@@ -250,6 +269,8 @@
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
               type="checkbox"
+              checked
+              disabled
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
             />
             <svg
@@ -380,6 +401,7 @@
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
               type="checkbox"
+              formControlName="canLeaveWithoutFingerPrint"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
             />
             <svg

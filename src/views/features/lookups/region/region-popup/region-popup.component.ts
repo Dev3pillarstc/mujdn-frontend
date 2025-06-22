@@ -1,28 +1,26 @@
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { PermissionReason } from '@/models/features/lookups/permission-reason/permission-reason';
-import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
+import { RegionService } from '@/services/features/lookups/region.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { Component, inject, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { Observable } from 'rxjs';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { Region } from '@/models/features/lookups/region/region';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-permission-popup',
-  imports: [InputTextModule, ReactiveFormsModule, RequiredMarkerDirective],
-  templateUrl: './permission-reason-popup.component.html',
-  styleUrl: './permission-reason-popup.component.scss',
+  selector: 'app-region-popup',
+  imports: [InputTextModule, ReactiveFormsModule, RequiredMarkerDirective, TranslatePipe],
+  templateUrl: './region-popup.component.html',
+  styleUrl: './region-popup.component.scss',
 })
-export class PermissionReasonPopupComponent
-  extends BasePopupComponent<PermissionReason>
-  implements OnInit
-{
-  declare model: PermissionReason;
+export class RegionPopupComponent extends BasePopupComponent<Region> implements OnInit {
+  declare model: Region;
   declare form: FormGroup;
   alertService = inject(AlertService);
-  service = inject(PermissionReasonService);
+  service = inject(RegionService);
   fb = inject(FormBuilder);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
@@ -33,10 +31,7 @@ export class PermissionReasonPopupComponent
     // logic after error if there
   }
 
-  override prepareModel(
-    model: PermissionReason,
-    form: FormGroup
-  ): PermissionReason | Observable<PermissionReason> {
+  override prepareModel(model: Region, form: FormGroup): Region | Observable<Region> {
     this.model = Object.assign(model, { ...form.value });
     return this.model;
   }
@@ -49,7 +44,7 @@ export class PermissionReasonPopupComponent
     this.form = this.fb.group(this.model.buildForm());
   }
 
-  beforeSave(model: PermissionReason, form: FormGroup) {
+  beforeSave(model: Region, form: FormGroup) {
     // manipulation before save
     return form.valid;
   }
@@ -57,5 +52,12 @@ export class PermissionReasonPopupComponent
   afterSave() {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
+  }
+  get nameArControl() {
+    return this.form.get('nameAr') as FormControl;
+  }
+
+  get nameEnControl() {
+    return this.form.get('nameEn') as FormControl;
   }
 }

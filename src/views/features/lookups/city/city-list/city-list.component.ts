@@ -35,7 +35,12 @@ export default class CityListComponent
     return this.cityService;
   }
 
-  override openDialog(): void {
-    // this.openBaseDialog(CityPopupComponent as any);
+  override openDialog(city: City): void {
+    this.openBaseDialog(CityPopupComponent as any, city);
+  }
+
+  addOrEditModel(city?: City) {
+    city = city || new City();
+    this.openDialog(city);
   }
 }

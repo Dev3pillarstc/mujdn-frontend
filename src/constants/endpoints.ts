@@ -7,6 +7,7 @@ export const EndPoints = {
   NATIONALITIES: '/nationalities',
   PERMISSION_REASONS: '/permissionreasons',
   ATTENDANCE: '/attendance',
+  REGIONS: '/regions',
   NOTIFICATION_CHANNELS: '/notificationchannels',
 };
 

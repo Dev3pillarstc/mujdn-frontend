@@ -16,7 +16,7 @@
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
-              <label class="label" for="cittyAr">{{
+              <label class="label" for="cityAr">{{
                 'CITIES_PAGE.CITY_IN_ARABIC' | translate
               }}</label>
               <input
@@ -24,7 +24,7 @@
                 [placeholder]="'CITIES_PAGE.CITY_IN_ARABIC' | translate"
                 class="peer"
                 fluid="true"
-                id="cittyAr"
+                id="cityAr"
                 pInputText
                 type="text"
               />
@@ -33,7 +33,7 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="cittyEn">{{
+              <label class="label" for="cityEn">{{
                 'CITIES_PAGE.CITY_IN_ENGLISH' | translate
               }}</label>
               <input
@@ -41,7 +41,7 @@
                 [placeholder]="'CITIES_PAGE.CITY_IN_ENGLISH' | translate"
                 class="peer"
                 fluid="true"
-                id="cittyEn"
+                id="cityEn"
                 pInputText
                 type="text"
               />
@@ -65,7 +65,6 @@
         <div
           class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
         >
-
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
             {{ 'CITIES_PAGE.CITIES_LIST' | translate }}
           </h4>
@@ -75,9 +74,8 @@
             </button>
             <button class="table-head-action-btn">
               <img alt="" src="/assets/icons/print.svg" />
-
             </button>
-            <button (click)="openDialog()" class="btn green-btn flex items-center">
+            <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
               <img alt="" src="/assets/icons/plus.svg" />
               <span>{{ 'CITIES_PAGE.ADD_NEW_CITY' | translate }}</span>
             </button>
@@ -99,8 +97,7 @@
                 <td>{{ city.nameEn }}</td>
                 <td>
                   <div class="actions flex gap-2">
-                    <button class="table-action-gray-btn"
->
+                    <button (click)="addOrEditModel(city)" class="table-action-gray-btn">
                       <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                     </button>
                     <button class="table-action-red-btn">

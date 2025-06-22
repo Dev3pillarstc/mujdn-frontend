@@ -8,6 +8,7 @@ import { NationalityFilter } from '@/models/features/lookups/Nationality-filter'
 import { PaginatorState } from 'primeng/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -43,8 +44,10 @@ export abstract class BaseListComponent<
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.loadList();
+    dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result && result == DIALOG_ENUM.OK) {
+        this.loadList();
+      }
     });
   }
 

@@ -1,15 +1,15 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { CityInterceptor } from '@/model-interceptors/features/lookups/city.interceptor';
-import { CityService } from '@/services/features/lookups/city.service';
+import { RegionInterceptor } from '@/model-interceptors/features/lookups/region.interceptor';
+import { RegionService } from '@/services/features/lookups/region.service';
 import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 
-const { send, receive } = new CityInterceptor();
+const { send, receive } = new RegionInterceptor();
 
 @InterceptModel({ send, receive })
-export class City extends BaseCrudModel<City, CityService> {
-  override $$__service_name__$$: string = 'CityService';
+export class Region extends BaseCrudModel<Region, RegionService> {
+  override $$__service_name__$$: string = 'RegionService';
   declare nameAr: string;
   declare nameEn: string;
   isActive: boolean = false;

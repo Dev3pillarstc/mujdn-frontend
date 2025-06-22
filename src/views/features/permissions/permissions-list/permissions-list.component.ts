@@ -13,9 +13,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddPermissionPopupComponent } from '../popups/add-permission-popup/add-permission-popup.component';
 import { TabsModule } from 'primeng/tabs';
 import { PermissionsDataPopupComponent } from '../popups/permissions-data-popup/permissions-data-popup.component';
+
 interface Adminstration {
   type: string;
 }
+
 @Component({
   selector: 'app-permissions-list',
   imports: [
@@ -50,6 +52,7 @@ export default class PermissionsListComponent implements OnInit {
   permissionsRequest!: any[];
   first: number = 0;
   rows: number = 10;
+
   ngOnInit() {
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'الاستئذانات' }];
     this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
@@ -125,6 +128,7 @@ export default class PermissionsListComponent implements OnInit {
       },
     ];
   }
+
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;

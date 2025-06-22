@@ -3,7 +3,6 @@ import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { Directive, inject, OnInit } from '@angular/core';
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { DialogRef } from '@angular/cdk/dialog';
 import { FormGroup } from '@angular/forms';
 import {
   catchError,
@@ -16,6 +15,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Directive()
 export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, any>>
@@ -26,7 +26,7 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
   declare direction: LAYOUT_DIRECTION_ENUM;
   languageService = inject(LanguageService);
   save$: Subject<void> = new Subject();
-  dialogRef = inject(DialogRef);
+  dialogRef = inject(MatDialogRef);
 
   constructor() {
     this.direction =
@@ -47,7 +47,7 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
 
   abstract saveFail(error: Error): void;
 
-  abstract afterSave(model: Model, dialogRef: DialogRef): void;
+  abstract afterSave(model: Model, dialogRef: MatDialogRef<any, any>): void;
 
   abstract beforeSave(model: Model, form: FormGroup): Observable<boolean> | boolean;
 
@@ -84,7 +84,13 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
           );
         })
       )
-      .pipe(filter((value) => !value.hasOwnProperty('error')))
+      .pipe(
+        filter((value) => {
+          return (
+            !value.hasOwnProperty('error') || (value.hasOwnProperty('error') && value.error == null)
+          );
+        })
+      )
       .subscribe((model: Model) => {
         this.afterSave(model, this.dialogRef);
         this.dialogRef.close(DIALOG_ENUM.OK);

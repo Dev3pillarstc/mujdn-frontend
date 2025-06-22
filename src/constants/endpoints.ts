@@ -8,6 +8,9 @@ export const EndPoints = {
   PERMISSION_REASONS: '/permissionreasons',
   ATTENDANCE: '/attendance',
   USERS: '/userprofile',
+  REGIONS: '/regions',
+  NOTIFICATION_CHANNELS: '/notificationchannels',
+  DEPARTMENTS: '/departments',
 };
 
 export type EndpointsType = typeof EndPoints;

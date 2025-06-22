@@ -5,6 +5,8 @@ import { nationalitiesResolver } from '@/resolvers/lookups/nationalities.resolve
 import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.resolver';
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
 import { userResolver } from '@/resolvers/user.resolver';
+import { regionResolver } from '@/resolvers/lookups/region.resolver';
+import { notificationChannelResolver } from '@/resolvers/setting/notification-channel.resolver';
 
 export const routes: Routes = [
   {
@@ -56,12 +58,20 @@ export const routes: Routes = [
         loadComponent: () => import('../views/features/lookups/city/city-list/city-list.component'),
       },
       {
+        path: 'regions',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
+        resolve: { list: regionResolver },
+        loadComponent: () =>
+          import('../views/features/lookups/region/region-list/region-list.component').then(
+            (m) => m.RegionListComponent
+          ),
+      },
+      {
         path: 'permission-reasons',
-
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN] },
         resolve: { list: permissionReasonResolver },
-
         loadComponent: () =>
           import(
             '../views/features/lookups/permission/permission-reason-list/permission-reason-list.component'
@@ -69,6 +79,11 @@ export const routes: Routes = [
       },
       {
         path: 'notification-channels',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN] },
+        resolve: {
+          channel: notificationChannelResolver,
+        },
         loadComponent: () =>
           import(
             '../views/features/settings/notification-channels/notification-channels.component'

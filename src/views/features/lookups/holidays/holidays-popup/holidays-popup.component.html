@@ -1,67 +1,97 @@
 <div [dir]="direction">
-    <div class="p-6">
-        <button class="block ms-auto" (click)="close()">
-            <i class="pi pi-times"></i>
-        </button>
-        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة اجازة أو عطلة جديدة</h3>
+  <div class="p-6">
+    <button class="block ms-auto" (click)="close()">
+      <i class="pi pi-times"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة اجازة أو عطلة جديدة</h3>
 
-        <form class="">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="col-span-4 md:col-span-4 lg:col-span-2">
-                    <label for="employeeNameAr" class="label"> مسمى العطلة أو الاجازة </label>
-                    <div class="relative">
-                        <input id="employeeNameAr" placeholder=" مسمى العطلة أو الاجازة" type="text" pInputText
-                            class="peer" fluid="true" />
-                        <span
-                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                    </div>
-                    <span class="validation-message">هذا الحقل مطلوب</span>
-                </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                    <label for="joinDate" class="label">تاريخ البداية</label>
-                    <div class="relative">
-                        <p-datepicker name="joinDate" [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true"
-                            placeholder="تاريخ البداية" class="peer block w-full" inputId="joinDate" id="joinDate">
-                            <ng-template pTemplate="inputicon">
-                                <img src="/assets/icons/calender-icon.svg" alt="" />
-                            </ng-template>
-                        </p-datepicker>
-                        <span
-                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                    </div>
-                    <span class="validation-message">هذا الحقل مطلوب</span>
-                </div>
-                <div class="col-span-4 md:col-span-2 lg:col-span-1">
-                    <label for="joinDate" class="label">تاريخ الانتهاء</label>
-                    <div class="relative">
-                        <p-datepicker name="joinDate" [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true"
-                            placeholder="تاريخ الانتهاء" class="peer block w-full" inputId="joinDate" id="joinDate">
-                            <ng-template pTemplate="inputicon">
-                                <img src="/assets/icons/calender-icon.svg" alt="" />
-                            </ng-template>
-                        </p-datepicker>
-                        <span
-                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                    </div>
-                    <span class="validation-message">هذا الحقل مطلوب</span>
-                </div>
-                <div class="col-span-4">
-                    <label for="" class="label">الملاحظات</label>
-                    <div class="relative w-full">
-                        <textarea
-                            class="h-24 overflow-auto w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
-                            rows="5" cols="30" pTextarea placeholder="الملاحظات"></textarea>
+    <form class="">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="col-span-4 md:col-span-4 lg:col-span-2">
+          <label for="employeeNameAr" class="label"> مسمى العطلة أو الاجازة </label>
+          <div class="relative">
+            <input
+              id="employeeNameAr"
+              placeholder=" مسمى العطلة أو الاجازة"
+              type="text"
+              pInputText
+              class="peer"
+              fluid="true"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div class="col-span-4 md:col-span-2 lg:col-span-1">
+          <label for="joinDate" class="label">تاريخ البداية</label>
+          <div class="relative">
+            <p-datepicker
+              name="joinDate"
+              [(ngModel)]="date2"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              placeholder="تاريخ البداية"
+              class="peer block w-full"
+              inputId="joinDate"
+              id="joinDate"
+            >
+              <ng-template pTemplate="inputicon">
+                <img src="/assets/icons/calender-icon.svg" alt="" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div class="col-span-4 md:col-span-2 lg:col-span-1">
+          <label for="joinDate" class="label">تاريخ الانتهاء</label>
+          <div class="relative">
+            <p-datepicker
+              name="joinDate"
+              [(ngModel)]="date2"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              placeholder="تاريخ الانتهاء"
+              class="peer block w-full"
+              inputId="joinDate"
+              id="joinDate"
+            >
+              <ng-template pTemplate="inputicon">
+                <img src="/assets/icons/calender-icon.svg" alt="" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div class="col-span-4">
+          <label for="" class="label">الملاحظات</label>
+          <div class="relative w-full">
+            <textarea
+              class="h-24 overflow-auto w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
+              rows="5"
+              cols="30"
+              pTextarea
+              placeholder="الملاحظات"
+            ></textarea>
 
-                        <span
-                            class="absolute bottom-2 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
-                    </div>
-                    <span class="validation-message">هذا الحقل مطلوب</span>
-                </div>
-            </div>
-            <div class="actions mt-6 flex items-center justify-end gap-4">
-                <button class="btn gray-btn" (click)="close()">الغاء</button>
-                <button class="btn green-btn">إضافة</button>
-            </div>
-        </form>
-    </div>
+            <span
+              class="absolute bottom-2 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+      </div>
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button class="btn gray-btn" (click)="close()">الغاء</button>
+        <button class="btn green-btn">إضافة</button>
+      </div>
+    </form>
+  </div>
 </div>

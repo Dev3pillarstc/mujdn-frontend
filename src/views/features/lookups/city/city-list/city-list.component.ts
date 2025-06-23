@@ -14,7 +14,7 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Region } from '@/models/features/lookups/region/region';
 import { RegionService } from '@/services/features/lookups/region.service';
-import { CityFilter } from '@/models/features/lookups/City/city-filter';
+import { CityFilter } from '@/models/features/lookups/city/city-filter';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({

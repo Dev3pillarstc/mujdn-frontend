@@ -127,6 +127,10 @@ export default class EmployeeListComponent
     return this.userService;
   }
 
+  override initListComponent(): void {
+    // load lookups if needed
+  }
+
   override openDialog(): void {
     const user = this.selectedModel || new User();
     this.openBaseDialog(AddNewEmployeePopupComponent as any, user);

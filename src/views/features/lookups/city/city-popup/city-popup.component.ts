@@ -25,12 +25,23 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
   declare form: FormGroup;
   alertService = inject(AlertService);
   service = inject(CityService);
-  regionService = inject(RegionService);
   fb = inject(FormBuilder);
   regions: Region[] | undefined = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
+  }
+
+  get nameArControl() {
+    return this.form.get('nameAr') as FormControl;
+  }
+
+  get nameEnControl() {
+    return this.form.get('nameEn') as FormControl;
+  }
+
+  get regionControl() {
+    return this.form.get('fkRegionId') as FormControl;
   }
 
   override saveFail(error: Error): void {
@@ -41,9 +52,10 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
     this.model = Object.assign(model, { ...form.value });
     return this.model;
   }
+
   override initPopup() {
     this.model = this.data.model;
-    this.loadLookups();
+    this.regions = this.data.lookups.regions;
   }
 
   override buildForm() {
@@ -58,25 +70,6 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
   afterSave() {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
-  }
-  get nameArControl() {
-    return this.form.get('nameAr') as FormControl;
-  }
-
-  get nameEnControl() {
-    return this.form.get('nameEn') as FormControl;
-  }
-
-  get regionControl() {
-    return this.form.get('fkRegionId') as FormControl;
-  }
-
-  loadLookups() {
-    this.regionService.load().subscribe({
-      next: (result) => {
-        this.regions = result;
-      },
-    });
   }
 
   getRegionOptionName() {

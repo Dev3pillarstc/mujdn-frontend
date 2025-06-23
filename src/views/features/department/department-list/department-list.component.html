@@ -5,7 +5,9 @@
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">ادارة المجاهدين</h3>
     </div>
     <section class="flex flex-col xl:flex-row gap-6 max-w-full">
-      <app-department-tree (departmentSelected)="selectedDepartment = $event"></app-department-tree>
+      <app-department-tree
+        (departmentSelected)="onSelectedDepamentChange($event)"
+      ></app-department-tree>
       <div class="w-full xl:w-[calc(100%-274px)]">
         <app-department-header [departmentData]="selectedDepartment"></app-department-header>
         <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
@@ -24,6 +26,8 @@
                     pInputText
                     class="peer"
                     fluid="true"
+                    ngModel
+                    [(ngModel)]="filterModel.nameAr"
                   />
                   <span
                     class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -62,8 +66,10 @@
               </div>
 
               <div class="actions flex items-center gap-4 pt-6">
-                <button class="btn black-btn">بحث</button>
-                <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+                <button class="btn black-btn" (click)="search()">بحث</button>
+                <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">
+                  إعادة تعيين
+                </button>
               </div>
             </div>
           </div>

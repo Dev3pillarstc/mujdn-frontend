@@ -77,5 +77,31 @@
     "ADD_NEW_REGION": "Add New Region",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
+  },
+  "EMPLOYEES_PAGE": {
+    "EMPLOYEES_LIST": "Employees List",
+    "SEARCH_FILTERS": "Search Filters",
+    "DEPARTMENT": "Department",
+    "EMPLOYEE_NAME_ARABIC": "Employee Name in Arabic",
+    "EMPLOYEE_NAME_ENGLISH": "Employee Name in English",
+    "JOIN_DATE": "Join Date",
+    "ACCOUNT_STATUS": "Account Status",
+    "JOB_TITLE": "Job Title",
+    "SHIFT_TYPE": "Shift Type",
+    "FINGERPRINT_EXEMPTION": "Fingerprint Exemption",
+    "SEARCH": "Search",
+    "RESET_SEARCH": "Reset Search",
+    "ADD_NEW_EMPLOYEE": "Add New Employee",
+    "EMPLOYEE_ID": "Employee ID",
+    "MORNING_SHIFT": "Morning Shift",
+    "ACTIONS": "Actions",
+    "EDIT_PERMISSIONS": "Edit Permissions",
+    "NO_DATA_TO_SHOW": "No data to display",
+    "EDIT_EMPLOYEE_DATA": "Edit Employee Data",
+    "VIEW_ATTENDANCE_REPORT": "View Attendance Report",
+    "ASSIGN_TASK": "Assign Task",
+    "ASSIGN_SHIFT": "Assign Shift",
+    "TASKS_ASSIGNED_TO_EMPLOYEE": "Tasks Assigned to Employee",
+    "DELETE_EMPLOYEE": "Delete Employee"
   }
 }

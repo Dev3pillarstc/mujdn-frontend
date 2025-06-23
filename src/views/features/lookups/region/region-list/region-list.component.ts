@@ -13,6 +13,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-region-list',
@@ -41,8 +42,9 @@ export class RegionListComponent
     // load lookups if needed
   }
 
-  override openDialog(region: Region): void {
-    this.openBaseDialog(RegionPopupComponent as any, region);
+  override openDialog(model: Region): void {
+    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(RegionPopupComponent as any, model, viewMode);
   }
 
   addOrEditModel(region?: Region) {

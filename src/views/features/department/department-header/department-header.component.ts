@@ -8,7 +8,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'app-department-header',
   imports: [TranslatePipe],
   templateUrl: './department-header.component.html',
-  styleUrl: './department-header.component.scss'
+  styleUrl: './department-header.component.scss',
 })
 export class DepartmentHeaderComponent {
   @Input() departmentData: Department | null = null;

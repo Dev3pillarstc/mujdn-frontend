@@ -1,14 +1,16 @@
-import { BaseCrudModel } from "@/abstracts/base-crud-model";
-import { notificationChannelInterceptor } from "@/model-interceptors/setting/notification-channel.interceptor";
-import { NotificationChannelService } from "@/services/features/setting/notification-channel.service";
-import { InterceptModel } from "cast-response";
+import { BaseCrudModel } from '@/abstracts/base-crud-model';
+import { notificationChannelInterceptor } from '@/model-interceptors/setting/notification-channel.interceptor';
+import { NotificationChannelService } from '@/services/features/setting/notification-channel.service';
+import { InterceptModel } from 'cast-response';
 
 const { send, receive } = new notificationChannelInterceptor();
 
 @InterceptModel({ send, receive })
-
-export class NotificationChannel extends BaseCrudModel<NotificationChannel, NotificationChannelService>{
-    override $$__service_name__$$: string = 'NotificationChannelService';
+export class NotificationChannel extends BaseCrudModel<
+  NotificationChannel,
+  NotificationChannelService
+> {
+  override $$__service_name__$$: string = 'NotificationChannelService';
 
   isSms: boolean = true;
   isMobile: boolean = true;

@@ -5,7 +5,7 @@
     class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 border-b border-white"
   >
     <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#fff]">
-      قائمة الادارة العامة لتقنية المعلومات
+      {{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}
     </h4>
     <div class="actions flex items-center gap-4 ms-auto pb-4">
       <button class="flex items-center justify-center gap-1 p-2 rounded border border-white/40">
@@ -19,39 +19,51 @@
   <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mt-6">
     <div>
       <p class="text-sm text-white mb-2">اسم الإدارة</p>
-      <h5 class="text-base font-semibold text-white">الادارة العامة لتقنية المع...</h5>
+      <h5 class="text-base font-semibold text-white">
+        {{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}
+      </h5>
     </div>
     <div>
       <p class="text-sm text-white mb-2">المنطقة</p>
-      <h5 class="text-base font-semibold text-white">السعودية</h5>
+      <h5 class="text-base font-semibold text-white">
+        {{
+          isCurrentLanguageEnglish() ? departmentData?.regionNameEn : departmentData?.regionNameAr
+        }}
+      </h5>
     </div>
     <div>
       <p class="text-sm text-white mb-2">المدينة</p>
-      <h5 class="text-base font-semibold text-white">الرياض</h5>
+      <h5 class="text-base font-semibold text-white">
+        {{ isCurrentLanguageEnglish() ? departmentData?.cityNameEn : departmentData?.cityNameAr }}
+      </h5>
     </div>
     <div>
       <p class="text-sm text-white mb-2">الهاتف</p>
-      <h5 class="text-base font-semibold text-white">12345678</h5>
+      <h5 class="text-base font-semibold text-white">{{ departmentData?.phoneNumber }}</h5>
     </div>
     <div>
       <p class="text-sm text-white mb-2">العنوان</p>
-      <h5 class="text-base font-semibold text-white">محتوى العنوان</h5>
+      <h5 class="text-base font-semibold text-white">{{ departmentData?.address }}</h5>
     </div>
     <div>
       <p class="text-sm text-white mb-2">الفاكس</p>
-      <h5 class="text-base font-semibold text-white">123456789</h5>
+      <h5 class="text-base font-semibold text-white">{{ departmentData?.fax }}</h5>
     </div>
     <div>
       <p class="text-sm text-white mb-2">طلب الاذن</p>
       <span
         class="min-w-[109px] min-h-[24px] inline-flex items-center justify-center font-medium text-[#1f2a37] px-4 rounded-full bg-[#f9fafb]"
       >
-        على مستوى واحد</span
+        {{ 'DEPARTMENTS_PAGE.' + getApprovalLevelText() | translate }}</span
       >
     </div>
     <div>
       <p class="text-sm text-white mb-2">اسم المدير</p>
-      <h5 class="text-base font-semibold text-white">محمد أحمد محمود</h5>
+      <h5 class="text-base font-semibold text-white">
+        {{
+          isCurrentLanguageEnglish() ? departmentData?.managerNameEn : departmentData?.managerNameAr
+        }}
+      </h5>
     </div>
   </div>
 </div>

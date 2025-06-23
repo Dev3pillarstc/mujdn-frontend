@@ -94,12 +94,10 @@
             <button class="table-head-action-btn">
               <img alt="" src="/assets/icons/print.svg" />
             </button>
-            <button (click)="addNewEmployeePopup()" class="btn green-btn flex items-center">
-              <img alt="" src="/assets/icons/plus.svg" />
-              <button class="btn green-btn flex items-center" (click)="openDialog()">
-                <img src="assets/icons/plus.svg" alt="" />
-                <span>إضافة موظف جديد</span>
-              </button>
+            <button class="btn green-btn flex items-center" (click)="openDialog()">
+              <img src="assets/icons/plus.svg" alt="" />
+              <span>إضافة موظف جديد</span>
+            </button>
           </div>
         </div>
         @if (list && list.length > 0) {

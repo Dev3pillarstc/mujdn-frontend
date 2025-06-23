@@ -48,6 +48,16 @@ interface Adminstration {
 })
 export default class DepartmentListComponent
   extends BaseListComponent<Department, DepartmentPopupComponent, DepartmentService, DepartmentFilter> {
+  override initListComponent(): void {
+
+  }
+  protected override mapModelToExcelRow(model: Department): { [key: string]: any; } {
+    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
+    return {
+      [lang === LANGUAGE_ENUM.ARABIC ? 'الإدارة' : 'Department']:
+        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+    };
+  }
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',

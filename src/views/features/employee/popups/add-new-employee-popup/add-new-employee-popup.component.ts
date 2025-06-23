@@ -18,7 +18,9 @@ import {
   BooleanOptionModel,
   FINGERPRINT_EXEMPTION_OPTIONS,
 } from '@/models/shared/fingerprint-exempt-option';
-import { ViewModeEnum } from '@/enums/view-mode-enum'; // Import your enums
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { City } from '@/models/features/lookups/City/city';
+import { Region } from '@/models/features/lookups/region/region'; // Import your enums
 
 @Component({
   selector: 'app-add-new-employee-popup',
@@ -56,6 +58,8 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   alertService = inject(AlertService);
   service = inject(UserService);
   fb = inject(FormBuilder);
+  cities: City[] = [];
+  regions: Region[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -63,6 +67,8 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
 
   override initPopup() {
     this.model = this.data.model;
+    this.cities = this.data.lookups.cities;
+    this.regions = this.data.lookups.regions;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
   }

@@ -18,36 +18,22 @@
             <div class="relative">
               <label class="label" for="permissionreasonAr">{{
                 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
-              }}</label>
-              <input
-                [(ngModel)]="filterModel.nameAr"
-                [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate"
-                class="peer"
-                fluid="true"
-                id="permissionreasonAr"
-                pInputText
-                type="text"
-              />
+                }}</label>
+              <input [(ngModel)]="filterModel.nameAr"
+                [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate" class="peer"
+                fluid="true" id="permissionreasonAr" pInputText type="text" />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
               <label class="label" for="permissionreasonEn">{{
                 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
-              }}</label>
-              <input
-                [(ngModel)]="filterModel.nameEn"
-                [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate"
-                class="peer"
-                fluid="true"
-                id="permissionreasonEn"
-                pInputText
-                type="text"
-              />
+                }}</label>
+              <input [(ngModel)]="filterModel.nameEn"
+                [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate" class="peer"
+                fluid="true" id="permissionreasonEn" pInputText type="text" />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
           </div>
 
@@ -63,8 +49,7 @@
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
-        >
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
             {{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASONS_LIST' | translate }}
           </h4>
@@ -82,49 +67,39 @@
           </div>
         </div>
         @if (list && list.length > 0) {
-          <p-table [value]="list">
-            <ng-template pTemplate="header">
-              <tr>
-                <th>{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate }}</th>
-                <th>{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate }}</th>
-                <th class="w-[100px]">{{ 'PERMISSIONREASONS_PAGE.ACTIONS' | translate }}</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-permissionreason>
-              <tr>
-                <td>{{ permissionreason.nameAr }}</td>
-                <td>{{ permissionreason.nameEn }}</td>
-                <td>
-                  <div class="actions flex gap-2">
-                    <button
-                      (click)="addOrEditModel(permissionreason)"
-                      class="table-action-gray-btn"
-                    >
-                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
-                    </button>
-                    <button class="table-action-red-btn">
-                      <img src="/assets/icons/delete-action.svg" alt="" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
+        <p-table [value]="list">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate }}</th>
+              <th>{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate }}</th>
+              <th class="w-[100px]">{{ 'PERMISSIONREASONS_PAGE.ACTIONS' | translate }}</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-permissionreason>
+            <tr>
+              <td>{{ permissionreason.nameAr }}</td>
+              <td>{{ permissionreason.nameEn }}</td>
+              <td>
+                <div class="actions flex gap-2">
+                  <button (click)="addOrEditModel(permissionreason)" class="table-action-gray-btn">
+                    <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                  </button>
+                  <button class="table-action-red-btn">
+                    <img src="/assets/icons/delete-action.svg" alt="" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
         } @else {
-          <div class="flex items-center justify-center h-64">
-            <p class="text-gray-500">{{ 'PERMISSIONREASONS_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
-          </div>
+        <div class="flex items-center justify-center h-64">
+          <p class="text-gray-500">{{ 'PERMISSIONREASONS_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+        </div>
         }
         @if (paginationInfo) {
-          <p-paginator
-            (onPageChange)="onPageChange($event)"
-            [first]="first"
-            [rowsPerPageOptions]="[10, 20, 30]"
-            [rows]="rows"
-            [showCurrentPageReport]="false"
-            [totalRecords]="paginationInfo.totalItems"
-            class="mt-6"
-          />
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]"
+          [rows]="rows" [showCurrentPageReport]="false" [totalRecords]="paginationInfo.totalItems" class="mt-6" />
         }
       </div>
     </div>

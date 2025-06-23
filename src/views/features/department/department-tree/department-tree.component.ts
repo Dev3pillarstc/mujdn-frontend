@@ -22,10 +22,10 @@ export class DepartmentTreeComponent implements OnInit {
   departmentService = inject(DepartmentService);
   languageService = inject(LanguageService);
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
-    this.getDepartmentTreeAsync();
+    // this.getDepartmentTreeAsync();
     this.translateDepartmentName();
   }
 

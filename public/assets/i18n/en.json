@@ -59,7 +59,9 @@
     "RESET_SEARCH": "Reset",
     "ADD_NEW_CITY": "Add New City",
     "ACTIONS": "Actions",
-    "NO_DATA_TO_SHOW": "No data to display"
+    "NO_DATA_TO_SHOW": "No data to display",
+    "SELECT_REGION": "Select Region",
+    "REGION": "Region"
   },
   "DEPARTMENTS_PAGE": {
     "ONE_LEVEL_APPROVAL": "One level approval",

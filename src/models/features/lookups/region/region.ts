@@ -12,9 +12,8 @@ export class Region extends BaseCrudModel<Region, RegionService> {
   override $$__service_name__$$: string = 'RegionService';
   declare nameAr: string;
   declare nameEn: string;
-  isActive: boolean = false;
   buildForm() {
-    const { nameAr, nameEn, isActive } = this;
+    const { nameAr, nameEn } = this;
     return {
       nameAr: [
         nameAr,
@@ -34,7 +33,6 @@ export class Region extends BaseCrudModel<Region, RegionService> {
           CustomValidators.pattern('ENG_NUM'),
         ],
       ],
-      isActive: [isActive, []],
     };
   }
 }

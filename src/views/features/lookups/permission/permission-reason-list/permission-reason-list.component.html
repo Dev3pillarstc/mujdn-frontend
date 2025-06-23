@@ -17,7 +17,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="permissionreasonAr">{{
-                'PERMISIIONREASONS_PAGE.PERMISIIONREASON_IN_ARABIC' | translate
+                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
               }}</label>
               <input
                 [(ngModel)]="filterModel.nameAr"
@@ -34,7 +34,7 @@
             </div>
             <div class="relative">
               <label class="label" for="permissionreasonEn">{{
-                'PERMISIIONREASONS_PAGE.PERMISIIONREASON_IN_ENGLISH' | translate
+                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
               }}</label>
               <input
                 [(ngModel)]="filterModel.nameEn"
@@ -98,12 +98,12 @@
                   <div class="actions flex gap-2">
                     <button
                       (click)="addOrEditModel(permissionreason)"
-                      class="bg-[#f3f4f6] rounded p-2 w-[32px]"
+                      class="table-action-gray-btn"
                     >
                       <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                     </button>
-                    <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
-                      <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                    <button class="table-action-red-btn">
+                      <img src="/assets/icons/delete-action.svg" alt="" />
                     </button>
                   </div>
                 </td>

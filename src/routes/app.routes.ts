@@ -4,6 +4,7 @@ import { ROLES_ENUM } from '@/enums/roles-enum';
 import { nationalitiesResolver } from '@/resolvers/lookups/nationalities.resolver';
 import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.resolver';
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
+import { userResolver } from '@/resolvers/user.resolver';
 import { regionResolver } from '@/resolvers/lookups/region.resolver';
 import { notificationChannelResolver } from '@/resolvers/setting/notification-channel.resolver';
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
@@ -16,7 +17,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [authGuard],
+    // canActivate: [authGuard],
     data: { roles: [ROLES_ENUM.EMPLOYEE] },
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
@@ -30,6 +31,9 @@ export const routes: Routes = [
       },
       {
         path: 'employees',
+        // canActivate: [authGuard],
+        // data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER] },
+        resolve: { list: userResolver },
         loadComponent: () =>
           import('../views/features/employee/employee-list/employee-list.component'),
         data: {

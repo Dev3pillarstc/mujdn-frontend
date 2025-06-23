@@ -11,6 +11,7 @@ import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginationParams } from '@/models/shared/pagination-params';
+import { dateOnlyConvertor } from '@/utils/date-only';
 
 export abstract class BaseCrudService<Model, PrimaryKey = number>
   extends RegisterServiceMixin(class {})
@@ -61,6 +62,7 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
     const httpParams = new HttpParams({
       fromObject: paginationParams as unknown as never,
     });
+    filterOptions = dateOnlyConvertor(filterOptions);
     return this.http
       .post<PaginatedListResponseData<Model>>(
         this.getUrlSegment() + '/GetWithPaging',
@@ -83,12 +85,14 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   @CastResponse()
   @HasInterception
   create(@InterceptParam() model: Model): Observable<Model> {
+    model = dateOnlyConvertor(model);
     return this.http.post<Model>(this.getUrlSegment(), model, { withCredentials: true });
   }
 
   @CastResponse()
   @HasInterception
   update(@InterceptParam() model: Model): Observable<Model> {
+    model = dateOnlyConvertor(model);
     return this.http.put<Model>(this.getUrlSegment(), model, { withCredentials: true });
   }
 

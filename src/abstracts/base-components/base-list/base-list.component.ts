@@ -14,7 +14,7 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
 export abstract class BaseListComponent<
   Model,
   PopupComponent,
-  TService extends BaseCrudService<Model>,
+  TService extends BaseCrudService<Model, string | number>,
   FilterModel,
 > implements OnInit
 {
@@ -40,6 +40,8 @@ export abstract class BaseListComponent<
   openBaseDialog(popupComponent: PopupComponent, model: Model) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = { model: model };
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
@@ -74,6 +76,7 @@ export abstract class BaseListComponent<
   }
 
   search() {
+    console.log(this.filterModel);
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadList();

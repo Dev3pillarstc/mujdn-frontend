@@ -1,6 +1,6 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { City } from '@/models/features/lookups/city/city';
+import { City } from '@/models/features/lookups/City/city';
 import { CityService } from '@/services/features/lookups/city.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { FormGroup, FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms';

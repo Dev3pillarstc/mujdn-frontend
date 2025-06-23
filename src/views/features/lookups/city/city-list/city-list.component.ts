@@ -11,6 +11,8 @@ import { City } from '@/models/features/lookups/City/city';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CityFilter } from '@/models/features/lookups/City/city-filter';
 import { TranslatePipe } from '@ngx-translate/core';
+import { LanguageService } from '@/services/shared/language.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Component({
   selector: 'app-city-list',
@@ -23,6 +25,14 @@ export default class CityListComponent
   extends BaseListComponent<City, CityPopupComponent, CityService, CityFilter>
   implements OnInit
 {
+  languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
+  protected override mapModelToExcelRow(model: City): { [key: string]: any } {
+    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
+    return {
+      [lang === LANGUAGE_ENUM.ARABIC ? 'المدينة' : 'City']:
+        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+    };
+  }
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',

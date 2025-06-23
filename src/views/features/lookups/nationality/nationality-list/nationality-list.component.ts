@@ -28,6 +28,9 @@ export default class NationalityListComponent
   >
   implements OnInit
 {
+  protected override mapModelToExcelRow(model: Nationality): { [key: string]: any } {
+    throw new Error('Method not implemented.');
+  }
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',

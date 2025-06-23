@@ -9,6 +9,7 @@ import { PaginatorState } from 'primeng/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import * as XLSX from 'xlsx';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -28,6 +29,8 @@ export abstract class BaseListComponent<
   matDialog = inject(MatDialog);
   activatedRoute = inject(ActivatedRoute);
   declare selectedModel: Model;
+  // Inside BaseListComponent
+  protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
 
   abstract get filterModel(): FilterModel;
 
@@ -106,5 +109,21 @@ export abstract class BaseListComponent<
 
     this.rows = this.paginationParams.pageSize;
     this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
+  }
+
+  exportExcel(fileName: string = 'data.xlsx'): void {
+    this.service.loadPaginated(this.paginationParams, { ...this.filterModel! }).subscribe({
+      next: (res) => {
+        const data = res.list;
+        if (data && data.length > 0) {
+          const transformedData = data.map((item) => this.mapModelToExcelRow(item));
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: true }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+    });
   }
 }

@@ -18,7 +18,6 @@
     "MAX_LENGTH": "Maximum length is 300 characters",
     "ARABIC_ONLY": "This field must contain Arabic characters only",
     "ENGLISH_ONLY": "This field must contain English characters only"
-
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -60,7 +59,13 @@
     "RESET_SEARCH": "Reset",
     "ADD_NEW_CITY": "Add New City",
     "ACTIONS": "Actions",
-    "NO_DATA_TO_SHOW": "No data to display"
+    "NO_DATA_TO_SHOW": "No data to display",
+    "SELECT_REGION": "Select Region",
+    "REGION": "Region"
+  },
+  "DEPARTMENTS_PAGE": {
+    "ONE_LEVEL_APPROVAL": "One level approval",
+    "TWO_LEVEL_APPROVAL": "Two levels approval"
   },
   "REGIONS_PAGE": {
     "REGIONS_LIST": "Regions List",

@@ -3,15 +3,16 @@ import { PermissionReason } from '@/models/features/lookups/permission-reason/pe
 import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { Component, inject, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { Observable } from 'rxjs';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-permission-popup',
-  imports: [InputTextModule, ReactiveFormsModule, RequiredMarkerDirective],
+  imports: [InputTextModule, ReactiveFormsModule, RequiredMarkerDirective, TranslatePipe],
   templateUrl: './permission-reason-popup.component.html',
   styleUrl: './permission-reason-popup.component.scss',
 })
@@ -57,5 +58,12 @@ export class PermissionReasonPopupComponent
   afterSave() {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
+  }
+  get nameArControl() {
+    return this.form.get('nameAr') as FormControl;
+  }
+
+  get nameEnControl() {
+    return this.form.get('nameEn') as FormControl;
   }
 }

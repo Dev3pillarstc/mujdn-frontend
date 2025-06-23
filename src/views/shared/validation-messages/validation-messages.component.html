@@ -1,0 +1,21 @@
+@if (control().touched && control().errors) {
+  @for (error of getActiveErrors(); track error.key) {
+    <ng-container>
+      @if (error.key === 'required') {
+        <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>
+      }
+      @if (error.key === 'AR_NUM') {
+        <span class="validation-message">{{ 'COMMON.ARABIC_ONLY' | translate }}</span>
+      }
+      @if (error.key === 'ENG_NUM') {
+        <span class="validation-message">{{ 'COMMON.ENGLISH_ONLY' | translate }}</span>
+      }
+      @if (error.key === 'minlength') {
+        <span class="validation-message">{{ 'COMMON.MIN_LENGTH' | translate }}</span>
+      }
+      @if (error.key === 'maxlength') {
+        <span class="validation-message">{{ 'COMMON.MAX_LENGTH' | translate }}</span>
+      }
+    </ng-container>
+  }
+}

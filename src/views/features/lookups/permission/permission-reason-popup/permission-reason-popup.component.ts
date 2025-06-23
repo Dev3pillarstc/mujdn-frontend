@@ -9,10 +9,17 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Observable } from 'rxjs';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 
 @Component({
   selector: 'app-permission-popup',
-  imports: [InputTextModule, ReactiveFormsModule, RequiredMarkerDirective, TranslatePipe],
+  imports: [
+    InputTextModule,
+    ReactiveFormsModule,
+    RequiredMarkerDirective,
+    TranslatePipe,
+    ValidationMessagesComponent,
+  ],
   templateUrl: './permission-reason-popup.component.html',
   styleUrl: './permission-reason-popup.component.scss',
 })

@@ -32,7 +32,9 @@ import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/models/shared/acc
 import {
   FINGERPRINT_EXEMPTION_OPTIONS,
   BooleanOptionModel,
-} from '@/models/shared/fingerprint-exempt-option'; // Import your enums
+} from '@/models/shared/fingerprint-exempt-option';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { LanguageService } from '@/services/shared/language.service'; // Import your enums
 
 @Component({
   selector: 'app-employee-list',
@@ -63,18 +65,17 @@ export default class EmployeeListComponent
     { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
     { id: 2, nameEn: 'name 2', nameAr: 'name 2' },
   ];
-
   userService = inject(UserService);
   home: MenuItem | undefined;
   filterModel: UserFilter = new UserFilter();
   accountStatusOptions: AccountStatusOption[] = ACCOUNT_STATUS_OPTIONS;
   fingerprintExemptionOptions: BooleanOptionModel[] = FINGERPRINT_EXEMPTION_OPTIONS;
-
   // items: MenuItem[] | undefined;
   selectedDepartment: BaseLookupModel | undefined;
   joinDate: Date | undefined;
   confirmationService = inject(ConfirmationService);
   alertService = inject(AlertService);
+  languageService = inject(LanguageService);
   actionList: MenuItem[] = [
     {
       label: 'تعديل بيانات الموظف',
@@ -117,19 +118,30 @@ export default class EmployeeListComponent
       command: () => this.openConfirmation(),
     },
   ];
-
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
   };
+
+  override get service() {
+    return this.userService;
+  }
+
+  override initListComponent(): void {
+    // load lookups if needed
+  }
 
   override openDialog(): void {
     const user = this.selectedModel || new User();
     this.openBaseDialog(AddNewEmployeePopupComponent as any, user);
   }
 
-  override get service() {
-    return this.userService;
+  override mapModelToExcelRow(model: User): { [key: string]: any } {
+    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
+    return {
+      [lang === LANGUAGE_ENUM.ARABIC ? 'الاسم الكامل' : 'Full name']:
+        lang === LANGUAGE_ENUM.ARABIC ? model.fullNameAr : model.fullNameEn,
+    };
   }
 
   openEmployeePermissionModal() {

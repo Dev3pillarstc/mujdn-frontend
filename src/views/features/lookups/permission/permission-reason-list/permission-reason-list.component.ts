@@ -30,15 +30,6 @@ export default class PermissionReasonListComponent
   implements OnInit
 {
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
-
-  protected override mapModelToExcelRow(model: PermissionReason): { [key: string]: any } {
-    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
-
-    return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : '؛Permission Reason']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
-    };
-  }
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -51,6 +42,10 @@ export default class PermissionReasonListComponent
     return this.permissionReasonService;
   }
 
+  override initListComponent(): void {
+    // load lookups if needed
+  }
+
   override openDialog(permissionReason: PermissionReason): void {
     this.openBaseDialog(PermissionReasonPopupComponent as any, permissionReason);
   }
@@ -58,5 +53,14 @@ export default class PermissionReasonListComponent
   addOrEditModel(permissionReason?: PermissionReason) {
     permissionReason = permissionReason || new PermissionReason();
     this.openDialog(permissionReason);
+  }
+
+  protected override mapModelToExcelRow(model: PermissionReason): { [key: string]: any } {
+    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
+
+    return {
+      [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : '؛Permission Reason']:
+        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+    };
   }
 }

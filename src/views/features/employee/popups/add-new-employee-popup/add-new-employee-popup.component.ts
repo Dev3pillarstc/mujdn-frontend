@@ -14,7 +14,10 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/models/shared/account-status-option';
-import { FINGERPRINT_EXEMPTION_OPTIONS, BooleanOptionModel } from '@/enums/boolean-option-enum'; // Import your enums
+import {
+  FINGERPRINT_EXEMPTION_OPTIONS,
+  BooleanOptionModel,
+} from '@/models/shared/fingerprint-exempt-option'; // Import your enums
 
 @Component({
   selector: 'app-add-new-employee-popup',

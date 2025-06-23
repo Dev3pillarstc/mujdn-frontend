@@ -4,7 +4,9 @@ import { ROLES_ENUM } from '@/enums/roles-enum';
 import { nationalitiesResolver } from '@/resolvers/lookups/nationalities.resolver';
 import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.resolver';
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
+import { regionResolver } from '@/resolvers/lookups/region.resolver';
 import { notificationChannelResolver } from '@/resolvers/setting/notification-channel.resolver';
+import { RouteIdsEnum } from '@/enums/route-ids-enum';
 
 export const routes: Routes = [
   {
@@ -22,16 +24,23 @@ export const routes: Routes = [
       {
         path: 'home',
         loadComponent: () => import('../views/home/home.component'),
+        data: {
+          routeId: RouteIdsEnum.HOME,
+        },
       },
       {
         path: 'employees',
         loadComponent: () =>
           import('../views/features/employee/employee-list/employee-list.component'),
+        data: {
+          roles: [ROLES_ENUM.HR_OFFICER],
+          routeId: RouteIdsEnum.EMPLOYEES,
+        },
       },
       {
         path: 'attendance-logs',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER] },
+        data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER], routeId: RouteIdsEnum.ATTENDANCE_LOGS },
         loadComponent: () =>
           import(
             '../views/features/attendance-log/attendance-log-list/attendance-log-list.component'
@@ -39,23 +48,35 @@ export const routes: Routes = [
       },
       {
         path: 'nationalities',
+        canActivate: [authGuard],
         resolve: { list: nationalitiesResolver },
         loadComponent: () =>
           import(
             '../views/features/lookups/nationality/nationality-list/nationality-list.component'
           ),
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NATIONALITIES },
       },
       {
         path: 'cities',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.ADMIN] },
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.CITIES },
         resolve: { list: cityResolver },
         loadComponent: () => import('../views/features/lookups/city/city-list/city-list.component'),
       },
       {
+        path: 'regions',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.REGIONS },
+        resolve: { list: regionResolver },
+        loadComponent: () =>
+          import('../views/features/lookups/region/region-list/region-list.component').then(
+            (m) => m.RegionListComponent
+          ),
+      },
+      {
         path: 'permission-reasons',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.ADMIN] },
+        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.PERMISSION_REASONS },
         resolve: { list: permissionReasonResolver },
         loadComponent: () =>
           import(
@@ -65,7 +86,7 @@ export const routes: Routes = [
       {
         path: 'notification-channels',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.ADMIN] },
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NOTIFICATION_CHANNELS },
         resolve: {
           channel: notificationChannelResolver,
         },

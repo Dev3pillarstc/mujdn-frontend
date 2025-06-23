@@ -10,7 +10,14 @@
     "UPDATED_SUCCESSFULLY": "Updated successfully",
     "DELETED_SUCCESSFULLY": "Deleted successfully",
     "DELETION_FAILED": "Failed to delete the item",
-    "NOT_AUTHORIZED": "You do not have permission to access this page"
+    "NOT_AUTHORIZED": "You do not have permission to access this page",
+    "SAVE": "Save",
+    "ACTIVE": "Active",
+    "REQUIRED_FIELD": "This field is required",
+    "MIN_LENGTH": "Minimum length is 3 characters",
+    "MAX_LENGTH": "Maximum length is 300 characters",
+    "ARABIC_ONLY": "This field must contain Arabic characters only",
+    "ENGLISH_ONLY": "This field must contain English characters only"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -57,5 +64,16 @@
   "DEPARTMENTS_PAGE": {
     "ONE_LEVEL_APPROVAL": "One level approval",
     "TWO_LEVEL_APPROVAL": "Two levels approval"
+  },
+  "REGIONS_PAGE": {
+    "REGIONS_LIST": "Regions List",
+    "SEARCH_FILTERS": "Search Filters",
+    "REGION_IN_ARABIC": "Region in Arabic",
+    "REGION_IN_ENGLISH": "Region in English",
+    "SEARCH": "Search",
+    "RESET_SEARCH": "Reset",
+    "ADD_NEW_REGION": "Add New Region",
+    "ACTIONS": "Actions",
+    "NO_DATA_TO_SHOW": "No data to display"
   }
 }

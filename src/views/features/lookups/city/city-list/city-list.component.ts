@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { PaginatorModule } from 'primeng/paginator';
 import { Breadcrumb } from 'primeng/breadcrumb';
@@ -8,13 +8,13 @@ import { CityService } from '@/services/features/lookups/city.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { CityPopupComponent } from '../city-popup/city-popup.component';
 import { City } from '@/models/features/lookups/City/city';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CityFilter } from '@/models/features/lookups/City/city-filter';
+import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Region } from '@/models/features/lookups/region/region';
 import { RegionService } from '@/services/features/lookups/region.service';
+import { CityFilter } from '@/models/features/lookups/City/city-filter';
 
 @Component({
   selector: 'app-city-list',

@@ -61,6 +61,9 @@ export default class EmployeeListComponent
   extends BaseListComponent<User, AddNewEmployeePopupComponent, UserService, UserFilter>
   implements OnInit
 {
+  protected override mapModelToExcelRow(model: User): { [key: string]: any } {
+    throw new Error('Method not implemented.');
+  }
   departments: BaseLookupModel[] = [
     { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
     { id: 2, nameEn: 'name 2', nameAr: 'name 2' },

@@ -14,38 +14,43 @@
             <div class="relative">
               <label class="label" for="">الادارة</label>
               <p-select
-                [(ngModel)]="selectedAdminstration"
-                [options]="adminstrations"
-                class="w-full peer"
-                optionLabel="type"
+                [options]="departments"
+                [(ngModel)]="selectedDepartment"
+                optionLabel="nameEn"
+                optionValue="id"
                 placeholder="الادارة"
+                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="">اسم الموظف عربي</label>
-              <p-select
-                [(ngModel)]="selectedAdminstration"
-                [options]="adminstrations"
-                class="w-full peer"
-                optionLabel="type"
-                placeholder="اسم الموظف"
-              ></p-select>
+              <label for="employeeNameAr" class="label">اسم الموظف عربي</label>
+              <input
+                id="employeeNameAr"
+                placeholder=" اسم الموظف بالعربية"
+                [(ngModel)]="filterModel.fullNameAr"
+                type="text"
+                pInputText
+                class="peer"
+                fluid="true"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="">اسم الموظف انجليزي </label>
-              <p-select
-                [(ngModel)]="selectedAdminstration"
-                [options]="adminstrations"
-                class="w-full peer"
-                optionLabel="type"
-                placeholder="اسم الموظف"
-              ></p-select>
+              <label for="employeeNameEn" class="label">اسم الموظف انجليزي </label>
+              <input
+                id="employeeNameEn"
+                placeholder="اسم الموظف بانجليزية"
+                [(ngModel)]="filterModel.fullNameEn"
+                type="text"
+                pInputText
+                class="peer"
+                fluid="true"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -53,7 +58,7 @@
             <div class="relative">
               <label class="label" for="">تاريخ الالتحاق</label>
               <p-datepicker
-                [(ngModel)]="date2"
+                [(ngModel)]="filterModel.joinDate"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
                 class="peer block w-full"
@@ -69,27 +74,32 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="">حالة الحساب</label>
+              <label class="label" for="accountStatus">حالة الحساب</label>
               <p-select
-                [(ngModel)]="selectedAdminstration"
-                [options]="adminstrations"
-                class="w-full peer"
-                optionLabel="type"
+                name="accountStatus"
+                [options]="accountStatusOptions"
+                [(ngModel)]="filterModel.isActive"
+                optionLabel="nameAr"
+                optionValue="id"
                 placeholder="اسم الموظف"
+                class="w-full peer"
+                id="accountStatus"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="">الوظيفة</label>
-              <p-select
-                [(ngModel)]="selectedAdminstration"
-                [options]="adminstrations"
-                class="w-full peer"
-                optionLabel="type"
-                placeholder="الوظيفة"
-              ></p-select>
+              <label for="jobTitle" class="label">الوظيفة</label>
+              <input
+                id="jobTitle"
+                placeholder=" اسم الموظف بالعربية"
+                [(ngModel)]="filterModel.jobTitleAr"
+                type="text"
+                pInputText
+                class="peer"
+                fluid="true"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -97,24 +107,26 @@
             <div class="relative">
               <label class="label" for="">نوع الدوام</label>
               <p-select
-                [(ngModel)]="selectedAdminstration"
-                [options]="adminstrations"
-                class="w-full peer"
+                [options]="departments"
+                [(ngModel)]="selectedDepartment"
                 optionLabel="type"
                 placeholder="نوع الدوام"
+                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="">الإعفاء من البصمة</label>
+              <label class="label" for="fingerPrint">الإعفاء من البصمة</label>
               <p-select
-                [(ngModel)]="selectedAdminstration"
-                [options]="adminstrations"
-                class="w-full peer"
-                optionLabel="type"
+                [options]="fingerprintExemptionOptions"
+                [(ngModel)]="filterModel.CanLeaveWithoutFingerPrint"
+                optionLabel="nameAr"
+                optionValue="id"
                 placeholder="نوع الدوام"
+                class="w-full peer"
+                id="fingerPrint"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -123,8 +135,10 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button class="btn black-btn">بحث</button>
-            <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+            <button (click)="search()" class="btn black-btn">بحث</button>
+            <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
+              إعادة تعيين
+            </button>
           </div>
         </div>
       </div>
@@ -140,71 +154,89 @@
             <button class="table-head-action-btn">
               <img alt="" src="/assets/icons/print.svg" />
             </button>
-            <button (click)="addNewEmployeePopup()" class="btn green-btn flex items-center">
-              <img alt="" src="/assets/icons/plus.svg" />
+            <button class="btn green-btn flex items-center" (click)="openDialog()">
+              <img src="assets/icons/plus.svg" alt="" />
               <span>إضافة موظف جديد</span>
             </button>
           </div>
         </div>
-        <p-table [value]="attendance">
-          <ng-template #header>
-            <tr>
-              <th>معرف الموظف</th>
-              <th>اسم الموظف عربي</th>
-              <th>اسم الموظف انجليزي</th>
-              <th>الإدارة</th>
-              <th>الاعفاء من البصمة</th>
-              <th>الوظيفة</th>
-              <th>نوع الدوام</th>
-              <th>تاريخ الالتحاق</th>
-              <th>حالة الحساب</th>
-              <th>الإجراء</th>
-            </tr>
-          </ng-template>
-          <ng-template #body let-attendance>
-            <tr>
-              <td>{{ attendance.serialNumber }}</td>
-              <td>{{ attendance.employeeNameAr }}</td>
-              <td>{{ attendance.employeeNameEn }}</td>
-              <td>{{ attendance.adminstration }}</td>
-              <td>
-                <div class="flex justify-center gap-2">
-                  <img alt="" src="/assets/icons/right-icon.svg" />
-                  <img alt="" src="/assets/icons/wrong-icon.svg" />
-                </div>
-              </td>
-              <td>{{ attendance.jop }}</td>
-              <td>{{ attendance.date }}</td>
-              <td>
-                <div class="flex justify-center gap-2">
-                  <img alt="" src="/assets/icons/right-icon.svg" />
-                  <img alt="" src="/assets/icons/wrong-icon.svg" />
-                </div>
-              </td>
-              <td>12/12/2024</td>
-              <td>
-                <div class="flex gap-4">
-                  <button
-                    (click)="openEmployeePermissionModal()"
-                    class="btn gray-btn flex align-items gap-4 min-w-[144px]"
-                  >
-                    <img alt="" src="/assets/icons/edit.svg" />
-                    <span class="text-sm">تعديل الصلاحية</span>
-                  </button>
-                  <p-splitbutton [model]="itemsList" dropdownIcon="pi pi-ellipsis-v" />
-                </div>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-        <p-paginator
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rowsPerPageOptions]="[10, 20, 30]"
-          [rows]="rows"
-          [totalRecords]="120"
-          class="mt-6"
-        />
+        @if (list && list.length > 0) {
+          <p-table [value]="list">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>معرف الموظف</th>
+                <th>اسم الموظف عربي</th>
+                <th>اسم الموظف انجليزي</th>
+                <th>الإدارة</th>
+                <th>الاعفاء من البصمة</th>
+                <th>الوظيفة</th>
+                <th>نوع الدوام</th>
+                <th>حالة الحساب</th>
+                <th>تاريخ الالتحاق</th>
+                <th>الإجراء</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user>
+              <tr>
+                <td>{{ user.nationalId }}</td>
+                <td>{{ user.fullNameAr }}</td>
+                <td>{{ user.fullNameEn }}</td>
+                <td>{{ user.department.nameAr }}</td>
+                <td>
+                  <div class="flex justify-center gap-2">
+                    @if (user.canLeaveWithoutFingerPrint) {
+                      <img src="assets/icons/right-icon.svg" alt="" />
+                    } @else {
+                      <img src="assets/icons/wrong-icon.svg" alt="" />
+                    }
+                  </div>
+                </td>
+                <td>{{ user.jobTitleEn }}</td>
+                <td>morning</td>
+                <td>
+                  <div class="flex justify-center gap-2">
+                    @if (user.isActive) {
+                      <img src="assets/icons/right-icon.svg" alt="" />
+                    } @else {
+                      <img src="assets/icons/wrong-icon.svg" alt="" />
+                    }
+                  </div>
+                </td>
+                <td>{{ user.joinDate | date }}</td>
+                <td>
+                  <div class="flex gap-4">
+                    <button
+                      class="btn gray-btn flex align-items gap-4 min-w-[144px]"
+                      (click)="openEmployeePermissionModal()"
+                    >
+                      <img  src="/assets/icons/edit.svg" alt="" />
+                      <span class="text-sm">تعديل الصلاحية</span>
+                    </button>
+                    <p-splitbutton
+                      (click)="setSelectedModel(user)" dropdownIcon="pi pi-ellipsis-v"
+                      [model]="actionList"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        } @else {
+          <div class="flex items-center justify-center h-64">
+            <p class="text-gray-500">{{ 'NATIONALITIES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+          </div>
+        }
+        @if (paginationInfo) {
+          <p-paginator
+            (onPageChange)="onPageChange($event)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
+        }
         <div></div>
       </div>
     </div>

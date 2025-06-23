@@ -1,4 +1,4 @@
-import { City } from '@/models/features/lookups/city/city';
+import { City } from '@/models/features/lookups/City/city';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { CityService } from '@/services/features/lookups/city.service';

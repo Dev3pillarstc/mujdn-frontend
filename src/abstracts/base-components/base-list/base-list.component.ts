@@ -10,6 +10,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import * as XLSX from 'xlsx';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -28,7 +29,7 @@ export abstract class BaseListComponent<
   paginationParams: PaginationParams = new PaginationParams();
   matDialog = inject(MatDialog);
   activatedRoute = inject(ActivatedRoute);
-  declare selectedModel: Model;
+  declare selectedModel?: Model;
 
   abstract get filterModel(): FilterModel;
 
@@ -40,14 +41,21 @@ export abstract class BaseListComponent<
 
   abstract initListComponent(): void;
 
-  openBaseDialog(popupComponent: PopupComponent, model: Model, lookups?: { [key: string]: any[] }) {
+  openBaseDialog(
+    popupComponent: PopupComponent,
+    model: Model,
+    viewMode: ViewModeEnum,
+    lookups?: {
+      [key: string]: any[];
+    }
+  ) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = { model: model, lookups: lookups };
+    dialogConfig.data = { model: model, lookups: lookups, viewMode: viewMode };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       if (result && result == DIALOG_ENUM.OK) {
         this.loadList();
       }

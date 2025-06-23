@@ -11,6 +11,7 @@ import { Nationality } from '@/models/features/lookups/Nationality';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NationalityService } from '@/services/features/lookups/nationality.service';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-nationality-list',
@@ -44,8 +45,9 @@ export default class NationalityListComponent
     // load lookups if needed
   }
 
-  override openDialog(nationality: Nationality): void {
-    this.openBaseDialog(NationalityPopupComponent as any, nationality);
+  override openDialog(model: Nationality): void {
+    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(NationalityPopupComponent as any, model, viewMode);
   }
 
   addOrEditModel(nationality?: Nationality) {

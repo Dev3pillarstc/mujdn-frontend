@@ -34,6 +34,8 @@ import {
 } from '@/models/shared/fingerprint-exempt-option'; // Import your enums
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { City } from '@/models/features/lookups/City/city';
+import { Region } from '@/models/features/lookups/region/region';
 
 @Component({
   selector: 'app-employee-list',
@@ -63,6 +65,8 @@ export default class EmployeeListComponent
   languageService = inject(LanguageService);
   translateService = inject(TranslateService);
   actionList: MenuItem[] = [];
+  cities: City[] = [];
+  regions: Region[] = [];
 
   departments: BaseLookupModel[] = [
     { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
@@ -87,8 +91,8 @@ export default class EmployeeListComponent
     return this.userService;
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
+  override initListComponent(): void {
+    // load lookups
     this.initializeActionList();
 
     // Re-initialize action list when language changes
@@ -97,14 +101,13 @@ export default class EmployeeListComponent
     });
   }
 
-  override initListComponent(): void {
-    // load lookups if needed
-  }
-
   override openDialog(): void {
     const user = this.selectedModel || new User();
     const viewMode = this.selectedModel ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    this.openBaseDialog(AddNewEmployeePopupComponent as any, user, viewMode);
+    this.openBaseDialog(AddNewEmployeePopupComponent as any, user, viewMode, {
+      cities: this.cities,
+      regions: this.regions,
+    });
   }
 
   override openBaseDialog(

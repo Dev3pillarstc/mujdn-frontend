@@ -7,7 +7,7 @@ export const EndPoints = {
   NATIONALITIES: '/nationalities',
   PERMISSION_REASONS: '/permissionreasons',
   ATTENDANCE: '/attendance',
-  USERS: '/userprofile',
+  USERS: '/userprofiles',
   REGIONS: '/regions',
   NOTIFICATION_CHANNELS: '/notificationchannels',
   DEPARTMENTS: '/departments',

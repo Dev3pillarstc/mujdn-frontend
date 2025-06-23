@@ -28,7 +28,7 @@ import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { InputTextModule } from 'primeng/inputtext';
-import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/enums/account-status-enum'; // Import your enums
+import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/models/shared/account-status-option';
 import { FINGERPRINT_EXEMPTION_OPTIONS, BooleanOptionModel } from '@/enums/boolean-option-enum'; // Import your enums
 
 @Component({

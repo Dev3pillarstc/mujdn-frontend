@@ -102,7 +102,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
       ],
       // profilePhotoKey: [profilePhotoKey],
       joinDate: [joinDate, [Validators.required]],
-      canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint],
+      canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint ?? false],
       isActive: [isActive ?? true],
     };
   }

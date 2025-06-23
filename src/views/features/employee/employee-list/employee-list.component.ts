@@ -128,6 +128,10 @@ export default class EmployeeListComponent
     this.openBaseDialog(AddNewEmployeePopupComponent as any, user);
   }
 
+  addNewEmployee() {
+    const user = new User();
+    this.openBaseDialog(AddNewEmployeePopupComponent as any, user);
+  }
   override get service() {
     return this.userService;
   }

@@ -34,13 +34,15 @@ export class DepartmentTreeComponent implements OnInit {
       next: (response) => {
         if (response?.data) {
           this.departments = this.mapDepartmentsToTree(response.data);
-          const rootDepartment = response.data.find((dept: Department) => dept.fkParentDepartmentId === null);
+          const rootDepartment = response.data.find((dept: Department) => dept.fkParentDepartmentId == null);
           if (rootDepartment) {
             this.departmentSelected.emit(rootDepartment);
           }
         }
       },
-      error: (error) => { },
+      error: (error) => {
+        //pending golable error handler
+      },
     });
   }
 

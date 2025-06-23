@@ -77,5 +77,31 @@
     "ADD_NEW_REGION": "إضافة منطقة جديدة",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+  },
+  "EMPLOYEES_PAGE": {
+    "EMPLOYEES_LIST": "قائمة الموظفين",
+    "SEARCH_FILTERS": "تصفية البحث",
+    "DEPARTMENT": "القسم",
+    "EMPLOYEE_NAME_ARABIC": "اسم الموظف بالعربية",
+    "EMPLOYEE_NAME_ENGLISH": "اسم الموظف بالإنجليزية",
+    "JOIN_DATE": "تاريخ الالتحاق",
+    "ACCOUNT_STATUS": "حالة الحساب",
+    "JOB_TITLE": "المسمى الوظيفي",
+    "SHIFT_TYPE": "نوع الوردية",
+    "FINGERPRINT_EXEMPTION": "إعفاء البصمة",
+    "SEARCH": "بحث",
+    "RESET_SEARCH": "إعادة تعيين",
+    "ADD_NEW_EMPLOYEE": "إضافة موظف جديد",
+    "EMPLOYEE_ID": "معرف الموظف",
+    "MORNING_SHIFT": "الوردية الصباحية",
+    "ACTIONS": "الإجراءات",
+    "EDIT_PERMISSIONS": "تعديل الصلاحيات",
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
+    "EDIT_EMPLOYEE_DATA": "تعديل بيانات الموظف",
+    "VIEW_ATTENDANCE_REPORT": "عرض تقرير الحضور والانصراف",
+    "ASSIGN_TASK": "إسناد مهمة",
+    "ASSIGN_SHIFT": "إسناد وردية",
+    "TASKS_ASSIGNED_TO_EMPLOYEE": "سجل المهمات المسندة للموظف",
+    "DELETE_EMPLOYEE": "حذف الموظف"
   }
 }

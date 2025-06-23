@@ -1,6 +1,6 @@
 <div [dir]="direction">
   <div class="p-6">
-    <button class="block ms-auto" (click)="close()">
+    <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة موظف جديد</h3>
@@ -8,16 +8,16 @@
     <form [formGroup]="form" class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
-          <label for="department" class="label">الادارة</label>
+          <label class="label" for="department">الادارة</label>
           <div class="relative">
             <p-select
-              name="selectedDepartment"
               [options]="departments"
+              class="w-full peer"
+              id="department"
+              name="selectedDepartment"
               optionLabel="nameAr"
               optionValue="id"
               placeholder="الادارة"
-              class="w-full peer"
-              id="department"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -26,16 +26,16 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="employeeNameAr" class="label"> اسم الموظف بالعربية </label>
+          <label class="label" for="employeeNameAr"> اسم الموظف بالعربية </label>
           <div class="relative">
             <input
-              id="employeeNameAr"
-              placeholder=" اسم الموظف بالعربية"
-              formControlName="fullNameAr"
-              type="text"
-              pInputText
               class="peer"
               fluid="true"
+              formControlName="fullNameAr"
+              id="employeeNameAr"
+              pInputText
+              placeholder=" اسم الموظف بالعربية"
+              type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -44,16 +44,16 @@
           <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>
         </div>
         <div>
-          <label for="employeeNameEn" class="label"> اسم الموظف بالانجليزية</label>
+          <label class="label" for="employeeNameEn"> اسم الموظف بالانجليزية</label>
           <div class="relative">
             <input
-              id="employeeNameEn"
-              placeholder=" اسم الموظف بالانجليزية"
-              formControlName="fullNameEn"
-              type="text"
-              pInputText
               class="peer"
               fluid="true"
+              formControlName="fullNameEn"
+              id="employeeNameEn"
+              pInputText
+              placeholder=" اسم الموظف بالانجليزية"
+              type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -62,15 +62,15 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="region" class="label"> المنطقة</label>
+          <label class="label" for="region"> المنطقة</label>
           <div class="relative">
             <input
+              class="peer"
+              fluid="true"
               id="region"
+              pInputText
               placeholder="المنطقة"
               type="text"
-              pInputText
-              class="peer"
-              fluid="true"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -79,15 +79,15 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="city" class="label"> المدينة</label>
+          <label class="label" for="city"> المدينة</label>
           <div class="relative">
             <input
+              class="peer"
+              fluid="true"
               id="city"
+              pInputText
               placeholder="المدينة"
               type="text"
-              pInputText
-              class="peer"
-              fluid="true"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -96,16 +96,16 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="mobile" class="label"> رقم الجوال</label>
+          <label class="label" for="mobile"> رقم الجوال</label>
           <div class="relative">
             <input
-              id="mobile"
-              placeholder="رقم الجوال"
+              class="peer"
+              fluid="true"
               formControlName="phoneNumber"
-              type="text"
+              id="mobile"
               pInputText
-              class="peer"
-              fluid="true"
+              placeholder="رقم الجوال"
+              type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -114,34 +114,16 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="job" class="label">الوظيفة بالعربية</label>
+          <label class="label" for="job">الوظيفة بالعربية</label>
           <div class="relative">
             <input
-              id="job"
-              placeholder="الوظيفة بالعربية"
+              class="peer"
+              fluid="true"
               formControlName="jobTitleAr"
-              type="text"
-              pInputText
-              class="peer"
-              fluid="true"
-            />
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
-        </div>
-        <div>
-          <label for="job" class="label">الوظيفة بالانجليزية</label>
-          <div class="relative">
-            <input
               id="job"
-              placeholder=" الوظيفة بالانجليزية"
-              formControlName="jobTitleEn"
-              type="text"
               pInputText
-              class="peer"
-              fluid="true"
+              placeholder="الوظيفة بالعربية"
+              type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -150,16 +132,16 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="email" class="label"> البريد الالكتروني</label>
+          <label class="label" for="job">الوظيفة بالانجليزية</label>
           <div class="relative">
             <input
-              id="email"
-              placeholder="البريد الالكتروني"
-              formControlName="email"
-              type="text"
-              pInputText
               class="peer"
               fluid="true"
+              formControlName="jobTitleEn"
+              id="job"
+              pInputText
+              placeholder=" الوظيفة بالانجليزية"
+              type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -168,16 +150,34 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="workType" class="label">نوع الدوام</label>
+          <label class="label" for="email"> البريد الالكتروني</label>
+          <div class="relative">
+            <input
+              class="peer"
+              fluid="true"
+              formControlName="email"
+              id="email"
+              pInputText
+              placeholder="البريد الالكتروني"
+              type="text"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="workType">نوع الدوام</label>
           <div class="relative">
             <p-select
-              name="selectedDepartment"
               [options]="departments"
+              class="w-full peer"
+              id="workType"
+              name="selectedDepartment"
               optionLabel="nameAr"
               optionValue="id"
               placeholder="نوع الدوام"
-              class="w-full peer"
-              id="workType"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -186,20 +186,20 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="joinDate" class="label">تاريخ الالتحاق</label>
+          <label class="label" for="joinDate">تاريخ الالتحاق</label>
           <div class="relative">
             <p-datepicker
-              name="joinDate"
-              formControlName="joinDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
-              placeholder="تاريخ الالتحاق"
               class="peer block w-full"
-              inputId="joinDate"
+              formControlName="joinDate"
               id="joinDate"
+              inputId="joinDate"
+              name="joinDate"
+              placeholder="تاريخ الالتحاق"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
+                <img alt="" src="/assets/icons/calender-icon.svg"/>
               </ng-template>
             </p-datepicker>
             <span
@@ -209,17 +209,17 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="accountStatus" class="label">حالة الحساب</label>
+          <label class="label" for="accountStatus">حالة الحساب</label>
           <div class="relative">
             <p-select
-              name="accountStatus"
               [options]="accountStatusOptions"
+              class="w-full peer"
+              formControlName="isActive"
+              id="accountStatus"
+              name="accountStatus"
               optionLabel="nameAr"
               optionValue="id"
-              formControlName="isActive"
               placeholder="حالة الحساب"
-              class="w-full peer"
-              id="accountStatus"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -228,16 +228,16 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="nationalId" class="label">رقم الهوية</label>
+          <label class="label" for="nationalId">رقم الهوية</label>
           <div class="relative">
             <input
-              id="nationalId"
-              placeholder="رقم الهوية"
+              class="peer"
+              fluid="true"
               formControlName="nationalId"
+              id="nationalId"
+              pInputText
+              placeholder="رقم الهوية"
               type="text"
-              pInputText
-              class="peer"
-              fluid="true"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -245,153 +245,155 @@
           </div>
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
-        <div>
-          <label for="password" class="label">كلمة المرور</label>
-          <div class="relative">
-            <input
-              id="password"
-              placeholder="كلمة المرور"
-              formControlName="password"
-              type="password"
-              pInputText
-              class="peer"
-              fluid="true"
-            />
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+        @if (isCreateMode) {
+          <div>
+            <label for="password" class="label">كلمة المرور</label>
+            <div class="relative">
+              <input
+                id="password"
+                placeholder="كلمة المرور"
+                formControlName="password"
+                type="password"
+                pInputText
+                class="peer"
+                fluid="true"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <span class="validation-message">هذا الحقل مطلوب</span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
-        </div>
+        }
       </div>
       <div class="mt-6 pt-6 border-t border-[#d2d6db]">
         <h3 class="text-[#1f2a37 font-[600] mb-6 text-sm sm:text-base">الصلاحيات</h3>
         <div class="flex flex-wrap gap-8">
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              type="checkbox"
               checked
-              disabled
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              disabled
+              type="checkbox"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-width="3"
+              viewBox="0 0 24 24"
             >
-              <polyline points="20 6 9 17 4 12" />
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">موظف</span>
           </label>
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              type="checkbox"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              type="checkbox"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-width="3"
+              viewBox="0 0 24 24"
             >
-              <polyline points="20 6 9 17 4 12" />
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">مسؤول النظام</span>
           </label>
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              type="checkbox"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              type="checkbox"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-width="3"
+              viewBox="0 0 24 24"
             >
-              <polyline points="20 6 9 17 4 12" />
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">مدير ادارة</span>
           </label>
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              type="checkbox"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              type="checkbox"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-width="3"
+              viewBox="0 0 24 24"
             >
-              <polyline points="20 6 9 17 4 12" />
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">مسؤول قسم المتابعة</span>
           </label>
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              type="checkbox"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              type="checkbox"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-width="3"
+              viewBox="0 0 24 24"
             >
-              <polyline points="20 6 9 17 4 12" />
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">مسؤول HR</span>
           </label>
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              type="checkbox"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              type="checkbox"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-width="3"
+              viewBox="0 0 24 24"
             >
-              <polyline points="20 6 9 17 4 12" />
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">فرد شرطة عسكرية</span>
           </label>
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              type="checkbox"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              type="checkbox"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-width="3"
+              viewBox="0 0 24 24"
             >
-              <polyline points="20 6 9 17 4 12" />
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">قائد شطة عسكرية</span>
           </label>
@@ -401,28 +403,28 @@
         <div class="flex flex-wrap gap-8">
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              type="checkbox"
-              formControlName="canLeaveWithoutFingerPrint"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              formControlName="canLeaveWithoutFingerPrint"
+              type="checkbox"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="3"
               stroke-linecap="round"
               stroke-linejoin="round"
+              stroke-width="3"
+              viewBox="0 0 24 24"
             >
-              <polyline points="20 6 9 17 4 12" />
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">اعفاء من البصمة</span>
           </label>
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn" (click)="close()">الغاء</button>
-        <button class="btn green-btn" (click)="save$.next()">إضافة</button>
+        <button (click)="close()" class="btn gray-btn">الغاء</button>
+        <button (click)="save$.next()" class="btn green-btn">إضافة</button>
       </div>
     </form>
   </div>

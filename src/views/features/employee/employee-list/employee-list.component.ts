@@ -138,10 +138,6 @@ export default class EmployeeListComponent
     maxWidth: '1024px',
   };
 
-  override get service() {
-    return this.userService;
-  }
-
   override initListComponent(): void {
     // load lookups if needed
   }

@@ -69,7 +69,7 @@
             {{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASONS_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button class="table-head-action-btn">
+            <button class="table-head-action-btn" (click)="exportExcel('permission-reasons.xlsx')">
               <img alt="" src="/assets/icons/excel.svg" />
             </button>
             <button class="table-head-action-btn">

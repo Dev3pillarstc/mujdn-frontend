@@ -29,8 +29,6 @@ export abstract class BaseListComponent<
   matDialog = inject(MatDialog);
   activatedRoute = inject(ActivatedRoute);
   declare selectedModel: Model;
-  // Inside BaseListComponent
-  protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
 
   abstract get filterModel(): FilterModel;
 
@@ -40,9 +38,11 @@ export abstract class BaseListComponent<
 
   abstract openDialog(nationality: Model): void;
 
-  openBaseDialog(popupComponent: PopupComponent, model: Model) {
+  abstract initListComponent(): void;
+
+  openBaseDialog(popupComponent: PopupComponent, model: Model, lookups?: { [key: string]: any[] }) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = { model: model };
+    dialogConfig.data = { model: model, lookups: lookups };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
@@ -58,6 +58,7 @@ export abstract class BaseListComponent<
     this.list = this.activatedRoute.snapshot.data['list'].list;
     this.paginationInfo = this.activatedRoute.snapshot.data['list'].paginationInfo;
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
+    this.initListComponent();
   }
 
   loadList() {
@@ -101,16 +102,6 @@ export abstract class BaseListComponent<
     this.loadList();
   }
 
-  private paginationInfoMap(response: PaginatedList<Model>) {
-    const paginationInfo = response.paginationInfo;
-    this.paginationInfo.totalItems = paginationInfo.totalItems || 0;
-    this.paginationParams.pageSize = paginationInfo.pageSize || 10;
-    this.paginationParams.pageNumber = paginationInfo.currentPage || 1;
-
-    this.rows = this.paginationParams.pageSize;
-    this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
-  }
-
   exportExcel(fileName: string = 'data.xlsx'): void {
     this.service.loadPaginated(this.paginationParams, { ...this.filterModel! }).subscribe({
       next: (res) => {
@@ -125,5 +116,18 @@ export abstract class BaseListComponent<
         }
       },
     });
+  }
+
+  // Inside BaseListComponent
+  protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
+
+  private paginationInfoMap(response: PaginatedList<Model>) {
+    const paginationInfo = response.paginationInfo;
+    this.paginationInfo.totalItems = paginationInfo.totalItems || 0;
+    this.paginationParams.pageSize = paginationInfo.pageSize || 10;
+    this.paginationParams.pageNumber = paginationInfo.currentPage || 1;
+
+    this.rows = this.paginationParams.pageSize;
+    this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
   }
 }

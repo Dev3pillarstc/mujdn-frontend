@@ -28,9 +28,6 @@ export default class NationalityListComponent
   >
   implements OnInit
 {
-  protected override mapModelToExcelRow(model: Nationality): { [key: string]: any } {
-    throw new Error('Method not implemented.');
-  }
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -43,6 +40,10 @@ export default class NationalityListComponent
     return this.nationalityService;
   }
 
+  override initListComponent(): void {
+    // load lookups if needed
+  }
+
   override openDialog(nationality: Nationality): void {
     this.openBaseDialog(NationalityPopupComponent as any, nationality);
   }
@@ -53,5 +54,9 @@ export default class NationalityListComponent
       : new Nationality();
 
     this.openDialog(nationalityCopy);
+  }
+
+  protected override mapModelToExcelRow(model: Nationality): { [key: string]: any } {
+    throw new Error('Method not implemented.');
   }
 }

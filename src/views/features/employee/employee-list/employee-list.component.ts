@@ -68,13 +68,11 @@ export default class EmployeeListComponent
     { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
     { id: 2, nameEn: 'name 2', nameAr: 'name 2' },
   ];
-
   userService = inject(UserService);
   home: MenuItem | undefined;
   filterModel: UserFilter = new UserFilter();
   accountStatusOptions: AccountStatusOption[] = ACCOUNT_STATUS_OPTIONS;
   fingerprintExemptionOptions: BooleanOptionModel[] = FINGERPRINT_EXEMPTION_OPTIONS;
-
   // items: MenuItem[] | undefined;
   selectedDepartment: BaseLookupModel | undefined;
   joinDate: Date | undefined;
@@ -139,6 +137,14 @@ export default class EmployeeListComponent
     width: '100%',
     maxWidth: '1024px',
   };
+
+  override get service() {
+    return this.userService;
+  }
+
+  override initListComponent(): void {
+    // load lookups if needed
+  }
 
   override openDialog(): void {
     const user = this.selectedModel || new User();

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { PaginatorModule } from 'primeng/paginator';
 import { Breadcrumb } from 'primeng/breadcrumb';
@@ -8,11 +8,13 @@ import { CityService } from '@/services/features/lookups/city.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { CityPopupComponent } from '../city-popup/city-popup.component';
 import { City } from '@/models/features/lookups/City/city';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CityFilter } from '@/models/features/lookups/City/city-filter';
+import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { Region } from '@/models/features/lookups/region/region';
+import { RegionService } from '@/services/features/lookups/region.service';
+import { CityFilter } from '@/models/features/lookups/City/city-filter';
 
 @Component({
   selector: 'app-city-list',
@@ -21,18 +23,13 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
   templateUrl: './city-list.component.html',
   styleUrl: './city-list.component.scss',
 })
-export default class CityListComponent
-  extends BaseListComponent<City, CityPopupComponent, CityService, CityFilter>
-  implements OnInit
-{
+export default class CityListComponent extends BaseListComponent<
+  City,
+  CityPopupComponent,
+  CityService,
+  CityFilter
+> {
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
-  protected override mapModelToExcelRow(model: City): { [key: string]: any } {
-    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
-    return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'المدينة' : 'City']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
-    };
-  }
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -40,17 +37,34 @@ export default class CityListComponent
   cityService = inject(CityService);
   home: MenuItem | undefined;
   filterModel: CityFilter = new CityFilter();
+  regions: Region[] = [];
+  regionService = inject(RegionService);
 
   override get service() {
     return this.cityService;
   }
 
+  override initListComponent(): void {
+    this.regionService.load().subscribe((res: Region[]) => {
+      this.regions = res;
+    });
+  }
+
   override openDialog(city: City): void {
-    this.openBaseDialog(CityPopupComponent as any, city);
+    const lookups = { regions: this.regions };
+    this.openBaseDialog(CityPopupComponent as any, city, lookups);
   }
 
   addOrEditModel(city?: City) {
     city = city || new City();
     this.openDialog(city);
+  }
+
+  protected override mapModelToExcelRow(model: City): { [key: string]: any } {
+    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
+    return {
+      [lang === LANGUAGE_ENUM.ARABIC ? 'المدينة' : 'City']:
+        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+    };
   }
 }

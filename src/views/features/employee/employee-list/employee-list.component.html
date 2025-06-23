@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">قائمة الموظفين</h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
@@ -61,7 +61,7 @@
                 placeholder="تاريخ الالتحاق"
               >
                 <ng-template pTemplate="inputicon">
-                  <img alt="" src="/assets/icons/calender-icon.svg"/>
+                  <img alt="" src="/assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
@@ -135,13 +135,13 @@
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">قائمة الموظفين</h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button class="table-head-action-btn">
-              <img alt="" src="/assets/icons/excel.svg"/>
+              <img alt="" src="/assets/icons/excel.svg" />
             </button>
             <button class="table-head-action-btn">
-              <img alt="" src="/assets/icons/print.svg"/>
+              <img alt="" src="/assets/icons/print.svg" />
             </button>
             <button (click)="addNewEmployeePopup()" class="btn green-btn flex items-center">
-              <img alt="" src="/assets/icons/plus.svg"/>
+              <img alt="" src="/assets/icons/plus.svg" />
               <span>إضافة موظف جديد</span>
             </button>
           </div>
@@ -169,16 +169,16 @@
               <td>{{ attendance.adminstration }}</td>
               <td>
                 <div class="flex justify-center gap-2">
-                  <img alt="" src="/assets/icons/right-icon.svg"/>
-                  <img alt="" src="/assets/icons/wrong-icon.svg"/>
+                  <img alt="" src="/assets/icons/right-icon.svg" />
+                  <img alt="" src="/assets/icons/wrong-icon.svg" />
                 </div>
               </td>
               <td>{{ attendance.jop }}</td>
               <td>{{ attendance.date }}</td>
               <td>
                 <div class="flex justify-center gap-2">
-                  <img alt="" src="/assets/icons/right-icon.svg"/>
-                  <img alt="" src="/assets/icons/wrong-icon.svg"/>
+                  <img alt="" src="/assets/icons/right-icon.svg" />
+                  <img alt="" src="/assets/icons/wrong-icon.svg" />
                 </div>
               </td>
               <td>12/12/2024</td>
@@ -188,10 +188,10 @@
                     (click)="openEmployeePermissionModal()"
                     class="btn gray-btn flex align-items gap-4 min-w-[144px]"
                   >
-                    <img alt="" src="/assets/icons/edit.svg"/>
+                    <img alt="" src="/assets/icons/edit.svg" />
                     <span class="text-sm">تعديل الصلاحية</span>
                   </button>
-                  <p-splitbutton [model]="itemsList" dropdownIcon="pi pi-ellipsis-v"/>
+                  <p-splitbutton [model]="itemsList" dropdownIcon="pi pi-ellipsis-v" />
                 </div>
               </td>
             </tr>

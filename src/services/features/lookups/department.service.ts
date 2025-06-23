@@ -6,9 +6,8 @@ import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer, HasInterception } from 'cast-response';
 import { Observable } from 'rxjs';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 @CastResponseContainer({
   $default: {
@@ -29,6 +28,9 @@ export class DepartmentService extends BaseCrudService<Department> {
   @CastResponse()
   @HasInterception
   getDepartmentTreeAsync(): Observable<ListResponseData<Department>> {
-    return this.http.get<ListResponseData<Department>>(this.getUrlSegment() + '/' + 'GetDepartmentTreeAsync', { withCredentials: true });
+    return this.http.get<ListResponseData<Department>>(
+      this.getUrlSegment() + '/' + 'GetDepartmentTreeAsync',
+      { withCredentials: true }
+    );
   }
 }

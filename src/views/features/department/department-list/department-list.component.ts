@@ -18,6 +18,9 @@ import { DepartmentTreeComponent } from '../department-tree/department-tree.comp
 import { Department } from '@/models/features/lookups/Department/department';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import DepartmentFilter from '@/models/features/lookups/Department/department-filter';
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 
 interface Adminstration {
   type: string;
@@ -43,29 +46,49 @@ interface Adminstration {
   templateUrl: './department-list.component.html',
   styleUrl: './department-list.component.scss',
 })
-export default class DepartmentListComponent {
-  first: number = 0;
-  rows: number = 10;
-  matDialog = inject(MatDialog);
+export default class DepartmentListComponent
+  extends BaseListComponent<Department, DepartmentPopupComponent, DepartmentService, DepartmentFilter> {
+  override dialogSize = {
+    width: '100%',
+    maxWidth: '600px',
+  };
+
+  private _filterModel: DepartmentFilter = new DepartmentFilter();
+  private _selectedDepartment: Department | null = null;
+
+  override get filterModel(): DepartmentFilter {
+    return this._filterModel;
+  }
+
+  override set filterModel(val: DepartmentFilter) {
+    this._filterModel = val;
+    this._filterModel.fkParentDepartmentId = this.selectedDepartment?.id;
+  }
+
+  get selectedDepartment(): Department | null {
+    return this._selectedDepartment;
+  }
+
+  set selectedDepartment(val: Department | null) {
+    this._selectedDepartment = val;
+    this.filterModel.fkParentDepartmentId = val?.id;
+  }
+  onSelectedDepamentChange(event: any) {
+    this.selectedDepartment = event;
+    this.loadList();
+  }
+  override get service(): DepartmentService {
+    return this.departmentService;
+  }
+
   languageService = inject(LanguageService);
-  items: MenuItem[] | undefined;
+  departmentService = inject(DepartmentService);
   home: MenuItem | undefined;
   date2: Date | undefined;
   attendance!: any[];
   adminstrations: Adminstration[] | undefined;
   selectedAdminstration: Adminstration | undefined;
-  selectedDepartment: Department | null = null;
-  ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'ادارة المجاهدين' }];
-    // Updated dummy data to match your Arabic table structure
-    this.attendance = [
-      {
-        serialNumber: 1,
-        employeeName: 'عيد الأضحى المبارك',
-        date: '12/12/2023',
-      },
-    ];
-  }
+
   openDialog() {
     const dialogRef = this.matDialog.open(DepartmentPopupComponent, {
       width: '100%',
@@ -76,9 +99,16 @@ export default class DepartmentListComponent {
       console.log(`Dialog result: ${result}`);
     });
   }
-  onPageChange(event: PaginatorState) {
+
+  override onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
+  }
+
+  override search(): void {
+    this.paginationParams.pageNumber = 1;
+    this.first = 0;
+    this.loadList();
   }
 
   isCurrentLanguageEnglish() {

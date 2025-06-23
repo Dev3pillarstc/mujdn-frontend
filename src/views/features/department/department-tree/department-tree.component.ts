@@ -22,7 +22,7 @@ export class DepartmentTreeComponent implements OnInit {
   departmentService = inject(DepartmentService);
   languageService = inject(LanguageService);
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.getDepartmentTreeAsync();
@@ -34,7 +34,9 @@ export class DepartmentTreeComponent implements OnInit {
       next: (response) => {
         if (response?.data) {
           this.departments = this.mapDepartmentsToTree(response.data);
-          const rootDepartment = response.data.find((dept: Department) => dept.fkParentDepartmentId == null);
+          const rootDepartment = response.data.find(
+            (dept: Department) => dept.fkParentDepartmentId == null
+          );
           if (rootDepartment) {
             this.departmentSelected.emit(rootDepartment);
           }
@@ -48,7 +50,10 @@ export class DepartmentTreeComponent implements OnInit {
 
   mapDepartmentsToTree(departments: any[]): TreeNode[] {
     return departments.map((dept) => ({
-      label: this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? dept.nameEn : dept.nameAr,
+      label:
+        this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+          ? dept.nameEn
+          : dept.nameAr,
       data: dept,
       children: this.mapDepartmentsToTree(dept.childDepartments || []),
     }));
@@ -62,7 +67,9 @@ export class DepartmentTreeComponent implements OnInit {
     if (event.node) {
       this.departmentSelected.emit(event.node.data);
     } else {
-      const rootDepartment = this.departments.map((node) => node.data).find((dept: Department) => dept.fkParentDepartmentId == null);
+      const rootDepartment = this.departments
+        .map((node) => node.data)
+        .find((dept: Department) => dept.fkParentDepartmentId == null);
       if (rootDepartment) {
         this.departmentSelected.emit(rootDepartment);
       }

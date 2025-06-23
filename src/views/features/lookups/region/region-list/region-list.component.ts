@@ -11,6 +11,8 @@ import { Breadcrumb } from 'primeng/breadcrumb';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { LanguageService } from '@/services/shared/language.service';
 
 @Component({
   selector: 'app-region-list',
@@ -22,6 +24,7 @@ export class RegionListComponent
   extends BaseListComponent<Region, RegionPopupComponent, RegionService, RegionFilter>
   implements OnInit
 {
+  languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -34,6 +37,10 @@ export class RegionListComponent
     return this.regionService;
   }
 
+  override initListComponent(): void {
+    // load lookups if needed
+  }
+
   override openDialog(region: Region): void {
     this.openBaseDialog(RegionPopupComponent as any, region);
   }
@@ -41,5 +48,13 @@ export class RegionListComponent
   addOrEditModel(region?: Region) {
     region = region || new Region();
     this.openDialog(region);
+  }
+
+  protected override mapModelToExcelRow(model: Region): { [key: string]: any } {
+    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
+    return {
+      [lang === LANGUAGE_ENUM.ARABIC ? 'المنطقة' : 'Region']:
+        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+    };
   }
 }

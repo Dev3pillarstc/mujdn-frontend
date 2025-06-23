@@ -9,6 +9,7 @@ import { PaginatorState } from 'primeng/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import * as XLSX from 'xlsx';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -37,9 +38,11 @@ export abstract class BaseListComponent<
 
   abstract openDialog(nationality: Model): void;
 
-  openBaseDialog(popupComponent: PopupComponent, model: Model) {
+  abstract initListComponent(): void;
+
+  openBaseDialog(popupComponent: PopupComponent, model: Model, lookups?: { [key: string]: any[] }) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = { model: model };
+    dialogConfig.data = { model: model, lookups: lookups };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
@@ -55,6 +58,7 @@ export abstract class BaseListComponent<
     this.list = this.activatedRoute.snapshot.data['list'].list;
     this.paginationInfo = this.activatedRoute.snapshot.data['list'].paginationInfo;
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
+    this.initListComponent();
   }
 
   loadList() {
@@ -97,6 +101,25 @@ export abstract class BaseListComponent<
     this.paginationParams.pageSize = this.rows;
     this.loadList();
   }
+
+  exportExcel(fileName: string = 'data.xlsx'): void {
+    this.service.loadPaginated(this.paginationParams, { ...this.filterModel! }).subscribe({
+      next: (res) => {
+        const data = res.list;
+        if (data && data.length > 0) {
+          const transformedData = data.map((item) => this.mapModelToExcelRow(item));
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: true }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+    });
+  }
+
+  // Inside BaseListComponent
+  protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
 
   private paginationInfoMap(response: PaginatedList<Model>) {
     const paginationInfo = response.paginationInfo;

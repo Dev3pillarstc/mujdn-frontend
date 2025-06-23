@@ -15,6 +15,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
 import { DepartmentHeaderComponent } from '../department-header/department-header.component';
 import { DepartmentTreeComponent } from '../department-tree/department-tree.component';
+import { Department } from '@/models/features/lookups/Department/department';
+import { LanguageService } from '@/services/shared/language.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 interface Adminstration {
   type: string;
@@ -44,12 +47,14 @@ export default class DepartmentListComponent {
   first: number = 0;
   rows: number = 10;
   matDialog = inject(MatDialog);
+  languageService = inject(LanguageService);
   items: MenuItem[] | undefined;
   home: MenuItem | undefined;
   date2: Date | undefined;
   attendance!: any[];
   adminstrations: Adminstration[] | undefined;
   selectedAdminstration: Adminstration | undefined;
+  selectedDepartment: Department | null = null;
   ngOnInit() {
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'ادارة المجاهدين' }];
     // Updated dummy data to match your Arabic table structure
@@ -74,5 +79,9 @@ export default class DepartmentListComponent {
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
+  }
+
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 }

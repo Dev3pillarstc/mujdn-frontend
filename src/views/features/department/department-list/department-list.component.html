@@ -5,9 +5,9 @@
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">ادارة المجاهدين</h3>
     </div>
     <section class="flex flex-col xl:flex-row gap-6 max-w-full">
-      <app-department-tree></app-department-tree>
+      <app-department-tree (departmentSelected)="selectedDepartment = $event"></app-department-tree>
       <div class="w-full xl:w-[calc(100%-274px)]">
-        <app-department-header></app-department-header>
+        <app-department-header [departmentData]="selectedDepartment"></app-department-header>
         <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
           <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
             <div class="flex items-center justify-between">
@@ -16,9 +16,9 @@
             <div class="pt-6">
               <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 <div class="relative">
-                  <label for="cityEn" class="label">اسم الإدارة ا اسم المدير</label>
+                  <label for="administration" class="label">اسم الإدارة ا اسم المدير</label>
                   <input
-                    id="cityEn"
+                    id="administration"
                     placeholder="اسم الإدارة  ا اسم المدير"
                     type="text"
                     pInputText
@@ -29,27 +29,31 @@
                     class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                   ></span>
                 </div>
+
                 <div class="relative">
-                  <label for="" class="label">المنطقة</label>
+                  <label id="region-label" class="label">المنطقة</label>
                   <p-select
                     [options]="adminstrations"
                     [(ngModel)]="selectedAdminstration"
                     optionLabel="type"
                     placeholder="المنطقة"
                     class="w-full peer"
+                    ariaLabelledBy="region-label"
                   ></p-select>
                   <span
                     class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                   ></span>
                 </div>
+
                 <div class="relative">
-                  <label for="" class="label">المدينة</label>
+                  <label id="city-label" class="label">المدينة</label>
                   <p-select
                     [options]="adminstrations"
                     [(ngModel)]="selectedAdminstration"
                     optionLabel="type"
                     placeholder="المدينة"
                     class="w-full peer"
+                    ariaLabelledBy="city-label"
                   ></p-select>
                   <span
                     class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -68,7 +72,11 @@
               class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
             >
               <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-                قائمة الادارة العامة لتقنية المعلومات
+                {{
+                  isCurrentLanguageEnglish()
+                    ? selectedDepartment?.nameEn
+                    : selectedDepartment?.nameAr
+                }}
               </h4>
               <div class="actions flex items-center gap-4 ms-auto">
                 <button>

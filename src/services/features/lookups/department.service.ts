@@ -4,9 +4,8 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Injectable } from '@angular/core';
 import { CastResponseContainer } from 'cast-response';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 @CastResponseContainer({
   $default: {

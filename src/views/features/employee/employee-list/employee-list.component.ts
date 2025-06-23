@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
@@ -20,10 +20,21 @@ import { AddNewEmployeePopupComponent } from '../popups/add-new-employee-popup/a
 import { AddTaskPopupComponent } from '../popups/add-task-popup/add-task-popup.component';
 import { TasksAssignedToEmployeePopupComponent } from '../popups/tasks-assigned-to-employee-popup/tasks-assigned-to-employee-popup.component';
 import { AttendanceReportPopupComponent } from '../popups/attendance-report-popup/attendance-report-popup.component';
-
-interface Adminstration {
-  type: string;
-}
+import { UserService } from '@/services/features/user.service';
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { User } from '@/models/auth/user';
+import { UserFilter } from '@/models/auth/user-filter';
+import { BaseCrudService } from '@/abstracts/base-crud-service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { InputTextModule } from 'primeng/inputtext';
+import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/models/shared/account-status-option';
+import {
+  FINGERPRINT_EXEMPTION_OPTIONS,
+  BooleanOptionModel,
+} from '@/models/shared/fingerprint-exempt-option';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { LanguageService } from '@/services/shared/language.service'; // Import your enums
 
 @Component({
   selector: 'app-employee-list',
@@ -39,80 +50,100 @@ interface Adminstration {
     CommonModule,
     SplitButtonModule,
     PaginatorModule,
+    TranslatePipe,
+    InputTextModule,
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
   providers: [MessageService],
 })
-export default class EmployeeListComponent {
-  items: MenuItem[] | undefined;
-  itemsList: MenuItem[];
-
+export default class EmployeeListComponent
+  extends BaseListComponent<User, AddNewEmployeePopupComponent, UserService, UserFilter>
+  implements OnInit
+{
+  departments: BaseLookupModel[] = [
+    { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
+    { id: 2, nameEn: 'name 2', nameAr: 'name 2' },
+  ];
+  userService = inject(UserService);
   home: MenuItem | undefined;
-  adminstrations: Adminstration[] | undefined;
-
-  selectedAdminstration: Adminstration | undefined;
-  date2: Date | undefined;
-  attendance!: any[];
-  first: number = 0;
-  rows: number = 10;
-  matDialog = inject(MatDialog);
-  service = inject(ConfirmationService);
+  filterModel: UserFilter = new UserFilter();
+  accountStatusOptions: AccountStatusOption[] = ACCOUNT_STATUS_OPTIONS;
+  fingerprintExemptionOptions: BooleanOptionModel[] = FINGERPRINT_EXEMPTION_OPTIONS;
+  // items: MenuItem[] | undefined;
+  selectedDepartment: BaseLookupModel | undefined;
+  joinDate: Date | undefined;
+  confirmationService = inject(ConfirmationService);
   alertService = inject(AlertService);
+  languageService = inject(LanguageService);
+  actionList: MenuItem[] = [
+    {
+      label: 'تعديل بيانات الموظف',
+      command: () => this.openDialog(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'عرض تقرير الحضور و الانصراف',
+      command: () => this.attendanceReportPopup(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'اسنادة مهمة',
+      command: () => this.assignTaskPopup(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'اسناد وردية',
+      command: () => this.assignShiftPopup(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'سجل المهمات المسندة للموظف',
+      command: () => this.tasksAssignedToEmployee(),
+    },
+    {
+      separator: true,
+    },
+    {
+      label: 'حذف الموظف',
+      styleClass: 'p-menuitem-danger',
+      command: () => this.openConfirmation(),
+    },
+  ];
+  override dialogSize = {
+    width: '100%',
+    maxWidth: '1024px',
+  };
 
-  // openMainModal() {
-  //   const dialogRef = this.matDialog.open(EmployeePopupComponent, this.dialogSize);
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-
-  //   });
-
-  constructor() {
-    this.itemsList = [
-      {
-        label: 'تعديل بيانات الموظف',
-        command: () => this.addNewEmployeePopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: 'عرض تقرير الحضور و الانصراف',
-        command: () => this.attendanceReportPopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: 'اسنادة مهمة',
-        command: () => this.assignTaskPopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: 'اسناد وردية',
-        command: () => this.assignShiftPopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: 'سجل المهمات المسندة للموظف',
-        command: () => this.tasksAssignedToEmployee(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: 'حذف الموظف',
-        styleClass: 'p-menuitem-danger',
-        command: () => this.openConfirmation(),
-      },
-    ];
+  override get service() {
+    return this.userService;
   }
 
-  // }
+  override initListComponent(): void {
+    // load lookups if needed
+  }
+
+  override openDialog(): void {
+    const user = this.selectedModel || new User();
+    this.openBaseDialog(AddNewEmployeePopupComponent as any, user);
+  }
+
+  override mapModelToExcelRow(model: User): { [key: string]: any } {
+    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
+    return {
+      [lang === LANGUAGE_ENUM.ARABIC ? 'الاسم الكامل' : 'Full name']:
+        lang === LANGUAGE_ENUM.ARABIC ? model.fullNameAr : model.fullNameEn,
+    };
+  }
+
   openEmployeePermissionModal() {
     const dialogRef = this.matDialog.open(EmployeePermissionPopupComponent, {
       width: '100%',
@@ -124,15 +155,6 @@ export default class EmployeeListComponent {
 
   assignShiftPopup() {
     const dialogRef = this.matDialog.open(AssignShiftPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe();
-  }
-
-  addNewEmployeePopup() {
-    const dialogRef = this.matDialog.open(AddNewEmployeePopupComponent, {
       width: '100%',
       maxWidth: '1024px',
     });
@@ -167,30 +189,8 @@ export default class EmployeeListComponent {
     dialogRef.afterClosed().subscribe();
   }
 
-  ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الموظفين' }];
-    this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
-    // Updated dummy data to match your Arabic table structure
-    this.attendance = [
-      {
-        serialNumber: 1,
-        employeeNameAr: 'محمد أحمد طه',
-        employeeNameEn: 'mohamed taha',
-        adminstration: 'إدارة الموارد',
-        jop: 'موظف',
-        PermanentType: 'دوام كلي',
-        date: '12/12/2024',
-      },
-    ];
-  }
-
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
-  }
-
   openConfirmation() {
-    const dialogRef = this.service.open({
+    const dialogRef = this.confirmationService.open({
       icon: 'warning',
       messages: ['COMMON.CONFIRM_DELETE'],
       confirmText: 'COMMON.OK',
@@ -206,5 +206,9 @@ export default class EmployeeListComponent {
         this.alertService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
       }
     });
+  }
+
+  setSelectedModel(model: User) {
+    this.selectedModel = model;
   }
 }

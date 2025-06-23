@@ -1,7 +1,7 @@
 {
   "ENVIRONMENTS_URLS": {
     "DEV": "https://localhost:7107/api",
-    "TEST": "http://localhost:3000"
+    "TEST": "http://localhost:5111/api"
   },
   "API_VERSION": "",
   "BASE_ENVIRONMENT": "DEV",

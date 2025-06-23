@@ -5,7 +5,6 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer, HasInterception } from 'cast-response';
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root',
 })

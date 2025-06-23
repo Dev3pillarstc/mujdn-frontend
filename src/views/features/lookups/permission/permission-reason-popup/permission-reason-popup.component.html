@@ -3,11 +3,15 @@
     <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة سبب جديد</h3>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'PERMISSIONREASONS_PAGE.ADD_NEW_PERMISSIONREASON' | translate }}
+    </h3>
     <form [formGroup]="form" class="mt-6">
       <div class="grid sm:grid-cols-2 gap-4">
         <div>
-          <label class="label" for="permissionAr-popup"> سبب الأذن بالعربية </label>
+          <label class="label" for="permissionAr-popup">{{
+            'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -15,17 +19,30 @@
               formControlName="nameAr"
               id="permissionAr-popup"
               pInputText
-              placeholder="سبب الأذن بالعربية"
+              placeholder="{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate }}"
               type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          @if (nameArControl.touched && nameArControl.errors?.['required']) {
+            <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>
+          }
+          @if (nameArControl.touched && nameArControl.errors?.['AR_NUM']) {
+            <span class="validation-message">{{ 'COMMON.ARABIC_ONLY' | translate }}</span>
+          }
+          @if (nameArControl.touched && nameArControl.errors?.['minlength']) {
+            <span class="validation-message">{{ 'COMMON.MIN_LENGTH' | translate }}</span>
+          }
+          @if (nameArControl.touched && nameArControl.errors?.['maxlength']) {
+            <span class="validation-message">{{ 'COMMON.MAX_LENGTH' | translate }}</span>
+          }
         </div>
         <div>
-          <label class="label" for="permissionEn-popup"> سبب الأذن بالانجليزية </label>
+          <label class="label" for="permissionEn-popup">{{
+            'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -33,38 +50,32 @@
               formControlName="nameEn"
               id="permissionEn-popup"
               pInputText
-              placeholder="سبب الأذن بالانجليزية"
+              placeholder="{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate }}"
               type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          @if (nameEnControl.touched && nameEnControl.errors?.['required']) {
+            <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>
+          }
+          @if (nameEnControl.touched && nameEnControl.errors?.['ENG_NUM']) {
+            <span class="validation-message">{{ 'COMMON.ENGLISH_ONLY' | translate }}</span>
+          }
+          @if (nameEnControl.touched && nameEnControl.errors?.['minlength']) {
+            <span class="validation-message">{{ 'COMMON.MIN_LENGTH' | translate }}</span>
+          }
+          @if (nameEnControl.touched && nameEnControl.errors?.['maxlength']) {
+            <span class="validation-message">{{ 'COMMON.MAX_LENGTH' | translate }}</span>
+          }
         </div>
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-            formControlName="isActive"
-            type="checkbox"
-          />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="3"
-            viewBox="0 0 24 24"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]">مفعل</span>
-        </label>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button (click)="close()" class="btn gray-btn">الغاء</button>
-        <button (click)="save$.next()" class="btn green-btn">حفظ</button>
+        <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="save$.next()" class="btn green-btn">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
       </div>
     </form>
   </div>

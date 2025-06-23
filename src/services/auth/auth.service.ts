@@ -2,14 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { SingleResponseData } from '@/models/shared/response/single-response-data';
-import { User } from '@/models/auth/user';
 import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { LoggedInUser } from '@/models/auth/logged-in-user';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService extends BaseCrudService<User, string> {
+export class AuthService extends BaseCrudService<LoggedInUser, string> {
   serviceName: string = 'AuthService';
   router = inject(Router);
   private loggedInUser: BehaviorSubject<LoggedInUser | null> =
@@ -20,7 +19,7 @@ export class AuthService extends BaseCrudService<User, string> {
   }
 
   login(username: string, password: string) {
-    return this.http.post<SingleResponseData<User>>(
+    return this.http.post<SingleResponseData<LoggedInUser>>(
       this.getUrlSegment() + '/login',
       {
         username: username,
@@ -31,7 +30,7 @@ export class AuthService extends BaseCrudService<User, string> {
   }
 
   logout() {
-    return this.http.get<SingleResponseData<User>>(this.getUrlSegment() + '/logout', {
+    return this.http.get<SingleResponseData<LoggedInUser>>(this.getUrlSegment() + '/logout', {
       withCredentials: true,
     });
   }

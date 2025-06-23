@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { Department } from '@/models/features/lookups/Department/department';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import { LanguageService } from '@/services/shared/language.service';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Tree } from 'primeng/tree';
 
@@ -10,165 +14,71 @@ import { Tree } from 'primeng/tree';
   styleUrl: './department-tree.component.scss',
 })
 export class DepartmentTreeComponent implements OnInit {
-  files: any[] = [];
-  OnInit() {}
-  private mockData = [
-    {
-      label: 'الإدارة العامة لتقنية المعلومات',
-      data: 'الإدارة العامة لتقنية المعلومات',
-      children: [
-        {
-          label: 'إدارة المشاريع التقنية',
-          data: 'إدارة المشاريع التقنية',
-        },
-        {
-          label: 'إدارة البنية التحتية',
-          data: 'إدارة البنية التحتية',
-        },
-        {
-          label: 'إدارة الدعم الفني',
-          data: 'إدارة الدعم الفني',
-        },
-        {
-          label: 'إدارة أمن المعلومات',
-          data: 'إدارة أمن المعلومات',
-        },
-        {
-          label: 'إدارة النظم والتطبيقات',
-          data: 'إدارة النظم والتطبيقات',
-        },
-        {
-          label: 'إدارة تطوير البرمجيات',
-          data: 'إدارة تطوير البرمجيات',
-        },
-        {
-          label: 'إدارة الحوكمة والامتثال',
-          data: 'إدارة الحوكمة والامتثال',
-        },
-      ],
-    },
-    {
-      label: 'الإدارة العامة لتقنية المعلومات',
-      data: 'الإدارة العامة لتقنية المعلومات',
-      children: [
-        {
-          label: 'إدارة المشاريع التقنية',
-          data: 'إدارة المشاريع التقنية',
-        },
-        {
-          label: 'إدارة البنية التحتية',
-          data: 'إدارة البنية التحتية',
-        },
-        {
-          label: 'إدارة الدعم الفني',
-          data: 'إدارة الدعم الفني',
-        },
-        {
-          label: 'إدارة أمن المعلومات',
-          data: 'إدارة أمن المعلومات',
-        },
-        {
-          label: 'إدارة النظم والتطبيقات',
-          data: 'إدارة النظم والتطبيقات',
-        },
-        {
-          label: 'إدارة تطوير البرمجيات',
-          data: 'إدارة تطوير البرمجيات',
-        },
-        {
-          label: 'إدارة الحوكمة والامتثال',
-          data: 'إدارة الحوكمة والامتثال',
-        },
-      ],
-    },
-    {
-      label: 'الإدارة العامة لتقنية المعلومات',
-      data: 'الإدارة العامة لتقنية المعلومات',
-      children: [
-        {
-          label: 'إدارة المشاريع التقنية',
-          data: 'إدارة المشاريع التقنية',
-        },
-        {
-          label: 'إدارة البنية التحتية',
-          data: 'إدارة البنية التحتية',
-        },
-        {
-          label: 'إدارة الدعم الفني',
-          data: 'إدارة الدعم الفني',
-        },
-        {
-          label: 'إدارة أمن المعلومات',
-          data: 'إدارة أمن المعلومات',
-        },
-        {
-          label: 'إدارة النظم والتطبيقات',
-          data: 'إدارة النظم والتطبيقات',
-        },
-        {
-          label: 'إدارة تطوير البرمجيات',
-          data: 'إدارة تطوير البرمجيات',
-        },
-        {
-          label: 'إدارة الحوكمة والامتثال',
-          data: 'إدارة الحوكمة والامتثال',
-        },
-      ],
-    },
-    {
-      label: 'الإدارة العامة لتقنية المعلومات',
-      data: 'الإدارة العامة لتقنية المعلومات',
-      children: [
-        {
-          label: 'إدارة المشاريع التقنية',
-          data: 'إدارة المشاريع التقنية',
-        },
-        {
-          label: 'إدارة البنية التحتية',
-          data: 'إدارة البنية التحتية',
-        },
-        {
-          label: 'إدارة الدعم الفني',
-          data: 'إدارة الدعم الفني',
-        },
-        {
-          label: 'إدارة أمن المعلومات',
-          data: 'إدارة أمن المعلومات',
-        },
-        {
-          label: 'إدارة النظم والتطبيقات',
-          data: 'إدارة النظم والتطبيقات',
-        },
-        {
-          label: 'إدارة تطوير البرمجيات',
-          data: 'إدارة تطوير البرمجيات',
-        },
-        {
-          label: 'إدارة الحوكمة والامتثال',
-          data: 'إدارة الحوكمة والامتثال',
-        },
-      ],
-    },
-  ];
+  departments: TreeNode[] = [];
+  selectedNode: TreeNode | null = null;
 
-  constructor() {
-    this.loadFiles();
-  }
+  @Output() departmentSelected = new EventEmitter<Department>();
+
+  departmentService = inject(DepartmentService);
+  languageService = inject(LanguageService);
+
+  constructor() {}
 
   ngOnInit() {
-    // Set aria-expanded="false" on all .p-tree-node elements after view is initialized
-    setTimeout(() => {
-      const nodes = document.querySelectorAll('.p-tree-node');
-      nodes.forEach((node) => {
-        (node as HTMLElement).setAttribute('aria-expanded', 'false');
-      });
-    }, 0);
+    this.getDepartmentTreeAsync();
+    this.translateDepartmentName();
   }
 
-  loadFiles() {
-    // محاكاة جلب البيانات كما لو كانت من خدمة
-    Promise.resolve(this.mockData).then((data) => {
-      this.files = data;
+  getDepartmentTreeAsync() {
+    this.departmentService.getDepartmentTreeAsync().subscribe({
+      next: (response) => {
+        if (response?.data) {
+          this.departments = this.mapDepartmentsToTree(response.data);
+          const rootDepartment = response.data.find(
+            (dept: Department) => dept.fkParentDepartmentId == null
+          );
+          if (rootDepartment) {
+            this.departmentSelected.emit(rootDepartment);
+          }
+        }
+      },
+      error: (error) => {
+        //pending golable error handler
+      },
+    });
+  }
+
+  mapDepartmentsToTree(departments: any[]): TreeNode[] {
+    return departments.map((dept) => ({
+      label:
+        this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+          ? dept.nameEn
+          : dept.nameAr,
+      data: dept,
+      children: this.mapDepartmentsToTree(dept.childDepartments || []),
+    }));
+  }
+
+  updateTreeLabels() {
+    this.departments = this.mapDepartmentsToTree(this.departments.map((node) => node.data));
+  }
+
+  onNodeSelect(event: any) {
+    if (event.node) {
+      this.departmentSelected.emit(event.node.data);
+    } else {
+      const rootDepartment = this.departments
+        .map((node) => node.data)
+        .find((dept: Department) => dept.fkParentDepartmentId == null);
+      if (rootDepartment) {
+        this.departmentSelected.emit(rootDepartment);
+      }
+    }
+  }
+
+  private translateDepartmentName() {
+    this.languageService.languageChanged$.subscribe(() => {
+      this.updateTreeLabels();
     });
   }
 }

@@ -5,16 +5,16 @@
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة موظف جديد</h3>
 
-    <form class="">
+    <form [formGroup]="form" class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
           <label for="department" class="label">الادارة</label>
           <div class="relative">
             <p-select
-              name="selectedAdminstration"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
+              name="selectedDepartment"
+              [options]="departments"
+              optionLabel="nameAr"
+              optionValue="id"
               placeholder="الادارة"
               class="w-full peer"
               id="department"
@@ -31,6 +31,7 @@
             <input
               id="employeeNameAr"
               placeholder=" اسم الموظف بالعربية"
+              formControlName="fullNameAr"
               type="text"
               pInputText
               class="peer"
@@ -40,14 +41,15 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>
         </div>
         <div>
-          <label for="employeeNameAr" class="label"> اسم الموظف بالانجليزية</label>
+          <label for="employeeNameEn" class="label"> اسم الموظف بالانجليزية</label>
           <div class="relative">
             <input
-              id="employeeNameAr"
+              id="employeeNameEn"
               placeholder=" اسم الموظف بالانجليزية"
+              formControlName="fullNameEn"
               type="text"
               pInputText
               class="peer"
@@ -99,6 +101,7 @@
             <input
               id="mobile"
               placeholder="رقم الجوال"
+              formControlName="phoneNumber"
               type="text"
               pInputText
               class="peer"
@@ -111,11 +114,30 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="job" class="label"> الوظيفة</label>
+          <label for="job" class="label">الوظيفة بالعربية</label>
           <div class="relative">
             <input
               id="job"
-              placeholder="الوظيفة"
+              placeholder="الوظيفة بالعربية"
+              formControlName="jobTitleAr"
+              type="text"
+              pInputText
+              class="peer"
+              fluid="true"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label for="job" class="label">الوظيفة بالانجليزية</label>
+          <div class="relative">
+            <input
+              id="job"
+              placeholder=" الوظيفة بالانجليزية"
+              formControlName="jobTitleEn"
               type="text"
               pInputText
               class="peer"
@@ -133,6 +155,7 @@
             <input
               id="email"
               placeholder="البريد الالكتروني"
+              formControlName="email"
               type="text"
               pInputText
               class="peer"
@@ -148,10 +171,10 @@
           <label for="workType" class="label">نوع الدوام</label>
           <div class="relative">
             <p-select
-              name="selectedAdminstration"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
+              name="selectedDepartment"
+              [options]="departments"
+              optionLabel="nameAr"
+              optionValue="id"
               placeholder="نوع الدوام"
               class="w-full peer"
               id="workType"
@@ -167,7 +190,7 @@
           <div class="relative">
             <p-datepicker
               name="joinDate"
-              [(ngModel)]="date2"
+              formControlName="joinDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
               placeholder="تاريخ الالتحاق"
@@ -190,9 +213,10 @@
           <div class="relative">
             <p-select
               name="accountStatus"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
+              [options]="accountStatusOptions"
+              optionLabel="nameAr"
+              optionValue="id"
+              formControlName="isActive"
               placeholder="حالة الحساب"
               class="w-full peer"
               id="accountStatus"
@@ -204,11 +228,12 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="username" class="label"> اسم المستخدم</label>
+          <label for="nationalId" class="label">رقم الهوية</label>
           <div class="relative">
             <input
-              id="username"
-              placeholder="اسم المستخدم"
+              id="nationalId"
+              placeholder="رقم الهوية"
+              formControlName="nationalId"
               type="text"
               pInputText
               class="peer"
@@ -221,11 +246,12 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="password" class="label"> كلمة المرور</label>
+          <label for="password" class="label">كلمة المرور</label>
           <div class="relative">
             <input
               id="password"
               placeholder="كلمة المرور"
+              formControlName="password"
               type="password"
               pInputText
               class="peer"
@@ -244,6 +270,8 @@
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
               type="checkbox"
+              checked
+              disabled
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
             />
             <svg
@@ -374,6 +402,7 @@
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
               type="checkbox"
+              formControlName="canLeaveWithoutFingerPrint"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
             />
             <svg
@@ -393,7 +422,7 @@
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button class="btn gray-btn" (click)="close()">الغاء</button>
-        <button class="btn green-btn">إضافة</button>
+        <button class="btn green-btn" (click)="save$.next()">إضافة</button>
       </div>
     </form>
   </div>

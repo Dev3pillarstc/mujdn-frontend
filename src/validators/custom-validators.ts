@@ -3,6 +3,8 @@ import { isValidValue } from '@/utils/utils';
 
 const defaultLengths = {
   MIN_LENGTH: 3,
+  PASSWORD_MIN: 8,
+  PASSWORD_MAX: 50,
   ARABIC_NAME_MAX: 300,
   ENGLISH_NAME_MAX: 300,
   EMAIL_MAX: 200,

@@ -46,12 +46,14 @@ interface Adminstration {
   templateUrl: './department-list.component.html',
   styleUrl: './department-list.component.scss',
 })
-export default class DepartmentListComponent
-  extends BaseListComponent<Department, DepartmentPopupComponent, DepartmentService, DepartmentFilter> {
-  override initListComponent(): void {
-
-  }
-  protected override mapModelToExcelRow(model: Department): { [key: string]: any; } {
+export default class DepartmentListComponent extends BaseListComponent<
+  Department,
+  DepartmentPopupComponent,
+  DepartmentService,
+  DepartmentFilter
+> {
+  override initListComponent(): void {}
+  protected override mapModelToExcelRow(model: Department): { [key: string]: any } {
     const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
     return {
       [lang === LANGUAGE_ENUM.ARABIC ? 'الإدارة' : 'Department']:

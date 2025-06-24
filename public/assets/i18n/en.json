@@ -2,6 +2,7 @@
   "COMMON": {
     "OK": "Ok",
     "CANCEL": "Cancel",
+    "ADD": "Add",
     "ERROR": "Error",
     "SUCCESS": "Success",
     "ALERT": "Alert",
@@ -17,7 +18,10 @@
     "MIN_LENGTH": "Minimum length is 3 characters",
     "MAX_LENGTH": "Maximum length is 300 characters",
     "ARABIC_ONLY": "This field must contain Arabic characters only",
-    "ENGLISH_ONLY": "This field must contain English characters only"
+    "ENGLISH_ONLY": "This field must contain English characters only",
+    "SEARCH": "Search",
+    "RESET_SEARCH": "Reset",
+    "SEARCH_FILTERS": "Search Filters"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -51,6 +55,7 @@
     "NO_DATA_TO_SHOW": "No data to display"
   },
   "CITIES_PAGE": {
+    "CITY": "City",
     "CITIES_LIST": "Cities List",
     "SEARCH_FILTERS": "Search Filters",
     "CITY_IN_ARABIC": "City in Arabic",
@@ -80,18 +85,38 @@
   },
   "EMPLOYEES_PAGE": {
     "EMPLOYEES_LIST": "Employees List",
-    "SEARCH_FILTERS": "Search Filters",
     "DEPARTMENT": "Department",
     "EMPLOYEE_NAME_ARABIC": "Employee Name in Arabic",
     "EMPLOYEE_NAME_ENGLISH": "Employee Name in English",
+    "REGION": "Region",
+    "CITY": "City",
+    "PHONE_NUMBER": "Phone Number",
+    "INVALID_PHONE": "Invalid phone number",
     "JOIN_DATE": "Join Date",
     "ACCOUNT_STATUS": "Account Status",
     "JOB_TITLE": "Job Title",
+    "JOB_TITLE_ARABIC": "Job Title in Arabic",
+    "JOB_TITLE_ENGLISH": "Job Title in English",
+    "EMAIL": "Email",
+    "INVALID_EMAIL": "Invalid email format",
+    "MAX_LENGTH_EMAIL": "Email cannot exceed 100 characters",
     "SHIFT_TYPE": "Shift Type",
+    "NATIONAL_ID": "National ID",
+    "INVALID_NATIONAL_ID": "National ID must be 10 digits",
+    "PASSWORD": "Password",
+    "MIN_LENGTH_PASSWORD": "Password must be at least 8 characters",
+    "MAX_LENGTH_PASSWORD": "Password cannot exceed 50 characters",
+    "PERMISSIONS": "Permissions",
+    "ROLE_EMPLOYEE": "Employee",
+    "ROLE_SYS_ADMIN": "System Administrator",
+    "ROLE_DEPT_MANAGER": "Department Manager",
+    "ROLE_FOLLOW_UP": "Follow-up Officer",
+    "ROLE_HR": "HR Officer",
+    "ROLE_MP_MEMBER": "Military Police Member",
+    "ROLE_MP_LEADER": "Military Police Leader",
     "FINGERPRINT_EXEMPTION": "Fingerprint Exemption",
-    "SEARCH": "Search",
-    "RESET_SEARCH": "Reset Search",
     "ADD_NEW_EMPLOYEE": "Add New Employee",
+    "EDIT_EMPLOYEE": "Edit Employee",
     "EMPLOYEE_ID": "Employee ID",
     "MORNING_SHIFT": "Morning Shift",
     "ACTIONS": "Actions",
@@ -102,7 +127,8 @@
     "ASSIGN_TASK": "Assign Task",
     "ASSIGN_SHIFT": "Assign Shift",
     "TASKS_ASSIGNED_TO_EMPLOYEE": "Tasks Assigned to Employee",
-    "DELETE_EMPLOYEE": "Delete Employee"
+    "DELETE_EMPLOYEE": "Delete Employee",
+    "MAX_LENGTH_NAME": "Name cannot exceed 100 characters"
   },
   "HOLIDAYS_PAGE": {
     "HOLIDAYS_LIST": "Holidays List",

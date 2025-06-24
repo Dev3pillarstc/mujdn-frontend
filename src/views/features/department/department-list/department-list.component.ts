@@ -45,7 +45,7 @@ interface Adminstration {
     Select,
     DepartmentHeaderComponent,
     DepartmentTreeComponent,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './department-list.component.html',
   styleUrl: './department-list.component.scss',
@@ -149,11 +149,12 @@ export default class DepartmentListComponent extends BaseListComponent<
     this.openBaseDialog(DepartmentPopupComponent as any, department, viewMode);
   }
 
-  addOrEditModel(department?: Department) {
-    const departmentCopy = department
-      ? new Department().clone(department)
-      : new Department();
-
+  addOrEditModel(parentDepartmentId?: number, department?: Department): void {
+    const departmentCopy = department ? new Department().clone(department) : new Department();
+    // Only set fkParentDepartmentId if adding (not editing)
+    if (!department) {
+      departmentCopy.fkParentDepartmentId = parentDepartmentId;
+    }
     this.openDialog(departmentCopy);
   }
   delete(departmentId: number | undefined): void {
@@ -161,19 +162,21 @@ export default class DepartmentListComponent extends BaseListComponent<
 
     this.departmentService.delete(departmentId).subscribe({
       next: () => {
-        this.loadList();
-        this.loadChildDepartmentsAfterSelect()
+        this.onDepartmentDeleted();
       },
-      error: (err) => {
-
-      },
+      error: (err) => {},
     });
   }
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
-
+  onDepartmentDeleted() {
+    this.loadList();
+    this.loadChildDepartmentsAfterSelect();
+  }
   getApprovalLevelText(isOneLevelVerification: boolean): string {
-    return isOneLevelVerification ? 'DEPARTMENTS_PAGE.ONE_LEVEL_APPROVAL' : 'DEPARTMENTS_PAGE.TWO_LEVEL_APPROVAL';
+    return isOneLevelVerification
+      ? 'DEPARTMENTS_PAGE.ONE_LEVEL_APPROVAL'
+      : 'DEPARTMENTS_PAGE.TWO_LEVEL_APPROVAL';
   }
 }

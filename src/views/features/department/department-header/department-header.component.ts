@@ -3,7 +3,7 @@ import { PERMISSION_APPROVAL_LEVELS } from '@/enums/permission-approval-levels';
 import { Department } from '@/models/features/lookups/Department/department';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { LanguageService } from '@/services/shared/language.service';
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-department-header',
@@ -13,6 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class DepartmentHeaderComponent {
   @Input() departmentData: Department | null = null;
+  @Output() departmentDeleted = new EventEmitter<number>(); // Add this line
   PERMISSION_APPROVAL_LEVELS = PERMISSION_APPROVAL_LEVELS;
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
@@ -27,8 +28,7 @@ export class DepartmentHeaderComponent {
 
     this.departmentService.delete(departmentId).subscribe({
       next: () => {
-        console.log(`Department with ID ${departmentId} deleted successfully.`);
-        // Optionally, emit an event or refresh the parent component's data
+        this.departmentDeleted.emit(departmentId);
       },
       error: (err) => {
         console.error(`Failed to delete department with ID ${departmentId}:`, err);

@@ -26,10 +26,11 @@ export class User extends BaseCrudModel<User, UserService, string> {
   declare jobTitleAr?: string;
   declare profilePhotoKey?: string;
   declare joinDate?: Date | string;
-  declare canLeaveWithoutFingerPrint?: boolean;
-  declare isActive?: boolean;
+  canLeaveWithoutFingerPrint?: boolean = false;
+  isActive?: boolean = true;
   declare region?: BaseLookupModel;
   declare city?: BaseLookupModel;
+  declare roleIds?: string[];
   declare department?: BaseLookupModel;
 
   buildForm(viewMode: ViewModeEnum) {
@@ -68,6 +69,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
               Validators.required,
               Validators.maxLength(CustomValidators.defaultLengths.PASSWORD_MAX),
               Validators.minLength(CustomValidators.defaultLengths.PASSWORD_MIN),
+              CustomValidators.pattern('ENG_NUM'),
             ]
           : [],
       ],
@@ -91,10 +93,10 @@ export class User extends BaseCrudModel<User, UserService, string> {
       ],
       nationalId: [nationalId, [Validators.required]],
       phoneNumber: [phoneNumber, [Validators.required]],
-      // fkRegionId: [fkRegionId, [Validators.required]],
-      // fkCityId: [fkCityId, [Validators.required]],
+      fkRegionId: [fkRegionId, [Validators.required]],
+      fkCityId: [fkCityId],
       // fkGenderId: [fkGenderId, [Validators.required]],
-      // fkDepartmentId: [fkDepartmentId, [Validators.required]],
+      fkDepartmentId: [fkDepartmentId, [Validators.required]],
       jobTitleEn: [
         jobTitleEn,
         [Validators.required, Validators.maxLength(100), CustomValidators.pattern('ENG_NUM')],
@@ -105,7 +107,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
       ],
       // profilePhotoKey: [profilePhotoKey],
       joinDate: [joinDate, [Validators.required]],
-      canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint ?? false],
+      canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint],
       isActive: [isActive ?? true],
     };
   }

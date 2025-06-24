@@ -1,7 +1,13 @@
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
@@ -20,7 +26,11 @@ import {
 } from '@/models/shared/fingerprint-exempt-option';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { City } from '@/models/features/lookups/city/city';
-import { Region } from '@/models/features/lookups/region/region'; // Import your enums
+import { Region } from '@/models/features/lookups/region/region';
+import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
+import { CityLookup } from '@/models/features/lookups/city/city-lookup';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { ROLES_ENUM } from '@/enums/roles-enum';
 
 @Component({
   selector: 'app-add-new-employee-popup',
@@ -33,6 +43,7 @@ import { Region } from '@/models/features/lookups/region/region'; // Import your
     ReactiveFormsModule,
     RequiredMarkerDirective,
     TranslatePipe,
+    ValidationMessagesComponent,
   ],
   templateUrl: './add-new-employee-popup.component.html',
   styleUrl: './add-new-employee-popup.component.scss',
@@ -41,12 +52,14 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   declare model: User;
   declare form: FormGroup;
   declare viewMode: ViewModeEnum;
+  alertService = inject(AlertService);
+  service = inject(UserService);
+  fb = inject(FormBuilder);
   isCreateMode = false;
 
-  departments: BaseLookupModel[] = [
-    { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
-    { id: 2, nameEn: 'name 2', nameAr: 'name 2' },
-  ];
+  departments: BaseLookupModel[] = [];
+  cities: CityLookup[] = [];
+  regions: BaseLookupModel[] = [];
 
   accountStatusOptions: AccountStatusOption[] = ACCOUNT_STATUS_OPTIONS;
   fingerprintExemptionOptions: BooleanOptionModel[] = FINGERPRINT_EXEMPTION_OPTIONS;
@@ -55,11 +68,18 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   selectedAccountStatus: AccountStatusOption | undefined;
   date2: Date | undefined;
 
-  alertService = inject(AlertService);
-  service = inject(UserService);
-  fb = inject(FormBuilder);
-  cities: City[] = [];
-  regions: Region[] = [];
+  filteredCities: CityLookup[] = [];
+
+  // Role mapping properties
+  roleStates = {
+    isEmployee: false,
+    isSysAdmin: false,
+    isDeptManager: false,
+    isFollowUp: false,
+    isHR: false,
+    isSecurityMember: false,
+    isSecurityLeader: false,
+  };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -69,8 +89,18 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     this.model = this.data.model;
     this.cities = this.data.lookups.cities;
     this.regions = this.data.lookups.regions;
+    this.departments = this.data.lookups.departments;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
+    console.log('this.model', this.model);
+    console.log('this.cities', this.cities);
+    console.log('this.regions', this.regions);
+
+    // Initialize filtered cities based on current region selection
+    this.initializeFilteredCities();
+
+    // Initialize role states
+    this.initializeRoleStates();
   }
 
   override prepareModel(model: User, form: FormGroup): User | Observable<User> {
@@ -81,6 +111,18 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     if (formValue.accountStatus !== undefined) {
       formValue.isActive = formValue.accountStatus;
     }
+
+    // Prepare roleIds array based on selected roles
+    const roleIds: string[] = [];
+    if (this.roleStates.isEmployee) roleIds.push(ROLES_ENUM.EMPLOYEE);
+    if (this.roleStates.isSysAdmin) roleIds.push(ROLES_ENUM.ADMIN);
+    if (this.roleStates.isDeptManager) roleIds.push(ROLES_ENUM.DEPARTMENT_MANAGER);
+    if (this.roleStates.isFollowUp) roleIds.push(ROLES_ENUM.FOLLOW_UP_OFFICER);
+    if (this.roleStates.isHR) roleIds.push(ROLES_ENUM.HR_OFFICER);
+    if (this.roleStates.isSecurityMember) roleIds.push(ROLES_ENUM.SECURITY_MEMBER);
+    if (this.roleStates.isSecurityLeader) roleIds.push(ROLES_ENUM.SECURITY_LEADER);
+
+    formValue.roleIds = roleIds;
 
     this.model = Object.assign(model, { ...formValue });
     return this.model;
@@ -95,6 +137,12 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
         (option) => option.id === this.model.isActive
       );
     }
+
+    // Subscribe to region changes to filter cities
+    this.form.get('fkRegionId')?.valueChanges.subscribe((regionId: number) => {
+      console.log('Region changed:', regionId);
+      this.onRegionChange(regionId);
+    });
   }
 
   override saveFail(error: Error): void {}
@@ -108,6 +156,60 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     return form.valid;
   }
 
+  // Initialize role states based on model's roleIds
+  private initializeRoleStates(): void {
+    if (this.model.roleIds) {
+      this.roleStates.isEmployee = this.model.roleIds.includes(ROLES_ENUM.EMPLOYEE);
+      this.roleStates.isSysAdmin = this.model.roleIds.includes(ROLES_ENUM.ADMIN);
+      this.roleStates.isDeptManager = this.model.roleIds.includes(ROLES_ENUM.DEPARTMENT_MANAGER);
+      this.roleStates.isFollowUp = this.model.roleIds.includes(ROLES_ENUM.FOLLOW_UP_OFFICER);
+      this.roleStates.isHR = this.model.roleIds.includes(ROLES_ENUM.HR_OFFICER);
+      this.roleStates.isSecurityMember = this.model.roleIds.includes(ROLES_ENUM.SECURITY_MEMBER);
+      this.roleStates.isSecurityLeader = this.model.roleIds.includes(ROLES_ENUM.SECURITY_LEADER);
+    }
+  }
+
+  // Initialize filtered cities based on current region selection
+  private initializeFilteredCities(): void {
+    const currentRegionId = this.model.fkRegionId;
+    console.log('currentRegionId', currentRegionId);
+    if (currentRegionId) {
+      this.filteredCities = this.cities.filter((city) => city.regionId === currentRegionId);
+    } else {
+      this.filteredCities = [];
+    }
+    console.log('this.filteredCities', this.filteredCities);
+  }
+
+  // Handle region selection change
+  onRegionChange(regionId: number): void {
+    if (regionId) {
+      // Filter cities based on selected region
+      this.filteredCities = this.cities.filter((city) => city.regionId === regionId);
+
+      // Clear city selection if the current city doesn't belong to the new region
+      const currentCityId = this.form.get('fkCityId')?.value;
+      if (currentCityId) {
+        const currentCityBelongsToRegion = this.filteredCities.some(
+          (city) => city.id === currentCityId
+        );
+        if (!currentCityBelongsToRegion) {
+          this.form.get('fkCityId')?.setValue(null);
+        }
+      }
+    } else {
+      // Clear cities if no region is selected
+      this.filteredCities = [];
+      this.form.get('fkCityId')?.setValue(null);
+    }
+  }
+
+  // Role checkbox change handlers
+  onRoleChange(role: keyof typeof this.roleStates, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    this.roleStates[role] = checkbox.checked;
+  }
+
   // Helper method to get display text for account status
   getAccountStatusText(isActive: boolean): string {
     const option = this.accountStatusOptions.find((opt) => opt.id === isActive);
@@ -118,5 +220,59 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   getFingerprintExemptionText(canLeave: boolean): string {
     const option = this.fingerprintExemptionOptions.find((opt) => opt.id === canLeave);
     return option ? option.nameAr : '';
+  }
+
+  get langOptionLabel(): string {
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  }
+
+  // Form control getters
+  get regionControl() {
+    return this.form.get('fkRegionId') as FormControl;
+  }
+
+  get cityControl() {
+    return this.form.get('fkCityId') as FormControl;
+  }
+
+  get fullNameArControl() {
+    return this.form.get('fullNameAr') as FormControl;
+  }
+
+  get fullNameEnControl() {
+    return this.form.get('fullNameEn') as FormControl;
+  }
+
+  get phoneNumberControl() {
+    return this.form.get('phoneNumber') as FormControl;
+  }
+
+  get jobTitleArControl() {
+    return this.form.get('jobTitleAr') as FormControl;
+  }
+
+  get jobTitleEnControl() {
+    return this.form.get('jobTitleEn') as FormControl;
+  }
+
+  get emailControl() {
+    return this.form.get('email') as FormControl;
+  }
+
+  get joinDateControl() {
+    return this.form.get('joinDate') as FormControl;
+  }
+
+  get accountStatusControl() {
+    return this.form.get('isActive') as FormControl;
+  }
+
+  get nationalIdControl() {
+    return this.form.get('nationalId') as FormControl;
+  }
+
+  get passwordControl() {
+    return this.form.get('password') as FormControl;
   }
 }

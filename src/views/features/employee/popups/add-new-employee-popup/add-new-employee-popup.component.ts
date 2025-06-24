@@ -28,7 +28,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { City } from '@/models/features/lookups/city/city';
 import { Region } from '@/models/features/lookups/region/region'; // Import your enums
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
-import { CityLookup } from '@/models/features/lookups/City/city-lookup';
+import { CityLookup } from '@/models/features/lookups/city/city-lookup';
 
 @Component({
   selector: 'app-add-new-employee-popup',

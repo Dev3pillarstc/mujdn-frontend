@@ -3,7 +3,6 @@ import { City } from '@/models/features/lookups/city/city';
 import { CityLookup } from '@/models/features/lookups/city/city-lookup';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
-import { ResponseData } from '@/models/shared/response/response-data';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { Observable, of, switchMap } from 'rxjs';

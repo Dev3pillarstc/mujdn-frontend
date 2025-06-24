@@ -16,7 +16,7 @@ export class City extends BaseCrudModel<City, CityService> {
   declare nameAr: string;
   declare nameEn: string;
   declare fkRegionId: number;
-  private languageService!: LanguageService;
+  private languageService?: LanguageService;
 
   constructor() {
     super();
@@ -24,7 +24,7 @@ export class City extends BaseCrudModel<City, CityService> {
   }
 
   getName(): string {
-    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
       ? this.nameEn
       : this.nameAr;
   }

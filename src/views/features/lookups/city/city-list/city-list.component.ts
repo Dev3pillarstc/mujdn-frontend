@@ -7,7 +7,7 @@ import { TableModule } from 'primeng/table';
 import { CityService } from '@/services/features/lookups/city.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { CityPopupComponent } from '../city-popup/city-popup.component';
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '@/services/shared/language.service';

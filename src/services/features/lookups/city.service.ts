@@ -1,5 +1,5 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Injectable } from '@angular/core';
 import { CastResponseContainer } from 'cast-response';

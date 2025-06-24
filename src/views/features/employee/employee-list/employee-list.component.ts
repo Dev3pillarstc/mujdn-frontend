@@ -34,8 +34,11 @@ import {
 } from '@/models/shared/fingerprint-exempt-option'; // Import your enums
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
-import { City } from '@/models/features/lookups/city/city';
-import { Region } from '@/models/features/lookups/region/region';
+import { CityService } from '@/services/features/lookups/city.service';
+import { CityLookup } from '@/models/features/lookups/city/city-lookup';
+import { RegionService } from '@/services/features/lookups/region.service';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Component({
   selector: 'app-employee-list',
@@ -64,14 +67,14 @@ export default class EmployeeListComponent
 {
   languageService = inject(LanguageService);
   translateService = inject(TranslateService);
+  cityService = inject(CityService);
+  regionService = inject(RegionService);
+  departmentService = inject(DepartmentService);
   actionList: MenuItem[] = [];
-  cities: City[] = [];
-  regions: Region[] = [];
+  cities: CityLookup[] = [];
+  regions: BaseLookupModel[] = [];
+  departments: BaseLookupModel[] = [];
 
-  departments: BaseLookupModel[] = [
-    { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
-    { id: 2, nameEn: 'name 2', nameAr: 'name 2' },
-  ];
   userService = inject(UserService);
   home: MenuItem | undefined;
   filterModel: UserFilter = new UserFilter();
@@ -93,6 +96,15 @@ export default class EmployeeListComponent
 
   override initListComponent(): void {
     // load lookups
+    this.cityService.getCitiesLookup().subscribe((res: CityLookup[]) => {
+      this.cities = res;
+    });
+    this.regionService.getRegionsLookup().subscribe((res: BaseLookupModel[]) => {
+      this.regions = res;
+    });
+    this.departmentService.getDepartmentsLookup().subscribe((res: BaseLookupModel[]) => {
+      this.departments = res;
+    });
     this.initializeActionList();
 
     // Re-initialize action list when language changes
@@ -107,6 +119,7 @@ export default class EmployeeListComponent
     this.openBaseDialog(AddNewEmployeePopupComponent as any, user, viewMode, {
       cities: this.cities,
       regions: this.regions,
+      departments: this.departments,
     });
   }
 
@@ -130,6 +143,9 @@ export default class EmployeeListComponent
         this.loadList();
       }
     });
+  }
+  onDepartmentChange(deptId: number | undefined) {
+    this.filterModel.fkDepartmentId = deptId;
   }
 
   openEmployeePermissionModal() {
@@ -202,6 +218,11 @@ export default class EmployeeListComponent
 
   protected override mapModelToExcelRow(model: User): { [key: string]: any } {
     throw new Error('Method not implemented.');
+  }
+
+  get departmentOptionLabel(): string {
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   private initializeActionList(): void {

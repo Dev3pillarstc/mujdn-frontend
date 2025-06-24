@@ -13,7 +13,6 @@ export class UserInterceptor implements ModelInterceptorContract<User> {
     delete model['city'];
     delete model['region'];
     delete model['department'];
-    model['fkDepartmentId'] = 1;
     return model;
   }
 }

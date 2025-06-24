@@ -34,7 +34,7 @@ import {
 } from '@/models/shared/fingerprint-exempt-option'; // Import your enums
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
 import { Region } from '@/models/features/lookups/region/region';
 import { CityService } from '@/services/features/lookups/city.service';
 import { CityLookup } from '@/models/features/lookups/City/city-lookup';

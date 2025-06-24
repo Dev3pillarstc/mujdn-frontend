@@ -88,7 +88,6 @@ export abstract class BaseListComponent<
   }
 
   search() {
-    console.log(this.filterModel);
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadList();

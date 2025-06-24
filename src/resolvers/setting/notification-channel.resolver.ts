@@ -6,10 +6,5 @@ import { tap } from 'rxjs';
 
 export const notificationChannelResolver: ResolveFn<NotificationChannel> = () => {
   const notificationChannelService = inject(NotificationChannelService);
-  const xx = notificationChannelService.get().pipe(
-    tap((res) => {
-      console.log('Notification Channel Resolver:', res);
-    })
-  ); // assuming `.get()` returns Observable<NotificationChannel>
-  return xx;
+  return notificationChannelService.get();
 };

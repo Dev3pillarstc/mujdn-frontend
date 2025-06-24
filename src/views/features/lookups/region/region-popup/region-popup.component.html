@@ -26,18 +26,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          @if (nameArControl.touched && nameArControl.errors?.['required']) {
-            <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>
-          }
-          @if (nameArControl.touched && nameArControl.errors?.['AR_NUM']) {
-            <span class="validation-message">{{ 'COMMON.ARABIC_ONLY' | translate }}</span>
-          }
-          @if (nameArControl.touched && nameArControl.errors?.['minlength']) {
-            <span class="validation-message">{{ 'COMMON.MIN_LENGTH' | translate }}</span>
-          }
-          @if (nameArControl.touched && nameArControl.errors?.['maxlength']) {
-            <span class="validation-message">{{ 'COMMON.MAX_LENGTH' | translate }}</span>
-          }
+          <app-validation-messages [control]="nameArControl"></app-validation-messages>
         </div>
         <div>
           <label class="label" for="regionEn-popup">{{
@@ -57,18 +46,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          @if (nameEnControl.touched && nameEnControl.errors?.['required']) {
-            <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>
-          }
-          @if (nameEnControl.touched && nameEnControl.errors?.['ENG_NUM']) {
-            <span class="validation-message">{{ 'COMMON.ENGLISH_ONLY' | translate }}</span>
-          }
-          @if (nameEnControl.touched && nameEnControl.errors?.['minlength']) {
-            <span class="validation-message">{{ 'COMMON.MIN_LENGTH' | translate }}</span>
-          }
-          @if (nameEnControl.touched && nameEnControl.errors?.['maxlength']) {
-            <span class="validation-message">{{ 'COMMON.MAX_LENGTH' | translate }}</span>
-          }
+          <app-validation-messages [control]="nameEnControl"></app-validation-messages>
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">

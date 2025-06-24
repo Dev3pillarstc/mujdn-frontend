@@ -5,6 +5,7 @@ import { CustomValidators } from '@/validators/custom-validators';
 import { BaseLookupModel } from '../features/lookups/base-lookup-model';
 import { UserInterceptor } from '@/model-interceptors/auth/user.interceptor';
 import { InterceptModel } from 'cast-response';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 const { send, receive } = new UserInterceptor();
 
@@ -31,7 +32,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
   declare city?: BaseLookupModel;
   declare department?: BaseLookupModel;
 
-  buildForm() {
+  buildForm(viewMode: ViewModeEnum) {
     const {
       email,
       password,
@@ -62,11 +63,13 @@ export class User extends BaseCrudModel<User, UserService, string> {
       ],
       password: [
         password,
-        [
-          Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.PASSWORD_MAX),
-          Validators.minLength(CustomValidators.defaultLengths.PASSWORD_MIN),
-        ],
+        viewMode == ViewModeEnum.CREATE
+          ? [
+              Validators.required,
+              Validators.maxLength(CustomValidators.defaultLengths.PASSWORD_MAX),
+              Validators.minLength(CustomValidators.defaultLengths.PASSWORD_MIN),
+            ]
+          : [],
       ],
       fullNameEn: [
         fullNameEn,
@@ -102,7 +105,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
       ],
       // profilePhotoKey: [profilePhotoKey],
       joinDate: [joinDate, [Validators.required]],
-      canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint],
+      canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint ?? false],
       isActive: [isActive ?? true],
     };
   }

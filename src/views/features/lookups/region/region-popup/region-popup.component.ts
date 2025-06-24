@@ -9,10 +9,17 @@ import { Observable } from 'rxjs';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { Region } from '@/models/features/lookups/region/region';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 
 @Component({
   selector: 'app-region-popup',
-  imports: [InputTextModule, ReactiveFormsModule, RequiredMarkerDirective, TranslatePipe],
+  imports: [
+    InputTextModule,
+    ReactiveFormsModule,
+    RequiredMarkerDirective,
+    TranslatePipe,
+    ValidationMessagesComponent,
+  ],
   templateUrl: './region-popup.component.html',
   styleUrl: './region-popup.component.scss',
 })

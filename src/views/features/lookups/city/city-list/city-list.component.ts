@@ -14,7 +14,8 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Region } from '@/models/features/lookups/region/region';
 import { RegionService } from '@/services/features/lookups/region.service';
-import { CityFilter } from '@/models/features/lookups/City/city-filter';
+import { CityFilter } from '@/models/features/lookups/city/city-filter';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-city-list',
@@ -50,9 +51,10 @@ export default class CityListComponent extends BaseListComponent<
     });
   }
 
-  override openDialog(city: City): void {
+  override openDialog(model: City): void {
     const lookups = { regions: this.regions };
-    this.openBaseDialog(CityPopupComponent as any, city, lookups);
+    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(CityPopupComponent as any, model, viewMode, lookups);
   }
 
   addOrEditModel(city?: City) {

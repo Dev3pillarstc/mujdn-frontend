@@ -13,10 +13,18 @@ import { RegionService } from '@/services/features/lookups/region.service';
 import { Region } from '@/models/features/lookups/region/region';
 import { Select } from 'primeng/select';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 
 @Component({
   selector: 'app-city-popup',
-  imports: [Select, InputTextModule, ReactiveFormsModule, RequiredMarkerDirective, TranslatePipe],
+  imports: [
+    Select,
+    InputTextModule,
+    ReactiveFormsModule,
+    RequiredMarkerDirective,
+    TranslatePipe,
+    ValidationMessagesComponent,
+  ],
   templateUrl: './city-popup.component.html',
   styleUrl: './city-popup.component.scss',
 })

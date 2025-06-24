@@ -21,11 +21,12 @@
               }}</label>
               <p-select
                 [(ngModel)]="selectedDepartment"
+                (ngModelChange)="onDepartmentChange($event)"
                 [options]="departments"
                 [placeholder]="'EMPLOYEES_PAGE.DEPARTMENT' | translate"
                 class="w-full peer"
                 id="department"
-                optionLabel="nameEn"
+                [optionLabel]="departmentOptionLabel"
                 optionValue="id"
               ></p-select>
               <span

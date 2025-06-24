@@ -29,6 +29,7 @@ import { City } from '@/models/features/lookups/city/city';
 import { Region } from '@/models/features/lookups/region/region'; // Import your enums
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { CityLookup } from '@/models/features/lookups/city/city-lookup';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Component({
   selector: 'app-add-new-employee-popup',
@@ -50,12 +51,14 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   declare model: User;
   declare form: FormGroup;
   declare viewMode: ViewModeEnum;
+  alertService = inject(AlertService);
+  service = inject(UserService);
+  fb = inject(FormBuilder);
   isCreateMode = false;
 
-  departments: BaseLookupModel[] = [
-    { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
-    { id: 2, nameEn: 'name 2', nameAr: 'name 2' },
-  ];
+  departments: BaseLookupModel[] = [];
+  cities: CityLookup[] = [];
+  regions: BaseLookupModel[] = [];
 
   accountStatusOptions: AccountStatusOption[] = ACCOUNT_STATUS_OPTIONS;
   fingerprintExemptionOptions: BooleanOptionModel[] = FINGERPRINT_EXEMPTION_OPTIONS;
@@ -64,11 +67,6 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   selectedAccountStatus: AccountStatusOption | undefined;
   date2: Date | undefined;
 
-  alertService = inject(AlertService);
-  service = inject(UserService);
-  fb = inject(FormBuilder);
-  cities: CityLookup[] = [];
-  regions: BaseLookupModel[] = [];
   filteredCities: CityLookup[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
@@ -79,6 +77,7 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     this.model = this.data.model;
     this.cities = this.data.lookups.cities;
     this.regions = this.data.lookups.regions;
+    this.departments = this.data.lookups.departments;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
     console.log('this.model', this.model);
@@ -175,6 +174,10 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   getFingerprintExemptionText(canLeave: boolean): string {
     const option = this.fingerprintExemptionOptions.find((opt) => opt.id === canLeave);
     return option ? option.nameAr : '';
+  }
+  get langOptionLabel(): string {
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   // Form control getters

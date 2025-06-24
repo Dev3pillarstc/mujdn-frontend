@@ -30,6 +30,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
   isActive?: boolean = true;
   declare region?: BaseLookupModel;
   declare city?: BaseLookupModel;
+  declare roleIds?: string[];
   declare department?: BaseLookupModel;
 
   buildForm(viewMode: ViewModeEnum) {
@@ -95,7 +96,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
       fkRegionId: [fkRegionId, [Validators.required]],
       fkCityId: [fkCityId],
       // fkGenderId: [fkGenderId, [Validators.required]],
-      fkDepartmentId: [fkDepartmentId],
+      fkDepartmentId: [fkDepartmentId, [Validators.required]],
       jobTitleEn: [
         jobTitleEn,
         [Validators.required, Validators.maxLength(100), CustomValidators.pattern('ENG_NUM')],

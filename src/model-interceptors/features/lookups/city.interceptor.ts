@@ -8,6 +8,7 @@ export class CityInterceptor implements ModelInterceptorContract<City> {
   }
 
   send(model: Partial<City>): Partial<City> {
+    delete (model as any)['languageService'];
     return model;
   }
 }

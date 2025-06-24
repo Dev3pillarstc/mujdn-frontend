@@ -79,7 +79,7 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
     this.alertService.showSuccessMessage(successObject);
   }
 
-  getRegionOptionName() {
+  getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
 }

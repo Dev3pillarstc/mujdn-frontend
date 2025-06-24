@@ -25,8 +25,8 @@ export class User extends BaseCrudModel<User, UserService, string> {
   declare jobTitleAr?: string;
   declare profilePhotoKey?: string;
   declare joinDate?: Date | string;
-  declare canLeaveWithoutFingerPrint?: boolean;
-  declare isActive?: boolean;
+  canLeaveWithoutFingerPrint?: boolean = false;
+  isActive?: boolean = true;
   declare region?: BaseLookupModel;
   declare city?: BaseLookupModel;
   declare department?: BaseLookupModel;

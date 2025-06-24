@@ -1,9 +1,7 @@
 <div
-  class="p-8 md:p-10 rounded-[16px] bg-[#074d31] shadow-[0_4px_6px_-2px_rgba(16,24,40,0.03),_0_12px_16px_-4px_rgba(16,24,40,0.08)] mb-6"
->
+  class="p-8 md:p-10 rounded-[16px] bg-[#074d31] shadow-[0_4px_6px_-2px_rgba(16,24,40,0.03),_0_12px_16px_-4px_rgba(16,24,40,0.08)] mb-6">
   <div
-    class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 border-b border-white"
-  >
+    class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 border-b border-white">
     <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#fff]">
       {{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}
     </h4>
@@ -11,7 +9,8 @@
       <button class="flex items-center justify-center gap-1 p-2 rounded border border-white/40">
         <img class="w-[21.5px] h-[21.5px]" src="/assets/icons/edit.png" alt="" />
       </button>
-      <button class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca]">
+      <button class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca]"
+        [disabled]="departmentData?.fkParentDepartmentId == null" (click)="delete(departmentData?.id)">
         <img class="w-[21.5px] h-[21.5px]" src="/assets/icons/delete.png" alt="" />
       </button>
     </div>
@@ -27,14 +26,14 @@
       <p class="text-sm text-white mb-2">المنطقة</p>
       <h5 class="text-base font-semibold text-white">
         {{
-          isCurrentLanguageEnglish() ? departmentData?.regionNameEn : departmentData?.regionNameAr
+        isCurrentLanguageEnglish() ? departmentData?.region?.nameEn : departmentData?.region?.nameAr
         }}
       </h5>
     </div>
     <div>
       <p class="text-sm text-white mb-2">المدينة</p>
       <h5 class="text-base font-semibold text-white">
-        {{ isCurrentLanguageEnglish() ? departmentData?.cityNameEn : departmentData?.cityNameAr }}
+        {{ isCurrentLanguageEnglish() ? departmentData?.city?.nameEn : departmentData?.city?.nameAr }}
       </h5>
     </div>
     <div>
@@ -52,16 +51,14 @@
     <div>
       <p class="text-sm text-white mb-2">طلب الاذن</p>
       <span
-        class="min-w-[109px] min-h-[24px] inline-flex items-center justify-center font-medium text-[#1f2a37] px-4 rounded-full bg-[#f9fafb]"
-      >
-        {{ 'DEPARTMENTS_PAGE.' + getApprovalLevelText() | translate }}</span
-      >
+        class="min-w-[109px] min-h-[24px] inline-flex items-center justify-center font-medium text-[#1f2a37] px-4 rounded-full bg-[#f9fafb]">
+        {{ 'DEPARTMENTS_PAGE.' + getApprovalLevelText() | translate }}</span>
     </div>
     <div>
       <p class="text-sm text-white mb-2">اسم المدير</p>
       <h5 class="text-base font-semibold text-white">
         {{
-          isCurrentLanguageEnglish() ? departmentData?.managerNameEn : departmentData?.managerNameAr
+        isCurrentLanguageEnglish() ? departmentData?.manager?.fullNameEn : departmentData?.manager?.fullNameAr
         }}
       </h5>
     </div>

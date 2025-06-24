@@ -1,4 +1,5 @@
 import { Department } from '@/models/features/lookups/Department/department';
+import { DepartmentResolverData } from '@/models/features/lookups/Department/department-resolver-data';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { DepartmentService } from '@/services/features/lookups/department.service';
@@ -7,35 +8,28 @@ import { ResolveFn } from '@angular/router';
 import { of, switchMap, map } from 'rxjs';
 
 // Define the return type for the resolver
-export interface DepartmentResolverData {
-  parentDepartment: Department | null;
-  childDepartments: PaginatedList<Department>;
-}
 
-export const departmentResolver: ResolveFn<DepartmentResolverData> = (route, state) => {
+
+export const departmentResolver: ResolveFn<any> = (route, state) => {
   const departmentService = inject(DepartmentService);
 
   return departmentService.getDepartmentTreeAsync().pipe(
-    switchMap((parentDepartment) => {
-      // Check if we have parent department data
-      if (!parentDepartment?.data?.[0]) {
-        // Return empty structure if no parent department found
+    switchMap((departmentsTree) => {
+      if (!departmentsTree?.data?.[0]) {
         return of({
-          parentDepartment: null,
-          childDepartments: new PaginatedList<Department>() // or however you create an empty PaginatedList
+          departmentsTree: departmentsTree,
+          childDepartments: null
         });
       }
 
-      // Get the first parent department
-      const firstParentDept = parentDepartment.data[0];
+      const firstParentDept = departmentsTree.data[0];
 
-      // Load child departments for the parent
       return departmentService.loadPaginated(
         new PaginationParams(),
         { fkParentDepartmentId: firstParentDept.id }
       ).pipe(
-        map((childDepartments: PaginatedList<Department>) => ({
-          parentDepartment: firstParentDept,
+        map((childDepartments: any) => ({
+          departmentsTree: departmentsTree,
           childDepartments
         }))
       );

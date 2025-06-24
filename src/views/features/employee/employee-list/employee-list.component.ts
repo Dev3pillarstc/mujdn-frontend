@@ -36,6 +36,9 @@ import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { City } from '@/models/features/lookups/City/city';
 import { Region } from '@/models/features/lookups/region/region';
+import { CityService } from '@/services/features/lookups/city.service';
+import { CityLookup } from '@/models/features/lookups/City/city-lookup';
+import { RegionService } from '@/services/features/lookups/region.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -64,9 +67,11 @@ export default class EmployeeListComponent
 {
   languageService = inject(LanguageService);
   translateService = inject(TranslateService);
+  cityService = inject(CityService);
+  regionService = inject(RegionService);
   actionList: MenuItem[] = [];
-  cities: City[] = [];
-  regions: Region[] = [];
+  cities: CityLookup[] = [];
+  regions: BaseLookupModel[] = [];
 
   departments: BaseLookupModel[] = [
     { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
@@ -93,6 +98,12 @@ export default class EmployeeListComponent
 
   override initListComponent(): void {
     // load lookups
+    this.cityService.getCitiesLookup().subscribe((res: CityLookup[]) => {
+      this.cities = res;
+    });
+    this.regionService.getRegionsLookup().subscribe((res: BaseLookupModel[]) => {
+      this.regions = res;
+    });
     this.initializeActionList();
 
     // Re-initialize action list when language changes

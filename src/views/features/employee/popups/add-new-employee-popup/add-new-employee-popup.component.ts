@@ -1,7 +1,13 @@
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
@@ -21,6 +27,8 @@ import {
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { City } from '@/models/features/lookups/City/city';
 import { Region } from '@/models/features/lookups/region/region'; // Import your enums
+import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
+import { CityLookup } from '@/models/features/lookups/City/city-lookup';
 
 @Component({
   selector: 'app-add-new-employee-popup',
@@ -33,6 +41,7 @@ import { Region } from '@/models/features/lookups/region/region'; // Import your
     ReactiveFormsModule,
     RequiredMarkerDirective,
     TranslatePipe,
+    ValidationMessagesComponent,
   ],
   templateUrl: './add-new-employee-popup.component.html',
   styleUrl: './add-new-employee-popup.component.scss',
@@ -58,8 +67,8 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   alertService = inject(AlertService);
   service = inject(UserService);
   fb = inject(FormBuilder);
-  cities: City[] = [];
-  regions: Region[] = [];
+  cities: CityLookup[] = [];
+  regions: BaseLookupModel[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -71,6 +80,8 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     this.regions = this.data.lookups.regions;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
+    console.log('this.cities', this.cities);
+    console.log('this.regions', this.regions);
   }
 
   override prepareModel(model: User, form: FormGroup): User | Observable<User> {
@@ -118,5 +129,49 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   getFingerprintExemptionText(canLeave: boolean): string {
     const option = this.fingerprintExemptionOptions.find((opt) => opt.id === canLeave);
     return option ? option.nameAr : '';
+  }
+
+  // Add these getters to your component class
+  // get departmentControl() {
+  //   return this.form.get('fkDepartmentId') as FormControl;
+  // }
+  // get regionControl() {
+  //   return this.form.get('fkRegionId') as FormControl;
+  // }
+  // get cityControl() {
+  //   return this.form.get('fkCityId') as FormControl;
+  // }
+  // get workTypeControl() {
+  //   return this.form.get('workTypeId') as FormControl; // Assuming formControlName is 'workTypeId'
+  // }
+  get fullNameArControl() {
+    return this.form.get('fullNameAr') as FormControl;
+  }
+  get fullNameEnControl() {
+    return this.form.get('fullNameEn') as FormControl;
+  }
+  get phoneNumberControl() {
+    return this.form.get('phoneNumber') as FormControl;
+  }
+  get jobTitleArControl() {
+    return this.form.get('jobTitleAr') as FormControl;
+  }
+  get jobTitleEnControl() {
+    return this.form.get('jobTitleEn') as FormControl;
+  }
+  get emailControl() {
+    return this.form.get('email') as FormControl;
+  }
+  get joinDateControl() {
+    return this.form.get('joinDate') as FormControl;
+  }
+  get accountStatusControl() {
+    return this.form.get('isActive') as FormControl;
+  }
+  get nationalIdControl() {
+    return this.form.get('nationalId') as FormControl;
+  }
+  get passwordControl() {
+    return this.form.get('password') as FormControl;
   }
 }

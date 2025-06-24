@@ -91,10 +91,10 @@ export class User extends BaseCrudModel<User, UserService, string> {
       ],
       nationalId: [nationalId, [Validators.required]],
       phoneNumber: [phoneNumber, [Validators.required]],
-      // fkRegionId: [fkRegionId, [Validators.required]],
-      // fkCityId: [fkCityId, [Validators.required]],
+      fkRegionId: [fkRegionId, [Validators.required]],
+      fkCityId: [fkCityId, [Validators.required]],
       // fkGenderId: [fkGenderId, [Validators.required]],
-      // fkDepartmentId: [fkDepartmentId, [Validators.required]],
+      fkDepartmentId: [fkDepartmentId, [Validators.required]],
       jobTitleEn: [
         jobTitleEn,
         [Validators.required, Validators.maxLength(100), CustomValidators.pattern('ENG_NUM')],
@@ -105,7 +105,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
       ],
       // profilePhotoKey: [profilePhotoKey],
       joinDate: [joinDate, [Validators.required]],
-      canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint ?? false],
+      canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint],
       isActive: [isActive ?? true],
     };
   }

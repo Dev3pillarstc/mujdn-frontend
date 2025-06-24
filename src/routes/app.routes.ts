@@ -37,14 +37,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../views/features/employee/employee-list/employee-list.component'),
         data: {
-          roles: [ROLES_ENUM.HR_OFFICER],
+          roles: [],
           routeId: RouteIdsEnum.EMPLOYEES,
         },
       },
       {
         path: 'attendance-logs',
-        canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER], routeId: RouteIdsEnum.ATTENDANCE_LOGS },
+        // canActivate: [authGuard],
+        // data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER], routeId: RouteIdsEnum.ATTENDANCE_LOGS },
         loadComponent: () =>
           import(
             '../views/features/attendance-log/attendance-log-list/attendance-log-list.component'
@@ -52,13 +52,13 @@ export const routes: Routes = [
       },
       {
         path: 'nationalities',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         resolve: { list: nationalitiesResolver },
         loadComponent: () =>
           import(
             '../views/features/lookups/nationality/nationality-list/nationality-list.component'
           ),
-        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NATIONALITIES },
+        // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NATIONALITIES },
       },
       {
         path: 'cities',

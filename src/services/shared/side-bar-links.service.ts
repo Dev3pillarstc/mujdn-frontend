@@ -74,6 +74,21 @@ export class SideBarLinksService {
           routerLink: ['/nationalities'],
           routeId: RouteIdsEnum.NATIONALITIES,
         },
+        {
+          label: 'قائمة المدن',
+          routerLink: ['/cities'],
+          routeId: RouteIdsEnum.CITIES,
+        },
+        {
+          label: 'قائمة المناطق',
+          routerLink: ['/regions'],
+          routeId: RouteIdsEnum.REGIONS,
+        },
+        {
+          label: 'قائمة لأعياد',
+          routerLink: ['/holidays-list'],
+          routeId: RouteIdsEnum.HOLIDAYS,
+        },
       ],
     },
   ];

@@ -7,10 +7,17 @@ import { FluidModule } from 'primeng/fluid';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { MatDialog } from '@angular/material/dialog';
+import { PaginatorModule } from 'primeng/paginator';
 import { HolidaysPopupComponent } from '../holidays-popup/holidays-popup.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { Holiday } from '@/models/features/lookups/holiday/holiday';
+import { HolidayService } from '@/services/features/lookups/holiday.service';
+import { LanguageService } from '@/services/shared/language.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HolidayFilter } from '@/models/features/lookups/holiday/holiday-filter';
 
 interface Adminstration {
   type: string;
@@ -20,57 +27,68 @@ interface Adminstration {
   selector: 'app-holidays-list',
   imports: [
     Breadcrumb,
+    TableModule,
+    PaginatorModule,
+    InputTextModule,
     FormsModule,
+    TranslatePipe,
     DatePickerModule,
     FluidModule,
     TableModule,
     CommonModule,
     RouterModule,
-    CommonModule,
-    PaginatorModule,
-    InputTextModule,
   ],
+
   templateUrl: './holidays-list.component.html',
   styleUrl: './holidays-list.component.scss',
 })
-export default class HolidaysListComponent {
-  first: number = 0;
-  rows: number = 10;
-  matDialog = inject(MatDialog);
-  items: MenuItem[] | undefined;
+export default class HolidaysListComponent extends BaseListComponent<
+  Holiday,
+  HolidaysPopupComponent,
+  HolidayService,
+  HolidayFilter
+> {
+  languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
+  override dialogSize = {
+    width: '100%',
+    maxWidth: '600px',
+  };
+  holidayService = inject(HolidayService);
   home: MenuItem | undefined;
-  adminstrations: Adminstration[] | undefined;
-  selectedAdminstration: Adminstration | undefined;
-  date2: Date | undefined;
-  attendance!: any[];
+  filterModel: HolidayFilter = new HolidayFilter();
 
-  ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الاجازات و الأعياد' }];
-    this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
-    // Updated dummy data to match your Arabic table structure
-    this.attendance = [
-      {
-        serialNumber: 1,
-        employeeName: 'عيد الأضحى المبارك',
-        date: '12/12/2023',
-        time: '12/12/2023',
+  override get service() {
+    return this.holidayService;
+  }
+
+  override initListComponent(): void {}
+
+  override openDialog(model: Holiday): void {
+    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(HolidaysPopupComponent as any, model, viewMode);
+  }
+
+  addOrEditModel(holiday?: Holiday) {
+    holiday = holiday || new Holiday();
+    this.openDialog(holiday);
+  }
+
+  protected override mapModelToExcelRow(model: Holiday): { [key: string]: any } {
+    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
+    return {
+      [lang === LANGUAGE_ENUM.ARABIC ? 'العطلة' : 'Holiday']:
+        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+    };
+  }
+
+  override search(): void {
+    this.paginationParams.pageNumber = 1;
+    this.first = 0;
+    this.service.getFilteredHolidays(this.filterModel).subscribe({
+      next: (res) => {
+        this.list = res;
+        this.paginationInfo.totalItems = res.length; // Assuming the response contains the total count
       },
-    ];
-  }
-
-  openDialog() {
-    const dialogRef = this.matDialog.open(HolidaysPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
   }
 }

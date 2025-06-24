@@ -103,5 +103,23 @@
     "ASSIGN_SHIFT": "إسناد وردية",
     "TASKS_ASSIGNED_TO_EMPLOYEE": "سجل المهمات المسندة للموظف",
     "DELETE_EMPLOYEE": "حذف الموظف"
+  },
+  "HOLIDAYS_PAGE": {
+    "HOLIDAYS_LIST": "قائمة العطلات",
+    "SEARCH_FILTERS": "تصفية البحث",
+    "HOLIDAY_NAME_ARABIC": "العطلة بالعربية",
+    "HOLIDAY_NAME_ENGLISH": "العطلة بالانجليزية",
+    "START_DATE": "تاريخ البدء",
+    "END_DATE": "تاريخ الانتهاء",
+    "NOTES": "ملاحظات",
+    "SEARCH": "بحث",
+    "RESET_SEARCH": "إعادة تعيين",
+    "ADD_NEW_HOLIDAY": "إضافة عطلة جديدة",
+    "ACTIONS": "الإجراء",
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
+    "DATE": "التاريخ",
+    "CODE": "الرقم التسلسلي",
+    "FROM": "من",
+    "TO": "إلى"
   }
 }

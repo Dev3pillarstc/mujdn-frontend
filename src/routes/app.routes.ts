@@ -8,6 +8,7 @@ import { userResolver } from '@/resolvers/user.resolver';
 import { regionResolver } from '@/resolvers/lookups/region.resolver';
 import { notificationChannelResolver } from '@/resolvers/setting/notification-channel.resolver';
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
+import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
 
 export const routes: Routes = [
   {
@@ -106,6 +107,9 @@ export const routes: Routes = [
       },
       {
         path: 'holidays-list',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.HOLIDAYS },
+        resolve: { list: holidayResolver },
         loadComponent: () =>
           import('../views/features/lookups/holidays/holidays-list/holidays-list.component'),
       },

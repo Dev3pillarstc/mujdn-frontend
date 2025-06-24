@@ -103,5 +103,23 @@
     "ASSIGN_SHIFT": "Assign Shift",
     "TASKS_ASSIGNED_TO_EMPLOYEE": "Tasks Assigned to Employee",
     "DELETE_EMPLOYEE": "Delete Employee"
+  },
+  "HOLIDAYS_PAGE": {
+    "HOLIDAYS_LIST": "Holidays List",
+    "SEARCH_FILTERS": "Search Filters",
+    "HOLIDAY_NAME_ARABIC": "Holiday Name in Arabic",
+    "HOLIDAY_NAME_ENGLISH": "Holiday Name in English",
+    "START_DATE": "Start Date",
+    "END_DATE": "End Date",
+    "NOTES": "Notes",
+    "SEARCH": "Search",
+    "RESET_SEARCH": "Reset Search",
+    "ADD_NEW_HOLIDAY": "Add New Holiday",
+    "ACTIONS": "Actions",
+    "NO_DATA_TO_SHOW": "No data to display",
+    "DATE": "Date",
+    "CODE": "Code",
+    "FROM": "From",
+    "TO": "To"
   }
 }

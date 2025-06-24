@@ -11,6 +11,7 @@ export const EndPoints = {
   REGIONS: '/regions',
   NOTIFICATION_CHANNELS: '/notificationchannels',
   DEPARTMENTS: '/departments',
+  HOLIDAYS: '/holidays',
 };
 
 export type EndpointsType = typeof EndPoints;

@@ -1,10 +1,11 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
-import { Department } from '@/models/features/lookups/Department/department';
+import { Department } from '@/models/features/lookups/department/department';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer, HasInterception } from 'cast-response';
 import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +21,7 @@ import { Observable } from 'rxjs';
 })
 export class DepartmentService extends BaseCrudService<Department> {
   override serviceName: string = 'DepartmentService';
+
   override getUrlSegment(): string {
     return this.urlService.URLS.DEPARTMENTS;
   }

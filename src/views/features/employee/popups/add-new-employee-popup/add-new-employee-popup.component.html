@@ -310,7 +310,7 @@
         <div class="flex flex-wrap gap-8">
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              checked
+              [checked]="roleStates.isEmployee"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
               disabled
               type="checkbox"
@@ -332,6 +332,7 @@
           </label>
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
+              [checked]="roleStates.isSysAdmin"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
               type="checkbox"
             />
@@ -354,6 +355,7 @@
             <input
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
               type="checkbox"
+              [checked]="roleStates.isDeptManager"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
@@ -374,6 +376,7 @@
             <input
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
               type="checkbox"
+              [checked]="roleStates.isFollowUp"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
@@ -394,6 +397,7 @@
             <input
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
               type="checkbox"
+              [checked]="roleStates.isHR"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
@@ -414,6 +418,7 @@
             <input
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
               type="checkbox"
+              [checked]="roleStates.isSecurityMember"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
@@ -434,6 +439,7 @@
             <input
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
               type="checkbox"
+              [checked]="roleStates.isSecurityLeader"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"

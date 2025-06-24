@@ -26,10 +26,11 @@ import {
 } from '@/models/shared/fingerprint-exempt-option';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { City } from '@/models/features/lookups/city/city';
-import { Region } from '@/models/features/lookups/region/region'; // Import your enums
+import { Region } from '@/models/features/lookups/region/region';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { CityLookup } from '@/models/features/lookups/city/city-lookup';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { ROLES_ENUM } from '@/enums/roles-enum';
 
 @Component({
   selector: 'app-add-new-employee-popup',
@@ -69,6 +70,17 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
 
   filteredCities: CityLookup[] = [];
 
+  // Role mapping properties
+  roleStates = {
+    isEmployee: false,
+    isSysAdmin: false,
+    isDeptManager: false,
+    isFollowUp: false,
+    isHR: false,
+    isSecurityMember: false,
+    isSecurityLeader: false,
+  };
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
@@ -86,6 +98,9 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
 
     // Initialize filtered cities based on current region selection
     this.initializeFilteredCities();
+
+    // Initialize role states
+    this.initializeRoleStates();
   }
 
   override prepareModel(model: User, form: FormGroup): User | Observable<User> {
@@ -96,6 +111,18 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     if (formValue.accountStatus !== undefined) {
       formValue.isActive = formValue.accountStatus;
     }
+
+    // Prepare roleIds array based on selected roles
+    const roleIds: string[] = [];
+    if (this.roleStates.isEmployee) roleIds.push(ROLES_ENUM.EMPLOYEE);
+    if (this.roleStates.isSysAdmin) roleIds.push(ROLES_ENUM.ADMIN);
+    if (this.roleStates.isDeptManager) roleIds.push(ROLES_ENUM.DEPARTMENT_MANAGER);
+    if (this.roleStates.isFollowUp) roleIds.push(ROLES_ENUM.FOLLOW_UP_OFFICER);
+    if (this.roleStates.isHR) roleIds.push(ROLES_ENUM.HR_OFFICER);
+    if (this.roleStates.isSecurityMember) roleIds.push(ROLES_ENUM.SECURITY_MEMBER);
+    if (this.roleStates.isSecurityLeader) roleIds.push(ROLES_ENUM.SECURITY_LEADER);
+
+    formValue.roleIds = roleIds;
 
     this.model = Object.assign(model, { ...formValue });
     return this.model;
@@ -127,6 +154,19 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
 
   override beforeSave(model: User, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
+  }
+
+  // Initialize role states based on model's roleIds
+  private initializeRoleStates(): void {
+    if (this.model.roleIds) {
+      this.roleStates.isEmployee = this.model.roleIds.includes(ROLES_ENUM.EMPLOYEE);
+      this.roleStates.isSysAdmin = this.model.roleIds.includes(ROLES_ENUM.ADMIN);
+      this.roleStates.isDeptManager = this.model.roleIds.includes(ROLES_ENUM.DEPARTMENT_MANAGER);
+      this.roleStates.isFollowUp = this.model.roleIds.includes(ROLES_ENUM.FOLLOW_UP_OFFICER);
+      this.roleStates.isHR = this.model.roleIds.includes(ROLES_ENUM.HR_OFFICER);
+      this.roleStates.isSecurityMember = this.model.roleIds.includes(ROLES_ENUM.SECURITY_MEMBER);
+      this.roleStates.isSecurityLeader = this.model.roleIds.includes(ROLES_ENUM.SECURITY_LEADER);
+    }
   }
 
   // Initialize filtered cities based on current region selection
@@ -164,6 +204,12 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     }
   }
 
+  // Role checkbox change handlers
+  onRoleChange(role: keyof typeof this.roleStates, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    this.roleStates[role] = checkbox.checked;
+  }
+
   // Helper method to get display text for account status
   getAccountStatusText(isActive: boolean): string {
     const option = this.accountStatusOptions.find((opt) => opt.id === isActive);
@@ -175,6 +221,7 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     const option = this.fingerprintExemptionOptions.find((opt) => opt.id === canLeave);
     return option ? option.nameAr : '';
   }
+
   get langOptionLabel(): string {
     const lang = this.languageService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';

@@ -63,10 +63,6 @@ export default class HolidaysListComponent {
       width: '100%',
       maxWidth: '1024px',
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   onPageChange(event: PaginatorState) {

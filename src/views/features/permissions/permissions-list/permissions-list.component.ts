@@ -134,19 +134,11 @@ export default class PermissionsListComponent implements OnInit {
     this.rows = event.rows ?? 10;
   }
 
-  openAddpermissionDialog(): void {
+  openAddPermissionDialog(): void {
     const dialogRef = this.dialog.open(AddPermissionPopupComponent as any, this.dialogSize);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   openPermissionsDataDialog(): void {
     const dialogRef = this.dialog.open(PermissionsDataPopupComponent as any, this.dialogSize);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 }

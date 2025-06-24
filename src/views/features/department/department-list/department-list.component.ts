@@ -100,10 +100,6 @@ export default class DepartmentListComponent extends BaseListComponent<
       width: '100%',
       maxWidth: '1024px',
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   override onPageChange(event: PaginatorState) {

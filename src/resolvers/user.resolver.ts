@@ -8,9 +8,5 @@ import { switchMap, tap } from 'rxjs';
 
 export const userResolver: ResolveFn<PaginatedList<User>> = () => {
   const userService = inject(UserService);
-  const list = userService
-    .loadPaginated(new PaginationParams())
-    .pipe(tap((list) => console.log(list)));
-
-  return list;
+  return userService.loadPaginated(new PaginationParams());
 };

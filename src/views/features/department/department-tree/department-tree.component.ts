@@ -1,5 +1,5 @@
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { Department } from '@/models/features/lookups/Department/department';
+import { Department } from '@/models/features/lookups/department/department';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { LanguageService } from '@/services/shared/language.service';
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';

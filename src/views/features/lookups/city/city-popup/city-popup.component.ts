@@ -1,15 +1,14 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
 import { CityService } from '@/services/features/lookups/city.service';
 import { AlertService } from '@/services/shared/alert.service';
-import { FormGroup, FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
-import { RegionService } from '@/services/features/lookups/region.service';
 import { Region } from '@/models/features/lookups/region/region';
 import { Select } from 'primeng/select';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';

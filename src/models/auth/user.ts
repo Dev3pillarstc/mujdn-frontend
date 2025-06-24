@@ -68,6 +68,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
               Validators.required,
               Validators.maxLength(CustomValidators.defaultLengths.PASSWORD_MAX),
               Validators.minLength(CustomValidators.defaultLengths.PASSWORD_MIN),
+              CustomValidators.pattern('ENG_NUM'),
             ]
           : [],
       ],
@@ -92,9 +93,9 @@ export class User extends BaseCrudModel<User, UserService, string> {
       nationalId: [nationalId, [Validators.required]],
       phoneNumber: [phoneNumber, [Validators.required]],
       fkRegionId: [fkRegionId, [Validators.required]],
-      fkCityId: [fkCityId, [Validators.required]],
+      fkCityId: [fkCityId],
       // fkGenderId: [fkGenderId, [Validators.required]],
-      fkDepartmentId: [fkDepartmentId, [Validators.required]],
+      fkDepartmentId: [fkDepartmentId],
       jobTitleEn: [
         jobTitleEn,
         [Validators.required, Validators.maxLength(100), CustomValidators.pattern('ENG_NUM')],

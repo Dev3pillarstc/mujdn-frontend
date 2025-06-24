@@ -81,41 +81,42 @@
         <div>
           <label for="region" class="label">{{ 'EMPLOYEES_PAGE.REGION' | translate }}</label>
           <div class="relative">
-            <input
-              id="region"
-              placeholder="{{ 'EMPLOYEES_PAGE.REGION' | translate }}"
+            <p-select
+              name="region"
               formControlName="fkRegionId"
-              type="text"
-              pInputText
-              class="peer"
-              fluid="true"
-            />
+              [options]="regions"
+              optionLabel="nameAr"
+              optionValue="id"
+              placeholder="{{ 'EMPLOYEES_PAGE.REGION' | translate }}"
+              class="w-full peer"
+              id="region"
+            ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <!-- <app-validation-messages [control]="regionControl"></app-validation-messages> -->
+          <app-validation-messages [control]="regionControl"></app-validation-messages>
         </div>
 
         <div>
           <label for="city" class="label">{{ 'EMPLOYEES_PAGE.CITY' | translate }}</label>
           <div class="relative">
-            <input
-              id="city"
-              placeholder="{{ 'EMPLOYEES_PAGE.CITY' | translate }}"
+            <p-select
+              name="city"
               formControlName="fkCityId"
-              type="text"
-              pInputText
-              class="peer"
-              fluid="true"
-            />
+              [options]="filteredCities"
+              optionLabel="nameAr"
+              optionValue="id"
+              placeholder="{{ 'EMPLOYEES_PAGE.CITY' | translate }}"
+              class="w-full peer"
+              id="city"
+            ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <!-- <app-validation-messages [control]="cityControl"></app-validation-messages> -->
+          <app-validation-messages [control]="cityControl"></app-validation-messages>
         </div>
-
         <div>
           <label for="mobile" class="label">{{ 'EMPLOYEES_PAGE.PHONE_NUMBER' | translate }}</label>
           <div class="relative">

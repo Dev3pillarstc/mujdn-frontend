@@ -69,6 +69,7 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   fb = inject(FormBuilder);
   cities: CityLookup[] = [];
   regions: BaseLookupModel[] = [];
+  filteredCities: CityLookup[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -80,8 +81,12 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     this.regions = this.data.lookups.regions;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
+    console.log('this.model', this.model);
     console.log('this.cities', this.cities);
     console.log('this.regions', this.regions);
+
+    // Initialize filtered cities based on current region selection
+    this.initializeFilteredCities();
   }
 
   override prepareModel(model: User, form: FormGroup): User | Observable<User> {
@@ -106,6 +111,12 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
         (option) => option.id === this.model.isActive
       );
     }
+
+    // Subscribe to region changes to filter cities
+    this.form.get('fkRegionId')?.valueChanges.subscribe((regionId: number) => {
+      console.log('Region changed:', regionId);
+      this.onRegionChange(regionId);
+    });
   }
 
   override saveFail(error: Error): void {}
@@ -117,6 +128,41 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
 
   override beforeSave(model: User, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
+  }
+
+  // Initialize filtered cities based on current region selection
+  private initializeFilteredCities(): void {
+    const currentRegionId = this.model.fkRegionId;
+    console.log('currentRegionId', currentRegionId);
+    if (currentRegionId) {
+      this.filteredCities = this.cities.filter((city) => city.regionId === currentRegionId);
+    } else {
+      this.filteredCities = [];
+    }
+    console.log('this.filteredCities', this.filteredCities);
+  }
+
+  // Handle region selection change
+  onRegionChange(regionId: number): void {
+    if (regionId) {
+      // Filter cities based on selected region
+      this.filteredCities = this.cities.filter((city) => city.regionId === regionId);
+
+      // Clear city selection if the current city doesn't belong to the new region
+      const currentCityId = this.form.get('fkCityId')?.value;
+      if (currentCityId) {
+        const currentCityBelongsToRegion = this.filteredCities.some(
+          (city) => city.id === currentCityId
+        );
+        if (!currentCityBelongsToRegion) {
+          this.form.get('fkCityId')?.setValue(null);
+        }
+      }
+    } else {
+      // Clear cities if no region is selected
+      this.filteredCities = [];
+      this.form.get('fkCityId')?.setValue(null);
+    }
   }
 
   // Helper method to get display text for account status
@@ -131,46 +177,51 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     return option ? option.nameAr : '';
   }
 
-  // Add these getters to your component class
-  // get departmentControl() {
-  //   return this.form.get('fkDepartmentId') as FormControl;
-  // }
-  // get regionControl() {
-  //   return this.form.get('fkRegionId') as FormControl;
-  // }
-  // get cityControl() {
-  //   return this.form.get('fkCityId') as FormControl;
-  // }
-  // get workTypeControl() {
-  //   return this.form.get('workTypeId') as FormControl; // Assuming formControlName is 'workTypeId'
-  // }
+  // Form control getters
+  get regionControl() {
+    return this.form.get('fkRegionId') as FormControl;
+  }
+
+  get cityControl() {
+    return this.form.get('fkCityId') as FormControl;
+  }
+
   get fullNameArControl() {
     return this.form.get('fullNameAr') as FormControl;
   }
+
   get fullNameEnControl() {
     return this.form.get('fullNameEn') as FormControl;
   }
+
   get phoneNumberControl() {
     return this.form.get('phoneNumber') as FormControl;
   }
+
   get jobTitleArControl() {
     return this.form.get('jobTitleAr') as FormControl;
   }
+
   get jobTitleEnControl() {
     return this.form.get('jobTitleEn') as FormControl;
   }
+
   get emailControl() {
     return this.form.get('email') as FormControl;
   }
+
   get joinDateControl() {
     return this.form.get('joinDate') as FormControl;
   }
+
   get accountStatusControl() {
     return this.form.get('isActive') as FormControl;
   }
+
   get nationalIdControl() {
     return this.form.get('nationalId') as FormControl;
   }
+
   get passwordControl() {
     return this.form.get('password') as FormControl;
   }

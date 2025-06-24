@@ -13,6 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { PermissionReasonPopupComponent } from '@/views/features/lookups/permission/permission-reason-popup/permission-reason-popup.component';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-permission-list',
@@ -46,8 +47,9 @@ export default class PermissionReasonListComponent
     // load lookups if needed
   }
 
-  override openDialog(permissionReason: PermissionReason): void {
-    this.openBaseDialog(PermissionReasonPopupComponent as any, permissionReason);
+  override openDialog(model: PermissionReason): void {
+    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(PermissionReasonPopupComponent as any, model, viewMode);
   }
 
   addOrEditModel(permissionReason?: PermissionReason) {

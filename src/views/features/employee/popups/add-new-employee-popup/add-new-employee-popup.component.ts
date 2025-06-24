@@ -15,9 +15,12 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
 import { TranslatePipe } from '@ngx-translate/core';
 import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/models/shared/account-status-option';
 import {
-  FINGERPRINT_EXEMPTION_OPTIONS,
   BooleanOptionModel,
-} from '@/models/shared/fingerprint-exempt-option'; // Import your enums
+  FINGERPRINT_EXEMPTION_OPTIONS,
+} from '@/models/shared/fingerprint-exempt-option';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { City } from '@/models/features/lookups/City/city';
+import { Region } from '@/models/features/lookups/region/region'; // Import your enums
 
 @Component({
   selector: 'app-add-new-employee-popup',
@@ -37,6 +40,8 @@ import {
 export class AddNewEmployeePopupComponent extends BasePopupComponent<User> implements OnInit {
   declare model: User;
   declare form: FormGroup;
+  declare viewMode: ViewModeEnum;
+  isCreateMode = false;
 
   departments: BaseLookupModel[] = [
     { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
@@ -53,6 +58,8 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   alertService = inject(AlertService);
   service = inject(UserService);
   fb = inject(FormBuilder);
+  cities: City[] = [];
+  regions: Region[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -60,6 +67,10 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
 
   override initPopup() {
     this.model = this.data.model;
+    this.cities = this.data.lookups.cities;
+    this.regions = this.data.lookups.regions;
+    this.viewMode = this.data.viewMode;
+    this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
   }
 
   override prepareModel(model: User, form: FormGroup): User | Observable<User> {
@@ -76,7 +87,7 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
   }
 
   override buildForm() {
-    this.form = this.fb.group(this.model.buildForm());
+    this.form = this.fb.group(this.model.buildForm(this.viewMode));
 
     // Set initial values if needed
     if (this.model.isActive !== undefined) {

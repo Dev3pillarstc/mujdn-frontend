@@ -8,9 +8,9 @@ import { FluidModule } from 'primeng/fluid';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
@@ -24,16 +24,18 @@ import { UserService } from '@/services/features/user.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { User } from '@/models/auth/user';
 import { UserFilter } from '@/models/auth/user-filter';
-import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { InputTextModule } from 'primeng/inputtext';
 import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/models/shared/account-status-option';
 import {
-  FINGERPRINT_EXEMPTION_OPTIONS,
   BooleanOptionModel,
+  FINGERPRINT_EXEMPTION_OPTIONS,
 } from '@/models/shared/fingerprint-exempt-option'; // Import your enums
 import { LanguageService } from '@/services/shared/language.service';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { City } from '@/models/features/lookups/City/city';
+import { Region } from '@/models/features/lookups/region/region';
 
 @Component({
   selector: 'app-employee-list',
@@ -63,6 +65,8 @@ export default class EmployeeListComponent
   languageService = inject(LanguageService);
   translateService = inject(TranslateService);
   actionList: MenuItem[] = [];
+  cities: City[] = [];
+  regions: Region[] = [];
 
   departments: BaseLookupModel[] = [
     { id: 1, nameEn: 'name 1', nameAr: 'name 1' },
@@ -78,8 +82,17 @@ export default class EmployeeListComponent
   joinDate: Date | undefined;
   confirmationService = inject(ConfirmationService);
   alertService = inject(AlertService);
-  override ngOnInit(): void {
-    super.ngOnInit();
+  override dialogSize = {
+    width: '100%',
+    maxWidth: '1024px',
+  };
+
+  override get service() {
+    return this.userService;
+  }
+
+  override initListComponent(): void {
+    // load lookups
     this.initializeActionList();
 
     // Re-initialize action list when language changes
@@ -88,71 +101,35 @@ export default class EmployeeListComponent
     });
   }
 
-  private initializeActionList(): void {
-    this.actionList = [
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.EDIT_EMPLOYEE_DATA'),
-        command: () => this.openDialog(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.VIEW_ATTENDANCE_REPORT'),
-        command: () => this.attendanceReportPopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.ASSIGN_TASK'),
-        command: () => this.assignTaskPopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.ASSIGN_SHIFT'),
-        command: () => this.assignShiftPopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.TASKS_ASSIGNED_TO_EMPLOYEE'),
-        command: () => this.tasksAssignedToEmployee(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.DELETE_EMPLOYEE'),
-        styleClass: 'p-menuitem-danger',
-        command: () => this.openConfirmation(),
-      },
-    ];
-  }
-
-  override dialogSize = {
-    width: '100%',
-    maxWidth: '1024px',
-  };
-
-  override initListComponent(): void {
-    // load lookups if needed
-  }
-
   override openDialog(): void {
     const user = this.selectedModel || new User();
-    this.openBaseDialog(AddNewEmployeePopupComponent as any, user);
+    const viewMode = this.selectedModel ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(AddNewEmployeePopupComponent as any, user, viewMode, {
+      cities: this.cities,
+      regions: this.regions,
+    });
   }
 
-  addNewEmployee() {
-    const user = new User();
-    this.openBaseDialog(AddNewEmployeePopupComponent as any, user);
-  }
-  override get service() {
-    return this.userService;
+  override openBaseDialog(
+    popupComponent: AddNewEmployeePopupComponent,
+    model: User,
+    viewMode: ViewModeEnum,
+    lookups?: {
+      [key: string]: any[];
+    }
+  ) {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = { model: model, lookups: lookups, viewMode: viewMode };
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
+    const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
+
+    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      this.selectedModel = undefined;
+      if (result && result == DIALOG_ENUM.OK) {
+        this.loadList();
+      }
+    });
   }
 
   openEmployeePermissionModal() {
@@ -222,7 +199,53 @@ export default class EmployeeListComponent
   setSelectedModel(model: User) {
     this.selectedModel = model;
   }
+
   protected override mapModelToExcelRow(model: User): { [key: string]: any } {
     throw new Error('Method not implemented.');
+  }
+
+  private initializeActionList(): void {
+    this.actionList = [
+      {
+        label: this.translateService.instant('EMPLOYEES_PAGE.EDIT_EMPLOYEE_DATA'),
+        command: () => this.openDialog(),
+      },
+      {
+        separator: true,
+      },
+      {
+        label: this.translateService.instant('EMPLOYEES_PAGE.VIEW_ATTENDANCE_REPORT'),
+        command: () => this.attendanceReportPopup(),
+      },
+      {
+        separator: true,
+      },
+      {
+        label: this.translateService.instant('EMPLOYEES_PAGE.ASSIGN_TASK'),
+        command: () => this.assignTaskPopup(),
+      },
+      {
+        separator: true,
+      },
+      {
+        label: this.translateService.instant('EMPLOYEES_PAGE.ASSIGN_SHIFT'),
+        command: () => this.assignShiftPopup(),
+      },
+      {
+        separator: true,
+      },
+      {
+        label: this.translateService.instant('EMPLOYEES_PAGE.TASKS_ASSIGNED_TO_EMPLOYEE'),
+        command: () => this.tasksAssignedToEmployee(),
+      },
+      {
+        separator: true,
+      },
+      {
+        label: this.translateService.instant('EMPLOYEES_PAGE.DELETE_EMPLOYEE'),
+        styleClass: 'p-menuitem-danger',
+        command: () => this.openConfirmation(),
+      },
+    ];
   }
 }

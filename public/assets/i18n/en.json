@@ -51,6 +51,7 @@
     "NO_DATA_TO_SHOW": "No data to display"
   },
   "CITIES_PAGE": {
+    "CITY": "City",
     "CITIES_LIST": "Cities List",
     "SEARCH_FILTERS": "Search Filters",
     "CITY_IN_ARABIC": "City in Arabic",

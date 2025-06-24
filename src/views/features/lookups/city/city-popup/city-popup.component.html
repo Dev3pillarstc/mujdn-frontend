@@ -9,17 +9,17 @@
     <form [formGroup]="form" class="mt-6">
       <div class="grid sm:grid-cols-2 gap-4">
         <div>
-          <label for="regionSelect" class="label">{{ 'CITIES_PAGE.REGION' | translate }}</label>
+          <label class="label" for="regionSelect">{{ 'CITIES_PAGE.REGION' | translate }}</label>
           <div class="relative">
             <p-select
-              name="regionSelect"
+              [optionLabel]="getPropertyName()"
               [options]="regions"
+              class="w-full peer"
               formControlName="fkRegionId"
-              [optionLabel]="getRegionOptionName()"
+              id="regionSelect"
+              name="regionSelect"
               optionValue="id"
               placeholder="{{ 'CITIES_PAGE.REGION' | translate }}"
-              class="w-full peer"
-              id="regionSelect"
             >
             </p-select>
             <span
@@ -32,8 +32,8 @@
         </div>
         <div>
           <label class="label" for="cityAr-popup">{{
-            'CITIES_PAGE.CITY_IN_ARABIC' | translate
-          }}</label>
+              'CITIES_PAGE.CITY_IN_ARABIC' | translate
+            }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -52,8 +52,8 @@
         </div>
         <div>
           <label class="label" for="cityEn-popup">{{
-            'CITIES_PAGE.CITY_IN_ENGLISH' | translate
-          }}</label>
+              'CITIES_PAGE.CITY_IN_ENGLISH' | translate
+            }}</label>
           <div class="relative">
             <input
               class="peer"

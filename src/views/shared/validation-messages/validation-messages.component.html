@@ -1,5 +1,5 @@
-@if (control().touched && control().errors) {
-  @for (error of getActiveErrors(); track error.key) {
+@if (control().errors && control().touched) {
+  @for (error of activeErrors$ | async; track error.key) {
     <ng-container>
       @if (error.key === 'required') {
         <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>

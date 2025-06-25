@@ -57,6 +57,7 @@
               formControlName="startDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
+              [minDate]="minDate"
               placeholder="{{ 'HOLIDAYS_PAGE.START_DATE' | translate }}"
               class="peer block w-full"
               inputId="joinDate"
@@ -80,6 +81,7 @@
               formControlName="endDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
+              [minDate]="minDate"
               placeholder="{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}"
               class="peer block w-full"
               inputId="joinDate"
@@ -113,6 +115,7 @@
           </div>
           <app-validation-messages [control]="notesControl"></app-validation-messages>
         </div>
+        <app-validation-messages [control]="form"></app-validation-messages>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>

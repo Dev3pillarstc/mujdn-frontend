@@ -16,6 +16,11 @@
       @if (error.key === 'maxlength') {
         <span class="validation-message">{{ 'COMMON.MAX_LENGTH' | translate }}</span>
       }
+      @if (error.key === 'startAfterEnd') {
+        <span class="validation-message">
+          {{ 'COMMON.START_BEFORE_END' | translate }}
+        </span>
+      }
     </ng-container>
   }
 }

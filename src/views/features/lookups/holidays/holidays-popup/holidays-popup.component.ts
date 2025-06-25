@@ -48,6 +48,7 @@ export class HolidaysPopupComponent extends BasePopupComponent<Holiday> implemen
   alertService = inject(AlertService);
   service = inject(HolidayService);
   fb = inject(FormBuilder);
+  minDate: Date = new Date();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();

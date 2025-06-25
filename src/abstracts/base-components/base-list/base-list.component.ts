@@ -128,7 +128,7 @@ export abstract class BaseListComponent<
   // Inside BaseListComponent
   protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
 
-  private paginationInfoMap(response: PaginatedList<Model>) {
+  protected paginationInfoMap(response: PaginatedList<Model>) {
     const paginationInfo = response.paginationInfo;
     this.paginationInfo.totalItems = paginationInfo.totalItems || 0;
     this.paginationParams.pageSize = paginationInfo.pageSize || 10;

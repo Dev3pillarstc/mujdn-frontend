@@ -19,10 +19,6 @@ import { LanguageService } from '@/services/shared/language.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { HolidayFilter } from '@/models/features/lookups/holiday/holiday-filter';
 
-interface Adminstration {
-  type: string;
-}
-
 @Component({
   selector: 'app-holidays-list',
   imports: [
@@ -84,10 +80,19 @@ export default class HolidaysListComponent extends BaseListComponent<
   override search(): void {
     this.paginationParams.pageNumber = 1;
     this.first = 0;
-    this.service.getFilteredHolidays(this.filterModel).subscribe({
-      next: (res) => {
-        this.list = res;
-        this.paginationInfo.totalItems = res.length; // Assuming the response contains the total count
+    this.service.getFilteredHolidays(this.filterModel, this.paginationParams).subscribe({
+      next: (response) => {
+        this.list = response.list || [];
+
+        if (response.paginationInfo) {
+          this.paginationInfoMap(response);
+        } else {
+          this.paginationInfo.totalItems = this.list.length;
+        }
+      },
+      error: (_) => {
+        this.list = [];
+        this.paginationInfo.totalItems = 0;
       },
     });
   }

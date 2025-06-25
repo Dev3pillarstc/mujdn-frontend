@@ -1,26 +1,9 @@
 @if (control().errors && control().touched) {
-  @for (error of activeErrors$ | async; track error.key) {
-    <ng-container>
-      @if (error.key === 'required') {
-        <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>
-      }
-      @if (error.key === 'AR_NUM') {
-        <span class="validation-message">{{ 'COMMON.ARABIC_ONLY' | translate }}</span>
-      }
-      @if (error.key === 'ENG_NUM') {
-        <span class="validation-message">{{ 'COMMON.ENGLISH_ONLY' | translate }}</span>
-      }
-      @if (error.key === 'minlength') {
-        <span class="validation-message">{{ 'COMMON.MIN_LENGTH' | translate }}</span>
-      }
-      @if (error.key === 'maxlength') {
-        <span class="validation-message">{{ 'COMMON.MAX_LENGTH' | translate }}</span>
-      }
-      @if (error.key === 'startAfterEnd') {
-        <span class="validation-message">
-          {{ 'COMMON.START_BEFORE_END' | translate }}
-        </span>
-      }
-    </ng-container>
+@for (error of activeErrors$ | async; track error.key) {
+  @if (getMessage(error.key)) {
+    <span class="validation-message">
+      {{ getMessage(error.key)! | translate }}
+    </span>
   }
+}
 }

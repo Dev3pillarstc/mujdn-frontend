@@ -147,6 +147,7 @@
     "DATE": "Date",
     "CODE": "Code",
     "FROM": "From",
-    "TO": "To"
+    "TO": "To",
+    "HOLIDAY": "Holiday"
   }
 }

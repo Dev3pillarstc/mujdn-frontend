@@ -31,7 +31,6 @@ export default class CityListComponent extends BaseListComponent<
   CityFilter
 > {
   translateService = inject(TranslateService);
-  languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -64,7 +63,6 @@ export default class CityListComponent extends BaseListComponent<
   }
 
   protected override mapModelToExcelRow(model: City): { [key: string]: any } {
-    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
     return {
       [this.translateService.instant('CITIES_PAGE.CITY')]: model.getName(),
     };

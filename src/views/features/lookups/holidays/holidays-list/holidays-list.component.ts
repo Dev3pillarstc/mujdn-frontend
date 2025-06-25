@@ -16,7 +16,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { Holiday } from '@/models/features/lookups/holiday/holiday';
 import { HolidayService } from '@/services/features/lookups/holiday.service';
 import { LanguageService } from '@/services/shared/language.service';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HolidayFilter } from '@/models/features/lookups/holiday/holiday-filter';
 
 @Component({
@@ -50,9 +50,9 @@ export default class HolidaysListComponent extends BaseListComponent<
     maxWidth: '600px',
   };
   holidayService = inject(HolidayService);
+  translateService = inject(TranslateService);
   home: MenuItem | undefined;
   filterModel: HolidayFilter = new HolidayFilter();
-
   override get service() {
     return this.holidayService;
   }
@@ -72,19 +72,9 @@ export default class HolidaysListComponent extends BaseListComponent<
   protected override mapModelToExcelRow(model: Holiday): { [key: string]: any } {
     const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
     return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'العطلة' : 'Holiday']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
-      [lang === LANGUAGE_ENUM.ARABIC ? 'تاريخ البداية' : 'Start Date']: model.startDate
-        ? new Date(model.startDate).toLocaleDateString(
-            lang === LANGUAGE_ENUM.ARABIC ? 'ar-EG' : 'en-US'
-          )
-        : '',
-      [lang === LANGUAGE_ENUM.ARABIC ? 'تاريخ النهاية' : 'End Date']: model.endDate
-        ? new Date(model.endDate).toLocaleDateString(
-            lang === LANGUAGE_ENUM.ARABIC ? 'ar-EG' : 'en-US'
-          )
-        : '',
-      [lang === LANGUAGE_ENUM.ARABIC ? 'ملاحظات' : 'Notes']: model.notes || '',
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY')]: model.getName(),
+      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.getStartDate(),
+      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.getEndDate(),
     };
   }
 

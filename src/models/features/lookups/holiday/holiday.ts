@@ -1,6 +1,9 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { HolidayInterceptor } from '@/model-interceptors/features/lookups/holiday.interceptor';
+import { FactoryService } from '@/services/factory-service';
 import { HolidayService } from '@/services/features/lookups/holiday.service';
+import { LanguageService } from '@/services/shared/language.service';
 import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
@@ -15,6 +18,11 @@ export class Holiday extends BaseCrudModel<Holiday, HolidayService> {
   declare startDate: Date | string;
   declare endDate: Date | string;
   declare notes: String;
+  private languageService?: LanguageService;
+  constructor(languageService?: LanguageService) {
+    super();
+    this.languageService = FactoryService.getService('LanguageService');
+  }
   buildForm() {
     const { nameAr, nameEn, startDate, endDate, notes } = this;
     return {
@@ -40,5 +48,24 @@ export class Holiday extends BaseCrudModel<Holiday, HolidayService> {
       endDate: [endDate, [Validators.required]],
       notes: [notes, [Validators.required]],
     };
+  }
+  getName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? this.nameEn
+      : this.nameAr;
+  }
+  getStartDate(): string {
+    return this.startDate
+      ? new Date(this.startDate).toLocaleDateString(
+          this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ARABIC ? 'ar-EG' : 'en-US'
+        )
+      : '';
+  }
+  getEndDate(): string {
+    return this.endDate
+      ? new Date(this.endDate).toLocaleDateString(
+          this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ARABIC ? 'ar-EG' : 'en-US'
+        )
+      : '';
   }
 }

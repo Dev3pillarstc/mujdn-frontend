@@ -105,7 +105,7 @@
             {{ 'HOLIDAYS_PAGE.HOLIDAYS_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button>
+            <button (click)="exportExcel('holidays.xlsx')" class="table-head-action-btn">
               <img src="/assets/icons/excel.svg" alt="" />
             </button>
             <button>

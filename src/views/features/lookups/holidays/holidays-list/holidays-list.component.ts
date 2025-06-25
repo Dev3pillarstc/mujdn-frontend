@@ -74,6 +74,17 @@ export default class HolidaysListComponent extends BaseListComponent<
     return {
       [lang === LANGUAGE_ENUM.ARABIC ? 'العطلة' : 'Holiday']:
         lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+      [lang === LANGUAGE_ENUM.ARABIC ? 'تاريخ البداية' : 'Start Date']: model.startDate
+        ? new Date(model.startDate).toLocaleDateString(
+            lang === LANGUAGE_ENUM.ARABIC ? 'ar-EG' : 'en-US'
+          )
+        : '',
+      [lang === LANGUAGE_ENUM.ARABIC ? 'تاريخ النهاية' : 'End Date']: model.endDate
+        ? new Date(model.endDate).toLocaleDateString(
+            lang === LANGUAGE_ENUM.ARABIC ? 'ar-EG' : 'en-US'
+          )
+        : '',
+      [lang === LANGUAGE_ENUM.ARABIC ? 'ملاحظات' : 'Notes']: model.notes || '',
     };
   }
 

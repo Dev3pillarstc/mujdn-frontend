@@ -32,6 +32,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
   declare city?: BaseLookupModel;
   declare roleIds?: string[];
   declare department?: BaseLookupModel;
+  declare concurrencyUpdateVersion?: string;
 
   buildForm(viewMode: ViewModeEnum) {
     const {

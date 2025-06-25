@@ -4,7 +4,7 @@ import { LanguageService } from '@/services/shared/language.service';
 import { DialogRef } from '@angular/cdk/dialog';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { User } from '@/models/auth/user';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import {
   FormBuilder,
@@ -19,6 +19,8 @@ import { AlertService } from '@/services/shared/alert.service';
 import { UserService } from '@/services/features/user.service';
 import { ROLES_ENUM } from '@/enums/roles-enum';
 import { TranslatePipe } from '@ngx-translate/core';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { UpdateRolesModel } from '@/models/auth/update-roles-model';
 
 @Component({
   selector: 'app-employee-permission-popup',
@@ -31,7 +33,7 @@ export class EmployeePermissionPopupComponent extends BasePopupComponent<User> i
   declare form: FormGroup;
   declare viewMode: ViewModeEnum;
   alertService = inject(AlertService);
-  service = inject(UserService);
+  userService = inject(UserService);
   fb = inject(FormBuilder);
   isCreateMode = false;
 
@@ -126,18 +128,16 @@ export class EmployeePermissionPopupComponent extends BasePopupComponent<User> i
     if (formValue.isSecurityMember) roleIds.push(ROLES_ENUM.SECURITY_MEMBER);
     if (formValue.isSecurityLeader) roleIds.push(ROLES_ENUM.SECURITY_LEADER);
 
-    // Call the updateUserRoles service method
-    console.log('userId to update', this.model.id);
-    console.log('roleIds to update', roleIds);
-    // this.service.updateUserRoles(this.model.id!, roleIds).subscribe({
-    //   next: (response) => {
-    //     this.afterSave();
-    //     this.dialogRef.close({ success: true, updatedRoles: roleIds });
-    //   },
-    //   error: (error) => {
-    //     this.saveFail(error);
-    //   }
-    // });
+    // user update role object
+    const data: UpdateRolesModel = {
+      id: this.model.id!,
+      roleIds: roleIds,
+      concurrencyUpdateVersion: this.model.concurrencyUpdateVersion,
+    };
+    this.userService.updateUserRoles(data).subscribe((res: UpdateRolesModel) => {
+      this.afterSave();
+      this.dialogRef.close(DIALOG_ENUM.OK);
+    });
   }
 
   // Initialize role states based on model's roleIds

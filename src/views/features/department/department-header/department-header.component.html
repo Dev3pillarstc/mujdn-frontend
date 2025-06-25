@@ -6,7 +6,7 @@
       {{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}
     </h4>
     <div class="actions flex items-center gap-4 ms-auto pb-4">
-      <button class="flex items-center justify-center gap-1 p-2 rounded border border-white/40">
+      <button class="flex items-center justify-center gap-1 p-2 rounded border border-white/40" (click)="openDialog()">
         <img class="w-[21.5px] h-[21.5px]" src="/assets/icons/edit.png" alt="" />
       </button>
       <button class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca]"

@@ -24,10 +24,6 @@ import { Select } from 'primeng/select';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { CustomValidators } from '@/validators/custom-validators';
 
-interface Adminstration {
-  type: string;
-}
-
 @Component({
   selector: 'app-holidays-popup',
   imports: [
@@ -52,6 +48,7 @@ export class HolidaysPopupComponent extends BasePopupComponent<Holiday> implemen
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
+    console.log('HolidaysPopupComponent initialized with data:', data);
   }
 
   get nameArControl() {

@@ -23,6 +23,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Select } from 'primeng/select';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { CustomValidators } from '@/validators/custom-validators';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-holidays-popup',
@@ -44,7 +45,7 @@ export class HolidaysPopupComponent extends BasePopupComponent<Holiday> implemen
   alertService = inject(AlertService);
   service = inject(HolidayService);
   fb = inject(FormBuilder);
-  minDate: Date = new Date();
+  minDate: Date | null = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -85,6 +86,7 @@ export class HolidaysPopupComponent extends BasePopupComponent<Holiday> implemen
   }
 
   override buildForm() {
+    this.minDate = this.data.viewMode == ViewModeEnum.EDIT ? null : new Date();
     this.form = this.fb.group(this.model.buildForm(), {
       validators: [CustomValidators.startBeforeEnd('startDate', 'endDate')],
     });

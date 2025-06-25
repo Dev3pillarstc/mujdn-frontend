@@ -121,6 +121,20 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../views/features/department/department-list/department-list.component'),
       },
+      {
+        path: 'work-shifts-list',
+        loadComponent: () =>
+          import(
+            '../views/features/lookups/work-shifts/work-shifts-list/work-shifts-list.component'
+          ),
+      },
+      {
+        path: 'work-shifts-assignment',
+        loadComponent: () =>
+          import(
+            '../views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
+          ),
+      },
     ],
   },
   {

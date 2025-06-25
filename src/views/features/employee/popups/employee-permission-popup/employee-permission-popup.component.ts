@@ -21,10 +21,11 @@ import { ROLES_ENUM } from '@/enums/roles-enum';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { UpdateRolesModel } from '@/models/auth/update-roles-model';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-employee-permission-popup',
-  imports: [FormsModule, ReactiveFormsModule, TranslatePipe],
+  imports: [FormsModule, ReactiveFormsModule, TranslatePipe, InputTextModule],
   templateUrl: './employee-permission-popup.component.html',
   styleUrl: './employee-permission-popup.component.scss',
 })
@@ -39,7 +40,7 @@ export class EmployeePermissionPopupComponent extends BasePopupComponent<User> i
 
   // Role mapping properties
   roleStates = {
-    isEmployee: false,
+    isEmployee: true,
     isSysAdmin: false,
     isDeptManager: false,
     isFollowUp: false,
@@ -63,7 +64,7 @@ export class EmployeePermissionPopupComponent extends BasePopupComponent<User> i
   override buildForm(): void {
     this.form = this.fb.group({
       roleIds: [this.model.roleIds || []],
-      isEmployee: [this.roleStates.isEmployee],
+      isEmployee: [{ value: this.roleStates.isEmployee, disabled: true }],
       isSysAdmin: [this.roleStates.isSysAdmin],
       isDeptManager: [this.roleStates.isDeptManager],
       isFollowUp: [this.roleStates.isFollowUp],
@@ -120,7 +121,7 @@ export class EmployeePermissionPopupComponent extends BasePopupComponent<User> i
     const roleIds: string[] = [];
 
     // Build roleIds array from form values
-    if (formValue.isEmployee) roleIds.push(ROLES_ENUM.EMPLOYEE);
+    roleIds.push(ROLES_ENUM.EMPLOYEE);
     if (formValue.isSysAdmin) roleIds.push(ROLES_ENUM.ADMIN);
     if (formValue.isDeptManager) roleIds.push(ROLES_ENUM.DEPARTMENT_MANAGER);
     if (formValue.isFollowUp) roleIds.push(ROLES_ENUM.FOLLOW_UP_OFFICER);

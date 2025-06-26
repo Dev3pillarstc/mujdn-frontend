@@ -5,12 +5,21 @@
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">ادارة المجاهدين</h3>
     </div>
     <section class="flex flex-col xl:flex-row gap-6 max-w-full">
-      <app-department-tree [selectedDepartmentSignal]="selectedDepartmentSignal"
-        (departmentSelected)="onSelectedDepartmentChange($event)"></app-department-tree>
+      <app-department-tree
+        [departmentsTree]="departmentsTree"
+        [selectedDepartmentSignal]="selectedDepartmentSignal"
+        (departmentSelected)="onSelectedDepartmentChange($event)"
+      >
+      </app-department-tree>
       <div class="w-full xl:w-[calc(100%-274px)]">
-        <app-department-header [departmentData]="selectedDepartment" [cities]="cities" [regions]="regions"
-          [usersProfiles]="usersProfiles" (departmentDeleted)="onDepartmentChange()"
-          (dialogClosed)="onDepartmentChange()">
+        <app-department-header
+          [departmentData]="selectedDepartment"
+          [cities]="cities"
+          [regions]="regions"
+          [usersProfiles]="usersProfiles"
+          (departmentDeleted)="onDepartmentChange()"
+          (dialogClosed)="onDepartmentChange()"
+        >
         </app-department-header>
         <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
           <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
@@ -20,41 +29,76 @@
             <div class="pt-6">
               <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 @if (isCurrentLanguageEnglish()) {
-                <div class="relative">
-                  <label for="administration" class="label">eng dept name</label>
-                  <input id="administration" placeholder="eng dept name" type="text" pInputText class="peer"
-                    fluid="true" ngModel [(ngModel)]="filterModel.nameEn" />
-                  <span
-                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                </div>
+                  <div class="relative">
+                    <label for="administration" class="label">eng dept name</label>
+                    <input
+                      id="administration"
+                      placeholder="eng dept name"
+                      type="text"
+                      pInputText
+                      class="peer"
+                      fluid="true"
+                      ngModel
+                      [(ngModel)]="filterModel.nameEn"
+                    />
+                    <span
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
+                  </div>
                 } @else {
-                <div class="relative">
-                  <label for="administration" class="label">اسم الإدارة</label>
-                  <input id="administration" placeholder="اسم الإدارة" type="text" pInputText class="peer" fluid="true"
-                    ngModel [(ngModel)]="filterModel.nameAr" />
-                  <span
-                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                </div>
+                  <div class="relative">
+                    <label for="administration" class="label">اسم الإدارة</label>
+                    <input
+                      id="administration"
+                      placeholder="اسم الإدارة"
+                      type="text"
+                      pInputText
+                      class="peer"
+                      fluid="true"
+                      ngModel
+                      [(ngModel)]="filterModel.nameAr"
+                    />
+                    <span
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
+                  </div>
                 }
 
                 <div class="relative">
                   <label id="region-label" class="label">المنطقة</label>
-                  <p-select [options]="regions" [(ngModel)]="filterModel.fkRegionId" optionLabel="nameEn"
-                    optionValue="id" placeholder="المنطقة" class="w-full peer" ariaLabelledBy="region-label"
-                    id="region-search" (onChange)="initializeFilteredCities()">
+                  <p-select
+                    [options]="regions"
+                    [(ngModel)]="filterModel.fkRegionId"
+                    optionLabel="nameEn"
+                    optionValue="id"
+                    placeholder="المنطقة"
+                    class="w-full peer"
+                    ariaLabelledBy="region-label"
+                    id="region-search"
+                    (onChange)="initializeFilteredCities()"
+                  >
                   </p-select>
                   <span
-                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
                 </div>
 
                 <div class="relative">
                   <label id="city-label" class="label">المدينة</label>
-                  <p-select [options]="filteredCities" [(ngModel)]="filterModel.fkCityId" optionLabel="nameEn"
-                    optionValue="id" placeholder="المدينة" class="w-full peer" ariaLabelledBy="city-label"
-                    id="city-search">
+                  <p-select
+                    [options]="filteredCities"
+                    [(ngModel)]="filterModel.fkCityId"
+                    optionLabel="nameEn"
+                    optionValue="id"
+                    placeholder="المدينة"
+                    class="w-full peer"
+                    ariaLabelledBy="city-label"
+                    id="city-search"
+                  >
                   </p-select>
                   <span
-                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
                 </div>
               </div>
 
@@ -68,12 +112,13 @@
           </div>
           <div class="mt-6">
             <div
-              class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
+              class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+            >
               <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
                 {{
-                isCurrentLanguageEnglish()
-                ? selectedDepartment?.nameEn
-                : selectedDepartment?.nameAr
+                  isCurrentLanguageEnglish()
+                    ? selectedDepartment?.nameEn
+                    : selectedDepartment?.nameAr
                 }}
               </h4>
               <div class="actions flex items-center gap-4 ms-auto">
@@ -83,67 +128,86 @@
                 <!-- <button>
                   <img src="/assets/icons/print.svg" alt="" />
                 </button> -->
-                <button class="btn green-btn flex items-center" (click)="addOrEditModel(selectedDepartment?.id ?? 0)">
+                <button
+                  class="btn green-btn flex items-center"
+                  (click)="addOrEditModel(selectedDepartment?.id ?? 0)"
+                >
                   <img src="assets/icons/plus.svg" alt="" />
                   <span>إضافة إدارة فرعية جديدة</span>
                 </button>
               </div>
             </div>
             @if (childDepartments.list && childDepartments.list.length > 0) {
-            <p-table [value]="childDepartments.list">
-              <ng-template #header>
-                <tr>
-                  <th>إسم الإداره</th>
-                  <th>طلب الاذن</th>
-                  <th>اسم المدير</th>
-                  <th>الإجراء</th>
-                </tr>
-              </ng-template>
-              <ng-template #body let-row>
-                <tr>
-                  <td>{{ isCurrentLanguageEnglish() ? row.nameEn : row.nameAr }}</td>
-                  <td>
-                    <span
-                      class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]">
-                      {{ getApprovalLevelText(row.isOneLevelApproval) | translate }}
-                    </span>
-                  </td>
-                  <td>
-                    {{
-                    isCurrentLanguageEnglish() ? row.manager.fullNameEn : row.manager.fullNameAr
-                    }}
-                  </td>
-                  <td>
-                    <div class="actions flex gap-2">
-                      <button class="btn black-btn flex items-center" (click)="addOrEditModel(row.id ?? 0)">
-                        <img src="assets/icons/plus.svg" alt="" />
-                        <span>إضافة إدارة فرعية جديدة</span>
-                      </button>
-                      <button class="bg-[#f3f4f6] rounded p-2 w-[32px]" (click)="addOrEditModel(0, row)">
-                        <img src="/assets/icons/edit-action.svg" alt="تعديل" />
-                      </button>
-                      <button class="bg-[#fef3f2] rounded p-2 w-[32px]" (click)="openConfirmation(row.id)">
-                        <img src="/assets/icons/delete-action.svg" alt="حذف" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
+              <p-table [value]="childDepartments.list">
+                <ng-template #header>
+                  <tr>
+                    <th>إسم الإداره</th>
+                    <th>طلب الاذن</th>
+                    <th>اسم المدير</th>
+                    <th>الإجراء</th>
+                  </tr>
+                </ng-template>
+                <ng-template #body let-row>
+                  <tr>
+                    <td>{{ isCurrentLanguageEnglish() ? row.nameEn : row.nameAr }}</td>
+                    <td>
+                      <span
+                        class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]"
+                      >
+                        {{ getApprovalLevelText(row.isOneLevelApproval) | translate }}
+                      </span>
+                    </td>
+                    <td>
+                      {{
+                        isCurrentLanguageEnglish() ? row.manager.fullNameEn : row.manager.fullNameAr
+                      }}
+                    </td>
+                    <td>
+                      <div class="actions flex gap-2">
+                        <button
+                          class="btn black-btn flex items-center"
+                          (click)="addOrEditModel(row.id ?? 0)"
+                        >
+                          <img src="assets/icons/plus.svg" alt="" />
+                          <span>إضافة إدارة فرعية جديدة</span>
+                        </button>
+                        <button
+                          class="bg-[#f3f4f6] rounded p-2 w-[32px]"
+                          (click)="addOrEditModel(0, row)"
+                        >
+                          <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                        </button>
+                        <button
+                          class="bg-[#fef3f2] rounded p-2 w-[32px]"
+                          (click)="openConfirmation(row.id)"
+                        >
+                          <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
             } @else {
-            <div colspan="4">
-              <div class="py-6 flex flex-col items-center justify-center text-center space-y-2">
-                <div class="">
-                  <img src="/assets/icons/empty.svg" alt="" srcset="" />
+              <div colspan="4">
+                <div class="py-6 flex flex-col items-center justify-center text-center space-y-2">
+                  <div class="">
+                    <img src="/assets/icons/empty.svg" alt="" srcset="" />
+                  </div>
+                  <h3 class="mt-2 text-[18px] font-bold text-[#384250]">لا يوجد إدارات بعد</h3>
+                  <p class="text-[12px] font-medium text-[#6c737f]">قم بإضافة الإدارات الخاصة بك</p>
                 </div>
-                <h3 class="mt-2 text-[18px] font-bold text-[#384250]">لا يوجد إدارات بعد</h3>
-                <p class="text-[12px] font-medium text-[#6c737f]">قم بإضافة الإدارات الخاصة بك</p>
               </div>
-            </div>
             }
             @if (childDepartments.list && childDepartments.list.length > 0) {
-            <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-              [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]" />
+              <p-paginator
+                class="mt-6"
+                (onPageChange)="onPageChange($event)"
+                [first]="first"
+                [rows]="rows"
+                [totalRecords]="120"
+                [rowsPerPageOptions]="[10, 20, 30]"
+              />
             }
             <div></div>
           </div>

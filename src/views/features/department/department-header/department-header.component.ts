@@ -60,13 +60,11 @@ export class DepartmentHeaderComponent {
       usersProfiles: this.usersProfiles,
     };
 
-    console.log('Opening dialog with data:', {
-      model: this.departmentData,
+    dialogConfig.data = {
+      model: this.departmentData ? new Department().clone(this.departmentData) : new Department(),
       lookups: lookups,
       viewMode: ViewModeEnum.EDIT,
-    });
-
-    dialogConfig.data = { model: this.departmentData, lookups: lookups, viewMode: ViewModeEnum.EDIT };
+    };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
 

@@ -6,6 +6,7 @@ export class DepartmentInterceptor implements ModelInterceptorContract<Departmen
     delete model.manager;
     delete model.city;
     delete model.region;
+    delete model.childDepartments;
     return model;
   }
   receive(model: any): any {

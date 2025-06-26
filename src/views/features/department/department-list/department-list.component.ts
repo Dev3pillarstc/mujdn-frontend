@@ -106,7 +106,7 @@ export default class DepartmentListComponent extends BaseListComponent<
 
     this.childDepartments = this.activatedRoute.snapshot.data['list'].childDepartments;
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الأقسام' }];
-    // this.initializeFilteredCities();
+    this.initializeFilteredCities();
   }
   initializeFilteredCities(): void {
     const currentRegionId = this.filterModel.fkRegionId;
@@ -197,7 +197,7 @@ export default class DepartmentListComponent extends BaseListComponent<
       cities: this.cities,
       regions: this.regions,
       usersProfiles: this.usersProfiles,
-    }
+    };
     const viewMode = department ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     dialogConfig.data = { model: department, lookups: lookups, viewMode: viewMode };
     dialogConfig.width = this.dialogSize.width;
@@ -225,15 +225,21 @@ export default class DepartmentListComponent extends BaseListComponent<
       next: () => {
         this.onDepartmentChange();
       },
-      error: (err) => { },
+      error: (err) => {},
     });
   }
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
   onDepartmentChange() {
-    this.loadList();
+    // this.loadList();
     this.loadChildDepartmentsAfterSelect();
+    this.loadDepartmentsTree(); // Add this line
+  }
+  loadDepartmentsTree() {
+    this.departmentService.getDepartmentTreeAsync().subscribe((tree) => {
+      this.departmentsTree = tree.data;
+    });
   }
   override search() {
     this.loadChildDepartmentsAfterSelect();

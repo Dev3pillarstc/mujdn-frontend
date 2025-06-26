@@ -2,7 +2,18 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Department } from '@/models/features/lookups/Department/department';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { LanguageService } from '@/services/shared/language.service';
-import { Component, effect, EventEmitter, inject, Input, OnInit, Output, Signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  Signal,
+  SimpleChanges,
+} from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Tree } from 'primeng/tree';
 
@@ -13,10 +24,10 @@ import { Tree } from 'primeng/tree';
   templateUrl: './department-tree.component.html',
   styleUrl: './department-tree.component.scss',
 })
-export class DepartmentTreeComponent implements OnInit {
+export class DepartmentTreeComponent implements OnInit, OnChanges {
   departments: TreeNode[] = [];
   selectedNode: TreeNode | null = null;
-
+  @Input() departmentsTree: Department[] = [];
   @Input() selectedDepartmentSignal!: Signal<Department | null>;
   @Output() departmentSelected = new EventEmitter<Department>();
 
@@ -25,8 +36,9 @@ export class DepartmentTreeComponent implements OnInit {
   // React to changes in the selectedDepartmentSignal using effect
   private readonly selectedDepartmentEffect = effect(() => {
     const selectedDepartment = this.selectedDepartmentSignal();
-    if (selectedDepartment) {
-      const allDepartments = this.extractAllDepartments(selectedDepartment); // Extract all departments from the hierarchy
+    if (selectedDepartment && this.departmentsTree.length > 0) {
+      // Find the root department in the tree
+      const allDepartments = this.extractAllDepartmentsFromTree(this.departmentsTree);
       const rootDepartment = this.findRootDepartment(selectedDepartment, allDepartments);
       if (rootDepartment) {
         this.departments = [this.mapDepartmentToTreeNode(rootDepartment)];
@@ -34,18 +46,41 @@ export class DepartmentTreeComponent implements OnInit {
       this.selectedNode = this.findTreeNodeByDepartment(selectedDepartment, this.departments);
     }
   });
-  private extractAllDepartments(department: Department): Department[] {
-    const allDepartments: Department[] = [];
-    const traverse = (dept: Department) => {
-      allDepartments.push(dept);
-      if (dept.childDepartments) {
-        dept.childDepartments.forEach(traverse);
+
+  // Add this helper to extract all departments from the tree
+  private extractAllDepartmentsFromTree(tree: Department[]): Department[] {
+    const all: Department[] = [];
+    const traverse = (depts: Department[]) => {
+      for (const dept of depts) {
+        all.push(dept);
+        if (dept.childDepartments) traverse(dept.childDepartments);
       }
     };
-    traverse(department);
-    return allDepartments;
+    traverse(tree);
+    return all;
   }
-  constructor() { }
+  constructor() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['departmentsTree'] && this.departmentsTree.length > 0) {
+      this.rebuildTree();
+    }
+  }
+
+  private rebuildTree() {
+    const selectedDepartment = this.selectedDepartmentSignal();
+    if (selectedDepartment && this.departmentsTree.length > 0) {
+      const allDepartments = this.extractAllDepartmentsFromTree(this.departmentsTree);
+      const rootDepartment = this.findRootDepartment(selectedDepartment, allDepartments);
+      if (rootDepartment) {
+        this.departments = [this.mapDepartmentToTreeNode(rootDepartment)];
+      }
+      this.selectedNode = this.findTreeNodeByDepartment(selectedDepartment, this.departments);
+    } else if (this.departmentsTree.length > 0) {
+      // If nothing is selected, show the whole tree
+      this.departments = this.mapDepartmentToTreeNodeArray(this.departmentsTree);
+      this.selectedNode = null;
+    }
+  }
 
   ngOnInit() {
     this.translateDepartmentName();
@@ -57,15 +92,19 @@ export class DepartmentTreeComponent implements OnInit {
 
   private mapDepartmentToTreeNode = (department: Department): TreeNode => {
     return {
-      label: this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-        ? department.nameEn
-        : department.nameAr,
+      label:
+        this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+          ? department.nameEn
+          : department.nameAr,
       data: department,
       children: department.childDepartments?.map(this.mapDepartmentToTreeNode) || [],
     };
-  }
+  };
 
-  private findRootDepartment(department: Department, allDepartments: Department[]): Department | null {
+  private findRootDepartment(
+    department: Department,
+    allDepartments: Department[]
+  ): Department | null {
     // Traverse up the hierarchy to find the root department
     let current = department;
     while (current.fkParentDepartmentId) {
@@ -96,14 +135,16 @@ export class DepartmentTreeComponent implements OnInit {
   updateTreeLabels() {
     this.departments = this.departments.map((node) => ({
       ...node,
-      label: this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-        ? node.data.nameEn
-        : node.data.nameAr,
+      label:
+        this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+          ? node.data.nameEn
+          : node.data.nameAr,
       children: node.children?.map((child) => ({
         ...child,
-        label: this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-          ? child.data.nameEn
-          : child.data.nameAr,
+        label:
+          this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+            ? child.data.nameEn
+            : child.data.nameAr,
       })),
     }));
   }

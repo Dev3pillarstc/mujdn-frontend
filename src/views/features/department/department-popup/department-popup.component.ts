@@ -24,13 +24,20 @@ interface Adminstration {
 
 @Component({
   selector: 'app-department-popup',
-  imports: [Select, DatePickerModule, FormsModule, InputTextModule, CommonModule, ReactiveFormsModule],
+  imports: [
+    Select,
+    DatePickerModule,
+    FormsModule,
+    InputTextModule,
+    CommonModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './department-popup.component.html',
   styleUrl: './department-popup.component.scss',
 })
 export class DepartmentPopupComponent extends BasePopupComponent<Department> implements OnInit {
   declare model: Department;
-  declare form: FormGroup<any>;
+  declare form: FormGroup;
   declare viewMode: ViewModeEnum;
   isCreateMode = false;
   alertService = inject(AlertService);
@@ -68,7 +75,11 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     // Finally, set up the region change listener
     this.setupRegionChangeListener();
   }
-
+  onRegionChange(event: any): void {
+    const regionId = event.value;
+    console.log('Region changed to:', regionId);
+    this.filterCitiesByRegion(regionId);
+  }
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm());
   }
@@ -80,7 +91,7 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   }
 
   setupRegionChangeListener(): void {
-    this.form.get('fkRegionId')?.valueChanges.subscribe(regionId => {
+    this.form.get('fkRegionId')?.valueChanges.subscribe((regionId) => {
       console.log('Region changed to:', regionId);
       this.filterCitiesByRegion(regionId);
     });
@@ -88,13 +99,13 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
 
   private filterCitiesByRegion(regionId: any): void {
     if (regionId) {
-      this.filteredCities = this.cities.filter(city => city.fkRegionId === regionId);
+      this.filteredCities = this.cities.filter((city) => city.fkRegionId === regionId);
     } else {
       this.filteredCities = [];
     }
 
     const currentCityId = this.form.get('fkCityId')?.value;
-    if (currentCityId && !this.filteredCities.some(city => city.id === currentCityId)) {
+    if (currentCityId && !this.filteredCities.some((city) => city.id === currentCityId)) {
       this.form.get('fkCityId')?.setValue(null);
     }
 
@@ -115,7 +126,7 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   override beforeSave(model: Department, form: FormGroup): Observable<boolean> | boolean {
     if (!form.valid) {
       // Mark all fields as touched to show validation errors
-      Object.keys(form.controls).forEach(key => {
+      Object.keys(form.controls).forEach((key) => {
         form.get(key)?.markAsTouched();
       });
       return false;
@@ -133,7 +144,7 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   // Helper method to debug form errors
   private getFormErrors(form: FormGroup): any {
     const errors: any = {};
-    Object.keys(form.controls).forEach(key => {
+    Object.keys(form.controls).forEach((key) => {
       const control = form.get(key);
       if (control && control.errors) {
         errors[key] = control.errors;

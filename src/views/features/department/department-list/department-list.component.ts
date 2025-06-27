@@ -1,5 +1,5 @@
 import { DepartmentPopupComponent } from '../department-popup/department-popup.component';
-import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +9,7 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
 import { inject } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
@@ -24,14 +24,13 @@ import { BaseListComponent } from '@/abstracts/base-components/base-list/base-li
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Region } from '@/models/features/lookups/region/region';
 import { City } from '@/models/features/lookups/City/city';
-import { CityService } from '@/services/features/lookups/city.service';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { AlertService } from '@/services/shared/alert.service';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { UserProfilesLookop } from '@/models/auth/users-profiles-lookup';
+import { filter, switchMap, tap } from 'rxjs';
 
 interface Adminstration {
   type: string;
@@ -84,59 +83,79 @@ export default class DepartmentListComponent extends BaseListComponent<
 
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
-  // cityService = inject(CityService);
   confirmationService = inject(ConfirmationService);
   alertService = inject(AlertService);
   selectedDepartmentSignal = signal<Department | null>(null);
+  rootDepartment: Department | null = null;
 
   initListComponent(): void {
+    this.mapDataFromResolver();
+    // Set the grandparent department in the signal
+    this.rootDepartment =
+      this.departmentsTree.find((dept: Department) => dept.fkParentDepartmentId == null) ?? null;
+    this.selectedDepartmentSignal.set(this.rootDepartment);
+
+    // Explicitly set the selectedDepartment property
+    this.selectedDepartment = this.rootDepartment;
+    this.items = [
+      { label: 'DEPARTMENTS_LIST_PAGE.DASHBOARD' },
+      { label: 'DEPARTMENTS_LIST_PAGE.DEPARTMENTS_LIST' },
+    ];
+    this.initializeFilteredCities();
+  }
+
+  private mapDataFromResolver() {
     this.departmentsTree = this.activatedRoute.snapshot.data['list'].departmentsTree.data;
     this.regions = this.activatedRoute.snapshot.data['list'].regions;
     this.cities = this.activatedRoute.snapshot.data['list'].cities;
     this.usersProfiles = this.activatedRoute.snapshot.data['list'].users.data;
-
-    // Set the grandparent department in the signal
-    const rootDepartment = this.departmentsTree.find(
-      (dept: Department) => dept.fkParentDepartmentId == null
-    );
-    this.selectedDepartmentSignal.set(rootDepartment || null);
-
-    // Explicitly set the selectedDepartment property
-    this.selectedDepartment = rootDepartment || null;
-
     this.childDepartments = this.activatedRoute.snapshot.data['list'].childDepartments;
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الأقسام' }];
-    this.initializeFilteredCities();
+    this.paginationInfo = this.childDepartments.paginationInfo;
   }
+
   initializeFilteredCities(): void {
     const currentRegionId = this.filterModel.fkRegionId;
-    console.log('currentRegionId', currentRegionId);
     if (currentRegionId) {
       this.filteredCities = this.cities.filter((city) => city.fkRegionId === currentRegionId);
     } else {
       this.filteredCities = [];
     }
-    console.log('this.filteredCities', this.cities);
   }
-  openConfirmation(departmentId: number | undefined) {
-    const dialogRef = this.confirmationService.open({
-      icon: 'warning',
-      messages: ['COMMON.CONFIRM_DELETE'],
-      confirmText: 'COMMON.OK',
-      cancelText: 'COMMON.CANCEL',
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result == DIALOG_ENUM.OK) {
-        this.delete(departmentId);
-        // User confirmed
-        this.alertService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
-      } else {
-        // User canceled
-        this.alertService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
-      }
-    });
+  openConfirmation(departmentId: number | undefined): void {
+    if (!departmentId) return;
+
+    this.confirmationService
+      .open({
+        icon: 'warning',
+        messages: ['COMMON.CONFIRM_DELETE'],
+        confirmText: 'COMMON.OK',
+        cancelText: 'COMMON.CANCEL',
+      })
+      .afterClosed()
+      .pipe(
+        filter((result): result is typeof DIALOG_ENUM.OK => result === DIALOG_ENUM.OK),
+        switchMap(() => this.departmentService.delete(departmentId)),
+        switchMap(() =>
+          this.alertService
+            .showSuccessMessage({
+              messages: ['COMMON.DELETED_SUCCESSFULLY'],
+            })
+            .afterClosed()
+        ),
+        tap(() => {
+          this.onDepartmentChange();
+          //this.selectedDepartmentSignal.set(this.rootDepartment);
+        })
+      )
+      .subscribe({
+        error: () =>
+          this.alertService.showErrorMessage({
+            messages: ['COMMON.DELETION_FAILED'],
+          }),
+      });
   }
+
   protected override mapModelToExcelRow(model: Department): { [key: string]: any } {
     const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
     return {
@@ -174,6 +193,7 @@ export default class DepartmentListComponent extends BaseListComponent<
     this.service.loadPaginated(this.paginationParams, { ...this.filterModel! }).subscribe({
       next: (response) => {
         this.childDepartments = response;
+        this.paginationInfo = this.childDepartments.paginationInfo;
       },
       error: (_) => {
         this.childDepartments = new PaginatedList<Department>();
@@ -198,7 +218,7 @@ export default class DepartmentListComponent extends BaseListComponent<
       regions: this.regions,
       usersProfiles: this.usersProfiles,
     };
-    const viewMode = department ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const viewMode = department.id && department.id != 0 ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     dialogConfig.data = { model: department, lookups: lookups, viewMode: viewMode };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
@@ -218,27 +238,26 @@ export default class DepartmentListComponent extends BaseListComponent<
     }
     this.openDialog(departmentCopy);
   }
-  delete(departmentId: number | undefined): void {
-    if (!departmentId) return;
 
-    this.departmentService.delete(departmentId).subscribe({
-      next: () => {
-        this.onDepartmentChange();
-      },
-      error: (err) => {},
-    });
-  }
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
   onDepartmentChange() {
-    // this.loadList();
+    this.filterModel.fkParentDepartmentId = this.rootDepartment?.id;
     this.loadChildDepartmentsAfterSelect();
-    this.loadDepartmentsTree(); // Add this line
+    this.loadDepartmentsTree(() => {
+      this.selectedDepartmentSignal.set(this.rootDepartment);
+      this.selectedDepartment = this.rootDepartment;
+    });
   }
-  loadDepartmentsTree() {
+
+  loadDepartmentsTree(callback?: () => void) {
     this.departmentService.getDepartmentTreeAsync().subscribe((tree) => {
       this.departmentsTree = tree.data;
+      // Update rootDepartment after tree is loaded
+      this.rootDepartment =
+        this.departmentsTree.find((dept: Department) => dept.fkParentDepartmentId == null) ?? null;
+      if (callback) callback();
     });
   }
   override search() {
@@ -253,7 +272,7 @@ export default class DepartmentListComponent extends BaseListComponent<
   }
   getApprovalLevelText(isOneLevelVerification: boolean): string {
     return isOneLevelVerification
-      ? 'DEPARTMENTS_PAGE.ONE_LEVEL_APPROVAL'
-      : 'DEPARTMENTS_PAGE.TWO_LEVEL_APPROVAL';
+      ? 'DEPARTMENTS_LIST_PAGE.ONE_LEVEL_APPROVAL'
+      : 'DEPARTMENTS_LIST_PAGE.TWO_LEVEL_APPROVAL';
   }
 }

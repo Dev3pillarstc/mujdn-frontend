@@ -3,16 +3,25 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إدارة جديدة</h3>
-
+    @if (isCreateMode) {
+      <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+        {{ 'DEPARTMENT_POPUP.ADD_DEPARTMENT' | translate }}
+      </h3>
+    } @else {
+      <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+        {{ 'DEPARTMENT_POPUP.EDIT_DEPARTMENT' | translate }}
+      </h3>
+    }
     <form [formGroup]="form" class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
-          <label for="departmentName" class="label"> اسم الإدارة عربي</label>
+          <label for="departmentName" class="label">
+            {{ 'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate }}</label
+          >
           <div class="relative">
             <input
               id="departmentName"
-              placeholder=" اسم الإدارة"
+              [placeholder]="'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate"
               type="text"
               pInputText
               class="peer"
@@ -26,15 +35,17 @@
           <span
             class="validation-message"
             *ngIf="form.get('nameAr')?.invalid && form.get('nameAr')?.touched"
-            >هذا الحقل مطلوب</span
+            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
           >
         </div>
         <div>
-          <label for="departmentNameEn" class="label">اسم الإدارة إنجليزي</label>
+          <label for="departmentNameEn" class="label">{{
+            'DEPARTMENT_POPUP.DEPARTMENT_NAME_ENGLISH' | translate
+          }}</label>
           <div class="relative">
             <input
               id="departmentNameEn"
-              placeholder="اسم الإدارة إنجليزي"
+              [placeholder]="'DEPARTMENT_POPUP.DEPARTMENT_NAME_ENGLISH' | translate"
               type="text"
               pInputText
               class="peer"
@@ -48,18 +59,20 @@
           <span
             class="validation-message"
             *ngIf="form.get('nameEn')?.invalid && form.get('nameEn')?.touched"
-            >هذا الحقل مطلوب</span
+            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
           >
         </div>
         <div>
-          <label for="regionSelect" class="label">المنطقة</label>
+          <label for="regionSelect" class="label">{{
+            'DEPARTMENT_POPUP.REGION' | translate
+          }}</label>
           <div class="relative">
             <p-select
               name="regionSelect"
               [options]="regions"
               optionValue="id"
               [optionLabel]="langOptionLabel"
-              placeholder="اختر المنطقة"
+              [placeholder]="'DEPARTMENT_POPUP.CHOOSE_REGION' | translate"
               class="w-full peer"
               id="regionSelect"
               formControlName="fkRegionId"
@@ -74,18 +87,18 @@
           <span
             class="validation-message"
             *ngIf="form.get('fkRegionId')?.invalid && form.get('fkRegionId')?.touched"
-            >هذا الحقل مطلوب</span
+            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
           >
         </div>
         <div>
-          <label for="citySelect" class="label">المدينة</label>
+          <label for="citySelect" class="label">{{ 'DEPARTMENT_POPUP.CITY' | translate }}</label>
           <div class="relative">
             <p-select
               name="citySelect"
               [options]="filteredCities"
               optionValue="id"
               [optionLabel]="langOptionLabel"
-              placeholder="اختر المدينة"
+              [placeholder]="'DEPARTMENT_POPUP.CHOOSE_CITY' | translate"
               class="w-full peer"
               id="citySelect"
               formControlName="fkCityId"
@@ -99,15 +112,17 @@
           <span
             class="validation-message"
             *ngIf="form.get('fkCityId')?.invalid && form.get('fkCityId')?.touched"
-            >هذا الحقل مطلوب</span
+            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
           >
         </div>
         <div>
-          <label for="addressInput" class="label"> العنوان</label>
+          <label for="addressInput" class="label">
+            {{ 'DEPARTMENT_POPUP.ADDRESS' | translate }}</label
+          >
           <div class="relative">
             <input
               id="addressInput"
-              placeholder=" العنوان"
+              [placeholder]="'DEPARTMENT_POPUP.ADDRESS' | translate"
               type="text"
               pInputText
               class="peer"
@@ -121,15 +136,15 @@
           <span
             class="validation-message"
             *ngIf="form.get('address')?.invalid && form.get('address')?.touched"
-            >هذا الحقل مطلوب</span
+            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
           >
         </div>
         <div>
-          <label for="phoneInput" class="label"> الهاتف</label>
+          <label for="phoneInput" class="label"> {{ 'DEPARTMENT_POPUP.PHONE' | translate }}</label>
           <div class="relative">
             <input
               id="phoneInput"
-              placeholder=" الهاتف"
+              [placeholder]="'DEPARTMENT_POPUP.PHONE' | translate"
               type="text"
               pInputText
               class="peer"
@@ -143,15 +158,15 @@
           <span
             class="validation-message"
             *ngIf="form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched"
-            >هذا الحقل مطلوب</span
+            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
           >
         </div>
         <div>
-          <label for="faxInput" class="label"> الفاكس</label>
+          <label for="faxInput" class="label"> {{ 'DEPARTMENT_POPUP.FAX' | translate }}</label>
           <div class="relative">
             <input
               id="faxInput"
-              placeholder=" الفاكس"
+              [placeholder]="'DEPARTMENT_POPUP.FAX' | translate"
               type="text"
               pInputText
               class="peer"
@@ -165,18 +180,20 @@
           <span
             class="validation-message"
             *ngIf="form.get('fax')?.invalid && form.get('fax')?.touched"
-            >هذا الحقل مطلوب</span
+            >{{ 'DEPARTMENT_POPUP.MANAGER_NAME' | translate }}</span
           >
         </div>
         <div>
-          <label for="managerSelect" class="label">اسم المدير</label>
+          <label for="managerSelect" class="label">{{
+            'DEPARTMENT_POPUP.MANAGER_NAME' | translate
+          }}</label>
           <div class="relative">
             <p-select
               name="managerSelect"
               [options]="usersProfiles"
               [optionLabel]="langOptionLabel"
               optionValue="id"
-              placeholder="اختر المدير"
+              [placeholder]="'DEPARTMENT_POPUP.MANAGER_NAME' | translate"
               class="w-full peer"
               id="managerSelect"
               formControlName="fkManagerId"
@@ -189,12 +206,14 @@
           <span
             class="validation-message"
             *ngIf="form.get('fkManagerId')?.invalid && form.get('fkManagerId')?.touched"
-            >هذا الحقل مطلوب</span
+            >{{ 'DEPARTMENT_POPUP.MANAGER_NAME' | translate }}</span
           >
         </div>
       </div>
       <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">مستوى الموافقة</h3>
+        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+          {{ 'DEPARTMENT_POPUP.APPROVAL_LEVEL' | translate }}
+        </h3>
         <div class="flex flex-wrap gap-8 items-center">
           <label class="flex items-center cursor-pointer gap-2">
             <input
@@ -213,7 +232,7 @@
                 *ngIf="form.get('isOneLevelApproval')?.value === false"
               ></span>
             </span>
-            <span>على مستويين</span>
+            <span>{{ 'DEPARTMENT_POPUP.TWO_LEVEL_APPROVAL' | translate }}</span>
           </label>
           <label class="flex items-center cursor-pointer gap-2">
             <input
@@ -232,14 +251,16 @@
                 *ngIf="form.get('isOneLevelApproval')?.value === true"
               ></span>
             </span>
-            <span>على مستوى واحد</span>
+            <span>{{ 'DEPARTMENT_POPUP.ONE_LEVEL_APPROVAL' | translate }}</span>
           </label>
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button type="button" class="btn gray-btn" (click)="close()">إلغاء</button>
+        <button type="button" class="btn gray-btn" (click)="close()">
+          {{ 'DEPARTMENT_POPUP.CANCEL' | translate }}
+        </button>
         <button type="button" class="btn green-btn" (click)="save$.next()">
-          {{ isCreateMode ? 'حفظ' : 'تعديل' }}
+          {{ 'DEPARTMENT_POPUP.SAVE' | translate }}
         </button>
       </div>
     </form>

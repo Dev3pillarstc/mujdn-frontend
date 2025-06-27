@@ -1,6 +1,5 @@
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Department } from '@/models/features/lookups/Department/department';
-import { DepartmentService } from '@/services/features/lookups/department.service';
 import { LanguageService } from '@/services/shared/language.service';
 import {
   Component,
@@ -14,12 +13,13 @@ import {
   Signal,
   SimpleChanges,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { TreeNode } from 'primeng/api';
 import { Tree } from 'primeng/tree';
 
 @Component({
   selector: 'app-department-tree',
-  imports: [Tree],
+  imports: [Tree, TranslatePipe],
   standalone: true,
   templateUrl: './department-tree.component.html',
   styleUrl: './department-tree.component.scss',

@@ -40,16 +40,7 @@ export class DepartmentHeaderComponent {
     return isOneLevel ? 'ONE_LEVEL_APPROVAL' : 'TWO_LEVEL_APPROVAL';
   }
   delete(departmentId: number | undefined): void {
-    if (!departmentId) return;
-
-    this.departmentService.delete(departmentId).subscribe({
-      next: () => {
-        this.departmentDeleted.emit(departmentId);
-      },
-      error: (err) => {
-        console.error(`Failed to delete department with ID ${departmentId}:`, err);
-      },
-    });
+    this.departmentDeleted.emit(departmentId);
   }
 
   openDialog() {
@@ -70,7 +61,7 @@ export class DepartmentHeaderComponent {
 
     const dialogRef = this.matDialog.open(DepartmentPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+    return dialogRef.afterClosed().subscribe((result: any) => {
       if (result && result == DIALOG_ENUM.OK) {
         this.dialogClosed.emit();
       }

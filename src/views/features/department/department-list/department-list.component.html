@@ -1,8 +1,15 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
-      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">ادارة المجاهدين</h3>
+      <p-breadcrumb [model]="items" [home]="home" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <span>{{ item.label | translate }}</span>
+        </ng-template>
+      </p-breadcrumb>
+
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'DEPARTMENTS_LIST_PAGE.MUJAHIDEEN_DEPARMENT' | translate }}
+      </h3>
     </div>
     <section class="flex flex-col xl:flex-row gap-6 max-w-full">
       <app-department-tree
@@ -17,23 +24,27 @@
           [cities]="cities"
           [regions]="regions"
           [usersProfiles]="usersProfiles"
-          (departmentDeleted)="onDepartmentChange()"
+          (departmentDeleted)="openConfirmation($event)"
           (dialogClosed)="onDepartmentChange()"
         >
         </app-department-header>
         <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
           <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
             <div class="flex items-center justify-between">
-              <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+              <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+                {{ 'DEPARTMENTS_LIST_PAGE.SEARCH_FILTERS' | translate }}
+              </h5>
             </div>
             <div class="pt-6">
               <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 @if (isCurrentLanguageEnglish()) {
                   <div class="relative">
-                    <label for="administration" class="label">eng dept name</label>
+                    <label for="administration" class="label">{{
+                      'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
+                    }}</label>
                     <input
                       id="administration"
-                      placeholder="eng dept name"
+                      [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
                       type="text"
                       pInputText
                       class="peer"
@@ -47,10 +58,12 @@
                   </div>
                 } @else {
                   <div class="relative">
-                    <label for="administration" class="label">اسم الإدارة</label>
+                    <label for="administration" class="label">{{
+                      'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
+                    }}</label>
                     <input
                       id="administration"
-                      placeholder="اسم الإدارة"
+                      [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
                       type="text"
                       pInputText
                       class="peer"
@@ -65,13 +78,15 @@
                 }
 
                 <div class="relative">
-                  <label id="region-label" class="label">المنطقة</label>
+                  <label id="region-label" class="label">{{
+                    'DEPARTMENTS_LIST_PAGE.REGION' | translate
+                  }}</label>
                   <p-select
                     [options]="regions"
                     [(ngModel)]="filterModel.fkRegionId"
                     optionLabel="nameEn"
                     optionValue="id"
-                    placeholder="المنطقة"
+                    [placeholder]="'DEPARTMENTS_LIST_PAGE.REGION' | translate"
                     class="w-full peer"
                     ariaLabelledBy="region-label"
                     id="region-search"
@@ -84,13 +99,15 @@
                 </div>
 
                 <div class="relative">
-                  <label id="city-label" class="label">المدينة</label>
+                  <label id="city-label" class="label">{{
+                    'DEPARTMENTS_LIST_PAGE.CITY' | translate
+                  }}</label>
                   <p-select
                     [options]="filteredCities"
                     [(ngModel)]="filterModel.fkCityId"
                     optionLabel="nameEn"
                     optionValue="id"
-                    placeholder="المدينة"
+                    [placeholder]="'DEPARTMENTS_LIST_PAGE.CITY' | translate"
                     class="w-full peer"
                     ariaLabelledBy="city-label"
                     id="city-search"
@@ -103,9 +120,11 @@
               </div>
 
               <div class="actions flex items-center gap-4 pt-6">
-                <button class="btn black-btn" (click)="search()">بحث</button>
+                <button class="btn black-btn" (click)="search()">
+                  {{ 'DEPARTMENTS_LIST_PAGE.SEARCH' | translate }}
+                </button>
                 <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">
-                  إعادة تعيين
+                  {{ 'DEPARTMENTS_LIST_PAGE.RESET_SEARCH' | translate }}
                 </button>
               </div>
             </div>
@@ -133,7 +152,7 @@
                   (click)="addOrEditModel(selectedDepartment?.id ?? 0)"
                 >
                   <img src="assets/icons/plus.svg" alt="" />
-                  <span>إضافة إدارة فرعية جديدة</span>
+                  <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_SUB_DEPARTMENT' | translate }}</span>
                 </button>
               </div>
             </div>
@@ -141,10 +160,10 @@
               <p-table [value]="childDepartments.list">
                 <ng-template #header>
                   <tr>
-                    <th>إسم الإداره</th>
-                    <th>طلب الاذن</th>
-                    <th>اسم المدير</th>
-                    <th>الإجراء</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.ACTIONS' | translate }}</th>
                   </tr>
                 </ng-template>
                 <ng-template #body let-row>
@@ -169,19 +188,19 @@
                           (click)="addOrEditModel(row.id ?? 0)"
                         >
                           <img src="assets/icons/plus.svg" alt="" />
-                          <span>إضافة إدارة فرعية جديدة</span>
+                          <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_SUB_DEPARTMENT' | translate }}</span>
                         </button>
                         <button
                           class="bg-[#f3f4f6] rounded p-2 w-[32px]"
                           (click)="addOrEditModel(0, row)"
                         >
-                          <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                          <img src="/assets/icons/edit-action.svg" alt="update" />
                         </button>
                         <button
                           class="bg-[#fef3f2] rounded p-2 w-[32px]"
                           (click)="openConfirmation(row.id)"
                         >
-                          <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                          <img src="/assets/icons/delete-action.svg" alt="delete" />
                         </button>
                       </div>
                     </td>
@@ -194,8 +213,12 @@
                   <div class="">
                     <img src="/assets/icons/empty.svg" alt="" srcset="" />
                   </div>
-                  <h3 class="mt-2 text-[18px] font-bold text-[#384250]">لا يوجد إدارات بعد</h3>
-                  <p class="text-[12px] font-medium text-[#6c737f]">قم بإضافة الإدارات الخاصة بك</p>
+                  <h3 class="mt-2 text-[18px] font-bold text-[#384250]">
+                    {{ 'DEPARTMENTS_LIST_PAGE.NO_DEPARTMENTS_YET' | translate }}
+                  </h3>
+                  <p class="text-[12px] font-medium text-[#6c737f]">
+                    {{ 'DEPARTMENTS_LIST_PAGE.ADD_YOUR_DEPARTMENT' | translate }}
+                  </p>
                 </div>
               </div>
             }
@@ -205,7 +228,7 @@
                 (onPageChange)="onPageChange($event)"
                 [first]="first"
                 [rows]="rows"
-                [totalRecords]="120"
+                [totalRecords]="paginationInfo.totalItems"
                 [rowsPerPageOptions]="[10, 20, 30]"
               />
             }

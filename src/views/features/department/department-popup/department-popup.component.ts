@@ -1,4 +1,3 @@
-import { DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -7,16 +6,15 @@ import { Select } from 'primeng/select';
 import { CommonModule } from '@angular/common';
 import { Department } from '@/models/features/lookups/Department/department';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { M } from '@angular/material/dialog.d-B5HZULyo';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from '@/services/shared/alert.service';
 import { City } from '@/models/features/lookups/City/city';
-import { Region } from '@/models/features/lookups/region/region';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { UserProfilesLookop } from '@/models/auth/users-profiles-lookup';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface Adminstration {
   type: string;
@@ -31,6 +29,7 @@ interface Adminstration {
     InputTextModule,
     CommonModule,
     ReactiveFormsModule,
+    TranslatePipe,
   ],
   templateUrl: './department-popup.component.html',
   styleUrl: './department-popup.component.scss',
@@ -53,8 +52,6 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
-    console.log(data);
-    console.log(data.model);
   }
 
   override initPopup() {
@@ -77,7 +74,6 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   }
   onRegionChange(event: any): void {
     const regionId = event.value;
-    console.log('Region changed to:', regionId);
     this.filterCitiesByRegion(regionId);
   }
   override buildForm() {
@@ -86,13 +82,11 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
 
   private initializeFilteredCities(): void {
     const currentRegionId = this.model.fkRegionId;
-    console.log('currentRegionId', currentRegionId);
     this.filterCitiesByRegion(currentRegionId);
   }
 
   setupRegionChangeListener(): void {
     this.form.get('fkRegionId')?.valueChanges.subscribe((regionId) => {
-      console.log('Region changed to:', regionId);
       this.filterCitiesByRegion(regionId);
     });
   }
@@ -108,8 +102,6 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     if (currentCityId && !this.filteredCities.some((city) => city.id === currentCityId)) {
       this.form.get('fkCityId')?.setValue(null);
     }
-
-    console.log('this.filteredCities', this.filteredCities);
   }
 
   override saveFail(error: Error): void {
@@ -120,7 +112,6 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   override afterSave(model: Department, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
-    // dialogRef will be automatically closed by the base class
   }
 
   override beforeSave(model: Department, form: FormGroup): Observable<boolean> | boolean {
@@ -136,7 +127,6 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   }
 
   override prepareModel(model: Department, form: FormGroup): Department | Observable<Department> {
-    console.log('Preparing model with form values:', form.value);
     this.model = Object.assign(model, { ...form.value });
     return this.model;
   }

@@ -57,6 +57,16 @@ export class SideBarLinksService {
       routeId: RouteIdsEnum.HOLIDAYS,
     },
     {
+      label: 'ورديات العمل',
+      iconUrl: 'assets/icons/time-icon.svg',
+      children: [
+        {
+          label: 'اعدادات ورديات العمل',
+          routerLink: ['/work-shifts'],
+        },
+      ]
+    },
+    {
       label: 'الإعدادات',
       iconUrl: 'assets/icons/menu-icons/settings.svg',
       children: [
@@ -92,7 +102,7 @@ export class SideBarLinksService {
   constructor(
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
 
   /** Public method to get menu items filtered by current user roles */
   getSidebarLinks(): MenuItem[] {

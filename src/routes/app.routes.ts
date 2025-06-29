@@ -135,6 +135,11 @@ export const routes: Routes = [
             '../views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
           ),
       },
+      {
+        path: 'temp-shifts',
+        loadComponent: () =>
+          import('../views/features/lookups/work-shifts/temp-shifts/temp-shifts.component'),
+      },
     ],
   },
   {

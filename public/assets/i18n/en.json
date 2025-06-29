@@ -141,6 +141,7 @@
   "EMPLOYEES_PAGE": {
     "EMPLOYEES_LIST": "Employees List",
     "DEPARTMENT": "Department",
+    "EMPLOYEE_NAME": "Employee Name",
     "EMPLOYEE_NAME_ARABIC": "Employee Name in Arabic",
     "EMPLOYEE_NAME_ENGLISH": "Employee Name in English",
     "REGION": "Region",
@@ -178,6 +179,7 @@
     "EDIT_PERMISSIONS": "Edit Permissions",
     "NO_DATA_TO_SHOW": "No data to display",
     "EDIT_EMPLOYEE_DATA": "Edit Employee Data",
+    "EDIT_EMPLOYEE_PERMISSIONS": "Edit Employee Permissions",
     "VIEW_ATTENDANCE_REPORT": "View Attendance Report",
     "ASSIGN_TASK": "Assign Task",
     "ASSIGN_SHIFT": "Assign Shift",

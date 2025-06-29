@@ -21,7 +21,9 @@
     "ENGLISH_ONLY": "يجب أن يحتوي هذا الحقل على أحرف إنجليزية فقط",
     "SEARCH": "بحث",
     "RESET_SEARCH": "إعادة تعيين",
-    "SEARCH_FILTERS": "تصفية البحث"
+    "SEARCH_FILTERS": "تصفية البحث",
+    "UNKNOWN_ERROR": "خطأ غير معروف",
+    "SERVICE_UNAVAILABLE": "الخدمة غير متاحة الآن"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"

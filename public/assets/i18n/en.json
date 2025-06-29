@@ -21,7 +21,9 @@
     "ENGLISH_ONLY": "This field must contain English characters only",
     "SEARCH": "Search",
     "RESET_SEARCH": "Reset",
-    "SEARCH_FILTERS": "Search Filters"
+    "SEARCH_FILTERS": "Search Filters",
+    "UNKNOWN_ERROR": "Unknown error",
+    "SERVICE_UNAVAILABLE": "Service unavailable"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

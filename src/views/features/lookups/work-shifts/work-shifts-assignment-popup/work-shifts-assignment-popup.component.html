@@ -4,36 +4,26 @@
             <i class="pi pi-times"></i>
         </button>
         <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اسناد وردية مؤقتة لموظف</h3>
-        <!-- <form class="mt-6">
+        <form class="mt-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
                 <div class="lg:col-span-2">
-                    <label for="time-pick" class="label">اسم الوردية باللغة العربية</label>
+                    <label for="time-pick" class="label">اسم الوردية</label>
                     <div class="relative">
-                        <input placeholder="اسم الوردية باللغة العربية" class="peer" fluid="true" id="nationalityAr"
-                            pInputText type="text" />
+                        <p-select name="selectedAdminstration1" [options]="adminstrations"
+                            [(ngModel)]="selectedAdminstration" optionLabel="type" placeholder="اسم الوردية"
+                            class="w-full peer" id="empoyeeName-popup"></p-select>
                         <span
                             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                     </div>
                     <span class="validation-message">هذا الحقل مطلوب</span>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="time-pick" class="label">اسم الوردية باللغة الانجليزية</label>
+                    <label for="time-pick" class="label">التاريخ (من)</label>
                     <div class="relative">
-                        <input placeholder="اسم الوردية باللغة الانجليزية" class="peer" fluid="true" id="nationalityAr"
-                            pInputText type="text" />
-                        <span
-                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                    </div>
-                    <span class="validation-message">هذا الحقل مطلوب</span>
-                </div>
-                <div class="lg:col-span-2">
-                    <label for="time-pick" class="label">الوقت (من)</label>
-                    <div class="relative">
-                        <p-datepicker name="selectedAdminstration5" [(ngModel)]="date2" [iconDisplay]="'input'"
-                            [showIcon]="true" placeholder="الوقت (من)" class="peer block w-full" inputId="icondisplay"
-                            [timeOnly]="true" id="time-pick">
+                        <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true"
+                            placeholder="التاريخ (من)" class="peer block w-full" inputId="icondisplay">
                             <ng-template pTemplate="inputicon">
-                                <img src="/assets/icons/time-icon.svg" alt="" />
+                                <img src="/assets/icons/calender-icon.svg" alt="" />
                             </ng-template>
                         </p-datepicker>
                         <span
@@ -42,13 +32,12 @@
                     <span class="validation-message">هذا الحقل مطلوب</span>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="time-pick" class="label">الوقت (الى)</label>
+                    <label for="time-pick" class="label">التاريخ (الى)</label>
                     <div class="relative">
-                        <p-datepicker name="selectedAdminstration5" [(ngModel)]="date2" [iconDisplay]="'input'"
-                            [showIcon]="true" placeholder="الوقت (الى)" class="peer block w-full" inputId="icondisplay"
-                            [timeOnly]="true" id="time-pick">
+                        <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true"
+                            placeholder="التاريخ (الى)" class="peer block w-full" inputId="icondisplay">
                             <ng-template pTemplate="inputicon">
-                                <img src="/assets/icons/time-icon.svg" alt="" />
+                                <img src="/assets/icons/calender-icon.svg" alt="" />
                             </ng-template>
                         </p-datepicker>
                         <span
@@ -57,47 +46,32 @@
                     <span class="validation-message">هذا الحقل مطلوب</span>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="time-pick" class="label">الحد الأقصى للحضور</label>
+                    <label for="time-pick" class="label">الإدارة</label>
                     <div class="relative">
-                        <p-datepicker name="selectedAdminstration5" [(ngModel)]="date2" [iconDisplay]="'input'"
-                            [showIcon]="true" placeholder="الحد الأقصى للحضور" class="peer block w-full"
-                            inputId="icondisplay" [timeOnly]="true" id="time-pick">
-                            <ng-template pTemplate="inputicon">
-                                <img src="/assets/icons/time-icon.svg" alt="" />
-                            </ng-template>
-                        </p-datepicker>
+                        <p-select name="selectedAdminstration1" [options]="adminstrations"
+                            [(ngModel)]="selectedAdminstration" optionLabel="type" placeholder="الإدارة"
+                            class="w-full peer" id="empoyeeName-popup"></p-select>
                         <span
                             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                     </div>
                     <span class="validation-message">هذا الحقل مطلوب</span>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="time-pick" class="label">الحد الأقصى للانصراف</label>
+                    <label for="time-pick" class="label">اسم الموظف</label>
                     <div class="relative">
-                        <input placeholder="الحد الأقصى للانصراف" class="peer" fluid="true" id="nationalityAr"
-                            pInputText type="text" />
+                        <p-select name="selectedAdminstration1" [options]="adminstrations"
+                            [(ngModel)]="selectedAdminstration" optionLabel="type" placeholder="اسم الموظف"
+                            class="w-full peer" id="empoyeeName-popup"></p-select>
                         <span
                             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                     </div>
                     <span class="validation-message">هذا الحقل مطلوب</span>
-                </div>
-                <div class="lg:col-span-6 border-t pt-6 border-[#d2d6db]">
-                    <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-                        <input type="checkbox"
-                            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
-                        <svg class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                        <span class="text-base font-medium text-[#1f2a37]">موظف</span>
-                    </label>
                 </div>
             </div>
             <div class="actions mt-6 flex items-center justify-end gap-4">
                 <button class="btn gray-btn" (click)="close()">الغاء</button>
                 <button class="btn green-btn">إضافة</button>
             </div>
-        </form> -->
+        </form>
     </div>
 </div>

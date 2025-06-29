@@ -3,37 +3,77 @@
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
       <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        قائمة الاجازات و الأعياد
+        {{ 'HOLIDAYS_PAGE.HOLIDAYS_LIST' | translate }}
       </h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
       <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
         <div class="flex items-center justify-between">
-          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+            {{ 'HOLIDAYS_PAGE.SEARCH_FILTERS' | translate }}
+          </h5>
         </div>
         <div class="pt-6">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="relative lg:col-span-2">
-              <label for="cityEn" class="label">مسمى العطلة أو الاجازة</label>
+            <div class="relative">
+              <label class="label" for="holidayAr">{{
+                'HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC' | translate
+              }}</label>
               <input
-                id="cityEn"
-                placeholder="مسمى العطلة أو الاجازة"
-                type="text"
-                pInputText
+                [(ngModel)]="filterModel.nameAr"
+                [placeholder]="'HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC' | translate"
                 class="peer"
                 fluid="true"
+                id="holidayAr"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="holidayEn">{{
+                'HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH' | translate
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.nameEn"
+                [placeholder]="'HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH' | translate"
+                class="peer"
+                fluid="true"
+                id="holidayEn"
+                pInputText
+                type="text"
               />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative lg:col-span-1">
-              <label for="" class="label">التاريخ</label>
+              <label for="" class="label">{{ 'HOLIDAYS_PAGE.FROM' | translate }}</label>
               <p-datepicker
-                [(ngModel)]="date2"
+                [(ngModel)]="filterModel.dateFrom"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
-                placeholder="التاريخ"
+                placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
+                class="peer block w-full"
+                inputId="icondisplay"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img src="assets/icons/calender-icon.svg" alt="" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative lg:col-span-1">
+              <label for="" class="label">{{ 'HOLIDAYS_PAGE.TO' | translate }}</label>
+              <p-datepicker
+                [(ngModel)]="filterModel.dateTo"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
                 class="peer block w-full"
                 inputId="icondisplay"
               >
@@ -48,8 +88,12 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button class="btn black-btn">بحث</button>
-            <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+            <button (click)="search()" class="btn black-btn">
+              {{ 'HOLIDAYS_PAGE.SEARCH' | translate }}
+            </button>
+            <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
+              {{ 'HOLIDAYS_PAGE.RESET_SEARCH' | translate }}
+            </button>
           </div>
         </div>
       </div>
@@ -58,59 +102,76 @@
           class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
         >
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-            قائمة الاجازات و الأعياد
+            {{ 'HOLIDAYS_PAGE.HOLIDAYS_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button>
+            <button (click)="exportExcel('holidays.xlsx')" class="table-head-action-btn">
               <img src="/assets/icons/excel.svg" alt="" />
             </button>
             <button>
               <img src="/assets/icons/print.svg" alt="" />
             </button>
-            <button class="btn green-btn flex items-center" (click)="openDialog()">
+            <button class="btn green-btn flex items-center" (click)="addOrEditModel()">
               <img src="assets/icons/plus.svg" alt="" />
-              <span>إضافة إجازة جديدة</span>
+              <span>{{ 'HOLIDAYS_PAGE.ADD_NEW_HOLIDAY' | translate }}</span>
             </button>
           </div>
         </div>
-        <p-table [value]="attendance">
-          <ng-template #header>
-            <tr>
-              <th>الرقم التسلسلي</th>
-              <th>مسمى العطلة أو الاجازة</th>
-              <th>تاريخ البداية</th>
-              <th>تاريخ الانتهاء</th>
-              <th>الإجراء</th>
-            </tr>
-          </ng-template>
-          <ng-template #body let-attendance>
-            <tr>
-              <td>{{ attendance.serialNumber }}</td>
-              <td>{{ attendance.employeeName }}</td>
-              <td>{{ attendance.date }}</td>
-              <td>{{ attendance.time }}</td>
-              <td>
-                <div class="actions flex gap-2">
-                  <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
-                    <img src="/assets/icons/edit-action.svg" alt="تعديل" />
-                  </button>
-                  <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
-                    <img src="/assets/icons/delete-action.svg" alt="حذف" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-        <p-paginator
-          class="mt-6"
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
-        />
-        <div></div>
+        @if (list && list.length > 0) {
+          <p-table
+            [value]="list"
+            [rows]="paginationInfo.pageSize"
+            [first]="(paginationInfo.currentPage - 1) * paginationInfo.pageSize"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th>{{ 'HOLIDAYS_PAGE.CODE' | translate }}</th>
+                <th>{{ 'HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC' | translate }}</th>
+                <th>{{ 'HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH' | translate }}</th>
+                <th>{{ 'HOLIDAYS_PAGE.START_DATE' | translate }}</th>
+                <th>{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}</th>
+                <th>{{ 'HOLIDAYS_PAGE.ACTIONS' | translate }}</th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-holiday let-rowIndex="rowIndex">
+              <tr>
+                <td>
+                  {{ rowIndex + 1 + (paginationInfo.currentPage - 1) * paginationInfo.pageSize }}
+                </td>
+                <td>{{ holiday.nameAr }}</td>
+                <td>{{ holiday.nameEn }}</td>
+                <td>{{ holiday.startDate | date }}</td>
+                <td>{{ holiday.endDate | date }}</td>
+                <td>
+                  <div class="actions flex gap-2">
+                    <button (click)="addOrEditModel(holiday)" class="table-action-gray-btn">
+                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                    </button>
+                    <button class="table-action-red-btn">
+                      <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        } @else {
+          <div class="flex items-center justify-center h-64">
+            <p class="text-gray-500">{{ 'HOLIDAYS_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+          </div>
+        }
+        @if (paginationInfo) {
+          <p-paginator
+            (onPageChange)="onPageChange($event)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
+        }
       </div>
     </div>
   </div>

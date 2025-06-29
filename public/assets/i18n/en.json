@@ -21,7 +21,8 @@
     "ENGLISH_ONLY": "This field must contain English characters only",
     "SEARCH": "Search",
     "RESET_SEARCH": "Reset",
-    "SEARCH_FILTERS": "Search Filters"
+    "SEARCH_FILTERS": "Search Filters",
+    "START_BEFORE_END": "Start date must be before end date"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -183,5 +184,24 @@
     "TASKS_ASSIGNED_TO_EMPLOYEE": "Tasks Assigned to Employee",
     "DELETE_EMPLOYEE": "Delete Employee",
     "MAX_LENGTH_NAME": "Name cannot exceed 100 characters"
+  },
+  "HOLIDAYS_PAGE": {
+    "HOLIDAYS_LIST": "Holidays List",
+    "SEARCH_FILTERS": "Search Filters",
+    "HOLIDAY_NAME_ARABIC": "Holiday Name in Arabic",
+    "HOLIDAY_NAME_ENGLISH": "Holiday Name in English",
+    "START_DATE": "Start Date",
+    "END_DATE": "End Date",
+    "NOTES": "Notes",
+    "SEARCH": "Search",
+    "RESET_SEARCH": "Reset Search",
+    "ADD_NEW_HOLIDAY": "Add New Holiday",
+    "ACTIONS": "Actions",
+    "NO_DATA_TO_SHOW": "No data to display",
+    "DATE": "Date",
+    "CODE": "Code",
+    "FROM": "From",
+    "TO": "To",
+    "HOLIDAY": "Holiday"
   }
 }

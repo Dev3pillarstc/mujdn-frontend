@@ -11,6 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import * as XLSX from 'xlsx';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { LanguageService } from '@/services/shared/language.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -29,6 +31,7 @@ export abstract class BaseListComponent<
   paginationParams: PaginationParams = new PaginationParams();
   matDialog = inject(MatDialog);
   activatedRoute = inject(ActivatedRoute);
+  langService = inject(LanguageService);
   declare selectedModel?: Model;
 
   abstract get filterModel(): FilterModel;
@@ -114,10 +117,12 @@ export abstract class BaseListComponent<
       next: (res) => {
         const data = res.list;
         if (data && data.length > 0) {
+          const isRTL =
+            this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? true : false;
           const transformedData = data.map((item) => this.mapModelToExcelRow(item));
           const ws = XLSX.utils.json_to_sheet(transformedData);
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: true }] };
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
           XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
           XLSX.writeFile(wb, fileName);
         }
@@ -127,7 +132,7 @@ export abstract class BaseListComponent<
 
   protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
 
-  private paginationInfoMap(response: PaginatedList<Model>) {
+  protected paginationInfoMap(response: PaginatedList<Model>) {
     const paginationInfo = response.paginationInfo;
     this.paginationInfo.totalItems = paginationInfo.totalItems || 0;
     this.paginationParams.pageSize = paginationInfo.pageSize || 10;

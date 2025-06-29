@@ -51,13 +51,13 @@ export class SideBarLinksService {
       routerLink: ['/dashboard'],
     },
     {
-      label: 'قائمة الاجازات و الأعياد',
-      iconUrl: 'assets/icons/menu-icons/vacations.svg',
+      label: 'ورديات العمل',
+      iconUrl: 'assets/icons/menu-icons/shifts-icon.svg',
       routerLink: ['/dashboard'],
     },
     {
-      label: 'ورديات العمل',
-      iconUrl: 'assets/icons/menu-icons/shifts-icon.svg',
+      label: 'ورديات العمل المؤقتة',
+      iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
       routerLink: ['/dashboard'],
     },
     {
@@ -66,10 +66,11 @@ export class SideBarLinksService {
       routerLink: ['/dashboard'],
     },
     {
-      label: 'ورديات العمل المؤقتة',
-      iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
+      label: 'قائمة الاجازات و الأعياد',
+      iconUrl: 'assets/icons/menu-icons/vacations.svg',
       routerLink: ['/dashboard'],
     },
+
     {
       label: 'الإعدادات',
       iconUrl: 'assets/icons/menu-icons/settings.svg',

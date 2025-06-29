@@ -10,7 +10,6 @@ import { Injectable } from '@angular/core';
 import { CastResponseContainer } from 'cast-response';
 import { of, switchMap, Observable } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -40,13 +39,12 @@ export class UserService extends BaseCrudService<User, string> {
           return of(response.data);
         })
       );
-
+  }
 
   getUsersProfiles(): Observable<ListResponseData<UserProfilesLookop>> {
     return this.http.get<ListResponseData<UserProfilesLookop>>(
       this.getUrlSegment() + '/' + 'lookup',
       { withCredentials: true }
     );
-
   }
 }

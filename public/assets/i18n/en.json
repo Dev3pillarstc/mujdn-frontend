@@ -69,9 +69,63 @@
     "SELECT_REGION": "Select Region",
     "REGION": "Region"
   },
-  "DEPARTMENTS_PAGE": {
+  "DEPARTMENTS_HEADER_PAGE": {
     "ONE_LEVEL_APPROVAL": "One level approval",
-    "TWO_LEVEL_APPROVAL": "Two levels approval"
+    "TWO_LEVEL_APPROVAL": "Two levels approval",
+    "DEPARTMENT_NAME": "Department name",
+    "REGION": "Region",
+    "CITY": "City",
+    "PHONE": "Phone",
+    "ADDRESS": "Address",
+    "LEAVE_REQUEST": "Leave request",
+    "MANAGER_NAME": "Manager name"
+  },
+  "DEPARTMENTS_LIST_PAGE": {
+    "MUJAHIDEEN_DEPARMENT": "Mujahideen Department",
+    "DEPARTMENT_NAME": "Department name",
+    "REGION": "Region",
+    "CITY": "City",
+    "PHONE": "Phone",
+    "ADDRESS": "Address",
+    "LEAVE_REQUEST": "Leave request",
+    "MANAGER_NAME": "Manager name",
+    "SEARCH_FILTERS": "Search filters",
+    "SEARCH": "Search",
+    "ADD_NEW_DEPARTMENT": "Add new department",
+    "ADD_SUB_DEPARTMENT": "Add new sub-department",
+    "RESET_SEARCH": "Reset",
+    "ACTIONS": "Actions",
+    "NO_DEPARTMENTS_YET": "No departments yet",
+    "ADD_YOUR_DEPARTMENT": "Add your own departments",
+    "ONE_LEVEL_APPROVAL": "One level approval",
+    "TWO_LEVEL_APPROVAL": "Two levels approval",
+    "DASHBOARD": "Dashboard",
+    "DEPARTMENTS_LIST": "Departments list"
+  },
+  "DEPARTMENT_POPUP": {
+    "ADD_DEPARTMENT": "New department",
+    "EDIT_DEPARTMENT": "Edit department",
+    "DEPARTMENT_NAME_ARABIC": "Department name in arabic",
+    "DEPARTMENT_NAME_ENGLISH": "Department name in english",
+    "PHONE_NUMBER": "Phone number",
+    "ADDRESS": "Address",
+    "LEAVE_REQUEST": "Leave request",
+    "REQUIRED_FIELD": "This field is required",
+    "REGION": "Region",
+    "CHOOSE_REGION": "Choose region",
+    "CITY": "City",
+    "CHOOSE_CITY": "Choose city",
+    "PHONE": "Phone",
+    "FAX": "Fax",
+    "MANAGER_NAME": "Manager name",
+    "APPROVAL_LEVEL": "Approval level",
+    "ONE_LEVEL_APPROVAL": "One level approval",
+    "TWO_LEVEL_APPROVAL": "Two levels approval",
+    "SAVE": "Save",
+    "CANCEL": "Cancel"
+  },
+  "DEPARTMENT_TREE": {
+    "DEPARTMENTS_LIST": "Departments List"
   },
   "REGIONS_PAGE": {
     "REGIONS_LIST": "Regions List",

@@ -69,9 +69,63 @@
     "SELECT_REGION": "اختر المنطقة",
     "REGION": "المنطقة"
   },
-  "DEPARTMENTS_PAGE": {
+  "DEPARTMENTS_HEADER_PAGE": {
     "ONE_LEVEL_APPROVAL": "موافقه على مستوى واحد",
-    "TWO_LEVEL_APPROVAL": "موافقه على مستويين"
+    "TWO_LEVEL_APPROVAL": "موافقه على مستويين",
+    "DEPARTMENT_NAME": "اسم الإدارة",
+    "REGION": "المنطقة",
+    "CITY": "المدينة",
+    "PHONE": "الهاتف",
+    "ADDRESS": "العنوان",
+    "LEAVE_REQUEST": "طلب الاذن",
+    "MANAGER_NAME": "اسم المدير"
+  },
+  "DEPARTMENTS_LIST_PAGE": {
+    "MUJAHIDEEN_DEPARMENT": "ادارة المجاهدين",
+    "DEPARTMENT_NAME": "اسم الإدارة",
+    "REGION": "المنطقة",
+    "CITY": "المدينة",
+    "PHONE": "الهاتف",
+    "ADDRESS": "العنوان",
+    "LEAVE_REQUEST": "طلب الاذن",
+    "MANAGER_NAME": "اسم المدير",
+    "SEARCH_FILTERS": "تصفية البحث",
+    "SEARCH": "بحث",
+    "ADD_NEW_DEPARTMENT": "إضافة إدارة جديدة",
+    "ADD_SUB_DEPARTMENT": "إضافة إدارة فرعية جديدة",
+    "RESET_SEARCH": "إعادة تعيين",
+    "ACTIONS": "الإجراء",
+    "NO_DEPARTMENTS_YET": "لا توجد إدارات بعد",
+    "ADD_YOUR_DEPARTMENT": "قم بإضافة الإدارات الخاصه بك",
+    "ONE_LEVEL_APPROVAL": "موافقه على مستوى واحد",
+    "TWO_LEVEL_APPROVAL": "موافقه على مستويين",
+    "DASHBOARD": "لوحة المعلومات",
+    "DEPARTMENTS_LIST": "قائمة الإدارات"
+  },
+  "DEPARTMENT_POPUP": {
+    "ADD_DEPARTMENT": "إدارة جديدة",
+    "EDIT_DEPARTMENT": "تعديل الإدارة",
+    "DEPARTMENT_NAME_ARABIC": "اسم الإدارة بالعربية",
+    "DEPARTMENT_NAME_ENGLISH": "اسم الإدارة بالانجليزية",
+    "PHONE_NUMBER": "رقم الهاتف",
+    "ADDRESS": "العنوان",
+    "LEAVE_REQUEST": "طلب الإذن",
+    "REQUIRED_FIELD": "هذا الحقل مطلوب",
+    "REGION": "المنطقة",
+    "CHOOSE_REGION": "اختر المنطقة",
+    "CITY": "المدينة",
+    "CHOOSE_CITY": "اختر المدينة",
+    "PHONE": "الهاتف",
+    "FAX": "الفاكس",
+    "MANAGER_NAME": "اسم المدير",
+    "APPROVAL_LEVEL": "مستوى الموافقة",
+    "ONE_LEVEL_APPROVAL": "موافقه على مستوى واحد",
+    "TWO_LEVEL_APPROVAL": "موافقه على مستويين",
+    "SAVE": "حفظ",
+    "CANCEL": "إلغاء"
+  },
+  "DEPARTMENT_TREE": {
+    "DEPARTMENTS_LIST": "قائمة الإدارات"
   },
   "REGIONS_PAGE": {
     "REGIONS_LIST": "قائمة المناطق",

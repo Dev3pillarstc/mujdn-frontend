@@ -25,7 +25,7 @@ export abstract class BaseListComponent<
   abstract dialogSize: any;
   first: number = 0;
   rows: number = 10;
-  declare paginationInfo: PaginationInfo;
+  paginationInfo: PaginationInfo = new PaginationInfo();
   items: MenuItem[] | undefined;
   list: Model[] = [];
   paginationParams: PaginationParams = new PaginationParams();

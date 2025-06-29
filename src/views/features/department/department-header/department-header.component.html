@@ -8,60 +8,79 @@
       {{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}
     </h4>
     <div class="actions flex items-center gap-4 ms-auto pb-4">
-      <button class="flex items-center justify-center gap-1 p-2 rounded border border-white/40">
+      <button
+        class="flex items-center justify-center gap-1 p-2 rounded border border-white/40"
+        (click)="openDialog()"
+      >
         <img class="w-[21.5px] h-[21.5px]" src="/assets/icons/edit.png" alt="" />
       </button>
-      <button class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca]">
+      <button
+        class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca]"
+        [disabled]="departmentData?.fkParentDepartmentId == null"
+        (click)="delete(departmentData?.id)"
+      >
         <img class="w-[21.5px] h-[21.5px]" src="/assets/icons/delete.png" alt="" />
       </button>
     </div>
   </div>
   <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mt-6">
     <div>
-      <p class="text-sm text-white mb-2">اسم الإدارة</p>
+      <p class="text-sm text-white mb-2">
+        {{ 'DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME' | translate }}
+      </p>
       <h5 class="text-base font-semibold text-white">
         {{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}
       </h5>
     </div>
     <div>
-      <p class="text-sm text-white mb-2">المنطقة</p>
+      <p class="text-sm text-white mb-2">{{ 'DEPARTMENTS_HEADER_PAGE.REGION' | translate }}</p>
       <h5 class="text-base font-semibold text-white">
         {{
-          isCurrentLanguageEnglish() ? departmentData?.regionNameEn : departmentData?.regionNameAr
+          isCurrentLanguageEnglish()
+            ? departmentData?.region?.nameEn
+            : departmentData?.region?.nameAr
         }}
       </h5>
     </div>
     <div>
-      <p class="text-sm text-white mb-2">المدينة</p>
+      <p class="text-sm text-white mb-2">{{ 'DEPARTMENTS_HEADER_PAGE.CITY' | translate }}</p>
       <h5 class="text-base font-semibold text-white">
-        {{ isCurrentLanguageEnglish() ? departmentData?.cityNameEn : departmentData?.cityNameAr }}
+        {{
+          isCurrentLanguageEnglish() ? departmentData?.city?.nameEn : departmentData?.city?.nameAr
+        }}
       </h5>
     </div>
     <div>
-      <p class="text-sm text-white mb-2">الهاتف</p>
+      <p class="text-sm text-white mb-2">{{ 'DEPARTMENTS_HEADER_PAGE.PHONE' | translate }}</p>
       <h5 class="text-base font-semibold text-white">{{ departmentData?.phoneNumber }}</h5>
     </div>
     <div>
-      <p class="text-sm text-white mb-2">العنوان</p>
+      <p class="text-sm text-white mb-2">{{ 'DEPARTMENTS_HEADER_PAGE.ADDRESS' | translate }}</p>
       <h5 class="text-base font-semibold text-white">{{ departmentData?.address }}</h5>
     </div>
     <div>
-      <p class="text-sm text-white mb-2">الفاكس</p>
+      <p class="text-sm text-white mb-2">{{ 'DEPARTMENTS_HEADER_PAGE.ADDRESS' | translate }}</p>
       <h5 class="text-base font-semibold text-white">{{ departmentData?.fax }}</h5>
     </div>
     <div>
-      <p class="text-sm text-white mb-2">طلب الاذن</p>
+      <p class="text-sm text-white mb-2">
+        {{ 'DEPARTMENTS_HEADER_PAGE.LEAVE_REQUEST' | translate }}
+      </p>
       <span
         class="min-w-[109px] min-h-[24px] inline-flex items-center justify-center font-medium text-[#1f2a37] px-4 rounded-full bg-[#f9fafb]"
       >
-        {{ 'DEPARTMENTS_PAGE.' + getApprovalLevelText() | translate }}</span
+        {{ 'DEPARTMENTS_HEADER_PAGE.' + getApprovalLevelText() | translate }}</span
       >
     </div>
     <div>
-      <p class="text-sm text-white mb-2">اسم المدير</p>
+      <p class="text-sm text-white mb-2">
+        {{ 'DEPARTMENTS_HEADER_PAGE.MANAGER_NAME' | translate }}
+      </p>
       <h5 class="text-base font-semibold text-white">
         {{
-          isCurrentLanguageEnglish() ? departmentData?.managerNameEn : departmentData?.managerNameAr
+          isCurrentLanguageEnglish()
+            ? departmentData?.manager?.fullNameEn
+            : departmentData?.manager?.fullNameAr
         }}
       </h5>
     </div>

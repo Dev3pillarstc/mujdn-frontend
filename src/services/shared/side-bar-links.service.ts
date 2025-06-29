@@ -56,6 +56,21 @@ export class SideBarLinksService {
       routerLink: ['/dashboard'],
     },
     {
+      label: 'ورديات العمل',
+      iconUrl: 'assets/icons/menu-icons/shifts-icon.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'اسناد ورديات عمل',
+      iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'ورديات العمل المؤقتة',
+      iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
       label: 'الإعدادات',
       iconUrl: 'assets/icons/menu-icons/settings.svg',
       children: [

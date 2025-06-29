@@ -148,13 +148,18 @@ export default class EmployeeListComponent
     this.filterModel.fkDepartmentId = deptId;
   }
 
-  openEmployeePermissionModal() {
-    const dialogRef = this.matDialog.open(EmployeePermissionPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
+  openEmployeePermissionModal(user: User) {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = { model: user };
+    dialogConfig.width = '100%';
+    dialogConfig.maxWidth = '1024px';
+    const dialogRef = this.matDialog.open(EmployeePermissionPopupComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe();
+    dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result && result == DIALOG_ENUM.OK) {
+        this.loadList();
+      }
+    });
   }
 
   assignShiftPopup() {

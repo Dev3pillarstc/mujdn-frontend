@@ -49,7 +49,6 @@ export class HolidaysPopupComponent extends BasePopupComponent<Holiday> implemen
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
-    console.log('HolidaysPopupComponent initialized with data:', data);
   }
 
   get nameArControl() {

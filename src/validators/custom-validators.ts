@@ -35,7 +35,19 @@ export function pattern(patternName: customValidationTypes): ValidatorFn {
     return !validationPatterns[patternName].test(control.value) ? response : null;
   };
 }
+function startBeforeEnd(startField: string, endField: string): ValidatorFn {
+  return (form: AbstractControl): ValidationErrors | null => {
+    const start = form.get(startField)?.value;
+    const end = form.get(endField)?.value;
 
+    if (!start || !end) return null;
+
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    return startDate > endDate ? { startAfterEnd: true } : null;
+  };
+}
 export type customValidationTypes =
   | 'ENG_NUM'
   | 'AR_NUM'
@@ -54,7 +66,8 @@ export type customValidationTypes =
   | 'PHONE_NUMBER'
   | 'WEBSITE'
   | 'URL'
-  | 'HAS_LETTERS';
+  | 'HAS_LETTERS'
+  | 'START_BEFORE_END';
 
 export const validationPatterns: any = {
   ENG_NUM: new RegExp(/^[a-zA-Z0-9\- ]+$/),
@@ -89,4 +102,5 @@ export const validationPatterns: any = {
 export const CustomValidators = {
   defaultLengths,
   pattern,
+  startBeforeEnd,
 };

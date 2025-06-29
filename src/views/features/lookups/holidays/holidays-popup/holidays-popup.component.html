@@ -97,6 +97,7 @@
           </div>
           <app-validation-messages [control]="endDateControl"></app-validation-messages>
         </div>
+        <app-validation-messages [control]="form"></app-validation-messages>
         <div class="md:col-span-2">
           <label for="" class="label">{{ 'HOLIDAYS_PAGE.NOTES' | translate }}</label>
           <div class="relative w-full">
@@ -115,7 +116,6 @@
           </div>
           <app-validation-messages [control]="notesControl"></app-validation-messages>
         </div>
-        <app-validation-messages [control]="form"></app-validation-messages>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>

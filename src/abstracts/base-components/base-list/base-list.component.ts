@@ -18,7 +18,8 @@ export abstract class BaseListComponent<
   PopupComponent,
   TService extends BaseCrudService<Model, string | number>,
   FilterModel,
-> implements OnInit {
+> implements OnInit
+{
   abstract dialogSize: any;
   first: number = 0;
   rows: number = 10;

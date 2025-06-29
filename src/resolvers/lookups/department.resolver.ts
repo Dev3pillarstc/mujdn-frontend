@@ -1,17 +1,13 @@
-import { Department } from '@/models/features/lookups/Department/department';
-import { DepartmentResolverData } from '@/models/features/lookups/Department/department-resolver-data';
 import { PaginationParams } from '@/models/shared/pagination-params';
-import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { CityService } from '@/services/features/lookups/city.service';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { RegionService } from '@/services/features/lookups/region.service';
 import { UserService } from '@/services/features/user.service';
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
-import { of, switchMap, map, forkJoin } from 'rxjs';
+import { forkJoin, map, switchMap } from 'rxjs';
 
 // Define the return type for the resolver
-
 
 export const departmentResolver: ResolveFn<any> = (route, state) => {
   const departmentService = inject(DepartmentService);
@@ -38,10 +34,9 @@ export const departmentResolver: ResolveFn<any> = (route, state) => {
       const firstParentDept = departmentsTree.data[0];
 
       return forkJoin({
-        childDepartments: departmentService.loadPaginated(
-          new PaginationParams(),
-          { fkParentDepartmentId: firstParentDept.id }
-        ),
+        childDepartments: departmentService.loadPaginated(new PaginationParams(), {
+          fkParentDepartmentId: firstParentDept.id,
+        }),
         cities: cityService.load(),
         regions: regionService.load(),
         users: userService.getUsersProfiles(),
@@ -51,7 +46,7 @@ export const departmentResolver: ResolveFn<any> = (route, state) => {
           childDepartments,
           cities,
           regions,
-          users
+          users,
         }))
       );
     })

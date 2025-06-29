@@ -2,12 +2,10 @@ import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { DepartmentInterceptor } from '@/model-interceptors/features/lookups/department-interceptor';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { InterceptModel } from 'cast-response';
-import { DepartmentRegion } from './department-region';
-import { DepartmentCity } from './department-city';
-import { DepartmentManager } from './department-manager';
 import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
 import { BaseLookupModel } from '../base-lookup-model';
+import { DepartmentManager } from '@/models/features/lookups/department/department-manager';
 
 const { send, receive } = new DepartmentInterceptor();
 
@@ -30,7 +28,17 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
   declare isOneLevelApproval: boolean;
 
   buildForm() {
-    const { nameAr, nameEn, fkRegionId, fkCityId, address, phoneNumber, fax, fkManagerId, isOneLevelApproval } = this;
+    const {
+      nameAr,
+      nameEn,
+      fkRegionId,
+      fkCityId,
+      address,
+      phoneNumber,
+      fax,
+      fkManagerId,
+      isOneLevelApproval,
+    } = this;
     return {
       nameAr: [
         nameAr,
@@ -50,38 +58,28 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
           CustomValidators.pattern('ENG_NUM'),
         ],
       ],
-      fkRegionId: [
-        fkRegionId, [Validators.required]
-      ],
-      fkCityId: [
-        fkCityId, [Validators.required]
-      ],
+      fkRegionId: [fkRegionId, [Validators.required]],
+      fkCityId: [fkCityId, [Validators.required]],
       address: [
-        address, [
-          Validators.required,
-          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH)
-        ]
+        address,
+        [Validators.required, Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH)],
       ],
       phoneNumber: [
-        phoneNumber, [
+        phoneNumber,
+        [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX)
-        ]
+          Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
+        ],
       ],
       fax: [
-        fax, [
+        fax,
+        [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX)
-        ]
+          Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
+        ],
       ],
-      fkManagerId: [
-        fkManagerId, []
-      ],
-      isOneLevelApproval: [
-        isOneLevelApproval, [
-          Validators.required
-        ]
-      ]
+      fkManagerId: [fkManagerId, []],
+      isOneLevelApproval: [isOneLevelApproval, [Validators.required]],
     };
   }
 }

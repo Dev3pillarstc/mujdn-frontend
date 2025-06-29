@@ -1,5 +1,6 @@
-import { Department } from '@/models/features/lookups/department/department';
+// import { Department } from '@/models/features/lookups/department/department';
 import { ModelInterceptorContract } from 'cast-response';
+import { Department } from '@/models/features/lookups/department/department';
 
 export class DepartmentInterceptor implements ModelInterceptorContract<Department> {
   send(model: any): any {

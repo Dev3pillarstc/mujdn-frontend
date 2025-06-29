@@ -4,7 +4,7 @@ import { PERMISSION_APPROVAL_LEVELS } from '@/enums/permission-approval-levels';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { UserProfilesLookop } from '@/models/auth/users-profiles-lookup';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
 import { Department } from '@/models/features/lookups/department/department';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { LanguageService } from '@/services/shared/language.service';
@@ -12,6 +12,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DepartmentPopupComponent } from '../department-popup/department-popup.component';
+
 @Component({
   selector: 'app-department-header',
   imports: [TranslatePipe],
@@ -33,12 +34,14 @@ export class DepartmentHeaderComponent {
     width: '100%',
     maxWidth: '600px',
   };
+
   getApprovalLevelText(): string {
     if (!this.departmentData) return '';
 
     const isOneLevel = this.departmentData.isOneLevelApproval;
     return isOneLevel ? 'ONE_LEVEL_APPROVAL' : 'TWO_LEVEL_APPROVAL';
   }
+
   delete(departmentId: number | undefined): void {
     this.departmentDeleted.emit(departmentId);
   }
@@ -67,6 +70,7 @@ export class DepartmentHeaderComponent {
       }
     });
   }
+
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }

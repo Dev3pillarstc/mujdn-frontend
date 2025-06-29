@@ -4,12 +4,12 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
 import { CommonModule } from '@angular/common';
-import { Department } from '@/models/features/lookups/Department/department';
+import { Department } from '@/models/features/lookups/department/department';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from '@/services/shared/alert.service';
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { UserProfilesLookop } from '@/models/auth/users-profiles-lookup';
@@ -54,6 +54,11 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     super();
   }
 
+  get langOptionLabel(): string {
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  }
+
   override initPopup() {
     // First, initialize the model and data
     this.model = this.data.model;
@@ -72,36 +77,20 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     // Finally, set up the region change listener
     this.setupRegionChangeListener();
   }
+
   onRegionChange(event: any): void {
     const regionId = event.value;
     this.filterCitiesByRegion(regionId);
   }
+
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm());
-  }
-
-  private initializeFilteredCities(): void {
-    const currentRegionId = this.model.fkRegionId;
-    this.filterCitiesByRegion(currentRegionId);
   }
 
   setupRegionChangeListener(): void {
     this.form.get('fkRegionId')?.valueChanges.subscribe((regionId) => {
       this.filterCitiesByRegion(regionId);
     });
-  }
-
-  private filterCitiesByRegion(regionId: any): void {
-    if (regionId) {
-      this.filteredCities = this.cities.filter((city) => city.fkRegionId === regionId);
-    } else {
-      this.filteredCities = [];
-    }
-
-    const currentCityId = this.form.get('fkCityId')?.value;
-    if (currentCityId && !this.filteredCities.some((city) => city.id === currentCityId)) {
-      this.form.get('fkCityId')?.setValue(null);
-    }
   }
 
   override saveFail(error: Error): void {
@@ -131,6 +120,28 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     return this.model;
   }
 
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
+  }
+
+  private initializeFilteredCities(): void {
+    const currentRegionId = this.model.fkRegionId;
+    this.filterCitiesByRegion(currentRegionId);
+  }
+
+  private filterCitiesByRegion(regionId: any): void {
+    if (regionId) {
+      this.filteredCities = this.cities.filter((city) => city.fkRegionId === regionId);
+    } else {
+      this.filteredCities = [];
+    }
+
+    const currentCityId = this.form.get('fkCityId')?.value;
+    if (currentCityId && !this.filteredCities.some((city) => city.id === currentCityId)) {
+      this.form.get('fkCityId')?.setValue(null);
+    }
+  }
+
   // Helper method to debug form errors
   private getFormErrors(form: FormGroup): any {
     const errors: any = {};
@@ -141,14 +152,5 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
       }
     });
     return errors;
-  }
-
-  isCurrentLanguageEnglish() {
-    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
-  }
-
-  get langOptionLabel(): string {
-    const lang = this.languageService.getCurrentLanguage();
-    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 }

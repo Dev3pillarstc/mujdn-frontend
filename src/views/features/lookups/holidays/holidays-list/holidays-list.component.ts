@@ -11,7 +11,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { HolidaysPopupComponent } from '../holidays-popup/holidays-popup.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
-import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { Holiday } from '@/models/features/lookups/holiday/holiday';
 import { HolidayService } from '@/services/features/lookups/holiday.service';
@@ -59,18 +58,17 @@ export default class HolidaysListComponent extends BaseListComponent<
 
   override initListComponent(): void {}
 
-  override openDialog(model: Holiday): void {
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    this.openBaseDialog(HolidaysPopupComponent as any, model, viewMode);
+  override openDialog(model: Holiday, viewMode?: ViewModeEnum): void {
+    this.openBaseDialog(HolidaysPopupComponent as any, model, viewMode!);
   }
 
   addOrEditModel(holiday?: Holiday) {
+    const viewMode = holiday ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     holiday = holiday || new Holiday();
-    this.openDialog(holiday);
+    this.openDialog(holiday, viewMode);
   }
 
   protected override mapModelToExcelRow(model: Holiday): { [key: string]: any } {
-    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
     return {
       [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY')]: model.getName(),
       [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.getStartDate(),

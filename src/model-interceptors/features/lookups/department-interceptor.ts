@@ -1,4 +1,4 @@
-import { Department } from '@/models/features/lookups/Department/department';
+import { Department } from '@/models/features/lookups/department/department';
 import { ModelInterceptorContract } from 'cast-response';
 
 export class DepartmentInterceptor implements ModelInterceptorContract<Department> {
@@ -9,6 +9,7 @@ export class DepartmentInterceptor implements ModelInterceptorContract<Departmen
     delete model.childDepartments;
     return model;
   }
+
   receive(model: any): any {
     delete model.$$__service_name__$$;
     return model;

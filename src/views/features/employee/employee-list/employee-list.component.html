@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'EMPLOYEES_PAGE.EMPLOYEES_LIST' | translate }}
       </h3>
@@ -10,22 +10,23 @@
       <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
         <div class="flex items-center justify-between">
           <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-            {{ 'EMPLOYEES_PAGE.SEARCH_FILTERS' | translate }}
+            {{ 'COMMON.SEARCH_FILTERS' | translate }}
           </h5>
         </div>
         <div class="pt-6">
           <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
               <label class="label" for="department">{{
-                  'EMPLOYEES_PAGE.DEPARTMENT' | translate
-                }}</label>
+                'EMPLOYEES_PAGE.DEPARTMENT' | translate
+              }}</label>
               <p-select
                 [(ngModel)]="selectedDepartment"
+                (ngModelChange)="onDepartmentChange($event)"
                 [options]="departments"
                 [placeholder]="'EMPLOYEES_PAGE.DEPARTMENT' | translate"
                 class="w-full peer"
                 id="department"
-                optionLabel="nameEn"
+                [optionLabel]="departmentOptionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -34,8 +35,8 @@
             </div>
             <div class="relative">
               <label class="label" for="employeeNameAr">{{
-                  'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
-                }}</label>
+                'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
+              }}</label>
               <input
                 [(ngModel)]="filterModel.fullNameAr"
                 [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate"
@@ -51,8 +52,8 @@
             </div>
             <div class="relative">
               <label class="label" for="employeeNameEn">{{
-                  'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate
-                }}</label>
+                'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate
+              }}</label>
               <input
                 [(ngModel)]="filterModel.fullNameEn"
                 [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate"
@@ -68,8 +69,8 @@
             </div>
             <div class="relative">
               <label class="label" for="joinDate">{{
-                  'EMPLOYEES_PAGE.JOIN_DATE' | translate
-                }}</label>
+                'EMPLOYEES_PAGE.JOIN_DATE' | translate
+              }}</label>
               <p-datepicker
                 [(ngModel)]="filterModel.joinDate"
                 [iconDisplay]="'input'"
@@ -79,7 +80,7 @@
                 inputId="joinDate"
               >
                 <ng-template pTemplate="inputicon">
-                  <img alt="" src="/assets/icons/calender-icon.svg"/>
+                  <img alt="" src="/assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
@@ -88,8 +89,8 @@
             </div>
             <div class="relative">
               <label class="label" for="accountStatus">{{
-                  'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
-                }}</label>
+                'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
+              }}</label>
               <p-select
                 [(ngModel)]="filterModel.isActive"
                 [options]="accountStatusOptions"
@@ -106,11 +107,11 @@
             </div>
             <div class="relative">
               <label class="label" for="jobTitle">{{
-                  'EMPLOYEES_PAGE.JOB_TITLE' | translate
-                }}</label>
+                'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate
+              }}</label>
               <input
                 [(ngModel)]="filterModel.jobTitleAr"
-                [placeholder]="'EMPLOYEES_PAGE.JOB_TITLE' | translate"
+                [placeholder]="'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate"
                 class="peer"
                 fluid="true"
                 id="jobTitle"
@@ -123,8 +124,8 @@
             </div>
             <div class="relative">
               <label class="label" for="shiftType">{{
-                  'EMPLOYEES_PAGE.SHIFT_TYPE' | translate
-                }}</label>
+                'EMPLOYEES_PAGE.SHIFT_TYPE' | translate
+              }}</label>
               <p-select
                 [(ngModel)]="selectedDepartment"
                 [options]="departments"
@@ -139,8 +140,8 @@
             </div>
             <div class="relative">
               <label class="label" for="fingerPrint">{{
-                  'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate
-                }}</label>
+                'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate
+              }}</label>
               <p-select
                 [(ngModel)]="filterModel.CanLeaveWithoutFingerPrint"
                 [options]="fingerprintExemptionOptions"
@@ -158,10 +159,10 @@
 
           <div class="actions flex items-center gap-4 pt-6">
             <button (click)="search()" class="btn black-btn">
-              {{ 'EMPLOYEES_PAGE.SEARCH' | translate }}
+              {{ 'COMMON.SEARCH' | translate }}
             </button>
             <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
-              {{ 'EMPLOYEES_PAGE.RESET_SEARCH' | translate }}
+              {{ 'COMMON.RESET_SEARCH' | translate }}
             </button>
           </div>
         </div>
@@ -175,13 +176,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button (click)="exportExcel('employees.xlsx')" class="table-head-action-btn">
-              <img alt="" src="/assets/icons/excel.svg"/>
+              <img alt="" src="/assets/icons/excel.svg" />
             </button>
             <button class="table-head-action-btn">
-              <img alt="" src="/assets/icons/print.svg"/>
+              <img alt="" src="/assets/icons/print.svg" />
             </button>
             <button (click)="openDialog()" class="btn green-btn flex items-center">
-              <img alt="" src="assets/icons/plus.svg"/>
+              <img alt="" src="assets/icons/plus.svg" />
               <span>{{ 'EMPLOYEES_PAGE.ADD_NEW_EMPLOYEE' | translate }}</span>
             </button>
           </div>
@@ -211,9 +212,9 @@
                 <td>
                   <div class="flex justify-center gap-2">
                     @if (user.canLeaveWithoutFingerPrint) {
-                      <img src="assets/icons/right-icon.svg" alt=""/>
+                      <img src="assets/icons/right-icon.svg" alt="" />
                     } @else {
-                      <img src="assets/icons/wrong-icon.svg" alt=""/>
+                      <img src="assets/icons/wrong-icon.svg" alt="" />
                     }
                   </div>
                 </td>
@@ -222,9 +223,9 @@
                 <td>
                   <div class="flex justify-center gap-2">
                     @if (user.isActive) {
-                      <img src="assets/icons/right-icon.svg" alt=""/>
+                      <img src="assets/icons/right-icon.svg" alt="" />
                     } @else {
-                      <img src="assets/icons/wrong-icon.svg" alt=""/>
+                      <img src="assets/icons/wrong-icon.svg" alt="" />
                     }
                   </div>
                 </td>
@@ -235,10 +236,10 @@
                       class="btn gray-btn flex align-items gap-4 min-w-[144px]"
                       (click)="openEmployeePermissionModal()"
                     >
-                      <img src="/assets/icons/edit.svg" alt=""/>
+                      <img src="/assets/icons/edit.svg" alt="" />
                       <span class="text-sm">{{
-                          'EMPLOYEES_PAGE.EDIT_PERMISSIONS' | translate
-                        }}</span>
+                        'EMPLOYEES_PAGE.EDIT_PERMISSIONS' | translate
+                      }}</span>
                     </button>
                     <p-splitbutton
                       (click)="setSelectedModel(user)"

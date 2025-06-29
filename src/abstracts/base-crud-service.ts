@@ -85,14 +85,12 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   @CastResponse()
   @HasInterception
   create(@InterceptParam() model: Model): Observable<Model> {
-    // model = genericDateOnlyConvertor(model);
     return this.http.post<Model>(this.getUrlSegment(), model, { withCredentials: true });
   }
 
   @CastResponse()
   @HasInterception
   update(@InterceptParam() model: Model): Observable<Model> {
-    // model = genericDateOnlyConvertor(model);
     return this.http.put<Model>(this.getUrlSegment(), model, { withCredentials: true });
   }
 

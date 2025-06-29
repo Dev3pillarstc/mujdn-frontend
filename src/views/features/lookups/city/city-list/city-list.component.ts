@@ -7,9 +7,9 @@ import { TableModule } from 'primeng/table';
 import { CityService } from '@/services/features/lookups/city.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { CityPopupComponent } from '../city-popup/city-popup.component';
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Region } from '@/models/features/lookups/region/region';
@@ -30,6 +30,7 @@ export default class CityListComponent extends BaseListComponent<
   CityService,
   CityFilter
 > {
+  translateService = inject(TranslateService);
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
     width: '100%',
@@ -65,8 +66,7 @@ export default class CityListComponent extends BaseListComponent<
   protected override mapModelToExcelRow(model: City): { [key: string]: any } {
     const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
     return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'المدينة' : 'City']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+      [this.translateService.instant('CITIES_PAGE.CITY')]: model.getName(),
     };
   }
 }

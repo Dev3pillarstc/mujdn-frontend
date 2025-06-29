@@ -1,16 +1,29 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
+import { debounceTime, delay, map, Observable, of, startWith } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-validation-messages',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, AsyncPipe],
   templateUrl: './validation-messages.component.html',
   styleUrls: ['./validation-messages.component.scss'],
 })
-export class ValidationMessagesComponent {
+export class ValidationMessagesComponent implements OnInit {
   control = input.required<AbstractControl>();
-  getActiveErrors(): { key: string; value: any }[] {
-    return Object.entries(this.control()?.errors || {}).map(([key, value]) => ({ key, value }));
+  activeErrors$!: Observable<{ key: string; value: any }[]>;
+
+  ngOnInit(): void {
+    const ctrl = this.control();
+
+    this.activeErrors$ = ctrl.statusChanges.pipe(
+      startWith(null), // trigger immediately
+      debounceTime(100),
+      map(() => {
+        const errors = ctrl.errors || {};
+        return Object.entries(errors).map(([key, value]) => ({ key, value }));
+      })
+    );
   }
 }

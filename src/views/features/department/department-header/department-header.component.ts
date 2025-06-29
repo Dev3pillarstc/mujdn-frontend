@@ -5,7 +5,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { UserProfilesLookop } from '@/models/auth/users-profiles-lookup';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { City } from '@/models/features/lookups/City/city';
-import { Department } from '@/models/features/lookups/Department/department';
+import { Department } from '@/models/features/lookups/department/department';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { LanguageService } from '@/services/shared/language.service';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';

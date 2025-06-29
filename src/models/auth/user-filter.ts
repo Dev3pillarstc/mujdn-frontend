@@ -4,7 +4,7 @@ export class UserFilter {
   declare jobTitleEn?: string;
   declare jobTitleAr?: string;
   declare joinDate?: Date | string;
-  // declare fkDepartmentId?: number;
+  declare fkDepartmentId?: number;
   declare isActive?: boolean;
   declare CanLeaveWithoutFingerPrint?: boolean;
 }

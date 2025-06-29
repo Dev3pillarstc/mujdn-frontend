@@ -1,8 +1,11 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
-import { City } from '@/models/features/lookups/City/city';
+import { City } from '@/models/features/lookups/city/city';
+import { CityLookup } from '@/models/features/lookups/city/city-lookup';
+import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Injectable } from '@angular/core';
-import { CastResponseContainer } from 'cast-response';
+import { CastResponse, CastResponseContainer } from 'cast-response';
+import { Observable, of, switchMap } from 'rxjs';
 
 @CastResponseContainer({
   $default: {
@@ -13,6 +16,11 @@ import { CastResponseContainer } from 'cast-response';
     unwrap: 'data',
     shape: { 'list.*': () => City },
   },
+  $lookup: {
+    model: () => CityLookup,
+    unwrap: 'data',
+    shape: { data: () => CityLookup },
+  },
 })
 @Injectable({
   providedIn: 'root',
@@ -22,5 +30,18 @@ export class CityService extends BaseCrudService<City> {
 
   override getUrlSegment(): string {
     return this.urlService.URLS.CITIES;
+  }
+
+  @CastResponse(undefined, { fallback: '$lookup' })
+  getCitiesLookup(): Observable<CityLookup[]> {
+    return this.http
+      .get<ListResponseData<CityLookup>>(this.getUrlSegment() + '/' + 'lookup', {
+        withCredentials: true,
+      })
+      .pipe(
+        switchMap((response: ListResponseData<CityLookup>) => {
+          return of(response.data);
+        })
+      );
   }
 }

@@ -2,6 +2,7 @@
   "COMMON": {
     "OK": "نعم",
     "CANCEL": "إلغاء",
+    "ADD": "إضافة",
     "ERROR": "خطأ",
     "SUCCESS": "نجاح",
     "ALERT": "تنبيه",
@@ -17,7 +18,10 @@
     "MIN_LENGTH": "يجب أن يكون الحد الأدنى للحقل هو 3",
     "MAX_LENGTH": "يجب أن يكون الحد الأقصى للحقل هو 300",
     "ARABIC_ONLY": "يجب أن يحتوي هذا الحقل على أحرف عربية فقط",
-    "ENGLISH_ONLY": "يجب أن يحتوي هذا الحقل على أحرف إنجليزية فقط"
+    "ENGLISH_ONLY": "يجب أن يحتوي هذا الحقل على أحرف إنجليزية فقط",
+    "SEARCH": "بحث",
+    "RESET_SEARCH": "إعادة تعيين",
+    "SEARCH_FILTERS": "تصفية البحث"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -51,6 +55,7 @@
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   },
   "CITIES_PAGE": {
+    "CITY": "المدينة",
     "CITIES_LIST": "قائمة المدن",
     "SEARCH_FILTERS": "تصفية البحث",
     "CITY_IN_ARABIC": "المدينة بالعربية",
@@ -135,17 +140,38 @@
   "EMPLOYEES_PAGE": {
     "EMPLOYEES_LIST": "قائمة الموظفين",
     "SEARCH_FILTERS": "تصفية البحث",
-    "DEPARTMENT": "القسم",
+    "DEPARTMENT": "الإدارة",
     "EMPLOYEE_NAME_ARABIC": "اسم الموظف بالعربية",
     "EMPLOYEE_NAME_ENGLISH": "اسم الموظف بالإنجليزية",
+    "REGION": "المنطقة",
+    "CITY": "المدينة",
+    "PHONE_NUMBER": "رقم الجوال",
+    "INVALID_PHONE": "رقم الجوال غير صالح",
     "JOIN_DATE": "تاريخ الالتحاق",
     "ACCOUNT_STATUS": "حالة الحساب",
     "JOB_TITLE": "المسمى الوظيفي",
-    "SHIFT_TYPE": "نوع الوردية",
-    "FINGERPRINT_EXEMPTION": "إعفاء البصمة",
-    "SEARCH": "بحث",
-    "RESET_SEARCH": "إعادة تعيين",
+    "JOB_TITLE_ARABIC": "المسمى الوظيفي بالعربية",
+    "JOB_TITLE_ENGLISH": "المسمى الوظيفي بالإنجليزية",
+    "EMAIL": "البريد الإلكتروني",
+    "INVALID_EMAIL": "صيغة البريد الإلكتروني غير صالحة",
+    "MAX_LENGTH_EMAIL": "البريد الإلكتروني لا يمكن أن يتجاوز 100 حرف",
+    "SHIFT_TYPE": "نوع الدوام",
+    "NATIONAL_ID": "رقم الهوية",
+    "INVALID_NATIONAL_ID": "رقم الهوية يجب أن يتكون من 10 أرقام",
+    "PASSWORD": "كلمة المرور",
+    "MIN_LENGTH_PASSWORD": "كلمة المرور يجب أن لا تقل عن 8 أحرف",
+    "MAX_LENGTH_PASSWORD": "كلمة المرور لا يمكن أن تتجاوز 50 حرفًا",
+    "PERMISSIONS": "الصلاحيات",
+    "ROLE_EMPLOYEE": "موظف",
+    "ROLE_SYS_ADMIN": "مسؤول النظام",
+    "ROLE_DEPT_MANAGER": "مدير ادارة",
+    "ROLE_FOLLOW_UP": "مسؤول قسم المتابعة",
+    "ROLE_HR": "مسؤول HR",
+    "ROLE_MP_MEMBER": "فرد شرطة عسكرية",
+    "ROLE_MP_LEADER": "قائد شرطة عسكرية",
+    "FINGERPRINT_EXEMPTION": "إعفاء من البصمة",
     "ADD_NEW_EMPLOYEE": "إضافة موظف جديد",
+    "EDIT_EMPLOYEE": "تعديل بيانات الموظف",
     "EMPLOYEE_ID": "معرف الموظف",
     "MORNING_SHIFT": "الوردية الصباحية",
     "ACTIONS": "الإجراءات",
@@ -156,6 +182,7 @@
     "ASSIGN_TASK": "إسناد مهمة",
     "ASSIGN_SHIFT": "إسناد وردية",
     "TASKS_ASSIGNED_TO_EMPLOYEE": "سجل المهمات المسندة للموظف",
-    "DELETE_EMPLOYEE": "حذف الموظف"
+    "DELETE_EMPLOYEE": "حذف الموظف",
+    "MAX_LENGTH_NAME": "الاسم لا يمكن أن يتجاوز 100 حرف"
   }
 }

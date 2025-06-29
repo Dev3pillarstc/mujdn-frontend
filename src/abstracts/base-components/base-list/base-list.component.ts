@@ -117,7 +117,8 @@ export abstract class BaseListComponent<
       next: (res) => {
         const data = res.list;
         if (data && data.length > 0) {
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? true : false;
+          const isRTL =
+            this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? true : false;
           const transformedData = data.map((item) => this.mapModelToExcelRow(item));
           const ws = XLSX.utils.json_to_sheet(transformedData);
           const wb: XLSX.WorkBook = XLSX.utils.book_new();

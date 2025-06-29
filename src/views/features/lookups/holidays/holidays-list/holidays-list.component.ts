@@ -77,24 +77,4 @@ export default class HolidaysListComponent extends BaseListComponent<
       [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.getEndDate(),
     };
   }
-
-  override search(): void {
-    this.paginationParams.pageNumber = 1;
-    this.first = 0;
-    this.service.getFilteredHolidays(this.filterModel, this.paginationParams).subscribe({
-      next: (response) => {
-        this.list = response.list || [];
-
-        if (response.paginationInfo) {
-          this.paginationInfoMap(response);
-        } else {
-          this.paginationInfo.totalItems = this.list.length;
-        }
-      },
-      error: (_) => {
-        this.list = [];
-        this.paginationInfo.totalItems = 0;
-      },
-    });
-  }
 }

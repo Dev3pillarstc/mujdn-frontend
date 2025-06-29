@@ -10,12 +10,10 @@ import { CityPopupComponent } from '../city-popup/city-popup.component';
 import { City } from '@/models/features/lookups/city/city';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '@/services/shared/language.service';
-import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { Region } from '@/models/features/lookups/region/region';
 import { RegionService } from '@/services/features/lookups/region.service';
 import { CityFilter } from '@/models/features/lookups/city/city-filter';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 
 @Component({
   selector: 'app-city-list',
@@ -38,7 +36,7 @@ export default class CityListComponent extends BaseListComponent<
   cityService = inject(CityService);
   home: MenuItem | undefined;
   filterModel: CityFilter = new CityFilter();
-  regions: Region[] = [];
+  regions: BaseLookupModel[] = [];
   regionService = inject(RegionService);
 
   override get service() {
@@ -46,7 +44,7 @@ export default class CityListComponent extends BaseListComponent<
   }
 
   override initListComponent(): void {
-    this.regionService.load().subscribe((res: Region[]) => {
+    this.regionService.getRegionsLookup().subscribe((res: BaseLookupModel[]) => {
       this.regions = res;
     });
   }

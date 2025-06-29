@@ -1,9 +1,9 @@
 @if (control().errors && control().touched) {
-@for (error of activeErrors$ | async; track error.key) {
-  @if (getMessage(error.key)) {
-    <span class="validation-message">
-      {{ getMessage(error.key)! | translate }}
-    </span>
+  @for (error of activeErrors$ | async; track error.key) {
+    @if (getMessage(error.key)) {
+      <span class="validation-message">
+        {{ getMessage(error.key)! | translate }}
+      </span>
+    }
   }
-}
 }

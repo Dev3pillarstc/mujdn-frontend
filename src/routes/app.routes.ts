@@ -8,6 +8,7 @@ import { userResolver } from '@/resolvers/user.resolver';
 import { regionResolver } from '@/resolvers/lookups/region.resolver';
 import { notificationChannelResolver } from '@/resolvers/setting/notification-channel.resolver';
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
+import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 
 export const routes: Routes = [
   {
@@ -118,6 +119,7 @@ export const routes: Routes = [
       },
       {
         path: 'department-list',
+        resolve: { list: departmentResolver },
         loadComponent: () =>
           import('../views/features/department/department-list/department-list.component'),
       },

@@ -128,7 +128,7 @@ export const routes: Routes = [
           import('../views/features/department/department-list/department-list.component'),
       },
       {
-        path: 'work-shifts-list',
+        path: 'work-shifts',
         loadComponent: () =>
           import(
             '../views/features/lookups/work-shifts/work-shifts-list/work-shifts-list.component'

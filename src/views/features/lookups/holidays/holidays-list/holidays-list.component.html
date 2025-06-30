@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'HOLIDAYS_PAGE.HOLIDAYS_LIST' | translate }}
       </h3>
@@ -10,15 +10,15 @@
       <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
         <div class="flex items-center justify-between">
           <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-            {{ 'HOLIDAYS_PAGE.SEARCH_FILTERS' | translate }}
+            {{ 'COMMON.SEARCH_FILTERS' | translate }}
           </h5>
         </div>
         <div class="pt-6">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="relative">
               <label class="label" for="holidayAr">{{
-                'HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC' | translate
-              }}</label>
+                  'HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.nameAr"
                 [placeholder]="'HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC' | translate"
@@ -34,8 +34,8 @@
             </div>
             <div class="relative">
               <label class="label" for="holidayEn">{{
-                'HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH' | translate
-              }}</label>
+                  'HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.nameEn"
                 [placeholder]="'HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH' | translate"
@@ -50,17 +50,17 @@
               ></span>
             </div>
             <div class="relative lg:col-span-1">
-              <label for="" class="label">{{ 'HOLIDAYS_PAGE.FROM' | translate }}</label>
+              <label class="label" for="">{{ 'HOLIDAYS_PAGE.FROM' | translate }}</label>
               <p-datepicker
                 [(ngModel)]="filterModel.dateFrom"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
-                placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
                 class="peer block w-full"
                 inputId="icondisplay"
+                placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="assets/icons/calender-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/calender-icon.svg"/>
                 </ng-template>
               </p-datepicker>
               <span
@@ -68,17 +68,17 @@
               ></span>
             </div>
             <div class="relative lg:col-span-1">
-              <label for="" class="label">{{ 'HOLIDAYS_PAGE.TO' | translate }}</label>
+              <label class="label" for="">{{ 'HOLIDAYS_PAGE.TO' | translate }}</label>
               <p-datepicker
                 [(ngModel)]="filterModel.dateTo"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
-                placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
                 class="peer block w-full"
                 inputId="icondisplay"
+                placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="assets/icons/calender-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/calender-icon.svg"/>
                 </ng-template>
               </p-datepicker>
               <span
@@ -89,10 +89,10 @@
 
           <div class="actions flex items-center gap-4 pt-6">
             <button (click)="search()" class="btn black-btn">
-              {{ 'HOLIDAYS_PAGE.SEARCH' | translate }}
+              {{ 'COMMON.SEARCH' | translate }}
             </button>
             <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
-              {{ 'HOLIDAYS_PAGE.RESET_SEARCH' | translate }}
+              {{ 'COMMON.RESET_SEARCH' | translate }}
             </button>
           </div>
         </div>
@@ -106,13 +106,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button (click)="exportExcel('holidays.xlsx')" class="table-head-action-btn">
-              <img src="/assets/icons/excel.svg" alt="" />
+              <img alt="" src="/assets/icons/excel.svg"/>
             </button>
             <button>
-              <img src="/assets/icons/print.svg" alt="" />
+              <img alt="" src="/assets/icons/print.svg"/>
             </button>
-            <button class="btn green-btn flex items-center" (click)="addOrEditModel()">
-              <img src="assets/icons/plus.svg" alt="" />
+            <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
+              <img alt="" src="assets/icons/plus.svg"/>
               <span>{{ 'HOLIDAYS_PAGE.ADD_NEW_HOLIDAY' | translate }}</span>
             </button>
           </div>
@@ -146,10 +146,10 @@
                 <td>
                   <div class="actions flex gap-2">
                     <button (click)="addOrEditModel(holiday)" class="table-action-gray-btn">
-                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                      <img src="/assets/icons/edit-action.svg" alt="تعديل"/>
                     </button>
                     <button (click)="deleteModel(holiday.id)" class="table-action-red-btn">
-                      <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                      <img src="/assets/icons/delete-action.svg" alt="حذف"/>
                     </button>
                   </div>
                 </td>

@@ -11,6 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import * as XLSX from 'xlsx';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { LanguageService } from '@/services/shared/language.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { ConfirmationService } from '@/services/shared/confirmation.service';
+import { AlertService } from '@/services/shared/alert.service';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -23,12 +27,15 @@ export abstract class BaseListComponent<
   abstract dialogSize: any;
   first: number = 0;
   rows: number = 10;
-  declare paginationInfo: PaginationInfo;
+  paginationInfo: PaginationInfo = new PaginationInfo();
   items: MenuItem[] | undefined;
   list: Model[] = [];
   paginationParams: PaginationParams = new PaginationParams();
   matDialog = inject(MatDialog);
   activatedRoute = inject(ActivatedRoute);
+  langService = inject(LanguageService);
+  confirmService = inject(ConfirmationService);
+  alertsService = inject(AlertService);
   declare selectedModel?: Model;
 
   abstract get filterModel(): FilterModel;
@@ -114,10 +121,12 @@ export abstract class BaseListComponent<
       next: (res) => {
         const data = res.list;
         if (data && data.length > 0) {
+          const isRTL =
+            this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? true : false;
           const transformedData = data.map((item) => this.mapModelToExcelRow(item));
           const ws = XLSX.utils.json_to_sheet(transformedData);
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: true }] };
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
           XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
           XLSX.writeFile(wb, fileName);
         }
@@ -125,10 +134,9 @@ export abstract class BaseListComponent<
     });
   }
 
-  // Inside BaseListComponent
   protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
 
-  private paginationInfoMap(response: PaginatedList<Model>) {
+  protected paginationInfoMap(response: PaginatedList<Model>) {
     const paginationInfo = response.paginationInfo;
     this.paginationInfo.totalItems = paginationInfo.totalItems || 0;
     this.paginationParams.pageSize = paginationInfo.pageSize || 10;
@@ -136,5 +144,28 @@ export abstract class BaseListComponent<
 
     this.rows = this.paginationParams.pageSize;
     this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
+  }
+
+  deleteModel(id: string | number) {
+    const dialogRef = this.confirmService.open({
+      icon: 'warning',
+      messages: ['COMMON.CONFIRM_DELETE'],
+      confirmText: 'COMMON.OK',
+      cancelText: 'COMMON.CANCEL',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == DIALOG_ENUM.OK) {
+        this.service.delete(id).subscribe({
+          next: () => {
+            this.loadList();
+            this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
+          },
+          error: (_) => {
+            this.alertsService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
+          },
+        });
+      }
+    });
   }
 }

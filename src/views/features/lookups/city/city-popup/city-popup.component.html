@@ -26,15 +26,12 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <!--          @if (regionControl.touched && regionControl.errors?.['required']) {-->
-          <!--            <span class="validation-message">{{ 'COMMON.REQUIRED_FIELD' | translate }}</span>-->
-          <!--          }-->
           <app-validation-messages [control]="regionControl"></app-validation-messages>
         </div>
         <div>
           <label class="label" for="cityAr-popup">{{
-              'CITIES_PAGE.CITY_IN_ARABIC' | translate
-            }}</label>
+            'CITIES_PAGE.CITY_IN_ARABIC' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -53,8 +50,8 @@
         </div>
         <div>
           <label class="label" for="cityEn-popup">{{
-              'CITIES_PAGE.CITY_IN_ENGLISH' | translate
-            }}</label>
+            'CITIES_PAGE.CITY_IN_ENGLISH' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"

@@ -7,6 +7,7 @@ export class RegionInterceptor implements ModelInterceptorContract<Region> {
   }
 
   send(model: Partial<Region>): Partial<Region> {
+    delete (model as any).languageService;
     return model;
   }
 }

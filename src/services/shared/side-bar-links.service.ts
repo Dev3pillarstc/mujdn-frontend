@@ -51,10 +51,27 @@ export class SideBarLinksService {
       routerLink: ['/dashboard'],
     },
     {
-      label: 'قائمة الاجازات و الأعياد',
-      iconUrl: 'assets/icons/menu-icons/vacations.svg',
+      label: 'ورديات العمل',
+      iconUrl: 'assets/icons/menu-icons/shifts-icon.svg',
       routerLink: ['/dashboard'],
     },
+    {
+      label: 'ورديات العمل المؤقتة',
+      iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'اسناد ورديات عمل',
+      iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
+      routerLink: ['/dashboard'],
+    },
+    {
+      label: 'قائمة الاجازات و الأعياد',
+      iconUrl: 'assets/icons/menu-icons/vacations.svg',
+      routerLink: ['/holidays-list'],
+      routeId: RouteIdsEnum.HOLIDAYS,
+    },
+
     {
       label: 'الإعدادات',
       iconUrl: 'assets/icons/menu-icons/settings.svg',
@@ -73,6 +90,16 @@ export class SideBarLinksService {
           label: 'قائمة الجنسيات',
           routerLink: ['/nationalities'],
           routeId: RouteIdsEnum.NATIONALITIES,
+        },
+        {
+          label: 'قائمة المدن',
+          routerLink: ['/cities'],
+          routeId: RouteIdsEnum.CITIES,
+        },
+        {
+          label: 'قائمة المناطق',
+          routerLink: ['/regions'],
+          routeId: RouteIdsEnum.REGIONS,
         },
       ],
     },

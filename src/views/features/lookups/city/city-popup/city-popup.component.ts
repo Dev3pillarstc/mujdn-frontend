@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
-import { Region } from '@/models/features/lookups/region/region';
 import { Select } from 'primeng/select';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 
 @Component({
   selector: 'app-city-popup',
@@ -33,7 +33,7 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
   alertService = inject(AlertService);
   service = inject(CityService);
   fb = inject(FormBuilder);
-  regions: Region[] | undefined = [];
+  regions: BaseLookupModel[] | undefined = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -67,6 +67,7 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
 
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm());
+    console.log('HolidaysPopupComponent form', this.form);
   }
 
   beforeSave(model: City, form: FormGroup) {

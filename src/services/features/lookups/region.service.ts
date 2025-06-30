@@ -1,4 +1,5 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
+import { LookupBaseService } from '@/abstracts/lookup-base.service';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { Region } from '@/models/features/lookups/region/region';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
@@ -25,7 +26,7 @@ import { Observable, of, switchMap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class RegionService extends BaseCrudService<Region> {
+export class RegionService extends LookupBaseService<Region> {
   serviceName: string = 'RegionService';
 
   override getUrlSegment(): string {

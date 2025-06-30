@@ -7,66 +7,72 @@ import { FluidModule } from 'primeng/fluid';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { MatDialog } from '@angular/material/dialog';
+import { PaginatorModule } from 'primeng/paginator';
 import { HolidaysPopupComponent } from '../holidays-popup/holidays-popup.component';
 import { InputTextModule } from 'primeng/inputtext';
-
-interface Adminstration {
-  type: string;
-}
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { Holiday } from '@/models/features/lookups/holiday/holiday';
+import { HolidayService } from '@/services/features/lookups/holiday.service';
+import { LanguageService } from '@/services/shared/language.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { HolidayFilter } from '@/models/features/lookups/holiday/holiday-filter';
 
 @Component({
   selector: 'app-holidays-list',
   imports: [
     Breadcrumb,
+    TableModule,
+    PaginatorModule,
+    InputTextModule,
     FormsModule,
+    TranslatePipe,
     DatePickerModule,
     FluidModule,
     TableModule,
     CommonModule,
     RouterModule,
-    CommonModule,
-    PaginatorModule,
-    InputTextModule,
   ],
+
   templateUrl: './holidays-list.component.html',
   styleUrl: './holidays-list.component.scss',
 })
-export default class HolidaysListComponent {
-  first: number = 0;
-  rows: number = 10;
-  matDialog = inject(MatDialog);
-  items: MenuItem[] | undefined;
+export default class HolidaysListComponent extends BaseListComponent<
+  Holiday,
+  HolidaysPopupComponent,
+  HolidayService,
+  HolidayFilter
+> {
+  languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
+  override dialogSize = {
+    width: '100%',
+    maxWidth: '600px',
+  };
+  holidayService = inject(HolidayService);
+  translateService = inject(TranslateService);
   home: MenuItem | undefined;
-  adminstrations: Adminstration[] | undefined;
-  selectedAdminstration: Adminstration | undefined;
-  date2: Date | undefined;
-  attendance!: any[];
-
-  ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الاجازات و الأعياد' }];
-    this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
-    // Updated dummy data to match your Arabic table structure
-    this.attendance = [
-      {
-        serialNumber: 1,
-        employeeName: 'عيد الأضحى المبارك',
-        date: '12/12/2023',
-        time: '12/12/2023',
-      },
-    ];
+  filterModel: HolidayFilter = new HolidayFilter();
+  override get service() {
+    return this.holidayService;
   }
 
-  openDialog() {
-    const dialogRef = this.matDialog.open(HolidaysPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
+  override initListComponent(): void {}
+
+  override openDialog(model: Holiday, viewMode?: ViewModeEnum): void {
+    this.openBaseDialog(HolidaysPopupComponent as any, model, viewMode!);
   }
 
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
+  addOrEditModel(holiday?: Holiday) {
+    const viewMode = holiday ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    holiday = holiday || new Holiday();
+    this.openDialog(holiday, viewMode);
+  }
+
+  protected override mapModelToExcelRow(model: Holiday): { [key: string]: any } {
+    return {
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY')]: model.getName(),
+      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.getStartDate(),
+      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.getEndDate(),
+    };
   }
 }

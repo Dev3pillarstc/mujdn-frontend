@@ -90,19 +90,19 @@
                 <th class="w-[100px]">{{ 'PERMISSIONREASONS_PAGE.ACTIONS' | translate }}</th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-permissionreason>
+            <ng-template pTemplate="body" let-permissionReason>
               <tr>
-                <td>{{ permissionreason.nameAr }}</td>
-                <td>{{ permissionreason.nameEn }}</td>
+                <td>{{ permissionReason.nameAr }}</td>
+                <td>{{ permissionReason.nameEn }}</td>
                 <td>
                   <div class="actions flex gap-2">
                     <button
-                      (click)="addOrEditModel(permissionreason)"
+                      (click)="addOrEditModel(permissionReason)"
                       class="table-action-gray-btn"
                     >
                       <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                     </button>
-                    <button class="table-action-red-btn">
+                    <button (click)="deleteModel(permissionReason.id)" class="table-action-red-btn">
                       <img src="/assets/icons/delete-action.svg" alt="" />
                     </button>
                   </div>

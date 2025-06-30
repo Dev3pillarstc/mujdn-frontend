@@ -10,6 +10,7 @@ import { notificationChannelResolver } from '@/resolvers/setting/notification-ch
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
+import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 
 export const routes: Routes = [
   {
@@ -129,6 +130,7 @@ export const routes: Routes = [
       },
       {
         path: 'work-shifts',
+        resolve: { list: workShiftResolver },
         loadComponent: () =>
           import(
             '../views/features/lookups/work-shifts/work-shifts-list/work-shifts-list.component'

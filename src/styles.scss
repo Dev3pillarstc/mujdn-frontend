@@ -127,3 +127,14 @@
 }
 
 // End SideMenu
+// start kareem
+.p-datepicker-hour-picker:dir(rtl) {
+  order: 3 !important;
+}
+.p-datepicker-separator:dir(rtl) {
+  order: 2 !important;
+}
+.p-datepicker-minute-picker:dir(rtl) {
+  order: 1 !important;
+}
+// end kareem

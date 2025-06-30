@@ -12,17 +12,23 @@
                 <div class="pt-6">
                     <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
                         <div class="relative">
-                            <label class="label" for="nationalityAr">اسم الوردية</label>
-                            <input placeholder="اسم الوردية" class="peer" fluid="true" id="nationalityAr" pInputText
-                                type="text" />
+                            <label class="label" for="nationalityName">اسم الوردية</label>
+                            @if(isCurrentLanguageEnglish()) {
+                            <input placeholder="shift name" class="peer" fluid="true" id="nationalityName" pInputText
+                                type="text" [(ngModel)]="filterModel.nameEn" />
+                            } @else {
+                            <input placeholder="اسم الوردية" class="peer" fluid="true" id="nationalityName" pInputText
+                                type="text" [(ngModel)]="filterModel.nameAr" />
+                            }
                             <span
                                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                         </div>
                     </div>
 
                     <div class="actions flex items-center gap-4 pt-6">
-                        <button class="btn black-btn">بحث</button>
-                        <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+                        <button class="btn black-btn" (click)="search()">بحث</button>
+                        <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">إعادة
+                            تعيين</button>
                     </div>
                 </div>
             </div>
@@ -31,39 +37,36 @@
                     class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
                     <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">قائمة ورديات العمل</h4>
                     <div class="actions flex items-center gap-4 ms-auto">
-                        <button>
+                        <button (click)="exportExcel('work-shifts.xlsx')">
                             <img src="assets/icons/excel.svg" alt="" />
                         </button>
-                        <button class="cursor-pointer">
-                            <img src="assets/icons/print.svg" alt="" />
-                        </button>
-                        <button class="btn green-btn flex items-center" (click)="openDialog()">
+                        <button class="btn green-btn flex items-center" (click)="addOrEditModel()">
                             <img src="assets/icons/plus.svg" alt="" />
                             <span>إضافة وردية عمل جديدة</span>
                         </button>
                     </div>
                 </div>
-                <p-table [value]="attendance">
+                <p-table [value]="list">
                     <ng-template #header>
                         <tr>
                             <th>معرف الوردية</th>
-                            <th>اسم الوردية باللغة العربية</th>
+                            <th>اسم الوردية</th>
                             <th>الحد الأقصى للحضور</th>
                             <th>الحد الأقصى للانصراف</th>
                             <th>الوقت (من - الى)</th>
                             <th>الإجراء</th>
                         </tr>
                     </ng-template>
-                    <ng-template #body let-attendance>
+                    <ng-template #body let-shift>
                         <tr>
-                            <td>1</td>
-                            <td>وردية صباحية</td>
-                            <td>06:30</td>
-                            <td>14:30</td>
-                            <td>14:00 - 06:00</td>
+                            <td>{{shift.id}}</td>
+                            <td>{{isCurrentLanguageEnglish() ? shift.nameEn : shift.nameAr}}</td>
+                            <td>{{shift.attendanceBuffer}}</td>
+                            <td>{{shift.leaveBuffer}}</td>
+                            <td>{{shift.timeFrom}} - {{shift.timeTo}}</td>
                             <td>
                                 <div class="actions flex gap-2">
-                                    <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
+                                    <button class="bg-[#f3f4f6] rounded p-2 w-[32px]" (click)="addOrEditModel(shift)">
                                         <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                                     </button>
                                 </div>
@@ -72,7 +75,8 @@
                     </ng-template>
                 </p-table>
                 <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-                    [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]" />
+                    [totalRecords]="paginationInfo.totalItems" [rowsPerPageOptions]="[10, 20, 30]"
+                    [showCurrentPageReport]="false" />
                 <div></div>
             </div>
         </div>

@@ -16,24 +16,6 @@
         <div class="pt-6">
           <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
-              <label class="label" for="department">{{
-                'EMPLOYEES_PAGE.DEPARTMENT' | translate
-              }}</label>
-              <p-select
-                [(ngModel)]="selectedDepartment"
-                (ngModelChange)="onDepartmentChange($event)"
-                [options]="departments"
-                [placeholder]="'EMPLOYEES_PAGE.DEPARTMENT' | translate"
-                class="w-full peer"
-                id="department"
-                [optionLabel]="departmentOptionLabel"
-                optionValue="id"
-              ></p-select>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
               <label class="label" for="employeeNameAr">{{
                 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
               }}</label>
@@ -68,26 +50,6 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="joinDate">{{
-                'EMPLOYEES_PAGE.JOIN_DATE' | translate
-              }}</label>
-              <p-datepicker
-                [(ngModel)]="filterModel.joinDate"
-                [iconDisplay]="'input'"
-                [placeholder]="'EMPLOYEES_PAGE.JOIN_DATE' | translate"
-                [showIcon]="true"
-                class="peer block w-full"
-                inputId="joinDate"
-              >
-                <ng-template pTemplate="inputicon">
-                  <img alt="" src="/assets/icons/calender-icon.svg" />
-                </ng-template>
-              </p-datepicker>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
               <label class="label" for="accountStatus">{{
                 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
               }}</label>
@@ -106,7 +68,26 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="jobTitle">{{
+              <label class="label" for="department">{{
+                'EMPLOYEES_PAGE.DEPARTMENT' | translate
+              }}</label>
+              <p-select
+                [(ngModel)]="selectedDepartment"
+                (ngModelChange)="onDepartmentChange($event)"
+                [options]="departments"
+                [placeholder]="'EMPLOYEES_PAGE.DEPARTMENT' | translate"
+                class="w-full peer"
+                id="department"
+                [optionLabel]="departmentOptionLabel"
+                optionValue="id"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+
+            <div class="relative">
+              <label class="label" for="jobTitleAr">{{
                 'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate
               }}</label>
               <input
@@ -114,7 +95,7 @@
                 [placeholder]="'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate"
                 class="peer"
                 fluid="true"
-                id="jobTitle"
+                id="jobTitleAr"
                 pInputText
                 type="text"
               />
@@ -123,21 +104,23 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="shiftType">{{
-                'EMPLOYEES_PAGE.SHIFT_TYPE' | translate
+              <label class="label" for="jobTitleEn">{{
+                'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate
               }}</label>
-              <p-select
-                [(ngModel)]="selectedDepartment"
-                [options]="departments"
-                [placeholder]="'EMPLOYEES_PAGE.SHIFT_TYPE' | translate"
-                class="w-full peer"
-                id="shiftType"
-                optionLabel="type"
-              ></p-select>
+              <input
+                [(ngModel)]="filterModel.jobTitleEn"
+                [placeholder]="'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate"
+                class="peer"
+                fluid="true"
+                id="jobTitleEn"
+                pInputText
+                type="text"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
+
             <div class="relative">
               <label class="label" for="fingerPrint">{{
                 'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate
@@ -151,6 +134,26 @@
                 optionLabel="nameAr"
                 optionValue="id"
               ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="joinDate">{{
+                'EMPLOYEES_PAGE.JOIN_DATE' | translate
+              }}</label>
+              <p-datepicker
+                [(ngModel)]="filterModel.joinDate"
+                [iconDisplay]="'input'"
+                [placeholder]="'EMPLOYEES_PAGE.JOIN_DATE' | translate"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="joinDate"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="/assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -196,8 +199,8 @@
                 <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.SHIFT_TYPE' | translate }}</th>
+                <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate }}</th>
+                <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.ACTIONS' | translate }}</th>
@@ -219,7 +222,7 @@
                   </div>
                 </td>
                 <td>{{ user.jobTitleEn }}</td>
-                <td>{{ 'EMPLOYEES_PAGE.MORNING_SHIFT' | translate }}</td>
+                <td>{{ user.jobTitleAr }}</td>
                 <td>
                   <div class="flex justify-center gap-2">
                     @if (user.isActive) {

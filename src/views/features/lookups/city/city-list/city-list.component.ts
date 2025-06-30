@@ -14,7 +14,6 @@ import { RegionService } from '@/services/features/lookups/region.service';
 import { CityFilter } from '@/models/features/lookups/city/city-filter';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
-import { PermissionTypeService } from '@/services/features/lookups/permission-type.service';
 
 @Component({
   selector: 'app-city-list',
@@ -39,17 +38,12 @@ export default class CityListComponent extends BaseListComponent<
   filterModel: CityFilter = new CityFilter();
   regions: BaseLookupModel[] = [];
   regionService = inject(RegionService);
-  PERMService = inject(PermissionTypeService);
 
   override get service() {
     return this.cityService;
   }
 
   override initListComponent(): void {
-    this.PERMService.getLookup().subscribe((res: BaseLookupModel[]) => {
-      console.log(res);
-    });
-
     this.regionService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.regions = res;
     });

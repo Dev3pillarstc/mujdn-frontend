@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class PermissionTypeService extends LookupBaseService<BaseLookupModel> {
-  serviceName: string = 'PermissionTypeService';
+export class PermissionStatusService extends LookupBaseService<BaseLookupModel> {
+  serviceName: string = 'PermissionStatusService';
 
   override getUrlSegment(): string {
-    return this.urlService.URLS.PERMISSION_TYPES;
+    return this.urlService.URLS.PERMISSION_STATUS;
   }
 }

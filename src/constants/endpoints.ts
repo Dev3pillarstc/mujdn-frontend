@@ -13,6 +13,7 @@ export const EndPoints = {
   DEPARTMENTS: '/departments',
   HOLIDAYS: '/holidays',
   PERMISSION_TYPES: '/permissiontypes',
+  PERMISSION_STATUS: '/permissionstatuses',
 };
 
 export type EndpointsType = typeof EndPoints;

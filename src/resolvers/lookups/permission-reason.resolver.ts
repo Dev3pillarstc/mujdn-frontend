@@ -2,7 +2,7 @@ import { ResolveFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginationParams } from '@/models/shared/pagination-params';
-import { PermissionReason } from '@/models/features/lookups/permission-reason/permission-reason';
+import { PermissionReason } from '@/models/features/lookups/permission/permission-reason';
 import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
 
 export const permissionReasonResolver: ResolveFn<PaginatedList<PermissionReason>> = () => {

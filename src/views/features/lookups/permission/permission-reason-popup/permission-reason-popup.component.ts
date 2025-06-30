@@ -1,5 +1,5 @@
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { PermissionReason } from '@/models/features/lookups/permission-reason/permission-reason';
+import { PermissionReason } from '@/models/features/lookups/permission/permission-reason';
 import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { Component, inject, Inject, OnInit } from '@angular/core';

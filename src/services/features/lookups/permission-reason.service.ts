@@ -3,7 +3,7 @@ import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { Injectable } from '@angular/core';
 import { CastResponseContainer } from 'cast-response';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
-import { PermissionReason } from '@/models/features/lookups/permission-reason/permission-reason';
+import { PermissionReason } from '@/models/features/lookups/permission/permission-reason';
 
 @CastResponseContainer({
   $default: {

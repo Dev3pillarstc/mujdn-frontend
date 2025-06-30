@@ -1,6 +1,6 @@
 import { BaseCrudServiceContract } from '@/contracts/base-crud-service-contract';
 import { OptionsContract } from '@/contracts/options-contract';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UrlService } from '@/services/url.service';
@@ -32,7 +32,13 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
         }),
         withCredentials: true,
       })
-      .pipe(map((response) => response.data as Model[]));
+      .pipe(map((response) => response.data as Model[]))
+      .pipe(
+        catchError((err) => {
+          // Let the global ErrorHandler handle it
+          throw err;
+        })
+      );
   }
 
   @CastResponse(undefined, { fallback: '$pagination' })
@@ -50,6 +56,12 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
             list: response.data.list as Model[],
             paginationInfo: response.data.paginationInfo,
           };
+        })
+      )
+      .pipe(
+        catchError((err) => {
+          // Let the global ErrorHandler handle it
+          throw err;
         })
       );
   }
@@ -79,28 +91,54 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
             paginationInfo: response.data.paginationInfo,
           };
         })
+      )
+      .pipe(
+        catchError((err) => {
+          // Let the global ErrorHandler handle it
+          throw err;
+        })
       );
   }
 
   @CastResponse()
   @HasInterception
   create(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.post<Model>(this.getUrlSegment(), model, { withCredentials: true });
+    return this.http.post<Model>(this.getUrlSegment(), model, { withCredentials: true }).pipe(
+      catchError((err) => {
+        // Let the global ErrorHandler handle it
+        throw err;
+      })
+    );
   }
 
   @CastResponse()
   @HasInterception
   update(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.put<Model>(this.getUrlSegment(), model, { withCredentials: true });
+    return this.http.put<Model>(this.getUrlSegment(), model, { withCredentials: true }).pipe(
+      catchError((err) => {
+        // Let the global ErrorHandler handle it
+        throw err;
+      })
+    );
   }
 
   @CastResponse()
   delete(id: PrimaryKey): Observable<Model> {
-    return this.http.delete<Model>(this.getUrlSegment() + '/' + id, { withCredentials: true });
+    return this.http.delete<Model>(this.getUrlSegment() + '/' + id, { withCredentials: true }).pipe(
+      catchError((err) => {
+        // Let the global ErrorHandler handle it
+        throw err;
+      })
+    );
   }
 
   @CastResponse()
   getById(id: PrimaryKey): Observable<Model> {
-    return this.http.get<Model>(this.getUrlSegment() + '/' + id, { withCredentials: true });
+    return this.http.get<Model>(this.getUrlSegment() + '/' + id, { withCredentials: true }).pipe(
+      catchError((err) => {
+        // Let the global ErrorHandler handle it
+        throw err;
+      })
+    );
   }
 }

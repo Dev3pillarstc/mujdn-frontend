@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASONS_LIST' | translate }}
       </h3>
@@ -10,15 +10,15 @@
       <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
         <div class="flex items-center justify-between">
           <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-            {{ 'PERMISSIONREASONS_PAGE.SEARCH_FILTERS' | translate }}
+            {{ 'COMMON.SEARCH_FILTERS' | translate }}
           </h5>
         </div>
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="permissionreasonAr">{{
-                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
-              }}</label>
+                  'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.nameAr"
                 [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate"
@@ -34,8 +34,8 @@
             </div>
             <div class="relative">
               <label class="label" for="permissionreasonEn">{{
-                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
-              }}</label>
+                  'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.nameEn"
                 [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate"
@@ -53,10 +53,10 @@
 
           <div class="actions flex items-center gap-4 pt-6">
             <button (click)="search()" class="btn black-btn">
-              {{ 'PERMISSIONREASONS_PAGE.SEARCH' | translate }}
+              {{ 'COMMON.SEARCH' | translate }}
             </button>
             <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
-              {{ 'PERMISSIONREASONS_PAGE.RESET_SEARCH' | translate }}
+              {{ 'COMMON.RESET_SEARCH' | translate }}
             </button>
           </div>
         </div>
@@ -69,14 +69,14 @@
             {{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASONS_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button class="table-head-action-btn" (click)="exportExcel('permission-reasons.xlsx')">
-              <img alt="" src="/assets/icons/excel.svg" />
+            <button (click)="exportExcel('permission-reasons.xlsx')" class="table-head-action-btn">
+              <img alt="" src="/assets/icons/excel.svg"/>
             </button>
             <button class="table-head-action-btn">
-              <img alt="" src="/assets/icons/print.svg" />
+              <img alt="" src="/assets/icons/print.svg"/>
             </button>
             <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
-              <img alt="" src="/assets/icons/plus.svg" />
+              <img alt="" src="/assets/icons/plus.svg"/>
               <span>{{ 'PERMISSIONREASONS_PAGE.ADD_NEW_PERMISSIONREASON' | translate }}</span>
             </button>
           </div>
@@ -90,20 +90,20 @@
                 <th class="w-[100px]">{{ 'PERMISSIONREASONS_PAGE.ACTIONS' | translate }}</th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-permissionreason>
+            <ng-template pTemplate="body" let-permissionReason>
               <tr>
-                <td>{{ permissionreason.nameAr }}</td>
-                <td>{{ permissionreason.nameEn }}</td>
+                <td>{{ permissionReason.nameAr }}</td>
+                <td>{{ permissionReason.nameEn }}</td>
                 <td>
                   <div class="actions flex gap-2">
                     <button
-                      (click)="addOrEditModel(permissionreason)"
+                      (click)="addOrEditModel(permissionReason)"
                       class="table-action-gray-btn"
                     >
-                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                      <img src="/assets/icons/edit-action.svg" alt="تعديل"/>
                     </button>
-                    <button class="table-action-red-btn">
-                      <img src="/assets/icons/delete-action.svg" alt="" />
+                    <button (click)="deleteModel(permissionReason.id)" class="table-action-red-btn">
+                      <img src="/assets/icons/delete-action.svg" alt=""/>
                     </button>
                   </div>
                 </td>

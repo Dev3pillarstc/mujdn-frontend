@@ -4,8 +4,13 @@ import { NationalityService } from '@/services/features/lookups/nationality.serv
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Nationality } from '@/models/features/lookups/Nationality';
 import { PaginationParams } from '@/models/shared/pagination-params';
+import { catchError, of } from 'rxjs';
 
-export const nationalitiesResolver: ResolveFn<PaginatedList<Nationality>> = () => {
+export const nationalitiesResolver: ResolveFn<PaginatedList<Nationality> | null> = () => {
   const nationalityService = inject(NationalityService);
-  return nationalityService.loadPaginated(new PaginationParams());
+  return nationalityService.loadPaginated(new PaginationParams()).pipe(
+    catchError((error) => {
+      return of(null); // Prevent throwing to allow route activation
+    })
+  );
 };

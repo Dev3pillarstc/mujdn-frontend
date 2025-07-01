@@ -13,6 +13,8 @@ import * as XLSX from 'xlsx';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { ConfirmationService } from '@/services/shared/confirmation.service';
+import { AlertService } from '@/services/shared/alert.service';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -32,6 +34,8 @@ export abstract class BaseListComponent<
   matDialog = inject(MatDialog);
   activatedRoute = inject(ActivatedRoute);
   langService = inject(LanguageService);
+  confirmService = inject(ConfirmationService);
+  alertsService = inject(AlertService);
   declare selectedModel?: Model;
 
   abstract get filterModel(): FilterModel;
@@ -66,8 +70,8 @@ export abstract class BaseListComponent<
   }
 
   ngOnInit() {
-    this.list = this.activatedRoute.snapshot.data['list'].list;
-    this.paginationInfo = this.activatedRoute.snapshot.data['list'].paginationInfo;
+    this.list = this.activatedRoute.snapshot.data['list']?.list;
+    this.paginationInfo = this.activatedRoute.snapshot.data['list']?.paginationInfo;
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
     this.initListComponent();
   }
@@ -140,5 +144,28 @@ export abstract class BaseListComponent<
 
     this.rows = this.paginationParams.pageSize;
     this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
+  }
+
+  deleteModel(id: string | number) {
+    const dialogRef = this.confirmService.open({
+      icon: 'warning',
+      messages: ['COMMON.CONFIRM_DELETE'],
+      confirmText: 'COMMON.OK',
+      cancelText: 'COMMON.CANCEL',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == DIALOG_ENUM.OK) {
+        this.service.delete(id).subscribe({
+          next: () => {
+            this.loadList();
+            this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
+          },
+          error: (_) => {
+            this.alertsService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
+          },
+        });
+      }
+    });
   }
 }

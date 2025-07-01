@@ -44,7 +44,7 @@ export default class CityListComponent extends BaseListComponent<
   }
 
   override initListComponent(): void {
-    this.regionService.getRegionsLookup().subscribe((res: BaseLookupModel[]) => {
+    this.regionService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.regions = res;
     });
   }

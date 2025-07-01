@@ -26,7 +26,8 @@
     "UNKNOWN_ERROR": "Unknown error",
     "SERVICE_UNAVAILABLE": "Service unavailable",
     "ACTION": "Action",
-    "EDIT": "Edit"
+    "EDIT": "Edit",
+    "DASHBOARD": "Dashboard"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

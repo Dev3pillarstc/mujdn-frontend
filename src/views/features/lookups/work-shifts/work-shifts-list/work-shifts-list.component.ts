@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
@@ -34,7 +34,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './work-shifts-list.component.html',
   styleUrl: './work-shifts-list.component.scss',
 })
-export default class WorkShiftsListComponent extends BaseListComponent<Shift, WorkShiftsListPopupComponent, ShiftService, ShiftsFilter> {
+export default class WorkShiftsListComponent extends BaseListComponent<Shift, WorkShiftsListPopupComponent, ShiftService, ShiftsFilter> implements OnInit {
 
   filterModel: ShiftsFilter = new ShiftsFilter();
 
@@ -58,6 +58,13 @@ export default class WorkShiftsListComponent extends BaseListComponent<Shift, Wo
   home: MenuItem | undefined;
   date2: Date | undefined;
   attendance!: any[];
+  override ngOnInit() {
+    super.ngOnInit();
+    this.items = [
+      { label: 'COMMON.DASHBOARD' },
+      { label: 'WORK_SHIFTS.WORK_SHIFTS' },
+    ];
+  }
 
   openDialog(model: Shift): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;

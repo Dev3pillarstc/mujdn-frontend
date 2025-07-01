@@ -3,35 +3,43 @@
         <button class="block ms-auto" (click)="close()">
             <i class="pi pi-times"></i>
         </button>
-        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة وردية عمل جديدة</h3>
+        @if (isCreateMode) {
+        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">{{ 'WORK_SHIFTS_POPUP.ADD_NEW_SHIFT' | translate }}
+        </h3>
+        } @else {
+        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">{{ 'WORK_SHIFTS_POPUP.EDIT_SHIFT' | translate }}
+        </h3>
+        }
         <form class="mt-6" [formGroup]="form">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
                 <div class="lg:col-span-2">
-                    <label for="shiftNameAr" class="label">اسم الوردية باللغة العربية</label>
+                    <label for="shiftNameAr" class="label">{{ 'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate
+                        }}</label>
                     <div class="relative">
-                        <input placeholder="اسم الوردية باللغة العربية" class="peer" fluid="true" id="shiftNameAr"
-                            formControlName="nameAr" pInputText type="text" />
+                        <input [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate" class="peer"
+                            fluid="true" id="shiftNameAr" formControlName="nameAr" pInputText type="text" />
                         <span
                             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                     </div>
                     <app-validation-messages [control]="nameArControl"></app-validation-messages>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="shiftNameEn" class="label">اسم الوردية باللغة الانجليزية</label>
+                    <label for="shiftNameEn" class="label">{{ 'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate
+                        }}</label>
                     <div class="relative">
-                        <input placeholder="اسم الوردية باللغة الانجليزية" class="peer" fluid="true" id="shiftNameEn"
-                            pInputText type="text" formControlName="nameEn" />
+                        <input [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate" class="peer"
+                            fluid="true" id="shiftNameEn" pInputText type="text" formControlName="nameEn" />
                         <span
                             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                     </div>
                     <app-validation-messages [control]="nameEnControl"></app-validation-messages>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="time-pick-from" class="label">الوقت (من)</label>
+                    <label for="time-pick-from" class="label">{{ 'WORK_SHIFTS_POPUP.TIME_FROM' | translate }}</label>
                     <div class="relative">
                         <p-datepicker name="time-pick-from" [iconDisplay]="'input'" [showIcon]="true"
-                            placeholder="الوقت (من)" class="peer block w-full" inputId="icondisplay" [timeOnly]="true"
-                            id="time-pick-from" formControlName="timeFrom">
+                            [placeholder]="'WORK_SHIFTS_POPUP.TIME_FROM' | translate" class="peer block w-full"
+                            inputId="icondisplay" [timeOnly]="true" id="time-pick-from" formControlName="timeFrom">
                             <ng-template pTemplate="inputicon">
                                 <img src="/assets/icons/time-icon.svg" alt="" />
                             </ng-template>
@@ -42,11 +50,11 @@
                     <app-validation-messages [control]="timeFromControl"></app-validation-messages>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="time-pick-to" class="label">الوقت (الى)</label>
+                    <label for="time-pick-to" class="label">{{ 'WORK_SHIFTS_POPUP.TIME_TO' | translate }}</label>
                     <div class="relative">
                         <p-datepicker name="time-pick-to" [iconDisplay]="'input'" [showIcon]="true"
-                            placeholder="الوقت (الى)" class="peer block w-full" inputId="icondisplay" [timeOnly]="true"
-                            id="time-pick-to" formControlName="timeTo">
+                            [placeholder]="'WORK_SHIFTS_POPUP.TIME_TO' | translate" class="peer block w-full"
+                            inputId="icondisplay" [timeOnly]="true" id="time-pick-to" formControlName="timeTo">
                             <ng-template pTemplate="inputicon">
                                 <img src="/assets/icons/time-icon.svg" alt="" />
                             </ng-template>
@@ -57,9 +65,11 @@
                     <app-validation-messages [control]="timeToControl"></app-validation-messages>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="max-attendance-time" class="label">الحد الأقصى للحضور</label>
+                    <label for="max-attendance-time" class="label">{{ 'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' |
+                        translate }}</label>
                     <div class="relative">
-                        <input type="number" name="selectedAdminstration5" placeholder="الحد الأقصى للحضور"
+                        <input type="number" name="selectedAdminstration5"
+                            [placeholder]="'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate"
                             class="peer block w-full" fluid="true" id="max-attendance-time" pInputText
                             formControlName="attendanceBuffer">
                         <!-- <ng-template pTemplate="inputicon">
@@ -72,11 +82,12 @@
                     <app-validation-messages [control]="attendanceBufferControl"></app-validation-messages>
                 </div>
                 <div class="lg:col-span-2">
-                    <label for="max-leave-time" class="label">الحد الأقصى للانصراف</label>
+                    <label for="max-leave-time" class="label">{{ 'WORK_SHIFTS_POPUP.MAX_LEAVE_TIME' | translate
+                        }}</label>
                     <div class="relative">
-                        <input type="number" name="selectedAdminstration5" placeholder="الحد الأقصى للانصراف"
-                            class="peer block w-full" fluid="true" id="max-leave-time" pInputText
-                            formControlName="leaveBuffer" />
+                        <input type="number" name="selectedAdminstration5"
+                            [placeholder]="'WORK_SHIFTS_POPUP.MAX_LEAVE_TIME' | translate" class="peer block w-full"
+                            fluid="true" id="max-leave-time" pInputText formControlName="leaveBuffer" />
                         <span
                             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                     </div>
@@ -91,13 +102,14 @@
                             stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="20 6 9 17 4 12" />
                         </svg>
-                        <span class="text-base font-medium text-[#1f2a37]">تعيين كورديه إفتراضيه</span>
+                        <span class="text-base font-medium text-[#1f2a37]">{{ 'WORK_SHIFTS_POPUP.DEFAULT_SHIFT' |
+                            translate }}</span>
                     </label>
                 </div>
             </div>
             <div class="actions mt-6 flex items-center justify-end gap-4">
-                <button class="btn gray-btn" (click)="close()">الغاء</button>
-                <button class="btn green-btn" (click)="save$.next()">حفظ</button>
+                <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
+                <button class="btn green-btn" (click)="save$.next()">{{ 'COMMON.SAVE' | translate }}</button>
             </div>
         </form>
     </div>

@@ -24,7 +24,9 @@
     "SEARCH_FILTERS": "Search Filters",
     "START_BEFORE_END": "Start date must be before end date",
     "UNKNOWN_ERROR": "Unknown error",
-    "SERVICE_UNAVAILABLE": "Service unavailable"
+    "SERVICE_UNAVAILABLE": "Service unavailable",
+    "ACTION": "Action",
+    "EDIT": "Edit"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -189,5 +191,26 @@
     "FROM": "From",
     "TO": "To",
     "HOLIDAY": "Holiday"
+  },
+  "WORK_SHIFTS": {
+    "WORK_SHIFTS": "Work shifts",
+    "SHIFT_NAME": "Shift name",
+    "SHIFTS_LIST": "Work shifts list",
+    "ADD_NEW_SHIFT": "Add new work shift",
+    "SHIFT_IDENTIFICATION": "Shift identifier",
+    "MAX_ATTENDANCE_TIME": "Maximum attendance time",
+    "MAX_LEAVE_TIME": "Maximum leave time",
+    "TIME_FROM_TO": "Time (from - to)"
+  },
+  "WORK_SHIFTS_POPUP": {
+    "ADD_NEW_SHIFT": "Add new work shift",
+    "EDIT_SHIFT": "Edit work shift",
+    "SHIFT_NAME_ARABIC": "Shift name in Arabic",
+    "SHIFT_NAME_ENGLISH": "Shift name in English",
+    "TIME_FROM": "Time (from)",
+    "TIME_TO": "Time (to)",
+    "MAX_ATTENDANCE_TIME": "Maximum attendance time",
+    "MAX_LEAVE_TIME": "Maximum leave time",
+    "DEFAULT_SHIFT": "Set as default shift"
   }
 }

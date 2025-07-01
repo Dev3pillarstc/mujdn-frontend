@@ -16,6 +16,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-work-shifts-list',
@@ -27,7 +28,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     CommonModule,
     PaginatorModule,
-    FormsModule
+    FormsModule,
+    TranslatePipe
   ],
   templateUrl: './work-shifts-list.component.html',
   styleUrl: './work-shifts-list.component.scss',
@@ -58,7 +60,7 @@ export default class WorkShiftsListComponent extends BaseListComponent<Shift, Wo
   attendance!: any[];
 
   openDialog(model: Shift): void {
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialog(WorkShiftsListPopupComponent as any, model, viewMode);
   }
 

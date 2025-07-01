@@ -123,7 +123,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'department-list',
+        path: 'departments',
         resolve: { list: departmentResolver },
         loadComponent: () =>
           import('../views/features/department/department-list/department-list.component'),

@@ -14,6 +14,8 @@ import { ShiftService } from '@/services/features/lookups/shift.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface Adminstration {
   type: string;
@@ -21,7 +23,7 @@ interface Adminstration {
 
 @Component({
   selector: 'app-work-shifts-list-popup',
-  imports: [DatePickerModule, FormsModule, InputTextModule, ReactiveFormsModule, ValidationMessagesComponent],
+  imports: [DatePickerModule, FormsModule, InputTextModule, ReactiveFormsModule, ValidationMessagesComponent, TranslatePipe],
   templateUrl: './work-shifts-list-popup.component.html',
   styleUrl: './work-shifts-list-popup.component.scss',
 })
@@ -31,6 +33,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   alertService = inject(AlertService);
   service = inject(ShiftService);
   fb = inject(FormBuilder);
+  isCreateMode = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
@@ -57,6 +60,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   // }
   override initPopup(): void {
     this.model = this.data.model;
+    this.isCreateMode = this.data.viewMode == ViewModeEnum.CREATE;
   }
   override buildForm(): void {
     this.form = this.fb.group(this.model.buildForm());
@@ -82,7 +86,9 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
 
   private dateToTimeString(date: Date): string | null {
     if (!date) return null;
-    return date.toTimeString().split(' ')[0]; // returns "HH:mm:ss"
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}:00`;
   }
 
 

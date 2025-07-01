@@ -17,10 +17,6 @@ import { ValidationMessagesComponent } from '@/views/shared/validation-messages/
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { TranslatePipe } from '@ngx-translate/core';
 
-interface Adminstration {
-  type: string;
-}
-
 @Component({
   selector: 'app-work-shifts-list-popup',
   imports: [DatePickerModule, FormsModule, InputTextModule, ReactiveFormsModule, ValidationMessagesComponent, TranslatePipe],

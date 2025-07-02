@@ -61,7 +61,7 @@ export default class PermissionReasonListComponent
     const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
 
     return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : '؛Permission Reason']:
+      [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : 'Permission Reason']:
         lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
     };
   }

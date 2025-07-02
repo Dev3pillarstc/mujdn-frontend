@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { CastResponseContainer } from 'cast-response';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PermissionReason } from '@/models/features/lookups/permission/permission-reason';
+import { LookupBaseService } from '@/abstracts/lookup-base.service';
 
 @CastResponseContainer({
   $default: {
@@ -18,7 +19,7 @@ import { PermissionReason } from '@/models/features/lookups/permission/permissio
 @Injectable({
   providedIn: 'root',
 })
-export class PermissionReasonService extends BaseCrudService<PermissionReason> {
+export class PermissionReasonService extends LookupBaseService<PermissionReason> {
   serviceName: string = 'PermissionReasonService';
 
   override getUrlSegment(): string {

@@ -14,6 +14,7 @@ export const EndPoints = {
   HOLIDAYS: '/holidays',
   PERMISSION_TYPES: '/permissiontypes',
   PERMISSION_STATUS: '/permissionstatuses',
+  PERMISSIONS: '/permissions',
 };
 
 export type EndpointsType = typeof EndPoints;

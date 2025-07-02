@@ -77,6 +77,17 @@ export class SideBarLinksService {
     },
 
     {
+      label: 'ورديات العمل',
+      iconUrl: 'assets/icons/time-icon.svg',
+      children: [
+        {
+          label: 'اعدادات ورديات العمل',
+          routerLink: ['/work-shifts'],
+          routeId: RouteIdsEnum.WORK_SHIFTS,
+        },
+      ],
+    },
+    {
       label: 'الإعدادات',
       iconUrl: 'assets/icons/menu-icons/settings.svg',
       children: [

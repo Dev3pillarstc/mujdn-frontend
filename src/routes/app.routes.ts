@@ -11,6 +11,7 @@ import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
 import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
+import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 
 export const routes: Routes = [
   {
@@ -129,13 +130,17 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'department-list',
+        path: 'departments',
+        canActivate: [authGuard],
         resolve: { list: departmentResolver },
         loadComponent: () =>
           import('../views/features/department/department-list/department-list.component'),
       },
       {
-        path: 'work-shifts-list',
+        path: 'work-shifts',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.WORK_SHIFTS },
+        resolve: { list: workShiftResolver },
         data: { routeId: RouteIdsEnum.WORK_SHIFT_LIST },
         loadComponent: () =>
           import(

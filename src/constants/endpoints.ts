@@ -15,6 +15,7 @@ export const EndPoints = {
   PERMISSION_TYPES: '/permissiontypes',
   PERMISSION_STATUS: '/permissionstatuses',
   PERMISSIONS: '/permissions',
+  SHIFTS: '/shifts',
 };
 
 export type EndpointsType = typeof EndPoints;

@@ -24,6 +24,7 @@ export class Permission extends BaseCrudModel<Permission, PermissionService> {
   declare status: BaseLookupModel;
   declare permissionReason: BaseLookupModel;
   declare permissionType: BaseLookupModel;
+  declare actionDate?: Date | string;
 
   buildForm() {
     const { permissionDate, fkPermissionTypeId, fkReasonId, description } = this;

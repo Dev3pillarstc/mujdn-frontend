@@ -15,10 +15,18 @@
           </div>
         </div>
         <div class="flex gap-2 items-center">
-          <span class="text-[#6c737f] text-sm">تاريخ الموافقة</span>
-          <span class="text-[#161616] font-semibold">
-            <span>{{ model.permissionDate | date }}</span>
-          </span>
+          @if (model.fkStatusId == 1) {
+            <span class="text-[#6c737f] text-sm">تاريخ الموافقة</span>
+            <span class="text-[#161616] font-semibold">
+              <span>{{ model.actionDate | date }}</span>
+            </span>
+          }
+          @if (model.fkStatusId == 1) {
+            <span class="text-[#6c737f] text-sm">تاريخ الرفض</span>
+            <span class="text-[#161616] font-semibold">
+              <span>{{ model.actionDate | date }}</span>
+            </span>
+          }
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">

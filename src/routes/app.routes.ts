@@ -109,7 +109,6 @@ export const routes: Routes = [
         path: 'permissions',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN, ROLES_ENUM.DEPARTMENT_MANAGER],
           routeId: RouteIdsEnum.PERMISSIONS,
         },
         resolve: { list: permissionResolver },

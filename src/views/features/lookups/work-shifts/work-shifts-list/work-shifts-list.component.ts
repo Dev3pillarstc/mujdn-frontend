@@ -29,13 +29,15 @@ import { TranslatePipe } from '@ngx-translate/core';
     CommonModule,
     PaginatorModule,
     FormsModule,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './work-shifts-list.component.html',
   styleUrl: './work-shifts-list.component.scss',
 })
-export default class WorkShiftsListComponent extends BaseListComponent<Shift, WorkShiftsListPopupComponent, ShiftService, ShiftsFilter> implements OnInit {
-
+export default class WorkShiftsListComponent
+  extends BaseListComponent<Shift, WorkShiftsListPopupComponent, ShiftService, ShiftsFilter>
+  implements OnInit
+{
   filterModel: ShiftsFilter = new ShiftsFilter();
 
   shiftService = inject(ShiftService);
@@ -45,9 +47,7 @@ export default class WorkShiftsListComponent extends BaseListComponent<Shift, Wo
   override get service(): ShiftService {
     return this.shiftService;
   }
-  override initListComponent(): void {
-
-  }
+  override initListComponent(): void {}
 
   dialogSize = {
     width: '100%',
@@ -60,10 +60,7 @@ export default class WorkShiftsListComponent extends BaseListComponent<Shift, Wo
   attendance!: any[];
   override ngOnInit() {
     super.ngOnInit();
-    this.items = [
-      { label: 'COMMON.DASHBOARD' },
-      { label: 'WORK_SHIFTS.WORK_SHIFTS' },
-    ];
+    this.items = [{ label: 'COMMON.DASHBOARD' }, { label: 'WORK_SHIFTS.WORK_SHIFTS' }];
   }
 
   openDialog(model: Shift): void {

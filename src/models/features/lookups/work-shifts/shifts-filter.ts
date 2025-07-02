@@ -1,4 +1,4 @@
 export default class ShiftsFilter {
-    declare nameAr: string;
-    declare nameEn: string;
+  declare nameAr: string;
+  declare nameEn: string;
 }

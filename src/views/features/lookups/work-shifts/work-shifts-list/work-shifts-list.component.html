@@ -1,97 +1,129 @@
 <div class="bg-white">
-    <div class="bg-[#f9fafb] p-3 sm:p-6">
-        <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-            <p-breadcrumb [home]="home" [model]="items" class="max-w-full">
-                <ng-template let-item pTemplate="item">
-                    <span>{{ item.label | translate }}</span>
-                </ng-template>
-            </p-breadcrumb>
-            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">{{ 'WORK_SHIFTS.WORK_SHIFTS' |
-                translate }}</h3>
-        </div>
-        <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
-            <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
-                <div class="flex items-center justify-between">
-                    <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">{{ 'COMMON.SEARCH_FILTERS' |
-                        translate }}</h5>
-                </div>
-                <div class="pt-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-                        <div class="relative">
-                            <label class="label" for="nationalityName">{{ 'WORK_SHIFTS.SHIFT_NAME' | translate
-                                }}</label>
-                            @if(isCurrentLanguageEnglish()) {
-                            <input [placeholder]="'WORK_SHIFTS.SHIFT_NAME' | translate" class="peer" fluid="true"
-                                id="nationalityName" pInputText type="text" [(ngModel)]="filterModel.nameEn" />
-                            } @else {
-                            <input [placeholder]="'WORK_SHIFTS.SHIFT_NAME' | translate" class="peer" fluid="true"
-                                id="nationalityName" pInputText type="text" [(ngModel)]="filterModel.nameAr" />
-                            }
-                            <span
-                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                        </div>
-                    </div>
-
-                    <div class="actions flex items-center gap-4 pt-6">
-                        <button class="btn black-btn" (click)="search()"
-                            [disabled]="isCurrentLanguageEnglish() ? !filterModel.nameEn : !filterModel.nameAr">
-                            {{ 'COMMON.SEARCH' | translate }}
-                        </button>
-                        <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()"
-                            [disabled]="isCurrentLanguageEnglish() ? !filterModel.nameEn : !filterModel.nameAr">
-                            {{ 'COMMON.RESET_SEARCH' | translate }}
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-6">
-                <div
-                    class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
-                    <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">{{ 'WORK_SHIFTS.SHIFTS_LIST' |
-                        translate }}</h4>
-                    <div class="actions flex items-center gap-4 ms-auto">
-                        <button (click)="exportExcel('work-shifts.xlsx')" class="table-head-action-btn">
-                            <img src="assets/icons/excel.svg" alt="" />
-                        </button>
-                        <button class="btn green-btn flex items-center" (click)="addOrEditModel()">
-                            <img src="assets/icons/plus.svg" alt="" />
-                            <span>{{ 'WORK_SHIFTS.ADD_NEW_SHIFT' | translate }}</span>
-                        </button>
-                    </div>
-                </div>
-                <p-table [value]="list">
-                    <ng-template #header>
-                        <tr>
-                            <th>{{ 'WORK_SHIFTS.SHIFT_IDENTIFICATION' | translate }}</th>
-                            <th>{{ 'WORK_SHIFTS.SHIFT_NAME' | translate }}</th>
-                            <th>{{ 'WORK_SHIFTS.MAX_ATTENDANCE_TIME' | translate }}</th>
-                            <th>{{ 'WORK_SHIFTS.MAX_LEAVE_TIME' | translate }}</th>
-                            <th>{{ 'WORK_SHIFTS.TIME_FROM_TO' | translate }}</th>
-                            <th>{{ 'COMMON.ACTION' | translate }}</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template #body let-shift>
-                        <tr>
-                            <td>{{shift.id}}</td>
-                            <td>{{isCurrentLanguageEnglish() ? shift.nameEn : shift.nameAr}}</td>
-                            <td>{{shift.attendanceBuffer}}</td>
-                            <td>{{shift.leaveBuffer}}</td>
-                            <td>{{shift.timeFrom}} - {{shift.timeTo}}</td>
-                            <td>
-                                <div class="actions flex gap-2">
-                                    <button class="table-action-gray-btn" (click)="addOrEditModel(shift)">
-                                        <img src="/assets/icons/edit-action.svg" [alt]="'COMMON.EDIT' | translate" />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-                <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-                    [totalRecords]="paginationInfo.totalItems" [rowsPerPageOptions]="[10, 20, 30]"
-                    [showCurrentPageReport]="false" />
-                <div></div>
-            </div>
-        </div>
+  <div class="bg-[#f9fafb] p-3 sm:p-6">
+    <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <span>{{ item.label | translate }}</span>
+        </ng-template>
+      </p-breadcrumb>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'WORK_SHIFTS.WORK_SHIFTS' | translate }}
+      </h3>
     </div>
+    <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
+      <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
+        <div class="flex items-center justify-between">
+          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+            {{ 'COMMON.SEARCH_FILTERS' | translate }}
+          </h5>
+        </div>
+        <div class="pt-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div class="relative">
+              <label class="label" for="nationalityName">{{
+                'WORK_SHIFTS.SHIFT_NAME' | translate
+              }}</label>
+              @if (isCurrentLanguageEnglish()) {
+                <input
+                  [placeholder]="'WORK_SHIFTS.SHIFT_NAME' | translate"
+                  class="peer"
+                  fluid="true"
+                  id="nationalityName"
+                  pInputText
+                  type="text"
+                  [(ngModel)]="filterModel.nameEn"
+                />
+              } @else {
+                <input
+                  [placeholder]="'WORK_SHIFTS.SHIFT_NAME' | translate"
+                  class="peer"
+                  fluid="true"
+                  id="nationalityName"
+                  pInputText
+                  type="text"
+                  [(ngModel)]="filterModel.nameAr"
+                />
+              }
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+          </div>
+
+          <div class="actions flex items-center gap-4 pt-6">
+            <button
+              class="btn black-btn"
+              (click)="search()"
+              [disabled]="isCurrentLanguageEnglish() ? !filterModel.nameEn : !filterModel.nameAr"
+            >
+              {{ 'COMMON.SEARCH' | translate }}
+            </button>
+            <button
+              class="btn gray-btn border border-[#d2d6db]"
+              (click)="resetSearch()"
+              [disabled]="isCurrentLanguageEnglish() ? !filterModel.nameEn : !filterModel.nameAr"
+            >
+              {{ 'COMMON.RESET_SEARCH' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+            {{ 'WORK_SHIFTS.SHIFTS_LIST' | translate }}
+          </h4>
+          <div class="actions flex items-center gap-4 ms-auto">
+            <button (click)="exportExcel('work-shifts.xlsx')" class="table-head-action-btn">
+              <img src="assets/icons/excel.svg" alt="" />
+            </button>
+            <button class="btn green-btn flex items-center" (click)="addOrEditModel()">
+              <img src="assets/icons/plus.svg" alt="" />
+              <span>{{ 'WORK_SHIFTS.ADD_NEW_SHIFT' | translate }}</span>
+            </button>
+          </div>
+        </div>
+        <p-table [value]="list">
+          <ng-template #header>
+            <tr>
+              <th>{{ 'WORK_SHIFTS.SHIFT_IDENTIFICATION' | translate }}</th>
+              <th>{{ 'WORK_SHIFTS.SHIFT_NAME' | translate }}</th>
+              <th>{{ 'WORK_SHIFTS.MAX_ATTENDANCE_TIME' | translate }}</th>
+              <th>{{ 'WORK_SHIFTS.MAX_LEAVE_TIME' | translate }}</th>
+              <th>{{ 'WORK_SHIFTS.TIME_FROM_TO' | translate }}</th>
+              <th>{{ 'COMMON.ACTION' | translate }}</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-shift>
+            <tr>
+              <td>{{ shift.id }}</td>
+              <td>{{ isCurrentLanguageEnglish() ? shift.nameEn : shift.nameAr }}</td>
+              <td>{{ shift.attendanceBuffer }}</td>
+              <td>{{ shift.leaveBuffer }}</td>
+              <td>{{ shift.timeFrom }} - {{ shift.timeTo }}</td>
+              <td>
+                <div class="actions flex gap-2">
+                  <button class="table-action-gray-btn" (click)="addOrEditModel(shift)">
+                    <img src="/assets/icons/edit-action.svg" [alt]="'COMMON.EDIT' | translate" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-paginator
+          class="mt-6"
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rows]="rows"
+          [totalRecords]="paginationInfo.totalItems"
+          [rowsPerPageOptions]="[10, 20, 30]"
+          [showCurrentPageReport]="false"
+        />
+        <div></div>
+      </div>
+    </div>
+  </div>
 </div>

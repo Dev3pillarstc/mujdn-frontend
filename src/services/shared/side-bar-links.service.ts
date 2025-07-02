@@ -82,7 +82,7 @@ export class SideBarLinksService {
           routerLink: ['/work-shifts'],
           routeId: RouteIdsEnum.WORK_SHIFTS,
         },
-      ]
+      ],
     },
     {
       label: 'الإعدادات',
@@ -120,7 +120,7 @@ export class SideBarLinksService {
   constructor(
     private router: Router,
     private authService: AuthService
-  ) { }
+  ) {}
 
   /** Public method to get menu items filtered by current user roles */
   getSidebarLinks(): MenuItem[] {

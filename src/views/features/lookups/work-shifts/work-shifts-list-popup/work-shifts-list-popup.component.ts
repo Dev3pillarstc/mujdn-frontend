@@ -1,5 +1,11 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
@@ -19,7 +25,14 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
-  imports: [DatePickerModule, FormsModule, InputTextModule, ReactiveFormsModule, ValidationMessagesComponent, TranslatePipe],
+  imports: [
+    DatePickerModule,
+    FormsModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    ValidationMessagesComponent,
+    TranslatePipe,
+  ],
   templateUrl: './work-shifts-list-popup.component.html',
   styleUrl: './work-shifts-list-popup.component.scss',
 })
@@ -61,8 +74,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   override buildForm(): void {
     this.form = this.fb.group(this.model.buildForm());
   }
-  override saveFail(error: Error): void {
-  }
+  override saveFail(error: Error): void {}
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
   }
@@ -86,6 +98,4 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}:00`;
   }
-
-
 }

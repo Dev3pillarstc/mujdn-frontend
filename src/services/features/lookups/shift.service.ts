@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { CastResponseContainer } from 'cast-response';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 @CastResponseContainer({
   $default: {
@@ -25,7 +25,6 @@ import { CastResponseContainer } from 'cast-response';
   },
 })
 export class ShiftService extends BaseCrudService<Shift> {
-
   override serviceName: string = 'ShiftService';
   constructor() {
     super();

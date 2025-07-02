@@ -68,6 +68,26 @@ export abstract class BaseListComponent<
       }
     });
   }
+  openBaseDialogSP(
+    popupComponent: PopupComponent,
+    model: Model,
+    viewMode: ViewModeEnum,
+    lookups?: {
+      [key: string]: any[];
+    }
+  ) {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = { model: model, lookups: lookups, viewMode: viewMode };
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
+    const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
+
+    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result && result == DIALOG_ENUM.OK) {
+        this.loadListSP();
+      }
+    });
+  }
 
   ngOnInit() {
     this.list = this.activatedRoute.snapshot.data['list']?.list;

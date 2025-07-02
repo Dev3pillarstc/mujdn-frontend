@@ -2,7 +2,12 @@ import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { AttendanceService } from '@/services/features/attendance.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { Validators } from '@angular/forms';
+import { InterceptModel } from 'cast-response';
+import { AttendanceLogInterceptor } from '@/model-interceptors/features/attendance-log-interceptor';
 
+const { send, receive } = new AttendanceLogInterceptor();
+
+@InterceptModel({ send, receive })
 export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceService, string> {
   override $$__service_name__$$: string = 'AttendanceService';
   declare id: string;
@@ -10,6 +15,7 @@ export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceServic
   declare employeeId?: number;
   declare swipeTime?: string;
   declare identificationNumber?: string;
+  declare nationalId?: string;
   declare channelName?: string | null;
   declare employeeNameEn?: string;
   declare employeeNameAr?: string;
@@ -19,16 +25,27 @@ export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceServic
   declare creatorNameAr?: string;
   declare openType?: string | null;
 
+  declare selectedDate?: Date;
+  declare selectedTime?: Date;
+
   buildForm(viewMode: ViewModeEnum) {
-    const { departmentId, identificationNumber, swipeTime } = this;
+    const {
+      departmentId,
+      identificationNumber,
+      employeeId,
+      nationalId,
+      swipeTime,
+      selectedDate,
+      selectedTime,
+    } = this;
 
     const controls = {
       departmentId: [departmentId, viewMode === ViewModeEnum.CREATE ? [] : [Validators.required]],
-      identificationNumber: [
-        identificationNumber,
-        viewMode === ViewModeEnum.CREATE ? [] : [Validators.required],
-      ],
+      employeeId: [employeeId, viewMode === ViewModeEnum.CREATE ? [] : [Validators.required]],
+      nationalId: [nationalId, viewMode === ViewModeEnum.CREATE ? [] : [Validators.required]],
       swipeTime: [swipeTime, [Validators.required]],
+      selectedDate: [selectedDate],
+      selectedTime: [selectedTime],
     };
 
     return controls;

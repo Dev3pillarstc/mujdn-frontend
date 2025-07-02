@@ -29,3 +29,9 @@ export const toDateTime = function (date: any) {
   date = new Date(date);
   return date;
 };
+
+// create a function that takes a UTC date and returns the date in local time
+export const toLocalTime = function (date: any) {
+  date = new Date(date);
+  return date.toLocaleString();
+};

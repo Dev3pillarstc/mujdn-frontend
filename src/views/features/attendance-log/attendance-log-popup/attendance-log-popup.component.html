@@ -4,7 +4,12 @@
       <i class="pi pi-times"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_MOVEMENT' | translate }}
+      {{
+        (isCreateMode
+          ? 'ATTENDANCE_LOG_PAGE.ADD_NEW_MOVEMENT'
+          : 'ATTENDANCE_LOG_PAGE.EDIT_MOVEMENT'
+        ) | translate
+      }}
     </h3>
     <form [formGroup]="form" class="mt-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
@@ -17,6 +22,7 @@
             <p-select
               [optionLabel]="getPropertyName()"
               [options]="departments"
+              [disabled]="!isCreateMode"
               class="w-full peer"
               formControlName="departmentId"
               id="department-popup"
@@ -41,13 +47,13 @@
             <p-select
               [optionLabel]="getPropertyName()"
               [options]="getFilteredEmployees()"
+              [disabled]="!isCreateMode || !departmentControl.value"
               class="w-full peer"
-              formControlName="identificationNumber"
+              formControlName="employeeId"
               id="employee-popup"
-              name="identificationNumber"
+              name="employeeId"
               optionValue="id"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME' | translate }}"
-              (onChange)="onEmployeeChange($event.value)"
             >
             </p-select>
             <span
@@ -64,23 +70,23 @@
           </label>
           <div class="relative">
             <p-datepicker
+              formControlName="selectedDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
+              [disabled]="!isCreateMode"
               class="peer block w-full"
               id="date-picker"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.DATE' | translate }}"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
+                <img src="/assets/icons/calender-icon.svg" alt="Calendar" />
               </ng-template>
             </p-datepicker>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <div class="validation-message" *ngIf="!selectedDate">
-            {{ 'ATTENDANCE_LOG_PAGE.DATE_REQUIRED' | translate }}
-          </div>
+          <app-validation-messages [control]="selectedDateControl"></app-validation-messages>
         </div>
 
         <!-- Time Picker -->
@@ -90,29 +96,25 @@
           </label>
           <div class="relative">
             <p-datepicker
+              formControlName="selectedTime"
               [iconDisplay]="'input'"
               [showIcon]="true"
               [timeOnly]="true"
+              [disabled]="!isCreateMode"
               class="peer block w-full"
               id="time-picker"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.TIME' | translate }}"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/time-icon.svg" alt="" />
+                <img src="/assets/icons/time-icon.svg" alt="Time" />
               </ng-template>
             </p-datepicker>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <div class="validation-message" *ngIf="!selectedTime">
-            {{ 'ATTENDANCE_LOG_PAGE.TIME_REQUIRED' | translate }}
-          </div>
+          <app-validation-messages [control]="selectedTimeControl"></app-validation-messages>
         </div>
-
-        <!-- Hidden fields for form validation -->
-        <input type="hidden" formControlName="identificationNumber" />
-        <input type="hidden" formControlName="swipeTime" />
       </div>
 
       <div class="actions mt-6 flex items-center justify-end gap-4">

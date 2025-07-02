@@ -124,8 +124,9 @@ export default class AttendanceLogListComponent
 
   override openDialog(attendanceLog?: AttendanceLog): void {
     const model = attendanceLog ?? new AttendanceLog();
+    console.log('model i nlist', model);
     const viewMode = attendanceLog ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    this.openBaseDialog(AttendanceLogPopupComponent as any, model, viewMode, {
+    this.openBaseDialogSP(AttendanceLogPopupComponent as any, model, viewMode, {
       departments: this.departments,
       employees: this.employees,
     });

@@ -10,7 +10,7 @@ import { notificationChannelResolver } from '@/resolvers/setting/notification-ch
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
-import { attendanceResolver } from '@/resolvers/features/attendance.resolver';
+import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
 
 export const routes: Routes = [
   {

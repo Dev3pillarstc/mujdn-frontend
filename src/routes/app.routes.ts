@@ -152,7 +152,14 @@ export const routes: Routes = [
       {
         path: 'outside-mission',
         loadComponent: () =>
-          import('../views/features/outside-mission/outside-mission-list/outside-mission-list.component'),
+          import(
+            '../views/features/outside-mission/outside-mission-list/outside-mission-list.component'
+          ),
+      },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('../views/features/lookups/notifiactions/notifiactions.component'),
       },
     ],
   },

@@ -99,8 +99,40 @@ export const validationPatterns: any = {
   ),
 };
 
+export function strongPassword(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+
+    if (!value) return null;
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasDigit = /\d/.test(value);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+    const isLongEnough = value.length >= defaultLengths.PASSWORD_MIN;
+    const isShortEnough = value.length <= defaultLengths.PASSWORD_MAX;
+
+    const valid =
+      hasUpperCase && hasLowerCase && hasDigit && hasSpecial && isLongEnough && isShortEnough;
+
+    return valid
+      ? null
+      : {
+          strongPassword: {
+            hasUpperCase,
+            hasLowerCase,
+            hasDigit,
+            hasSpecial,
+            isLongEnough,
+            isShortEnough,
+          },
+        };
+  };
+}
+
 export const CustomValidators = {
   defaultLengths,
   pattern,
   startBeforeEnd,
+  strongPassword,
 };

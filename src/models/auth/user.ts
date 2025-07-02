@@ -66,12 +66,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
       password: [
         password,
         viewMode == ViewModeEnum.CREATE
-          ? [
-              Validators.required,
-              Validators.maxLength(CustomValidators.defaultLengths.PASSWORD_MAX),
-              Validators.minLength(CustomValidators.defaultLengths.PASSWORD_MIN),
-              CustomValidators.pattern('ENG_NUM'),
-            ]
+          ? [Validators.required, CustomValidators.strongPassword()]
           : [],
       ],
       fullNameEn: [

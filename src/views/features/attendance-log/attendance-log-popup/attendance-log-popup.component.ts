@@ -111,6 +111,11 @@ export class AttendanceLogPopupComponent
 
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm(this.viewMode));
+    if (this.viewMode == ViewModeEnum.EDIT) {
+      this.form.get('departmentId')?.disable();
+      this.form.get('employeeId')?.disable();
+      this.form.get('selectedDate')?.disable();
+    }
 
     // Set up form subscriptions for reactive updates
     this.setupFormSubscriptions();

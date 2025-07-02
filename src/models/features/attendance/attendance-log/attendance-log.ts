@@ -14,7 +14,6 @@ export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceServic
   declare departmentId?: number;
   declare employeeId?: number;
   declare swipeTime?: string;
-  declare identificationNumber?: string;
   declare nationalId?: string;
   declare channelName?: string | null;
   declare employeeNameEn?: string;
@@ -29,15 +28,7 @@ export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceServic
   declare selectedTime?: Date;
 
   buildForm(viewMode: ViewModeEnum) {
-    const {
-      departmentId,
-      identificationNumber,
-      employeeId,
-      nationalId,
-      swipeTime,
-      selectedDate,
-      selectedTime,
-    } = this;
+    const { departmentId, employeeId, nationalId, swipeTime, selectedDate, selectedTime } = this;
 
     const controls = {
       departmentId: [departmentId, viewMode === ViewModeEnum.CREATE ? [] : [Validators.required]],

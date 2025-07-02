@@ -192,7 +192,7 @@ export default class AttendanceLogListComponent
 
   protected override mapModelToExcelRow(model: AttendanceLog): { [key: string]: any } {
     return {
-      'ATTENDANCE_LOG_PAGE.EMPLOYEE_ID': model.identificationNumber,
+      'ATTENDANCE_LOG_PAGE.EMPLOYEE_ID': model.employeeId,
       'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR': model.employeeNameAr,
       'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN': model.employeeNameEn,
       'ATTENDANCE_LOG_PAGE.DEPARTMENT': model.departmentNameAr,

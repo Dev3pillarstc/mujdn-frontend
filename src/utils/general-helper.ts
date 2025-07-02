@@ -1,3 +1,5 @@
+import { FormArray, FormGroup } from '@angular/forms';
+
 export const genericDateOnlyConvertor = function (model: any) {
   if (!model) return model;
 
@@ -35,3 +37,13 @@ export const toLocalTime = function (date: any) {
   date = new Date(date);
   return date.toLocaleString();
 };
+
+export function markFormGroupTouched(form: FormGroup | FormArray) {
+  Object.values(form.controls).forEach((control) => {
+    if (control instanceof FormGroup || control instanceof FormArray) {
+      markFormGroupTouched(control); // Recursive call
+    } else {
+      control.markAsTouched();
+    }
+  });
+}

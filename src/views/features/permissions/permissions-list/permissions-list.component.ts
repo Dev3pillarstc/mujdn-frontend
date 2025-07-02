@@ -24,8 +24,6 @@ import { DepartmentService } from '@/services/features/lookups/department.servic
 import { PermissionStatusService } from '@/services/features/lookups/permission-status.service';
 import { UserService } from '@/services/features/user.service';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
-import { UserProfilesLookup } from '@/models/auth/users-profiles-lookup';
-import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
 import { PermissionsDataPopupComponent } from '../popups/permissions-data-popup/permissions-data-popup.component';
@@ -76,7 +74,7 @@ export default class PermissionsListComponent
   permissionStatusEnum = PERMISSION_STATUS_ENUM;
   permissionTypes: BaseLookupModel[] = [];
   departments: BaseLookupModel[] = [];
-  users: UserProfilesLookup[] = [];
+  users: BaseLookupModel[] = [];
   prmissionStatuses: BaseLookupModel[] = [];
   prmissionReasons: BaseLookupModel[] = [];
   home: MenuItem | undefined;
@@ -96,8 +94,8 @@ export default class PermissionsListComponent
     this.prmissionStatusService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.prmissionStatuses = res;
     });
-    this.userService.getUsersProfiles().subscribe((res: ListResponseData<UserProfilesLookup>) => {
-      this.users = res.data;
+    this.userService.getLookup().subscribe((res: BaseLookupModel[]) => {
+      this.users = res;
     });
     this.prmissionReasonService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.prmissionReasons = res;

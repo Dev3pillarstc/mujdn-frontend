@@ -108,7 +108,7 @@ export default class AttendanceLogListComponent
 
   override initListComponent(): void {
     // Load lookups
-    this.departmentService.getDepartmentsLookup().subscribe((res: BaseLookupModel[]) => {
+    this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.departments = res;
     });
 

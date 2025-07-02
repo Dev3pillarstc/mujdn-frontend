@@ -129,6 +129,7 @@ export const routes: Routes = [
       },
       {
         path: 'work-shifts-list',
+        data: { routeId: RouteIdsEnum.WORK_SHIFT_LIST },
         loadComponent: () =>
           import(
             '../views/features/lookups/work-shifts/work-shifts-list/work-shifts-list.component'
@@ -136,6 +137,7 @@ export const routes: Routes = [
       },
       {
         path: 'work-shifts-assignment',
+        data: { routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT },
         loadComponent: () =>
           import(
             '../views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
@@ -143,8 +145,14 @@ export const routes: Routes = [
       },
       {
         path: 'temp-shifts',
+        data: { routeId: RouteIdsEnum.WORK_SHIFT_TEMP },
         loadComponent: () =>
           import('../views/features/lookups/work-shifts/temp-shifts/temp-shifts.component'),
+      },
+      {
+        path: 'outside-mission',
+        loadComponent: () =>
+          import('../views/features/outside-mission/outside-mission-list/outside-mission-list.component'),
       },
     ],
   },

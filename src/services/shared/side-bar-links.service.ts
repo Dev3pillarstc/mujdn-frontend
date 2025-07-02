@@ -54,16 +54,19 @@ export class SideBarLinksService {
       label: 'ورديات العمل',
       iconUrl: 'assets/icons/menu-icons/shifts-icon.svg',
       routerLink: ['/dashboard'],
+      routeId: RouteIdsEnum.WORK_SHIFT_LIST,
     },
     {
       label: 'ورديات العمل المؤقتة',
       iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
       routerLink: ['/dashboard'],
+      routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
     },
     {
       label: 'اسناد ورديات عمل',
       iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
       routerLink: ['/dashboard'],
+      routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
     },
     {
       label: 'قائمة الاجازات و الأعياد',

@@ -31,6 +31,7 @@ export class PermissionsDataPopupComponent implements OnInit {
   isArabic = this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ARABIC;
   dialogRef = inject(MatDialogRef);
   canTakeAction = this.data.ViewMode == ViewModeEnum.TAKE_ACTION;
+  statusEnum = PERMISSION_STATUS_ENUM;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {

@@ -262,6 +262,30 @@
         </div>
 
         <div>
+          <label class="label" for="joinDate">{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}</label>
+          <div class="relative">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              formControlName="joinDate"
+              id="joinDate"
+              inputId="joinDate"
+              name="joinDate"
+              placeholder="{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="/assets/icons/calender-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="joinDateControl"></app-validation-messages>
+        </div>
+
+        <div>
           <label class="label" for="nationalId">{{
             'EMPLOYEES_PAGE.NATIONAL_ID' | translate
           }}</label>
@@ -286,6 +310,7 @@
             <label for="password" class="label">{{ 'EMPLOYEES_PAGE.PASSWORD' | translate }}</label>
             <div class="relative">
               <input
+                autocomplete="new-password"
                 id="password"
                 placeholder="{{ 'EMPLOYEES_PAGE.PASSWORD' | translate }}"
                 formControlName="password"
@@ -305,10 +330,10 @@
 
       <fieldset [disabled]="true">
         <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-          <h3 class="text-[#1f2a37 font-[600] mb-6 text-sm sm:text-base">
+          <h3 class="text-[#1f2a37] font-[600] text-sm sm:text-base">
             {{ 'EMPLOYEES_PAGE.PERMISSIONS' | translate }}
           </h3>
-          <div class="flex flex-wrap gap-8">
+          <div class="flex flex-wrap gap-8 mt-3 rounded p-6 dimmed-form">
             <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
               <input
                 checked
@@ -436,7 +461,7 @@
                 'EMPLOYEES_PAGE.ROLE_MP_MEMBER' | translate
               }}</span>
             </label>
-            <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <label class="flex items-center space-x-2 cursor-pointer relative">
               <input
                 [checked]="roleStates.isSecurityLeader"
                 class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"

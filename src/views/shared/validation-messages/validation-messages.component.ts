@@ -1,7 +1,7 @@
 import { Component, input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { debounceTime, delay, map, Observable, of, startWith } from 'rxjs';
+import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ValidationErrorKeyEnum } from '@/enums/validation-error-key-enum';
 
@@ -38,5 +38,6 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.MIN_LENGTH]: 'COMMON.MIN_LENGTH',
     [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH',
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
+    [ValidationErrorKeyEnum.STRONG_PASSWORD]: 'COMMON.STRONG_PASSWORD',
   };
 }

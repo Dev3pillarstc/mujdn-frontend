@@ -10,6 +10,7 @@ import { notificationChannelResolver } from '@/resolvers/setting/notification-ch
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
+import { attendanceResolver } from '@/resolvers/features/attendance.resolver';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,7 @@ export const routes: Routes = [
       {
         path: 'attendance-logs',
         canActivate: [authGuard],
+        resolve: { list: attendanceResolver },
         data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER], routeId: RouteIdsEnum.ATTENDANCE_LOGS },
         loadComponent: () =>
           import(

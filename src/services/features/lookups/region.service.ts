@@ -26,7 +26,7 @@ import { Observable, of, switchMap } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class RegionService extends LookupBaseService<Region> {
+export class RegionService extends LookupBaseService<Region, number> {
   serviceName: string = 'RegionService';
 
   override getUrlSegment(): string {

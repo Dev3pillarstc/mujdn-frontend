@@ -5,7 +5,7 @@ import { AttendanceLog } from '@/models/features/attendance/attendance-log/atten
 @Injectable({
   providedIn: 'root',
 })
-export class AttendanceService extends BaseCrudService<AttendanceLog> {
+export class AttendanceService extends BaseCrudService<AttendanceLog, string> {
   serviceName: string = 'AttendanceService';
 
   getUrlSegment(): string {

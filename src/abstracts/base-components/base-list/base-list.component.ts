@@ -94,18 +94,48 @@ export abstract class BaseListComponent<
     });
   }
 
+  loadListSP() {
+    this.service.loadPaginatedSP(this.paginationParams, { ...this.filterModel! }).subscribe({
+      next: (response) => {
+        this.list = response.list || [];
+
+        if (response.paginationInfo) {
+          this.paginationInfoMap(response);
+        } else {
+          this.paginationInfo.totalItems = this.list.length;
+        }
+      },
+      error: (_) => {
+        this.list = [];
+        this.paginationInfo.totalItems = 0;
+      },
+    });
+  }
+
   search() {
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadList();
   }
+  searchSP() {
+    this.paginationParams.pageNumber = 1;
+    this.first = 0;
+    this.loadListSP();
+  }
 
   resetSearch() {
-    this.filterModel = new NationalityFilter() as FilterModel;
+    this.filterModel = {} as FilterModel;
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
     this.first = 0;
     this.loadList();
+  }
+  resetSearchSP() {
+    this.filterModel = {} as FilterModel;
+    this.paginationParams.pageNumber = 1;
+    this.paginationParams.pageSize = 10;
+    this.first = 0;
+    this.loadListSP();
   }
 
   onPageChange(event: PaginatorState) {
@@ -114,6 +144,13 @@ export abstract class BaseListComponent<
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     this.loadList();
+  }
+  onPageChangeSP(event: PaginatorState) {
+    this.first = event.first!;
+    this.rows = event.rows!;
+    this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
+    this.paginationParams.pageSize = this.rows;
+    this.loadListSP();
   }
 
   exportExcel(fileName: string = 'data.xlsx'): void {

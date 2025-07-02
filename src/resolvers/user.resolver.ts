@@ -4,7 +4,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { UserService } from '@/services/features/user.service';
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
-import { catchError, of, switchMap, tap } from 'rxjs';
+import { catchError, of } from 'rxjs';
 
 export const userResolver: ResolveFn<PaginatedList<User> | null> = () => {
   const userService = inject(UserService);

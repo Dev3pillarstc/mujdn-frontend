@@ -2,7 +2,6 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { PERMISSION_APPROVAL_LEVELS } from '@/enums/permission-approval-levels';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
-import { UserProfilesLookop } from '@/models/auth/users-profiles-lookup';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { City } from '@/models/features/lookups/city/city';
 import { Department } from '@/models/features/lookups/department/department';
@@ -24,7 +23,7 @@ export class DepartmentHeaderComponent {
   @Output() departmentDeleted = new EventEmitter<number>(); // Add this line
   @Input() cities: City[] = [];
   @Input() regions: BaseLookupModel[] = [];
-  @Input() usersProfiles: UserProfilesLookop[] = [];
+  @Input() usersProfiles: BaseLookupModel[] = [];
   @Output() dialogClosed = new EventEmitter<void>();
   PERMISSION_APPROVAL_LEVELS = PERMISSION_APPROVAL_LEVELS;
   languageService = inject(LanguageService);

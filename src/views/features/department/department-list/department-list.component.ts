@@ -26,7 +26,6 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { AlertService } from '@/services/shared/alert.service';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
-import { UserProfilesLookop } from '@/models/auth/users-profiles-lookup';
 import { filter, switchMap, tap } from 'rxjs';
 import { Department } from '@/models/features/lookups/department/department';
 import { MatDialogConfig } from '@angular/material/dialog';
@@ -76,7 +75,7 @@ export default class DepartmentListComponent extends BaseListComponent<
   departmentsTree: Department[] = [];
   regions: BaseLookupModel[] = [];
   cities: City[] = [];
-  usersProfiles: UserProfilesLookop[] = [];
+  usersProfiles: BaseLookupModel[] = [];
   filteredCities: City[] = [];
   childDepartments: PaginatedList<Department> = new PaginatedList<Department>();
 

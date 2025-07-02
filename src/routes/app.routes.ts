@@ -11,6 +11,7 @@ import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
 import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
+import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 
 export const routes: Routes = [
   {
@@ -128,13 +129,18 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'department-list',
+        path: 'departments',
+        canActivate: [authGuard],
         resolve: { list: departmentResolver },
         loadComponent: () =>
           import('../views/features/department/department-list/department-list.component'),
       },
       {
-        path: 'work-shifts-list',
+        path: 'work-shifts',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.WORK_SHIFTS },
+        resolve: { list: workShiftResolver },
+        data: { routeId: RouteIdsEnum.WORK_SHIFT_LIST },
         loadComponent: () =>
           import(
             '../views/features/lookups/work-shifts/work-shifts-list/work-shifts-list.component'
@@ -142,6 +148,7 @@ export const routes: Routes = [
       },
       {
         path: 'work-shifts-assignment',
+        data: { routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT },
         loadComponent: () =>
           import(
             '../views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
@@ -149,8 +156,21 @@ export const routes: Routes = [
       },
       {
         path: 'temp-shifts',
+        data: { routeId: RouteIdsEnum.WORK_SHIFT_TEMP },
         loadComponent: () =>
           import('../views/features/lookups/work-shifts/temp-shifts/temp-shifts.component'),
+      },
+      {
+        path: 'outside-mission',
+        loadComponent: () =>
+          import(
+            '../views/features/outside-mission/outside-mission-list/outside-mission-list.component'
+          ),
+      },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('../views/features/lookups/notifiactions/notifiactions.component'),
       },
     ],
   },

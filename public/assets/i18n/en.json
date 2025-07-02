@@ -21,11 +21,14 @@
     "ENGLISH_ONLY": "This field must contain English characters only",
     "SEARCH": "Search",
     "RESET_SEARCH": "Reset",
-    "SEARCH_FILTERS": "Search Filters",
+    "SEARCH_FILTERS": "Search filters",
     "START_BEFORE_END": "Start date must be before end date",
     "UNKNOWN_ERROR": "Unknown error",
     "SERVICE_UNAVAILABLE": "Service unavailable",
-    "STRONG_PASSWORD": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character"
+    "STRONG_PASSWORD": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
+    "ACTION": "Action",
+    "EDIT": "Edit",
+    "DASHBOARD": "Dashboard"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -190,5 +193,26 @@
     "FROM": "From",
     "TO": "To",
     "HOLIDAY": "Holiday"
+  },
+  "WORK_SHIFTS": {
+    "WORK_SHIFTS": "Work shifts",
+    "SHIFT_NAME": "Shift name",
+    "SHIFTS_LIST": "Work shifts list",
+    "ADD_NEW_SHIFT": "Add new work shift",
+    "SHIFT_IDENTIFICATION": "Shift identifier",
+    "MAX_ATTENDANCE_TIME": "Maximum attendance time",
+    "MAX_LEAVE_TIME": "Maximum leave time",
+    "TIME_FROM_TO": "Time (from - to)"
+  },
+  "WORK_SHIFTS_POPUP": {
+    "ADD_NEW_SHIFT": "Add new work shift",
+    "EDIT_SHIFT": "Edit work shift",
+    "SHIFT_NAME_ARABIC": "Shift name in Arabic",
+    "SHIFT_NAME_ENGLISH": "Shift name in English",
+    "TIME_FROM": "Time (from)",
+    "TIME_TO": "Time (to)",
+    "MAX_ATTENDANCE_TIME": "Maximum attendance time",
+    "MAX_LEAVE_TIME": "Maximum leave time",
+    "DEFAULT_SHIFT": "Set as default shift"
   }
 }

@@ -25,7 +25,10 @@
     "START_BEFORE_END": "يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء",
     "UNKNOWN_ERROR": "خطأ غير معروف",
     "SERVICE_UNAVAILABLE": "الخدمة غير متاحة الآن",
-    "STRONG_PASSWORD": "كلمة المرور يجب أن تكون على الأقل 8 أحرف وتحتوي على الأقل على حرف كبير وحرف صغير ورقم وحرف خاص"
+    "STRONG_PASSWORD": "كلمة المرور يجب أن تكون على الأقل 8 أحرف وتحتوي على الأقل على حرف كبير وحرف صغير ورقم وحرف خاص",
+    "ACTION": "الإجراء",
+    "EDIT": "تعديل",
+    "DASHBOARD": "لوحة المعلومات"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -199,5 +202,26 @@
     "PERMISSION_DATE": "تاريخ الإذن",
     "PERMISSION_STATUS": "حالة الطلب",
     "PERMISSION_LIST": "قائمة الأذونات"
+  },
+  "WORK_SHIFTS": {
+    "WORK_SHIFTS": "ورديات العمل",
+    "SHIFT_NAME": "اسم الوردية",
+    "SHIFTS_LIST": "قائمة ورديات العمل",
+    "ADD_NEW_SHIFT": "إضافة وردية عمل جديده",
+    "SHIFT_IDENTIFICATION": "معرف الوردية",
+    "MAX_ATTENDANCE_TIME": "الحد الأقصى للحضور",
+    "MAX_LEAVE_TIME": "الحد الأقصى للإنصراف",
+    "TIME_FROM_TO": "الوقت (من - الى)"
+  },
+  "WORK_SHIFTS_POPUP": {
+    "ADD_NEW_SHIFT": "إضافة وردية عمل جديدة",
+    "EDIT_SHIFT": "نعديل وردية عمل",
+    "SHIFT_NAME_ARABIC": "اسم الوردية باللغة العربية",
+    "SHIFT_NAME_ENGLISH": "اسم الوردية باللغة الإنجليزيه",
+    "TIME_FROM": "الوقت (من)",
+    "TIME_TO": "الوقت (إلى)",
+    "MAX_ATTENDANCE_TIME": "الحد الأقصى للحضور",
+    "MAX_LEAVE_TIME": "الحد الأقصى للإنصراف",
+    "DEFAULT_SHIFT": "تعيين كوردية الافتراضية"
   }
 }

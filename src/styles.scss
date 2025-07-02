@@ -127,3 +127,48 @@
 }
 
 // End SideMenu
+// start kareem
+.close-popup {
+  margin-bottom: 24px;
+}
+:root {
+  --p-tabs-tab-hover-background: #e5e7eb !important;
+}
+.p-tab {
+  position: relative;
+  border: unset !important;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    height: 3px;
+    background-color: #161616;
+    display: none;
+  }
+  &:hover {
+    &::after {
+      display: block;
+    }
+  }
+  &.p-tab-active {
+    &::after {
+      background-color: #1b8354;
+      display: block;
+    }
+  }
+}
+// end kareem
+// start kareem
+.p-datepicker-hour-picker:dir(rtl) {
+  order: 3 !important;
+}
+.p-datepicker-separator:dir(rtl) {
+  order: 2 !important;
+}
+.p-datepicker-minute-picker:dir(rtl) {
+  order: 1 !important;
+}
+// end kareem

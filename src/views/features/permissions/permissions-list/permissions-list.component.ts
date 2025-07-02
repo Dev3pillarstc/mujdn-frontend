@@ -32,6 +32,8 @@ import { PermissionsDataPopupComponent } from '../popups/permissions-data-popup/
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
+import { AuthService } from '@/services/auth/auth.service';
+import { PERMISSION_TABS_ENUM } from '@/enums/permission-tabs-enum';
 
 @Component({
   selector: 'app-permissions-list',
@@ -62,6 +64,7 @@ export default class PermissionsListComponent
   >
   implements OnInit
 {
+  activeTabIndex = 0;
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
     width: '100%',
@@ -85,6 +88,7 @@ export default class PermissionsListComponent
   override get service() {
     return this.permissionService;
   }
+  authService = inject(AuthService);
 
   override initListComponent(): void {
     this.permissionTypeService.getLookup().subscribe((res: BaseLookupModel[]) => {
@@ -145,11 +149,13 @@ export default class PermissionsListComponent
   }
   clickIncomingPermissionTab() {
     this.filterModel = new PermissionFilter();
-    this.getDepartmentPermissions();
+    this.activeTabIndex == PERMISSION_TABS_ENUM.MY_PERMISSIONS && this.getDepartmentPermissions();
+    this.activeTabIndex = PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS;
   }
   clickMyPermissionTab() {
     this.filterModel = new PermissionFilter();
-    this.loadList();
+    this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS && this.loadList();
+    this.activeTabIndex = PERMISSION_TABS_ENUM.MY_PERMISSIONS;
   }
   departmentPermissionSearch() {
     this.paginationParams.pageNumber = 1;
@@ -173,5 +179,13 @@ export default class PermissionsListComponent
         this.getDepartmentPermissions();
       }
     });
+  }
+
+  showIncomingPermissions() {
+    return (
+      this.authService.isAdmin ||
+      this.authService.isDepartmentManager ||
+      this.authService.isHROfficer
+    );
   }
 }

@@ -9,6 +9,7 @@ export class HolidayInterceptor implements ModelInterceptorContract<Holiday> {
     return model;
   }
   send(model: Partial<Holiday>): Partial<Holiday> {
+    delete (model as any).languageService;
     model.endDate = toDateOnly(model.endDate);
     model.startDate = toDateOnly(model.startDate);
 

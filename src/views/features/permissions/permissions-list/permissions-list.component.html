@@ -6,8 +6,8 @@
     </div>
     <p-tabs value="0">
       <p-tablist class="my-6">
-        <p-tab value="0">طلبات الاستئذان الواردة</p-tab>
-        <p-tab value="1">سجل طلباتي</p-tab>
+        <p-tab (click)="clickMyPermissionTab()" value="0">سجل طلباتي</p-tab>
+        <p-tab (click)="clickIncomingPermissionTab()" value="1">طلبات الاستئذان الواردة</p-tab>
       </p-tablist>
       <p-tabpanels>
         <p-tabpanel value="0">
@@ -23,40 +23,14 @@
                   <div class="relative">
                     <label class="label" for="permission-type-select">نوع الاذن</label>
                     <p-select
-                      [(ngModel)]="selectedAdminstration"
-                      [options]="adminstrations"
+                      [(ngModel)]="filterModel.fkPermissionTypeId"
+                      [optionLabel]="getPropertyName()"
+                      [options]="permissionTypes"
                       class="w-full peer"
                       id="permission-type-select"
-                      optionLabel="type"
+                      name="permission-type-select"
+                      optionValue="id"
                       placeholder="نوع الاذن"
-                    ></p-select>
-                    <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                    ></span>
-                  </div>
-                  <div class="relative">
-                    <label class="label" for="employee-name-select">اسم الموظف</label>
-                    <p-select
-                      [(ngModel)]="selectedAdminstration"
-                      [options]="adminstrations"
-                      class="w-full peer"
-                      id="employee-name-select"
-                      optionLabel="type"
-                      placeholder="اسم الموظف"
-                    ></p-select>
-                    <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                    ></span>
-                  </div>
-                  <div class="relative">
-                    <label class="label" for="department-select">الادارة</label>
-                    <p-select
-                      [(ngModel)]="selectedAdminstration"
-                      [options]="adminstrations"
-                      class="w-full peer"
-                      id="department-select"
-                      optionLabel="type"
-                      placeholder="الادارة"
                     ></p-select>
                     <span
                       class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -65,7 +39,7 @@
                   <div class="relative">
                     <label class="label" for="permission-date-picker">تاريخ الاستئذان</label>
                     <p-datepicker
-                      [(ngModel)]="date2"
+                      [(ngModel)]="filterModel.permissionDate"
                       [iconDisplay]="'input'"
                       [showIcon]="true"
                       class="peer block w-full"
@@ -85,11 +59,13 @@
                   <div class="relative">
                     <label class="label" for="request-status-select">حالة الطلب</label>
                     <p-select
-                      [(ngModel)]="selectedAdminstration"
-                      [options]="adminstrations"
+                      [(ngModel)]="filterModel.fkStatusId"
+                      [optionLabel]="getPropertyName()"
+                      [options]="prmissionStatuses"
                       class="w-full peer"
                       id="request-status-select"
                       optionLabel="type"
+                      optionValue="id"
                       placeholder="حالة الطلب"
                     ></p-select>
                     <span
@@ -98,8 +74,12 @@
                   </div>
                 </div>
                 <div class="actions flex items-center gap-4 pt-6">
-                  <button class="btn black-btn">بحث</button>
-                  <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+                  <button (click)="search()" class="btn black-btn">
+                    {{ 'COMMON.SEARCH' | translate }}
+                  </button>
+                  <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
+                    {{ 'COMMON.RESET_SEARCH' | translate }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -111,98 +91,103 @@
                   قائمة الاستئذانات
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
-                  <button class="table-head-action-btn">
+                  <button (click)="exportExcel('permissions.xlsx')" class="table-head-action-btn">
                     <img alt="" src="/assets/icons/excel.svg" />
                   </button>
                   <button class="table-head-action-btn">
                     <img alt="" src="/assets/icons/print.svg" />
                   </button>
-                  <button
-                    (click)="openAddPermissionDialog()"
-                    class="btn green-btn flex items-center"
-                  >
+                  <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
                     <img alt="" src="/assets/icons/plus.svg" />
                     <span>إضافة طلب استئذان جديد</span>
                   </button>
                 </div>
               </div>
             </div>
-            <p-table [value]="permissionsRequest">
-              <ng-template #header>
-                <tr>
-                  <th>الرقم التسلسلي</th>
-                  <th>نوع الطلب</th>
-                  <th>اسم الموظف</th>
-                  <th>تاريخ الاستئذان</th>
-                  <th>مدة الاستئذان</th>
-                  <th>حالة الطلب</th>
-                  <th>الإجراء</th>
-                </tr>
-              </ng-template>
-              <ng-template #body let-permissionsRequest>
-                <tr>
-                  <td>{{ permissionsRequest.id }}</td>
-                  <td>{{ permissionsRequest.requestType }}</td>
-                  <td>{{ permissionsRequest.employeeName }}</td>
-                  <td>{{ permissionsRequest.requestDate }}</td>
-                  <td>{{ permissionsRequest.duration }}</td>
-                  <td>
-                    <div
-                      [ngClass]="[
-                        'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
-                        permissionsRequest.status === 'موافقة'
-                          ? 'bg-[#ecfdf3] text-[#085d3a]'
-                          : permissionsRequest.status === 'جديد'
-                            ? 'bg-[#eff8ff] text-[#1849a9]'
-                            : 'bg-[#fef3f2] text-[#912018]',
-                      ]"
-                    >
-                      <span
+            @if (list && list.length > 0) {
+              <p-table [value]="list">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>نوع الطلب</th>
+                    <th>تاريخ الاستئذان</th>
+                    <th>سبب الاستئذان</th>
+                    <th>حالة الطلب</th>
+                    <th>الإجراء</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-permission>
+                  <tr>
+                    <td>{{ permission.permissionType.nameAr }}</td>
+                    <td>{{ permission.permissionDate | date }}</td>
+                    <td>{{ permission.permissionReason.nameAr }}</td>
+                    <td>
+                      <div
                         [ngClass]="[
-                          'block w-[10px] h-[10px] rounded-full',
-                          permissionsRequest.status === 'موافقة'
-                            ? 'bg-[#085d3a]'
-                            : permissionsRequest.status === 'جديد'
-                              ? 'bg-[#1849a9]'
-                              : 'bg-[#912018]',
+                          'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
+                          permission.status.id === permissionStatusEnum.Accepted
+                            ? 'bg-[#ecfdf3] text-[#085d3a]'
+                            : permission.status.id === permissionStatusEnum.New
+                              ? 'bg-[#eff8ff] text-[#1849a9]'
+                              : 'bg-[#fef3f2] text-[#912018]',
                         ]"
-                      ></span>
-                      <span>{{ permissionsRequest.status }}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="actions flex gap-2">
-                      <button
-                        (click)="openPermissionsDataDialog()"
-                        *ngIf="permissionsRequest.canView"
-                        class="table-action-gray-btn"
                       >
-                        <img alt="" src="/assets/icons/view-action.svg" />
-                      </button>
-                      <button
-                        (click)="openAddPermissionDialog()"
-                        *ngIf="permissionsRequest.canEdit"
-                        class="table-action-gray-btn !min-w-[75px] text-[161616] font-medium"
-                      >
-                        <img alt="" src="/assets/icons/edit-action.svg" />
-                        <span>اجراء</span>
-                      </button>
-                      <button *ngIf="permissionsRequest.canDelete" class="table-action-red-btn">
-                        <img alt="" src="/assets/icons/delete-action.svg" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-            <p-paginator
-              (onPageChange)="onPageChange($event)"
-              [first]="first"
-              [rowsPerPageOptions]="[10, 20, 30]"
-              [rows]="rows"
-              [totalRecords]="120"
-              class="mt-6"
-            />
+                        <span
+                          [ngClass]="[
+                            'block w-[10px] h-[10px] rounded-full',
+                            permission.status.id === permissionStatusEnum.Accepted
+                              ? 'bg-[#085d3a]'
+                              : permission.status.id === permissionStatusEnum.New
+                                ? 'bg-[#1849a9]'
+                                : 'bg-[#912018]',
+                          ]"
+                        ></span>
+                        <span>{{ permission.status.nameAr }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="actions flex gap-2">
+                        @if (permission.status.id !== permissionStatusEnum.New) {
+                          <button
+                            (click)="openDataDialog(permission)"
+                            class="table-action-gray-btn"
+                          >
+                            <img alt="" src="/assets/icons/view-action.svg" />
+                          </button>
+                        }
+                        @if (permission.status.id === permissionStatusEnum.New) {
+                          <button
+                            (click)="addOrEditModel(permission)"
+                            class="table-action-gray-btn text-[161616] font-medium"
+                          >
+                            <img alt="" src="/assets/icons/edit-action.svg" />
+                          </button>
+                          <button (click)="deleteModel(permission.id)" class="table-action-red-btn">
+                            <img alt="" src="/assets/icons/delete-action.svg" />
+                          </button>
+                        }
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            } @else {
+              <div class="flex items-center justify-center h-64">
+                <p class="text-gray-500">
+                  {{ 'PERMISSIONREASONS_PAGE.NO_DATA_TO_SHOW' | translate }}
+                </p>
+              </div>
+            }
+            @if (paginationInfo) {
+              <p-paginator
+                (onPageChange)="onPageChange($event)"
+                [first]="first"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [rows]="rows"
+                [showCurrentPageReport]="false"
+                [totalRecords]="paginationInfo.totalItems"
+                class="mt-6"
+              />
+            }
           </div>
         </p-tabpanel>
         <p-tabpanel value="1">
@@ -218,22 +203,55 @@
                   <div class="relative">
                     <label class="label" for="permission-type-select">نوع الاذن</label>
                     <p-select
-                      [(ngModel)]="selectedAdminstration"
-                      [options]="adminstrations"
+                      [(ngModel)]="filterModel.fkPermissionTypeId"
+                      [optionLabel]="getPropertyName()"
+                      [options]="permissionTypes"
                       class="w-full peer"
                       id="permission-type-select"
-                      optionLabel="type"
+                      name="permission-type-select"
+                      optionValue="id"
                       placeholder="نوع الاذن"
                     ></p-select>
                     <span
                       class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                     ></span>
                   </div>
-
+                  <div class="relative">
+                    <label class="label" for="employee-name-select">اسم الموظف</label>
+                    <p-select
+                      [(ngModel)]="filterModel.creationUserId"
+                      [optionLabel]="getPropertyName()"
+                      [options]="users"
+                      class="w-full peer"
+                      id="employee-name-select"
+                      optionLabel="type"
+                      optionValue="id"
+                      placeholder="اسم الموظف"
+                    ></p-select>
+                    <span
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
+                  </div>
+                  <div class="relative">
+                    <label class="label" for="department-select">الادارة</label>
+                    <p-select
+                      [(ngModel)]="filterModel.fkDepartmentId"
+                      [optionLabel]="getPropertyName()"
+                      [options]="departments"
+                      class="w-full peer"
+                      id="department-select"
+                      optionLabel="type"
+                      optionValue="id"
+                      placeholder="الادارة"
+                    ></p-select>
+                    <span
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
+                  </div>
                   <div class="relative">
                     <label class="label" for="permission-date-picker">تاريخ الاستئذان</label>
                     <p-datepicker
-                      [(ngModel)]="date2"
+                      [(ngModel)]="filterModel.permissionDate"
                       [iconDisplay]="'input'"
                       [showIcon]="true"
                       class="peer block w-full"
@@ -249,14 +267,17 @@
                       class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                     ></span>
                   </div>
+
                   <div class="relative">
                     <label class="label" for="request-status-select">حالة الطلب</label>
                     <p-select
-                      [(ngModel)]="selectedAdminstration"
-                      [options]="adminstrations"
+                      [(ngModel)]="filterModel.fkStatusId"
+                      [optionLabel]="getPropertyName()"
+                      [options]="prmissionStatuses"
                       class="w-full peer"
                       id="request-status-select"
                       optionLabel="type"
+                      optionValue="id"
                       placeholder="حالة الطلب"
                     ></p-select>
                     <span
@@ -265,8 +286,15 @@
                   </div>
                 </div>
                 <div class="actions flex items-center gap-4 pt-6">
-                  <button class="btn black-btn">بحث</button>
-                  <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+                  <button (click)="departmentPermissionSearch()" class="btn black-btn">
+                    {{ 'COMMON.SEARCH' | translate }}
+                  </button>
+                  <button
+                    (click)="departmentPermissionResetSearch()"
+                    class="btn gray-btn border border-[#d2d6db]"
+                  >
+                    {{ 'COMMON.RESET_SEARCH' | translate }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -278,95 +306,99 @@
                   قائمة الاستئذانات
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
-                  <button class="table-head-action-btn">
+                  <button (click)="exportExcel('permissions.xlsx')" class="table-head-action-btn">
                     <img alt="" src="/assets/icons/excel.svg" />
                   </button>
                   <button class="table-head-action-btn">
                     <img alt="" src="/assets/icons/print.svg" />
                   </button>
-                  <button
-                    (click)="openAddPermissionDialog()"
-                    class="btn green-btn flex items-center"
-                  >
-                    <img alt="" src="/assets/icons/plus.svg" />
-                    <span>إضافة طلب استئذان جديد</span>
-                  </button>
                 </div>
               </div>
             </div>
-            <p-table [value]="permissions">
-              <ng-template #header>
-                <tr>
-                  <th>الرقم التسلسلي</th>
-                  <th>نوع الطلب</th>
-                  <th>تاريخ الاستئذان</th>
-                  <th>مدة الاستئذان</th>
-                  <th>حالة الطلب</th>
-                  <th>الإجراء</th>
-                </tr>
-              </ng-template>
-              <ng-template #body let-permission>
-                <tr>
-                  <td>{{ permission.id }}</td>
-                  <td>{{ permission.requestType }}</td>
-                  <td>{{ permission.requestDate }}</td>
-                  <td>{{ permission.duration }}</td>
-                  <td>
-                    <div
-                      [ngClass]="[
-                        'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
-                        permission.status === 'موافقة'
-                          ? 'bg-[#ecfdf3] text-[#085d3a]'
-                          : permission.status === 'تحت المعالجة'
-                            ? 'bg-[#fffaeb] text-[#93370d]'
-                            : 'bg-[#fef3f2] text-[#912018]',
-                      ]"
-                    >
-                      <span
+            @if (list && list.length > 0) {
+              <p-table [value]="list">
+                <ng-template #header>
+                  <tr>
+                    <th>نوع الإذن</th>
+                    <th>اسم الموظف</th>
+                    <th>تاريخ الاستئذان</th>
+                    <th>سبب الإذن</th>
+                    <th>حالة الإذن</th>
+                    <th>الإجراء</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-permissionsRequest>
+                  <tr>
+                    <td>{{ permissionsRequest.permissionType.nameAr }}</td>
+                    <td>{{ permissionsRequest.creationUser.nameAr }}</td>
+                    <td>{{ permissionsRequest.permissionDate | date }}</td>
+                    <td>{{ permissionsRequest.permissionReason.nameAr }}</td>
+                    <td>
+                      <div
                         [ngClass]="[
-                          'block w-[10px] h-[10px] rounded-full',
-                          permission.status === 'موافقة'
-                            ? 'bg-[#085d3a]'
-                            : permission.status === 'تحت المعالجة'
-                              ? 'bg-[#93370d]'
-                              : 'bg-[#912018]',
+                          'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
+                          permissionsRequest.status.id === permissionStatusEnum.Accepted
+                            ? 'bg-[#ecfdf3] text-[#085d3a]'
+                            : permissionsRequest.status.id === permissionStatusEnum.New
+                              ? 'bg-[#eff8ff] text-[#1849a9]'
+                              : 'bg-[#fef3f2] text-[#912018]',
                         ]"
-                      ></span>
-                      <span>{{ permission.status }}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="actions flex gap-2">
-                      <button
-                        (click)="openPermissionsDataDialog()"
-                        *ngIf="permission.canView"
-                        class="table-action-gray-btn"
                       >
-                        <img alt="" src="/assets/icons/view-action.svg" />
-                      </button>
-                      <button
-                        (click)="openAddPermissionDialog()"
-                        *ngIf="permission.canEdit"
-                        class="table-action-gray-btn"
-                      >
-                        <img alt="" src="/assets/icons/edit-action.svg" />
-                      </button>
-                      <button *ngIf="permission.canDelete" class="table-action-red-btn">
-                        <img alt="" src="/assets/icons/delete-action.svg" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-            <p-paginator
-              (onPageChange)="onPageChange($event)"
-              [first]="first"
-              [rowsPerPageOptions]="[10, 20, 30]"
-              [rows]="rows"
-              [totalRecords]="120"
-              class="mt-6"
-            />
+                        <span
+                          [ngClass]="[
+                            'block w-[10px] h-[10px] rounded-full',
+                            permissionsRequest.status.id === permissionStatusEnum.Accepted
+                              ? 'bg-[#085d3a]'
+                              : permissionsRequest.status.id === permissionStatusEnum.New
+                                ? 'bg-[#1849a9]'
+                                : 'bg-[#912018]',
+                          ]"
+                        ></span>
+                        <span>{{ permissionsRequest.status.nameAr }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="actions flex gap-2">
+                        @if (permissionsRequest.status.id !== permissionStatusEnum.New) {
+                          <button
+                            (click)="openDataDialog(permissionsRequest)"
+                            class="table-action-gray-btn"
+                          >
+                            <img alt="" src="/assets/icons/view-action.svg" />
+                          </button>
+                        }
+                        @if (permissionsRequest.status.id === permissionStatusEnum.New) {
+                          <button
+                            (click)="openDataDialog(permissionsRequest, viewMode.TAKE_ACTION)"
+                            class="table-action-gray-btn !min-w-[75px] text-[161616] font-medium"
+                          >
+                            <img alt="" src="/assets/icons/edit-action.svg" />
+                            <span>اجراء</span>
+                          </button>
+                        }
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            } @else {
+              <div class="flex items-center justify-center h-64">
+                <p class="text-gray-500">
+                  {{ 'PERMISSIONREASONS_PAGE.NO_DATA_TO_SHOW' | translate }}
+                </p>
+              </div>
+            }
+            @if (paginationInfo) {
+              <p-paginator
+                (onPageChange)="onPageChange($event)"
+                [first]="first"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [rows]="rows"
+                [showCurrentPageReport]="false"
+                [totalRecords]="paginationInfo.totalItems"
+                class="mt-6"
+              />
+            }
           </div>
         </p-tabpanel>
       </p-tabpanels>

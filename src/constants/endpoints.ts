@@ -12,7 +12,10 @@ export const EndPoints = {
   NOTIFICATION_CHANNELS: '/notificationchannels',
   DEPARTMENTS: '/departments',
   HOLIDAYS: '/holidays',
-  SHIFTS: '/shifts',
+  PERMISSION_TYPES: '/permissiontypes',
+  PERMISSION_STATUS: '/permissionstatuses',
+  PERMISSIONS: '/permissions',
+  SHIFTS: '/shifts'
 };
 
 export type EndpointsType = typeof EndPoints;

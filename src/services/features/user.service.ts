@@ -2,7 +2,7 @@ import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { UpdateRolesModel } from '@/models/auth/update-roles-model';
 import { User } from '@/models/auth/user';
-import { UserProfilesLookop } from '@/models/auth/users-profiles-lookup';
+import { UserProfilesLookup } from '@/models/auth/users-profiles-lookup';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { ResponseData } from '@/models/shared/response/response-data';
@@ -41,8 +41,8 @@ export class UserService extends BaseCrudService<User, string> {
       );
   }
 
-  getUsersProfiles(): Observable<ListResponseData<UserProfilesLookop>> {
-    return this.http.get<ListResponseData<UserProfilesLookop>>(
+  getUsersProfiles(): Observable<ListResponseData<UserProfilesLookup>> {
+    return this.http.get<ListResponseData<UserProfilesLookup>>(
       this.getUrlSegment() + '/' + 'lookup',
       { withCredentials: true }
     );

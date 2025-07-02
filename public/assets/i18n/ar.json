@@ -191,6 +191,15 @@
     "TO": "إلى",
     "HOLIDAY": "العطلة"
   },
+  "PERMISSION_PAGE": {
+    "PERMISSIONS": "الأذونات",
+    "MY_REQUESTS": "طلباتي",
+    "INBOX_REQUESTS": "الطلبات الواردة",
+    "PERMISSION_TYPE": "نوع الإذن",
+    "PERMISSION_DATE": "تاريخ الإذن",
+    "PERMISSION_STATUS": "حالة الطلب",
+    "PERMISSION_LIST": "قائمة الأذونات"
+  },
   "ATTENDANCE_LOG_PAGE": {
     "ATTENDANCE_LOGS_LIST": "سجلات الحضور",
     "DEPARTMENT": "القسم",

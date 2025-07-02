@@ -10,6 +10,7 @@ import { notificationChannelResolver } from '@/resolvers/setting/notification-ch
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
+import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
 
 export const routes: Routes = [
@@ -105,11 +106,17 @@ export const routes: Routes = [
       },
       {
         path: 'permissions',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN, ROLES_ENUM.DEPARTMENT_MANAGER],
+          routeId: RouteIdsEnum.PERMISSIONS,
+        },
+        resolve: { list: permissionResolver },
         loadComponent: () =>
           import('../views/features/permissions/permissions-list/permissions-list.component'),
       },
       {
-        path: 'holidays-list',
+        path: 'holidays',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.HOLIDAYS },
         resolve: { list: holidayResolver },
@@ -131,6 +138,7 @@ export const routes: Routes = [
       },
       {
         path: 'work-shifts-list',
+        data: { routeId: RouteIdsEnum.WORK_SHIFT_LIST },
         loadComponent: () =>
           import(
             '../views/features/lookups/work-shifts/work-shifts-list/work-shifts-list.component'
@@ -138,6 +146,7 @@ export const routes: Routes = [
       },
       {
         path: 'work-shifts-assignment',
+        data: { routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT },
         loadComponent: () =>
           import(
             '../views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
@@ -145,8 +154,21 @@ export const routes: Routes = [
       },
       {
         path: 'temp-shifts',
+        data: { routeId: RouteIdsEnum.WORK_SHIFT_TEMP },
         loadComponent: () =>
           import('../views/features/lookups/work-shifts/temp-shifts/temp-shifts.component'),
+      },
+      {
+        path: 'outside-mission',
+        loadComponent: () =>
+          import(
+            '../views/features/outside-mission/outside-mission-list/outside-mission-list.component'
+          ),
+      },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('../views/features/lookups/notifiactions/notifiactions.component'),
       },
     ],
   },

@@ -1,42 +1,44 @@
 <div dir="rtl">
   <div class="p-6">
     <button class="block ms-auto" (click)="close()">
-      <i class="pi pi-times"></i>
+      <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">طلب استئذان جديد</h3>
 
-    <form class="">
+    <form [formGroup]="form" class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
-          <label for="shiftName" class="label">نوع الاذن</label>
+          <label for="permissionType" class="label">نوع الاذن</label>
           <div class="relative">
             <p-select
-              name="shiftName"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
+              [optionLabel]="getPropertyName()"
+              name="permissionType"
+              [options]="permissionTypes"
+              formControlName="fkPermissionTypeId"
               optionLabel="type"
               placeholder="نوع الاذن"
               class="w-full peer"
-              id="shiftName"
+              id="permissionType"
+              optionValue="id"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="fkPermissionTypeIdControl"></app-validation-messages>
         </div>
         <div>
-          <label for="endDate" class="label">تاريخ الاذن</label>
+          <label for="permissionDate" class="label">تاريخ الاذن</label>
           <div class="relative">
             <p-datepicker
-              name="endDate"
-              [(ngModel)]="date2"
+              name="permissionDate"
+              formControlName="permissionDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
               placeholder="تاريخ الاذن"
               class="peer block w-full"
-              inputId="endDate"
-              id="endDate"
+              inputId="permissionDate"
+              id="permissionDate"
             >
               <ng-template pTemplate="inputicon">
                 <img src="/assets/icons/calender-icon.svg" alt="" />
@@ -46,27 +48,27 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="permissionDateControl"></app-validation-messages>
         </div>
         <div>
-          <label for="shiftName" class="label">سبب الأذن </label>
+          <label for="prmissionReason" class="label">سبب الأذن </label>
           <div class="relative">
             <p-select
-              name="shiftName"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
+              name="prmissionReason"
+              [optionLabel]="getPropertyName()"
+              [options]="prmissionReasons"
+              formControlName="fkReasonId"
               optionLabel="type"
-              placeholder="سبب الأذن
-
-                "
+              placeholder="سبب الأذن"
               class="w-full peer"
-              id="shiftName"
+              id="prmissionReason"
+              optionValue="id"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="fkReasonIdControl"></app-validation-messages>
         </div>
         <div class="md:col-span-2 lg:col-span-3">
           <label for="" class="text-sm font-normal">وصف المهمة</label>
@@ -75,17 +77,20 @@
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
               pTextarea
               placeholder="وصف المهمة"
+              formControlName="description"
             ></textarea>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="descriptionControl"></app-validation-messages>
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn" (click)="close()">الغاء</button>
-        <button class="btn green-btn">ارسال الطلب</button>
+        <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="save$.next()" class="btn green-btn">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
       </div>
     </form>
   </div>

@@ -14,8 +14,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
           <label class="label" for="department">{{
-            'EMPLOYEES_PAGE.DEPARTMENT' | translate
-          }}</label>
+              'EMPLOYEES_PAGE.DEPARTMENT' | translate
+            }}</label>
           <div class="relative">
             <p-select
               [optionLabel]="langOptionLabel"
@@ -38,8 +38,8 @@
 
         <div>
           <label class="label" for="employeeNameAr">{{
-            'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
-          }}</label>
+              'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
+            }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -59,8 +59,8 @@
 
         <div>
           <label class="label" for="employeeNameEn">{{
-            'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate
-          }}</label>
+              'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate
+            }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -138,8 +138,8 @@
 
         <div>
           <label class="label" for="jobAr">{{
-            'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate
-          }}</label>
+              'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate
+            }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -159,8 +159,8 @@
 
         <div>
           <label class="label" for="jobEn">{{
-            'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate
-          }}</label>
+              'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate
+            }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -196,10 +196,53 @@
           </div>
           <app-validation-messages [control]="emailControl"></app-validation-messages>
         </div>
+
+        <div>
+          <label class="label" for="workType">{{ 'EMPLOYEES_PAGE.SHIFT_TYPE' | translate }}</label>
+          <div class="relative">
+            <p-select
+              [options]="[]"
+              class="w-full peer"
+              id="workType"
+              name="workType"
+              optionLabel="nameAr"
+              optionValue="id"
+              placeholder="{{ 'EMPLOYEES_PAGE.SHIFT_TYPE' | translate }}"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+        </div>
+
+        <div>
+          <label class="label" for="joinDate">{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}</label>
+          <div class="relative">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              formControlName="joinDate"
+              id="joinDate"
+              inputId="joinDate"
+              name="joinDate"
+              placeholder="{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="/assets/icons/calender-icon.svg"/>
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="joinDateControl"></app-validation-messages>
+        </div>
+
         <div>
           <label class="label" for="accountStatus">{{
-            'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
-          }}</label>
+              'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
+            }}</label>
           <div class="relative">
             <p-select
               [options]="accountStatusOptions"
@@ -219,33 +262,9 @@
         </div>
 
         <div>
-          <label class="label" for="joinDate">{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}</label>
-          <div class="relative">
-            <p-datepicker
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              class="peer block w-full"
-              formControlName="joinDate"
-              id="joinDate"
-              inputId="joinDate"
-              name="joinDate"
-              placeholder="{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}"
-            >
-              <ng-template pTemplate="inputicon">
-                <img alt="" src="/assets/icons/calender-icon.svg" />
-              </ng-template>
-            </p-datepicker>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-          <app-validation-messages [control]="joinDateControl"></app-validation-messages>
-        </div>
-
-        <div>
           <label class="label" for="nationalId">{{
-            'EMPLOYEES_PAGE.NATIONAL_ID' | translate
-          }}</label>
+              'EMPLOYEES_PAGE.NATIONAL_ID' | translate
+            }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -267,7 +286,6 @@
             <label for="password" class="label">{{ 'EMPLOYEES_PAGE.PASSWORD' | translate }}</label>
             <div class="relative">
               <input
-                autocomplete="new-password"
                 id="password"
                 placeholder="{{ 'EMPLOYEES_PAGE.PASSWORD' | translate }}"
                 formControlName="password"
@@ -287,10 +305,10 @@
 
       <fieldset [disabled]="true">
         <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-          <h3 class="text-[#1f2a37] font-[600] text-sm sm:text-base">
+          <h3 class="text-[#1f2a37 font-[600] mb-6 text-sm sm:text-base">
             {{ 'EMPLOYEES_PAGE.PERMISSIONS' | translate }}
           </h3>
-          <div class="flex flex-wrap gap-8 mt-3 rounded p-6 dimmed-form">
+          <div class="flex flex-wrap gap-8">
             <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
               <input
                 checked
@@ -307,11 +325,11 @@
                 stroke-width="3"
                 viewBox="0 0 24 24"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <polyline points="20 6 9 17 4 12"/>
               </svg>
               <span class="text-base font-medium text-[#1f2a37]">{{
-                'EMPLOYEES_PAGE.ROLE_EMPLOYEE' | translate
-              }}</span>
+                  'EMPLOYEES_PAGE.ROLE_EMPLOYEE' | translate
+                }}</span>
             </label>
             <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
               <input
@@ -328,11 +346,11 @@
                 stroke-width="3"
                 viewBox="0 0 24 24"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <polyline points="20 6 9 17 4 12"/>
               </svg>
               <span class="text-base font-medium text-[#1f2a37]">{{
-                'EMPLOYEES_PAGE.ROLE_SYS_ADMIN' | translate
-              }}</span>
+                  'EMPLOYEES_PAGE.ROLE_SYS_ADMIN' | translate
+                }}</span>
             </label>
             <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
               <input
@@ -349,11 +367,11 @@
                 stroke-width="3"
                 viewBox="0 0 24 24"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <polyline points="20 6 9 17 4 12"/>
               </svg>
               <span class="text-base font-medium text-[#1f2a37]">{{
-                'EMPLOYEES_PAGE.ROLE_DEPT_MANAGER' | translate
-              }}</span>
+                  'EMPLOYEES_PAGE.ROLE_DEPT_MANAGER' | translate
+                }}</span>
             </label>
             <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
               <input
@@ -370,11 +388,11 @@
                 stroke-width="3"
                 viewBox="0 0 24 24"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <polyline points="20 6 9 17 4 12"/>
               </svg>
               <span class="text-base font-medium text-[#1f2a37]">{{
-                'EMPLOYEES_PAGE.ROLE_FOLLOW_UP' | translate
-              }}</span>
+                  'EMPLOYEES_PAGE.ROLE_FOLLOW_UP' | translate
+                }}</span>
             </label>
             <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
               <input
@@ -391,11 +409,11 @@
                 stroke-width="3"
                 viewBox="0 0 24 24"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <polyline points="20 6 9 17 4 12"/>
               </svg>
               <span class="text-base font-medium text-[#1f2a37]">{{
-                'EMPLOYEES_PAGE.ROLE_HR' | translate
-              }}</span>
+                  'EMPLOYEES_PAGE.ROLE_HR' | translate
+                }}</span>
             </label>
             <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
               <input
@@ -412,13 +430,13 @@
                 stroke-width="3"
                 viewBox="0 0 24 24"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <polyline points="20 6 9 17 4 12"/>
               </svg>
               <span class="text-base font-medium text-[#1f2a37]">{{
-                'EMPLOYEES_PAGE.ROLE_MP_MEMBER' | translate
-              }}</span>
+                  'EMPLOYEES_PAGE.ROLE_MP_MEMBER' | translate
+                }}</span>
             </label>
-            <label class="flex items-center space-x-2 cursor-pointer relative">
+            <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
               <input
                 [checked]="roleStates.isSecurityLeader"
                 class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
@@ -433,11 +451,11 @@
                 stroke-width="3"
                 viewBox="0 0 24 24"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <polyline points="20 6 9 17 4 12"/>
               </svg>
               <span class="text-base font-medium text-[#1f2a37]">{{
-                'EMPLOYEES_PAGE.ROLE_MP_LEADER' | translate
-              }}</span>
+                  'EMPLOYEES_PAGE.ROLE_MP_LEADER' | translate
+                }}</span>
             </label>
           </div>
         </div>
@@ -460,11 +478,11 @@
               stroke-width="3"
               viewBox="0 0 24 24"
             >
-              <polyline points="20 6 9 17 4 12" />
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">{{
-              'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate
-            }}</span>
+                'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate
+              }}</span>
           </label>
         </div>
       </div>

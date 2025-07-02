@@ -21,7 +21,7 @@
     "ENGLISH_ONLY": "This field must contain English characters only",
     "SEARCH": "Search",
     "RESET_SEARCH": "Reset",
-    "SEARCH_FILTERS": "Search Filters",
+    "SEARCH_FILTERS": "Search filters",
     "START_BEFORE_END": "Start date must be before end date",
     "UNKNOWN_ERROR": "Unknown error",
     "SERVICE_UNAVAILABLE": "Service unavailable",

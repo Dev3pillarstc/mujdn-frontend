@@ -79,6 +79,7 @@ export class SideBarLinksService {
         {
           label: 'اعدادات ورديات العمل',
           routerLink: ['/work-shifts'],
+          routeId: RouteIdsEnum.WORK_SHIFTS,
         },
       ]
     },

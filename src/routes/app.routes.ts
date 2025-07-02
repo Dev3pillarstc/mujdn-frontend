@@ -124,12 +124,15 @@ export const routes: Routes = [
       },
       {
         path: 'departments',
+        canActivate: [authGuard],
         resolve: { list: departmentResolver },
         loadComponent: () =>
           import('../views/features/department/department-list/department-list.component'),
       },
       {
         path: 'work-shifts',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.WORK_SHIFTS },
         resolve: { list: workShiftResolver },
         loadComponent: () =>
           import(

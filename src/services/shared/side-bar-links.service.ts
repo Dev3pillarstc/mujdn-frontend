@@ -41,9 +41,10 @@ export class SideBarLinksService {
       routerLink: ['/dashboard'],
     },
     {
-      label: 'الاستئذانات',
+      label: 'الأذونات',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',
-      routerLink: ['/dashboard'],
+      routerLink: ['/permissions'],
+      routeId: RouteIdsEnum.PERMISSIONS,
     },
     {
       label: 'الموظفون المُكلفون',
@@ -68,7 +69,7 @@ export class SideBarLinksService {
     {
       label: 'قائمة الاجازات و الأعياد',
       iconUrl: 'assets/icons/menu-icons/vacations.svg',
-      routerLink: ['/holidays-list'],
+      routerLink: ['/holidays'],
       routeId: RouteIdsEnum.HOLIDAYS,
     },
 

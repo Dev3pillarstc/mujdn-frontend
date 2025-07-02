@@ -12,7 +12,7 @@ import { AlertService } from '@/services/shared/alert.service';
 import { City } from '@/models/features/lookups/city/city';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
-import { UserProfilesLookop } from '@/models/auth/users-profiles-lookup';
+import { UserProfilesLookup } from '@/models/auth/users-profiles-lookup';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -43,7 +43,7 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   fb = inject(FormBuilder);
   cities: City[] = [];
   regions: BaseLookupModel[] = [];
-  usersProfiles: UserProfilesLookop[] = new Array<UserProfilesLookop>();
+  usersProfiles: UserProfilesLookup[] = new Array<UserProfilesLookup>();
   adminstrations: Adminstration[] | undefined;
   selectedAdminstration: Adminstration | undefined;
   date2: Date | undefined;

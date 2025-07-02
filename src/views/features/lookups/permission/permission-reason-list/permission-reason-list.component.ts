@@ -5,8 +5,8 @@ import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
-import { PermissionReason } from '@/models/features/lookups/permission-reason/permission-reason';
-import { PermissionReasonFilter } from '@/models/features/lookups/permission-reason/permission-reason-filter';
+import { PermissionReason } from '@/models/features/lookups/permission/permission-reason';
+import { PermissionReasonFilter } from '@/models/features/lookups/permission/permission-reason-filter';
 import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -61,7 +61,7 @@ export default class PermissionReasonListComponent
     const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
 
     return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : '؛Permission Reason']:
+      [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : 'Permission Reason']:
         lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
     };
   }

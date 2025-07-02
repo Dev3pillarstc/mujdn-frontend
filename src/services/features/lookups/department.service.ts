@@ -1,4 +1,5 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
+import { LookupBaseService } from '@/abstracts/lookup-base.service';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { Department } from '@/models/features/lookups/department/department';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
@@ -25,7 +26,7 @@ import { Observable, of, switchMap } from 'rxjs';
     shape: { 'list.*': () => BaseLookupModel },
   },
 })
-export class DepartmentService extends BaseCrudService<Department> {
+export class DepartmentService extends LookupBaseService<Department> {
   override serviceName: string = 'DepartmentService';
 
   override getUrlSegment(): string {
@@ -39,17 +40,5 @@ export class DepartmentService extends BaseCrudService<Department> {
       this.getUrlSegment() + '/' + 'GetDepartmentTreeAsync',
       { withCredentials: true }
     );
-  }
-  @CastResponse(undefined, { fallback: '$lookup' })
-  getDepartmentsLookup(): Observable<BaseLookupModel[]> {
-    return this.http
-      .get<ListResponseData<BaseLookupModel>>(this.getUrlSegment() + '/' + 'lookup', {
-        withCredentials: true,
-      })
-      .pipe(
-        switchMap((response: ListResponseData<BaseLookupModel>) => {
-          return of(response.data);
-        })
-      );
   }
 }

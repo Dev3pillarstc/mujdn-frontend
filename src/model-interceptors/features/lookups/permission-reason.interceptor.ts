@@ -1,4 +1,4 @@
-import { PermissionReason } from '@/models/features/lookups/permission-reason/permission-reason';
+import { PermissionReason } from '@/models/features/lookups/permission/permission-reason';
 import { ModelInterceptorContract } from 'cast-response';
 
 export class PermissionReasonInterceptor implements ModelInterceptorContract<PermissionReason> {

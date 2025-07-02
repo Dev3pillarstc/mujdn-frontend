@@ -196,49 +196,6 @@
           </div>
           <app-validation-messages [control]="emailControl"></app-validation-messages>
         </div>
-
-        <div>
-          <label class="label" for="workType">{{ 'EMPLOYEES_PAGE.SHIFT_TYPE' | translate }}</label>
-          <div class="relative">
-            <p-select
-              [options]="[]"
-              class="w-full peer"
-              id="workType"
-              name="workType"
-              optionLabel="nameAr"
-              optionValue="id"
-              placeholder="{{ 'EMPLOYEES_PAGE.SHIFT_TYPE' | translate }}"
-            ></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-        </div>
-
-        <div>
-          <label class="label" for="joinDate">{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}</label>
-          <div class="relative">
-            <p-datepicker
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              class="peer block w-full"
-              formControlName="joinDate"
-              id="joinDate"
-              inputId="joinDate"
-              name="joinDate"
-              placeholder="{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}"
-            >
-              <ng-template pTemplate="inputicon">
-                <img alt="" src="/assets/icons/calender-icon.svg" />
-              </ng-template>
-            </p-datepicker>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-          <app-validation-messages [control]="joinDateControl"></app-validation-messages>
-        </div>
-
         <div>
           <label class="label" for="accountStatus">{{
             'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate

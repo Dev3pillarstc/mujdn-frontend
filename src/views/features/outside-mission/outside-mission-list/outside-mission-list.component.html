@@ -1,0 +1,142 @@
+<div class="bg-white">
+  <div class="bg-[#f9fafb] p-3 sm:p-6">
+    <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        مهام الأعمال و الاسناد
+      </h3>
+    </div>
+
+    <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
+      <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
+        <div class="flex items-center justify-between">
+          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+        </div>
+        <div class="pt-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+            <div class="relative xl:col-span-2">
+              <label class="label" for="nationalityAr">اسم المهمة</label>
+              <input
+                placeholder="اسم المهمة"
+                class="peer"
+                fluid="true"
+                id="nationalityAr"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="adminstrations-popup" class="label">الادارة</label>
+              <p-select
+                name="selectedAdminstration"
+                optionLabel="type"
+                placeholder="الادارة"
+                class="w-full peer"
+                id="adminstrations-popup"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label for="" class="label">التاريخ (من - الى)</label>
+              <p-datepicker
+                [(ngModel)]="date2"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                placeholder="التاريخ (من - الى)"
+                class="peer block w-full"
+                inputId="icondisplay"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img src="/assets/icons/calender-icon.svg" alt="" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+          </div>
+
+          <div class="actions flex items-center gap-4 pt-6">
+            <button class="btn black-btn">بحث</button>
+            <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+            قائمة مهام الأعمال و الاسناد
+          </h4>
+          <div class="actions flex items-center gap-4 ms-auto">
+            <button class="table-head-action-btn">
+              <img src="assets/icons/excel.svg" alt="" />
+            </button>
+            <button class="table-head-action-btn">
+              <img src="assets/icons/print.svg" alt="" />
+            </button>
+            <button class="btn green-btn flex items-center" (click)="addNewMission()">
+              <img src="assets/icons/plus.svg" alt="" />
+              <span>إضافة مهمة عمل جديدة </span>
+            </button>
+          </div>
+        </div>
+        <p-table [value]="missions">
+          <ng-template #header>
+            <tr>
+              <th>اسم المهمة</th>
+              <th>تاريخ البداية</th>
+              <th>تاريخ النهاية</th>
+              <th>مسند المهمة</th>
+              <th>اجراء</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-missions>
+            <tr>
+              <td>{{ missions.taskName }}</td>
+              <td>{{ missions.startDate }}</td>
+              <td>{{ missions.endDate }}</td>
+              <td>{{ missions.taskPredicate }}</td>
+              <td>
+                <div class="actions flex gap-2">
+                  <button
+                    (click)="viewMission()"
+                    *ngIf="missions.actions?.includes('view')"
+                    class="table-action-gray-btn"
+                  >
+                    <img src="assets/icons/view-action.svg" alt="" />
+                  </button>
+                  <button
+                    (click)="addNewMission()"
+                    *ngIf="missions.actions?.includes('edit')"
+                    class="table-action-gray-btn"
+                  >
+                    <img src="/assets/icons/edit-action.svg" alt="update" />
+                  </button>
+                  <button *ngIf="missions.actions?.includes('delete')" class="table-action-red-btn">
+                    <img src="/assets/icons/delete-action.svg" alt="delete" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-paginator
+          class="mt-6"
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rows]="rows"
+          [totalRecords]="120"
+          [rowsPerPageOptions]="[10, 20, 30]"
+        />
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>

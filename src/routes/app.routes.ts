@@ -140,7 +140,6 @@ export const routes: Routes = [
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.WORK_SHIFTS },
         resolve: { list: workShiftResolver },
-        data: { routeId: RouteIdsEnum.WORK_SHIFT_LIST },
         loadComponent: () =>
           import(
             '../views/features/lookups/work-shifts/work-shifts-list/work-shifts-list.component'

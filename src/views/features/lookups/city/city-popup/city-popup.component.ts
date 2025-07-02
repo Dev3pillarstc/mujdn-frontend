@@ -67,7 +67,6 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
 
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm());
-    console.log('HolidaysPopupComponent form', this.form);
   }
 
   beforeSave(model: City, form: FormGroup) {

@@ -102,7 +102,7 @@ export default class EmployeeListComponent
     this.regionService.getRegionsLookup().subscribe((res: BaseLookupModel[]) => {
       this.regions = res;
     });
-    this.departmentService.getDepartmentsLookup().subscribe((res: BaseLookupModel[]) => {
+    this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.departments = res;
     });
     this.initializeActionList();

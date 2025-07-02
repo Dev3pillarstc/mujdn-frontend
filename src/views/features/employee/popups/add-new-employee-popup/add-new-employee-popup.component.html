@@ -196,23 +196,26 @@
           </div>
           <app-validation-messages [control]="emailControl"></app-validation-messages>
         </div>
-
         <div>
-          <label class="label" for="workType">{{ 'EMPLOYEES_PAGE.SHIFT_TYPE' | translate }}</label>
+          <label class="label" for="accountStatus">{{
+            'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
+          }}</label>
           <div class="relative">
             <p-select
-              [options]="[]"
+              [options]="accountStatusOptions"
               class="w-full peer"
-              id="workType"
-              name="workType"
+              formControlName="isActive"
+              id="accountStatus"
+              name="accountStatus"
               optionLabel="nameAr"
               optionValue="id"
-              placeholder="{{ 'EMPLOYEES_PAGE.SHIFT_TYPE' | translate }}"
+              placeholder="{{ 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate }}"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
+          <app-validation-messages [control]="accountStatusControl"></app-validation-messages>
         </div>
 
         <div>
@@ -240,28 +243,6 @@
         </div>
 
         <div>
-          <label class="label" for="accountStatus">{{
-            'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
-          }}</label>
-          <div class="relative">
-            <p-select
-              [options]="accountStatusOptions"
-              class="w-full peer"
-              formControlName="isActive"
-              id="accountStatus"
-              name="accountStatus"
-              optionLabel="nameAr"
-              optionValue="id"
-              placeholder="{{ 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate }}"
-            ></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-          <app-validation-messages [control]="accountStatusControl"></app-validation-messages>
-        </div>
-
-        <div>
           <label class="label" for="nationalId">{{
             'EMPLOYEES_PAGE.NATIONAL_ID' | translate
           }}</label>
@@ -286,6 +267,7 @@
             <label for="password" class="label">{{ 'EMPLOYEES_PAGE.PASSWORD' | translate }}</label>
             <div class="relative">
               <input
+                autocomplete="new-password"
                 id="password"
                 placeholder="{{ 'EMPLOYEES_PAGE.PASSWORD' | translate }}"
                 formControlName="password"
@@ -305,10 +287,10 @@
 
       <fieldset [disabled]="true">
         <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-          <h3 class="text-[#1f2a37 font-[600] mb-6 text-sm sm:text-base">
+          <h3 class="text-[#1f2a37] font-[600] text-sm sm:text-base">
             {{ 'EMPLOYEES_PAGE.PERMISSIONS' | translate }}
           </h3>
-          <div class="flex flex-wrap gap-8">
+          <div class="flex flex-wrap gap-8 mt-3 rounded p-6 dimmed-form">
             <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
               <input
                 checked
@@ -436,7 +418,7 @@
                 'EMPLOYEES_PAGE.ROLE_MP_MEMBER' | translate
               }}</span>
             </label>
-            <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <label class="flex items-center space-x-2 cursor-pointer relative">
               <input
                 [checked]="roleStates.isSecurityLeader"
                 class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"

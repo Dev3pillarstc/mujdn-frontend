@@ -9,49 +9,59 @@
       <div class="flex flex-col sm:flex-row justify-between bg-white rounded-2xl py-4 px-6 gap-4">
         <div class="flex gap-2 items-center">
           <span class="text-[#6c737f] text-sm">حالة الطلب</span>
-          <div class="bg-[#067647] px-4 rounded-full text-white flex gap-2 items-center">
-            <span class="block w-[10px] rounded-full h-[10px] bg-[#ffffff99]"> </span>
-            <span>موافقة</span>
-          </div>
           <div class="bg-[#1570ef] px-4 rounded-full text-white flex gap-2 items-center">
             <span class="block w-[10px] rounded-full h-[10px] bg-[#ffffff99]"> </span>
-            <span>جديد</span>
+            <span>{{ isArabic ? model.status.nameAr : model.status.nameEn }}</span>
           </div>
         </div>
         <div class="flex gap-2 items-center">
           <span class="text-[#6c737f] text-sm">تاريخ الموافقة</span>
-          <span class="text-[#161616] font-semibold">12/12/2024</span>
+          <span class="text-[#161616] font-semibold">
+            <span>{{ model.permissionDate | date }}</span>
+          </span>
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]">نوع الاذن</span>
-          <span class="font-semibold text-[#161616]">صباحي</span>
+          <span class="font-semibold text-[#161616]">
+            <span>{{ isArabic ? model.permissionType.nameAr : model.permissionType.nameEn }}</span>
+          </span>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]">اسم المدير </span>
-          <span class="font-semibold text-[#161616]">محمد أحمد طه</span>
+          <span class="font-semibold text-[#161616]">
+            <span>{{ isArabic ? model.creationUser.nameAr : model.creationUser.nameEn }}</span>
+          </span>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]">تاريخ الاذن </span>
-          <span class="font-semibold text-[#161616]">12/12/2024</span>
+          <span class="font-semibold text-[#161616]">{{ model.permissionDate | date }}</span>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]">سبب الأذن </span>
-          <span class="font-semibold text-[#161616]">محتوى السبب</span>
+          <span class="font-semibold text-[#161616]">
+            <span>{{
+              isArabic ? model.permissionReason.nameAr : model.permissionReason.nameEn
+            }}</span>
+          </span>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]">ملاحظات </span>
-          <span class="font-semibold text-[#161616]">محتوى الملاحظات</span>
+          <span class="font-semibold text-[#161616]">
+            <span>{{ model.description }}</span>
+          </span>
         </div>
       </div>
     </div>
     <div class="actions mt-6 flex items-center justify-between gap-4">
       <button class="btn gray-btn" (click)="close()">الغاء</button>
-      <div class="flex gap-2">
-        <button class="btn red-btn-action" (click)="close()">رفض</button>
-        <button class="btn green-btn" (click)="close()">قبول</button>
-      </div>
+      @if (canTakeAction) {
+        <div class="flex gap-2">
+          <button class="btn red-btn" (click)="rejectPermissionStatus()">رفض</button>
+          <button class="btn green-btn" (click)="acceptPermissionStatus()">قبول</button>
+        </div>
+      }
     </div>
   </div>
 </div>

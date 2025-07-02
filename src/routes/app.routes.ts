@@ -10,6 +10,7 @@ import { notificationChannelResolver } from '@/resolvers/setting/notification-ch
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
+import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 
 export const routes: Routes = [
   {
@@ -103,11 +104,17 @@ export const routes: Routes = [
       },
       {
         path: 'permissions',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN, ROLES_ENUM.DEPARTMENT_MANAGER],
+          routeId: RouteIdsEnum.PERMISSIONS,
+        },
+        resolve: { list: permissionResolver },
         loadComponent: () =>
           import('../views/features/permissions/permissions-list/permissions-list.component'),
       },
       {
-        path: 'holidays-list',
+        path: 'holidays',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.HOLIDAYS },
         resolve: { list: holidayResolver },

@@ -35,7 +35,7 @@ export class CityService extends BaseCrudService<City> {
   @CastResponse(undefined, { fallback: '$lookup' })
   getCitiesLookup(): Observable<CityLookup[]> {
     return this.http
-      .get<ListResponseData<CityLookup>>(this.getUrlSegment() + '/' + 'lookup', {
+      .get<ListResponseData<CityLookup>>(this.getUrlSegment() + '/' + 'citylookup', {
         withCredentials: true,
       })
       .pipe(

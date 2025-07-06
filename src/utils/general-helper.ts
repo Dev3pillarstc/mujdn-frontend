@@ -32,6 +32,20 @@ export const toDateTime = function (date: any) {
   return date;
 };
 
+export function timeStringToDate(value: string): Date {
+  const [hours, minutes, seconds] = value.split(':').map(Number);
+  const date = new Date();
+  date.setHours(hours, minutes, seconds || 0, 0);
+  return date;
+}
+
+export function dateToTimeString(date: Date): string | null {
+  if (!date) return null;
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}:00`;
+}
+
 // create a function that takes a UTC date and returns the date in local time
 export const toLocalTime = function (date: any) {
   date = new Date(date);

@@ -42,14 +42,23 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   }
 
   @CastResponse(undefined, { fallback: '$pagination' })
-  loadPaginatedSP(options?: OptionsContract | undefined): Observable<PaginatedList<Model>> {
+  loadPaginatedSP(
+    paginationParams?: PaginationParams,
+    filterOptions?: OptionsContract | undefined
+  ): Observable<PaginatedList<Model>> {
+    const httpParams = new HttpParams({
+      fromObject: paginationParams as unknown as never,
+    });
+    filterOptions = genericDateOnlyConvertor(filterOptions);
     return this.http
-      .get<PaginatedListResponseData<Model>>(this.getUrlSegment() + '/GetWithPagingSP', {
-        params: new HttpParams({
-          fromObject: options as never,
-        }),
-        withCredentials: true,
-      })
+      .post<PaginatedListResponseData<Model>>(
+        this.getUrlSegment() + '/GetWithPagingSP',
+        filterOptions || {},
+        {
+          params: httpParams, // <-- query string
+          withCredentials: true,
+        }
+      )
       .pipe(
         map((response) => {
           return {

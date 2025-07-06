@@ -19,7 +19,7 @@ import { globalErrorHandler } from '@/http-interceptors/global-error-handler';
 export const appConfig: ApplicationConfig = {
   providers: [
     configInit,
-    globalErrorHandler(),
+    // globalErrorHandler(),
     SpinnerService,
 
     // Use both approaches

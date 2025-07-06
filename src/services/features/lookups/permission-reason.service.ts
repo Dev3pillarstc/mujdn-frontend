@@ -19,7 +19,7 @@ import { LookupBaseService } from '@/abstracts/lookup-base.service';
 @Injectable({
   providedIn: 'root',
 })
-export class PermissionReasonService extends LookupBaseService<PermissionReason> {
+export class PermissionReasonService extends LookupBaseService<PermissionReason, number> {
   serviceName: string = 'PermissionReasonService';
 
   override getUrlSegment(): string {

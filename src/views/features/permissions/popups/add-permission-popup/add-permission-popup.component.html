@@ -3,12 +3,16 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">طلب استئذان جديد</h3>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'PERMISSION_PAGE.NEW_PERMISSION' | translate }}
+    </h3>
 
     <form [formGroup]="form" class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
-          <label for="permissionType" class="label">نوع الاذن</label>
+          <label for="permissionType" class="label">{{
+            'PERMISSION_PAGE.PERMISSION_TYPE' | translate
+          }}</label>
           <div class="relative">
             <p-select
               [optionLabel]="getPropertyName()"
@@ -16,7 +20,7 @@
               [options]="permissionTypes"
               formControlName="fkPermissionTypeId"
               optionLabel="type"
-              placeholder="نوع الاذن"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_TYPE' | translate }}"
               class="w-full peer"
               id="permissionType"
               optionValue="id"
@@ -28,14 +32,16 @@
           <app-validation-messages [control]="fkPermissionTypeIdControl"></app-validation-messages>
         </div>
         <div>
-          <label for="permissionDate" class="label">تاريخ الاذن</label>
+          <label for="permissionDate" class="label">{{
+            'PERMISSION_PAGE.PERMISSION_DATE' | translate
+          }}</label>
           <div class="relative">
             <p-datepicker
               name="permissionDate"
               formControlName="permissionDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
-              placeholder="تاريخ الاذن"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}"
               class="peer block w-full"
               inputId="permissionDate"
               id="permissionDate"
@@ -51,7 +57,9 @@
           <app-validation-messages [control]="permissionDateControl"></app-validation-messages>
         </div>
         <div>
-          <label for="prmissionReason" class="label">سبب الأذن </label>
+          <label for="prmissionReason" class="label"
+            >{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}
+          </label>
           <div class="relative">
             <p-select
               name="prmissionReason"
@@ -59,7 +67,7 @@
               [options]="prmissionReasons"
               formControlName="fkReasonId"
               optionLabel="type"
-              placeholder="سبب الأذن"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}"
               class="w-full peer"
               id="prmissionReason"
               optionValue="id"
@@ -71,12 +79,14 @@
           <app-validation-messages [control]="fkReasonIdControl"></app-validation-messages>
         </div>
         <div class="md:col-span-2 lg:col-span-3">
-          <label for="" class="text-sm font-normal">وصف المهمة</label>
+          <label for="" class="text-sm font-normal">{{
+            'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate
+          }}</label>
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
               pTextarea
-              placeholder="وصف المهمة"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate }}"
               formControlName="description"
             ></textarea>
             <span

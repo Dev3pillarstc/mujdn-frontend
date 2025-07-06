@@ -2,13 +2,19 @@
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
       <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
-      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">الاستئذانات</h3>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'PERMISSION_PAGE.PERMISSIONS' | translate }}
+      </h3>
     </div>
     <p-tabs value="0">
       <p-tablist class="my-6">
-        <p-tab (click)="clickMyPermissionTab()" value="0">سجل طلباتي</p-tab>
+        <p-tab (click)="clickMyPermissionTab()" value="0">{{
+          'PERMISSION_PAGE.MY_REQUESTS' | translate
+        }}</p-tab>
         @if (showIncomingPermissions()) {
-          <p-tab (click)="clickIncomingPermissionTab()" value="1">طلبات الاستئذان الواردة</p-tab>
+          <p-tab (click)="clickIncomingPermissionTab()" value="1">{{
+            'PERMISSION_PAGE.INCOMING_REQUESTS' | translate
+          }}</p-tab>
         }
       </p-tablist>
       <p-tabpanels>
@@ -17,13 +23,15 @@
             <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
               <div class="flex items-center justify-between">
                 <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-                  تصفية البحث
+                  {{ 'COMMON.SEARCH_FILTERS' | translate }}
                 </h5>
               </div>
               <div class="pt-6">
                 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
                   <div class="relative">
-                    <label class="label" for="permission-type-select">نوع الاذن</label>
+                    <label class="label" for="permission-type-select">{{
+                      'PERMISSION_PAGE.PERMISSION_TYPE' | translate
+                    }}</label>
                     <p-select
                       [(ngModel)]="filterModel.fkPermissionTypeId"
                       [optionLabel]="getPropertyName()"
@@ -32,14 +40,16 @@
                       id="permission-type-select"
                       name="permission-type-select"
                       optionValue="id"
-                      placeholder="نوع الاذن"
+                      placeholder="{{ 'PERMISSION_PAGE.PERMISSION_TYPE' | translate }}"
                     ></p-select>
                     <span
                       class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                     ></span>
                   </div>
                   <div class="relative">
-                    <label class="label" for="permission-date-picker">تاريخ الاستئذان</label>
+                    <label class="label" for="permission-date-picker">{{
+                      'PERMISSION_PAGE.PERMISSION_DATE' | translate
+                    }}</label>
                     <p-datepicker
                       [(ngModel)]="filterModel.permissionDate"
                       [iconDisplay]="'input'"
@@ -47,7 +57,7 @@
                       class="peer block w-full"
                       id="permission-date-picker"
                       inputId="permission-date-picker"
-                      placeholder="تاريخ الاستئذان"
+                      placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}"
                     >
                       <ng-template pTemplate="inputicon">
                         <img alt="" src="/assets/icons/calender-icon.svg" />
@@ -59,7 +69,9 @@
                   </div>
 
                   <div class="relative">
-                    <label class="label" for="request-status-select">حالة الطلب</label>
+                    <label class="label" for="request-status-select">{{
+                      'PERMISSION_PAGE.PERMISSION_STATUS' | translate
+                    }}</label>
                     <p-select
                       [(ngModel)]="filterModel.fkStatusId"
                       [optionLabel]="getPropertyName()"
@@ -68,7 +80,7 @@
                       id="request-status-select"
                       optionLabel="type"
                       optionValue="id"
-                      placeholder="حالة الطلب"
+                      placeholder="{{ 'PERMISSION_PAGE.PERMISSION_STATUS' | translate }}"
                     ></p-select>
                     <span
                       class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -90,7 +102,7 @@
                 class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
               >
                 <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-                  قائمة الاستئذانات
+                  {{ 'PERMISSION_PAGE.PERMISSION_LIST' | translate }}
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
                   <button (click)="exportExcel('permissions.xlsx')" class="table-head-action-btn">
@@ -101,7 +113,7 @@
                   </button>
                   <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
                     <img alt="" src="/assets/icons/plus.svg" />
-                    <span>إضافة طلب استئذان جديد</span>
+                    <span>{{ 'PERMISSION_PAGE.ADD_NEW_PERMISSION' | translate }}</span>
                   </button>
                 </div>
               </div>
@@ -110,11 +122,11 @@
               <p-table [value]="list">
                 <ng-template pTemplate="header">
                   <tr>
-                    <th>نوع الطلب</th>
-                    <th>تاريخ الاستئذان</th>
-                    <th>سبب الاستئذان</th>
-                    <th>حالة الطلب</th>
-                    <th>الإجراء</th>
+                    <th>{{ 'PERMISSION_PAGE.PERMISSION_TYPE' | translate }}</th>
+                    <th>{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}</th>
+                    <th>{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}</th>
+                    <th>{{ 'PERMISSION_PAGE.PERMISSION_STATUS' | translate }}</th>
+                    <th>{{ 'COMMON.ACTION' | translate }}</th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-permission>
@@ -198,13 +210,15 @@
               <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
                 <div class="flex items-center justify-between">
                   <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-                    تصفية البحث
+                    {{ 'COMMON.SEARCH_FILTERS' | translate }}
                   </h5>
                 </div>
                 <div class="pt-6">
                   <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
                     <div class="relative">
-                      <label class="label" for="permission-type-select">نوع الاذن</label>
+                      <label class="label" for="permission-type-select">{{
+                        'PERMISSION_PAGE.PERMISSION_TYPE' | translate
+                      }}</label>
                       <p-select
                         [(ngModel)]="filterModel.fkPermissionTypeId"
                         [optionLabel]="getPropertyName()"
@@ -213,7 +227,7 @@
                         id="permission-type-select"
                         name="permission-type-select"
                         optionValue="id"
-                        placeholder="نوع الاذن"
+                        placeholder="{{ 'PERMISSION_PAGE.PERMISSION_TYPE' | translate }}"
                       ></p-select>
                       <span
                         class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -252,7 +266,9 @@
                       ></span>
                     </div>
                     <div class="relative">
-                      <label class="label" for="permission-date-picker">تاريخ الاستئذان</label>
+                      <label class="label" for="permission-date-picker">{{
+                        'PERMISSION_PAGE.PERMISSION_DATE' | translate
+                      }}</label>
                       <p-datepicker
                         [(ngModel)]="filterModel.permissionDate"
                         [iconDisplay]="'input'"
@@ -260,7 +276,7 @@
                         class="peer block w-full"
                         id="permission-date-picker"
                         inputId="permission-date-picker"
-                        placeholder="تاريخ الاستئذان"
+                        placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}"
                       >
                         <ng-template pTemplate="inputicon">
                           <img alt="" src="/assets/icons/calender-icon.svg" />
@@ -272,7 +288,9 @@
                     </div>
 
                     <div class="relative">
-                      <label class="label" for="request-status-select">حالة الطلب</label>
+                      <label class="label" for="request-status-select">{{
+                        'PERMISSION_PAGE.PERMISSION_STATUS' | translate
+                      }}</label>
                       <p-select
                         [(ngModel)]="filterModel.fkStatusId"
                         [optionLabel]="getPropertyName()"
@@ -281,7 +299,7 @@
                         id="request-status-select"
                         optionLabel="type"
                         optionValue="id"
-                        placeholder="حالة الطلب"
+                        placeholder="{{ 'PERMISSION_PAGE.PERMISSION_STATUS' | translate }}"
                       ></p-select>
                       <span
                         class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -306,7 +324,7 @@
                   class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
                 >
                   <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-                    قائمة الاستئذانات
+                    {{ 'PERMISSION_PAGE.PERMISSION_LIST' | translate }}
                   </h4>
                   <div class="actions flex items-center gap-4 ms-auto">
                     <button (click)="exportExcel('permissions.xlsx')" class="table-head-action-btn">
@@ -325,10 +343,10 @@
                       <th>نوع الإذن</th>
                       <th>اسم الموظف</th>
                       <th>اسم الإدارة</th>
-                      <th>تاريخ الاستئذان</th>
+                      <th>{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}</th>
                       <th>سبب الإذن</th>
                       <th>حالة الإذن</th>
-                      <th>الإجراء</th>
+                      <th>{{ 'COMMON.ACTION' | translate }}</th>
                     </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-permissionsRequest>

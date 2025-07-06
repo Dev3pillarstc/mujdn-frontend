@@ -13,11 +13,12 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-permissions-data-popup',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './permissions-data-popup.component.html',
   styleUrl: './permissions-data-popup.component.scss',
 })
@@ -39,11 +40,6 @@ export class PermissionsDataPopupComponent implements OnInit {
     console.log(this.model);
   }
 
-  beforeSave(model: Permission, form: FormGroup) {
-    // manipulation before save
-    return form.valid;
-  }
-
   afterSave() {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
@@ -52,15 +48,18 @@ export class PermissionsDataPopupComponent implements OnInit {
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
+
   acceptPermissionStatus() {
     this.service.updateStatus(this.model.id, PERMISSION_STATUS_ENUM.Accepted).subscribe({
       next: (updatedPermission) => {
         this.model = updatedPermission; // optionally update local model
+        this.afterSave();
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
       error: (err) => {},
     });
   }
+
   rejectPermissionStatus() {
     this.service.updateStatus(this.model.id, PERMISSION_STATUS_ENUM.Rejected).subscribe({
       next: (updatedPermission) => {
@@ -70,6 +69,7 @@ export class PermissionsDataPopupComponent implements OnInit {
       error: (err) => {},
     });
   }
+
   close() {
     this.dialogRef.close();
   }

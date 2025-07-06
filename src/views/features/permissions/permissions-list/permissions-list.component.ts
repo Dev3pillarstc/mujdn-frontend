@@ -85,6 +85,7 @@ export default class PermissionsListComponent
   home: MenuItem | undefined;
   filterModel: PermissionFilter = new PermissionFilter();
   viewMode = ViewModeEnum;
+
   override get service() {
     return this.permissionService;
   }

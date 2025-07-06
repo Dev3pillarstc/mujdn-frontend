@@ -8,30 +8,34 @@
     <div class="p-6 rounded-2xl bg-[#f3f4f6]">
       <div class="flex flex-col sm:flex-row justify-between bg-white rounded-2xl py-4 px-6 gap-4">
         <div class="flex gap-2 items-center">
-          <span class="text-[#6c737f] text-sm">حالة الطلب</span>
+          <span class="text-[#6c737f] text-sm">{{
+            'PERMISSION_PAGE.PERMISSION_STATUS' | translate
+          }}</span>
           <div class="bg-[#1570ef] px-4 rounded-full text-white flex gap-2 items-center">
             <span class="block w-[10px] rounded-full h-[10px] bg-[#ffffff99]"> </span>
             <span>{{ isArabic ? model.status.nameAr : model.status.nameEn }}</span>
           </div>
         </div>
         <div class="flex gap-2 items-center">
-          @if (model.fkStatusId == 1) {
+          @if (model.fkStatusId == statusEnum.Accepted) {
             <span class="text-[#6c737f] text-sm">تاريخ الموافقة</span>
             <span class="text-[#161616] font-semibold">
-              <span>{{ model.actionDate | date }}</span>
+              <span>{{ model.actionDate ? (model.actionDate | date) : '' }}</span>
             </span>
           }
-          @if (model.fkStatusId == 1) {
+          @if (model.fkStatusId == statusEnum.Rejected) {
             <span class="text-[#6c737f] text-sm">تاريخ الرفض</span>
             <span class="text-[#161616] font-semibold">
-              <span>{{ model.actionDate | date }}</span>
+              <span>{{ model.actionDate ? (model.actionDate | date) : '' }}</span>
             </span>
           }
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
         <div class="flex flex-col gap-2">
-          <span class="text-sm text-[#6c737f]">نوع الاذن</span>
+          <span class="text-sm text-[#6c737f]">{{
+            'PERMISSION_PAGE.PERMISSION_TYPE' | translate
+          }}</span>
           <span class="font-semibold text-[#161616]">
             <span>{{ isArabic ? model.permissionType.nameAr : model.permissionType.nameEn }}</span>
           </span>
@@ -43,11 +47,15 @@
           </span>
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-sm text-[#6c737f]">تاريخ الاذن </span>
+          <span class="text-sm text-[#6c737f]"
+            >{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}
+          </span>
           <span class="font-semibold text-[#161616]">{{ model.permissionDate | date }}</span>
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-sm text-[#6c737f]">سبب الأذن </span>
+          <span class="text-sm text-[#6c737f]"
+            >{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}
+          </span>
           <span class="font-semibold text-[#161616]">
             <span>{{
               isArabic ? model.permissionReason.nameAr : model.permissionReason.nameEn

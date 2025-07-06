@@ -17,6 +17,7 @@ import { HolidayService } from '@/services/features/lookups/holiday.service';
 import { LanguageService } from '@/services/shared/language.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HolidayFilter } from '@/models/features/lookups/holiday/holiday-filter';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-holidays-list',
@@ -50,6 +51,8 @@ export default class HolidaysListComponent extends BaseListComponent<
   };
   holidayService = inject(HolidayService);
   translateService = inject(TranslateService);
+  authService = inject(AuthService);
+
   home: MenuItem | undefined;
   filterModel: HolidayFilter = new HolidayFilter();
   override get service() {
@@ -74,5 +77,8 @@ export default class HolidaysListComponent extends BaseListComponent<
       [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.getStartDate(),
       [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.getEndDate(),
     };
+  }
+  showAddEditButtons() {
+    return this.authService.isHROfficer;
   }
 }

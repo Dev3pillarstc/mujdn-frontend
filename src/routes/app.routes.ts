@@ -12,6 +12,7 @@ import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
 import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
+import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,7 @@ export const routes: Routes = [
       {
         path: 'attendance-logs',
         canActivate: [authGuard],
+        resolve: { list: attendanceResolver },
         data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER], routeId: RouteIdsEnum.ATTENDANCE_LOGS },
         loadComponent: () =>
           import(

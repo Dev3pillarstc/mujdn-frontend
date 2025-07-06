@@ -26,7 +26,7 @@ import { Observable, of, switchMap } from 'rxjs';
     shape: { 'list.*': () => BaseLookupModel },
   },
 })
-export class DepartmentService extends LookupBaseService<Department> {
+export class DepartmentService extends LookupBaseService<Department, number> {
   override serviceName: string = 'DepartmentService';
 
   override getUrlSegment(): string {

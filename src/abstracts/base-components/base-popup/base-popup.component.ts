@@ -3,7 +3,7 @@ import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { Directive, inject, OnInit } from '@angular/core';
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import {
   catchError,
   exhaustMap,
@@ -16,6 +16,7 @@ import {
 } from 'rxjs';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { MatDialogRef } from '@angular/material/dialog';
+import { markFormGroupTouched } from '@/utils/general-helper';
 
 @Directive()
 export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, any>>
@@ -59,6 +60,7 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
       .pipe(
         switchMap(() => {
           const result = this.beforeSave(this.model, this.form);
+          !result && markFormGroupTouched(this.form);
           return isObservable(result) ? result : of(result);
         })
       )

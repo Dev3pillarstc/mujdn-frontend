@@ -64,7 +64,7 @@ export default class DepartmentListComponent extends BaseListComponent<
 > {
   override dialogSize = {
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '800px',
   };
   private _filterModel: DepartmentFilter = new DepartmentFilter();
   private _selectedDepartment: Department | null = null;

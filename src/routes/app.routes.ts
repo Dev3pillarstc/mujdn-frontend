@@ -57,12 +57,12 @@ export const routes: Routes = [
       {
         path: 'nationalities',
         canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NATIONALITIES },
         resolve: { list: nationalitiesResolver },
         loadComponent: () =>
           import(
             '../views/features/lookups/nationality/nationality-list/nationality-list.component'
           ),
-        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NATIONALITIES },
       },
       {
         path: 'cities',
@@ -131,6 +131,7 @@ export const routes: Routes = [
       {
         path: 'departments',
         canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.DEPARTMENTS },
         resolve: { list: departmentResolver },
         loadComponent: () =>
           import('../views/features/department/department-list/department-list.component'),

@@ -58,17 +58,30 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
           CustomValidators.pattern('ENG_NUM'),
         ],
       ],
-      fkRegionId: [fkRegionId, [Validators.required]],
-      fkCityId: [fkCityId, [Validators.required]],
+      fkRegionId: [fkRegionId,
+        [
+          Validators.required
+        ]
+      ],
+      fkCityId: [fkCityId,
+        [
+          Validators.required
+        ]
+      ],
       address: [
         address,
-        [Validators.required, Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH)],
+        [
+          Validators.required,
+          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
+          CustomValidators.pattern('ENG_AR_ONLY'),
+        ],
       ],
       phoneNumber: [
         phoneNumber,
         [
           Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
+          CustomValidators.pattern('PHONE_NUMBER'),
         ],
       ],
       fax: [
@@ -76,10 +89,17 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
         [
           Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
+          CustomValidators.pattern('PHONE_NUMBER'),
         ],
       ],
-      fkManagerId: [fkManagerId, []],
-      isOneLevelApproval: [isOneLevelApproval, [Validators.required]],
+      fkManagerId: [
+        fkManagerId,
+        []
+      ],
+      isOneLevelApproval: [
+        isOneLevelApproval !== undefined ? isOneLevelApproval : true,
+        []
+      ],
     };
   }
 }

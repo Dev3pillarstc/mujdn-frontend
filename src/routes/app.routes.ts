@@ -59,12 +59,12 @@ export const routes: Routes = [
       {
         path: 'nationalities',
         canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NATIONALITIES },
         resolve: { list: nationalitiesResolver },
         loadComponent: () =>
           import(
             '../views/features/lookups/nationality/nationality-list/nationality-list.component'
           ),
-        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NATIONALITIES },
       },
       {
         path: 'cities',
@@ -86,7 +86,7 @@ export const routes: Routes = [
       {
         path: 'permission-reasons',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.PERMISSION_REASONS },
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.PERMISSION_REASONS },
         resolve: { list: permissionReasonResolver },
         loadComponent: () =>
           import(
@@ -118,7 +118,7 @@ export const routes: Routes = [
       {
         path: 'holidays',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.HOLIDAYS },
+        data: { routeId: RouteIdsEnum.HOLIDAYS },
         resolve: { list: holidayResolver },
         loadComponent: () =>
           import('../views/features/lookups/holidays/holidays-list/holidays-list.component'),
@@ -133,6 +133,7 @@ export const routes: Routes = [
       {
         path: 'departments',
         canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.DEPARTMENTS },
         resolve: { list: departmentResolver },
         loadComponent: () =>
           import('../views/features/department/department-list/department-list.component'),

@@ -111,10 +111,12 @@
             <button>
               <img alt="" src="/assets/icons/print.svg" />
             </button>
-            <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
-              <img alt="" src="assets/icons/plus.svg" />
-              <span>{{ 'HOLIDAYS_PAGE.ADD_NEW_HOLIDAY' | translate }}</span>
-            </button>
+            @if (showAddEditButtons()) {
+              <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
+                <img alt="" src="assets/icons/plus.svg" />
+                <span>{{ 'HOLIDAYS_PAGE.ADD_NEW_HOLIDAY' | translate }}</span>
+              </button>
+            }
           </div>
         </div>
         @if (list && list.length > 0) {
@@ -130,7 +132,9 @@
                 <th>{{ 'HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH' | translate }}</th>
                 <th>{{ 'HOLIDAYS_PAGE.START_DATE' | translate }}</th>
                 <th>{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}</th>
-                <th>{{ 'HOLIDAYS_PAGE.ACTIONS' | translate }}</th>
+                @if (showAddEditButtons()) {
+                  <th>{{ 'HOLIDAYS_PAGE.ACTIONS' | translate }}</th>
+                }
               </tr>
             </ng-template>
 
@@ -143,16 +147,18 @@
                 <td>{{ holiday.nameEn }}</td>
                 <td>{{ holiday.startDate | date }}</td>
                 <td>{{ holiday.endDate | date }}</td>
-                <td>
-                  <div class="actions flex gap-2">
-                    <button (click)="addOrEditModel(holiday)" class="table-action-gray-btn">
-                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
-                    </button>
-                    <button (click)="deleteModel(holiday.id)" class="table-action-red-btn">
-                      <img src="/assets/icons/delete-action.svg" alt="حذف" />
-                    </button>
-                  </div>
-                </td>
+                @if (showAddEditButtons()) {
+                  <td>
+                    <div class="actions flex gap-2">
+                      <button (click)="addOrEditModel(holiday)" class="table-action-gray-btn">
+                        <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                      </button>
+                      <button (click)="deleteModel(holiday.id)" class="table-action-red-btn">
+                        <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                      </button>
+                    </div>
+                  </td>
+                }
               </tr>
             </ng-template>
           </p-table>

@@ -15,7 +15,7 @@ import { BaseCrudService } from './base-crud-service';
 @Injectable({
   providedIn: 'root',
 })
-export abstract class LookupBaseService<T> extends BaseCrudService<T> {
+export abstract class LookupBaseService<T, TKEY> extends BaseCrudService<T, TKEY> {
   @CastResponse(undefined, { fallback: '$lookup' })
   getLookup(): Observable<BaseLookupModel[]> {
     return this.http

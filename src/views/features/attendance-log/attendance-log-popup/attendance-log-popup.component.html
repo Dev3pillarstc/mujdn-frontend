@@ -3,114 +3,127 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة حركة جديدة</h3>
-    <form class="mt-6">
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{
+        (isCreateMode
+          ? 'ATTENDANCE_LOG_PAGE.ADD_NEW_MOVEMENT'
+          : 'ATTENDANCE_LOG_PAGE.EDIT_MOVEMENT'
+        ) | translate
+      }}
+    </h3>
+    <form [formGroup]="form" class="mt-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
+        <!-- Department Selection -->
         <div class="lg:col-span-3">
-          <label for="adminstrations-popup" class="label">الادارة</label>
+          <label for="department-popup" class="label">
+            {{ 'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate }}
+          </label>
           <div class="relative">
             <p-select
-              name="selectedAdminstration"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
-              placeholder="الادارة"
+              [optionLabel]="getPropertyName()"
+              [options]="departments"
+              [disabled]="!isCreateMode"
               class="w-full peer"
-              id="adminstrations-popup"
-            ></p-select>
+              formControlName="departmentId"
+              id="department-popup"
+              name="departmentId"
+              optionValue="id"
+              placeholder="{{ 'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate }}"
+            >
+            </p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="departmentControl"></app-validation-messages>
         </div>
+
+        <!-- Employee Selection -->
         <div class="lg:col-span-3">
-          <label for="empoyeeName-popup" class="label">اسم الموظف</label>
+          <label for="employee-popup" class="label">
+            {{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME' | translate }}
+          </label>
           <div class="relative">
             <p-select
-              name="selectedAdminstration1"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
-              placeholder="اسم الموظف"
+              [optionLabel]="getPropertyName()"
+              [options]="getFilteredEmployees()"
+              [disabled]="!isCreateMode || !departmentControl.value"
               class="w-full peer"
-              id="empoyeeName-popup"
-            ></p-select>
+              formControlName="employeeId"
+              id="employee-popup"
+              name="employeeId"
+              optionValue="id"
+              placeholder="{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME' | translate }}"
+            >
+            </p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="employeeControl"></app-validation-messages>
         </div>
-        <div class="lg:col-span-2">
-          <label for="movment-popup" class="label">نوع الحركة</label>
-          <div class="relative">
-            <p-select
-              name="selectedAdminstration2"
-              [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
-              placeholder="نوع الحركة"
-              class="w-full peer"
-              id="movment-popup"
-            ></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
-        </div>
-        <div class="lg:col-span-2">
-          <label for="date-pick" class="label">التاريخ</label>
+
+        <!-- Date Picker -->
+        <div class="lg:col-span-3">
+          <label for="date-picker" class="label">
+            {{ 'ATTENDANCE_LOG_PAGE.DATE' | translate }}
+          </label>
           <div class="relative">
             <p-datepicker
-              name="selectedAdminstration4"
-              [(ngModel)]="date2"
+              formControlName="selectedDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
-              placeholder="التاريخ"
+              [disabled]="!isCreateMode"
               class="peer block w-full"
-              inputId="icondisplay"
-              id="date-pick"
+              id="date-picker"
+              placeholder="{{ 'ATTENDANCE_LOG_PAGE.DATE' | translate }}"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
+                <img src="/assets/icons/calender-icon.svg" alt="Calendar" />
               </ng-template>
             </p-datepicker>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="selectedDateControl"></app-validation-messages>
         </div>
-        <div class="lg:col-span-2">
-          <label for="time-pick" class="label">الوقت</label>
+
+        <!-- Time Picker -->
+        <div class="lg:col-span-3">
+          <label for="time-picker" class="label">
+            {{ 'ATTENDANCE_LOG_PAGE.TIME' | translate }}
+          </label>
           <div class="relative">
             <p-datepicker
-              name="selectedAdminstration5"
-              [(ngModel)]="date2"
+              formControlName="selectedTime"
               [iconDisplay]="'input'"
               [showIcon]="true"
-              placeholder="الوقت"
-              class="peer block w-full"
-              inputId="icondisplay"
               [timeOnly]="true"
-              id="time-pick"
+              [disabled]="!isCreateMode"
+              class="peer block w-full"
+              id="time-picker"
+              placeholder="{{ 'ATTENDANCE_LOG_PAGE.TIME' | translate }}"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/time-icon.svg" alt="" />
+                <img src="/assets/icons/time-icon.svg" alt="Time" />
               </ng-template>
             </p-datepicker>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="selectedTimeControl"></app-validation-messages>
         </div>
       </div>
+
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn" (click)="close()">الغاء</button>
-        <button class="btn green-btn">إضافة</button>
+        <button type="button" class="btn gray-btn" (click)="close()">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+        <button type="button" class="btn green-btn" (click)="save$.next()">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
       </div>
     </form>
   </div>

@@ -39,7 +39,7 @@ export const departmentResolver: ResolveFn<any> = (route, state) => {
         }),
         cities: cityService.load(),
         regions: regionService.load(),
-        users: userService.getUsersProfiles(),
+        users: userService.getLookup(),
       }).pipe(
         map(({ childDepartments, cities, regions, users }) => ({
           departmentsTree: departmentsTree,

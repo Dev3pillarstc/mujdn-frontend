@@ -12,8 +12,21 @@ import { ROLES_ENUM } from '@/enums/roles-enum';
 export class AuthService extends BaseCrudService<LoggedInUser, string> {
   serviceName: string = 'AuthService';
   router = inject(Router);
-  private loggedInUser: BehaviorSubject<LoggedInUser | null> =
-    new BehaviorSubject<LoggedInUser | null>(null);
+  private loggedInUser: BehaviorSubject<LoggedInUser | undefined> = new BehaviorSubject<
+    LoggedInUser | undefined
+  >(undefined);
+
+  get isAdmin() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.ADMIN);
+  }
+
+  get isDepartmentManager() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.DEPARTMENT_MANAGER);
+  }
+
+  get isHROfficer() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.HR_OFFICER);
+  }
 
   getUrlSegment(): string {
     return this.urlService.URLS.AUTH;
@@ -36,25 +49,13 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
     });
   }
 
-  setUser(loggedInUser: LoggedInUser | null) {
+  setUser(loggedInUser: LoggedInUser | undefined) {
     const user = Object.assign(new LoggedInUser(), loggedInUser);
     this.loggedInUser.next(user);
   }
 
-  getUser(): BehaviorSubject<LoggedInUser | null> {
+  getUser(): BehaviorSubject<LoggedInUser | undefined> {
     return this.loggedInUser;
-  }
-
-  get isAdmin() {
-    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.ADMIN);
-  }
-
-  get isDepartmentManager() {
-    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.DEPARTMENT_MANAGER);
-  }
-
-  get isHROfficer() {
-    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.HR_OFFICER);
   }
 
   isFollowUpOfficer() {

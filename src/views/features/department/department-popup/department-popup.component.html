@@ -1,4 +1,4 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
@@ -32,11 +32,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span
-            class="validation-message"
-            *ngIf="form.get('nameAr')?.invalid && form.get('nameAr')?.touched"
-            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
-          >
+          <app-validation-messages [control]="nameArControl"></app-validation-messages>
         </div>
         <div>
           <label for="departmentNameEn" class="label">{{
@@ -56,11 +52,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span
-            class="validation-message"
-            *ngIf="form.get('nameEn')?.invalid && form.get('nameEn')?.touched"
-            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
-          >
+          <app-validation-messages [control]="nameEnControl"></app-validation-messages>
         </div>
         <div>
           <label for="regionSelect" class="label">{{
@@ -84,11 +76,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span
-            class="validation-message"
-            *ngIf="form.get('fkRegionId')?.invalid && form.get('fkRegionId')?.touched"
-            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
-          >
+          <app-validation-messages [control]="fkRegionIdControl"></app-validation-messages>
         </div>
         <div>
           <label for="citySelect" class="label">{{ 'DEPARTMENT_POPUP.CITY' | translate }}</label>
@@ -109,11 +97,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span
-            class="validation-message"
-            *ngIf="form.get('fkCityId')?.invalid && form.get('fkCityId')?.touched"
-            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
-          >
+          <app-validation-messages [control]="fkCityIdControl"></app-validation-messages>
         </div>
         <div>
           <label for="addressInput" class="label">
@@ -133,11 +117,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span
-            class="validation-message"
-            *ngIf="form.get('address')?.invalid && form.get('address')?.touched"
-            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
-          >
+          <app-validation-messages [control]="addressControl"></app-validation-messages>
         </div>
         <div>
           <label for="phoneInput" class="label"> {{ 'DEPARTMENT_POPUP.PHONE' | translate }}</label>
@@ -155,11 +135,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span
-            class="validation-message"
-            *ngIf="form.get('phoneNumber')?.invalid && form.get('phoneNumber')?.touched"
-            >{{ 'DEPARTMENT_POPUP.REQUIRED_FIELD' | translate }}</span
-          >
+          <app-validation-messages [control]="phoneNumberControl"></app-validation-messages>
         </div>
         <div>
           <label for="faxInput" class="label"> {{ 'DEPARTMENT_POPUP.FAX' | translate }}</label>
@@ -177,11 +153,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span
-            class="validation-message"
-            *ngIf="form.get('fax')?.invalid && form.get('fax')?.touched"
-            >{{ 'DEPARTMENT_POPUP.MANAGER_NAME' | translate }}</span
-          >
+          <app-validation-messages [control]="faxControl"></app-validation-messages>
         </div>
         <div>
           <label for="managerSelect" class="label">{{
@@ -203,37 +175,13 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span
-            class="validation-message"
-            *ngIf="form.get('fkManagerId')?.invalid && form.get('fkManagerId')?.touched"
-            >{{ 'DEPARTMENT_POPUP.MANAGER_NAME' | translate }}</span
-          >
         </div>
       </div>
-      <div class="mt-6 pt-6 border-t border-[#d2d6db]">
+      <div class="mt-6 pt-6 border-t border-[#d2d6db] text-[#000]">
         <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
           {{ 'DEPARTMENT_POPUP.APPROVAL_LEVEL' | translate }}
         </h3>
         <div class="flex flex-wrap gap-8 items-center">
-          <label class="flex items-center cursor-pointer gap-2">
-            <input
-              type="radio"
-              class="hidden peer"
-              name="isOneLevelApproval"
-              [value]="false"
-              id="two-levels-radio"
-              formControlName="isOneLevelApproval"
-            />
-            <span
-              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
-            >
-              <span
-                class="w-4 h-4 rounded-full bg-[#22a06b] block peer-checked:block"
-                *ngIf="form.get('isOneLevelApproval')?.value === false"
-              ></span>
-            </span>
-            <span>{{ 'DEPARTMENT_POPUP.TWO_LEVEL_APPROVAL' | translate }}</span>
-          </label>
           <label class="flex items-center cursor-pointer gap-2">
             <input
               type="radio"
@@ -247,11 +195,31 @@
               class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
             >
               <span
-                class="w-4 h-4 rounded-full bg-[#22a06b] block peer-checked:block"
+                class="w-4 h-4 rounded-full bg-[#22a06b] block"
                 *ngIf="form.get('isOneLevelApproval')?.value === true"
               ></span>
             </span>
             <span>{{ 'DEPARTMENT_POPUP.ONE_LEVEL_APPROVAL' | translate }}</span>
+          </label>
+
+          <label class="flex items-center cursor-pointer gap-2">
+            <input
+              type="radio"
+              class="hidden peer"
+              name="isOneLevelApproval"
+              [value]="false"
+              id="two-levels-radio"
+              formControlName="isOneLevelApproval"
+            />
+            <span
+              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
+            >
+              <span
+                class="w-4 h-4 rounded-full bg-[#22a06b] block"
+                *ngIf="form.get('isOneLevelApproval')?.value === false"
+              ></span>
+            </span>
+            <span>{{ 'DEPARTMENT_POPUP.TWO_LEVEL_APPROVAL' | translate }}</span>
           </label>
         </div>
       </div>

@@ -28,6 +28,7 @@ export class SideBarLinksService {
       label: 'الادارات',
       iconUrl: 'assets/icons/menu-icons/tools.svg',
       routerLink: ['/departments'],
+      routeId: RouteIdsEnum.DEPARTMENTS,
     },
     {
       label: 'قائمة الموظفين',

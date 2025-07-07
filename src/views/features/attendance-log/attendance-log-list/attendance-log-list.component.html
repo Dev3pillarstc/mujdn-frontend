@@ -167,7 +167,8 @@
                 <th>{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN' | translate }}</th>
                 <th>{{ 'ATTENDANCE_LOG_PAGE.SWIPE_TIME' | translate }}</th>
                 <th>{{ 'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate }}</th>
-                <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR' | translate }}</th>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_AR' | translate }}</th>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_EN' | translate }}</th>
                 <th>{{ 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate }}</th>
                 <th>{{ 'ATTENDANCE_LOG_PAGE.ACTIONS' | translate }}</th>
               </tr>
@@ -185,7 +186,14 @@
                   </div>
                 </td>
                 <td>{{ attendanceLog.channelName }}</td>
-                <td>{{ attendanceLog.creatorNameAr }}</td>
+
+                @if (attendanceLog.creatorNameAr && attendanceLog.creatorNameEn) {
+                  <td>{{ attendanceLog.creatorNameAr }}</td>
+                  <td>{{ attendanceLog.creatorNameEn }}</td>
+                } @else {
+                  <td>النظام</td>
+                  <td>System</td>
+                }
                 <td>
                   <div
                     [ngClass]="[

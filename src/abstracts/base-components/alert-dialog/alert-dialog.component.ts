@@ -29,7 +29,7 @@ export class AlertDialogComponent {
   get iconPath(): string {
     switch (this.data.icon) {
       case 'success':
-        return '/assets/icons/checkmark.svg';
+        return '/assets/icons/success.svg';
       case 'error':
         return '/assets/icons/error.svg';
       case 'info':

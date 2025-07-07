@@ -86,7 +86,7 @@ export const routes: Routes = [
       {
         path: 'permission-reasons',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.PERMISSION_REASONS },
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.PERMISSION_REASONS },
         resolve: { list: permissionReasonResolver },
         loadComponent: () =>
           import(
@@ -118,7 +118,7 @@ export const routes: Routes = [
       {
         path: 'holidays',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.HOLIDAYS },
+        data: { routeId: RouteIdsEnum.HOLIDAYS },
         resolve: { list: holidayResolver },
         loadComponent: () =>
           import('../views/features/lookups/holidays/holidays-list/holidays-list.component'),

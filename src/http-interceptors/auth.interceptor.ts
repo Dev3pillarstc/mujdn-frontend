@@ -33,7 +33,7 @@ export const AuthInterceptor: HttpInterceptorFn = (
     tap((response) => {
       if (response instanceof HttpResponse) {
         if (req.url.includes('logout')) {
-          authService.setUser(null);
+          authService.setUser(undefined);
           router.navigate(['/login']);
           return; // ✅ optional, now safely exits from this block
         } else {
@@ -46,7 +46,7 @@ export const AuthInterceptor: HttpInterceptorFn = (
               authService.setUser(userDataCookie);
             }
           } else {
-            authService.setUser(null);
+            authService.setUser(undefined);
             authService.logout();
           }
         }

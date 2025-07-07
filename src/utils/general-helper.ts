@@ -61,3 +61,12 @@ export function markFormGroupTouched(form: FormGroup | FormArray) {
     }
   });
 }
+
+export function convertUtcToKsaTime(utcDateTime: Date | string): Date {
+  const utcDate = new Date(utcDateTime);
+
+  // Ensure the input is treated as UTC and add 3 hours to convert to KSA time
+  const ksaTime = new Date(utcDate.getTime() + 3 * 60 * 60 * 1000);
+
+  return ksaTime;
+}

@@ -3,7 +3,7 @@ import { AttendanceService } from '@/services/features/attendance.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
-import { AttendanceLogInterceptor } from '@/model-interceptors/features/attendance-log-interceptor';
+import { AttendanceLogInterceptor } from '@/model-interceptors/features/attendance-log.interceptor';
 
 const { send, receive } = new AttendanceLogInterceptor();
 
@@ -13,7 +13,7 @@ export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceServic
   declare id: string;
   declare departmentId?: number;
   declare employeeId?: number;
-  declare swipeTime?: string;
+  declare swipeTime?: Date | string;
   declare nationalId?: string;
   declare channelName?: string | null;
   declare employeeNameEn?: string;

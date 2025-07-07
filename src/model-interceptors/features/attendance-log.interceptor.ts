@@ -1,10 +1,10 @@
 import { AttendanceLog } from '@/models/features/attendance/attendance-log/attendance-log';
 import { ModelInterceptorContract } from 'cast-response';
-import { toLocalTime } from '@/utils/general-helper';
+import { convertUtcToKsaTime } from '@/utils/general-helper';
 
 export class AttendanceLogInterceptor implements ModelInterceptorContract<AttendanceLog> {
   receive(model: AttendanceLog): AttendanceLog {
-    model['swipeTime'] = toLocalTime(model['swipeTime']);
+    model['swipeTime'] = convertUtcToKsaTime(model['swipeTime'] as string);
     return model;
   }
 

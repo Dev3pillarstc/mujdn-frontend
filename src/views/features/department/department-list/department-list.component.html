@@ -157,66 +157,82 @@
               </div>
             </div>
             @if (childDepartments.list && childDepartments.list.length > 0) {
-            <p-table [value]="childDepartments.list">
-              <ng-template #header>
-                <tr>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</th>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST' | translate }}</th>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME' | translate }}</th>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.ACTIONS' | translate }}</th>
-                </tr>
-              </ng-template>
-              <ng-template #body let-row>
-                <tr>
-                  <td>{{ isCurrentLanguageEnglish() ? row?.nameEn : row?.nameAr }}</td>
-                  <td>
-                    <span
-                      class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]">
-                      {{ getApprovalLevelText(row.isOneLevelApproval) | translate }}
-                    </span>
-                  </td>
-                  <td>
-                    {{
-                    isCurrentLanguageEnglish()
+              <p-table [value]="childDepartments.list">
+                <ng-template #header>
+                  <tr>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.ACTIONS' | translate }}</th>
+                  </tr>
+                </ng-template>
+                <ng-template #body let-row>
+                  <tr>
+                    <td>{{ isCurrentLanguageEnglish() ? row?.nameEn : row?.nameAr }}</td>
+                    <td>
+                      <span
+                        class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]"
+                      >
+                        {{ getApprovalLevelText(row.isOneLevelApproval) | translate }}
+                      </span>
+                    </td>
+                    <td>
+                      {{
+                        isCurrentLanguageEnglish()
                           ? row.manager?.fullNameEn
                           : row.manager?.fullNameAr
-                    }}
-                  </td>
-                  <td>
-                    <div class="actions flex gap-2">
-                      <button class="btn black-btn flex items-center" (click)="addOrEditModel(row.id ?? 0)">
-                        <img src="assets/icons/plus.svg" alt="" />
-                        <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_SUB_DEPARTMENT' | translate }}</span>
-                      </button>
-                      <button class="bg-[#f3f4f6] rounded p-2 w-[32px]" (click)="addOrEditModel(0, row)">
-                        <img src="/assets/icons/edit-action.svg" alt="update" />
-                      </button>
-                      <button class="bg-[#fef3f2] rounded p-2 w-[32px]" (click)="openConfirmation(row.id)">
-                        <img src="/assets/icons/delete-action.svg" alt="delete" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
+                      }}
+                    </td>
+                    <td>
+                      <div class="actions flex gap-2">
+                        <button
+                          class="btn black-btn flex items-center"
+                          (click)="addOrEditModel(row.id ?? 0)"
+                        >
+                          <img src="assets/icons/plus.svg" alt="" />
+                          <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_SUB_DEPARTMENT' | translate }}</span>
+                        </button>
+                        <button
+                          class="bg-[#f3f4f6] rounded p-2 w-[32px]"
+                          (click)="addOrEditModel(0, row)"
+                        >
+                          <img src="/assets/icons/edit-action.svg" alt="update" />
+                        </button>
+                        <button
+                          class="bg-[#fef3f2] rounded p-2 w-[32px]"
+                          (click)="openConfirmation(row.id)"
+                        >
+                          <img src="/assets/icons/delete-action.svg" alt="delete" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
             } @else {
-            <div colspan="4">
-              <div class="py-6 flex flex-col items-center justify-center text-center space-y-2">
-                <div class="">
-                  <img src="/assets/icons/empty.svg" alt="" srcset="" />
+              <div colspan="4">
+                <div class="py-6 flex flex-col items-center justify-center text-center space-y-2">
+                  <div class="">
+                    <img src="/assets/icons/empty.svg" alt="" srcset="" />
+                  </div>
+                  <h3 class="mt-2 text-[18px] font-bold text-[#384250]">
+                    {{ 'DEPARTMENTS_LIST_PAGE.NO_DEPARTMENTS_YET' | translate }}
+                  </h3>
+                  <p class="text-[12px] font-medium text-[#6c737f]">
+                    {{ 'DEPARTMENTS_LIST_PAGE.ADD_YOUR_DEPARTMENT' | translate }}
+                  </p>
                 </div>
-                <h3 class="mt-2 text-[18px] font-bold text-[#384250]">
-                  {{ 'DEPARTMENTS_LIST_PAGE.NO_DEPARTMENTS_YET' | translate }}
-                </h3>
-                <p class="text-[12px] font-medium text-[#6c737f]">
-                  {{ 'DEPARTMENTS_LIST_PAGE.ADD_YOUR_DEPARTMENT' | translate }}
-                </p>
               </div>
-            </div>
             }
             @if (childDepartments.list && childDepartments.list.length > 0) {
-            <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-              [totalRecords]="paginationInfo.totalItems" [rowsPerPageOptions]="[10, 20, 30]" />
+              <p-paginator
+                class="mt-6"
+                (onPageChange)="onPageChange($event)"
+                [first]="first"
+                [rows]="rows"
+                [totalRecords]="paginationInfo.totalItems"
+                [rowsPerPageOptions]="[10, 20, 30]"
+              />
             }
             <div></div>
           </div>

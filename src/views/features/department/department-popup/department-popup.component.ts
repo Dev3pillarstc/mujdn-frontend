@@ -1,5 +1,11 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
@@ -14,7 +20,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ValidationMessagesComponent } from "../../../shared/validation-messages/validation-messages.component";
+import { ValidationMessagesComponent } from '../../../shared/validation-messages/validation-messages.component';
 
 interface Adminstration {
   type: string;
@@ -30,7 +36,7 @@ interface Adminstration {
     CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
-    ValidationMessagesComponent
+    ValidationMessagesComponent,
   ],
   templateUrl: './department-popup.component.html',
   styleUrl: './department-popup.component.scss',

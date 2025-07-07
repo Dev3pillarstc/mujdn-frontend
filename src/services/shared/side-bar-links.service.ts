@@ -28,6 +28,7 @@ export class SideBarLinksService {
       label: 'الادارات',
       iconUrl: 'assets/icons/menu-icons/tools.svg',
       routerLink: ['/departments'],
+      routeId: RouteIdsEnum.DEPARTMENTS
     },
     {
       label: 'قائمة الموظفين',
@@ -123,7 +124,7 @@ export class SideBarLinksService {
   constructor(
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
 
   /** Public method to get menu items filtered by current user roles */
   getSidebarLinks(): MenuItem[] {

@@ -18,114 +18,71 @@
             <div class="relative">
               <label class="label" for="department">{{
                 'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate
-              }}</label>
-              <p-select
-                [(ngModel)]="filterModel.departmentId"
-                [options]="departments"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate"
-                class="w-full peer"
-                id="department"
-                [optionLabel]="optionLabel"
-                optionValue="id"
-              ></p-select>
+                }}</label>
+              <p-select [(ngModel)]="filterModel.departmentId" [options]="departments"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate" class="w-full peer" id="department"
+                [optionLabel]="optionLabel" optionValue="id"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
 
             <div class="relative">
               <label class="label" for="employee">{{
                 'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate
-              }}</label>
-              <p-select
-                [(ngModel)]="filterModel.employeeId"
-                (ngModelChange)="onEmployeeChange($event)"
-                [options]="employees"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate"
-                class="w-full peer"
-                id="employee"
-                [optionLabel]="optionLabel"
-                optionValue="id"
-              ></p-select>
+                }}</label>
+              <p-select [(ngModel)]="filterModel.employeeId" (ngModelChange)="onEmployeeChange($event)"
+                [options]="employees" [placeholder]="'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate" class="w-full peer"
+                id="employee" [optionLabel]="optionLabel" optionValue="id"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
 
             <div class="relative">
               <label class="label" for="swipeDate">{{
                 'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate
-              }}</label>
-              <p-datepicker
-                [(ngModel)]="filterModel.swipeDate"
-                [iconDisplay]="'input'"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate"
-                [showIcon]="true"
-                class="peer block w-full"
-                inputId="swipeDate"
-              >
+                }}</label>
+              <p-datepicker [(ngModel)]="filterModel.swipeDate" [iconDisplay]="'input'"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate" [showIcon]="true" class="peer block w-full"
+                inputId="swipeDate">
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="/assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
 
             <div class="relative">
               <label class="label" for="channelName">{{
                 'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
-              }}</label>
-              <input
-                [(ngModel)]="filterModel.channelName"
-                (ngModelChange)="onChannelChange($event)"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate"
-                class="peer"
-                fluid="true"
-                id="channelName"
-                pInputText
-                type="text"
-              />
+                }}</label>
+              <input [(ngModel)]="filterModel.channelName" (ngModelChange)="onChannelChange($event)"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate" class="peer" fluid="true"
+                id="channelName" pInputText type="text" />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
 
             <div class="relative">
               <label class="label" for="processingStatus">{{
                 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate
-              }}</label>
-              <p-select
-                [options]="processingStatusOptions"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate"
-                class="w-full peer"
-                id="processingStatus"
-                [optionLabel]="optionLabel"
-                optionValue="id"
-              ></p-select>
+                }}</label>
+              <p-select [options]="processingStatusOptions"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate" class="w-full peer"
+                id="processingStatus" [optionLabel]="optionLabel" optionValue="id"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
 
             <div class="relative">
               <label class="label" for="creator">{{
                 'ATTENDANCE_LOG_PAGE.CREATOR' | translate
-              }}</label>
-              <p-select
-                [(ngModel)]="filterModel.creatorId"
-                (ngModelChange)="onCreatorChange($event)"
-                [options]="creators"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.CREATOR' | translate"
-                class="w-full peer"
-                id="creator"
-                [optionLabel]="optionLabel"
-                optionValue="id"
-              ></p-select>
+                }}</label>
+              <p-select [(ngModel)]="filterModel.creatorId" (ngModelChange)="onCreatorChange($event)"
+                [options]="creators" [placeholder]="'ATTENDANCE_LOG_PAGE.CREATOR' | translate" class="w-full peer"
+                id="creator" [optionLabel]="optionLabel" optionValue="id"></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
           </div>
 
@@ -141,8 +98,7 @@
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
-        >
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
             {{ 'ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST' | translate }}
           </h4>
@@ -160,82 +116,79 @@
           </div>
         </div>
         @if (list && list.length > 0) {
-          <p-table [value]="list">
-            <ng-template pTemplate="header">
-              <tr>
-                <th>{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR' | translate }}</th>
-                <th>{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN' | translate }}</th>
-                <th>{{ 'ATTENDANCE_LOG_PAGE.SWIPE_TIME' | translate }}</th>
-                <th>{{ 'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate }}</th>
-                <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR' | translate }}</th>
-                <th>{{ 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate }}</th>
-                <th>{{ 'ATTENDANCE_LOG_PAGE.ACTIONS' | translate }}</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-attendanceLog>
-              <tr>
-                <td>{{ attendanceLog.employeeNameAr }}</td>
-                <td>{{ attendanceLog.employeeNameEn }}</td>
-                <td>
-                  <div class="flex flex-col items-center">
-                    <span>{{ formatSwipeTime(attendanceLog.swipeTime).date }}</span>
-                    <span class="text-[#64748b]">{{
-                      formatSwipeTime(attendanceLog.swipeTime).time
+        <p-table [value]="list">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR' | translate }}</th>
+              <th>{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN' | translate }}</th>
+              <th>{{ 'ATTENDANCE_LOG_PAGE.SWIPE_TIME' | translate }}</th>
+              <th>{{ 'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate }}</th>
+              <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_AR' | translate }}</th>
+              <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_EN' | translate }}</th>
+              <th>{{ 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate }}</th>
+              <th>{{ 'ATTENDANCE_LOG_PAGE.ACTIONS' | translate }}</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-attendanceLog>
+            <tr>
+              <td>{{ attendanceLog.employeeNameAr }}</td>
+              <td>{{ attendanceLog.employeeNameEn }}</td>
+              <td>
+                <div class="flex flex-col items-center">
+                  <span>{{ formatSwipeTime(attendanceLog.swipeTime).date }}</span>
+                  <span class="text-[#64748b]">{{
+                    formatSwipeTime(attendanceLog.swipeTime).time
                     }}</span>
-                  </div>
-                </td>
-                <td>{{ attendanceLog.channelName }}</td>
-                <td>{{ attendanceLog.creatorNameAr }}</td>
-                <td>
-                  <div
-                    [ngClass]="[
+                </div>
+              </td>
+              <td>{{ attendanceLog.channelName }}</td>
+
+              @if (attendanceLog.creatorNameAr && attendanceLog.creatorNameEn){
+              <td>{{ attendanceLog.creatorNameAr }}</td>
+              <td>{{ attendanceLog.creatorNameEn }}</td>
+              }@else {
+              <td>النظام</td>
+              <td>System</td>
+              }
+              <td>
+                <div [ngClass]="[
                       'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
                       getProcessingStatusClass(attendanceLog.isProcessed),
-                    ]"
-                  >
-                    <span
-                      [ngClass]="[
+                    ]">
+                  <span [ngClass]="[
                         'block w-[10px] h-[10px] rounded-full',
                         getProcessingStatusDotClass(attendanceLog.isProcessed),
-                      ]"
-                    ></span>
-                    <span>
-                      {{
-                        attendanceLog.isProcessed
-                          ? ('ATTENDANCE_LOG_PAGE.PROCESSED' | translate)
-                          : ('ATTENDANCE_LOG_PAGE.PROCESSING' | translate)
-                      }}
-                    </span>
-                  </div>
-                </td>
-                <td>
-                  <div class="actions flex gap-2">
-                    <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
-                      <img src="/assets/icons/edit-action.svg" alt="" />
-                    </button>
-                    <button (click)="deleteModel(attendanceLog.id)" class="table-action-red-btn">
-                      <img src="/assets/icons/delete-action.svg" alt="" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
+                      ]"></span>
+                  <span>
+                    {{
+                    attendanceLog.isProcessed
+                    ? ('ATTENDANCE_LOG_PAGE.PROCESSED' | translate)
+                    : ('ATTENDANCE_LOG_PAGE.PROCESSING' | translate)
+                    }}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="actions flex gap-2">
+                  <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
+                    <img src="/assets/icons/edit-action.svg" alt="" />
+                  </button>
+                  <button (click)="deleteModel(attendanceLog.id)" class="table-action-red-btn">
+                    <img src="/assets/icons/delete-action.svg" alt="" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
         } @else {
-          <div class="flex items-center justify-center h-64">
-            <p class="text-gray-500">{{ 'ATTENDANCE_LOG_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
-          </div>
+        <div class="flex items-center justify-center h-64">
+          <p class="text-gray-500">{{ 'ATTENDANCE_LOG_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+        </div>
         }
         @if (paginationInfo) {
-          <p-paginator
-            (onPageChange)="onPageChangeSP($event)"
-            [first]="first"
-            [rowsPerPageOptions]="[10, 20, 30]"
-            [rows]="rows"
-            [showCurrentPageReport]="false"
-            [totalRecords]="paginationInfo.totalItems"
-            class="mt-6"
-          />
+        <p-paginator (onPageChange)="onPageChangeSP($event)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]"
+          [rows]="rows" [showCurrentPageReport]="false" [totalRecords]="paginationInfo.totalItems" class="mt-6" />
         }
         <div></div>
       </div>

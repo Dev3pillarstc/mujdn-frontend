@@ -3,8 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LANGUAGE_BUTTON_LABEL_ENUM } from '@/enums/language-button-label-enum';
 import { LocalStorageService } from '@/services/shared/local-storage.service';
-import { LOCALSTORAGE_ENUM } from '@/enums/local-storage-enum';
 import { LanguageService } from '@/services/shared/language.service';
+import { AuthService } from '@/services/auth/auth.service';
+import { LoggedInUser } from '@/models/auth/logged-in-user';
 
 @Component({
   selector: 'app-header',
@@ -15,20 +16,21 @@ import { LanguageService } from '@/services/shared/language.service';
 export class HeaderComponent implements OnInit {
   languageService = inject(LanguageService);
   translateService = inject(TranslateService);
+  authService = inject(AuthService);
   localStorageService = inject(LocalStorageService);
   declare currentLanguage: string;
   languageEnum = LANGUAGE_ENUM;
+  declare loggedInUser?: LoggedInUser;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loggedInUser = this.authService.getUser().value;
+    console.log('user', this.loggedInUser);
+  }
 
   getLanguageButtonText() {
-    let lang: string = LANGUAGE_BUTTON_LABEL_ENUM.ENGLISH;
-    if (this.translateService.currentLang === LANGUAGE_ENUM.ARABIC) {
-      lang = LANGUAGE_BUTTON_LABEL_ENUM.ENGLISH;
-    } else {
-      lang = LANGUAGE_BUTTON_LABEL_ENUM.ARABIC;
-    }
-    return lang;
+    return this.translateService.currentLang === LANGUAGE_ENUM.ARABIC
+      ? LANGUAGE_BUTTON_LABEL_ENUM.ENGLISH
+      : LANGUAGE_BUTTON_LABEL_ENUM.ARABIC;
   }
 
   changeLanguage() {
@@ -37,5 +39,17 @@ export class HeaderComponent implements OnInit {
         ? LANGUAGE_ENUM.ARABIC
         : LANGUAGE_ENUM.ENGLISH;
     this.languageService.setLanguage(targetLanguage);
+  }
+
+  getLoggedInUserName() {
+    return this.translateService.currentLang == LANGUAGE_ENUM.ENGLISH
+      ? this.loggedInUser?.fullNameEn
+      : this.loggedInUser?.fullNameAr;
+  }
+
+  getLoggedInUserDepartment() {
+    return this.translateService.currentLang == LANGUAGE_ENUM.ENGLISH
+      ? this.loggedInUser?.departNameEn
+      : this.loggedInUser?.departNameAr;
   }
 }

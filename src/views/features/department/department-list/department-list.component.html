@@ -168,7 +168,7 @@
                 </ng-template>
                 <ng-template #body let-row>
                   <tr>
-                    <td>{{ isCurrentLanguageEnglish() ? row.nameEn : row.nameAr }}</td>
+                    <td>{{ isCurrentLanguageEnglish() ? row?.nameEn : row?.nameAr }}</td>
                     <td>
                       <span
                         class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]"
@@ -178,7 +178,9 @@
                     </td>
                     <td>
                       {{
-                        isCurrentLanguageEnglish() ? row.manager.fullNameEn : row.manager.fullNameAr
+                        isCurrentLanguageEnglish()
+                          ? row.manager?.fullNameEn
+                          : row.manager?.fullNameAr
                       }}
                     </td>
                     <td>

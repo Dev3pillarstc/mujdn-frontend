@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'NATIONALITIES_PAGE.NATIONALITIES_LIST' | translate }}
       </h3>
@@ -17,8 +17,8 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="nationalityAr">{{
-                'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate
-              }}</label>
+                  'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.nameAr"
                 [placeholder]="'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate"
@@ -34,8 +34,8 @@
             </div>
             <div class="relative">
               <label class="label" for="nationalityEn">{{
-                'NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate
-              }}</label>
+                  'NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.nameEn"
                 [placeholder]="'NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate"
@@ -70,13 +70,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button class="table-head-action-btn">
-              <img alt="" src="/assets/icons/excel.svg" />
+              <img alt="" src="assets/icons/excel.svg"/>
             </button>
             <button class="table-head-action-btn">
-              <img alt="" src="/assets/icons/print.svg" />
+              <img alt="" src="assets/icons/print.svg"/>
             </button>
             <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
-              <img alt="" src="/assets/icons/plus.svg" />
+              <img alt="" src="assets/icons/plus.svg"/>
               <span>{{ 'NATIONALITIES_PAGE.ADD_NEW_NATIONALITY' | translate }}</span>
             </button>
           </div>
@@ -97,10 +97,10 @@
                 <td>
                   <div class="actions flex gap-2">
                     <button (click)="addOrEditModel(nationality)" class="table-action-gray-btn">
-                      <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                      <img src="assets/icons/edit-action.svg" alt="تعديل"/>
                     </button>
                     <button class="table-action-red-btn">
-                      <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                      <img src="assets/icons/delete-action.svg" alt="حذف"/>
                     </button>
                   </div>
                 </td>

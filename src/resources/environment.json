@@ -1,10 +1,10 @@
 {
   "ENVIRONMENTS_URLS": {
     "DEV": "https://localhost:7107/api",
-    "TEST": "https://172.28.0.12:5000/api"
+    "TESTING": "http://dev3pillarstc-001-site6.rtempurl.com/api"
   },
   "API_VERSION": "",
-  "BASE_ENVIRONMENT": "DEV",
+  "BASE_ENVIRONMENT": "TESTING",
   "DEV_VARIABLES": {
     "INTEGRATION1": "http//dev/integration1",
     "INTEGRATION2": "http//dev/integration2"

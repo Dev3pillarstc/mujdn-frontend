@@ -1,6 +1,6 @@
 <div [dir]="direction">
   <div class="p-6">
-    <button class="block ms-auto" (click)="close()">
+    <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
@@ -11,8 +11,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label class="label" for="holidayAr-popup">{{
-            'HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC' | translate
-          }}</label>
+              'HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC' | translate
+            }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -31,8 +31,8 @@
         </div>
         <div>
           <label class="label" for="holidayEn-popup">{{
-            'HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH' | translate
-          }}</label>
+              'HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH' | translate
+            }}</label>
           <div class="relative">
             <input
               class="peer"
@@ -50,21 +50,21 @@
           <app-validation-messages [control]="nameEnControl"></app-validation-messages>
         </div>
         <div class="">
-          <label for="startDate" class="label">{{ 'HOLIDAYS_PAGE.START_DATE' | translate }}</label>
+          <label class="label" for="startDate">{{ 'HOLIDAYS_PAGE.START_DATE' | translate }}</label>
           <div class="relative">
             <p-datepicker
-              name="startDate"
-              formControlName="startDate"
               [iconDisplay]="'input'"
-              [showIcon]="true"
               [minDate]="minDate"
-              placeholder="{{ 'HOLIDAYS_PAGE.START_DATE' | translate }}"
+              [showIcon]="true"
               class="peer block w-full"
-              inputId="startDate"
+              formControlName="startDate"
               id="startDate"
+              inputId="startDate"
+              name="startDate"
+              placeholder="{{ 'HOLIDAYS_PAGE.START_DATE' | translate }}"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
+                <img alt="" src="assets/icons/calender-icon.svg"/>
               </ng-template>
             </p-datepicker>
             <span
@@ -74,21 +74,21 @@
           <app-validation-messages [control]="startDateControl"></app-validation-messages>
         </div>
         <div class="">
-          <label for="endDate" class="label">{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}</label>
+          <label class="label" for="endDate">{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}</label>
           <div class="relative">
             <p-datepicker
-              name="endDate"
-              formControlName="endDate"
               [iconDisplay]="'input'"
-              [showIcon]="true"
               [minDate]="minDate"
-              placeholder="{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}"
+              [showIcon]="true"
               class="peer block w-full"
-              inputId="endDate"
+              formControlName="endDate"
               id="endDate"
+              inputId="endDate"
+              name="endDate"
+              placeholder="{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
+                <img alt="" src="assets/icons/calender-icon.svg"/>
               </ng-template>
             </p-datepicker>
             <span
@@ -99,15 +99,15 @@
         </div>
         <app-validation-messages [control]="form"></app-validation-messages>
         <div class="md:col-span-2">
-          <label for="" class="label">{{ 'HOLIDAYS_PAGE.NOTES' | translate }}</label>
+          <label class="label" for="">{{ 'HOLIDAYS_PAGE.NOTES' | translate }}</label>
           <div class="relative w-full">
             <textarea
-              formControlName="notes"
               class="h-24 overflow-auto w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
-              rows="5"
               cols="30"
+              formControlName="notes"
               pTextarea
               placeholder="{{ 'HOLIDAYS_PAGE.NOTES' | translate }}"
+              rows="5"
             ></textarea>
 
             <span

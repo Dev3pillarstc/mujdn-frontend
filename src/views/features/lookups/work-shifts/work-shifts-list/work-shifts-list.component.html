@@ -21,8 +21,8 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="nationalityName">{{
-                'WORK_SHIFTS.SHIFT_NAME' | translate
-              }}</label>
+                  'WORK_SHIFTS.SHIFT_NAME' | translate
+                }}</label>
               @if (isCurrentLanguageEnglish()) {
                 <input
                   [placeholder]="'WORK_SHIFTS.SHIFT_NAME' | translate"
@@ -52,16 +52,16 @@
 
           <div class="actions flex items-center gap-4 pt-6">
             <button
-              class="btn black-btn"
               (click)="search()"
               [disabled]="isCurrentLanguageEnglish() ? !filterModel.nameEn : !filterModel.nameAr"
+              class="btn black-btn"
             >
               {{ 'COMMON.SEARCH' | translate }}
             </button>
             <button
-              class="btn gray-btn border border-[#d2d6db]"
               (click)="resetSearch()"
               [disabled]="isCurrentLanguageEnglish() ? !filterModel.nameEn : !filterModel.nameAr"
+              class="btn gray-btn border border-[#d2d6db]"
             >
               {{ 'COMMON.RESET_SEARCH' | translate }}
             </button>
@@ -77,10 +77,10 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button (click)="exportExcel('work-shifts.xlsx')" class="table-head-action-btn">
-              <img src="assets/icons/excel.svg" alt="" />
+              <img alt="" src="assets/icons/excel.svg"/>
             </button>
-            <button class="btn green-btn flex items-center" (click)="addOrEditModel()">
-              <img src="assets/icons/plus.svg" alt="" />
+            <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
+              <img alt="" src="assets/icons/plus.svg"/>
               <span>{{ 'WORK_SHIFTS.ADD_NEW_SHIFT' | translate }}</span>
             </button>
           </div>
@@ -105,8 +105,8 @@
               <td>{{ shift.timeFrom }} - {{ shift.timeTo }}</td>
               <td>
                 <div class="actions flex gap-2">
-                  <button class="table-action-gray-btn" (click)="addOrEditModel(shift)">
-                    <img src="/assets/icons/edit-action.svg" [alt]="'COMMON.EDIT' | translate" />
+                  <button (click)="addOrEditModel(shift)" class="table-action-gray-btn">
+                    <img [alt]="'COMMON.EDIT' | translate" src="assets/icons/edit-action.svg"/>
                   </button>
                 </div>
               </td>
@@ -114,13 +114,13 @@
           </ng-template>
         </p-table>
         <p-paginator
-          class="mt-6"
           (onPageChange)="onPageChange($event)"
           [first]="first"
-          [rows]="rows"
-          [totalRecords]="paginationInfo.totalItems"
           [rowsPerPageOptions]="[10, 20, 30]"
+          [rows]="rows"
           [showCurrentPageReport]="false"
+          [totalRecords]="paginationInfo.totalItems"
+          class="mt-6"
         />
         <div></div>
       </div>

@@ -194,6 +194,20 @@
     "TO": "To",
     "HOLIDAY": "Holiday"
   },
+  "PERMISSION_PAGE": {
+    "PERMISSIONS": "Permissions",
+    "MY_REQUESTS": "My Requests",
+    "INCOMING_REQUESTS": "Incoming Requests",
+    "PERMISSION_TYPE": "Permission Type",
+    "PERMISSION_DATE": "Permission Date",
+    "PERMISSION_STATUS": "Request Status",
+    "PERMISSION_LIST": "Permissions List",
+    "PERMISSION_DATA": "Permission Data",
+    "PERMISSION_REASON": "Permission Reason",
+    "PERMISSION_DESCRIPTION": "Permission Description",
+    "ADD_NEW_PERMISSION": "Add New Permission",
+    "NEW_PERMISSION": "New Permission"
+  },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
     "SHIFT_NAME": "Shift name",

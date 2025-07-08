@@ -28,7 +28,8 @@
     "STRONG_PASSWORD": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
     "ACTION": "Action",
     "EDIT": "Edit",
-    "DASHBOARD": "Dashboard"
+    "DASHBOARD": "Dashboard",
+    "NO_DATA_TO_SHOW": "No data to display"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

@@ -13,7 +13,7 @@
     <div
       class="sidebar-header p-3 border-bottom-1 surface-border flex justify-between items-center"
     >
-      <img alt="" src="assets/shared/gov-logo-gam-light.png"/>
+      <img alt="" src="assets/shared/gov-logo-gam-light.png" />
       <div>
         <button
           (click)="closeSidebar()"
@@ -33,8 +33,8 @@
             class="w-5 h-5"
           />
           <a *ngIf="!item.children" [routerLink]="item.routerLink" class="flex-1 truncate block">{{
-              item.label
-            }}</a>
+            item.label
+          }}</a>
           <span *ngIf="item.children" class="flex-1 truncate block">{{ item.label }}</span>
           <svg
             *ngIf="item.children && !isSubmenuOpen(item)"

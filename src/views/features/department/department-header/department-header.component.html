@@ -12,14 +12,14 @@
         (click)="openDialog()"
         class="flex items-center justify-center gap-1 p-2 rounded border border-white/40"
       >
-        <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/edit.png"/>
+        <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/edit.png" />
       </button>
       <button
         (click)="delete(departmentData?.id)"
         [disabled]="departmentData?.fkParentDepartmentId == null"
         class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca]"
       >
-        <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/delete.png"/>
+        <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/delete.png" />
       </button>
     </div>
   </div>

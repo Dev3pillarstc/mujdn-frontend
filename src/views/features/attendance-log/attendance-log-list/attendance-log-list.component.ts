@@ -15,7 +15,7 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { AttendanceLogPopupComponent } from '../attendance-log-popup/attendance-log-popup.component';
-import { AttendanceService } from '@/services/features/attendance.service';
+import { AttendanceService } from '@/services/features/attendance-log.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';

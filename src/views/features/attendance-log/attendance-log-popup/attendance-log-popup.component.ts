@@ -1,7 +1,7 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { AttendanceLog } from '@/models/features/attendance/attendance-log/attendance-log';
-import { AttendanceService } from '@/services/features/attendance.service';
+import { AttendanceService } from '@/services/features/attendance-log.service';
 import { AlertService } from '@/services/shared/alert.service';
 import {
   FormBuilder,

@@ -1,5 +1,5 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { AttendanceService } from '@/services/features/attendance.service';
+import { AttendanceService } from '@/services/features/attendance-log.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
@@ -23,6 +23,7 @@ export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceServic
   declare creatorNameEn?: string;
   declare creatorNameAr?: string;
   declare openType?: string | null;
+  declare IsRowData?: boolean | null;
 
   declare selectedDate?: Date;
   declare selectedTime?: Date;

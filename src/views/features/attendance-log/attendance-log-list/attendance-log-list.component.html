@@ -186,8 +186,7 @@
                   </div>
                 </td>
                 <td>{{ attendanceLog.channelName }}</td>
-                <!-- if IsRowData is false -->
-                @if (attendanceLog.creatorNameAr && attendanceLog.creatorNameEn) {
+                @if (!attendanceLog.isRowData) {
                   <td>{{ attendanceLog.creatorNameAr }}</td>
                   <td>{{ attendanceLog.creatorNameEn }}</td>
                 } @else {
@@ -221,7 +220,11 @@
                     <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
                       <img src="assets/icons/edit-action.svg" alt="" />
                     </button>
-                    <button (click)="deleteModel(attendanceLog.id)" class="table-action-red-btn">
+                    <button
+                      (click)="deleteModelSP(attendanceLog.id)"
+                      [disabled]="attendanceLog.isRowData"
+                      class="table-action-red-btn {{ attendanceLog.isRowData ? 'disabled' : '' }}"
+                    >
                       <img src="assets/icons/delete-action.svg" alt="" />
                     </button>
                   </div>

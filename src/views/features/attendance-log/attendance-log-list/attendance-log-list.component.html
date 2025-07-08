@@ -21,11 +21,11 @@
               }}</label>
               <p-select
                 [(ngModel)]="filterModel.departmentId"
+                [optionLabel]="optionLabel"
                 [options]="departments"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate"
                 class="w-full peer"
                 id="department"
-                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -38,13 +38,13 @@
                 'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate
               }}</label>
               <p-select
-                [(ngModel)]="filterModel.employeeId"
                 (ngModelChange)="onEmployeeChange($event)"
+                [(ngModel)]="filterModel.employeeId"
+                [optionLabel]="optionLabel"
                 [options]="employees"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate"
                 class="w-full peer"
                 id="employee"
-                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -65,7 +65,7 @@
                 inputId="swipeDate"
               >
                 <ng-template pTemplate="inputicon">
-                  <img alt="" src="/assets/icons/calender-icon.svg" />
+                  <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
@@ -78,8 +78,8 @@
                 'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
               }}</label>
               <input
-                [(ngModel)]="filterModel.channelName"
                 (ngModelChange)="onChannelChange($event)"
+                [(ngModel)]="filterModel.channelName"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate"
                 class="peer"
                 fluid="true"
@@ -97,11 +97,11 @@
                 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate
               }}</label>
               <p-select
+                [optionLabel]="optionLabel"
                 [options]="processingStatusOptions"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate"
                 class="w-full peer"
                 id="processingStatus"
-                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -114,13 +114,13 @@
                 'ATTENDANCE_LOG_PAGE.CREATOR' | translate
               }}</label>
               <p-select
-                [(ngModel)]="filterModel.creatorId"
                 (ngModelChange)="onCreatorChange($event)"
+                [(ngModel)]="filterModel.creatorId"
+                [optionLabel]="optionLabel"
                 [options]="creators"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.CREATOR' | translate"
                 class="w-full peer"
                 id="creator"
-                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -148,10 +148,10 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button (click)="exportExcel('attendance-logs.xlsx')" class="table-head-action-btn">
-              <img alt="" src="/assets/icons/excel.svg" />
+              <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button class="table-head-action-btn">
-              <img alt="" src="/assets/icons/print.svg" />
+              <img alt="" src="assets/icons/print.svg" />
             </button>
             <button (click)="openDialog()" class="btn green-btn flex items-center">
               <img alt="" src="assets/icons/plus.svg" />
@@ -219,10 +219,10 @@
                 <td>
                   <div class="actions flex gap-2">
                     <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
-                      <img src="/assets/icons/edit-action.svg" alt="" />
+                      <img src="assets/icons/edit-action.svg" alt="" />
                     </button>
-                    <button (click)="deleteModelSP(attendanceLog.id)" class="table-action-red-btn">
-                      <img src="/assets/icons/delete-action.svg" alt="" />
+                    <button (click)="deleteModel(attendanceLog.id)" class="table-action-red-btn">
+                      <img src="assets/icons/delete-action.svg" alt="" />
                     </button>
                   </div>
                 </td>

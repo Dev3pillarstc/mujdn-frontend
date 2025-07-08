@@ -13,38 +13,58 @@ import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
 import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
+import { loginResolver } from '@/resolvers/login.resolver';
 
 export const routes: Routes = [
+  // ✅ Protected routes
+
+  // ✅ Redirect root "/" to /auth/login — public
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'auth/login',
+  },
+
+  // ✅ Optional legacy redirect
+  {
+    path: 'login',
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
+  },
+
+  // ✅ Auth layout and login
+  {
+    path: 'auth',
+    loadComponent: () => import('@/views/layout/auth/auth-layout/auth-layout.component'),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'login',
+      },
+      {
+        path: 'login',
+        resolve: { notUsed: loginResolver },
+        loadComponent: () => import('@/views/auth/login/login.component'),
+      },
+    ],
   },
   {
     path: '',
-    // canActivate: [authGuard],
-    data: { roles: [ROLES_ENUM.EMPLOYEE] },
+    canActivate: [authGuard],
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
-        loadComponent: () => import('../views/home/home.component'),
-        data: {
-          routeId: RouteIdsEnum.HOME,
-        },
+        loadComponent: () => import('@/views/home/home.component'),
+        data: { routeId: RouteIdsEnum.HOME },
       },
       {
         path: 'employees',
-        // canActivate: [authGuard],
-        // data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER] },
         resolve: { list: userResolver },
         loadComponent: () =>
-          import('../views/features/employee/employee-list/employee-list.component'),
-        data: {
-          roles: [ROLES_ENUM.HR_OFFICER],
-          routeId: RouteIdsEnum.EMPLOYEES,
-        },
+          import('@/views/features/employee/employee-list/employee-list.component'),
+        data: { roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.EMPLOYEES },
       },
       {
         path: 'attendance-logs',
@@ -53,7 +73,7 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER], routeId: RouteIdsEnum.ATTENDANCE_LOGS },
         loadComponent: () =>
           import(
-            '../views/features/attendance-log/attendance-log-list/attendance-log-list.component'
+            '@/views/features/attendance-log/attendance-log-list/attendance-log-list.component'
           ),
       },
       {
@@ -63,7 +83,7 @@ export const routes: Routes = [
         resolve: { list: nationalitiesResolver },
         loadComponent: () =>
           import(
-            '../views/features/lookups/nationality/nationality-list/nationality-list.component'
+            '@/views/features/lookups/nationality/nationality-list/nationality-list.component'
           ),
       },
       {
@@ -71,7 +91,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.CITIES },
         resolve: { list: cityResolver },
-        loadComponent: () => import('../views/features/lookups/city/city-list/city-list.component'),
+        loadComponent: () => import('@/views/features/lookups/city/city-list/city-list.component'),
       },
       {
         path: 'regions',
@@ -79,7 +99,7 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.REGIONS },
         resolve: { list: regionResolver },
         loadComponent: () =>
-          import('../views/features/lookups/region/region-list/region-list.component').then(
+          import('@/views/features/lookups/region/region-list/region-list.component').then(
             (m) => m.RegionListComponent
           ),
       },
@@ -90,30 +110,24 @@ export const routes: Routes = [
         resolve: { list: permissionReasonResolver },
         loadComponent: () =>
           import(
-            '../views/features/lookups/permission/permission-reason-list/permission-reason-list.component'
+            '@/views/features/lookups/permission/permission-reason-list/permission-reason-list.component'
           ),
       },
       {
         path: 'notification-channels',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NOTIFICATION_CHANNELS },
-        resolve: {
-          channel: notificationChannelResolver,
-        },
+        resolve: { channel: notificationChannelResolver },
         loadComponent: () =>
-          import(
-            '../views/features/settings/notification-channels/notification-channels.component'
-          ),
+          import('@/views/features/settings/notification-channels/notification-channels.component'),
       },
       {
         path: 'permissions',
         canActivate: [authGuard],
-        data: {
-          routeId: RouteIdsEnum.PERMISSIONS,
-        },
+        data: { routeId: RouteIdsEnum.PERMISSIONS },
         resolve: { list: permissionResolver },
         loadComponent: () =>
-          import('../views/features/permissions/permissions-list/permissions-list.component'),
+          import('@/views/features/permissions/permissions-list/permissions-list.component'),
       },
       {
         path: 'holidays',
@@ -121,14 +135,12 @@ export const routes: Routes = [
         data: { routeId: RouteIdsEnum.HOLIDAYS },
         resolve: { list: holidayResolver },
         loadComponent: () =>
-          import('../views/features/lookups/holidays/holidays-list/holidays-list.component'),
+          import('@/views/features/lookups/holidays/holidays-list/holidays-list.component'),
       },
       {
         path: 'employee-holidays',
         loadComponent: () =>
-          import(
-            '../views/features/lookups/holidays/employee-holidays/employee-holidays.component'
-          ),
+          import('@/views/features/lookups/holidays/employee-holidays/employee-holidays.component'),
       },
       {
         path: 'departments',
@@ -136,7 +148,7 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.DEPARTMENTS },
         resolve: { list: departmentResolver },
         loadComponent: () =>
-          import('../views/features/department/department-list/department-list.component'),
+          import('@/views/features/department/department-list/department-list.component'),
       },
       {
         path: 'work-shifts',
@@ -145,7 +157,7 @@ export const routes: Routes = [
         resolve: { list: workShiftResolver },
         loadComponent: () =>
           import(
-            '../views/features/lookups/work-shifts/work-shifts-list/work-shifts-list.component'
+            '@/views/features/lookups/work-shifts/work-shifts-list/work-shifts-list.component'
           ),
       },
       {
@@ -153,42 +165,37 @@ export const routes: Routes = [
         data: { routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT },
         loadComponent: () =>
           import(
-            '../views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
+            '@/views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
           ),
       },
       {
         path: 'temp-shifts',
         data: { routeId: RouteIdsEnum.WORK_SHIFT_TEMP },
         loadComponent: () =>
-          import('../views/features/lookups/work-shifts/temp-shifts/temp-shifts.component'),
+          import('@/views/features/lookups/work-shifts/temp-shifts/temp-shifts.component'),
       },
       {
         path: 'outside-mission',
         loadComponent: () =>
           import(
-            '../views/features/outside-mission/outside-mission-list/outside-mission-list.component'
+            '@/views/features/outside-mission/outside-mission-list/outside-mission-list.component'
           ),
       },
       {
         path: 'notifications',
         loadComponent: () =>
-          import('../views/features/lookups/notifiactions/notifiactions.component'),
+          import('@/views/features/lookups/notifiactions/notifiactions.component'),
       },
     ],
   },
-  {
-    path: '',
-    loadComponent: () => import('@/views/layout/auth/auth-layout/auth-layout.component'),
-    children: [
-      {
-        path: 'login',
-        loadComponent: () => import('../views/auth/login/login.component'),
-      },
-    ],
-  },
+
+  // 404 handler
   {
     path: '404',
     loadComponent: () => import('@/views/shared/not-found/not-found.component'),
   },
-  { path: '**', redirectTo: '404' },
+  {
+    path: '**',
+    redirectTo: '404',
+  },
 ];

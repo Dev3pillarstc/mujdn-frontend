@@ -142,10 +142,10 @@
               </h4>
               <div class="actions flex items-center gap-4 ms-auto">
                 <button (click)="exportExcel()">
-                  <img alt="" src="/assets/icons/excel.svg" />
+                  <img alt="" src="assets/icons/excel.svg" />
                 </button>
                 <!-- <button>
-                  <img src="/assets/icons/print.svg" alt="" />
+                  <img src="assets/icons/print.svg" alt="" />
                 </button> -->
                 <button
                   (click)="addOrEditModel(selectedDepartment?.id ?? 0)"
@@ -196,13 +196,13 @@
                           class="bg-[#f3f4f6] rounded p-2 w-[32px]"
                           (click)="addOrEditModel(0, row)"
                         >
-                          <img src="/assets/icons/edit-action.svg" alt="update" />
+                          <img src="assets/icons/edit-action.svg" alt="update" />
                         </button>
                         <button
                           class="bg-[#fef3f2] rounded p-2 w-[32px]"
                           (click)="openConfirmation(row.id)"
                         >
-                          <img src="/assets/icons/delete-action.svg" alt="delete" />
+                          <img src="assets/icons/delete-action.svg" alt="delete" />
                         </button>
                       </div>
                     </td>
@@ -213,7 +213,7 @@
               <div colspan="4">
                 <div class="py-6 flex flex-col items-center justify-center text-center space-y-2">
                   <div class="">
-                    <img src="/assets/icons/empty.svg" alt="" srcset="" />
+                    <img src="assets/icons/empty.svg" alt="" srcset="" />
                   </div>
                   <h3 class="mt-2 text-[18px] font-bold text-[#384250]">
                     {{ 'DEPARTMENTS_LIST_PAGE.NO_DEPARTMENTS_YET' | translate }}

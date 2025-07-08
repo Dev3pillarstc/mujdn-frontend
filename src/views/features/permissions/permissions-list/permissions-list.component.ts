@@ -128,13 +128,11 @@ export default class PermissionsListComponent
 
     return {
       [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : 'Permission Reason']:
-        lang === LANGUAGE_ENUM.ARABIC
-          ? model.permissionReason.nameAr
-          : model.permissionReason.nameEn,
+        model.getPermissionReasonName(),
       [lang === LANGUAGE_ENUM.ARABIC ? 'نوع الإذن' : 'Permission Type']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.permissionType.nameAr : model.permissionType.nameEn,
-      [lang === LANGUAGE_ENUM.ARABIC ? 'تاريخ الإذن' : 'Permission Type']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.permissionType.nameAr : model.permissionType.nameEn,
+        model.getPermissionTypeName(),
+      [lang === LANGUAGE_ENUM.ARABIC ? 'تاريخ الإذن' : 'Permission Date']: model.permissionDate,
+      [lang === LANGUAGE_ENUM.ARABIC ? 'حالة الإذن' : 'Permission Status']: model.getStatusName(),
     };
   }
   getPropertyName() {

@@ -71,4 +71,9 @@ export class Permission extends BaseCrudModel<Permission, PermissionService> {
       ? (this.permissionType.nameEn ?? '')
       : (this.permissionType.nameAr ?? '');
   }
+  getPermissionDepartmentName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (this.deprtment.nameEn ?? '')
+      : (this.deprtment.nameAr ?? '');
+  }
 }

@@ -16,6 +16,37 @@ import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver
 
 export const routes: Routes = [
   // ✅ Protected routes
+
+  // ✅ Redirect root "/" to /auth/login — public
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'auth/login',
+  },
+
+  // ✅ Optional legacy redirect
+  {
+    path: 'login',
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
+  },
+
+  // ✅ Auth layout and login
+  {
+    path: 'auth',
+    loadComponent: () => import('@/views/layout/auth/auth-layout/auth-layout.component'),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'login',
+      },
+      {
+        path: 'login',
+        loadComponent: () => import('@/views/auth/login/login.component'),
+      },
+    ],
+  },
   {
     path: '',
     canActivate: [authGuard],
@@ -31,7 +62,7 @@ export const routes: Routes = [
         resolve: { list: userResolver },
         loadComponent: () =>
           import('@/views/features/employee/employee-list/employee-list.component'),
-        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.EMPLOYEES },
+        data: { roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.EMPLOYEES },
       },
       {
         path: 'attendance-logs',
@@ -152,37 +183,6 @@ export const routes: Routes = [
         path: 'notifications',
         loadComponent: () =>
           import('@/views/features/lookups/notifiactions/notifiactions.component'),
-      },
-    ],
-  },
-
-  // ✅ Redirect root "/" to /auth/login — public
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'auth/login',
-  },
-
-  // ✅ Optional legacy redirect
-  {
-    path: 'login',
-    redirectTo: 'auth/login',
-    pathMatch: 'full',
-  },
-
-  // ✅ Auth layout and login
-  {
-    path: 'auth',
-    loadComponent: () => import('@/views/layout/auth/auth-layout/auth-layout.component'),
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'login',
-      },
-      {
-        path: 'login',
-        loadComponent: () => import('@/views/auth/login/login.component'),
       },
     ],
   },

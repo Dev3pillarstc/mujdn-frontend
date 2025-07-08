@@ -21,8 +21,8 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="nationalityName">{{
-                  'WORK_SHIFTS.SHIFT_NAME' | translate
-                }}</label>
+                'WORK_SHIFTS.SHIFT_NAME' | translate
+              }}</label>
               @if (isCurrentLanguageEnglish()) {
                 <input
                   [placeholder]="'WORK_SHIFTS.SHIFT_NAME' | translate"
@@ -77,10 +77,10 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button (click)="exportExcel('work-shifts.xlsx')" class="table-head-action-btn">
-              <img alt="" src="assets/icons/excel.svg"/>
+              <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
-              <img alt="" src="assets/icons/plus.svg"/>
+              <img alt="" src="assets/icons/plus.svg" />
               <span>{{ 'WORK_SHIFTS.ADD_NEW_SHIFT' | translate }}</span>
             </button>
           </div>
@@ -106,7 +106,7 @@
               <td>
                 <div class="actions flex gap-2">
                   <button (click)="addOrEditModel(shift)" class="table-action-gray-btn">
-                    <img [alt]="'COMMON.EDIT' | translate" src="assets/icons/edit-action.svg"/>
+                    <img [alt]="'COMMON.EDIT' | translate" src="assets/icons/edit-action.svg" />
                   </button>
                 </div>
               </td>

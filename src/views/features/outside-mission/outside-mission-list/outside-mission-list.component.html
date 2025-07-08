@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         مهام الأعمال و الاسناد
       </h3>
@@ -52,7 +52,7 @@
                 placeholder="التاريخ (من - الى)"
               >
                 <ng-template pTemplate="inputicon">
-                  <img alt="" src="assets/icons/calender-icon.svg"/>
+                  <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
@@ -76,13 +76,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button class="table-head-action-btn">
-              <img alt="" src="assets/icons/excel.svg"/>
+              <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button class="table-head-action-btn">
-              <img alt="" src="assets/icons/print.svg"/>
+              <img alt="" src="assets/icons/print.svg" />
             </button>
             <button (click)="addNewMission()" class="btn green-btn flex items-center">
-              <img alt="" src="assets/icons/plus.svg"/>
+              <img alt="" src="assets/icons/plus.svg" />
               <span>إضافة مهمة عمل جديدة </span>
             </button>
           </div>
@@ -110,17 +110,17 @@
                     *ngIf="missions.actions?.includes('view')"
                     class="table-action-gray-btn"
                   >
-                    <img alt="" src="assets/icons/view-action.svg"/>
+                    <img alt="" src="assets/icons/view-action.svg" />
                   </button>
                   <button
                     (click)="addNewMission()"
                     *ngIf="missions.actions?.includes('edit')"
                     class="table-action-gray-btn"
                   >
-                    <img alt="update" src="assets/icons/edit-action.svg"/>
+                    <img alt="update" src="assets/icons/edit-action.svg" />
                   </button>
                   <button *ngIf="missions.actions?.includes('delete')" class="table-action-red-btn">
-                    <img alt="delete" src="assets/icons/delete-action.svg"/>
+                    <img alt="delete" src="assets/icons/delete-action.svg" />
                   </button>
                 </div>
               </td>

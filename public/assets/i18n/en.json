@@ -236,6 +236,7 @@
     "SWIPE_DATE": "Swipe Date",
     "CHANNEL_NAME": "Channel Name",
     "PROCESSING_STATUS": "Processing Status",
+    "CREATOR": "Creator Name",
     "CREATOR_AR": "Creator (Arabic)",
     "CREATOR_EN": "Creator (English)",
     "ADD_NEW_ATTENDANCE_LOG": "Add New Attendance Log",

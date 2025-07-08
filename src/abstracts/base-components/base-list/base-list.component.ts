@@ -226,4 +226,27 @@ export abstract class BaseListComponent<
       }
     });
   }
+
+  deleteModelSP(id: string | number) {
+    const dialogRef = this.confirmService.open({
+      icon: 'warning',
+      messages: ['COMMON.CONFIRM_DELETE'],
+      confirmText: 'COMMON.OK',
+      cancelText: 'COMMON.CANCEL',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == DIALOG_ENUM.OK) {
+        this.service.delete(id).subscribe({
+          next: () => {
+            this.loadListSP();
+            this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
+          },
+          error: (_) => {
+            this.alertsService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
+          },
+        });
+      }
+    });
+  }
 }

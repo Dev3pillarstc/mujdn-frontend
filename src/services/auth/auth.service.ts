@@ -12,6 +12,7 @@ import { ROLES_ENUM } from '@/enums/roles-enum';
 export class AuthService extends BaseCrudService<LoggedInUser, string> {
   serviceName: string = 'AuthService';
   router = inject(Router);
+  isAuthenticated = false;
   private loggedInUser: BehaviorSubject<LoggedInUser | undefined> = new BehaviorSubject<
     LoggedInUser | undefined
   >(undefined);
@@ -50,6 +51,7 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
   }
 
   setUser(loggedInUser: LoggedInUser | undefined) {
+    this.isAuthenticated = !!loggedInUser;
     const user = Object.assign(new LoggedInUser(), loggedInUser);
     this.loggedInUser.next(user);
   }

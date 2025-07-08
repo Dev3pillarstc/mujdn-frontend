@@ -13,6 +13,7 @@ import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
 import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
+import { loginResolver } from '@/resolvers/login.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -43,6 +44,7 @@ export const routes: Routes = [
       },
       {
         path: 'login',
+        resolve: { notUsed: loginResolver },
         loadComponent: () => import('@/views/auth/login/login.component'),
       },
     ],

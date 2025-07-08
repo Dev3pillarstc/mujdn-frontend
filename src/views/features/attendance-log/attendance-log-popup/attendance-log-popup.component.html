@@ -6,8 +6,8 @@
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
       {{
         (isCreateMode
-            ? 'ATTENDANCE_LOG_PAGE.ADD_NEW_MOVEMENT'
-            : 'ATTENDANCE_LOG_PAGE.EDIT_MOVEMENT'
+          ? 'ATTENDANCE_LOG_PAGE.ADD_NEW_MOVEMENT'
+          : 'ATTENDANCE_LOG_PAGE.EDIT_MOVEMENT'
         ) | translate
       }}
     </h3>
@@ -79,7 +79,7 @@
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.DATE' | translate }}"
             >
               <ng-template pTemplate="inputicon">
-                <img alt="Calendar" src="assets/icons/calender-icon.svg"/>
+                <img alt="Calendar" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
@@ -106,7 +106,7 @@
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.TIME' | translate }}"
             >
               <ng-template pTemplate="inputicon">
-                <img alt="Time" src="assets/icons/time-icon.svg"/>
+                <img alt="Time" src="assets/icons/time-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span

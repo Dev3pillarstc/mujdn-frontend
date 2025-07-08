@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASONS_LIST' | translate }}
       </h3>
@@ -17,8 +17,8 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="permissionreasonAr">{{
-                  'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
-                }}</label>
+                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
+              }}</label>
               <input
                 [(ngModel)]="filterModel.nameAr"
                 [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate"
@@ -34,8 +34,8 @@
             </div>
             <div class="relative">
               <label class="label" for="permissionreasonEn">{{
-                  'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
-                }}</label>
+                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
+              }}</label>
               <input
                 [(ngModel)]="filterModel.nameEn"
                 [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate"
@@ -70,13 +70,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button (click)="exportExcel('permission-reasons.xlsx')" class="table-head-action-btn">
-              <img alt="" src="assets/icons/excel.svg"/>
+              <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button class="table-head-action-btn">
-              <img alt="" src="assets/icons/print.svg"/>
+              <img alt="" src="assets/icons/print.svg" />
             </button>
             <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
-              <img alt="" src="assets/icons/plus.svg"/>
+              <img alt="" src="assets/icons/plus.svg" />
               <span>{{ 'PERMISSIONREASONS_PAGE.ADD_NEW_PERMISSIONREASON' | translate }}</span>
             </button>
           </div>
@@ -100,10 +100,10 @@
                       (click)="addOrEditModel(permissionReason)"
                       class="table-action-gray-btn"
                     >
-                      <img src="assets/icons/edit-action.svg" alt="تعديل"/>
+                      <img src="assets/icons/edit-action.svg" alt="تعديل" />
                     </button>
                     <button (click)="deleteModel(permissionReason.id)" class="table-action-red-btn">
-                      <img src="assets/icons/delete-action.svg" alt=""/>
+                      <img src="assets/icons/delete-action.svg" alt="" />
                     </button>
                   </div>
                 </td>

@@ -112,6 +112,10 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
 
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm());
+
+    if (this.model.fkParentDepartmentId == null) {
+      this.form.get('isOneLevelApproval')?.setValue(true);
+    }
   }
 
   setupRegionChangeListener(): void {
@@ -139,11 +143,21 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
       return false;
     }
 
+    if (model.fkParentDepartmentId == null) {
+      model.isOneLevelApproval = true;
+      form.get('isOneLevelApproval')?.setValue(true);
+    }
+
     return true;
   }
 
   override prepareModel(model: Department, form: FormGroup): Department | Observable<Department> {
     this.model = Object.assign(model, { ...form.value });
+
+    if (this.model.fkParentDepartmentId == null) {
+      this.model.isOneLevelApproval = true;
+    }
+
     return this.model;
   }
 

@@ -53,12 +53,6 @@ export class SideBarLinksService {
       routerLink: ['/dashboard'],
     },
     {
-      label: 'ورديات العمل',
-      iconUrl: 'assets/icons/menu-icons/shifts-icon.svg',
-      routerLink: ['/dashboard'],
-      routeId: RouteIdsEnum.WORK_SHIFT_LIST,
-    },
-    {
       label: 'ورديات العمل المؤقتة',
       iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
       routerLink: ['/dashboard'],

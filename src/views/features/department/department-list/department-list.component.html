@@ -178,7 +178,9 @@
                     </td>
                     <td>
                       {{
-                        isCurrentLanguageEnglish() ? row.manager.fullNameEn : row.manager.fullNameAr
+                        isCurrentLanguageEnglish()
+                          ? row.manager?.fullNameEn
+                          : row.manager?.fullNameAr
                       }}
                     </td>
                     <td>

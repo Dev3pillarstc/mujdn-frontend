@@ -150,12 +150,13 @@
                             'block w-[10px] h-[10px] rounded-full',
                             permission.status.id === permissionStatusEnum.Accepted
                               ? 'bg-[#085d3a]'
-                              : permission.status.id === permissionStatusEnum.New
+                              : permission.status.id === permissionStatusEnum.New ||
+                                  permission.status.id === permissionStatusEnum.FirstAccepted
                                 ? 'bg-[#1849a9]'
                                 : 'bg-[#912018]',
                           ]"
                         ></span>
-                        <span>{{ permission.status.nameAr }}</span>
+                        <span>{{ permission.getStatusName() }}</span>
                       </div>
                     </td>
                     <td>
@@ -340,12 +341,12 @@
                 <p-table [value]="list">
                   <ng-template #header>
                     <tr>
-                      <th>نوع الإذن</th>
-                      <th>اسم الموظف</th>
-                      <th>اسم الإدارة</th>
+                      <th>{{ 'PERMISSION_PAGE.PERMISSION_TYPE' | translate }}</th>
+                      <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}</th>
+                      <th>{{ 'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate }}</th>
                       <th>{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}</th>
-                      <th>سبب الإذن</th>
-                      <th>حالة الإذن</th>
+                      <th>{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}</th>
+                      <th>{{ 'PERMISSION_PAGE.PERMISSION_STATUS' | translate }}</th>
                       <th>{{ 'COMMON.ACTION' | translate }}</th>
                     </tr>
                   </ng-template>
@@ -362,7 +363,9 @@
                             'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
                             permissionsRequest.status.id === permissionStatusEnum.Accepted
                               ? 'bg-[#ecfdf3] text-[#085d3a]'
-                              : permissionsRequest.status.id === permissionStatusEnum.New
+                              : permissionsRequest.status.id === permissionStatusEnum.New ||
+                                  permissionsRequest.status.id ===
+                                    permissionStatusEnum.FirstAccepted
                                 ? 'bg-[#eff8ff] text-[#1849a9]'
                                 : 'bg-[#fef3f2] text-[#912018]',
                           ]"
@@ -372,17 +375,22 @@
                               'block w-[10px] h-[10px] rounded-full',
                               permissionsRequest.status.id === permissionStatusEnum.Accepted
                                 ? 'bg-[#085d3a]'
-                                : permissionsRequest.status.id === permissionStatusEnum.New
+                                : permissionsRequest.status.id === permissionStatusEnum.New ||
+                                    permissionsRequest.status.id ===
+                                      permissionStatusEnum.FirstAccepted
                                   ? 'bg-[#1849a9]'
                                   : 'bg-[#912018]',
                             ]"
                           ></span>
-                          <span>{{ permissionsRequest.status.nameAr }}</span>
+                          <span>{{ permissionsRequest.getStatusName() }}</span>
                         </div>
                       </td>
                       <td>
                         <div class="actions flex gap-2">
-                          @if (permissionsRequest.status.id !== permissionStatusEnum.New) {
+                          @if (
+                            permissionsRequest.status.id !== permissionStatusEnum.New ||
+                            !permissionsRequest.canTakeAction
+                          ) {
                             <button
                               (click)="openDataDialog(permissionsRequest)"
                               class="table-action-gray-btn"
@@ -390,13 +398,18 @@
                               <img alt="" src="/assets/icons/view-action.svg" />
                             </button>
                           }
-                          @if (permissionsRequest.status.id === permissionStatusEnum.New) {
+                          @if (
+                            (permissionsRequest.status.id === permissionStatusEnum.New ||
+                              permissionsRequest.status.id ===
+                                permissionStatusEnum.FirstAccepted) &&
+                            permissionsRequest.canTakeAction
+                          ) {
                             <button
-                              (click)="openDataDialog(permissionsRequest, viewMode.TAKE_ACTION)"
+                              (click)="openDataDialog(permissionsRequest)"
                               class="table-action-gray-btn !min-w-[75px] text-[161616] font-medium"
                             >
                               <img alt="" src="/assets/icons/edit-action.svg" />
-                              <span>اجراء</span>
+                              <span>{{ 'PERMISSION_PAGE.ACTION' | translate }}</span>
                             </button>
                           }
                         </div>
@@ -413,7 +426,7 @@
               }
               @if (paginationInfo) {
                 <p-paginator
-                  (onPageChange)="onPageChange($event)"
+                  (onPageChange)="onIncomingPermissionPageChange($event)"
                   [first]="first"
                   [rowsPerPageOptions]="[10, 20, 30]"
                   [rows]="rows"

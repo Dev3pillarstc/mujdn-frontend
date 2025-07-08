@@ -74,7 +74,6 @@ export abstract class BaseListComponent<
     this.paginationInfo = this.activatedRoute.snapshot.data['list']?.paginationInfo;
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
     this.initListComponent();
-    console.log(this.list);
   }
 
   loadList() {

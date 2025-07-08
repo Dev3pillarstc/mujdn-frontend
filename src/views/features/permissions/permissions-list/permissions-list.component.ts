@@ -3,7 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
-import { PaginatorModule } from 'primeng/paginator';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { AddPermissionPopupComponent } from '../popups/add-permission-popup/add-permission-popup.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
@@ -109,19 +109,18 @@ export default class PermissionsListComponent
     });
   }
 
-  override openDialog(model: Permission): void {
+  override openDialog(model: Permission, viewMode?: ViewModeEnum): void {
     const lookups = {
       permissionTypes: this.permissionTypes,
       prmissionReasons: this.prmissionReasons,
     };
-
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    this.openBaseDialog(AddPermissionPopupComponent as any, model, viewMode, lookups);
+    this.openBaseDialog(AddPermissionPopupComponent as any, model, viewMode!, lookups);
   }
 
   addOrEditModel(permission?: Permission) {
+    const viewMode = permission ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     permission = permission || new Permission();
-    this.openDialog(permission);
+    this.openDialog(permission, viewMode);
   }
 
   protected override mapModelToExcelRow(model: Permission): { [key: string]: any } {
@@ -141,16 +140,28 @@ export default class PermissionsListComponent
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
-  getDepartmentPermissions() {
+  loadIncomingPermissions() {
     this.service
       .loadDepartmentPermissionPaginated(this.paginationParams, { ...this.filterModel! })
-      .subscribe((res) => {
-        this.list = res.list;
+      .subscribe({
+        next: (response) => {
+          this.list = response.list || [];
+
+          if (response.paginationInfo) {
+            this.paginationInfoMap(response);
+          } else {
+            this.paginationInfo.totalItems = this.list.length;
+          }
+        },
+        error: (_) => {
+          this.list = [];
+          this.paginationInfo.totalItems = 0;
+        },
       });
   }
   clickIncomingPermissionTab() {
     this.filterModel = new PermissionFilter();
-    this.activeTabIndex == PERMISSION_TABS_ENUM.MY_PERMISSIONS && this.getDepartmentPermissions();
+    this.activeTabIndex == PERMISSION_TABS_ENUM.MY_PERMISSIONS && this.loadIncomingPermissions();
     this.activeTabIndex = PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS;
   }
   clickMyPermissionTab() {
@@ -161,14 +172,14 @@ export default class PermissionsListComponent
   departmentPermissionSearch() {
     this.paginationParams.pageNumber = 1;
     this.first = 0;
-    this.getDepartmentPermissions();
+    this.loadIncomingPermissions();
   }
   departmentPermissionResetSearch() {
     this.filterModel = new PermissionFilter();
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
     this.first = 0;
-    this.getDepartmentPermissions();
+    this.loadIncomingPermissions();
   }
   openDataDialog(model: Permission, canTakeAction?: ViewModeEnum): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
@@ -177,16 +188,23 @@ export default class PermissionsListComponent
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       if (result && result == DIALOG_ENUM.OK) {
-        this.getDepartmentPermissions();
+        this.loadIncomingPermissions();
       }
     });
   }
 
   showIncomingPermissions() {
     return (
-      this.authService.isAdmin ||
+      this.authService.isSecurityLeader ||
       this.authService.isDepartmentManager ||
       this.authService.isHROfficer
     );
+  }
+  onIncomingPermissionPageChange(event: PaginatorState) {
+    this.first = event.first!;
+    this.rows = event.rows!;
+    this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
+    this.paginationParams.pageSize = this.rows;
+    this.loadIncomingPermissions();
   }
 }

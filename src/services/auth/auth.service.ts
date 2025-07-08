@@ -57,15 +57,15 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
     return this.loggedInUser.value?.roles.includes(ROLES_ENUM.HR_OFFICER);
   }
 
-  isFollowUpOfficer() {
+  get isFollowUpOfficer() {
     return this.loggedInUser.value?.roles.includes(ROLES_ENUM.FOLLOW_UP_OFFICER);
   }
 
-  isSecurityLeader() {
+  get isSecurityLeader() {
     return this.loggedInUser.value?.roles.includes(ROLES_ENUM.SECURITY_LEADER);
   }
 
-  isSecurityMember() {
+  get isSecurityMember() {
     return this.loggedInUser.value?.roles.includes(ROLES_ENUM.SECURITY_MEMBER);
   }
 }

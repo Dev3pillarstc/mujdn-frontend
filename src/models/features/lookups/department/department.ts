@@ -58,16 +58,8 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
           CustomValidators.pattern('ENG_NUM'),
         ],
       ],
-      fkRegionId: [fkRegionId,
-        [
-          Validators.required
-        ]
-      ],
-      fkCityId: [fkCityId,
-        [
-          Validators.required
-        ]
-      ],
+      fkRegionId: [fkRegionId, [Validators.required]],
+      fkCityId: [fkCityId, [Validators.required]],
       address: [
         address,
         [
@@ -92,14 +84,8 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
           CustomValidators.pattern('PHONE_NUMBER'),
         ],
       ],
-      fkManagerId: [
-        fkManagerId,
-        []
-      ],
-      isOneLevelApproval: [
-        isOneLevelApproval !== undefined ? isOneLevelApproval : true,
-        []
-      ],
+      fkManagerId: [fkManagerId, []],
+      isOneLevelApproval: [isOneLevelApproval !== undefined ? isOneLevelApproval : true, []],
     };
   }
 }

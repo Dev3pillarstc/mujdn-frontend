@@ -1,3 +1,5 @@
+import { FormArray, FormGroup } from '@angular/forms';
+
 export const genericDateOnlyConvertor = function (model: any) {
   if (!model) return model;
 
@@ -29,3 +31,42 @@ export const toDateTime = function (date: any) {
   date = new Date(date);
   return date;
 };
+
+export function timeStringToDate(value: string): Date {
+  const [hours, minutes, seconds] = value.split(':').map(Number);
+  const date = new Date();
+  date.setHours(hours, minutes, seconds || 0, 0);
+  return date;
+}
+
+export function dateToTimeString(date: Date): string | null {
+  if (!date) return null;
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}:00`;
+}
+
+// create a function that takes a UTC date and returns the date in local time
+export const toLocalTime = function (date: any) {
+  date = new Date(date);
+  return date.toLocaleString();
+};
+
+export function markFormGroupTouched(form: FormGroup | FormArray) {
+  Object.values(form.controls).forEach((control) => {
+    if (control instanceof FormGroup || control instanceof FormArray) {
+      markFormGroupTouched(control); // Recursive call
+    } else {
+      control.markAsTouched();
+    }
+  });
+}
+
+export function convertUtcToKsaTime(utcDateTime: Date | string): Date {
+  const utcDate = new Date(utcDateTime);
+
+  // Ensure the input is treated as UTC and add 3 hours to convert to KSA time
+  const ksaTime = new Date(utcDate.getTime() + 3 * 60 * 60 * 1000);
+
+  return ksaTime;
+}

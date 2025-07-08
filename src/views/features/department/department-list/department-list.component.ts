@@ -26,7 +26,6 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { AlertService } from '@/services/shared/alert.service';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
-import { UserProfilesLookup } from '@/models/auth/users-profiles-lookup';
 import { filter, switchMap, tap } from 'rxjs';
 import { Department } from '@/models/features/lookups/department/department';
 import { MatDialogConfig } from '@angular/material/dialog';
@@ -64,7 +63,7 @@ export default class DepartmentListComponent extends BaseListComponent<
 > {
   override dialogSize = {
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '800px',
   };
   private _filterModel: DepartmentFilter = new DepartmentFilter();
   private _selectedDepartment: Department | null = null;
@@ -76,7 +75,7 @@ export default class DepartmentListComponent extends BaseListComponent<
   departmentsTree: Department[] = [];
   regions: BaseLookupModel[] = [];
   cities: City[] = [];
-  usersProfiles: UserProfilesLookup[] = [];
+  usersProfiles: BaseLookupModel[] = [];
   filteredCities: City[] = [];
   childDepartments: PaginatedList<Department> = new PaginatedList<Department>();
 
@@ -107,7 +106,7 @@ export default class DepartmentListComponent extends BaseListComponent<
     this.departmentsTree = this.activatedRoute.snapshot.data['list'].departmentsTree.data;
     this.regions = this.activatedRoute.snapshot.data['list'].regions;
     this.cities = this.activatedRoute.snapshot.data['list'].cities;
-    this.usersProfiles = this.activatedRoute.snapshot.data['list'].users.data;
+    this.usersProfiles = this.activatedRoute.snapshot.data['list'].users;
     this.childDepartments = this.activatedRoute.snapshot.data['list'].childDepartments;
     this.paginationInfo = this.childDepartments.paginationInfo;
   }

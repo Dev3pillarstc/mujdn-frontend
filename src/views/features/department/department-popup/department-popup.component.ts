@@ -1,5 +1,11 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
@@ -12,9 +18,9 @@ import { AlertService } from '@/services/shared/alert.service';
 import { City } from '@/models/features/lookups/city/city';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
-import { UserProfilesLookup } from '@/models/auth/users-profiles-lookup';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ValidationMessagesComponent } from '../../../shared/validation-messages/validation-messages.component';
 
 interface Adminstration {
   type: string;
@@ -30,6 +36,7 @@ interface Adminstration {
     CommonModule,
     ReactiveFormsModule,
     TranslatePipe,
+    ValidationMessagesComponent,
   ],
   templateUrl: './department-popup.component.html',
   styleUrl: './department-popup.component.scss',
@@ -43,7 +50,7 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   fb = inject(FormBuilder);
   cities: City[] = [];
   regions: BaseLookupModel[] = [];
-  usersProfiles: UserProfilesLookup[] = new Array<UserProfilesLookup>();
+  usersProfiles: BaseLookupModel[] = new Array<BaseLookupModel>();
   adminstrations: Adminstration[] | undefined;
   selectedAdminstration: Adminstration | undefined;
   date2: Date | undefined;
@@ -53,7 +60,27 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
-
+  get nameArControl() {
+    return this.form.get('nameAr') as FormControl;
+  }
+  get nameEnControl() {
+    return this.form.get('nameEn') as FormControl;
+  }
+  get fkRegionIdControl() {
+    return this.form.get('fkRegionId') as FormControl;
+  }
+  get fkCityIdControl() {
+    return this.form.get('fkCityId') as FormControl;
+  }
+  get addressControl() {
+    return this.form.get('address') as FormControl;
+  }
+  get phoneNumberControl() {
+    return this.form.get('phoneNumber') as FormControl;
+  }
+  get faxControl() {
+    return this.form.get('fax') as FormControl;
+  }
   get langOptionLabel(): string {
     const lang = this.languageService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';

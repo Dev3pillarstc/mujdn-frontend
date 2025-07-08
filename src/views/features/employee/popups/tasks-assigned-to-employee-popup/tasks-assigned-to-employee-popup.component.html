@@ -1,6 +1,6 @@
 <div [dir]="direction">
   <div class="p-6">
-    <button class="block ms-auto" (click)="close()">
+    <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">سجل المهمات المسندة للموظف</h3>
@@ -48,10 +48,10 @@
             <td>
               <div class="actions flex gap-2">
                 <button class="table-action-gray-btn">
-                  <img src="/assets/icons/edit-action.svg" alt="" />
+                  <img alt="" src="assets/icons/edit-action.svg" />
                 </button>
                 <button class="table-action-red-btn">
-                  <img src="/assets/icons/delete-action.svg" alt="" />
+                  <img alt="" src="assets/icons/delete-action.svg" />
                 </button>
               </div>
             </td>
@@ -59,16 +59,16 @@
         </ng-template>
       </p-table>
       <p-paginator
-        class="mt-6"
         (onPageChange)="onPageChange($event)"
         [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
         [rows]="rows"
         [totalRecords]="120"
-        [rowsPerPageOptions]="[10, 20, 30]"
+        class="mt-6"
       />
       <div></div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn" (click)="close()">الغاء</button>
+        <button (click)="close()" class="btn gray-btn">الغاء</button>
         <button class="btn green-btn">اسناد</button>
       </div>
     </div>

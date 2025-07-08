@@ -1,6 +1,6 @@
 <div dir="rtl">
   <div class="p-6">
-    <button class="block ms-auto" (click)="close()">
+    <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
@@ -10,20 +10,20 @@
     <form [formGroup]="form" class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
-          <label for="permissionType" class="label">{{
+          <label class="label" for="permissionType">{{
             'PERMISSION_PAGE.PERMISSION_TYPE' | translate
           }}</label>
           <div class="relative">
             <p-select
               [optionLabel]="getPropertyName()"
-              name="permissionType"
               [options]="permissionTypes"
-              formControlName="fkPermissionTypeId"
-              optionLabel="type"
-              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_TYPE' | translate }}"
               class="w-full peer"
+              formControlName="fkPermissionTypeId"
               id="permissionType"
+              name="permissionType"
+              optionLabel="type"
               optionValue="id"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_TYPE' | translate }}"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -32,23 +32,24 @@
           <app-validation-messages [control]="fkPermissionTypeIdControl"></app-validation-messages>
         </div>
         <div>
-          <label for="permissionDate" class="label">{{
+          <label class="label" for="permissionDate">{{
             'PERMISSION_PAGE.PERMISSION_DATE' | translate
           }}</label>
           <div class="relative">
             <p-datepicker
-              name="permissionDate"
-              formControlName="permissionDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
               [minDate]="minDate"
               placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}"
               class="peer block w-full"
-              inputId="permissionDate"
+              formControlName="permissionDate"
               id="permissionDate"
+              inputId="permissionDate"
+              name="permissionDate"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
+                <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
@@ -58,20 +59,20 @@
           <app-validation-messages [control]="permissionDateControl"></app-validation-messages>
         </div>
         <div>
-          <label for="prmissionReason" class="label"
+          <label class="label" for="prmissionReason"
             >{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}
           </label>
           <div class="relative">
             <p-select
-              name="prmissionReason"
               [optionLabel]="getPropertyName()"
               [options]="prmissionReasons"
-              formControlName="fkReasonId"
-              optionLabel="type"
-              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}"
               class="w-full peer"
+              formControlName="fkReasonId"
               id="prmissionReason"
+              name="prmissionReason"
+              optionLabel="type"
               optionValue="id"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -80,15 +81,15 @@
           <app-validation-messages [control]="fkReasonIdControl"></app-validation-messages>
         </div>
         <div class="md:col-span-2 lg:col-span-3">
-          <label for="" class="text-sm font-normal">{{
+          <label class="text-sm font-normal" for="">{{
             'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate
           }}</label>
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
+              formControlName="description"
               pTextarea
               placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate }}"
-              formControlName="description"
             ></textarea>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"

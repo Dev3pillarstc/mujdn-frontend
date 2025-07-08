@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">اسناد ورديات عمل</h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
@@ -14,11 +14,11 @@
             <div class="relative">
               <label class="label" for="nationalityAr">اسم الوردية</label>
               <input
-                placeholder="اسم الوردية"
                 class="peer"
                 fluid="true"
                 id="nationalityAr"
                 pInputText
+                placeholder="اسم الوردية"
                 type="text"
               />
               <span
@@ -26,17 +26,17 @@
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">التاريخ (من - الى)</label>
+              <label class="label" for="">التاريخ (من - الى)</label>
               <p-datepicker
                 [(ngModel)]="date2"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
-                placeholder="التاريخ (من - الى)"
                 class="peer block w-full"
                 inputId="icondisplay"
+                placeholder="التاريخ (من - الى)"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="/assets/icons/calender-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
@@ -44,26 +44,26 @@
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">الادارة</label>
+              <label class="label" for="">الادارة</label>
               <p-select
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
                 optionLabel="type"
                 placeholder="الادارة"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">اسم الموظف</label>
+              <label class="label" for="">اسم الموظف</label>
               <p-select
-                [options]="adminstrations"
                 [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
                 optionLabel="type"
                 placeholder="اسم الموظف"
-                class="w-full peer"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -86,13 +86,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button>
-              <img src="assets/icons/excel.svg" alt="" />
+              <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button class="cursor-pointer">
-              <img src="assets/icons/print.svg" alt="" />
+              <img alt="" src="assets/icons/print.svg" />
             </button>
-            <button class="btn green-btn flex items-center" (click)="openDialog()">
-              <img src="assets/icons/plus.svg" alt="" />
+            <button (click)="openDialog()" class="btn green-btn flex items-center">
+              <img alt="" src="assets/icons/plus.svg" />
               <span>اسناد وردية لموظف</span>
             </button>
           </div>
@@ -116,10 +116,10 @@
               <td>
                 <div class="actions flex gap-2">
                   <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
-                    <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                    <img alt="تعديل" src="assets/icons/edit-action.svg" />
                   </button>
                   <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
-                    <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                    <img alt="حذف" src="assets/icons/delete-action.svg" />
                   </button>
                 </div>
               </td>
@@ -127,12 +127,12 @@
           </ng-template>
         </p-table>
         <p-paginator
-          class="mt-6"
           (onPageChange)="onPageChange($event)"
           [first]="first"
+          [rowsPerPageOptions]="[10, 20, 30]"
           [rows]="rows"
           [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
+          class="mt-6"
         />
         <div></div>
       </div>

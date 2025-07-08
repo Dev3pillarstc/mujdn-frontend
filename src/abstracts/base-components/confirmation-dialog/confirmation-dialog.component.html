@@ -3,30 +3,30 @@
     <div class="text-end mb-2">
       <button (click)="onCancel()">
         <svg
-          width="20"
+          fill="none"
           height="20"
           viewBox="0 0 20 20"
-          fill="none"
+          width="20"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
             clip-rule="evenodd"
             d="M4.558 4.558a.625.625 0 0 1 .884 0L10 9.116l4.558-4.558a.625.625 0 1 1 .884.884L10.884 10l4.558 4.558a.625.625 0 1 1-.884.884L10 10.884l-4.558 4.558a.625.625 0 1 1-.884-.884L9.116 10 4.558 5.442a.625.625 0 0 1 0-.884z"
             fill="#161616"
+            fill-rule="evenodd"
           />
         </svg>
       </button>
     </div>
-    <img class="mb-2" src="/assets/icons/alert.svg" alt="" />
+    <img alt="" class="mb-2" src="assets/icons/alert.svg" />
     @for (item of data.messages; track $index) {
       <p class="text-[#1f2a37] text-[18px] font-semibold mb-2">{{ item | translate }}</p>
     }
     <div class="flex gap-4 mt-2 justify-end">
-      <button mat-button class="btn gray-btn" (click)="onCancel()">
+      <button (click)="onCancel()" class="btn gray-btn" mat-button>
         {{ data.cancelText || 'COMMON.CANCEL' | translate }}
       </button>
-      <button mat-raised-button class="btn red-btn" (click)="onConfirm()">
+      <button (click)="onConfirm()" class="btn red-btn" mat-raised-button>
         {{ data.confirmText || 'COMMON.OK' | translate }}
       </button>
     </div>

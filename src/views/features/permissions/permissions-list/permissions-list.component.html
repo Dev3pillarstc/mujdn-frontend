@@ -8,13 +8,13 @@
     </div>
     <p-tabs value="0">
       <p-tablist class="my-6">
-        <p-tab (click)="clickMyPermissionTab()" value="0">{{
-          'PERMISSION_PAGE.MY_REQUESTS' | translate
-        }}</p-tab>
+        <p-tab (click)="clickMyPermissionTab()" value="0"
+          >{{ 'PERMISSION_PAGE.MY_REQUESTS' | translate }}
+        </p-tab>
         @if (showIncomingPermissions()) {
-          <p-tab (click)="clickIncomingPermissionTab()" value="1">{{
-            'PERMISSION_PAGE.INCOMING_REQUESTS' | translate
-          }}</p-tab>
+          <p-tab (click)="clickIncomingPermissionTab()" value="1"
+            >{{ 'PERMISSION_PAGE.INCOMING_REQUESTS' | translate }}
+          </p-tab>
         }
       </p-tablist>
       <p-tabpanels>
@@ -60,7 +60,7 @@
                       placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}"
                     >
                       <ng-template pTemplate="inputicon">
-                        <img alt="" src="/assets/icons/calender-icon.svg" />
+                        <img alt="" src="assets/icons/calender-icon.svg" />
                       </ng-template>
                     </p-datepicker>
                     <span
@@ -106,13 +106,13 @@
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
                   <button (click)="exportExcel('permissions.xlsx')" class="table-head-action-btn">
-                    <img alt="" src="/assets/icons/excel.svg" />
+                    <img alt="" src="assets/icons/excel.svg" />
                   </button>
                   <button class="table-head-action-btn">
-                    <img alt="" src="/assets/icons/print.svg" />
+                    <img alt="" src="assets/icons/print.svg" />
                   </button>
                   <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
-                    <img alt="" src="/assets/icons/plus.svg" />
+                    <img alt="" src="assets/icons/plus.svg" />
                     <span>{{ 'PERMISSION_PAGE.ADD_NEW_PERMISSION' | translate }}</span>
                   </button>
                 </div>
@@ -166,7 +166,7 @@
                             (click)="openDataDialog(permission)"
                             class="table-action-gray-btn"
                           >
-                            <img alt="" src="/assets/icons/view-action.svg" />
+                            <img alt="" src="assets/icons/view-action.svg" />
                           </button>
                         }
                         @if (permission.status.id === permissionStatusEnum.New) {
@@ -174,10 +174,10 @@
                             (click)="addOrEditModel(permission)"
                             class="table-action-gray-btn text-[161616] font-medium"
                           >
-                            <img alt="" src="/assets/icons/edit-action.svg" />
+                            <img alt="" src="assets/icons/edit-action.svg" />
                           </button>
                           <button (click)="deleteModel(permission.id)" class="table-action-red-btn">
-                            <img alt="" src="/assets/icons/delete-action.svg" />
+                            <img alt="" src="assets/icons/delete-action.svg" />
                           </button>
                         }
                       </div>
@@ -280,7 +280,7 @@
                         placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}"
                       >
                         <ng-template pTemplate="inputicon">
-                          <img alt="" src="/assets/icons/calender-icon.svg" />
+                          <img alt="" src="assets/icons/calender-icon.svg" />
                         </ng-template>
                       </p-datepicker>
                       <span
@@ -329,10 +329,10 @@
                   </h4>
                   <div class="actions flex items-center gap-4 ms-auto">
                     <button (click)="exportExcel('permissions.xlsx')" class="table-head-action-btn">
-                      <img alt="" src="/assets/icons/excel.svg" />
+                      <img alt="" src="assets/icons/excel.svg" />
                     </button>
                     <button class="table-head-action-btn">
-                      <img alt="" src="/assets/icons/print.svg" />
+                      <img alt="" src="assets/icons/print.svg" />
                     </button>
                   </div>
                 </div>
@@ -395,7 +395,7 @@
                               (click)="openDataDialog(permissionsRequest)"
                               class="table-action-gray-btn"
                             >
-                              <img alt="" src="/assets/icons/view-action.svg" />
+                              <img alt="" src="assets/icons/view-action.svg" />
                             </button>
                           }
                           @if (

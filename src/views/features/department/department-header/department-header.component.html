@@ -9,17 +9,17 @@
     </h4>
     <div class="actions flex items-center gap-4 ms-auto pb-4">
       <button
-        class="flex items-center justify-center gap-1 p-2 rounded border border-white/40"
         (click)="openDialog()"
+        class="flex items-center justify-center gap-1 p-2 rounded border border-white/40"
       >
-        <img class="w-[21.5px] h-[21.5px]" src="/assets/icons/edit.png" alt="" />
+        <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/edit.png" />
       </button>
       <button
-        class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca]"
-        [disabled]="departmentData?.fkParentDepartmentId == null"
         (click)="delete(departmentData?.id)"
+        [disabled]="departmentData?.fkParentDepartmentId == null"
+        class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca]"
       >
-        <img class="w-[21.5px] h-[21.5px]" src="/assets/icons/delete.png" alt="" />
+        <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/delete.png" />
       </button>
     </div>
   </div>

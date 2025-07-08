@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">ورديات العمل المؤقتة</h3>
     </div>
     <div
@@ -38,11 +38,11 @@
             <div class="relative xl:col-span-3">
               <label class="label" for="nationalityAr">اسم الوردية</label>
               <input
-                placeholder="اسم الوردية"
                 class="peer"
                 fluid="true"
                 id="nationalityAr"
                 pInputText
+                placeholder="اسم الوردية"
                 type="text"
               />
               <span
@@ -50,17 +50,17 @@
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">التاريخ (من - الى)</label>
+              <label class="label" for="">التاريخ (من - الى)</label>
               <p-datepicker
                 [(ngModel)]="date2"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
-                placeholder="التاريخ (من - الى)"
                 class="peer block w-full"
                 inputId="icondisplay"
+                placeholder="التاريخ (من - الى)"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="/assets/icons/calender-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/calender-icon.svg"/>
                 </ng-template>
               </p-datepicker>
               <span
@@ -84,10 +84,10 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button class="table-head-action-btn">
-              <img src="assets/icons/excel.svg" alt="" />
+              <img alt="" src="assets/icons/excel.svg"/>
             </button>
             <button class="table-head-action-btn">
-              <img src="assets/icons/print.svg" alt="" />
+              <img alt="" src="assets/icons/print.svg"/>
             </button>
           </div>
         </div>
@@ -116,12 +116,12 @@
           </ng-template>
         </p-table>
         <p-paginator
-          class="mt-6"
           (onPageChange)="onPageChange($event)"
           [first]="first"
+          [rowsPerPageOptions]="[10, 20, 30]"
           [rows]="rows"
           [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
+          class="mt-6"
         />
         <div></div>
       </div>

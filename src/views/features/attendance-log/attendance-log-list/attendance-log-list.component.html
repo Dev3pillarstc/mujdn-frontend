@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST' | translate }}
       </h3>
@@ -17,15 +17,15 @@
           <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
               <label class="label" for="department">{{
-                'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate
-              }}</label>
+                  'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate
+                }}</label>
               <p-select
                 [(ngModel)]="filterModel.departmentId"
+                [optionLabel]="optionLabel"
                 [options]="departments"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate"
                 class="w-full peer"
                 id="department"
-                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -35,16 +35,16 @@
 
             <div class="relative">
               <label class="label" for="employee">{{
-                'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate
-              }}</label>
+                  'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate
+                }}</label>
               <p-select
-                [(ngModel)]="filterModel.employeeId"
                 (ngModelChange)="onEmployeeChange($event)"
+                [(ngModel)]="filterModel.employeeId"
+                [optionLabel]="optionLabel"
                 [options]="employees"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate"
                 class="w-full peer"
                 id="employee"
-                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -54,8 +54,8 @@
 
             <div class="relative">
               <label class="label" for="swipeDate">{{
-                'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate
-              }}</label>
+                  'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate
+                }}</label>
               <p-datepicker
                 [(ngModel)]="filterModel.swipeDate"
                 [iconDisplay]="'input'"
@@ -65,7 +65,7 @@
                 inputId="swipeDate"
               >
                 <ng-template pTemplate="inputicon">
-                  <img alt="" src="/assets/icons/calender-icon.svg" />
+                  <img alt="" src="assets/icons/calender-icon.svg"/>
                 </ng-template>
               </p-datepicker>
               <span
@@ -75,11 +75,11 @@
 
             <div class="relative">
               <label class="label" for="channelName">{{
-                'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
-              }}</label>
+                  'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
+                }}</label>
               <input
-                [(ngModel)]="filterModel.channelName"
                 (ngModelChange)="onChannelChange($event)"
+                [(ngModel)]="filterModel.channelName"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate"
                 class="peer"
                 fluid="true"
@@ -94,14 +94,14 @@
 
             <div class="relative">
               <label class="label" for="processingStatus">{{
-                'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate
-              }}</label>
+                  'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate
+                }}</label>
               <p-select
+                [optionLabel]="optionLabel"
                 [options]="processingStatusOptions"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate"
                 class="w-full peer"
                 id="processingStatus"
-                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -111,16 +111,16 @@
 
             <div class="relative">
               <label class="label" for="creator">{{
-                'ATTENDANCE_LOG_PAGE.CREATOR' | translate
-              }}</label>
+                  'ATTENDANCE_LOG_PAGE.CREATOR' | translate
+                }}</label>
               <p-select
-                [(ngModel)]="filterModel.creatorId"
                 (ngModelChange)="onCreatorChange($event)"
+                [(ngModel)]="filterModel.creatorId"
+                [optionLabel]="optionLabel"
                 [options]="creators"
                 [placeholder]="'ATTENDANCE_LOG_PAGE.CREATOR' | translate"
                 class="w-full peer"
                 id="creator"
-                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -148,13 +148,13 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button (click)="exportExcel('attendance-logs.xlsx')" class="table-head-action-btn">
-              <img alt="" src="/assets/icons/excel.svg" />
+              <img alt="" src="assets/icons/excel.svg"/>
             </button>
             <button class="table-head-action-btn">
-              <img alt="" src="/assets/icons/print.svg" />
+              <img alt="" src="assets/icons/print.svg"/>
             </button>
             <button (click)="openDialog()" class="btn green-btn flex items-center">
-              <img alt="" src="assets/icons/plus.svg" />
+              <img alt="" src="assets/icons/plus.svg"/>
               <span>{{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_ATTENDANCE_LOG' | translate }}</span>
             </button>
           </div>
@@ -181,8 +181,8 @@
                   <div class="flex flex-col items-center">
                     <span>{{ formatSwipeTime(attendanceLog.swipeTime).date }}</span>
                     <span class="text-[#64748b]">{{
-                      formatSwipeTime(attendanceLog.swipeTime).time
-                    }}</span>
+                        formatSwipeTime(attendanceLog.swipeTime).time
+                      }}</span>
                   </div>
                 </td>
                 <td>{{ attendanceLog.channelName }}</td>
@@ -219,10 +219,10 @@
                 <td>
                   <div class="actions flex gap-2">
                     <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
-                      <img src="/assets/icons/edit-action.svg" alt="" />
+                      <img src="assets/icons/edit-action.svg" alt=""/>
                     </button>
                     <button (click)="deleteModel(attendanceLog.id)" class="table-action-red-btn">
-                      <img src="/assets/icons/delete-action.svg" alt="" />
+                      <img src="assets/icons/delete-action.svg" alt=""/>
                     </button>
                   </div>
                 </td>

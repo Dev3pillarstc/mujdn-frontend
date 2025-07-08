@@ -1,6 +1,6 @@
 <div [dir]="direction">
   <div class="p-6">
-    <button class="block ms-auto" (click)="close()">
+    <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة وردية للموظف</h3>
@@ -8,16 +8,16 @@
     <form class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
-          <label for="shiftName" class="label">اسم المهمة</label>
+          <label class="label" for="shiftName">اسم المهمة</label>
           <div class="relative">
             <p-select
-              name="shiftName"
-              [options]="adminstrations"
               [(ngModel)]="selectedAdminstration"
-              optionLabel="type"
-              placeholder="اسم المهمة"
+              [options]="adminstrations"
               class="w-full peer"
               id="shiftName"
+              name="shiftName"
+              optionLabel="type"
+              placeholder="اسم المهمة"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -26,20 +26,20 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="startDate" class="label">تاريخ البداية</label>
+          <label class="label" for="startDate">تاريخ البداية</label>
           <div class="relative">
             <p-datepicker
-              name="startDate"
               [(ngModel)]="date2"
               [iconDisplay]="'input'"
               [showIcon]="true"
-              placeholder="تاريخ البداية"
               class="peer block w-full"
-              inputId="startDate"
               id="startDate"
+              inputId="startDate"
+              name="startDate"
+              placeholder="تاريخ البداية"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
+                <img alt="" src="assets/icons/calender-icon.svg"/>
               </ng-template>
             </p-datepicker>
             <span
@@ -49,20 +49,20 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div>
-          <label for="endDate" class="label">تاريخ النهاية</label>
+          <label class="label" for="endDate">تاريخ النهاية</label>
           <div class="relative">
             <p-datepicker
-              name="endDate"
               [(ngModel)]="date2"
               [iconDisplay]="'input'"
               [showIcon]="true"
-              placeholder="تاريخ النهاية"
               class="peer block w-full"
-              inputId="endDate"
               id="endDate"
+              inputId="endDate"
+              name="endDate"
+              placeholder="تاريخ النهاية"
             >
               <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
+                <img alt="" src="assets/icons/calender-icon.svg"/>
               </ng-template>
             </p-datepicker>
             <span
@@ -72,14 +72,14 @@
           <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
         <div class="md:col-span-2 lg:col-span-3">
-          <label for="" class="text-sm font-normal text-[#9da4ae]">وصف المهمة</label>
+          <label class="text-sm font-normal text-[#9da4ae]" for="">وصف المهمة</label>
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
-              rows="5"
               cols="30"
               pTextarea
               placeholder="وصف المهمة"
+              rows="5"
             ></textarea>
 
             <span
@@ -89,7 +89,7 @@
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn" (click)="close()">الغاء</button>
+        <button (click)="close()" class="btn gray-btn">الغاء</button>
         <button class="btn green-btn">اسناد</button>
       </div>
     </form>

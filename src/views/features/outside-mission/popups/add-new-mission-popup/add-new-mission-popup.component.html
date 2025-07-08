@@ -1,6 +1,6 @@
 <div dir="rtl">
   <div class="p-6">
-    <button class="block ms-auto" (click)="close()">
+    <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة مهمة جديدة</h3>
@@ -14,14 +14,14 @@
           <form class="">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               <div class="xl:col-span-2">
-                <label for="shiftName" class="label">اسم المهمة</label>
+                <label class="label" for="shiftName">اسم المهمة</label>
                 <div class="relative">
                   <input
-                    placeholder="اسم المهمة"
                     class="peer"
                     fluid="true"
                     id="nationalityAr"
                     pInputText
+                    placeholder="اسم المهمة"
                     type="text"
                   />
                   <span
@@ -31,20 +31,20 @@
                 <span class="validation-message">هذا الحقل مطلوب</span>
               </div>
               <div>
-                <label for="startDate" class="label">تاريخ البداية</label>
+                <label class="label" for="startDate">تاريخ البداية</label>
                 <div class="relative">
                   <p-datepicker
-                    name="startDate"
                     [(ngModel)]="date2"
                     [iconDisplay]="'input'"
                     [showIcon]="true"
-                    placeholder="تاريخ البداية"
                     class="peer block w-full"
-                    inputId="startDate"
                     id="startDate"
+                    inputId="startDate"
+                    name="startDate"
+                    placeholder="تاريخ البداية"
                   >
                     <ng-template pTemplate="inputicon">
-                      <img src="/assets/icons/calender-icon.svg" alt="" />
+                      <img alt="" src="assets/icons/calender-icon.svg"/>
                     </ng-template>
                   </p-datepicker>
                   <span
@@ -54,20 +54,20 @@
                 <span class="validation-message">هذا الحقل مطلوب</span>
               </div>
               <div>
-                <label for="endDate" class="label">تاريخ النهاية</label>
+                <label class="label" for="endDate">تاريخ النهاية</label>
                 <div class="relative">
                   <p-datepicker
-                    name="endDate"
                     [(ngModel)]="date2"
                     [iconDisplay]="'input'"
                     [showIcon]="true"
-                    placeholder="تاريخ النهاية"
                     class="peer block w-full"
-                    inputId="endDate"
                     id="endDate"
+                    inputId="endDate"
+                    name="endDate"
+                    placeholder="تاريخ النهاية"
                   >
                     <ng-template pTemplate="inputicon">
-                      <img src="/assets/icons/calender-icon.svg" alt="" />
+                      <img alt="" src="assets/icons/calender-icon.svg"/>
                     </ng-template>
                   </p-datepicker>
                   <span
@@ -77,14 +77,14 @@
                 <span class="validation-message">هذا الحقل مطلوب</span>
               </div>
               <div class="xl:col-span-4 lg:col-span-3 md:col-span-2">
-                <label for="" class="label">وصف المهمة</label>
+                <label class="label" for="">وصف المهمة</label>
                 <div class="relative w-full">
                   <textarea
                     class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
-                    rows="5"
                     cols="30"
                     pTextarea
                     placeholder="وصف المهمة"
+                    rows="5"
                   ></textarea>
 
                   <span
@@ -95,10 +95,10 @@
               </div>
             </div>
             <div class="actions mt-6 flex items-center justify-between gap-4">
-              <button class="btn gray-btn" (click)="close()">الغاء</button>
+              <button (click)="close()" class="btn gray-btn">الغاء</button>
               <button class="btn green-btn flex items-center">
                 <span>التالي</span>
-                <img class="ltr:rotate-180" src="/assets/icons/left-arrow.svg" alt="" />
+                <img alt="" class="ltr:rotate-180" src="assets/icons/left-arrow.svg"/>
               </button>
             </div>
           </form>
@@ -107,14 +107,14 @@
           <div class="bg-white">
             <div class="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-18 items-center gap-6">
               <div class="sm:col-span-3 lg:col-span-7">
-                <label for="adminstrations-popup" class="label">الادارة</label>
+                <label class="label" for="adminstrations-popup">الادارة</label>
                 <div class="relative">
                   <p-select
+                    class="w-full peer"
+                    id="adminstrations-popup"
                     name="selectedAdminstration"
                     optionLabel="type"
                     placeholder="الادارة"
-                    class="w-full peer"
-                    id="adminstrations-popup"
                   ></p-select>
                   <span
                     class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -123,14 +123,14 @@
                 <span class="validation-message">هذا الحقل مطلوب</span>
               </div>
               <div class="sm:col-span-3 lg:col-span-7">
-                <label for="shiftName" class="label">اسم الموظف</label>
+                <label class="label" for="shiftName">اسم الموظف</label>
                 <div class="relative">
                   <input
-                    placeholder="اسم الموظف"
                     class="peer"
                     fluid="true"
                     id="nationalityAr"
                     pInputText
+                    placeholder="اسم الموظف"
                     type="text"
                   />
                   <span
@@ -163,7 +163,7 @@
                           stroke-width="3"
                           viewBox="0 0 24 24"
                         >
-                          <polyline points="20 6 9 17 4 12" />
+                          <polyline points="20 6 9 17 4 12"/>
                         </svg>
                       </label>
                     </th>
@@ -190,7 +190,7 @@
                           stroke-width="3"
                           viewBox="0 0 24 24"
                         >
-                          <polyline points="20 6 9 17 4 12" />
+                          <polyline points="20 6 9 17 4 12"/>
                         </svg>
                       </label>
                     </td>
@@ -202,12 +202,12 @@
                 </ng-template>
               </p-table>
               <p-paginator
-                class="mt-6"
                 (onPageChange)="onPageChange($event)"
                 [first]="first"
+                [rowsPerPageOptions]="[10, 20, 30]"
                 [rows]="rows"
                 [totalRecords]="120"
-                [rowsPerPageOptions]="[10, 20, 30]"
+                class="mt-6"
               />
               <div></div>
             </div>
@@ -218,40 +218,40 @@
               <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
                 <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
                 <button>
-                  <img src="/assets/icons/close-tag-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/close-tag-icon.svg"/>
                 </button>
               </div>
               <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
                 <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
                 <button>
-                  <img src="/assets/icons/close-tag-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/close-tag-icon.svg"/>
                 </button>
               </div>
               <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
                 <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
                 <button>
-                  <img src="/assets/icons/close-tag-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/close-tag-icon.svg"/>
                 </button>
               </div>
               <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
                 <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
                 <button>
-                  <img src="/assets/icons/close-tag-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/close-tag-icon.svg"/>
                 </button>
               </div>
               <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
                 <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
                 <button>
-                  <img src="/assets/icons/close-tag-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/close-tag-icon.svg"/>
                 </button>
               </div>
             </div>
           </div>
           <div class="actions mt-6 flex items-center justify-between gap-4">
-            <button class="btn gray-btn" (click)="close()">الغاء</button>
+            <button (click)="close()" class="btn gray-btn">الغاء</button>
             <div class="flex gap-2">
               <button class="btn gray-btn flex items-center">
-                <img class="ltr:rotate-180" src="/assets/icons/right-black-arrow.svg" alt="" />
+                <img alt="" class="ltr:rotate-180" src="assets/icons/right-black-arrow.svg"/>
                 <span>السابق</span>
               </button>
               <button class="btn green-btn flex items-center">

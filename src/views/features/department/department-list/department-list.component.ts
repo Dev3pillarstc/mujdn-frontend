@@ -106,7 +106,7 @@ export default class DepartmentListComponent extends BaseListComponent<
     this.departmentsTree = this.activatedRoute.snapshot.data['list'].departmentsTree.data;
     this.regions = this.activatedRoute.snapshot.data['list'].regions;
     this.cities = this.activatedRoute.snapshot.data['list'].cities;
-    this.usersProfiles = this.activatedRoute.snapshot.data['list'].users.data;
+    this.usersProfiles = this.activatedRoute.snapshot.data['list'].users;
     this.childDepartments = this.activatedRoute.snapshot.data['list'].childDepartments;
     this.paginationInfo = this.childDepartments.paginationInfo;
   }

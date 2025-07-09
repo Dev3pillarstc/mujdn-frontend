@@ -53,27 +53,27 @@ export class Permission extends BaseCrudModel<Permission, PermissionService> {
   }
   getStatusName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? (this.status.nameEn ?? '')
-      : (this.status.nameAr ?? '');
+      ? (this.status?.nameEn ?? '')
+      : (this.status?.nameAr ?? '');
   }
   getCreationUserName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? (this.creationUser.nameEn ?? '')
-      : (this.creationUser.nameAr ?? '');
+      ? (this.creationUser?.nameEn ?? '')
+      : (this.creationUser?.nameAr ?? '');
   }
   getPermissionReasonName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? (this.permissionReason.nameEn ?? '')
-      : (this.permissionReason.nameAr ?? '');
+      ? (this.permissionReason?.nameEn ?? '')
+      : (this.permissionReason?.nameAr ?? '');
   }
   getPermissionTypeName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? (this.permissionType.nameEn ?? '')
-      : (this.permissionType.nameAr ?? '');
+      ? (this.permissionType?.nameEn ?? '')
+      : (this.permissionType?.nameAr ?? '');
   }
   getPermissionDepartmentName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? (this.deprtment.nameEn ?? '')
-      : (this.deprtment.nameAr ?? '');
+      ? (this.deprtment?.nameEn ?? '')
+      : (this.deprtment?.nameAr ?? '');
   }
 }

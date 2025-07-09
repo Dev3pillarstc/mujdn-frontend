@@ -23,7 +23,7 @@ import { Observable } from 'rxjs';
   styleUrl: './permissions-data-popup.component.scss',
 })
 export class PermissionsDataPopupComponent implements OnInit {
-  declare model: Permission;
+  declare model?: Permission;
   declare form: FormGroup;
   alertService = inject(AlertService);
   service = inject(PermissionService);
@@ -49,7 +49,7 @@ export class PermissionsDataPopupComponent implements OnInit {
   }
 
   acceptPermissionStatus() {
-    this.service.acceptPermission(this.model.id).subscribe({
+    this.service.acceptPermission(this.model?.id!).subscribe({
       next: (updatedPermission) => {
         this.model = updatedPermission; // optionally update local model
         this.afterSave();
@@ -60,7 +60,7 @@ export class PermissionsDataPopupComponent implements OnInit {
   }
 
   rejectPermissionStatus() {
-    this.service.rejectPermission(this.model.id).subscribe({
+    this.service.rejectPermission(this.model?.id!).subscribe({
       next: (updatedPermission) => {
         this.model = updatedPermission; // optionally update local model
         this.dialogRef.close(DIALOG_ENUM.OK);

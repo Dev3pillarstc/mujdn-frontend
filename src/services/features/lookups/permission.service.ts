@@ -65,8 +65,14 @@ export class PermissionService extends BaseCrudService<Permission> {
   }
   @CastResponse()
   @HasInterception
-  updateStatus(id: number, fkStatusId: number): Observable<Permission> {
-    const url = `${this.getUrlSegment()}/${id}/status?fkStatusId=${fkStatusId}`;
+  acceptPermission(permissionId: number): Observable<Permission> {
+    const url = `${this.getUrlSegment()}/${permissionId}/accept`;
+    return this.http.put<Permission>(url, null, { withCredentials: true });
+  }
+  @CastResponse()
+  @HasInterception
+  rejectPermission(permissionId: number): Observable<Permission> {
+    const url = `${this.getUrlSegment()}/${permissionId}/reject`;
     return this.http.put<Permission>(url, null, { withCredentials: true });
   }
 }

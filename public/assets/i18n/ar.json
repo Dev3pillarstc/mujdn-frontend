@@ -211,7 +211,7 @@
     "ACTION": "إجراء",
     "APPROVAL_DATE": "تاريخ الموافقة",
     "REJECTION_DATE": "تاريخ الرفض",
-    "APPROVE":"موافقة",
+    "APPROVE": "موافقة",
     "DECLINE": "رفض"
   },
   "WORK_SHIFTS": {
@@ -266,5 +266,26 @@
     "EMPLOYEE_REQUIRED": "الموظف مطلوب",
     "MOVEMENT_TYPE": "نوع الحركة",
     "WORK_TYPE": "نوع العمل"
+  },
+  "MENU": {
+    "DASHBOARD": "لوحة المعلومات",
+    "ATTENDANCE_REPORT": "تقرير الحضور والانصراف",
+    "ATTENDANCE_LOGS": "حركات الحضور والانصراف",
+    "DEPARTMENTS": "الإدارات",
+    "EMPLOYEES": "قائمة الموظفين",
+    "PRESENCE_INQUIRIES": "مسائلات توثيق التواجد",
+    "PERMISSIONS": "الأذونات",
+    "ASSIGNED_EMPLOYEES": "الموظفون المُكلفون",
+    "WORK_SHIFT_TEMP": "ورديات العمل المؤقتة",
+    "WORK_SHIFT_ASSIGNMENT": "إسناد ورديات العمل",
+    "HOLIDAYS": "قائمة الإجازات والأعياد",
+    "WORK_SHIFT": "ورديات العمل",
+    "WORK_SHIFT_SETTINGS": "إعدادات ورديات العمل",
+    "SETTINGS": "الإعدادات",
+    "PERMISSION_REASONS": "اسباب الأذونات",
+    "NOTIFICATION_CHANNELS": "إعدادات الإشعارات",
+    "NATIONALITIES": "قائمة الجنسيات",
+    "CITIES": "قائمة المدن",
+    "REGIONS": "قائمة المناطق"
   }
 }

@@ -1,113 +1,123 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router, Route } from '@angular/router';
 import { AuthService } from '@/services/auth/auth.service';
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { MenuItem } from '@/models/shared/menu-item';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable, map } from 'rxjs';
+
+type MenuItemConfig = Omit<MenuItem, 'label' | 'children'> & {
+  labelKey: string;
+  children?: MenuItemConfig[];
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class SideBarLinksService {
-  menuItems: MenuItem[] = [
+  translateService = inject(TranslateService);
+  router = inject(Router);
+  authService = inject(AuthService);
+
+  private rawMenuConfig: MenuItemConfig[] = [
     {
-      label: 'لوحة المعلومات',
+      labelKey: 'MENU.DASHBOARD',
       iconUrl: 'assets/icons/menu-icons/home.svg',
       routerLink: ['/dashboard'],
     },
     {
-      label: 'تقرير الحضور و الانصراف',
+      labelKey: 'MENU.ATTENDANCE_REPORT',
       iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
       routerLink: ['/dashboard'],
     },
     {
-      label: 'حركات الحضور و الانصراف',
+      labelKey: 'MENU.ATTENDANCE_LOGS',
       iconUrl: 'assets/icons/menu-icons/icon.svg',
       routerLink: ['/attendance-logs'],
     },
     {
-      label: 'الادارات',
+      labelKey: 'MENU.DEPARTMENTS',
       iconUrl: 'assets/icons/menu-icons/tools.svg',
       routerLink: ['/departments'],
       routeId: RouteIdsEnum.DEPARTMENTS,
     },
     {
-      label: 'قائمة الموظفين',
+      labelKey: 'MENU.EMPLOYEES',
       iconUrl: 'assets/icons/menu-icons/employees.svg',
       routerLink: ['/employees'],
       routeId: RouteIdsEnum.EMPLOYEES,
     },
     {
-      label: 'مسائلات توثيق التواجد',
+      labelKey: 'MENU.PRESENCE_INQUIRIES',
       iconUrl: 'assets/icons/menu-icons/icon2.svg',
       routerLink: ['/dashboard'],
     },
     {
-      label: 'الأذونات',
+      labelKey: 'MENU.PERMISSIONS',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',
       routerLink: ['/permissions'],
       routeId: RouteIdsEnum.PERMISSIONS,
     },
     {
-      label: 'الموظفون المُكلفون',
+      labelKey: 'MENU.ASSIGNED_EMPLOYEES',
       iconUrl: 'assets/icons/menu-icons/icon3.svg',
       routerLink: ['/dashboard'],
     },
     {
-      label: 'ورديات العمل المؤقتة',
+      labelKey: 'MENU.WORK_SHIFT_TEMP',
       iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
       routerLink: ['/dashboard'],
       routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
     },
     {
-      label: 'اسناد ورديات عمل',
+      labelKey: 'MENU.WORK_SHIFT_ASSIGNMENT',
       iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
       routerLink: ['/dashboard'],
       routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
     },
     {
-      label: 'قائمة الاجازات و الأعياد',
+      labelKey: 'MENU.HOLIDAYS',
       iconUrl: 'assets/icons/menu-icons/vacations.svg',
       routerLink: ['/holidays'],
       routeId: RouteIdsEnum.HOLIDAYS,
     },
-
     {
-      label: 'ورديات العمل',
+      labelKey: 'MENU.WORK_SHIFT',
       iconUrl: 'assets/icons/time-icon.svg',
       children: [
         {
-          label: 'اعدادات ورديات العمل',
+          labelKey: 'MENU.WORK_SHIFT_SETTINGS',
           routerLink: ['/work-shifts'],
           routeId: RouteIdsEnum.WORK_SHIFTS,
         },
       ],
     },
     {
-      label: 'الإعدادات',
+      labelKey: 'MENU.SETTINGS',
       iconUrl: 'assets/icons/menu-icons/settings.svg',
       children: [
         {
-          label: 'اعدادات الأذونات',
+          labelKey: 'MENU.PERMISSION_REASONS',
           routerLink: ['/permission-reasons'],
           routeId: RouteIdsEnum.PERMISSION_REASONS,
         },
         {
-          label: 'اعدادات الاشعارات',
+          labelKey: 'MENU.NOTIFICATION_CHANNELS',
           routerLink: ['/notification-channels'],
           routeId: RouteIdsEnum.NOTIFICATION_CHANNELS,
         },
         {
-          label: 'قائمة الجنسيات',
+          labelKey: 'MENU.NATIONALITIES',
           routerLink: ['/nationalities'],
           routeId: RouteIdsEnum.NATIONALITIES,
         },
         {
-          label: 'قائمة المدن',
+          labelKey: 'MENU.CITIES',
           routerLink: ['/cities'],
           routeId: RouteIdsEnum.CITIES,
         },
         {
-          label: 'قائمة المناطق',
+          labelKey: 'MENU.REGIONS',
           routerLink: ['/regions'],
           routeId: RouteIdsEnum.REGIONS,
         },
@@ -115,48 +125,22 @@ export class SideBarLinksService {
     },
   ];
 
-  constructor(
-    private router: Router,
-    private authService: AuthService
-  ) {}
-
-  /** Public method to get menu items filtered by current user roles */
-  getSidebarLinks(): MenuItem[] {
+  getSidebarLinks(): Observable<MenuItem[]> {
     const userRoles = this.authService.getUser().value?.roles;
     const allRoutes = this.flattenRouterConfig(this.router.config);
+    const labelKeys = this.extractLabelKeys(this.rawMenuConfig);
 
-    const filterMenuItems = (menuItems: MenuItem[]): MenuItem[] => {
-      const filtered: MenuItem[] = [];
-
-      for (const item of menuItems) {
-        if (item.routeId && !item.children) {
-          const matchedRoute = allRoutes.find((r) => r.data?.['routeId'] === item.routeId);
-          const allowedRoles = matchedRoute?.data?.['roles'] as string[] | undefined;
-
-          const isAllowed = !allowedRoles || allowedRoles.some((role) => userRoles?.includes(role));
-          if (isAllowed) {
-            filtered.push(item);
-          }
-        } else if (!item.routeId && !item.children) {
-          // Public item
-          filtered.push(item);
-        }
-
-        if (item.children) {
-          const allowedChildren = filterMenuItems(item.children);
-          if (allowedChildren.length > 0) {
-            filtered.push({ ...item, children: allowedChildren });
-          }
-        }
-      }
-
-      return filtered;
-    };
-
-    return filterMenuItems(this.menuItems);
+    return this.translateService.get(labelKeys).pipe(
+      map((translations) => {
+        const translatedMenuItems = this.buildMenuItemsWithTranslations(
+          this.rawMenuConfig,
+          translations
+        );
+        return this.filterMenuItems(translatedMenuItems, allRoutes, userRoles);
+      })
+    );
   }
 
-  /** Recursively flattens the route tree from Angular Router config */
   private flattenRouterConfig(routes: Route[]): Route[] {
     let flatRoutes: Route[] = [];
 
@@ -168,5 +152,69 @@ export class SideBarLinksService {
     }
 
     return flatRoutes;
+  }
+
+  private extractLabelKeys(items: MenuItemConfig[] = []): string[] {
+    const keys: string[] = [];
+
+    for (const item of items) {
+      keys.push(item.labelKey);
+      if (item.children) {
+        keys.push(...this.extractLabelKeys(item.children));
+      }
+    }
+
+    return keys;
+  }
+
+  private buildMenuItemsWithTranslations(
+    items: MenuItemConfig[],
+    translations: Record<string, string>
+  ): MenuItem[] {
+    return items.map((item): MenuItem => {
+      const menuItem: MenuItem = {
+        label: translations[item.labelKey] || item.labelKey,
+        routeId: item.routeId,
+        routerLink: item.routerLink,
+        iconUrl: item.iconUrl,
+      };
+
+      if (item.children) {
+        menuItem.children = this.buildMenuItemsWithTranslations(item.children, translations);
+      }
+
+      return menuItem;
+    });
+  }
+
+  private filterMenuItems(
+    menuItems: MenuItem[],
+    allRoutes: Route[],
+    userRoles?: string[]
+  ): MenuItem[] {
+    const filtered: MenuItem[] = [];
+
+    for (const item of menuItems) {
+      if (item.routeId && !item.children) {
+        const matchedRoute = allRoutes.find((r) => r.data?.['routeId'] === item.routeId);
+        const allowedRoles = matchedRoute?.data?.['roles'] as string[] | undefined;
+
+        const isAllowed = !allowedRoles || allowedRoles.some((role) => userRoles?.includes(role));
+        if (isAllowed) {
+          filtered.push(item);
+        }
+      } else if (!item.routeId && !item.children) {
+        filtered.push(item); // public
+      }
+
+      if (item.children) {
+        const allowedChildren = this.filterMenuItems(item.children, allRoutes, userRoles);
+        if (allowedChildren.length > 0) {
+          filtered.push({ ...item, children: allowedChildren });
+        }
+      }
+    }
+
+    return filtered;
   }
 }

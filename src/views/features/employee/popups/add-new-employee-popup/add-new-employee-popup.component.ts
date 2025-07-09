@@ -85,143 +85,6 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     super();
   }
 
-  override initPopup() {
-    this.model = this.data.model;
-    this.cities = this.data.lookups.cities;
-    this.regions = this.data.lookups.regions;
-    this.departments = this.data.lookups.departments;
-    this.viewMode = this.data.viewMode;
-    this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
-    console.log('this.model', this.model);
-    console.log('this.cities', this.cities);
-    console.log('this.regions', this.regions);
-
-    // Initialize filtered cities based on current region selection
-    this.initializeFilteredCities();
-
-    // Initialize role states
-    this.initializeRoleStates();
-  }
-
-  override prepareModel(model: User, form: FormGroup): User | Observable<User> {
-    // Map the boolean values correctly
-    const formValue = form.value;
-
-    // Convert account status to boolean for isActive
-    if (formValue.accountStatus !== undefined) {
-      formValue.isActive = formValue.accountStatus;
-    }
-
-    // Prepare roleIds array based on selected roles
-    const roleIds: string[] = [];
-    if (this.roleStates.isEmployee) roleIds.push(ROLES_ENUM.EMPLOYEE);
-    if (this.roleStates.isSysAdmin) roleIds.push(ROLES_ENUM.ADMIN);
-    if (this.roleStates.isDeptManager) roleIds.push(ROLES_ENUM.DEPARTMENT_MANAGER);
-    if (this.roleStates.isFollowUp) roleIds.push(ROLES_ENUM.FOLLOW_UP_OFFICER);
-    if (this.roleStates.isHR) roleIds.push(ROLES_ENUM.HR_OFFICER);
-    if (this.roleStates.isSecurityMember) roleIds.push(ROLES_ENUM.SECURITY_MEMBER);
-    if (this.roleStates.isSecurityLeader) roleIds.push(ROLES_ENUM.SECURITY_LEADER);
-
-    formValue.roleIds = roleIds;
-
-    this.model = Object.assign(model, { ...formValue });
-    return this.model;
-  }
-
-  override buildForm() {
-    this.form = this.fb.group(this.model.buildForm(this.viewMode));
-
-    // Set initial values if needed
-    if (this.model.isActive !== undefined) {
-      this.selectedAccountStatus = this.accountStatusOptions.find(
-        (option) => option.id === this.model.isActive
-      );
-    }
-
-    // Subscribe to region changes to filter cities
-    this.form.get('fkRegionId')?.valueChanges.subscribe((regionId: number) => {
-      console.log('Region changed:', regionId);
-      this.onRegionChange(regionId);
-    });
-  }
-
-  override saveFail(error: Error): void {}
-
-  afterSave() {
-    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
-    this.alertService.showSuccessMessage(successObject);
-  }
-
-  override beforeSave(model: User, form: FormGroup): Observable<boolean> | boolean {
-    return form.valid;
-  }
-
-  // Initialize role states based on model's roleIds
-  private initializeRoleStates(): void {
-    if (this.model.roleIds) {
-      this.roleStates.isEmployee = this.model.roleIds.includes(ROLES_ENUM.EMPLOYEE);
-      this.roleStates.isSysAdmin = this.model.roleIds.includes(ROLES_ENUM.ADMIN);
-      this.roleStates.isDeptManager = this.model.roleIds.includes(ROLES_ENUM.DEPARTMENT_MANAGER);
-      this.roleStates.isFollowUp = this.model.roleIds.includes(ROLES_ENUM.FOLLOW_UP_OFFICER);
-      this.roleStates.isHR = this.model.roleIds.includes(ROLES_ENUM.HR_OFFICER);
-      this.roleStates.isSecurityMember = this.model.roleIds.includes(ROLES_ENUM.SECURITY_MEMBER);
-      this.roleStates.isSecurityLeader = this.model.roleIds.includes(ROLES_ENUM.SECURITY_LEADER);
-    }
-  }
-
-  // Initialize filtered cities based on current region selection
-  private initializeFilteredCities(): void {
-    const currentRegionId = this.model.fkRegionId;
-    console.log('currentRegionId', currentRegionId);
-    if (currentRegionId) {
-      this.filteredCities = this.cities.filter((city) => city.regionId === currentRegionId);
-    } else {
-      this.filteredCities = [];
-    }
-    console.log('this.filteredCities', this.filteredCities);
-  }
-
-  // Handle region selection change
-  onRegionChange(regionId: number): void {
-    if (regionId) {
-      // Filter cities based on selected region
-      this.filteredCities = this.cities.filter((city) => city.regionId === regionId);
-
-      // Clear city selection if the current city doesn't belong to the new region
-      const currentCityId = this.form.get('fkCityId')?.value;
-      if (currentCityId) {
-        const currentCityBelongsToRegion = this.filteredCities.some(
-          (city) => city.id === currentCityId
-        );
-        if (!currentCityBelongsToRegion) {
-          this.form.get('fkCityId')?.setValue(null);
-        }
-      }
-    } else {
-      // Clear cities if no region is selected
-      this.filteredCities = [];
-      this.form.get('fkCityId')?.setValue(null);
-    }
-  }
-
-  // Role checkbox change handlers
-  onRoleChange(role: keyof typeof this.roleStates, event: Event): void {
-    const checkbox = event.target as HTMLInputElement;
-    this.roleStates[role] = checkbox.checked;
-  }
-
-  // Helper method to get display text for account status
-  getAccountStatusText(isActive: boolean): string {
-    const option = this.accountStatusOptions.find((opt) => opt.id === isActive);
-    return option ? option.nameAr : '';
-  }
-
-  // Helper method to get display text for fingerprint exemption
-  getFingerprintExemptionText(canLeave: boolean): string {
-    const option = this.fingerprintExemptionOptions.find((opt) => opt.id === canLeave);
-    return option ? option.nameAr : '';
-  }
-
   get langOptionLabel(): string {
     const lang = this.languageService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
@@ -274,5 +137,135 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
 
   get passwordControl() {
     return this.form.get('password') as FormControl;
+  }
+
+  override initPopup() {
+    this.model = this.data.model;
+    this.cities = this.data.lookups.cities;
+    this.regions = this.data.lookups.regions;
+    this.departments = this.data.lookups.departments;
+    this.viewMode = this.data.viewMode;
+    this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
+    // Initialize filtered cities based on current region selection
+    this.initializeFilteredCities();
+
+    // Initialize role states
+    this.initializeRoleStates();
+  }
+
+  override prepareModel(model: User, form: FormGroup): User | Observable<User> {
+    // Map the boolean values correctly
+    const formValue = form.value;
+
+    // Convert account status to boolean for isActive
+    if (formValue.accountStatus !== undefined) {
+      formValue.isActive = formValue.accountStatus;
+    }
+
+    // Prepare roleIds array based on selected roles
+    const roleIds: string[] = [];
+    if (this.roleStates.isEmployee) roleIds.push(ROLES_ENUM.EMPLOYEE);
+    if (this.roleStates.isSysAdmin) roleIds.push(ROLES_ENUM.ADMIN);
+    if (this.roleStates.isDeptManager) roleIds.push(ROLES_ENUM.DEPARTMENT_MANAGER);
+    if (this.roleStates.isFollowUp) roleIds.push(ROLES_ENUM.FOLLOW_UP_OFFICER);
+    if (this.roleStates.isHR) roleIds.push(ROLES_ENUM.HR_OFFICER);
+    if (this.roleStates.isSecurityMember) roleIds.push(ROLES_ENUM.SECURITY_MEMBER);
+    if (this.roleStates.isSecurityLeader) roleIds.push(ROLES_ENUM.SECURITY_LEADER);
+
+    formValue.roleIds = roleIds;
+
+    this.model = Object.assign(model, { ...formValue });
+    return this.model;
+  }
+
+  override buildForm() {
+    this.form = this.fb.group(this.model.buildForm(this.viewMode));
+
+    // Set initial values if needed
+    if (this.model.isActive !== undefined) {
+      this.selectedAccountStatus = this.accountStatusOptions.find(
+        (option) => option.id === this.model.isActive
+      );
+    }
+
+    // Subscribe to region changes to filter cities
+    this.form.get('fkRegionId')?.valueChanges.subscribe((regionId: number) => {
+      this.onRegionChange(regionId);
+    });
+  }
+
+  override saveFail(error: Error): void {}
+
+  afterSave() {
+    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
+    this.alertService.showSuccessMessage(successObject);
+  }
+
+  override beforeSave(model: User, form: FormGroup): Observable<boolean> | boolean {
+    return form.valid;
+  }
+
+  // Handle region selection change
+  onRegionChange(regionId: number): void {
+    if (regionId) {
+      // Filter cities based on selected region
+      this.filteredCities = this.cities.filter((city) => city.regionId === regionId);
+
+      // Clear city selection if the current city doesn't belong to the new region
+      const currentCityId = this.form.get('fkCityId')?.value;
+      if (currentCityId) {
+        const currentCityBelongsToRegion = this.filteredCities.some(
+          (city) => city.id === currentCityId
+        );
+        if (!currentCityBelongsToRegion) {
+          this.form.get('fkCityId')?.setValue(null);
+        }
+      }
+    } else {
+      // Clear cities if no region is selected
+      this.filteredCities = [];
+      this.form.get('fkCityId')?.setValue(null);
+    }
+  }
+
+  // Role checkbox change handlers
+  onRoleChange(role: keyof typeof this.roleStates, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    this.roleStates[role] = checkbox.checked;
+  }
+
+  // Helper method to get display text for account status
+  getAccountStatusText(isActive: boolean): string {
+    const option = this.accountStatusOptions.find((opt) => opt.id === isActive);
+    return option ? option.nameAr : '';
+  }
+
+  // Helper method to get display text for fingerprint exemption
+  getFingerprintExemptionText(canLeave: boolean): string {
+    const option = this.fingerprintExemptionOptions.find((opt) => opt.id === canLeave);
+    return option ? option.nameAr : '';
+  }
+
+  // Initialize role states based on model's roleIds
+  private initializeRoleStates(): void {
+    if (this.model.roleIds) {
+      this.roleStates.isEmployee = this.model.roleIds.includes(ROLES_ENUM.EMPLOYEE);
+      this.roleStates.isSysAdmin = this.model.roleIds.includes(ROLES_ENUM.ADMIN);
+      this.roleStates.isDeptManager = this.model.roleIds.includes(ROLES_ENUM.DEPARTMENT_MANAGER);
+      this.roleStates.isFollowUp = this.model.roleIds.includes(ROLES_ENUM.FOLLOW_UP_OFFICER);
+      this.roleStates.isHR = this.model.roleIds.includes(ROLES_ENUM.HR_OFFICER);
+      this.roleStates.isSecurityMember = this.model.roleIds.includes(ROLES_ENUM.SECURITY_MEMBER);
+      this.roleStates.isSecurityLeader = this.model.roleIds.includes(ROLES_ENUM.SECURITY_LEADER);
+    }
+  }
+
+  // Initialize filtered cities based on current region selection
+  private initializeFilteredCities(): void {
+    const currentRegionId = this.model.fkRegionId;
+    if (currentRegionId) {
+      this.filteredCities = this.cities.filter((city) => city.regionId === currentRegionId);
+    } else {
+      this.filteredCities = [];
+    }
   }
 }

@@ -53,10 +53,46 @@ export class EmployeePermissionPopupComponent extends BasePopupComponent<User> i
     super();
   }
 
+  // Form control getters
+  get isEmployeeControl() {
+    return this.form.get('isEmployee') as FormControl;
+  }
+
+  get isSysAdminControl() {
+    return this.form.get('isSysAdmin') as FormControl;
+  }
+
+  get isDeptManagerControl() {
+    return this.form.get('isDeptManager') as FormControl;
+  }
+
+  get isFollowUpControl() {
+    return this.form.get('isFollowUp') as FormControl;
+  }
+
+  get isHRControl() {
+    return this.form.get('isHR') as FormControl;
+  }
+
+  get isSecurityMemberControl() {
+    return this.form.get('isSecurityMember') as FormControl;
+  }
+
+  get isSecurityLeaderControl() {
+    return this.form.get('isSecurityLeader') as FormControl;
+  }
+
+  // Helper method to get department name based on current language
+  get departmentName(): string {
+    if (!this.model.department) return '';
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC
+      ? this.model.department.nameAr || ''
+      : this.model.department.nameEn || '';
+  }
+
   override initPopup(): void {
     this.model = this.data.model;
-    console.log('Permission popup model:', this.model);
-
     // Initialize role states based on model's roleIds
     this.initializeRoleStates();
   }
@@ -184,43 +220,5 @@ export class EmployeePermissionPopupComponent extends BasePopupComponent<User> i
     this.form.get('isSecurityLeader')?.valueChanges.subscribe((value) => {
       this.roleStates.isSecurityLeader = value;
     });
-  }
-
-  // Form control getters
-  get isEmployeeControl() {
-    return this.form.get('isEmployee') as FormControl;
-  }
-
-  get isSysAdminControl() {
-    return this.form.get('isSysAdmin') as FormControl;
-  }
-
-  get isDeptManagerControl() {
-    return this.form.get('isDeptManager') as FormControl;
-  }
-
-  get isFollowUpControl() {
-    return this.form.get('isFollowUp') as FormControl;
-  }
-
-  get isHRControl() {
-    return this.form.get('isHR') as FormControl;
-  }
-
-  get isSecurityMemberControl() {
-    return this.form.get('isSecurityMember') as FormControl;
-  }
-
-  get isSecurityLeaderControl() {
-    return this.form.get('isSecurityLeader') as FormControl;
-  }
-
-  // Helper method to get department name based on current language
-  get departmentName(): string {
-    if (!this.model.department) return '';
-    const lang = this.languageService.getCurrentLanguage();
-    return lang === LANGUAGE_ENUM.ARABIC
-      ? this.model.department.nameAr || ''
-      : this.model.department.nameEn || '';
   }
 }

@@ -106,6 +106,11 @@ export default class AttendanceLogListComponent
     return this.attendanceService;
   }
 
+  get optionLabel(): string {
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  }
+
   override initListComponent(): void {
     // Load lookups
     this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
@@ -113,7 +118,6 @@ export default class AttendanceLogListComponent
     });
 
     this.userService.getUsersWithDepartment().subscribe((res: UsersWithDepartmentLookup[]) => {
-      console.log('Employees', res);
       this.employees = res;
       this.creators = res; // Same users can be creators
     });
@@ -124,7 +128,6 @@ export default class AttendanceLogListComponent
 
   override openDialog(attendanceLog?: AttendanceLog): void {
     const model = attendanceLog ?? new AttendanceLog();
-    console.log('model i nlist', model);
     const viewMode = attendanceLog ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialogSP(AttendanceLogPopupComponent as any, model, viewMode, {
       departments: this.departments,
@@ -165,11 +168,6 @@ export default class AttendanceLogListComponent
         this.alertService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
       }
     });
-  }
-
-  get optionLabel(): string {
-    const lang = this.languageService.getCurrentLanguage();
-    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   formatSwipeTime(swipeTime: string | undefined): { date: string; time: string } {

@@ -6,6 +6,9 @@ import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 import { Department } from '../department/department';
 import { BaseLookupModel } from '../base-lookup-model';
+import { LanguageService } from '@/services/shared/language.service';
+import { FactoryService } from '@/services/factory-service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 const { send, receive } = new PermissionInterceptor();
 
@@ -25,7 +28,13 @@ export class Permission extends BaseCrudModel<Permission, PermissionService> {
   declare permissionReason: BaseLookupModel;
   declare permissionType: BaseLookupModel;
   declare actionDate?: Date | string;
+  declare canTakeAction?: boolean;
+  private languageService?: LanguageService;
 
+  constructor() {
+    super();
+    this.languageService = FactoryService.getService('LanguageService');
+  }
   buildForm() {
     const { permissionDate, fkPermissionTypeId, fkReasonId, description } = this;
     return {
@@ -41,5 +50,30 @@ export class Permission extends BaseCrudModel<Permission, PermissionService> {
         ],
       ],
     };
+  }
+  getStatusName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (this.status.nameEn ?? '')
+      : (this.status.nameAr ?? '');
+  }
+  getCreationUserName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (this.creationUser.nameEn ?? '')
+      : (this.creationUser.nameAr ?? '');
+  }
+  getPermissionReasonName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (this.permissionReason.nameEn ?? '')
+      : (this.permissionReason.nameAr ?? '');
+  }
+  getPermissionTypeName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (this.permissionType.nameEn ?? '')
+      : (this.permissionType.nameAr ?? '');
+  }
+  getPermissionDepartmentName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (this.deprtment.nameEn ?? '')
+      : (this.deprtment.nameAr ?? '');
   }
 }

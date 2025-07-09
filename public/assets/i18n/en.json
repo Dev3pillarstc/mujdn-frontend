@@ -206,7 +206,12 @@
     "PERMISSION_REASON": "Permission Reason",
     "PERMISSION_DESCRIPTION": "Permission Description",
     "ADD_NEW_PERMISSION": "Add New Permission",
-    "NEW_PERMISSION": "New Permission"
+    "NEW_PERMISSION": "New Permission",
+    "ACTION": "Action",
+    "APPROVAL_DATE": "Approval Date",
+    "REJECTION_DATE": "Rejection Date",
+    "APPROVE": "Approve",
+    "DECLINE": "Decline"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",

@@ -3,7 +3,9 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">بيانات طلب الاستئذان</h3>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'PERMISSION_PAGE.PERMISSION_DATA' | translate }}
+    </h3>
 
     <div class="p-6 rounded-2xl bg-[#f3f4f6]">
       <div class="flex flex-col sm:flex-row justify-between bg-white rounded-2xl py-4 px-6 gap-4">
@@ -11,20 +13,47 @@
           <span class="text-[#6c737f] text-sm">{{
             'PERMISSION_PAGE.PERMISSION_STATUS' | translate
           }}</span>
-          <div class="bg-[#1570ef] px-4 rounded-full text-white flex gap-2 items-center">
-            <span class="block w-[10px] rounded-full h-[10px] bg-[#ffffff99]"> </span>
-            <span>{{ isArabic ? model.status.nameAr : model.status.nameEn }}</span>
+          <div
+            [ngClass]="[
+              'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
+              model.status.id === permissionStatusEnum.Accepted
+                ? 'bg-[#ecfdf3] text-[#085d3a]'
+                : model.status.id === permissionStatusEnum.New ||
+                    model.status.id === permissionStatusEnum.FirstAccepted
+                  ? 'bg-[#eff8ff] text-[#1849a9]'
+                  : 'bg-[#fef3f2] text-[#912018]',
+            ]"
+          >
+            <span
+              [ngClass]="[
+                'block w-[10px] h-[10px] rounded-full',
+                model.status.id === permissionStatusEnum.Accepted
+                  ? 'bg-[#085d3a]'
+                  : model.status.id === permissionStatusEnum.New ||
+                      model.status.id === permissionStatusEnum.FirstAccepted
+                    ? 'bg-[#1849a9]'
+                    : 'bg-[#912018]',
+              ]"
+            >
+            </span>
+            <span>{{ model.getStatusName() }}</span>
           </div>
         </div>
         <div class="flex gap-2 items-center">
-          @if (model.fkStatusId == statusEnum.Accepted) {
-            <span class="text-[#6c737f] text-sm">تاريخ الموافقة</span>
+          @if (
+            model.fkStatusId == statusEnum.Accepted || model.fkStatusId == statusEnum.FirstAccepted
+          ) {
+            <span class="text-[#6c737f] text-sm">{{
+              'PERMISSION_PAGE.APPROVAL_DATE' | translate
+            }}</span>
             <span class="text-[#161616] font-semibold">
               <span>{{ model.actionDate ? (model.actionDate | date) : '' }}</span>
             </span>
           }
           @if (model.fkStatusId == statusEnum.Rejected) {
-            <span class="text-[#6c737f] text-sm">تاريخ الرفض</span>
+            <span class="text-[#6c737f] text-sm">{{
+              'PERMISSION_PAGE.REJECTION_DATE' | translate
+            }}</span>
             <span class="text-[#161616] font-semibold">
               <span>{{ model.actionDate ? (model.actionDate | date) : '' }}</span>
             </span>
@@ -37,13 +66,15 @@
             'PERMISSION_PAGE.PERMISSION_TYPE' | translate
           }}</span>
           <span class="font-semibold text-[#161616]">
-            <span>{{ isArabic ? model.permissionType.nameAr : model.permissionType.nameEn }}</span>
+            <span>{{ model.getPermissionTypeName() }}</span>
           </span>
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-sm text-[#6c737f]">اسم المدير </span>
+          <span class="text-sm text-[#6c737f]">
+            {{ 'DEPARTMENTS_HEADER_PAGE.MANAGER_NAME' | translate }}
+          </span>
           <span class="font-semibold text-[#161616]">
-            <span>{{ isArabic ? model.creationUser.nameAr : model.creationUser.nameEn }}</span>
+            <span>{{ model.getCreationUserName() }}</span>
           </span>
         </div>
         <div class="flex flex-col gap-2">
@@ -57,13 +88,13 @@
             >{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}
           </span>
           <span class="font-semibold text-[#161616]">
-            <span>{{
-              isArabic ? model.permissionReason.nameAr : model.permissionReason.nameEn
-            }}</span>
+            <span>{{ model.getPermissionReasonName() }}</span>
           </span>
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-sm text-[#6c737f]">ملاحظات </span>
+          <span class="text-sm text-[#6c737f]"
+            >{{ 'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate }}
+          </span>
           <span class="font-semibold text-[#161616]">
             <span>{{ model.description }}</span>
           </span>
@@ -71,11 +102,15 @@
       </div>
     </div>
     <div class="actions mt-6 flex items-center justify-between gap-4">
-      <button class="btn gray-btn" (click)="close()">الغاء</button>
-      @if (canTakeAction) {
+      <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
+      @if (model.canTakeAction) {
         <div class="flex gap-2">
-          <button class="btn red-btn" (click)="rejectPermissionStatus()">رفض</button>
-          <button class="btn green-btn" (click)="acceptPermissionStatus()">قبول</button>
+          <button class="btn red-btn" (click)="rejectPermissionStatus()">
+            {{ 'PERMISSION_PAGE.DECLINE' | translate }}
+          </button>
+          <button class="btn green-btn" (click)="acceptPermissionStatus()">
+            {{ 'PERMISSION_PAGE.APPROVE' | translate }}
+          </button>
         </div>
       }
     </div>

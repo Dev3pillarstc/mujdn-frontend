@@ -29,15 +29,14 @@ export class PermissionsDataPopupComponent implements OnInit {
   service = inject(PermissionService);
   fb = inject(FormBuilder);
   languageService = inject(LanguageService);
-  isArabic = this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ARABIC;
   dialogRef = inject(MatDialogRef);
-  canTakeAction = this.data.ViewMode == ViewModeEnum.TAKE_ACTION;
   statusEnum = PERMISSION_STATUS_ENUM;
+  permissionStatusEnum = PERMISSION_STATUS_ENUM;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
     this.model = this.data.model;
-    console.log(this.model);
   }
 
   afterSave() {
@@ -50,7 +49,7 @@ export class PermissionsDataPopupComponent implements OnInit {
   }
 
   acceptPermissionStatus() {
-    this.service.updateStatus(this.model.id, PERMISSION_STATUS_ENUM.Accepted).subscribe({
+    this.service.acceptPermission(this.model.id).subscribe({
       next: (updatedPermission) => {
         this.model = updatedPermission; // optionally update local model
         this.afterSave();
@@ -61,7 +60,7 @@ export class PermissionsDataPopupComponent implements OnInit {
   }
 
   rejectPermissionStatus() {
-    this.service.updateStatus(this.model.id, PERMISSION_STATUS_ENUM.Rejected).subscribe({
+    this.service.rejectPermission(this.model.id).subscribe({
       next: (updatedPermission) => {
         this.model = updatedPermission; // optionally update local model
         this.dialogRef.close(DIALOG_ENUM.OK);

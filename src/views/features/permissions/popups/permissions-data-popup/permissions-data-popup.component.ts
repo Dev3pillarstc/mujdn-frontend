@@ -40,7 +40,7 @@ export class PermissionsDataPopupComponent implements OnInit {
   }
 
   afterSave() {
-    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
+    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'], icon: 'success' };
     this.alertService.showSuccessMessage(successObject);
   }
 

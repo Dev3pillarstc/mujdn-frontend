@@ -137,7 +137,7 @@ export abstract class BaseListComponent<
     this.first = 0;
     this.loadList();
   }
-  searchSP() {
+  searchAndLoadSP() {
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadListSP();
@@ -150,7 +150,7 @@ export abstract class BaseListComponent<
     this.first = 0;
     this.loadList();
   }
-  resetSearchSP() {
+  resetSearchAndLoadSP() {
     this.filterModel = {} as FilterModel;
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
@@ -165,7 +165,7 @@ export abstract class BaseListComponent<
     this.paginationParams.pageSize = this.rows;
     this.loadList();
   }
-  onPageChangeSP(event: PaginatorState) {
+  onPageChangeLoadSP(event: PaginatorState) {
     this.first = event.first!;
     this.rows = event.rows!;
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
@@ -216,6 +216,29 @@ export abstract class BaseListComponent<
         this.service.delete(id).subscribe({
           next: () => {
             this.loadList();
+            this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
+          },
+          error: (_) => {
+            this.alertsService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
+          },
+        });
+      }
+    });
+  }
+
+  deleteAndLoadSP(id: string | number) {
+    const dialogRef = this.confirmService.open({
+      icon: 'warning',
+      messages: ['COMMON.CONFIRM_DELETE'],
+      confirmText: 'COMMON.OK',
+      cancelText: 'COMMON.CANCEL',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == DIALOG_ENUM.OK) {
+        this.service.delete(id).subscribe({
+          next: () => {
+            this.loadListSP();
             this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
           },
           error: (_) => {

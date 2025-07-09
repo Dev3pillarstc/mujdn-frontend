@@ -6,5 +6,7 @@ export class LoggedInUser {
   departNameAr?: string;
   departNameEn?: string;
   profilePhotoId?: string;
+  isInRootDepartment?: boolean;
+  isDepartmentManager?: boolean;
   roles: string[] = [];
 }

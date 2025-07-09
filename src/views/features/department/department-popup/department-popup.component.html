@@ -177,52 +177,55 @@
           </div>
         </div>
       </div>
-      <div class="mt-6 pt-6 border-t border-[#d2d6db] text-[#000]">
-        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-          {{ 'DEPARTMENT_POPUP.APPROVAL_LEVEL' | translate }}
-        </h3>
-        <div class="flex flex-wrap gap-8 items-center">
-          <label class="flex items-center cursor-pointer gap-2">
-            <input
-              type="radio"
-              class="hidden peer"
-              name="isOneLevelApproval"
-              [value]="true"
-              id="one-level-radio"
-              formControlName="isOneLevelApproval"
-            />
-            <span
-              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
-            >
-              <span
-                class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('isOneLevelApproval')?.value === true"
-              ></span>
-            </span>
-            <span>{{ 'DEPARTMENT_POPUP.ONE_LEVEL_APPROVAL' | translate }}</span>
-          </label>
 
-          <label class="flex items-center cursor-pointer gap-2">
-            <input
-              type="radio"
-              class="hidden peer"
-              name="isOneLevelApproval"
-              [value]="false"
-              id="two-levels-radio"
-              formControlName="isOneLevelApproval"
-            />
-            <span
-              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
-            >
+      @if (model.fkParentDepartmentId != null) {
+        <div class="mt-6 pt-6 border-t border-[#d2d6db] text-[#000]">
+          <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+            {{ 'DEPARTMENT_POPUP.APPROVAL_LEVEL' | translate }}
+          </h3>
+          <div class="flex flex-wrap gap-8 items-center">
+            <label class="flex items-center cursor-pointer gap-2">
+              <input
+                type="radio"
+                class="hidden peer"
+                name="isOneLevelApproval"
+                [value]="true"
+                id="one-level-radio"
+                formControlName="isOneLevelApproval"
+              />
               <span
-                class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('isOneLevelApproval')?.value === false"
-              ></span>
-            </span>
-            <span>{{ 'DEPARTMENT_POPUP.TWO_LEVEL_APPROVAL' | translate }}</span>
-          </label>
+                class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
+              >
+                <span
+                  class="w-4 h-4 rounded-full bg-[#22a06b] block"
+                  *ngIf="form.get('isOneLevelApproval')?.value === true"
+                ></span>
+              </span>
+              <span>{{ 'DEPARTMENT_POPUP.ONE_LEVEL_APPROVAL' | translate }}</span>
+            </label>
+
+            <label class="flex items-center cursor-pointer gap-2">
+              <input
+                type="radio"
+                class="hidden peer"
+                name="isOneLevelApproval"
+                [value]="false"
+                id="two-levels-radio"
+                formControlName="isOneLevelApproval"
+              />
+              <span
+                class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
+              >
+                <span
+                  class="w-4 h-4 rounded-full bg-[#22a06b] block"
+                  *ngIf="form.get('isOneLevelApproval')?.value === false"
+                ></span>
+              </span>
+              <span>{{ 'DEPARTMENT_POPUP.TWO_LEVEL_APPROVAL' | translate }}</span>
+            </label>
+          </div>
         </div>
-      </div>
+      }
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button type="button" class="btn gray-btn" (click)="close()">
           {{ 'DEPARTMENT_POPUP.CANCEL' | translate }}

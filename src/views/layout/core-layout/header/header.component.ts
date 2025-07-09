@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.loggedInUser = this.authService.getUser().value;
-    console.log('user', this.loggedInUser);
   }
 
   getLanguageButtonText() {

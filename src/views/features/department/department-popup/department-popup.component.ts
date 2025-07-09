@@ -22,10 +22,6 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationMessagesComponent } from '../../../shared/validation-messages/validation-messages.component';
 
-interface Adminstration {
-  type: string;
-}
-
 @Component({
   selector: 'app-department-popup',
   imports: [
@@ -51,8 +47,6 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   cities: City[] = [];
   regions: BaseLookupModel[] = [];
   usersProfiles: BaseLookupModel[] = new Array<BaseLookupModel>();
-  adminstrations: Adminstration[] | undefined;
-  selectedAdminstration: Adminstration | undefined;
   date2: Date | undefined;
   filteredCities: City[] = [];
   levelType: string = 'one-level';
@@ -112,6 +106,10 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
 
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm());
+
+    if (this.model.fkParentDepartmentId == null) {
+      this.form.get('isOneLevelApproval')?.setValue(true);
+    }
   }
 
   setupRegionChangeListener(): void {

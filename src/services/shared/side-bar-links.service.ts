@@ -22,7 +22,7 @@ export class SideBarLinksService {
     {
       label: 'حركات الحضور و الانصراف',
       iconUrl: 'assets/icons/menu-icons/icon.svg',
-      routerLink: ['/dashboard'],
+      routerLink: ['/attendance-logs'],
     },
     {
       label: 'الادارات',

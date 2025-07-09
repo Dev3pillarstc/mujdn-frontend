@@ -264,14 +264,14 @@ export default class EmployeeListComponent
         label: this.translateService.instant('EMPLOYEES_PAGE.TASKS_ASSIGNED_TO_EMPLOYEE'),
         command: () => this.tasksAssignedToEmployee(),
       },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.DELETE_EMPLOYEE'),
-        styleClass: 'p-menuitem-danger',
-        command: () => this.openConfirmation(),
-      },
+      // {
+      //   separator: true,
+      // },
+      // {
+      //   label: this.translateService.instant('EMPLOYEES_PAGE.DELETE_EMPLOYEE'),
+      //   styleClass: 'p-menuitem-danger',
+      //   command: () => this.openConfirmation(),
+      // },
     ];
   }
 }

@@ -4,7 +4,7 @@
     "TESTING": "http://dev3pillarstc-001-site6.rtempurl.com/api"
   },
   "API_VERSION": "",
-  "BASE_ENVIRONMENT": "TESTING",
+  "BASE_ENVIRONMENT": "DEV",
   "DEV_VARIABLES": {
     "INTEGRATION1": "http//dev/integration1",
     "INTEGRATION2": "http//dev/integration2"

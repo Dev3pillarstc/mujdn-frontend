@@ -130,10 +130,10 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button (click)="searchSP()" class="btn black-btn">
+            <button (click)="searchAndLoadSP()" class="btn black-btn">
               {{ 'COMMON.SEARCH' | translate }}
             </button>
-            <button (click)="resetSearchSP()" class="btn gray-btn border border-[#d2d6db]">
+            <button (click)="resetSearchAndLoadSP()" class="btn gray-btn border border-[#d2d6db]">
               {{ 'COMMON.RESET_SEARCH' | translate }}
             </button>
           </div>
@@ -186,8 +186,7 @@
                   </div>
                 </td>
                 <td>{{ attendanceLog.channelName }}</td>
-
-                @if (attendanceLog.creatorNameAr && attendanceLog.creatorNameEn) {
+                @if (!attendanceLog.isRowData) {
                   <td>{{ attendanceLog.creatorNameAr }}</td>
                   <td>{{ attendanceLog.creatorNameEn }}</td>
                 } @else {
@@ -221,7 +220,11 @@
                     <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
                       <img src="assets/icons/edit-action.svg" alt="" />
                     </button>
-                    <button (click)="deleteModel(attendanceLog.id)" class="table-action-red-btn">
+                    <button
+                      (click)="deleteAndLoadSP(attendanceLog.id)"
+                      [disabled]="attendanceLog.isRowData"
+                      class="table-action-red-btn {{ attendanceLog.isRowData ? 'disabled' : '' }}"
+                    >
                       <img src="assets/icons/delete-action.svg" alt="" />
                     </button>
                   </div>
@@ -231,12 +234,12 @@
           </p-table>
         } @else {
           <div class="flex items-center justify-center h-64">
-            <p class="text-gray-500">{{ 'ATTENDANCE_LOG_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+            <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
           </div>
         }
         @if (paginationInfo) {
           <p-paginator
-            (onPageChange)="onPageChangeSP($event)"
+            (onPageChange)="onPageChangeLoadSP($event)"
             [first]="first"
             [rowsPerPageOptions]="[10, 20, 30]"
             [rows]="rows"

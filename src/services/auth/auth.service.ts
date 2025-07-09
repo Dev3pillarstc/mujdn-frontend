@@ -29,6 +29,12 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
     return this.loggedInUser.value?.roles.includes(ROLES_ENUM.HR_OFFICER);
   }
 
+  get isRootDeprtment() {
+    return this.loggedInUser.value?.isInRootDepartment;
+  }
+  get isDeprtmentActualManager() {
+    return this.loggedInUser.value?.isDepartmentManager;
+  }
   getUrlSegment(): string {
     return this.urlService.URLS.AUTH;
   }
@@ -52,6 +58,10 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
 
   setUser(loggedInUser: LoggedInUser | undefined) {
     this.isAuthenticated = !!loggedInUser;
+    if (loggedInUser) {
+      loggedInUser.isDepartmentManager = loggedInUser.isDepartmentManager + '' == 'true';
+      loggedInUser.isInRootDepartment = loggedInUser.isInRootDepartment + '' == 'true';
+    }
     const user = Object.assign(new LoggedInUser(), loggedInUser);
     this.loggedInUser.next(user);
   }

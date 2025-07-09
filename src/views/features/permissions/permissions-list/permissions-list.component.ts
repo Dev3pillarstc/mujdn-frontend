@@ -196,11 +196,20 @@ export default class PermissionsListComponent
       this.authService.isHROfficer
     );
   }
+  showMyPermissions(): boolean {
+    const isManagerOfRoot =
+      this.authService.isDeprtmentActualManager && this.authService.isRootDeprtment;
+    return !isManagerOfRoot;
+  }
+
   onIncomingPermissionPageChange(event: PaginatorState) {
     this.first = event.first!;
     this.rows = event.rows!;
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     this.loadIncomingPermissions();
+  }
+  initialTabIndex(): number {
+    return this.showMyPermissions() ? 0 : 1;
   }
 }

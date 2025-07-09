@@ -264,5 +264,26 @@
     "EMPLOYEE_REQUIRED": "Employee is required",
     "MOVEMENT_TYPE": "Movement Type",
     "WORK_TYPE": "Work Type"
+  },
+  "MENU": {
+    "DASHBOARD": "Dashboard",
+    "ATTENDANCE_REPORT": "Attendance Report",
+    "ATTENDANCE_LOGS": "Attendance Logs",
+    "DEPARTMENTS": "Departments",
+    "EMPLOYEES": "Employee List",
+    "PRESENCE_INQUIRIES": "Presence Inquiries",
+    "PERMISSIONS": "Permissions",
+    "ASSIGNED_EMPLOYEES": "Assigned Employees",
+    "WORK_SHIFT_TEMP": "Temporary Work Shifts",
+    "WORK_SHIFT_ASSIGNMENT": "Assign Work Shifts",
+    "HOLIDAYS": "Holiday List",
+    "WORK_SHIFT": "Work Shifts",
+    "WORK_SHIFT_SETTINGS": "Work Shift Settings",
+    "SETTINGS": "Settings",
+    "PERMISSION_REASONS": "Permission Reasons",
+    "NOTIFICATION_CHANNELS": "Notification Settings",
+    "NATIONALITIES": "Nationalities",
+    "CITIES": "Cities",
+    "REGIONS": "Regions"
   }
 }

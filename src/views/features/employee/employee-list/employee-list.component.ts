@@ -28,10 +28,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { InputTextModule } from 'primeng/inputtext';
 import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/models/shared/account-status-option';
-import {
-  BooleanOptionModel,
-  FINGERPRINT_EXEMPTION_OPTIONS,
-} from '@/models/shared/fingerprint-exempt-option'; // Import your enums
+import { FINGERPRINT_EXEMPTION_OPTIONS } from '@/models/shared/fingerprint-exempt-option'; // Import your enums
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { CityService } from '@/services/features/lookups/city.service';
@@ -39,6 +36,8 @@ import { CityLookup } from '@/models/features/lookups/city/city-lookup';
 import { RegionService } from '@/services/features/lookups/region.service';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { BooleanOptionModel } from '@/models/shared/boolean-option';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -70,6 +69,8 @@ export default class EmployeeListComponent
   cityService = inject(CityService);
   regionService = inject(RegionService);
   departmentService = inject(DepartmentService);
+  authService = inject(AuthService);
+
   actionList: MenuItem[] = [];
   cities: CityLookup[] = [];
   regions: BaseLookupModel[] = [];

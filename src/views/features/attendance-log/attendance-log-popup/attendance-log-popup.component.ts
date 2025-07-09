@@ -61,6 +61,30 @@ export class AttendanceLogPopupComponent
     super();
   }
 
+  get departmentControl() {
+    return this.form.get('departmentId') as FormControl;
+  }
+
+  get employeeControl() {
+    return this.form.get('employeeId') as FormControl;
+  }
+
+  get nationalIdControl() {
+    return this.form.get('nationalId') as FormControl;
+  }
+
+  get selectedDateControl() {
+    return this.form.get('selectedDate') as FormControl;
+  }
+
+  get selectedTimeControl() {
+    return this.form.get('selectedTime') as FormControl;
+  }
+
+  get swipeTimeControl() {
+    return this.form.get('swipeTime') as FormControl;
+  }
+
   override initPopup() {
     this.model = this.data.model;
     this.departments = this.data.lookups?.departments ?? [];
@@ -68,7 +92,6 @@ export class AttendanceLogPopupComponent
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
     this.filteredEmployees = [...this.employees];
-    console.log('this.model', this.model);
     // Initialize form controls with existing data if in edit mode
     if (this.model.swipeTime) {
       const existingDateTime = new Date(this.model.swipeTime);
@@ -121,6 +144,49 @@ export class AttendanceLogPopupComponent
     this.setupFormSubscriptions();
   }
 
+  beforeSave(model: AttendanceLog, form: FormGroup): boolean {
+    // Validate that both date and time are selected
+    if (!form.get('selectedDate')?.value || !form.get('selectedTime')?.value) {
+      this.alertService.showErrorMessage({
+        messages: ['ATTENDANCE_LOG_PAGE.DATE_TIME_REQUIRED'],
+      });
+      return false;
+    }
+
+    // Validate that department and employee are selected
+    if (!form.get('departmentId')?.value) {
+      this.alertService.showErrorMessage({
+        messages: ['ATTENDANCE_LOG_PAGE.DEPARTMENT_REQUIRED'],
+      });
+      return false;
+    }
+
+    if (!form.get('employeeId')?.value) {
+      this.alertService.showErrorMessage({
+        messages: ['ATTENDANCE_LOG_PAGE.EMPLOYEE_REQUIRED'],
+      });
+      return false;
+    }
+
+    return form.valid;
+  }
+
+  afterSave() {
+    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
+    this.alertService.showSuccessMessage(successObject);
+  }
+
+  getPropertyName(): string {
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+      ? 'nameEn'
+      : 'nameAr';
+  }
+
+  // Public method to get filtered employees for template
+  getFilteredEmployees(): UsersWithDepartmentLookup[] {
+    return this.filteredEmployees;
+  }
+
   private setupFormSubscriptions() {
     // Subscribe to department changes
     this.form.get('departmentId')?.valueChanges.subscribe((departmentId) => {
@@ -154,38 +220,6 @@ export class AttendanceLogPopupComponent
     });
   }
 
-  beforeSave(model: AttendanceLog, form: FormGroup): boolean {
-    // Validate that both date and time are selected
-    if (!form.get('selectedDate')?.value || !form.get('selectedTime')?.value) {
-      this.alertService.showErrorMessage({
-        messages: ['ATTENDANCE_LOG_PAGE.DATE_TIME_REQUIRED'],
-      });
-      return false;
-    }
-
-    // Validate that department and employee are selected
-    if (!form.get('departmentId')?.value) {
-      this.alertService.showErrorMessage({
-        messages: ['ATTENDANCE_LOG_PAGE.DEPARTMENT_REQUIRED'],
-      });
-      return false;
-    }
-
-    if (!form.get('employeeId')?.value) {
-      this.alertService.showErrorMessage({
-        messages: ['ATTENDANCE_LOG_PAGE.EMPLOYEE_REQUIRED'],
-      });
-      return false;
-    }
-
-    return form.valid;
-  }
-
-  afterSave() {
-    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
-    this.alertService.showSuccessMessage(successObject);
-  }
-
   private filterEmployeesByDepartment(departmentId: number) {
     this.filteredEmployees = this.employees.filter((emp) => emp.departmentId === departmentId);
   }
@@ -210,40 +244,5 @@ export class AttendanceLogPopupComponent
     combined.setMilliseconds(0);
 
     return combined.toISOString();
-  }
-
-  getPropertyName(): string {
-    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-      ? 'nameEn'
-      : 'nameAr';
-  }
-
-  // Public method to get filtered employees for template
-  getFilteredEmployees(): UsersWithDepartmentLookup[] {
-    return this.filteredEmployees;
-  }
-
-  get departmentControl() {
-    return this.form.get('departmentId') as FormControl;
-  }
-
-  get employeeControl() {
-    return this.form.get('employeeId') as FormControl;
-  }
-
-  get nationalIdControl() {
-    return this.form.get('nationalId') as FormControl;
-  }
-
-  get selectedDateControl() {
-    return this.form.get('selectedDate') as FormControl;
-  }
-
-  get selectedTimeControl() {
-    return this.form.get('selectedTime') as FormControl;
-  }
-
-  get swipeTimeControl() {
-    return this.form.get('swipeTime') as FormControl;
   }
 }

@@ -31,6 +31,7 @@ import { of, switchMap, Observable } from 'rxjs';
 })
 export class UserService extends LookupBaseService<User, string> {
   override serviceName: string = 'UserService';
+
   override getUrlSegment(): string {
     return this.urlService.URLS.USERS;
   }
@@ -58,7 +59,6 @@ export class UserService extends LookupBaseService<User, string> {
       )
       .pipe(
         switchMap((response: ListResponseData<UsersWithDepartmentLookup>) => {
-          console.log('response: ', response);
           return of(response.data);
         })
       );

@@ -9,7 +9,6 @@ import { catchError, of, tap } from 'rxjs';
 export const attendanceResolver: ResolveFn<PaginatedList<AttendanceLog> | null> = () => {
   const attendanceService = inject(AttendanceService);
   return attendanceService.loadPaginatedSP(new PaginationParams()).pipe(
-    tap((response) => console.log('resolver: attendanceResolver', response)),
     catchError((error) => {
       return of(null); // Prevent throwing to allow route activation
     })

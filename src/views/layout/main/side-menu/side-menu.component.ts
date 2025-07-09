@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '@/services/auth/auth.service';
 import { SideBarLinksService } from '@/services/shared/side-bar-links.service';
 import { MenuItem } from '@/models/shared/menu-item';
+import { LanguageService } from '@/services/shared/language.service';
+import { combineLatest, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-side-menu',
@@ -21,6 +23,8 @@ export class SideMenuComponent implements OnInit {
   authService = inject(AuthService);
   sidebarLinksService = inject(SideBarLinksService);
   menuItems: MenuItem[] = [];
+  languageService = inject(LanguageService);
+  private subscription = new Subscription();
 
   constructor() {
     window.addEventListener('resize', () => {
@@ -36,9 +40,13 @@ export class SideMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.getUser().subscribe((_) => {
-      this.menuItems = this.sidebarLinksService.getSidebarLinks();
-    });
+    this.subscription.add(
+      combineLatest([this.authService.getUser(), this.languageService.languageChanged$])
+        .pipe(switchMap(() => this.sidebarLinksService.getSidebarLinks()))
+        .subscribe((menu) => {
+          this.menuItems = menu;
+        })
+    );
   }
 
   toggleSubmenu(item: MenuItem) {
@@ -63,5 +71,9 @@ export class SideMenuComponent implements OnInit {
 
   logout() {
     this.authService.logout().subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

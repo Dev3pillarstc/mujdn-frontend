@@ -20,17 +20,13 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/models/shared/account-status-option';
-import {
-  BooleanOptionModel,
-  FINGERPRINT_EXEMPTION_OPTIONS,
-} from '@/models/shared/fingerprint-exempt-option';
+import { FINGERPRINT_EXEMPTION_OPTIONS } from '@/models/shared/fingerprint-exempt-option';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
-import { City } from '@/models/features/lookups/city/city';
-import { Region } from '@/models/features/lookups/region/region';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { CityLookup } from '@/models/features/lookups/city/city-lookup';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ROLES_ENUM } from '@/enums/roles-enum';
+import { BooleanOptionModel } from '@/models/shared/boolean-option';
 
 @Component({
   selector: 'app-add-new-employee-popup',

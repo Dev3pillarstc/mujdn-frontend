@@ -184,7 +184,11 @@
             <button class="table-head-action-btn">
               <img alt="" src="assets/icons/print.svg" />
             </button>
-            <button (click)="openDialog()" class="btn green-btn flex items-center">
+            <button
+              [hidden]="authService.isAdmin"
+              (click)="openDialog()"
+              class="btn green-btn flex items-center"
+            >
               <img alt="" src="assets/icons/plus.svg" />
               <span>{{ 'EMPLOYEES_PAGE.ADD_NEW_EMPLOYEE' | translate }}</span>
             </button>
@@ -236,6 +240,7 @@
                 <td>
                   <div class="flex gap-4">
                     <button
+                      [hidden]="!authService.isAdmin"
                       class="btn gray-btn flex align-items gap-4 min-w-[144px]"
                       (click)="openEmployeePermissionModal(user)"
                     >
@@ -245,6 +250,7 @@
                       }}</span>
                     </button>
                     <p-splitbutton
+                      [hidden]="authService.isAdmin"
                       (click)="setSelectedModel(user)"
                       dropdownIcon="pi pi-ellipsis-v"
                       [model]="actionList"

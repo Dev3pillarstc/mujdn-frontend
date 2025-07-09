@@ -28,27 +28,11 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { AttendanceLog } from '@/models/features/attendance/attendance-log/attendance-log';
 import { AttendanceLogFilter } from '@/models/features/attendance/attendance-log/attendance-log-filter';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
+import { BooleanOptionModel } from '@/models/shared/boolean-option';
+import { PROCESSING_STATUS_OPTIONS } from '@/models/shared/processing-status-option';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { registerIBMPlexArabicFont } from '../../../../assets/fonts/ibm-plex-font'; // adjust the path
-
-// Define constants for options
-const PROCESSING_STATUS_OPTIONS: BaseLookupModel[] = [
-  { id: 1, nameAr: 'تمت المعالجة', nameEn: 'Processed' },
-  { id: 2, nameAr: 'قيد المعالجة', nameEn: 'Processing' },
-];
-
-const MOVEMENT_TYPE_OPTIONS: BaseLookupModel[] = [
-  { id: 1, nameAr: 'حضور', nameEn: 'Check In' },
-  { id: 2, nameAr: 'انصراف', nameEn: 'Check Out' },
-  { id: 3, nameAr: 'استراحة', nameEn: 'Break' },
-];
-
-const WORK_TYPE_OPTIONS: BaseLookupModel[] = [
-  { id: 1, nameAr: 'دوام كلي', nameEn: 'Full Time' },
-  { id: 2, nameAr: 'دوام جزئي', nameEn: 'Part Time' },
-  { id: 3, nameAr: 'دوام نوبات', nameEn: 'Shift Work' },
-];
 
 @Component({
   selector: 'app-attendance-log-list',
@@ -93,9 +77,7 @@ export default class AttendanceLogListComponent
 
   home: MenuItem | undefined;
   filterModel: AttendanceLogFilter = new AttendanceLogFilter();
-  processingStatusOptions: BaseLookupModel[] = PROCESSING_STATUS_OPTIONS;
-  movementTypeOptions: BaseLookupModel[] = MOVEMENT_TYPE_OPTIONS;
-  workTypeOptions: BaseLookupModel[] = WORK_TYPE_OPTIONS;
+  processingStatusOptions: BooleanOptionModel[] = PROCESSING_STATUS_OPTIONS;
 
   confirmationService = inject(ConfirmationService);
   alertService = inject(AlertService);

@@ -132,45 +132,38 @@ export abstract class BaseListComponent<
     });
   }
 
-  search() {
+  search(isStoredProcedure: boolean = false) {
     this.paginationParams.pageNumber = 1;
     this.first = 0;
-    this.loadList();
-  }
-  searchAndLoadSP() {
-    this.paginationParams.pageNumber = 1;
-    this.first = 0;
-    this.loadListSP();
+    if (isStoredProcedure) {
+      this.loadListSP();
+    } else {
+      this.loadList();
+    }
   }
 
-  resetSearch() {
+  resetSearch(isStoredProcedure: boolean = false) {
     this.filterModel = {} as FilterModel;
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
     this.first = 0;
-    this.loadList();
-  }
-  resetSearchAndLoadSP() {
-    this.filterModel = {} as FilterModel;
-    this.paginationParams.pageNumber = 1;
-    this.paginationParams.pageSize = 10;
-    this.first = 0;
-    this.loadListSP();
+    if (isStoredProcedure) {
+      this.loadListSP();
+    } else {
+      this.loadList();
+    }
   }
 
-  onPageChange(event: PaginatorState) {
+  onPageChange(event: PaginatorState, isStoredProcedure: boolean = false) {
     this.first = event.first!;
     this.rows = event.rows!;
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
-    this.loadList();
-  }
-  onPageChangeLoadSP(event: PaginatorState) {
-    this.first = event.first!;
-    this.rows = event.rows!;
-    this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
-    this.paginationParams.pageSize = this.rows;
-    this.loadListSP();
+    if (isStoredProcedure) {
+      this.loadListSP();
+    } else {
+      this.loadList();
+    }
   }
 
   exportExcel(fileName: string = 'data.xlsx'): void {
@@ -197,7 +190,7 @@ export abstract class BaseListComponent<
     this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
   }
 
-  deleteModel(id: string | number) {
+  deleteModel(id: string | number, isStoredProcedure: boolean = false) {
     const dialogRef = this.confirmService.open({
       icon: 'warning',
       messages: ['COMMON.CONFIRM_DELETE'],
@@ -209,30 +202,11 @@ export abstract class BaseListComponent<
       if (result == DIALOG_ENUM.OK) {
         this.service.delete(id).subscribe({
           next: () => {
-            this.loadList();
-            this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
-          },
-          error: (_) => {
-            this.alertsService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
-          },
-        });
-      }
-    });
-  }
-
-  deleteAndLoadSP(id: string | number) {
-    const dialogRef = this.confirmService.open({
-      icon: 'warning',
-      messages: ['COMMON.CONFIRM_DELETE'],
-      confirmText: 'COMMON.OK',
-      cancelText: 'COMMON.CANCEL',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result == DIALOG_ENUM.OK) {
-        this.service.delete(id).subscribe({
-          next: () => {
-            this.loadListSP();
+            if (isStoredProcedure) {
+              this.loadListSP();
+            } else {
+              this.loadList();
+            }
             this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
           },
           error: (_) => {

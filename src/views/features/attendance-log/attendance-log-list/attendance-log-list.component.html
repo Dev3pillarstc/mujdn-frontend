@@ -130,10 +130,10 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button (click)="searchSP()" class="btn black-btn">
+            <button (click)="searchAndLoadSP()" class="btn black-btn">
               {{ 'COMMON.SEARCH' | translate }}
             </button>
-            <button (click)="resetSearchSP()" class="btn gray-btn border border-[#d2d6db]">
+            <button (click)="resetSearchAndLoadSP()" class="btn gray-btn border border-[#d2d6db]">
               {{ 'COMMON.RESET_SEARCH' | translate }}
             </button>
           </div>
@@ -221,7 +221,7 @@
                       <img src="assets/icons/edit-action.svg" alt="" />
                     </button>
                     <button
-                      (click)="deleteModelSP(attendanceLog.id)"
+                      (click)="deleteAndLoadSP(attendanceLog.id)"
                       [disabled]="attendanceLog.isRowData"
                       class="table-action-red-btn {{ attendanceLog.isRowData ? 'disabled' : '' }}"
                     >
@@ -239,7 +239,7 @@
         }
         @if (paginationInfo) {
           <p-paginator
-            (onPageChange)="onPageChangeSP($event)"
+            (onPageChange)="onPageChangeLoadSP($event)"
             [first]="first"
             [rowsPerPageOptions]="[10, 20, 30]"
             [rows]="rows"

@@ -190,6 +190,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('@/views/features/lookups/notifiactions/notifiactions.component'),
       },
+      {
+        path: 'presence-inquiries',
+        loadComponent: () =>
+          import(
+            '@/views/features/presence-inquiries/presence-inquiries-list/presence-inquiries-list.component'
+          ),
+      },
     ],
   },
 

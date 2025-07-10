@@ -34,8 +34,8 @@ export default class NotificationChannelsComponent implements OnInit {
   save(): void {
     this.model = Object.assign(this.model, { ...this.form.value });
     console.log(this.model);
-    this.service.updateChannel(this.model).subscribe({
-      next: (result: ResponseData<NotificationChannel>) => {
+    this.service.update(this.model).subscribe({
+      next: (result: NotificationChannel) => {
         this.model = Object.assign(new NotificationChannel(), result);
       },
     });

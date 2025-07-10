@@ -34,28 +34,12 @@ export class NotificationChannelService extends BaseCrudService<NotificationChan
   @HasInterception
   get(): Observable<NotificationChannel> {
     return this.http
-      .get<ResponseData<NotificationChannel>>(this.getUrlSegment(), {
+      .get<ResponseData<NotificationChannel>>(this.getUrlSegment() + '/GetChannel', {
         withCredentials: true,
       })
       .pipe(
         switchMap((response: ResponseData<NotificationChannel>) => {
           return of(response.data);
-        })
-      );
-  }
-  @CastResponse()
-  @HasInterception
-  updateChannel(
-    @InterceptParam() model: NotificationChannel
-  ): Observable<ResponseData<NotificationChannel>> {
-    return this.http
-      .put<
-        ResponseData<NotificationChannel>
-      >(`${this.getUrlSegment()}`, model, { withCredentials: true })
-      .pipe(
-        catchError((err) => {
-          // Let the global ErrorHandler handle it
-          throw err;
         })
       );
   }

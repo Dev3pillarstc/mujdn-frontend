@@ -34,6 +34,7 @@ export class SideBarLinksService {
       labelKey: 'MENU.ATTENDANCE_LOGS',
       iconUrl: 'assets/icons/menu-icons/icon.svg',
       routerLink: ['/attendance-logs'],
+      routeId: RouteIdsEnum.ATTENDANCE_LOGS,
     },
     {
       labelKey: 'MENU.DEPARTMENTS',

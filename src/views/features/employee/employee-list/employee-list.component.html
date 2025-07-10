@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full"/>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'EMPLOYEES_PAGE.EMPLOYEES_LIST' | translate }}
       </h3>
@@ -17,8 +17,8 @@
           <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
               <label class="label" for="employeeNameAr">{{
-                'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
-              }}</label>
+                  'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.fullNameAr"
                 [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate"
@@ -34,8 +34,8 @@
             </div>
             <div class="relative">
               <label class="label" for="employeeNameEn">{{
-                'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate
-              }}</label>
+                  'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.fullNameEn"
                 [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate"
@@ -51,8 +51,8 @@
             </div>
             <div class="relative">
               <label class="label" for="accountStatus">{{
-                'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
-              }}</label>
+                  'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
+                }}</label>
               <p-select
                 [(ngModel)]="filterModel.isActive"
                 [options]="accountStatusOptions"
@@ -69,8 +69,8 @@
             </div>
             <div class="relative">
               <label class="label" for="department">{{
-                'EMPLOYEES_PAGE.DEPARTMENT' | translate
-              }}</label>
+                  'EMPLOYEES_PAGE.DEPARTMENT' | translate
+                }}</label>
               <p-select
                 (ngModelChange)="onDepartmentChange($event)"
                 [(ngModel)]="selectedDepartment"
@@ -88,8 +88,8 @@
 
             <div class="relative">
               <label class="label" for="jobTitleAr">{{
-                'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate
-              }}</label>
+                  'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.jobTitleAr"
                 [placeholder]="'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate"
@@ -105,8 +105,8 @@
             </div>
             <div class="relative">
               <label class="label" for="jobTitleEn">{{
-                'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate
-              }}</label>
+                  'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate
+                }}</label>
               <input
                 [(ngModel)]="filterModel.jobTitleEn"
                 [placeholder]="'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate"
@@ -123,8 +123,8 @@
 
             <div class="relative">
               <label class="label" for="fingerPrint">{{
-                'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate
-              }}</label>
+                  'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate
+                }}</label>
               <p-select
                 [(ngModel)]="filterModel.CanLeaveWithoutFingerPrint"
                 [options]="fingerprintExemptionOptions"
@@ -140,8 +140,8 @@
             </div>
             <div class="relative">
               <label class="label" for="joinDate">{{
-                'EMPLOYEES_PAGE.JOIN_DATE' | translate
-              }}</label>
+                  'EMPLOYEES_PAGE.JOIN_DATE' | translate
+                }}</label>
               <p-datepicker
                 [(ngModel)]="filterModel.joinDate"
                 [iconDisplay]="'input'"
@@ -151,7 +151,7 @@
                 inputId="joinDate"
               >
                 <ng-template pTemplate="inputicon">
-                  <img alt="" src="assets/icons/calender-icon.svg" />
+                  <img alt="" src="assets/icons/calender-icon.svg"/>
                 </ng-template>
               </p-datepicker>
               <span
@@ -179,19 +179,20 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button (click)="exportExcel('employees.xlsx')" class="table-head-action-btn">
-              <img alt="" src="assets/icons/excel.svg" />
+              <img alt="" src="assets/icons/excel.svg"/>
             </button>
             <button class="table-head-action-btn">
-              <img alt="" src="assets/icons/print.svg" />
+              <img alt="" src="assets/icons/print.svg"/>
             </button>
-            <button
-              [hidden]="authService.isAdmin && !authService.isHROfficer"
-              (click)="openDialog()"
-              class="btn green-btn flex items-center"
-            >
-              <img alt="" src="assets/icons/plus.svg" />
-              <span>{{ 'EMPLOYEES_PAGE.ADD_NEW_EMPLOYEE' | translate }}</span>
-            </button>
+            @if (authService.isHROfficer) {
+              <button
+                (click)="openDialog()"
+                class="btn green-btn flex items-center"
+              >
+                <img alt="" src="assets/icons/plus.svg"/>
+                <span>{{ 'EMPLOYEES_PAGE.ADD_NEW_EMPLOYEE' | translate }}</span>
+              </button>
+            }
           </div>
         </div>
         @if (list && list.length > 0) {
@@ -219,9 +220,9 @@
                 <td>
                   <div class="flex justify-center gap-2">
                     @if (user.canLeaveWithoutFingerPrint) {
-                      <img src="assets/icons/right-icon.svg" alt="" />
+                      <img src="assets/icons/right-icon.svg" alt=""/>
                     } @else {
-                      <img src="assets/icons/wrong-icon.svg" alt="" />
+                      <img src="assets/icons/wrong-icon.svg" alt=""/>
                     }
                   </div>
                 </td>
@@ -230,31 +231,33 @@
                 <td>
                   <div class="flex justify-center gap-2">
                     @if (user.isActive) {
-                      <img src="assets/icons/right-icon.svg" alt="" />
+                      <img src="assets/icons/right-icon.svg" alt=""/>
                     } @else {
-                      <img src="assets/icons/wrong-icon.svg" alt="" />
+                      <img src="assets/icons/wrong-icon.svg" alt=""/>
                     }
                   </div>
                 </td>
                 <td>{{ user.joinDate | date }}</td>
                 <td>
                   <div class="flex gap-4">
-                    <button
-                      [hidden]="!authService.isAdmin || !authService.isHROfficer"
-                      class="btn gray-btn flex align-items gap-4 min-w-[144px]"
-                      (click)="openEmployeePermissionModal(user)"
-                    >
-                      <img src="assets/icons/edit-action.svg" alt="" />
-                      <span class="text-sm">{{
-                        'EMPLOYEES_PAGE.EDIT_PERMISSIONS' | translate
-                      }}</span>
-                    </button>
-                    <p-splitbutton
-                      [hidden]="authService.isAdmin && !authService.isHROfficer"
-                      (click)="setSelectedModel(user)"
-                      dropdownIcon="pi pi-ellipsis-v"
-                      [model]="actionList"
-                    />
+                    @if (authService.isAdmin) {
+                      <button
+                        class="btn gray-btn flex align-items gap-4 min-w-[144px]"
+                        (click)="openEmployeePermissionModal(user)"
+                      >
+                        <img src="assets/icons/edit-action.svg" alt=""/>
+                        <span class="text-sm">{{
+                            'EMPLOYEES_PAGE.EDIT_PERMISSIONS' | translate
+                          }}</span>
+                      </button>
+                    }
+                    @if (authService.isHROfficer) {
+                      <p-splitbutton
+                        (click)="setSelectedModel(user)"
+                        dropdownIcon="pi pi-ellipsis-v"
+                        [model]="actionList"
+                      />
+                    }
                   </div>
                 </td>
               </tr>

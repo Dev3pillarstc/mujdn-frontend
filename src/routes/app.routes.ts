@@ -51,7 +51,8 @@ export const routes: Routes = [
   },
   {
     path: '',
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
+    data: { roles: [ROLES_ENUM.EMPLOYEE] },
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
       {

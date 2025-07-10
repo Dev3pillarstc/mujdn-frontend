@@ -6,6 +6,7 @@ import { LocalStorageService } from '@/services/shared/local-storage.service';
 import { LanguageService } from '@/services/shared/language.service';
 import { AuthService } from '@/services/auth/auth.service';
 import { LoggedInUser } from '@/models/auth/logged-in-user';
+import { SharedService } from '@/services/shared/shared.service';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   declare currentLanguage: string;
   languageEnum = LANGUAGE_ENUM;
   declare loggedInUser?: LoggedInUser;
+  sharedService = inject(SharedService);
 
   ngOnInit() {
     this.loggedInUser = this.authService.getUser().value;
@@ -50,5 +52,9 @@ export class HeaderComponent implements OnInit {
     return this.translateService.currentLang == LANGUAGE_ENUM.ENGLISH
       ? this.loggedInUser?.departNameEn
       : this.loggedInUser?.departNameAr;
+  }
+
+  toggleSideMenu() {
+    this.sharedService.toggleSideMenu();
   }
 }

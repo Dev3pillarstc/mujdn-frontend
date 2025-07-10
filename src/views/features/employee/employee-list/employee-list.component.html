@@ -185,7 +185,7 @@
               <img alt="" src="assets/icons/print.svg" />
             </button>
             <button
-              [hidden]="authService.isAdmin"
+              [hidden]="authService.isAdmin && !authService.isHROfficer"
               (click)="openDialog()"
               class="btn green-btn flex items-center"
             >
@@ -240,7 +240,7 @@
                 <td>
                   <div class="flex gap-4">
                     <button
-                      [hidden]="!authService.isAdmin"
+                      [hidden]="!authService.isAdmin || !authService.isHROfficer"
                       class="btn gray-btn flex align-items gap-4 min-w-[144px]"
                       (click)="openEmployeePermissionModal(user)"
                     >
@@ -250,7 +250,7 @@
                       }}</span>
                     </button>
                     <p-splitbutton
-                      [hidden]="authService.isAdmin"
+                      [hidden]="authService.isAdmin && !authService.isHROfficer"
                       (click)="setSelectedModel(user)"
                       dropdownIcon="pi pi-ellipsis-v"
                       [model]="actionList"

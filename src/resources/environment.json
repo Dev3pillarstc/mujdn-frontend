@@ -4,7 +4,7 @@
     "TESTING": "https://m-back.dev3pillars.org/api"
   },
   "API_VERSION": "",
-  "BASE_ENVIRONMENT": "TESTING",
+  "BASE_ENVIRONMENT": "DEV",
   "DEV_VARIABLES": {
     "INTEGRATION1": "http//dev/integration1",
     "INTEGRATION2": "http//dev/integration2"

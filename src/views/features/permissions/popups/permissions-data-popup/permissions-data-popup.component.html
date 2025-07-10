@@ -41,8 +41,7 @@
         </div>
         <div class="flex gap-2 items-center">
           @if (
-            model.fkStatusId == statusEnum.Accepted ||
-            model.fkStatusId == statusEnum.FirstAccepted
+            model.fkStatusId == statusEnum.Accepted || model.fkStatusId == statusEnum.FirstAccepted
           ) {
             <span class="text-[#6c737f] text-sm">{{
               'PERMISSION_PAGE.APPROVAL_DATE' | translate

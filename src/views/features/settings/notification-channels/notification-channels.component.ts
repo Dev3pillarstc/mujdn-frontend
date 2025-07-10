@@ -27,13 +27,11 @@ export default class NotificationChannelsComponent implements OnInit {
   ngOnInit(): void {
     this.items = [{ label: 'لوحة المعلومات' }, { label: 'إعدادات الإشعارات' }];
     this.model = this.route.snapshot.data['channel'];
-    console.log(this.model);
     this.form = this.fb.group(this.model.buildForm());
   }
 
   save(): void {
     this.model = Object.assign(this.model, { ...this.form.value });
-    console.log(this.model);
     this.service.update(this.model).subscribe({
       next: (result: NotificationChannel) => {
         this.model = Object.assign(new NotificationChannel(), result);

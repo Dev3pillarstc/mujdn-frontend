@@ -32,9 +32,23 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
   get isRootDeprtment() {
     return this.loggedInUser.value?.isInRootDepartment;
   }
+
   get isDeprtmentActualManager() {
     return this.loggedInUser.value?.isDepartmentManager;
   }
+
+  get isFollowUpOfficer() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.FOLLOW_UP_OFFICER);
+  }
+
+  get isSecurityLeader() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.SECURITY_LEADER);
+  }
+
+  get isSecurityMember() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.SECURITY_MEMBER);
+  }
+
   getUrlSegment(): string {
     return this.urlService.URLS.AUTH;
   }
@@ -62,23 +76,12 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
       loggedInUser.isDepartmentManager = loggedInUser.isDepartmentManager + '' == 'true';
       loggedInUser.isInRootDepartment = loggedInUser.isInRootDepartment + '' == 'true';
     }
-    const user = Object.assign(new LoggedInUser(), loggedInUser);
+
+    const user = loggedInUser ? Object.assign(new LoggedInUser(), loggedInUser) : undefined;
     this.loggedInUser.next(user);
   }
 
   getUser(): BehaviorSubject<LoggedInUser | undefined> {
     return this.loggedInUser;
-  }
-
-  get isFollowUpOfficer() {
-    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.FOLLOW_UP_OFFICER);
-  }
-
-  get isSecurityLeader() {
-    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.SECURITY_LEADER);
-  }
-
-  get isSecurityMember() {
-    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.SECURITY_MEMBER);
   }
 }

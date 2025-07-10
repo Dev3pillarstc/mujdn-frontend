@@ -32,7 +32,7 @@ import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { PROCESSING_STATUS_OPTIONS } from '@/models/shared/processing-status-option';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { registerIBMPlexArabicFont } from '../../../../assets/fonts/ibm-plex-font'; // adjust the path
+import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ibm-plex-font';
 
 @Component({
   selector: 'app-attendance-log-list',
@@ -173,18 +173,6 @@ export default class AttendanceLogListComponent
     return isProcessed ? 'bg-[#085d3a]' : 'bg-[#93370d]';
   }
 
-  protected override mapModelToExcelRow(model: AttendanceLog): { [key: string]: any } {
-    return {
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]: model.employeeNameAr,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]: model.employeeNameEn,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_ID')]: model.employeeId,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR')]: model.creatorNameAr,
-    };
-  }
-
   exportPdf(fileName: string = 'data.pdf'): void {
     if (this.list && this.list.length > 0) {
       const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
@@ -245,5 +233,17 @@ export default class AttendanceLogListComponent
 
       doc.save(fileName);
     }
+  }
+
+  protected override mapModelToExcelRow(model: AttendanceLog): { [key: string]: any } {
+    return {
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]: model.employeeNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]: model.employeeNameEn,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_ID')]: model.employeeId,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR')]: model.creatorNameAr,
+    };
   }
 }

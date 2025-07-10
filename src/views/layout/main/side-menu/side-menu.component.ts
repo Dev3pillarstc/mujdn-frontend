@@ -8,6 +8,7 @@ import { SideBarLinksService } from '@/services/shared/side-bar-links.service';
 import { MenuItem } from '@/models/shared/menu-item';
 import { LanguageService } from '@/services/shared/language.service';
 import { combineLatest, Subscription, switchMap } from 'rxjs';
+import { SharedService } from '@/services/shared/shared.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -24,6 +25,7 @@ export class SideMenuComponent implements OnInit {
   sidebarLinksService = inject(SideBarLinksService);
   menuItems: MenuItem[] = [];
   languageService = inject(LanguageService);
+  sharedService = inject(SharedService);
   private subscription = new Subscription();
 
   constructor() {
@@ -47,6 +49,10 @@ export class SideMenuComponent implements OnInit {
           this.menuItems = menu;
         })
     );
+
+    this.sharedService.sideMenuToggle$.subscribe(() => {
+      this.toggleSidebar();
+    });
   }
 
   toggleSubmenu(item: MenuItem) {

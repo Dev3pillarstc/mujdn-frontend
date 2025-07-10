@@ -37,12 +37,19 @@
   }
 }
 
+@media (max-width: 768px) {
+  .p-overlay-mask-enter.p-drawer-mask {
+    position: fixed !important;
+    transform: unset !important;
+  }
+}
+
 .menu-list {
   font-size: 14px;
   font-weight: 600;
   color: #161616;
 
-  & > li {
+  &>li {
     margin-top: 8px;
     padding-bottom: 8px;
     border-bottom: 1px solid #d2d6db;
@@ -131,12 +138,15 @@
 .close-popup {
   margin-bottom: 24px;
 }
+
 :root {
   --p-tabs-tab-hover-background: #e5e7eb !important;
 }
+
 .p-tab {
   position: relative;
   border: unset !important;
+
   &::after {
     content: '';
     position: absolute;
@@ -148,11 +158,13 @@
     background-color: #161616;
     display: none;
   }
+
   &:hover {
     &::after {
       display: block;
     }
   }
+
   &.p-tab-active {
     &::after {
       background-color: #1b8354;
@@ -160,15 +172,19 @@
     }
   }
 }
+
 // end kareem
 // start kareem
 .p-datepicker-hour-picker:dir(rtl) {
   order: 3 !important;
 }
+
 .p-datepicker-separator:dir(rtl) {
   order: 2 !important;
 }
+
 .p-datepicker-minute-picker:dir(rtl) {
   order: 1 !important;
 }
+
 // end kareem

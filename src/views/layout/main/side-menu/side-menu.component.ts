@@ -19,7 +19,7 @@ import { SharedService } from '@/services/shared/shared.service';
 export class SideMenuComponent implements OnInit {
   @ViewChild('sidebarContainer', { static: true }) sidebarContainer!: ElementRef;
   sidebarVisible = false;
-  isMobile = window.innerWidth <= 768;
+  isMobile = false;
   openedSubmenus = new Set<MenuItem>();
   authService = inject(AuthService);
   sidebarLinksService = inject(SideBarLinksService);
@@ -27,6 +27,7 @@ export class SideMenuComponent implements OnInit {
   languageService = inject(LanguageService);
   sharedService = inject(SharedService);
   private subscription = new Subscription();
+  private resizeListener = () => this.checkScreenSize();
 
   constructor() {
     window.addEventListener('resize', () => {
@@ -42,6 +43,9 @@ export class SideMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkScreenSize(); // 👈 أول مرة
+    // ✅ نتابع التغير في حجم الشاشة
+    window.addEventListener('resize', this.resizeListener);
     this.subscription.add(
       combineLatest([this.authService.getUser(), this.languageService.languageChanged$])
         .pipe(switchMap(() => this.sidebarLinksService.getSidebarLinks()))
@@ -81,5 +85,15 @@ export class SideMenuComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+
+    // ✅ إزالة listener لتفادي memory leak
+    window.removeEventListener('resize', this.resizeListener);
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 767;
+
+    // ✅ قفل السايدبار على الموبايل
+    this.sidebarVisible = !this.isMobile;
   }
 }

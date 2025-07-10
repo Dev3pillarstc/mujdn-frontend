@@ -71,7 +71,10 @@ export const routes: Routes = [
         path: 'attendance-logs',
         canActivate: [authGuard],
         resolve: { list: attendanceResolver },
-        data: { roles: [ROLES_ENUM.DEPARTMENT_MANAGER], routeId: RouteIdsEnum.ATTENDANCE_LOGS },
+        data: {
+          roles: [ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.HR_OFFICER],
+          routeId: RouteIdsEnum.ATTENDANCE_LOGS,
+        },
         loadComponent: () =>
           import(
             '@/views/features/attendance-log/attendance-log-list/attendance-log-list.component'

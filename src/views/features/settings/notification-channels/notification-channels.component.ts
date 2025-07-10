@@ -6,7 +6,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NotificationChannel } from '@/models/features/setting/notification-channel';
 import { NotificationChannelService } from '@/services/features/setting/notification-channel.service';
 import { ActivatedRoute } from '@angular/router';
-import { ResponseData } from '@/models/shared/response/response-data';
 
 @Component({
   selector: 'app-notification-channels',

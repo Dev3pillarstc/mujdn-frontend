@@ -34,7 +34,7 @@ export class NotificationChannelService extends BaseCrudService<NotificationChan
   @HasInterception
   get(): Observable<NotificationChannel> {
     return this.http
-      .get<ResponseData<NotificationChannel>>(this.getUrlSegment() + '/GetChannel', {
+      .get<ResponseData<NotificationChannel>>(this.getUrlSegment(), {
         withCredentials: true,
       })
       .pipe(

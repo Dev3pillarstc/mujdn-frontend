@@ -2,8 +2,13 @@ import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { NotificationChannel } from '@/models/features/setting/notification-channel';
 import { ResponseData } from '@/models/shared/response/response-data';
 import { Injectable } from '@angular/core';
-import { CastResponse, CastResponseContainer, HasInterception } from 'cast-response';
-import { Observable, of, switchMap } from 'rxjs';
+import {
+  CastResponse,
+  CastResponseContainer,
+  HasInterception,
+  InterceptParam,
+} from 'cast-response';
+import { catchError, Observable, of, switchMap } from 'rxjs';
 
 @CastResponseContainer({
   $default: {

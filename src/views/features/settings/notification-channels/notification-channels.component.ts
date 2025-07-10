@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { MatDialogModule } from '@angular/material/dialog';
-
 import { NotificationChannel } from '@/models/features/setting/notification-channel';
 import { NotificationChannelService } from '@/services/features/setting/notification-channel.service';
 import { ActivatedRoute } from '@angular/router';

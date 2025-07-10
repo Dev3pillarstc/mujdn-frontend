@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { AddPermissionPopupComponent } from '../popups/add-permission-popup/add-permission-popup.component';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
@@ -83,6 +83,7 @@ export default class PermissionsListComponent
   home: MenuItem | undefined;
   filterModel: PermissionFilter = new PermissionFilter();
   viewMode = ViewModeEnum;
+  translateService = inject(TranslateService);
 
   override get service() {
     return this.permissionService;
@@ -122,15 +123,13 @@ export default class PermissionsListComponent
   }
 
   protected override mapModelToExcelRow(model: Permission): { [key: string]: any } {
-    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
-
     return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : 'Permission Reason']:
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
         model.getPermissionReasonName(),
-      [lang === LANGUAGE_ENUM.ARABIC ? 'نوع الإذن' : 'Permission Type']:
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
         model.getPermissionTypeName(),
-      [lang === LANGUAGE_ENUM.ARABIC ? 'تاريخ الإذن' : 'Permission Date']: model.permissionDate,
-      [lang === LANGUAGE_ENUM.ARABIC ? 'حالة الإذن' : 'Permission Status']: model.getStatusName(),
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
     };
   }
   getPropertyName() {

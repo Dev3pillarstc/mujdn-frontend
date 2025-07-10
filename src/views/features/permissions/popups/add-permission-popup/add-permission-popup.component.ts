@@ -46,7 +46,6 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
   fb = inject(FormBuilder);
   permissionTypes: BaseLookupModel[] | undefined = [];
   prmissionReasons: BaseLookupModel[] | undefined = [];
-  minDate: Date | null = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -68,8 +67,6 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
   }
 
   override buildForm() {
-    this.minDate = this.data.viewMode == ViewModeEnum.EDIT ? null : new Date();
-
     this.form = this.fb.group(this.model.buildForm());
   }
 

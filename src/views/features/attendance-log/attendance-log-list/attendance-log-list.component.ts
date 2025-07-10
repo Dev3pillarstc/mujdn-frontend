@@ -30,6 +30,9 @@ import { AttendanceLogFilter } from '@/models/features/attendance/attendance-log
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { PROCESSING_STATUS_OPTIONS } from '@/models/shared/processing-status-option';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import { registerIBMPlexArabicFont } from '../../../../assets/fonts/ibm-plex-font'; // adjust the path
 
 @Component({
   selector: 'app-attendance-log-list',
@@ -172,13 +175,75 @@ export default class AttendanceLogListComponent
 
   protected override mapModelToExcelRow(model: AttendanceLog): { [key: string]: any } {
     return {
-      'ATTENDANCE_LOG_PAGE.EMPLOYEE_ID': model.employeeId,
-      'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR': model.employeeNameAr,
-      'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN': model.employeeNameEn,
-      'ATTENDANCE_LOG_PAGE.DEPARTMENT': model.departmentNameAr,
-      'ATTENDANCE_LOG_PAGE.SWIPE_TIME': model.swipeTime,
-      'ATTENDANCE_LOG_PAGE.CHANNEL_NAME': model.channelName,
-      'ATTENDANCE_LOG_PAGE.CREATOR': model.creatorNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]: model.employeeNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]: model.employeeNameEn,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_ID')]: model.employeeId,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR')]: model.creatorNameAr,
     };
+  }
+
+  exportPdf(fileName: string = 'data.pdf'): void {
+    if (this.list && this.list.length > 0) {
+      const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+
+      // Inline mapping logic with translated headers
+      const transformedData = this.list.map((model) => ({
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]:
+          model.employeeNameAr,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]:
+          model.employeeNameEn,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_ID')]: model.employeeId,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR')]: model.creatorNameAr,
+      }));
+
+      // Format cell values to avoid issues with Date/undefined/null
+      const formatCell = (val: any): string | number => {
+        if (val instanceof Date) {
+          return val.toLocaleString(); // You can customize formatting here
+        }
+        return val != null ? val : '';
+      };
+
+      const head = [Object.keys(transformedData[0])];
+      const body = transformedData.map((row) => Object.values(row).map(formatCell));
+
+      const doc = new jsPDF({
+        orientation: 'landscape',
+        format: 'a4',
+      });
+      registerIBMPlexArabicFont(doc); // ✅ Call this right after creating doc
+
+      autoTable(doc, {
+        head,
+        body,
+        styles: {
+          font: 'IBMPlexSansArabic',
+          fontStyle: 'normal',
+          halign: isRTL ? 'right' : 'left',
+        },
+        headStyles: {
+          font: 'IBMPlexSansArabic', // ✅ explicitly set here
+          fontStyle: 'normal',
+          halign: isRTL ? 'right' : 'left',
+        },
+        margin: isRTL ? { right: 10, left: 0 } : { left: 10, right: 0 },
+        didDrawPage: () => {
+          const title = isRTL ? 'سجل الحضور' : 'Attendance Log';
+          doc.setFont('IBMPlexSansArabic');
+          doc.setFontSize(12);
+          doc.text(title, isRTL ? doc.internal.pageSize.getWidth() - 20 : 10, 10, {
+            align: isRTL ? 'right' : 'left',
+          });
+        },
+      });
+
+      doc.save(fileName);
+    }
   }
 }

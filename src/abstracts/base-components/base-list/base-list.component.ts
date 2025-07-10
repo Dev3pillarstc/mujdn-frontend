@@ -167,21 +167,15 @@ export abstract class BaseListComponent<
   }
 
   exportExcel(fileName: string = 'data.xlsx'): void {
-    this.service.loadPaginated(this.paginationParams, { ...this.filterModel! }).subscribe({
-      next: (res) => {
-        const data = res.list;
-        if (data && data.length > 0) {
-          const isRTL =
-            this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? true : false;
-          const transformedData = data.map((item) => this.mapModelToExcelRow(item));
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
-        }
-      },
-    });
+    if (this.list && this.list.length > 0) {
+      const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? true : false;
+      const transformedData = this.list.map((item) => this.mapModelToExcelRow(item));
+      const ws = XLSX.utils.json_to_sheet(transformedData);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      wb.Workbook = { Views: [{ RTL: isRTL }] };
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, fileName);
+    }
   }
 
   protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };

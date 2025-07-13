@@ -4,7 +4,6 @@ import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { DialogRef } from '@angular/cdk/dialog';
-import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -19,7 +18,6 @@ interface Adminstration {
   selector: 'app-add-task-popup',
   imports: [
     FormsModule,
-    Select,
     DatePickerModule,
     InputTextModule,
     ReactiveFormsModule,

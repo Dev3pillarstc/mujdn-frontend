@@ -189,7 +189,7 @@
                   </div>
                 </td>
                 <td>{{ attendanceLog.channelName }}</td>
-                @if (!attendanceLog.isRowData) {
+                @if (!attendanceLog.isRawData) {
                   <td>{{ attendanceLog.creatorNameAr }}</td>
                   <td>{{ attendanceLog.creatorNameEn }}</td>
                 } @else {
@@ -225,8 +225,8 @@
                     </button>
                     <button
                       (click)="deleteModel(attendanceLog.id, true)"
-                      [disabled]="attendanceLog.isRowData"
-                      class="table-action-red-btn {{ attendanceLog.isRowData ? 'disabled' : '' }}"
+                      [disabled]="attendanceLog.isRawData"
+                      class="table-action-red-btn {{ attendanceLog.isRawData ? 'disabled' : '' }}"
                     >
                       <img src="assets/icons/delete-action.svg" alt="" />
                     </button>

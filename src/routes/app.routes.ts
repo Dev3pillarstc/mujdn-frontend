@@ -197,6 +197,10 @@ export const routes: Routes = [
             '@/views/features/presence-inquiries/presence-inquiries-list/presence-inquiries-list.component'
           ),
       },
+      {
+        path: 'tasks-list',
+        loadComponent: () => import('@/views/features/tasks/tasks-list/tasks-list.component'),
+      },
     ],
   },
 

@@ -17,9 +17,9 @@ jobs:
       - name: Deploy to Simply
         uses: jahbenjah/SmarterASP.NET-web-deploy@1.0.0.alpha.8
         with:
-          website-name: ${{ secrets.WEBSITE_NAME }}
-          server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
-          server-username: ${{ secrets.SERVER_USERNAME }}
-          server-password: ${{ secrets.SERVER_PASSWORD }}
+          website-name: ${{ secrets.MUJDN_FRONT_WEBSITE_NAME }}
+          server-computer-name: ${{ secrets.MUJDN_FRONT_SERVER_COMPUTER_NAME }}
+          server-username: ${{ secrets.MUJDN_FRONT_SERVER_USERNAME }}
+          server-password: ${{ secrets.MUJDN_FRONT_SERVER_PASSWORD }}
           source-path: '\dist\'
           target-delete: true

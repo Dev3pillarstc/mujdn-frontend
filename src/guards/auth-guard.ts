@@ -14,9 +14,9 @@ export const authGuard: CanActivateFn = (route) => {
   return authService.getUser().pipe(
     map((user) => {
       if (!user) {
-        router.navigate(['/login']);
+        // ✅ RETURN a redirect UrlTree, instead of navigate()
         alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
-        return false;
+        return router.createUrlTree(['/login']);
       }
 
       if (!expectedRoles || expectedRoles.length === 0) {
@@ -25,9 +25,8 @@ export const authGuard: CanActivateFn = (route) => {
 
       const userHasRole = user.roles.some((role) => expectedRoles.includes(role));
       if (!userHasRole) {
-        router.navigate(['/login']);
         alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
-        return false;
+        return router.createUrlTree(['/login']);
       }
 
       return true;

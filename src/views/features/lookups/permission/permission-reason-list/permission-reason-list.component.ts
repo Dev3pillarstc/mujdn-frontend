@@ -48,15 +48,13 @@ export default class PermissionReasonListComponent
   }
 
   override openDialog(model: PermissionReason): void {
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialog(PermissionReasonPopupComponent as any, model, viewMode);
   }
 
-  addOrEditModel(permissionReason?: PermissionReason) {
-    permissionReason = permissionReason || new PermissionReason();
-    this.openDialog(permissionReason);
+  addOrEditModel(permissionReason?: PermissionReason): void {
+    this.openDialog(permissionReason ?? new PermissionReason());
   }
-
   protected override mapModelToExcelRow(model: PermissionReason): { [key: string]: any } {
     const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
 

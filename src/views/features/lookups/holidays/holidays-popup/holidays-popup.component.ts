@@ -46,7 +46,8 @@ export class HolidaysPopupComponent extends BasePopupComponent<Holiday> implemen
   service = inject(HolidayService);
   fb = inject(FormBuilder);
   minDate: Date | null = null;
-
+  declare viewMode: ViewModeEnum;
+  isCreateMode = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
@@ -82,6 +83,8 @@ export class HolidaysPopupComponent extends BasePopupComponent<Holiday> implemen
 
   override initPopup() {
     this.model = this.data.model;
+    this.viewMode = this.data.viewMode;
+    this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
   }
 
   override buildForm() {

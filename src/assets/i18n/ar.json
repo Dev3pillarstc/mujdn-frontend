@@ -28,8 +28,7 @@
     "STRONG_PASSWORD": "كلمة المرور يجب أن تكون على الأقل 8 أحرف وتحتوي على الأقل على حرف كبير وحرف صغير ورقم وحرف خاص",
     "ACTION": "الإجراء",
     "EDIT": "تعديل",
-    "DASHBOARD": "لوحة المعلومات",
-    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+    "DASHBOARD": "لوحة المعلومات"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -53,7 +52,6 @@
     "PERMISSION_REASON_IN_ARABIC": "سبب الإذن بالعربية",
     "PERMISSION_REASON_IN_ENGLISH": "سبب الإذن بالانجليزية",
     "ADD_NEW_PERMISSION_REASON": "إضافة سبب إذن جديد",
-    "EDIT_PERMISSION_REASON": "تعديل سبب الإذن",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   },
@@ -63,7 +61,6 @@
     "CITY_IN_ARABIC": "المدينة بالعربية",
     "CITY_IN_ENGLISH": "المدينة بالانجليزية",
     "ADD_NEW_CITY": "إضافة مدينة جديدة",
-    "EDIT_CITY": "تعديل المدينة",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "SELECT_REGION": "اختر المنطقة",
@@ -129,7 +126,6 @@
     "REGION_IN_ARABIC": "المنطقة بالعربية",
     "REGION_IN_ENGLISH": "المنطقة بالانجليزية",
     "ADD_NEW_REGION": "إضافة منطقة جديدة",
-    "EDIT_REGION": "تعديل المنطقة",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   },
@@ -190,7 +186,6 @@
     "END_DATE": "تاريخ الانتهاء",
     "NOTES": "ملاحظات",
     "ADD_NEW_HOLIDAY": "إضافة عطلة جديدة",
-    "EDIT_HOLIDAY": "تعديل العطلة",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "DATE": "التاريخ",
@@ -211,13 +206,7 @@
     "PERMISSION_REASON": "سبب الإذن",
     "PERMISSION_DESCRIPTION": "وصف الإذن",
     "ADD_NEW_PERMISSION": "إضافة طلب استئذان جديد",
-    "EDIT_PERMISSION": "تعديل طلب الاستئذان",
-    "NEW_PERMISSION": " طلب استئذان جديد",
-    "ACTION": "إجراء",
-    "APPROVAL_DATE": "تاريخ الموافقة",
-    "REJECTION_DATE": "تاريخ الرفض",
-    "APPROVE": "موافقة",
-    "DECLINE": "رفض"
+    "NEW_PERMISSION": " طلب استئذان جديد"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "ورديات العمل",
@@ -247,7 +236,6 @@
     "SWIPE_DATE": "تاريخ البصمة",
     "CHANNEL_NAME": "اسم الجهاز",
     "PROCESSING_STATUS": "حالة المعالجة",
-    "CREATOR": "منشئ الحركة",
     "CREATOR_AR": "منشئ الحركة (عربي)",
     "CREATOR_EN": "منشئ الحركة (إنجليزي)",
     "ADD_NEW_ATTENDANCE_LOG": "إضافة سجل حضور جديد",
@@ -271,26 +259,5 @@
     "EMPLOYEE_REQUIRED": "الموظف مطلوب",
     "MOVEMENT_TYPE": "نوع الحركة",
     "WORK_TYPE": "نوع العمل"
-  },
-  "MENU": {
-    "DASHBOARD": "لوحة المعلومات",
-    "ATTENDANCE_REPORT": "تقرير الحضور والانصراف",
-    "ATTENDANCE_LOGS": "حركات الحضور والانصراف",
-    "DEPARTMENTS": "الإدارات",
-    "EMPLOYEES": "قائمة الموظفين",
-    "PRESENCE_INQUIRIES": "مسائلات توثيق التواجد",
-    "PERMISSIONS": "الأذونات",
-    "ASSIGNED_EMPLOYEES": "الموظفون المُكلفون",
-    "WORK_SHIFT_TEMP": "ورديات العمل المؤقتة",
-    "WORK_SHIFT_ASSIGNMENT": "إسناد ورديات العمل",
-    "HOLIDAYS": "قائمة الإجازات والأعياد",
-    "WORK_SHIFT": "ورديات العمل",
-    "WORK_SHIFT_SETTINGS": "إعدادات ورديات العمل",
-    "SETTINGS": "الإعدادات",
-    "PERMISSION_REASONS": "اسباب الأذونات",
-    "NOTIFICATION_CHANNELS": "إعدادات الإشعارات",
-    "NATIONALITIES": "قائمة الجنسيات",
-    "CITIES": "قائمة المدن",
-    "REGIONS": "قائمة المناطق"
   }
 }

@@ -227,7 +227,10 @@
     "SHIFT_IDENTIFICATION": "معرف الوردية",
     "MAX_ATTENDANCE_TIME": "الحد الأقصى للحضور",
     "MAX_LEAVE_TIME": "الحد الأقصى للإنصراف",
-    "TIME_FROM_TO": "الوقت (من - الى)"
+    "TIME_FROM_TO": "الوقت (من - الى)",
+    "CONFLICTING_DATES": "تعارض تاريخ الورديه",
+    "DATA_NOT_COMPLETE": "المعلومات غير مكتمله",
+    "CONFLICTING_USER_DATES": "تعارض في مواعيد الورديات الخاصه بالمستخدم"
   },
   "WORK_SHIFTS_POPUP": {
     "ADD_NEW_SHIFT": "إضافة وردية عمل جديدة",

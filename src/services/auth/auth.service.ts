@@ -81,6 +81,12 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
     this.loggedInUser.next(user);
   }
 
+  refreshToken() {
+    return this.http.get<SingleResponseData<LoggedInUser>>(this.getUrlSegment() + '/refresh', {
+      withCredentials: true,
+    });
+  }
+
   getUser(): BehaviorSubject<LoggedInUser | undefined> {
     return this.loggedInUser;
   }

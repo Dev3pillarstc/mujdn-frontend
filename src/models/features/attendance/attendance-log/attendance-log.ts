@@ -23,7 +23,7 @@ export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceServic
   declare creatorNameEn?: string;
   declare creatorNameAr?: string;
   declare openType?: string | null;
-  declare isRowData?: boolean | null;
+  declare isRawData?: boolean | null;
 
   declare selectedDate?: Date;
   declare selectedTime?: Date;

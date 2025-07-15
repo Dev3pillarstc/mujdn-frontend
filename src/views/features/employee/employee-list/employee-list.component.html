@@ -73,7 +73,7 @@
               }}</label>
               <p-select
                 (ngModelChange)="onDepartmentChange($event)"
-                [(ngModel)]="selectedDepartment"
+                [(ngModel)]="filterModel.fkDepartmentId"
                 [optionLabel]="departmentOptionLabel"
                 [options]="departments"
                 [placeholder]="'EMPLOYEES_PAGE.DEPARTMENT' | translate"

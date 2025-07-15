@@ -50,14 +50,13 @@ export default class CityListComponent extends BaseListComponent<
   }
 
   override openDialog(model: City): void {
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     const lookups = { regions: this.regions };
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialog(CityPopupComponent as any, model, viewMode, lookups);
   }
 
-  addOrEditModel(city?: City) {
-    city = city || new City();
-    this.openDialog(city);
+  addOrEditModel(city?: City): void {
+    this.openDialog(city ?? new City());
   }
 
   protected override mapModelToExcelRow(model: City): { [key: string]: any } {

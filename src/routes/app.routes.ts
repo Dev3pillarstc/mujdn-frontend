@@ -51,18 +51,18 @@ export const routes: Routes = [
   },
   {
     path: '',
-    canActivate: [authGuard],
-    data: { roles: [ROLES_ENUM.EMPLOYEE] },
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
       {
         path: 'home',
+        canActivate: [authGuard],
         loadComponent: () => import('@/views/home/home.component'),
-        data: { routeId: RouteIdsEnum.HOME },
+        data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOME },
       },
       {
         path: 'employees',
         resolve: { list: userResolver },
+        canActivate: [authGuard],
         loadComponent: () =>
           import('@/views/features/employee/employee-list/employee-list.component'),
         data: { roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.EMPLOYEES },
@@ -128,7 +128,7 @@ export const routes: Routes = [
       {
         path: 'permissions',
         canActivate: [authGuard],
-        data: { routeId: RouteIdsEnum.PERMISSIONS },
+        data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.PERMISSIONS },
         resolve: { list: permissionResolver },
         loadComponent: () =>
           import('@/views/features/permissions/permissions-list/permissions-list.component'),
@@ -136,7 +136,7 @@ export const routes: Routes = [
       {
         path: 'holidays',
         canActivate: [authGuard],
-        data: { routeId: RouteIdsEnum.HOLIDAYS },
+        data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOLIDAYS },
         resolve: { list: holidayResolver },
         loadComponent: () =>
           import('@/views/features/lookups/holidays/holidays-list/holidays-list.component'),
@@ -196,6 +196,10 @@ export const routes: Routes = [
           import(
             '@/views/features/presence-inquiries/presence-inquiries-list/presence-inquiries-list.component'
           ),
+      },
+      {
+        path: 'tasks-list',
+        loadComponent: () => import('@/views/features/tasks/tasks-list/tasks-list.component'),
       },
     ],
   },

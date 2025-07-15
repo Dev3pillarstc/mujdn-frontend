@@ -61,14 +61,13 @@ export default class HolidaysListComponent extends BaseListComponent<
 
   override initListComponent(): void {}
 
-  override openDialog(model: Holiday, viewMode?: ViewModeEnum): void {
-    this.openBaseDialog(HolidaysPopupComponent as any, model, viewMode!);
+  override openDialog(model: Holiday): void {
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(HolidaysPopupComponent as any, model, viewMode);
   }
 
-  addOrEditModel(holiday?: Holiday) {
-    const viewMode = holiday ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    holiday = holiday || new Holiday();
-    this.openDialog(holiday, viewMode);
+  addOrEditModel(holiday?: Holiday): void {
+    this.openDialog(holiday ?? new Holiday());
   }
 
   protected override mapModelToExcelRow(model: Holiday): { [key: string]: any } {

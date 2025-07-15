@@ -9,13 +9,14 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { TableModule } from 'primeng/table';
 interface Adminstration {
   type: string;
 }
 
 @Component({
-  selector: 'app-presence-inquiries-popup',
+  selector: 'app-assign-task-popup',
   imports: [
     FormsModule,
     Select,
@@ -23,11 +24,16 @@ interface Adminstration {
     InputTextModule,
     ReactiveFormsModule,
     CommonModule,
+    TableModule,
+    PaginatorModule,
   ],
-  templateUrl: './presence-inquiries-popup.component.html',
-  styleUrl: './presence-inquiries-popup.component.scss',
+  templateUrl: './assign-task-popup.component.html',
+  styleUrl: './assign-task-popup.component.scss',
 })
-export class PresenceInquiriesPopupComponent {
+export class AssignTaskPopupComponent {
+  attendance!: any[];
+  first: number = 0;
+  rows: number = 10;
   date2: Date | undefined;
   yourFormGroup = new FormGroup({
     fromDate: new FormControl(null), // التاريخ (من)
@@ -47,9 +53,25 @@ export class PresenceInquiriesPopupComponent {
       this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
         ? LAYOUT_DIRECTION_ENUM.LTR
         : LAYOUT_DIRECTION_ENUM.RTL;
+
+    this.attendance = [
+      {
+        serialNumber: 1,
+        employeeNameAr: 'محمد أحمد طه',
+        employeeNameEn: 'mohamed taha',
+        adminstration: 'إدارة الموارد',
+        jop: 'موظف',
+        PermanentType: 'دوام كلي',
+        date: '12/12/2024',
+      },
+    ];
   }
 
   close() {
     this.dialogRef.close();
+  }
+  onPageChange(event: PaginatorState) {
+    this.first = event.first ?? 0;
+    this.rows = event.rows ?? 10;
   }
 }

@@ -25,6 +25,7 @@
               fluid="true"
               formControlName="nameAr"
               id="shiftNameAr"
+              name="shiftNameAr"
               pInputText
               type="text"
             />
@@ -35,7 +36,7 @@
           <app-validation-messages [control]="nameArControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-2">
-          <label class="label" for="shiftNameEn">{{
+          <label class="label" for="nameEn">{{
             'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate
           }}</label>
           <div class="relative">
@@ -44,7 +45,7 @@
               class="peer"
               fluid="true"
               formControlName="nameEn"
-              id="shiftNameEn"
+              id="nameEn"
               pInputText
               type="text"
             />

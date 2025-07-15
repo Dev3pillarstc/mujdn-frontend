@@ -22,6 +22,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { TranslatePipe } from '@ngx-translate/core';
+import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -32,6 +33,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     ReactiveFormsModule,
     ValidationMessagesComponent,
     TranslatePipe,
+    RequiredMarkerDirective,
   ],
   templateUrl: './work-shifts-list-popup.component.html',
   styleUrl: './work-shifts-list-popup.component.scss',

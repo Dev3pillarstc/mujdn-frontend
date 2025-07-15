@@ -6,6 +6,9 @@ import { BaseLookupModel } from '../features/lookups/base-lookup-model';
 import { UserInterceptor } from '@/model-interceptors/auth/user.interceptor';
 import { InterceptModel } from 'cast-response';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { FactoryService } from '@/services/factory-service';
+import { LanguageService } from '@/services/shared/language.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 const { send, receive } = new UserInterceptor();
 
@@ -33,6 +36,12 @@ export class User extends BaseCrudModel<User, UserService, string> {
   declare roleIds?: string[];
   declare department?: BaseLookupModel;
   declare concurrencyUpdateVersion?: string;
+  private languageService?: LanguageService;
+
+  constructor() {
+    super();
+    this.languageService = FactoryService.getService('LanguageService');
+  }
 
   buildForm(viewMode: ViewModeEnum) {
     const {
@@ -106,5 +115,16 @@ export class User extends BaseCrudModel<User, UserService, string> {
       canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint],
       isActive: [isActive ?? true],
     };
+  }
+
+  getUserName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (this.fullNameEn ?? '')
+      : (this.fullNameAr ?? '');
+  }
+  getJobTitleName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (this.jobTitleEn ?? '')
+      : (this.jobTitleAr ?? '');
   }
 }

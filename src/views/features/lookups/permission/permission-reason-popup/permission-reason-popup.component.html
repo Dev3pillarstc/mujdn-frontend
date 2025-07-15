@@ -4,13 +4,17 @@
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'PERMISSIONREASONS_PAGE.ADD_NEW_PERMISSIONREASON' | translate }}
+      {{
+        isCreateMode
+          ? ('PERMISSION_REASONS_PAGE.ADD_NEW_PERMISSION_REASON' | translate)
+          : ('PERMISSION_REASONS_PAGE.EDIT_PERMISSION_REASON' | translate)
+      }}
     </h3>
     <form [formGroup]="form" class="mt-6">
       <div class="grid sm:grid-cols-2 gap-4">
         <div>
           <label class="label" for="permissionAr-popup">{{
-            'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
+            'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ARABIC' | translate
           }}</label>
           <div class="relative">
             <input
@@ -19,7 +23,7 @@
               formControlName="nameAr"
               id="permissionAr-popup"
               pInputText
-              placeholder="{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate }}"
+              placeholder="{{ 'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ARABIC' | translate }}"
               type="text"
             />
             <span
@@ -30,7 +34,7 @@
         </div>
         <div>
           <label class="label" for="permissionEn-popup">{{
-            'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
+            'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ENGLISH' | translate
           }}</label>
           <div class="relative">
             <input
@@ -39,7 +43,7 @@
               formControlName="nameEn"
               id="permissionEn-popup"
               pInputText
-              placeholder="{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate }}"
+              placeholder="{{ 'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ENGLISH' | translate }}"
               type="text"
             />
             <span

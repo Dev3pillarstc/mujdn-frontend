@@ -48,11 +48,12 @@
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
   },
-  "PERMISSIONREASONS_PAGE": {
-    "PERMISSIONREASONS_LIST": "Permission Reasons List",
-    "PERMISSIONREASON_IN_ARABIC": "Permission Reason in Arabic",
-    "PERMISSIONREASON_IN_ENGLISH": "Permission Reason in English",
-    "ADD_NEW_PERMISSIONREASON": "Add New Permission Reason",
+  "PERMISSION_REASONS_PAGE": {
+    "PERMISSION_REASONS_LIST": "Permission Reasons List",
+    "PERMISSION_REASON_IN_ARABIC": "Permission Reason in Arabic",
+    "PERMISSION_REASON_IN_ENGLISH": "Permission Reason in English",
+    "ADD_NEW_PERMISSION_REASON": "Add New Permission Reason",
+    "EDIT_PERMISSION_REASON": "Edit Permission Reason",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
   },
@@ -62,6 +63,7 @@
     "CITY_IN_ARABIC": "City in Arabic",
     "CITY_IN_ENGLISH": "City in English",
     "ADD_NEW_CITY": "Add New City",
+    "EDIT_CITY": "Edit City",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display",
     "SELECT_REGION": "Select Region",
@@ -127,6 +129,7 @@
     "REGION_IN_ARABIC": "Region in Arabic",
     "REGION_IN_ENGLISH": "Region in English",
     "ADD_NEW_REGION": "Add New Region",
+    "EDIT_REGION": "Edit Region",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
   },
@@ -187,6 +190,7 @@
     "END_DATE": "End Date",
     "NOTES": "Notes",
     "ADD_NEW_HOLIDAY": "Add New Holiday",
+    "EDIT_HOLIDAY": "Edit Holiday",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display",
     "DATE": "Date",
@@ -207,6 +211,7 @@
     "PERMISSION_REASON": "Permission Reason",
     "PERMISSION_DESCRIPTION": "Permission Description",
     "ADD_NEW_PERMISSION": "Add New Permission",
+    "EDIT_PERMISSION": "Edit Permission",
     "NEW_PERMISSION": "New Permission",
     "ACTION": "Action",
     "APPROVAL_DATE": "Approval Date",

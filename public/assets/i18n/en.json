@@ -30,7 +30,11 @@
     "EDIT": "Edit",
     "DASHBOARD": "Dashboard",
     "NO_DATA_TO_SHOW": "No data to display",
-    "NATIONAL_ID_VALIDATION": "National ID must be 10 digits and starts with 1"
+    "NATIONAL_ID_VALIDATION": "National ID must be 10 digits and starts with 1",
+    "MAX_LENGTH_DYNAMIC": "You have exceeded the maximum length",
+    "POSITIVE_NUMBER_ONLY": "Only positive numbers are allowed",
+    "INVALID_NUMBER": "Please enter a valid number",
+    "NUMBER_RANGE": "Value must be between 0 and 9999"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

@@ -67,7 +67,8 @@ export type customValidationTypes =
   | 'WEBSITE'
   | 'URL'
   | 'HAS_LETTERS'
-  | 'START_BEFORE_END';
+  | 'START_BEFORE_END'
+  | 'NATIONAL_ID';
 
 export const validationPatterns: any = {
   ENG_NUM: new RegExp(/^[a-zA-Z0-9\- ]+$/),
@@ -97,6 +98,7 @@ export const validationPatterns: any = {
   HAS_LETTERS: new RegExp(
     /^[\u0621-\u064A0-9\u0660-\u0669\u0621-\u064Aa-zA-Z0-9]*[\u0621-\u064Aa-zA-Z ]/
   ),
+  NATIONAL_ID: new RegExp(/^1\d{9}$/),
 };
 
 export function strongPassword(): ValidatorFn {

@@ -87,7 +87,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
           CustomValidators.pattern('AR_NUM'),
         ],
       ],
-      nationalId: [nationalId, [Validators.required]],
+      nationalId: [nationalId, [Validators.required, CustomValidators.pattern('NATIONAL_ID')]],
       phoneNumber: [phoneNumber, [Validators.required]],
       fkRegionId: [fkRegionId, [Validators.required]],
       fkCityId: [fkCityId],

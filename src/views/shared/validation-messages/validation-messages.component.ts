@@ -39,5 +39,6 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH',
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
     [ValidationErrorKeyEnum.STRONG_PASSWORD]: 'COMMON.STRONG_PASSWORD',
+    [ValidationErrorKeyEnum.NATIONAL_ID]: 'COMMON.NATIONAL_ID_VALIDATION',
   };
 }

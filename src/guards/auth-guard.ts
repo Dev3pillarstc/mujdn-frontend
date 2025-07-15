@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AuthService } from '@/services/auth/auth.service';
 import { AlertService } from '@/services/shared/alert.service';
 
@@ -10,30 +10,26 @@ export const authGuard: CanActivateFn = (route) => {
   const alertService = inject(AlertService);
 
   const expectedRoles = route.data?.['roles'] as string[] | undefined;
-  return authService.refreshToken().pipe(
-    switchMap(() => {
-      return authService.getUser().pipe(
-        map((user) => {
-          if (!user) {
-            router.navigate(['/login']);
-            alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
-            return false;
-          }
 
-          if (!expectedRoles || expectedRoles.length === 0) {
-            return true;
-          }
+  return authService.getUser().pipe(
+    map((user) => {
+      if (!user) {
+        // ✅ RETURN a redirect UrlTree, instead of navigate()
+        alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
+        return router.createUrlTree(['/login']);
+      }
 
-          const userHasRole = user.roles.some((role) => expectedRoles.includes(role));
-          if (!userHasRole) {
-            router.navigate(['/login']);
-            alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
-            return false;
-          }
+      if (!expectedRoles || expectedRoles.length === 0) {
+        return true;
+      }
 
-          return true;
-        })
-      );
+      const userHasRole = user.roles.some((role) => expectedRoles.includes(role));
+      if (!userHasRole) {
+        alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
+        return router.createUrlTree(['/login']);
+      }
+
+      return true;
     })
   );
 };

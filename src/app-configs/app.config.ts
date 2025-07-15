@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from '@/routes/app.routes';
 import { GeneralInterceptor } from '@/model-interceptors/general-interceptor';
@@ -14,18 +14,17 @@ import { HttpLoaderFactory } from '@/configs/translate-loader';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { provideInterceptors } from 'cast-response';
 import { AuthInterceptor } from '@/http-interceptors/auth.interceptor';
-import { globalErrorHandler } from '@/http-interceptors/global-error-handler';
+import { httpErrorInterceptor } from '@/http-interceptors/http-error-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     configInit,
-    // globalErrorHandler(),
     SpinnerService,
 
     // Use both approaches
     provideHttpClient(
       withFetch(),
-      withInterceptors([loadingInterceptor, AuthInterceptor]) // Functional interceptor
+      withInterceptors([loadingInterceptor, AuthInterceptor, httpErrorInterceptor]) // Functional interceptor
     ),
     provideRouter(routes),
     // provideClientHydration(),

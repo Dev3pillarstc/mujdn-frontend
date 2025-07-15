@@ -4,6 +4,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '@/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -46,7 +47,15 @@ export default class LoginComponent implements OnInit {
 
     this.authService.login(username, password).subscribe((result) => {
       if (!result.error) {
-        this.router.navigate(['home']);
+        this.authService
+          .getUser()
+          .pipe(
+            filter((user) => !!user),
+            take(1)
+          )
+          .subscribe(() => {
+            this.router.navigate(['home']);
+          });
       }
     });
   }

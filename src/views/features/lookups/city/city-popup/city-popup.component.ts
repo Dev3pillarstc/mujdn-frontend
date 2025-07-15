@@ -13,6 +13,7 @@ import { Select } from 'primeng/select';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-city-popup',
@@ -34,6 +35,8 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
   service = inject(CityService);
   fb = inject(FormBuilder);
   regions: BaseLookupModel[] | undefined = [];
+  isCreateMode = false;
+  declare viewMode: ViewModeEnum;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -63,6 +66,8 @@ export class CityPopupComponent extends BasePopupComponent<City> implements OnIn
   override initPopup() {
     this.model = this.data.model;
     this.regions = this.data.lookups.regions;
+    this.viewMode = this.data.viewMode;
+    this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
   }
 
   override buildForm() {

@@ -49,11 +49,12 @@
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   },
-  "PERMISSIONREASONS_PAGE": {
-    "PERMISSIONREASONS_LIST": "قائمة أسباب الإذن",
-    "PERMISSIONREASON_IN_ARABIC": "سبب الإذن بالعربية",
-    "PERMISSIONREASON_IN_ENGLISH": "سبب الإذن بالانجليزية",
-    "ADD_NEW_PERMISSIONREASON": "إضافة سبب إذن جديد",
+  "PERMISSION_REASONS_PAGE": {
+    "PERMISSION_REASONS_LIST": "قائمة أسباب الإذن",
+    "PERMISSION_REASON_IN_ARABIC": "سبب الإذن بالعربية",
+    "PERMISSION_REASON_IN_ENGLISH": "سبب الإذن بالانجليزية",
+    "ADD_NEW_PERMISSION_REASON": "إضافة سبب إذن جديد",
+    "EDIT_PERMISSION_REASON": "تعديل سبب الإذن",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   },
@@ -63,6 +64,7 @@
     "CITY_IN_ARABIC": "المدينة بالعربية",
     "CITY_IN_ENGLISH": "المدينة بالانجليزية",
     "ADD_NEW_CITY": "إضافة مدينة جديدة",
+    "EDIT_CITY": "تعديل المدينة",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "SELECT_REGION": "اختر المنطقة",
@@ -128,6 +130,7 @@
     "REGION_IN_ARABIC": "المنطقة بالعربية",
     "REGION_IN_ENGLISH": "المنطقة بالانجليزية",
     "ADD_NEW_REGION": "إضافة منطقة جديدة",
+    "EDIT_REGION": "تعديل المنطقة",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   },
@@ -188,6 +191,7 @@
     "END_DATE": "تاريخ الانتهاء",
     "NOTES": "ملاحظات",
     "ADD_NEW_HOLIDAY": "إضافة عطلة جديدة",
+    "EDIT_HOLIDAY": "تعديل العطلة",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "DATE": "التاريخ",
@@ -208,6 +212,7 @@
     "PERMISSION_REASON": "سبب الإذن",
     "PERMISSION_DESCRIPTION": "وصف الإذن",
     "ADD_NEW_PERMISSION": "إضافة طلب استئذان جديد",
+    "EDIT_PERMISSION": "تعديل طلب الاستئذان",
     "NEW_PERMISSION": " طلب استئذان جديد",
     "ACTION": "إجراء",
     "APPROVAL_DATE": "تاريخ الموافقة",

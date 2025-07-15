@@ -4,30 +4,30 @@ import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { DialogRef } from '@angular/cdk/dialog';
-import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TextareaModule } from 'primeng/textarea';
 
 interface Adminstration {
   type: string;
 }
 
 @Component({
-  selector: 'app-presence-inquiries-popup',
+  selector: 'app-add-task-popup',
   imports: [
     FormsModule,
-    Select,
     DatePickerModule,
     InputTextModule,
     ReactiveFormsModule,
     CommonModule,
+    TextareaModule,
   ],
-  templateUrl: './presence-inquiries-popup.component.html',
-  styleUrl: './presence-inquiries-popup.component.scss',
+  templateUrl: './add-task-popup.component.html',
+  styleUrl: './add-task-popup.component.scss',
 })
-export class PresenceInquiriesPopupComponent {
+export class AddTaskPopupComponent {
   date2: Date | undefined;
   yourFormGroup = new FormGroup({
     fromDate: new FormControl(null), // التاريخ (من)

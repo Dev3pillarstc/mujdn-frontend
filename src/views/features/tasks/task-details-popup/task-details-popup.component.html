@@ -1,0 +1,44 @@
+<div [dir]="direction">
+    <div class="p-6">
+        <button class="block ms-auto" (click)="close()">
+            <i class="pi pi-times"></i>
+        </button>
+        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">بيانات المهمة المسندة</h3>
+        <div class="p-6 rounded-[16px] border border-[0.5px] border-[#1b8354] bg-[#074d31]">
+            <div
+                class="flex items-center justify-between flex-wrap gap-4 px-6 py-3 rounded-[16px] border border-[#1b8354] border-[0.5px] bg-[rgba(27,131,84,0.2)]">
+                <div>
+                    <p class="text-[14px] font-normal text-white mb-2">اسم المهمة</p>
+                    <h5 class="text-[16px] font-semibold text-white">مهمة خارجية أمنية</h5>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-[14px] font-normal text-[#fae996]">رقم المهمة</span>
+                    <strong class="text-[16px] font-semibold text-[#fae996]">1234</strong>
+                </div>
+            </div>
+            <div class="grid grid-rows-3 gap-4 lg:grid-cols-3 lg:grid-rows-none mt-8">
+                <div>
+                    <p class="text-[14px] font-normal text-white mb-2">تاريخ البداية</p>
+                    <h5 class="text-[16px] font-semibold text-white">12/12/2024</h5>
+                </div>
+                <div>
+                    <p class="text-[14px] font-normal text-white mb-2">تاريخ النهاية</p>
+                    <h5 class="text-[16px] font-semibold text-white">12/12/2024</h5>
+                </div>
+                <div>
+                    <p class="text-[14px] font-normal text-white mb-2">مسند المهمة</p>
+                    <h5 class="text-[16px] font-semibold text-white">محمد احمد</h5>
+                </div>
+            </div>
+
+        </div>
+        <div class="p-6 rounded-[16px] bg-[#f3f4f6] mt-8">
+            <p class="text-[14px] font-normal text-[#6c737f] mb-2">وصف المهمة</p>
+            <h5 class="text-[16px] font-semibold text-[#161616]">هنا يكون محتوى وصف المهمة هنا يكون محتوى وصف المهمة هنا
+                يكون محتوى وصف المهمة</h5>
+        </div>
+        <div class="actions mt-6 flex items-center justify-end gap-4">
+            <button class="btn gray-btn" (click)="close()">الغاء</button>
+        </div>
+    </div>
+</div>

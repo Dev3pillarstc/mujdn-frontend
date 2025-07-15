@@ -232,19 +232,19 @@
     "SHIFT_IDENTIFICATION": "معرف الوردية",
     "MAX_ATTENDANCE_TIME": "الحد الأقصى للحضور",
     "MAX_LEAVE_TIME": "الحد الأقصى للإنصراف",
-    "TIME_FROM_TO": "الوقت (من - الى)",
-    "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "الوقت (من) يجب أن يكون أقل من الوقت (إلى)"
+    "TIME_FROM_TO": "الوقت (من - الى)"
   },
   "WORK_SHIFTS_POPUP": {
     "ADD_NEW_SHIFT": "إضافة وردية عمل جديدة",
-    "EDIT_SHIFT": "نعديل وردية عمل",
+    "EDIT_SHIFT": "تعديل وردية عمل",
     "SHIFT_NAME_ARABIC": "اسم الوردية باللغة العربية",
     "SHIFT_NAME_ENGLISH": "اسم الوردية باللغة الإنجليزيه",
     "TIME_FROM": "الوقت (من)",
     "TIME_TO": "الوقت (إلى)",
     "MAX_ATTENDANCE_TIME": "الحد الأقصى للحضور",
     "MAX_LEAVE_TIME": "الحد الأقصى للإنصراف",
-    "DEFAULT_SHIFT": "تعيين كوردية الافتراضية"
+    "DEFAULT_SHIFT": "تعيين كوردية الافتراضية",
+    "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "الوقت (من) يجب أن يكون أقل من الوقت (إلى)"
   },
   "ATTENDANCE_LOG_PAGE": {
     "ATTENDANCE_LOGS_LIST": "سجلات الحضور",

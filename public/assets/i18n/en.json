@@ -232,8 +232,7 @@
     "SHIFT_IDENTIFICATION": "Shift identifier",
     "MAX_ATTENDANCE_TIME": "Maximum attendance time",
     "MAX_LEAVE_TIME": "Maximum leave time",
-    "TIME_FROM_TO": "Time (from - to)",
-    "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "Time from must be less than time to"
+    "TIME_FROM_TO": "Time (from - to)"
   },
   "WORK_SHIFTS_POPUP": {
     "ADD_NEW_SHIFT": "Add new work shift",
@@ -244,7 +243,8 @@
     "TIME_TO": "Time (to)",
     "MAX_ATTENDANCE_TIME": "Maximum attendance time",
     "MAX_LEAVE_TIME": "Maximum leave time",
-    "DEFAULT_SHIFT": "Set as default shift"
+    "DEFAULT_SHIFT": "Set as default shift",
+    "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "Time from must be less than time to"
   },
   "ATTENDANCE_LOG_PAGE": {
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",

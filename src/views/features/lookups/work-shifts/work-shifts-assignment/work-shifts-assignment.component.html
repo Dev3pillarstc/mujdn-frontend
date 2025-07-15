@@ -13,34 +13,61 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
               <label class="label" for="nationalityAr">اسم الوردية</label>
-              <input class="peer" fluid="true" id="nationalityAr" pInputText placeholder="اسم الوردية" type="text" />
+              <input
+                class="peer"
+                fluid="true"
+                id="nationalityAr"
+                pInputText
+                placeholder="اسم الوردية"
+                type="text"
+              />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
             <div class="relative">
               <label class="label" for="">التاريخ (من - الى)</label>
-              <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full"
-                inputId="icondisplay" placeholder="التاريخ (من - الى)">
+              <p-datepicker
+                [(ngModel)]="date2"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="icondisplay"
+                placeholder="التاريخ (من - الى)"
+              >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
             <div class="relative">
               <label class="label" for="">الادارة</label>
-              <p-select [(ngModel)]="selectedAdminstration" [options]="adminstrations" class="w-full peer"
-                optionLabel="type" placeholder="الادارة"></p-select>
+              <p-select
+                [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
+                optionLabel="type"
+                placeholder="الادارة"
+              ></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
             <div class="relative">
               <label class="label" for="">اسم الموظف</label>
-              <p-select [(ngModel)]="selectedAdminstration" [options]="adminstrations" class="w-full peer"
-                optionLabel="type" placeholder="اسم الموظف"></p-select>
+              <p-select
+                [(ngModel)]="selectedAdminstration"
+                [options]="adminstrations"
+                class="w-full peer"
+                optionLabel="type"
+                placeholder="اسم الموظف"
+              ></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
           </div>
 
@@ -52,7 +79,8 @@
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
             قائمة ورديات العمل
           </h4>
@@ -98,8 +126,14 @@
             </tr>
           </ng-template>
         </p-table>
-        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]"
-          [rows]="rows" [totalRecords]="120" class="mt-6" />
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rowsPerPageOptions]="[10, 20, 30]"
+          [rows]="rows"
+          [totalRecords]="120"
+          class="mt-6"
+        />
         <div></div>
       </div>
     </div>

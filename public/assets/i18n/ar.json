@@ -56,7 +56,7 @@
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",
     "AUTH_INVALID_OTP": "رمز OTP غير صحيح",
     "AUTH_OTP_EXPIRED": "انتهت صلاحية جلسة OTP",
-    "AUTH_USER_NAME_EXISTS": "اسم المستخدم مسجل بالفعل",
+    "AUTH_USER_NAME_EXISTS": "رقم الهوية مسجل بالفعل",
     "AUTH_Email_EXISTS": "البريد الإلكتروني مسجل بالفعل",
     "AUTH_INVALID_ROLES": "أدوار غير صحيحة أو مفقودة",
     "AUTH_USER_NOT_FOUND": "المستخدم غير موجود",

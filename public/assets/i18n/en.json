@@ -56,7 +56,7 @@
     "AUTH_USER_NOT_ACTIVE": "User is not active",
     "AUTH_INVALID_OTP": "Invalid OTP code",
     "AUTH_OTP_EXPIRED": "OTP session has expired",
-    "AUTH_USER_NAME_EXISTS": "Username is already registered",
+    "AUTH_USER_NAME_EXISTS": "National ID is already registered",
     "AUTH_Email_EXISTS": "Email is already registered",
     "AUTH_INVALID_ROLES": "Invalid or missing role(s)",
     "AUTH_USER_NOT_FOUND": "User not found",

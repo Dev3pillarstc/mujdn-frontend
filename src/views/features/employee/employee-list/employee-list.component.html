@@ -60,7 +60,7 @@
                 class="w-full peer"
                 id="accountStatus"
                 name="accountStatus"
-                optionLabel="nameAr"
+                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span
@@ -74,7 +74,7 @@
               <p-select
                 (ngModelChange)="onDepartmentChange($event)"
                 [(ngModel)]="filterModel.fkDepartmentId"
-                [optionLabel]="departmentOptionLabel"
+                [optionLabel]="optionLabel"
                 [options]="departments"
                 [placeholder]="'EMPLOYEES_PAGE.DEPARTMENT' | translate"
                 class="w-full peer"
@@ -131,7 +131,7 @@
                 [placeholder]="'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate"
                 class="w-full peer"
                 id="fingerPrint"
-                optionLabel="nameAr"
+                [optionLabel]="optionLabel"
                 optionValue="id"
               ></p-select>
               <span

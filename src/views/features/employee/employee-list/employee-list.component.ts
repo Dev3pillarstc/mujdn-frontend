@@ -226,7 +226,7 @@ export default class EmployeeListComponent
     throw new Error('Method not implemented.');
   }
 
-  get departmentOptionLabel(): string {
+  get optionLabel(): string {
     const lang = this.languageService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }

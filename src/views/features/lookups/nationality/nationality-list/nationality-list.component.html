@@ -1,23 +1,50 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        حركات حضور و انصراف الموظفين
+        {{ 'NATIONALITIES_PAGE.NATIONALITIES_LIST' | translate }}
       </h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
       <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
         <div class="flex items-center justify-between">
           <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-            تصفية البحث
+            {{ 'COMMON.SEARCH_FILTERS' | translate }}
           </h5>
         </div>
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
-              <label for="nationality" class="label">الجنسية</label>
-              <input id="nationality" type="text" pInputText class="peer" fluid="true" />
+              <label class="label" for="nationalityAr">{{
+                'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.nameAr"
+                [placeholder]="'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate"
+                class="peer"
+                fluid="true"
+                id="nationalityAr"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="nationalityEn">{{
+                'NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.nameEn"
+                [placeholder]="'NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate"
+                class="peer"
+                fluid="true"
+                id="nationalityEn"
+                pInputText
+                type="text"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -25,70 +52,77 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button class="btn black-btn">بحث</button>
-            <button class="btn gray-btn border border-[#d2d6db]">
-              إعادة تعيين
+            <button (click)="search()" class="btn black-btn">
+              {{ 'COMMON.SEARCH' | translate }}
+            </button>
+            <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
+              {{ 'COMMON.RESET_SEARCH' | translate }}
             </button>
           </div>
         </div>
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
         >
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-            قائمة حركات الحضور و الانصراف للموظفين
+            {{ 'NATIONALITIES_PAGE.NATIONALITIES_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button>
-              <img src="assets/icons/excel.svg" alt="" />
+            <button class="table-head-action-btn">
+              <img alt="" src="assets/icons/excel.svg" />
             </button>
-            <button>
-              <img src="assets/icons/print.svg" alt="" />
+            <button class="table-head-action-btn">
+              <img alt="" src="assets/icons/print.svg" />
             </button>
-            <button class="btn green-btn flex items-center">
-              <img src="assets/icons/plus.svg" alt="" />
-              <span>إضافة حركة جديدة</span>
+            <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
+              <img alt="" src="assets/icons/plus.svg" />
+              <span>{{ 'NATIONALITIES_PAGE.ADD_NEW_NATIONALITY' | translate }}</span>
             </button>
           </div>
         </div>
-        <p-table [value]="nationalities">
-          <ng-template #header>
-            <tr>
-              <th>الجنسية</th>
-              <th class="w-[120px]">الإجراء</th>
-            </tr>
-          </ng-template>
-          <ng-template #body let-nationalities>
-            <tr>
-              <td>{{ nationalities.nationality }}</td>
-
-              <td>
-                <div class="actions flex gap-2">
-                  <button
-                    class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center"
-                  >
-                    <img src="assets/icons/edit-action.svg" alt="" />
-                  </button>
-                  <button
-                    class="bg-[#fef3f2] rounded p-2 flex items-center justify-center"
-                  >
-                    <img src="assets/icons/delete-action.svg" alt="" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-        <p-paginator
-          class="mt-6"
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
-        />
-        <div></div>
+        @if (list && list.length > 0) {
+          <p-table [value]="list">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>{{ 'NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate }}</th>
+                <th>{{ 'NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate }}</th>
+                <th class="w-[100px]">{{ 'NATIONALITIES_PAGE.ACTIONS' | translate }}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-nationality>
+              <tr>
+                <td>{{ nationality.nameAr }}</td>
+                <td>{{ nationality.nameEn }}</td>
+                <td>
+                  <div class="actions flex gap-2">
+                    <button (click)="addOrEditModel(nationality)" class="table-action-gray-btn">
+                      <img src="assets/icons/edit-action.svg" alt="تعديل" />
+                    </button>
+                    <button class="table-action-red-btn">
+                      <img src="assets/icons/delete-action.svg" alt="حذف" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        } @else {
+          <div class="flex items-center justify-center h-64">
+            <p class="text-gray-500">{{ 'NATIONALITIES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+          </div>
+        }
+        @if (paginationInfo) {
+          <p-paginator
+            (onPageChange)="onPageChange($event)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
+        }
       </div>
     </div>
   </div>

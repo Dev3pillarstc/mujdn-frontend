@@ -1,0 +1,76 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">سجل المهمات المسندة للموظف</h3>
+    <div class="bg-[#074d31] p-6 rounded-2xl">
+      <div class="flex flex-col sm:flex-row justify-between pb-4">
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-white">اسم الموظف:</span>
+          <span class="font-semibold text-white">محمد أحمد محمود</span>
+        </div>
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-[#fae996]">معرف الموظف:</span>
+          <span class="font-semibold text-[#fae996]">1234</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-6">
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">الادارة</span>
+          <span class="font-semibold text-white">ادارة الموارد البشرية</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">نوع الدوام</span>
+          <span class="font-semibold text-white">دوام كلي</span>
+        </div>
+      </div>
+    </div>
+    <div class="mt-6">
+      <p-table [value]="tasks">
+        <ng-template #header>
+          <tr>
+            <th>رقم المهمة</th>
+            <th>اسم المهمة</th>
+            <th>تاريخ البداية</th>
+            <th>تاريخ النهاية</th>
+            <th>مسند المهمة</th>
+            <th>الإجراء</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-task>
+          <tr>
+            <td>{{ task.taskId }}</td>
+            <td>{{ task.taskName }}</td>
+            <td>{{ task.startDate }}</td>
+            <td>{{ task.endDate }}</td>
+            <td>{{ task.assignedTo }}</td>
+            <td>
+              <div class="actions flex gap-2">
+                <button class="table-action-gray-btn">
+                  <img alt="" src="assets/icons/edit-action.svg" />
+                </button>
+                <button class="table-action-red-btn">
+                  <img alt="" src="assets/icons/delete-action.svg" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="rows"
+        [totalRecords]="120"
+        class="mt-6"
+      />
+      <div></div>
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button (click)="close()" class="btn gray-btn">الغاء</button>
+        <button class="btn green-btn">اسناد</button>
+      </div>
+    </div>
+  </div>
+</div>

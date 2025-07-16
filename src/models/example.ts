@@ -1,12 +1,12 @@
-import { BaseCrudModel } from '@/abstracts/base-crud-model'
-import { ExampleService } from '@/services/features/example.service'
-import { InterceptModel } from 'cast-response'
-import { ExampleInterceptor } from '@/model-interceptors/example-interceptor'
+import { BaseCrudModel } from '@/abstracts/base-crud-model';
+import { ExampleService } from '@/services/features/example.service';
+import { InterceptModel } from 'cast-response';
+import { ExampleInterceptor } from '@/model-interceptors/example-interceptor';
 
-const { send, receive } = new ExampleInterceptor()
+const { send, receive } = new ExampleInterceptor();
 
 @InterceptModel({ send, receive })
 export class Example extends BaseCrudModel<Example, ExampleService> {
-  override $$__service_name__$$: string = 'ExampleService'
-  name!: string
+  override $$__service_name__$$: string = 'ExampleService';
+  name!: string;
 }

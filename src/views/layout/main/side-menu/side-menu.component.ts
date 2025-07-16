@@ -1,9 +1,14 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { MenuItem } from 'primeng/api';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '@/services/auth/auth.service';
+import { SideBarLinksService } from '@/services/shared/side-bar-links.service';
+import { MenuItem } from '@/models/shared/menu-item';
+import { LanguageService } from '@/services/shared/language.service';
+import { combineLatest, Subscription, switchMap } from 'rxjs';
+import { SharedService } from '@/services/shared/shared.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -11,80 +16,18 @@ import { CommonModule } from '@angular/common';
   imports: [SidebarModule, PanelMenuModule, RouterModule, CommonModule],
   templateUrl: './side-menu.component.html',
 })
-export class SideMenuComponent {
+export class SideMenuComponent implements OnInit {
   @ViewChild('sidebarContainer', { static: true }) sidebarContainer!: ElementRef;
   sidebarVisible = false;
-  isMobile = window.innerWidth <= 768;
+  isMobile = false;
   openedSubmenus = new Set<MenuItem>();
-
-  menuItems = [
-    {
-      label: 'لوحة المعلومات',
-      iconUrl: 'assets/icons/menu-icons/home.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      label: 'تقرير الحضور و الانصراف',
-      iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      label: 'حركات الحضور و الانصراف',
-      iconUrl: 'assets/icons/menu-icons/icon.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      label: 'الادارات',
-      iconUrl: 'assets/icons/menu-icons/tools.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      label: 'قائمة الموظفين',
-      iconUrl: 'assets/icons/menu-icons/employees.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      label: 'مسائلات توثيق التواجد',
-      iconUrl: 'assets/icons/menu-icons/icon2.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      label: 'الاستئذانات',
-      iconUrl: 'assets/icons/menu-icons/permissions.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      label: 'الموظفون المُكلفون',
-      iconUrl: 'assets/icons/menu-icons/icon3.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      label: 'قائمة الاجازات و الأعياد',
-      iconUrl: 'assets/icons/menu-icons/vacations.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      label: 'الإعدادات',
-      iconUrl: 'assets/icons/menu-icons/settings.svg',
-      children: [
-        {
-          label: 'اعدادات الأذونات',
-          // iconUrl: 'assets/icons/permission.svg',
-          routerLink: ['/settings/permissions'],
-        },
-        {
-          label: 'اعدادات الاشعارات',
-          // iconUrl: 'assets/icons/notification.svg',
-          routerLink: ['/settings/notifications'],
-        },
-        {
-          label: 'قائمة الجنسيات',
-          // iconUrl: 'assets/icons/nationality.svg',
-          routerLink: ['/settings/nationalities'],
-        },
-      ],
-    },
-  ];
+  authService = inject(AuthService);
+  sidebarLinksService = inject(SideBarLinksService);
+  menuItems: MenuItem[] = [];
+  languageService = inject(LanguageService);
+  sharedService = inject(SharedService);
+  private subscription = new Subscription();
+  private resizeListener = () => this.checkScreenSize();
 
   constructor() {
     window.addEventListener('resize', () => {
@@ -97,6 +40,23 @@ export class SideMenuComponent {
     if (!this.isMobile) {
       this.sidebarVisible = true;
     }
+  }
+
+  ngOnInit() {
+    this.checkScreenSize(); // 👈 أول مرة
+    // ✅ نتابع التغير في حجم الشاشة
+    window.addEventListener('resize', this.resizeListener);
+    this.subscription.add(
+      combineLatest([this.authService.getUser(), this.languageService.languageChanged$])
+        .pipe(switchMap(() => this.sidebarLinksService.getSidebarLinks()))
+        .subscribe((menu) => {
+          this.menuItems = menu;
+        })
+    );
+
+    this.sharedService.sideMenuToggle$.subscribe(() => {
+      this.toggleSidebar();
+    });
   }
 
   toggleSubmenu(item: MenuItem) {
@@ -117,5 +77,23 @@ export class SideMenuComponent {
 
   closeSidebar() {
     this.sidebarVisible = false;
+  }
+
+  logout() {
+    this.authService.logout().subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+
+    // ✅ إزالة listener لتفادي memory leak
+    window.removeEventListener('resize', this.resizeListener);
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 767;
+
+    // ✅ قفل السايدبار على الموبايل
+    this.sidebarVisible = !this.isMobile;
   }
 }

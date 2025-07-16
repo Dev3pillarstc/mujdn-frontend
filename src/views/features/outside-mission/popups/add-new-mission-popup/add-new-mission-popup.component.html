@@ -1,0 +1,266 @@
+<div dir="rtl">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة مهمة جديدة</h3>
+    <p-tabs value="0">
+      <p-tablist class="my-6">
+        <p-tab value="0">بيانات المهمة</p-tab>
+        <p-tab value="1">اسناد لموظفين</p-tab>
+      </p-tablist>
+      <p-tabpanels>
+        <p-tabpanel value="0">
+          <form class="">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div class="xl:col-span-2">
+                <label class="label" for="shiftName">اسم المهمة</label>
+                <div class="relative">
+                  <input
+                    class="peer"
+                    fluid="true"
+                    id="nationalityAr"
+                    pInputText
+                    placeholder="اسم المهمة"
+                    type="text"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <span class="validation-message">هذا الحقل مطلوب</span>
+              </div>
+              <div>
+                <label class="label" for="startDate">تاريخ البداية</label>
+                <div class="relative">
+                  <p-datepicker
+                    [(ngModel)]="date2"
+                    [iconDisplay]="'input'"
+                    [showIcon]="true"
+                    class="peer block w-full"
+                    id="startDate"
+                    inputId="startDate"
+                    name="startDate"
+                    placeholder="تاريخ البداية"
+                  >
+                    <ng-template pTemplate="inputicon">
+                      <img alt="" src="assets/icons/calender-icon.svg" />
+                    </ng-template>
+                  </p-datepicker>
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <span class="validation-message">هذا الحقل مطلوب</span>
+              </div>
+              <div>
+                <label class="label" for="endDate">تاريخ النهاية</label>
+                <div class="relative">
+                  <p-datepicker
+                    [(ngModel)]="date2"
+                    [iconDisplay]="'input'"
+                    [showIcon]="true"
+                    class="peer block w-full"
+                    id="endDate"
+                    inputId="endDate"
+                    name="endDate"
+                    placeholder="تاريخ النهاية"
+                  >
+                    <ng-template pTemplate="inputicon">
+                      <img alt="" src="assets/icons/calender-icon.svg" />
+                    </ng-template>
+                  </p-datepicker>
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <span class="validation-message">هذا الحقل مطلوب</span>
+              </div>
+              <div class="xl:col-span-4 lg:col-span-3 md:col-span-2">
+                <label class="label" for="">وصف المهمة</label>
+                <div class="relative w-full">
+                  <textarea
+                    class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
+                    cols="30"
+                    pTextarea
+                    placeholder="وصف المهمة"
+                    rows="5"
+                  ></textarea>
+
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+                  ></span>
+                </div>
+                <span class="validation-message">هذا الحقل مطلوب</span>
+              </div>
+            </div>
+            <div class="actions mt-6 flex items-center justify-between gap-4">
+              <button (click)="close()" class="btn gray-btn">الغاء</button>
+              <button class="btn green-btn flex items-center">
+                <span>التالي</span>
+                <img alt="" class="ltr:rotate-180" src="assets/icons/left-arrow.svg" />
+              </button>
+            </div>
+          </form>
+        </p-tabpanel>
+        <p-tabpanel value="1">
+          <div class="bg-white">
+            <div class="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-18 items-center gap-6">
+              <div class="sm:col-span-3 lg:col-span-7">
+                <label class="label" for="adminstrations-popup">الادارة</label>
+                <div class="relative">
+                  <p-select
+                    class="w-full peer"
+                    id="adminstrations-popup"
+                    name="selectedAdminstration"
+                    optionLabel="type"
+                    placeholder="الادارة"
+                  ></p-select>
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <span class="validation-message">هذا الحقل مطلوب</span>
+              </div>
+              <div class="sm:col-span-3 lg:col-span-7">
+                <label class="label" for="shiftName">اسم الموظف</label>
+                <div class="relative">
+                  <input
+                    class="peer"
+                    fluid="true"
+                    id="nationalityAr"
+                    pInputText
+                    placeholder="اسم الموظف"
+                    type="text"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <span class="validation-message">هذا الحقل مطلوب</span>
+              </div>
+              <div class="sm:col-span-4 flex gap-4 itmes-center">
+                <button class="btn black-btn">بحث</button>
+                <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+              </div>
+            </div>
+            <div class="mt-6">
+              <p-table [value]="employees">
+                <ng-template #header>
+                  <tr>
+                    <th>
+                      <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+                        <input
+                          class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                          type="checkbox"
+                        />
+                        <svg
+                          class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="3"
+                          viewBox="0 0 24 24"
+                        >
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      </label>
+                    </th>
+                    <th>معرف الموظف</th>
+                    <th>اسم الموظف بالعربي</th>
+                    <th>اسم الموظف بالانجليزي</th>
+                    <th>الادارة</th>
+                  </tr>
+                </ng-template>
+                <ng-template #body let-employees>
+                  <tr>
+                    <td>
+                      <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+                        <input
+                          class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                          type="checkbox"
+                        />
+                        <svg
+                          class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="3"
+                          viewBox="0 0 24 24"
+                        >
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      </label>
+                    </td>
+                    <td>{{ employees.employeeId }}</td>
+                    <td>{{ employees.employeeNameAr }}</td>
+                    <td>{{ employees.employeeNameEn }}</td>
+                    <td>{{ employees.adminstration }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <p-paginator
+                (onPageChange)="onPageChange($event)"
+                [first]="first"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [rows]="rows"
+                [totalRecords]="120"
+                class="mt-6"
+              />
+              <div></div>
+            </div>
+          </div>
+          <div class="pt-6 mt-6 border-t border-[#d2d6db]">
+            <h4>الموظفون المعنيون بتنفيذ المهام</h4>
+            <div class="flex flex-wrap gap-4 mt-6">
+              <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
+                <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
+                <button>
+                  <img alt="" src="assets/icons/close-tag-icon.svg" />
+                </button>
+              </div>
+              <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
+                <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
+                <button>
+                  <img alt="" src="assets/icons/close-tag-icon.svg" />
+                </button>
+              </div>
+              <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
+                <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
+                <button>
+                  <img alt="" src="assets/icons/close-tag-icon.svg" />
+                </button>
+              </div>
+              <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
+                <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
+                <button>
+                  <img alt="" src="assets/icons/close-tag-icon.svg" />
+                </button>
+              </div>
+              <div class="flex items-center gap-1 bg-[#f3f4f6] px-3 rounded-full">
+                <span class="text-[#161616] font-medium nowrap">محمد احمد طه</span>
+                <button>
+                  <img alt="" src="assets/icons/close-tag-icon.svg" />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="actions mt-6 flex items-center justify-between gap-4">
+            <button (click)="close()" class="btn gray-btn">الغاء</button>
+            <div class="flex gap-2">
+              <button class="btn gray-btn flex items-center">
+                <img alt="" class="ltr:rotate-180" src="assets/icons/right-black-arrow.svg" />
+                <span>السابق</span>
+              </button>
+              <button class="btn green-btn flex items-center">
+                <span>إضافة</span>
+              </button>
+            </div>
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+</div>

@@ -1,124 +1,127 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        حركات حضور و انصراف الموظفين
+        {{ 'ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST' | translate }}
       </h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
       <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
         <div class="flex items-center justify-between">
           <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-            تصفية البحث
+            {{ 'COMMON.SEARCH_FILTERS' | translate }}
           </h5>
         </div>
         <div class="pt-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
-              <label for="" class="label">الادارة</label>
+              <label class="label" for="department">{{
+                'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate
+              }}</label>
               <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="الادارة"
+                [(ngModel)]="filterModel.departmentId"
+                [optionLabel]="optionLabel"
+                [options]="departments"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate"
                 class="w-full peer"
+                id="department"
+                optionValue="id"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
+
             <div class="relative">
-              <label for="" class="label">اسم الموظف</label>
+              <label class="label" for="employee">{{
+                'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate
+              }}</label>
               <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="اسم الموظف"
+                (ngModelChange)="onEmployeeChange($event)"
+                [(ngModel)]="filterModel.employeeId"
+                [optionLabel]="optionLabel"
+                [options]="employees"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate"
                 class="w-full peer"
+                id="employee"
+                optionValue="id"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
+
             <div class="relative">
-              <label for="" class="label">التاريخ</label>
+              <label class="label" for="swipeDate">{{
+                'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate
+              }}</label>
               <p-datepicker
-                [(ngModel)]="date2"
+                [(ngModel)]="filterModel.swipeDate"
                 [iconDisplay]="'input'"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate"
                 [showIcon]="true"
-                placeholder="التاريخ"
                 class="peer block w-full"
-                inputId="icondisplay"
+                inputId="swipeDate"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="/assets/icons/calender-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
+
             <div class="relative">
-              <label for="" class="label">نوع الدوام</label>
+              <label class="label" for="channelName">{{
+                'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
+              }}</label>
+              <input
+                (ngModelChange)="onChannelChange($event)"
+                [(ngModel)]="filterModel.channelName"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate"
+                class="peer"
+                fluid="true"
+                id="channelName"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+
+            <div class="relative">
+              <label class="label" for="processingStatus">{{
+                'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate
+              }}</label>
               <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="نوع الدوام"
+                [optionLabel]="optionLabel"
+                [options]="processingStatusOptions"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate"
                 class="w-full peer"
+                id="processingStatus"
+                optionValue="id"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
+
             <div class="relative">
-              <label for="" class="label">نوع الحركة</label>
+              <label class="label" for="creator">{{
+                'ATTENDANCE_LOG_PAGE.CREATOR' | translate
+              }}</label>
               <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="نوع الحركة"
+                (ngModelChange)="onCreatorChange($event)"
+                [(ngModel)]="filterModel.creatorId"
+                [optionLabel]="optionLabel"
+                [options]="creators"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.CREATOR' | translate"
                 class="w-full peer"
-              ></p-select>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
-              <label for="" class="label">جهاز البصمة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="جهاز البصمة"
-                class="w-full peer"
-              ></p-select>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
-              <label for="" class="label">حالة المعالجة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="حالة المعالجة"
-                class="w-full peer"
-              ></p-select>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
-              <label for="" class="label">منشئ الحركة</label>
-              <p-select
-                [options]="adminstrations"
-                [(ngModel)]="selectedAdminstration"
-                optionLabel="type"
-                placeholder="منشئ الحركة"
-                class="w-full peer"
+                id="creator"
+                optionValue="id"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -127,112 +130,127 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button class="btn black-btn">بحث</button>
-            <button class="btn gray-btn border border-[#d2d6db]">
-              إعادة تعيين
+            <button (click)="search(true)" class="btn black-btn">
+              {{ 'COMMON.SEARCH' | translate }}
+            </button>
+            <button (click)="resetSearch(true)" class="btn gray-btn border border-[#d2d6db]">
+              {{ 'COMMON.RESET_SEARCH' | translate }}
             </button>
           </div>
         </div>
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
         >
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-            قائمة حركات الحضور و الانصراف للموظفين
+            {{ 'ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button>
-              <img src="/assets/icons/excel.svg" alt="" />
+            <button (click)="exportExcel('attendance-logs.xlsx')" class="table-head-action-btn">
+              <img alt="" src="assets/icons/excel.svg" />
             </button>
-            <button>
-              <img src="/assets/icons/print.svg" alt="" />
+            <button (click)="exportPdf()" class="table-head-action-btn">
+              <img class="w-6 h-6" alt="" src="assets/icons/file.png" />
+            </button>
+            <button class="table-head-action-btn">
+              <img alt="" src="assets/icons/print.svg" />
             </button>
             <button (click)="openDialog()" class="btn green-btn flex items-center">
-              <img src="/assets/icons/plus.svg" alt="" />
-              <span>إضافة حركة جديدة</span>
+              <img alt="" src="assets/icons/plus.svg" />
+              <span>{{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_ATTENDANCE_LOG' | translate }}</span>
             </button>
           </div>
         </div>
-        <p-table [value]="attendance">
-          <ng-template #header>
-            <tr>
-              <th>الرقم التسلسلي</th>
-              <th>اسم الموظف</th>
-              <th>التاريخ - الوقت</th>
-              <th>نوع الدوام</th>
-              <th>نوع الحركة</th>
-              <th>جهاز البصمة</th>
-              <th>منشئ الحركة</th>
-              <th>حالة المعالجة</th>
-              <th>الإجراء</th>
-            </tr>
-          </ng-template>
-          <ng-template #body let-attendance>
-            <tr>
-              <td>{{ attendance.serialNumber }}</td>
-              <td>{{ attendance.employeeName }}</td>
-              <td>
-                <div class="flex flex-col items-center">
-                  <span>
-                    {{ attendance.date }}
-                  </span>
-                  <span class="text-[#64748b]">
-                    {{ attendance.time }}
-                  </span>
-                </div>
-              </td>
-              <td>{{ attendance.workType }}</td>
-              <td>{{ attendance.attendanceStatus }}</td>
-              <td>{{ attendance.department }}</td>
-              <td>{{ attendance.movement }}</td>
-              <td>
-                <div
-                  [ngClass]="[
-                    `px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2`,
-                    attendance.treatmentStatus === 'تمت المعالجة'
-                      ? `bg-[#ecfdf3] text-[#085d3a]`
-                      : `bg-[#fffaeb] text-[#93370d]`
-                  ]"
-                >
-                  <span
+        @if (list && list.length > 0) {
+          <p-table [value]="list">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR' | translate }}</th>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN' | translate }}</th>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.SWIPE_TIME' | translate }}</th>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate }}</th>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_AR' | translate }}</th>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_EN' | translate }}</th>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate }}</th>
+                <th>{{ 'ATTENDANCE_LOG_PAGE.ACTIONS' | translate }}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-attendanceLog>
+              <tr>
+                <td>{{ attendanceLog.employeeNameAr }}</td>
+                <td>{{ attendanceLog.employeeNameEn }}</td>
+                <td>
+                  <div class="flex flex-col items-center">
+                    <span>{{ formatSwipeTime(attendanceLog.swipeTime).date }}</span>
+                    <span class="text-[#64748b]">{{
+                      formatSwipeTime(attendanceLog.swipeTime).time
+                    }}</span>
+                  </div>
+                </td>
+                <td>{{ attendanceLog.channelName }}</td>
+                @if (!attendanceLog.isRawData) {
+                  <td>{{ attendanceLog.creatorNameAr }}</td>
+                  <td>{{ attendanceLog.creatorNameEn }}</td>
+                } @else {
+                  <td>النظام</td>
+                  <td>System</td>
+                }
+                <td>
+                  <div
                     [ngClass]="[
-                      `block w-[10px] h-[10px] rounded-full`,
-                      attendance.treatmentStatus === 'تمت المعالجة'
-                        ? `bg-[#085d3a]`
-                        : `bg-[#93370d]`
+                      'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
+                      getProcessingStatusClass(attendanceLog.isProcessed),
                     ]"
-                  ></span>
-                  <span>
-                    {{ attendance.treatmentStatus }}
-                  </span>
-                </div>
-              </td>
-              <td>
-                <div class="actions flex gap-2">
-                  <button
-                    class="bg-[#f3f4f6] rounded p-2 flex items-center justify-center"
                   >
-                    <img src="/assets/icons/edit-action.svg" alt="" />
-                  </button>
-                  <button
-                    class="bg-[#fef3f2] rounded p-2 flex items-center justify-center"
-                  >
-                    <img src="/assets/icons/delete-action.svg" alt="" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-        <p-paginator
-          class="mt-6"
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="120"
-          [rowsPerPageOptions]="[10, 20, 30]"
-        />
+                    <span
+                      [ngClass]="[
+                        'block w-[10px] h-[10px] rounded-full',
+                        getProcessingStatusDotClass(attendanceLog.isProcessed),
+                      ]"
+                    ></span>
+                    <span>
+                      {{
+                        attendanceLog.isProcessed
+                          ? ('ATTENDANCE_LOG_PAGE.PROCESSED' | translate)
+                          : ('ATTENDANCE_LOG_PAGE.PROCESSING' | translate)
+                      }}
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <div class="actions flex gap-2">
+                    <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
+                      <img src="assets/icons/edit-action.svg" alt="" />
+                    </button>
+                    <button
+                      (click)="deleteModel(attendanceLog.id, true)"
+                      [disabled]="attendanceLog.isRawData"
+                      class="table-action-red-btn {{ attendanceLog.isRawData ? 'disabled' : '' }}"
+                    >
+                      <img src="assets/icons/delete-action.svg" alt="" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        } @else {
+          <div class="flex items-center justify-center h-64">
+            <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
+          </div>
+        }
+        @if (paginationInfo) {
+          <p-paginator
+            (onPageChange)="onPageChange($event, true)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
+        }
         <div></div>
       </div>
     </div>

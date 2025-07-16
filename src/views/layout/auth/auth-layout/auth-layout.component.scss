@@ -1,16 +1,16 @@
 .page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .content {
+    flex: 1;
+    background-image: url('/assets/imgs/auth-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-
-    .content {
-        flex: 1;
-        background-image: url('/assets/imgs/auth-bg.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: bottom;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+    justify-content: center;
+  }
 }

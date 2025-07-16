@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {MatDialogModule} from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +7,4 @@ import {MatDialogModule} from '@angular/material/dialog';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export default class HomeComponent {
-
-}
+export default class HomeComponent {}

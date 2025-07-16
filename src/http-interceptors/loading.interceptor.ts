@@ -1,10 +1,19 @@
 import { SpinnerService } from '@/services/shared/spinner.service';
-import { HttpEvent, HttpHandler, HttpHandlerFn, HttpInterceptor, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpHandlerFn,
+  HttpInterceptor,
+  HttpInterceptorFn,
+  HttpRequest,
+} from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, finalize, timeout } from 'rxjs';
 
-export const loadingInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
-  
+export const loadingInterceptor = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<unknown>> => {
   const spinnerService = inject(SpinnerService);
 
   // Skip loading for certain requests (optional)
@@ -13,10 +22,10 @@ export const loadingInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerF
   }
 
   spinnerService.show();
-  
+
   return next(req).pipe(
     finalize(() => {
-        spinnerService.hide();
+      spinnerService.hide();
     })
   );
 };

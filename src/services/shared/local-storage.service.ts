@@ -2,15 +2,15 @@ import { LOCALSTORAGE_ENUM } from '@/enums/local-storage-enum';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalStorageService {
   get(key: LOCALSTORAGE_ENUM) {
     const value = localStorage.getItem(key);
     try {
-        return value ? JSON.parse(value) : null;
+      return value ? JSON.parse(value) : null;
     } catch (error) {
-        return null;
+      return null;
     }
   }
 

@@ -1,0 +1,11 @@
+.dimmed-form {
+  background-color: rgba(0, 0, 0, 0.1); /* darken */
+  label {
+    input:checked {
+      background-color: #7c7777 !important;
+    }
+    span {
+      color: #5c5959 !important;
+    }
+  }
+}

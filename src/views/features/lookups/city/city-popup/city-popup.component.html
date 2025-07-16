@@ -1,0 +1,81 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ (isCreateMode ? 'CITIES_PAGE.ADD_NEW_CITY' : 'CITIES_PAGE.EDIT_CITY') | translate }}
+    </h3>
+    <form [formGroup]="form" class="mt-6">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="label" for="regionSelect">{{ 'CITIES_PAGE.REGION' | translate }}</label>
+          <div class="relative">
+            <p-select
+              [optionLabel]="getPropertyName()"
+              [options]="regions"
+              class="w-full peer"
+              formControlName="fkRegionId"
+              id="regionSelect"
+              name="regionSelect"
+              optionValue="id"
+              placeholder="{{ 'CITIES_PAGE.REGION' | translate }}"
+            >
+            </p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="regionControl"></app-validation-messages>
+        </div>
+        <div>
+          <label class="label" for="cityAr-popup">{{
+            'CITIES_PAGE.CITY_IN_ARABIC' | translate
+          }}</label>
+          <div class="relative">
+            <input
+              class="peer"
+              fluid="true"
+              formControlName="nameAr"
+              id="cityAr-popup"
+              pInputText
+              placeholder="{{ 'CITIES_PAGE.CITY_IN_ARABIC' | translate }}"
+              type="text"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="nameArControl"></app-validation-messages>
+        </div>
+        <div>
+          <label class="label" for="cityEn-popup">{{
+            'CITIES_PAGE.CITY_IN_ENGLISH' | translate
+          }}</label>
+          <div class="relative">
+            <input
+              class="peer"
+              fluid="true"
+              formControlName="nameEn"
+              id="cityEn-popup"
+              pInputText
+              placeholder="{{ 'CITIES_PAGE.CITY_IN_ENGLISH' | translate }}"
+              type="text"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="nameEnControl"></app-validation-messages>
+        </div>
+      </div>
+
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="save$.next()" class="btn green-btn">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

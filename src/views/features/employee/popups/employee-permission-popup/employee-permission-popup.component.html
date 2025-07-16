@@ -1,0 +1,231 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <button class="block ms-auto" (click)="close()">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'EMPLOYEES_PAGE.EDIT_EMPLOYEE_PERMISSIONS' | translate }}
+    </h3>
+
+    <!-- Employee Information Card -->
+    <div class="bg-[#074d31] p-6 rounded-2xl">
+      <div class="flex flex-col sm:flex-row justify-between pb-4">
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME' | translate }}:</span>
+          <span class="font-semibold text-white">
+            {{ model.fullNameAr || model.fullNameEn || 'N/A' }}
+          </span>
+        </div>
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-[#fae996]"
+            >{{ 'EMPLOYEES_PAGE.EMPLOYEE_ID' | translate }}:</span
+          >
+          <span class="font-semibold text-[#fae996]">{{ model.nationalId || 'N/A' }}</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-6">
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}</span>
+          <span class="font-semibold text-white">{{ departmentName || 'N/A' }}</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.EMAIL' | translate }}</span>
+          <span class="font-semibold text-white">{{ model.email || 'N/A' }}</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.PHONE_NUMBER' | translate }}</span>
+          <span class="font-semibold text-white">{{ model.phoneNumber || 'N/A' }}</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.JOB_TITLE' | translate }}</span>
+          <span class="font-semibold text-white">
+            {{ model.jobTitleAr || model.jobTitleEn || 'N/A' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Permissions Form -->
+    <div class="mt-6 pt-6 border-t border-[#d2d6db]">
+      <h3 class="text-[#1f2a37] font-[600] mb-6 text-sm sm:text-base">
+        {{ 'EMPLOYEES_PAGE.PERMISSIONS' | translate }}
+      </h3>
+
+      <form [formGroup]="form">
+        <div class="flex flex-wrap gap-8">
+          <!-- Employee Role -->
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              type="checkbox"
+              formControlName="isEmployee"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              checked
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]">
+              {{ 'EMPLOYEES_PAGE.ROLE_EMPLOYEE' | translate }}
+            </span>
+          </label>
+
+          <!-- System Admin Role -->
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              type="checkbox"
+              formControlName="isSysAdmin"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]">
+              {{ 'EMPLOYEES_PAGE.ROLE_SYS_ADMIN' | translate }}
+            </span>
+          </label>
+
+          <!-- Department Manager Role -->
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              type="checkbox"
+              formControlName="isDeptManager"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]">
+              {{ 'EMPLOYEES_PAGE.ROLE_DEPT_MANAGER' | translate }}
+            </span>
+          </label>
+
+          <!-- Follow-up Officer Role -->
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              type="checkbox"
+              formControlName="isFollowUp"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]">
+              {{ 'EMPLOYEES_PAGE.ROLE_FOLLOW_UP' | translate }}
+            </span>
+          </label>
+
+          <!-- HR Officer Role -->
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              type="checkbox"
+              formControlName="isHR"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]">
+              {{ 'EMPLOYEES_PAGE.ROLE_HR' | translate }}
+            </span>
+          </label>
+
+          <!-- Security Member Role -->
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              type="checkbox"
+              formControlName="isSecurityMember"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]">
+              {{ 'EMPLOYEES_PAGE.ROLE_MP_MEMBER' | translate }}
+            </span>
+          </label>
+
+          <!-- Security Leader Role -->
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              type="checkbox"
+              formControlName="isSecurityLeader"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]">
+              {{ 'EMPLOYEES_PAGE.ROLE_MP_LEADER' | translate }}
+            </span>
+          </label>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="actions mt-6 flex items-center justify-end gap-4">
+          <button type="button" class="btn gray-btn" (click)="close()">
+            {{ 'COMMON.CANCEL' | translate }}
+          </button>
+          <button type="button" class="btn green-btn" (click)="saveUserRoles()">
+            {{ 'COMMON.SAVE' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

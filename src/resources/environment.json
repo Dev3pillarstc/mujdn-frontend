@@ -1,7 +1,7 @@
 {
   "ENVIRONMENTS_URLS": {
-    "DEV": "http://localhost:3000",
-    "TEST": "http://localhost:3000"
+    "DEV": "https://localhost:7107/api",
+    "TESTING": "https://m-back.dev3pillars.org/api"
   },
   "API_VERSION": "",
   "BASE_ENVIRONMENT": "DEV",

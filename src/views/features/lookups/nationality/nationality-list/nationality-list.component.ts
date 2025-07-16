@@ -1,60 +1,64 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
-import { FormsModule } from '@angular/forms';
-import { Select } from 'primeng/select';
-import { DatePickerModule } from 'primeng/datepicker';
-import { FluidModule } from 'primeng/fluid';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { NationalityPopupComponent } from '@/views/features/lookups/nationality/nationality-popup/nationality-popup.component';
+import { NationalityFilter } from '@/models/features/lookups/Nationality-filter';
+import { Nationality } from '@/models/features/lookups/Nationality';
+import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { NationalityService } from '@/services/features/lookups/nationality.service';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-nationality-list',
-  imports: [
-    Breadcrumb,
-    FormsModule,
-    DatePickerModule,
-    FluidModule,
-    TableModule,
-    CommonModule,
-    RouterModule,
-    CommonModule,
-    PaginatorModule,
-    InputTextModule,
-  ],
+  standalone: true,
+  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
   templateUrl: './nationality-list.component.html',
   styleUrl: './nationality-list.component.scss',
 })
-export default class NationalityListComponent {
-  items: MenuItem[] | undefined;
-
+export default class NationalityListComponent
+  extends BaseListComponent<
+    Nationality,
+    NationalityPopupComponent,
+    NationalityService,
+    NationalityFilter
+  >
+  implements OnInit
+{
+  override dialogSize = {
+    width: '100%',
+    maxWidth: '600px',
+  };
+  nationalityService = inject(NationalityService);
   home: MenuItem | undefined;
+  filterModel: NationalityFilter = new NationalityFilter();
 
-  date2: Date | undefined;
-  nationalities!: any[];
-  first: number = 0;
-  rows: number = 10;
-
-  ngOnInit() {
-    this.items = [
-      { label: 'لوحة المعلومات' },
-      { label: 'حركات حضور و انصراف الموظفين' },
-    ];
-    // Updated dummy data to match your Arabic table structure
-    this.nationalities = [
-      {
-        nationality: 'اسم الجنسية',
-      },
-      {
-        nationality: 'اسم الجنسية',
-      },
-    ];
+  override get service() {
+    return this.nationalityService;
   }
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
+
+  override initListComponent(): void {
+    // load lookups if needed
+  }
+
+  override openDialog(model: Nationality): void {
+    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(NationalityPopupComponent as any, model, viewMode);
+  }
+
+  addOrEditModel(nationality?: Nationality) {
+    const nationalityCopy = nationality
+      ? new Nationality().clone(nationality) // assuming a `clone` method exists
+      : new Nationality();
+
+    this.openDialog(nationalityCopy);
+  }
+
+  protected override mapModelToExcelRow(model: Nationality): { [key: string]: any } {
+    throw new Error('Method not implemented.');
   }
 }

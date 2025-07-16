@@ -1,99 +1,93 @@
-import {inject, Injectable} from '@angular/core';
-import {BehaviorSubject, catchError, tap, throwError} from 'rxjs';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {SingleResponseData} from '@/models/shared/response/single-response-data';
-import {User} from '@/models/auth/user';
-import {BaseCrudService} from '@/abstracts/base-crud-service';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { SingleResponseData } from '@/models/shared/response/single-response-data';
+import { BaseCrudService } from '@/abstracts/base-crud-service';
+import { LoggedInUser } from '@/models/auth/logged-in-user';
+import { ROLES_ENUM } from '@/enums/roles-enum';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthService extends BaseCrudService<User, string> {
+export class AuthService extends BaseCrudService<LoggedInUser, string> {
   serviceName: string = 'AuthService';
   router = inject(Router);
-  user = new BehaviorSubject<User | null>(null);
-  private tokenExpirationTimer: any;
+  isAuthenticated = false;
+  private loggedInUser: BehaviorSubject<LoggedInUser | undefined> = new BehaviorSubject<
+    LoggedInUser | undefined
+  >(undefined);
+
+  get isAdmin() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.ADMIN);
+  }
+
+  get isDepartmentManager() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.DEPARTMENT_MANAGER);
+  }
+
+  get isHROfficer() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.HR_OFFICER);
+  }
+
+  get isRootDeprtment() {
+    return this.loggedInUser.value?.isInRootDepartment;
+  }
+
+  get isDeprtmentActualManager() {
+    return this.loggedInUser.value?.isDepartmentManager;
+  }
+
+  get isFollowUpOfficer() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.FOLLOW_UP_OFFICER);
+  }
+
+  get isSecurityLeader() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.SECURITY_LEADER);
+  }
+
+  get isSecurityMember() {
+    return this.loggedInUser.value?.roles.includes(ROLES_ENUM.SECURITY_MEMBER);
+  }
 
   getUrlSegment(): string {
     return this.urlService.URLS.AUTH;
   }
 
-  login(email: string, password: string) {
-    return this.http
-      .post<SingleResponseData<User>>(
-        this.getUrlSegment() + '/login',
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap(resData => {
-          this.handleAuthentication(
-            resData.data
-          );
-        })
-      );
-  }
-
-  autoLogin() {
-    const userData: User = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')!) : null;
-    if (!userData) {
-      return;
-    }
-
-    const loadedUser = Object.assign(new User(), {...userData});
-
-    if (loadedUser.token) {
-      this.user.next(loadedUser);
-      const expirationDuration =
-        new Date(userData.tokenExpirationDate).getTime() -
-        new Date().getTime();
-      this.autoLogout(expirationDuration);
-    }
+  login(username: string, password: string) {
+    return this.http.post<SingleResponseData<LoggedInUser>>(
+      this.getUrlSegment() + '/login',
+      {
+        username: username,
+        password: password,
+      },
+      { withCredentials: true }
+    );
   }
 
   logout() {
-    this.user.next(null);
-    this.router.navigate(['/auth']);
-    localStorage.removeItem('userData');
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
-    this.tokenExpirationTimer = null;
+    return this.http.get<SingleResponseData<LoggedInUser>>(this.getUrlSegment() + '/logout', {
+      withCredentials: true,
+    });
   }
 
-  autoLogout(expirationDuration: number) {
-    this.tokenExpirationTimer = setTimeout(() => {
-      this.logout();
-    }, expirationDuration);
+  setUser(loggedInUser: LoggedInUser | undefined) {
+    this.isAuthenticated = !!loggedInUser;
+    if (loggedInUser) {
+      loggedInUser.isDepartmentManager = loggedInUser.isDepartmentManager + '' == 'true';
+      loggedInUser.isInRootDepartment = loggedInUser.isInRootDepartment + '' == 'true';
+    }
+
+    const user = loggedInUser ? Object.assign(new LoggedInUser(), loggedInUser) : undefined;
+    this.loggedInUser.next(user);
   }
 
-  private handleAuthentication(user: User) {
-    this.user.next(user);
-    this.autoLogout(5 * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
+  refreshToken() {
+    return this.http.get<SingleResponseData<LoggedInUser>>(this.getUrlSegment() + '/refresh', {
+      withCredentials: true,
+    });
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred!';
-    if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
-    }
-    switch (errorRes.error.error.message) {
-      case 'EMAIL_EXISTS':
-        errorMessage = 'This email exists already';
-        break;
-      case 'EMAIL_NOT_FOUND':
-        errorMessage = 'This email does not exist.';
-        break;
-      case 'INVALID_PASSWORD':
-        errorMessage = 'This password is not correct.';
-        break;
-    }
-    return throwError(errorMessage);
+  getUser(): BehaviorSubject<LoggedInUser | undefined> {
+    return this.loggedInUser;
   }
 }

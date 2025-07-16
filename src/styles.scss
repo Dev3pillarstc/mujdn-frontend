@@ -33,6 +33,14 @@
     width: 256px !important;
     position: fixed !important;
     height: 100vh !important;
+    top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .p-overlay-mask-enter.p-drawer-mask {
+    position: fixed !important;
+    transform: unset !important;
   }
 }
 
@@ -77,7 +85,7 @@
         border-radius: 10px;
         transition: 0.2s;
         transform: translateY(-50%);
-        content: "";
+        content: '';
       }
     }
   }
@@ -111,7 +119,7 @@
       border-radius: 10px;
       transition: 0.2s;
       transform: translateY(-50%);
-      content: "";
+      content: '';
     }
   }
 }
@@ -126,33 +134,57 @@
 }
 
 // End SideMenu
-//start kareem new
-.p-datepicker-input-icon-container {
-  inset-inline-end: unset !important;
-  inset-inline-start: 16px !important;
-  pointer-events: none;
+// start kareem
+.close-popup {
+  margin-bottom: 24px;
 }
-.p-datepicker:has(.p-datepicker-input-icon-container) .p-datepicker-input {
-  padding-inline-end: 0 !important;
-  padding-inline-start: 44px !important;
-  cursor: pointer;
-}
-button,
-a {
-  cursor: pointer;
-}
-.p-breadcrumb {
-  padding: 0;
-  padding-bottom: 24px;
 
-  ol {
-    li {
-      &:last-child {
-        span {
-          color: #9da4ae;
-        }
-      }
+:root {
+  --p-tabs-tab-hover-background: #e5e7eb !important;
+}
+
+.p-tab {
+  position: relative;
+  border: unset !important;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    height: 3px;
+    background-color: #161616;
+    display: none;
+  }
+
+  &:hover {
+    &::after {
+      display: block;
+    }
+  }
+
+  &.p-tab-active {
+    &::after {
+      background-color: #1b8354;
+      display: block;
     }
   }
 }
-// en kareem new
+
+// end kareem
+// start kareem
+.p-datepicker-hour-picker:dir(rtl) {
+  order: 3 !important;
+}
+
+.p-datepicker-separator:dir(rtl) {
+  order: 2 !important;
+}
+
+.p-datepicker-minute-picker:dir(rtl) {
+  order: 1 !important;
+}
+
+// end kareem

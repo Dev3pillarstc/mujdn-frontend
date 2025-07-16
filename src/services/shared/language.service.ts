@@ -1,12 +1,13 @@
-import {inject, Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {LANGUAGE_ENUM} from '@/enums/language-enum';
-import {TranslateService} from '@ngx-translate/core';
-import {LOCALSTORAGE_ENUM} from "@/enums/local-storage-enum";
-import {LocalStorageService} from "@/services/shared/local-storage.service";
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { TranslateService } from '@ngx-translate/core';
+import { LOCALSTORAGE_ENUM } from '@/enums/local-storage-enum';
+import { LocalStorageService } from '@/services/shared/local-storage.service';
+import { FactoryService } from '@/services/factory-service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LanguageService {
   translateService = inject(TranslateService);
@@ -21,6 +22,8 @@ export class LanguageService {
       this._currentLanguage = storedLanguage;
       this.translateService.use(storedLanguage);
     }
+
+    FactoryService.registerService('LanguageService', this);
   }
 
   getCurrentLanguage(): string {

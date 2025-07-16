@@ -1,15 +1,14 @@
-div[dir="rtl"] {
-
-    // Arabic Sidebar
-    .p-drawer-left {
-        left: unset !important;
-        right: 0;
-    }
-
-    // Arabic Sidebar
-}
-
-[dir="rtl"]~.p-drawer-left {
+div[dir='rtl'] {
+  // Arabic Sidebar
+  .p-drawer-left {
     left: unset !important;
     right: 0;
+  }
+
+  // Arabic Sidebar
+}
+
+[dir='rtl'] ~ .p-drawer-left {
+  left: unset !important;
+  right: 0;
 }

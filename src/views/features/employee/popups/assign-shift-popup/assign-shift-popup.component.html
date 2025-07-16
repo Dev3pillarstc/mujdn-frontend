@@ -1,0 +1,81 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اسناد وردية للموظف</h3>
+    <div class="bg-[#074d31] p-6 rounded-2xl">
+      <div class="flex flex-col sm:flex-row justify-between pb-4">
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-white">اسم الموظف:</span>
+          <span class="font-semibold text-white">محمد أحمد محمود</span>
+        </div>
+        <div class="flex gap-2 items-center">
+          <span class="text-sm text-[#fae996]">معرف الموظف:</span>
+          <span class="font-semibold text-[#fae996]">1234</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-6">
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">الادارة</span>
+          <span class="font-semibold text-white">ادارة الموارد البشرية</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">نوع الدوام</span>
+          <span class="font-semibold text-white">دوام كلي</span>
+        </div>
+      </div>
+    </div>
+    <div class="mt-6">
+      <div class="flex justify-between items-center gap-4 my-6">
+        <h4 class="text-sm md:text-base font-bold text-[#161616]">ورديات الموظف</h4>
+        <div class="actions flex items-center gap-4 ms-auto">
+          <button (click)="addShift()" class="btn black-btn flex items-center">
+            <img alt="" src="assets/icons/plus.svg" />
+            <span>إضافة وردية جديدة</span>
+          </button>
+        </div>
+      </div>
+      <p-table [value]="employees">
+        <ng-template #header>
+          <tr>
+            <th>اسم الوردية</th>
+            <th>التاريخ (من)</th>
+            <th>التاريخ (الى)</th>
+            <th>الإجراء</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-employees>
+          <tr>
+            <td>{{ employees.shiftName }}</td>
+            <td>{{ employees.dateTo }}</td>
+            <td>{{ employees.dateFrom }}</td>
+            <td>
+              <div class="actions flex gap-2">
+                <button class="table-action-gray-btn">
+                  <img alt="" src="assets/icons/edit-action.svg" />
+                </button>
+                <button class="table-action-red-btn">
+                  <img alt="" src="assets/icons/delete-action.svg" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="rows"
+        [totalRecords]="120"
+        class="mt-6"
+      />
+      <div></div>
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button (click)="close()" class="btn gray-btn">الغاء</button>
+        <button class="btn green-btn">اسناد</button>
+      </div>
+    </div>
+  </div>
+</div>

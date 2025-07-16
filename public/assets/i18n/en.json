@@ -1,6 +1,35 @@
 {
   "COMMON": {
-
+    "OK": "Ok",
+    "CANCEL": "Cancel",
+    "ADD": "Add",
+    "ERROR": "Error",
+    "SUCCESS": "Success",
+    "ALERT": "Alert",
+    "CONFIRM_DELETE": "Are you sure you want to delete this item?",
+    "SAVED_SUCCESSFULLY": "Saved successfully",
+    "UPDATED_SUCCESSFULLY": "Updated successfully",
+    "DELETED_SUCCESSFULLY": "Deleted successfully",
+    "DELETION_FAILED": "Failed to delete the item",
+    "NOT_AUTHORIZED": "You do not have permission to access this page",
+    "SAVE": "Save",
+    "ACTIVE": "Active",
+    "REQUIRED_FIELD": "This field is required",
+    "MIN_LENGTH": "Minimum length is 3 characters",
+    "MAX_LENGTH": "Maximum length is 300 characters",
+    "ARABIC_ONLY": "This field must contain Arabic characters only",
+    "ENGLISH_ONLY": "This field must contain English characters only",
+    "SEARCH": "Search",
+    "RESET_SEARCH": "Reset",
+    "SEARCH_FILTERS": "Search filters",
+    "START_BEFORE_END": "Start date must be before end date",
+    "UNKNOWN_ERROR": "Unknown error",
+    "SERVICE_UNAVAILABLE": "Service unavailable",
+    "STRONG_PASSWORD": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
+    "ACTION": "Action",
+    "EDIT": "Edit",
+    "DASHBOARD": "Dashboard",
+    "NO_DATA_TO_SHOW": "No data to display"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

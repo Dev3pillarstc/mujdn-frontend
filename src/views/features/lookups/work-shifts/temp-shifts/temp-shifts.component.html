@@ -1,0 +1,130 @@
+<div class="bg-white">
+  <div class="bg-[#f9fafb] p-3 sm:p-6">
+    <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">ورديات العمل المؤقتة</h3>
+    </div>
+    <div
+      class="p-8 md:p-10 rounded-[16px] bg-[#074d31] shadow-[0_4px_6px_-2px_rgba(16,24,40,0.03),_0_12px_16px_-4px_rgba(16,24,40,0.08)] mb-6"
+    >
+      <div
+        class="flex items-center gap-2 bg-[#1B835433] rounded-full px-6 py-4 border border-[#1b8354]"
+      >
+        <p class="text-sm text-white">اسم الوردية الأساسية</p>
+        <h5 class="text-base font-semibold text-white">دوام كامل</h5>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-10">
+        <div>
+          <p class="text-sm text-white mb-2">الوقت (من - الى)</p>
+          <h5 class="text-base font-semibold text-white">08:00 - 17:00</h5>
+        </div>
+        <div>
+          <p class="text-sm text-white mb-2">الحد الأقصى للحضور</p>
+          <h5 class="text-base font-semibold text-white">09:30</h5>
+        </div>
+        <div>
+          <p class="text-sm text-white mb-2">الحد الأقصى للانصراف</p>
+          <h5 class="text-base font-semibold text-white">19:00</h5>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
+      <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
+        <div class="flex items-center justify-between">
+          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+        </div>
+        <div class="pt-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+            <div class="relative xl:col-span-3">
+              <label class="label" for="nationalityAr">اسم الوردية</label>
+              <input
+                class="peer"
+                fluid="true"
+                id="nationalityAr"
+                pInputText
+                placeholder="اسم الوردية"
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="">التاريخ (من - الى)</label>
+              <p-datepicker
+                [(ngModel)]="date2"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="icondisplay"
+                placeholder="التاريخ (من - الى)"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+          </div>
+
+          <div class="actions flex items-center gap-4 pt-6">
+            <button class="btn black-btn">بحث</button>
+            <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+            قائمة ورديات العمل المؤقتة
+          </h4>
+          <div class="actions flex items-center gap-4 ms-auto">
+            <button class="table-head-action-btn">
+              <img alt="" src="assets/icons/excel.svg" />
+            </button>
+            <button class="table-head-action-btn">
+              <img alt="" src="assets/icons/print.svg" />
+            </button>
+          </div>
+        </div>
+        <p-table [value]="attendance">
+          <ng-template #header>
+            <tr>
+              <th>معرف الوردية</th>
+              <th>اسم الوردية</th>
+              <th>تاريخ البداية</th>
+              <th>اتاريخ الانتهاء</th>
+              <th>الوقت (من - الى)</th>
+              <th>الحد الأقصى للحضور</th>
+              <th>الحد الأقصى للانصراف</th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-attendance>
+            <tr>
+              <td>{{ attendance.serialNumber }}</td>
+              <td>{{ attendance.PermanentType }}</td>
+              <td>{{ attendance.startDate }}</td>
+              <td>{{ attendance.endDate }}</td>
+              <td>{{ attendance.timeRange }}</td>
+              <td>{{ attendance.maxAttendanceTime }}</td>
+              <td>{{ attendance.maxwithdrawalTime }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rowsPerPageOptions]="[10, 20, 30]"
+          [rows]="rows"
+          [totalRecords]="120"
+          class="mt-6"
+        />
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>

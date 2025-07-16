@@ -18,7 +18,7 @@
     "ACTIVE": "Active",
     "REQUIRED_FIELD": "This field is required",
     "MIN_LENGTH": "Minimum length is 3 characters",
-    "MAX_LENGTH": "Maximum length is 300 characters",
+    "MAX_LENGTH": "You have reached the maximum length of the field",
     "ARABIC_ONLY": "This field must contain Arabic characters only",
     "ENGLISH_ONLY": "This field must contain English characters only",
     "SEARCH": "Search",
@@ -53,6 +53,7 @@
     "SERIALIZATION_ERROR": "An error occurred while processing the data",
     "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is connected/related to another entity",
     "CANNOT_BE_DELETE": "The record can't be deleted",
+    "EXISTING_NATIONALITY_ERROR": "Nationality already exists",
 
     "AUTH_INVALID_CREDENTIALS": "Username or password is incorrect",
     "AUTH_USER_NOT_ACTIVE": "User is not active",
@@ -105,6 +106,7 @@
     "NATIONALITY_IN_ARABIC": "Nationality in Arabic",
     "NATIONALITY_IN_ENGLISH": "Nationality in English",
     "ADD_NEW_NATIONALITY": "Add New Nationality",
+    "EDIT_NATIONALITY": "Edit Nationality",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
   },

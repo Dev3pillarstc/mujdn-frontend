@@ -92,7 +92,7 @@ export abstract class BaseListComponent<
   ngOnInit() {
     this.list = this.activatedRoute.snapshot.data['list']?.list;
     this.paginationInfo = this.activatedRoute.snapshot.data['list']?.paginationInfo;
-    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
+    this.breadcrumbs = [];
     this.initListComponent();
   }
 

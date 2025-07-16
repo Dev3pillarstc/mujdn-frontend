@@ -16,7 +16,7 @@
     "ACTIVE": "نشط",
     "REQUIRED_FIELD": "هذا الحقل مطلوب",
     "MIN_LENGTH": "يجب أن يكون الحد الأدنى للحقل هو 3",
-    "MAX_LENGTH": "يجب أن يكون الحد الأقصى للحقل هو 300",
+    "MAX_LENGTH": "لقد تخطيت الحد الاقصى لطول الحقل",
     "ARABIC_ONLY": "يجب أن يحتوي هذا الحقل على أحرف عربية فقط",
     "ENGLISH_ONLY": "يجب أن يحتوي هذا الحقل على أحرف إنجليزية فقط",
     "SEARCH": "بحث",
@@ -51,6 +51,7 @@
     "SERIALIZATION_ERROR": "حدث خطأ أثناء معالجة البيانات",
     "INVALID_DELETE_REQUEST": "لا يمكن حذف السجل لأنه متصل/مرتبط بكيان آخر",
     "CANNOT_BE_DELETE": "لا يمكن حذف السجل",
+    "EXISTING_NATIONALITY_ERROR": "الجنسية موجودة بالفعل",
 
     "AUTH_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",
@@ -103,6 +104,7 @@
     "NATIONALITY_IN_ARABIC": "الجنسية بالعربية",
     "NATIONALITY_IN_ENGLISH": "الجنسية بالانجليزية",
     "ADD_NEW_NATIONALITY": "إضافة جنسية جديدة",
+    "EDIT_NATIONALITY": "تعديل جنسية",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   },

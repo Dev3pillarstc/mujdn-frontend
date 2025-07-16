@@ -63,13 +63,13 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.REQUIRED]: 'COMMON.REQUIRED_FIELD',
     [ValidationErrorKeyEnum.AR_NUM]: 'COMMON.ARABIC_ONLY',
     [ValidationErrorKeyEnum.ENG_NUM]: 'COMMON.ENGLISH_ONLY',
-    [ValidationErrorKeyEnum.MIN_LENGTH]: 'COMMON.MIN_LENGTH_DYNAMIC', // Should be: "Minimum length is {length}"
-    [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH_DYNAMIC', // Should be: "Maximum length is {length}"
+    [ValidationErrorKeyEnum.MIN_LENGTH]: 'COMMON.MIN_LENGTH',
+    [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH',
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
     [ValidationErrorKeyEnum.STRONG_PASSWORD]: 'COMMON.STRONG_PASSWORD',
     [ValidationErrorKeyEnum.NATIONAL_ID]: 'COMMON.NATIONAL_ID_VALIDATION',
     [ValidationErrorKeyEnum.POSITIVE_NUMBER]: 'COMMON.POSITIVE_NUMBER_ONLY',
     [ValidationErrorKeyEnum.INVALID_NUMBER]: 'COMMON.INVALID_NUMBER',
-    [ValidationErrorKeyEnum.NUMBER_RANGE]: 'COMMON.NUMBER_RANGE', // Should be: "Value must be between {min} and {max}"
+    [ValidationErrorKeyEnum.NUMBER_RANGE]: 'COMMON.NUMBER_RANGE',
   };
 }

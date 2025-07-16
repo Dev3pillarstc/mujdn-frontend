@@ -73,6 +73,14 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   }
   override buildForm(): void {
     this.form = this.fb.group(this.model.buildForm());
+
+    if (!this.isCreateMode) {
+      this.form.get('timeFrom')?.disable();
+      this.form.get('timeTo')?.disable();
+      this.form.get('attendanceBuffer')?.disable();
+      this.form.get('leaveBuffer')?.disable();
+      this.form.get('isDefaultShift')?.disable();
+    }
   }
   override saveFail(error: Error): void {}
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {

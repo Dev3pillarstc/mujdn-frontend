@@ -59,7 +59,8 @@
     "PERMISSION_REASON_ADDED_SUCCESSFULLY": "Permission Reason added successfully",
     "PERMISSION_REASON_UPDATED_SUCCESSFULLY": "Permission Reason updated successfully",
     "BACK_TO_PERMISSION_REASONS": "Back to Permission Reasons",
-    "PERMISSIONS_SETTINGS": "Permissions Settings"
+    "PERMISSIONS_SETTINGS": "Permissions Settings",
+    "PERMISSION_REASON": "Permission reason"
   },
   "CITIES_PAGE": {
     "CITY": "City",

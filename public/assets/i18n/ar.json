@@ -59,7 +59,8 @@
     "PERMISSION_REASON_ADDED_SUCCESSFULLY": "تم إضافة سبب الإذن بنجاح",
     "PERMISSION_REASON_UPDATED_SUCCESSFULLY": "تم تحديث سبب الإذن بنجاح",
     "BACK_TO_PERMISSION_REASONS": "العودة إلى أسباب الإذن",
-    "PERMISSIONS_SETTINGS": "إعدادات الأذونات"
+    "PERMISSIONS_SETTINGS": "إعدادات الأذونات",
+    "PERMISSION_REASON": "سبب الإذن"
   },
   "CITIES_PAGE": {
     "CITY": "المدينة",

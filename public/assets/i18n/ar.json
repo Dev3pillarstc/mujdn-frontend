@@ -51,7 +51,7 @@
     "SERIALIZATION_ERROR": "حدث خطأ أثناء معالجة البيانات",
     "INVALID_DELETE_REQUEST": "لا يمكن حذف السجل لأنه متصل/مرتبط بكيان آخر",
     "CANNOT_BE_DELETE": "لا يمكن حذف السجل",
-    "EXISTING_NATIONALITY_ERROR": "الجنسية موجودة بالفعل",
+    "EXISTING_RECORD_ERROR": "هذا السجل موجود بالفعل",
 
     "AUTH_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",

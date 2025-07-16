@@ -28,7 +28,7 @@ export abstract class BaseListComponent<
   first: number = 0;
   rows: number = 10;
   paginationInfo: PaginationInfo = new PaginationInfo();
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   list: Model[] = [];
   paginationParams: PaginationParams = new PaginationParams();
   matDialog = inject(MatDialog);
@@ -92,7 +92,7 @@ export abstract class BaseListComponent<
   ngOnInit() {
     this.list = this.activatedRoute.snapshot.data['list']?.list;
     this.paginationInfo = this.activatedRoute.snapshot.data['list']?.paginationInfo;
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
     this.initListComponent();
   }
 

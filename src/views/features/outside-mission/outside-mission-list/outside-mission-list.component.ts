@@ -35,12 +35,12 @@ export default class OutsideMissionListComponent {
   rows: number = 10;
   date2: Date | undefined;
   missions!: any[];
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   matDialog = inject(MatDialog);
 
   ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'مهام الأعمال و الاسناد' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'مهام الأعمال و الاسناد' }];
     // Updated dummy data to match your Arabic table structure
     this.missions = [
       {

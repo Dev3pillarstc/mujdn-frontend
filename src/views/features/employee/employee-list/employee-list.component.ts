@@ -96,6 +96,7 @@ export default class EmployeeListComponent
   }
 
   override initListComponent(): void {
+    this.breadcrumbs = [{ label: 'MENU.DASHBOARD' }, { label: 'MENU.EMPLOYEES' }];
     // load lookups
     this.cityService.getCitiesLookup().subscribe((res: CityLookup[]) => {
       this.cities = res;

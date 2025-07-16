@@ -16,6 +16,7 @@ export const EndPoints = {
   PERMISSION_STATUS: '/permissionstatuses',
   PERMISSIONS: '/permissions',
   SHIFTS: '/shifts',
+  User_Work_Shifts: '/UserWorkShifts',
 };
 
 export type EndpointsType = typeof EndPoints;

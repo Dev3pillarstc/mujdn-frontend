@@ -4,7 +4,7 @@ import Shift from '@/models/features/lookups/work-shifts/shift';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Injectable } from '@angular/core';
-import { CastResponseContainer } from 'cast-response';
+import { CastResponse, CastResponseContainer } from 'cast-response';
 
 @Injectable({
   providedIn: 'root',

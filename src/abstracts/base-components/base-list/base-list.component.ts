@@ -209,9 +209,6 @@ export abstract class BaseListComponent<
             }
             this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
           },
-          error: (_) => {
-            this.alertsService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
-          },
         });
       }
     });

@@ -228,9 +228,10 @@
     "MAX_ATTENDANCE_TIME": "Maximum attendance time",
     "MAX_LEAVE_TIME": "Maximum leave time",
     "TIME_FROM_TO": "Time (from - to)",
-    "CONFLICTING_DATES": "تعارض تاريخ الورديه",
-    "DATA_NOT_COMPLETE": "المعلومات غير مكتمله",
-    "CONFLICTING_USER_DATES": "تعارض في مواعيد الورديات الخاصه بالمستخدم"
+    "CONFLICTING_DATES": "Conflicting shift dates",
+    "DATA_NOT_COMPLETE": "Complete shift logs data",
+    "CONFLICTING_USER_DATES": "Conflicting shift dates for this user",
+    "SHIFT_NAME_INVALID": "Shift name is required"
   },
   "WORK_SHIFTS_POPUP": {
     "ADD_NEW_SHIFT": "Add new work shift",

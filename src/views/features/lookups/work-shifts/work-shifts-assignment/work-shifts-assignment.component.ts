@@ -36,7 +36,12 @@ interface Adminstration {
   templateUrl: './work-shifts-assignment.component.html',
   styleUrl: './work-shifts-assignment.component.scss',
 })
-export default class WorkShiftsAssignmentComponent extends BaseListComponent<UserWorkShift, WorkShiftsAssignmentPopupComponent, UserWorkShiftService, ShiftsFilter> {
+export default class WorkShiftsAssignmentComponent extends BaseListComponent<
+  UserWorkShift,
+  WorkShiftsAssignmentPopupComponent,
+  UserWorkShiftService,
+  ShiftsFilter
+> {
   override get filterModel(): ShiftsFilter {
     throw new Error('Method not implemented.');
   }
@@ -49,7 +54,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<Use
   override initListComponent(): void {
     throw new Error('Method not implemented.');
   }
-  protected override mapModelToExcelRow(model: UserWorkShift): { [key: string]: any; } {
+  protected override mapModelToExcelRow(model: UserWorkShift): { [key: string]: any } {
     throw new Error('Method not implemented.');
   }
   // items: MenuItem[] | undefined;

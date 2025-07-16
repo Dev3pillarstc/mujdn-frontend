@@ -55,7 +55,11 @@
     "ADD_NEW_PERMISSION_REASON": "Add New Permission Reason",
     "EDIT_PERMISSION_REASON": "Edit Permission Reason",
     "ACTIONS": "Actions",
-    "NO_DATA_TO_SHOW": "No data to display"
+    "NO_DATA_TO_SHOW": "No data to display",
+    "PERMISSION_REASON_ADDED_SUCCESSFULLY": "Permission Reason added successfully",
+    "PERMISSION_REASON_UPDATED_SUCCESSFULLY": "Permission Reason updated successfully",
+    "BACK_TO_PERMISSION_REASONS": "Back to Permission Reasons",
+    "PERMISSIONS_SETTINGS": "Permissions Settings"
   },
   "CITIES_PAGE": {
     "CITY": "City",
@@ -291,6 +295,7 @@
     "NOTIFICATION_CHANNELS": "Notification Settings",
     "NATIONALITIES": "Nationalities",
     "CITIES": "Cities",
-    "REGIONS": "Regions"
+    "REGIONS": "Regions",
+    "PERMISSIONS_SETTINGS": "Permissions Settings"
   }
 }

@@ -8,6 +8,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-temp-shifts',
   imports: [
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     PaginatorModule,
     DatePickerModule,
     FormsModule,
+    TranslatePipe,
   ],
   templateUrl: './temp-shifts.component.html',
   styleUrl: './temp-shifts.component.scss',

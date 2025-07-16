@@ -88,7 +88,8 @@
     "SERVER_INVALID_OPERATION": "عملية غير صحيحة",
     "SERVER_INTERNAL_ERROR": "حدث خطأ داخلي في الخادم",
     "AUTH_EXTERNAL_ERROR": "فشل تسجيل الدخول بسبب خطأ داخلي",
-    "STORED_EXTERNAL_ERROR": "حدث خطأ داخلي في الخادم في المخزن"
+    "STORED_EXTERNAL_ERROR": "حدث خطأ داخلي في الخادم في المخزن",
+    "HOME": "الصفحة الرئيسية"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"

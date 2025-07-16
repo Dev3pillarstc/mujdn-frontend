@@ -14,10 +14,21 @@ import { RegionService } from '@/services/features/lookups/region.service';
 import { CityFilter } from '@/models/features/lookups/city/city-filter';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-city-list',
-  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
+  imports: [
+    Breadcrumb,
+    TableModule,
+    PaginatorModule,
+    InputTextModule,
+    FormsModule,
+    TranslatePipe,
+    CommonModule,
+    RouterModule,
+  ],
   providers: [CityService],
   templateUrl: './city-list.component.html',
   styleUrl: './city-list.component.scss',
@@ -34,7 +45,7 @@ export default class CityListComponent extends BaseListComponent<
     maxWidth: '600px',
   };
   cityService = inject(CityService);
-  home: MenuItem | undefined;
+  override breadcrumbs: MenuItem[] | undefined;
   filterModel: CityFilter = new CityFilter();
   regions: BaseLookupModel[] = [];
   regionService = inject(RegionService);
@@ -47,8 +58,8 @@ export default class CityListComponent extends BaseListComponent<
     this.regionService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.regions = res;
     });
+    this.breadcrumbs = [{ label: 'CITIES_PAGE.CITIES_LIST' }];
   }
-
   override openDialog(model: City): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     const lookups = { regions: this.regions };

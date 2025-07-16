@@ -12,6 +12,7 @@ import { AddNewMissionPopupComponent } from '../popups/add-new-mission-popup/add
 import { MatDialog } from '@angular/material/dialog';
 import { ViewMissionDataPopupComponent } from '../popups/view-mission-data-popup/view-mission-data-popup.component';
 import { Select } from 'primeng/select';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-outside-mission-list',
@@ -26,6 +27,7 @@ import { Select } from 'primeng/select';
     DatePickerModule,
     Select,
     FormsModule,
+    TranslatePipe,
   ],
   templateUrl: './outside-mission-list.component.html',
   styleUrl: './outside-mission-list.component.scss',

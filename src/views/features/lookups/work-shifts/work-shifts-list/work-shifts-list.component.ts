@@ -47,7 +47,9 @@ export default class WorkShiftsListComponent
   override get service(): ShiftService {
     return this.shiftService;
   }
-  override initListComponent(): void {}
+  override initListComponent(): void {
+    this.breadcrumbs = [{ label: 'WORK_SHIFTS.WORK_SHIFTS' }];
+  }
 
   dialogSize = {
     width: '100%',
@@ -55,13 +57,9 @@ export default class WorkShiftsListComponent
   };
 
   dialog = inject(MatDialog);
-  home: MenuItem | undefined;
+  override breadcrumbs: MenuItem[] | undefined;
   date2: Date | undefined;
   attendance!: any[];
-  override ngOnInit() {
-    super.ngOnInit();
-    this.breadcrumbs = [{ label: 'COMMON.DASHBOARD' }, { label: 'WORK_SHIFTS.WORK_SHIFTS' }];
-  }
 
   openDialog(model: Shift): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;

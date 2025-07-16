@@ -36,7 +36,7 @@ export default class NationalityListComponent
     maxWidth: '600px',
   };
   nationalityService = inject(NationalityService);
-  home: MenuItem | undefined;
+  override breadcrumbs: MenuItem[] | undefined;
   filterModel: NationalityFilter = new NationalityFilter();
 
   override get service() {
@@ -44,8 +44,7 @@ export default class NationalityListComponent
   }
 
   override initListComponent(): void {
-    this.breadcrumbs = [{ label: 'MENU.DASHBOARD' }, { label: 'MENU.NATIONALITIES' }];
-    // load lookups if needed
+    this.breadcrumbs = [{ label: 'MENU.NATIONALITIES' }];
   }
 
   override openDialog(model: Nationality): void {

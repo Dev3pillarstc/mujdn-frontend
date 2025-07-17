@@ -115,7 +115,7 @@ export class LanguageService {
         ],
         today: 'Today',
         clear: 'Clear',
-        firstDayOfWeek: 0,
+        firstDayOfWeek: 6,
         dateFormat: 'dd/mm/yy',
       });
     }

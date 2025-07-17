@@ -172,16 +172,36 @@ export abstract class BaseListComponent<
     }
   }
 
-  exportExcel(fileName: string = 'data.xlsx'): void {
-    if (this.list && this.list.length > 0) {
-      const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? true : false;
-      const transformedData = this.list.map((item) => this.mapModelToExcelRow(item));
-      const ws = XLSX.utils.json_to_sheet(transformedData);
-      const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      wb.Workbook = { Views: [{ RTL: isRTL }] };
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-      XLSX.writeFile(wb, fileName);
-    }
+  exportExcel(fileName: string = 'data.xlsx', isStoredProcedure: boolean = false): void {
+    const MAX_EXPORT_SIZE = 10000;
+
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: MAX_EXPORT_SIZE,
+    };
+
+    const fetchAll = isStoredProcedure
+      ? this.service.loadPaginatedSP(allDataParams, { ...this.filterModel! })
+      : this.service.loadPaginated(allDataParams, { ...this.filterModel! });
+
+    fetchAll.subscribe({
+      next: (response) => {
+        const fullList = response.list || [];
+        if (fullList.length > 0) {
+          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+      error: (_) => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
   }
 
   protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };

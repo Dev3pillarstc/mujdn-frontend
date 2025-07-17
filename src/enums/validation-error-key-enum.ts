@@ -6,4 +6,8 @@ export enum ValidationErrorKeyEnum {
   MAX_LENGTH = 'maxlength',
   START_AFTER_END = 'startAfterEnd',
   STRONG_PASSWORD = 'strongPassword',
+  NATIONAL_ID = 'NATIONAL_ID',
+  POSITIVE_NUMBER = 'positiveNumber',
+  INVALID_NUMBER = 'invalidNumber',
+  NUMBER_RANGE = 'numberRange',
 }

@@ -188,3 +188,13 @@
 }
 
 // end kareem
+p-datepicker.ng-touched.ng-invalid {
+  input {
+    border-color: #b42318 !important;
+    color: #b42318;
+  }
+
+  ::placeholder {
+    color: #b42318;
+  }
+}

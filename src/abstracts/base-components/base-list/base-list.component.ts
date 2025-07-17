@@ -15,6 +15,7 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -27,8 +28,9 @@ export abstract class BaseListComponent<
   abstract dialogSize: any;
   first: number = 0;
   rows: number = 10;
+
   paginationInfo: PaginationInfo = new PaginationInfo();
-  items: MenuItem[] | undefined;
+  abstract breadcrumbs: MenuItem[] | undefined;
   list: Model[] = [];
   paginationParams: PaginationParams = new PaginationParams();
   matDialog = inject(MatDialog);
@@ -36,6 +38,7 @@ export abstract class BaseListComponent<
   langService = inject(LanguageService);
   confirmService = inject(ConfirmationService);
   alertsService = inject(AlertService);
+  tanslateService = inject(TranslateService);
   declare selectedModel?: Model;
 
   abstract get filterModel(): FilterModel;
@@ -47,7 +50,11 @@ export abstract class BaseListComponent<
   abstract openDialog(nationality: Model): void;
 
   abstract initListComponent(): void;
-
+  home = {
+    label: this.tanslateService.instant('COMMON.HOME'),
+    icon: 'pi pi-home',
+    routerLink: '/',
+  };
   openBaseDialog(
     popupComponent: PopupComponent,
     model: Model,
@@ -92,7 +99,6 @@ export abstract class BaseListComponent<
   ngOnInit() {
     this.list = this.activatedRoute.snapshot.data['list']?.list;
     this.paginationInfo = this.activatedRoute.snapshot.data['list']?.paginationInfo;
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الجنسيات' }];
     this.initListComponent();
   }
 
@@ -208,9 +214,6 @@ export abstract class BaseListComponent<
               this.loadList();
             }
             this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
-          },
-          error: (_) => {
-            this.alertsService.showErrorMessage({ messages: ['COMMON.DELETION_FAILED'] });
           },
         });
       }

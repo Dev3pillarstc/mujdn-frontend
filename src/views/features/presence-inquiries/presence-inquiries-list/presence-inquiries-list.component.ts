@@ -35,7 +35,7 @@ interface Adminstration {
   styleUrl: './presence-inquiries-list.component.scss',
 })
 export default class PresenceInquiriesListComponent {
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -53,7 +53,7 @@ export default class PresenceInquiriesListComponent {
   constructor() {}
 
   ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'مسائلات توثيق التواجد' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'مسائلات توثيق التواجد' }];
     this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [

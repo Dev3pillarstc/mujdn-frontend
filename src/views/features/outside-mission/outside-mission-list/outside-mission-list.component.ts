@@ -12,6 +12,7 @@ import { AddNewMissionPopupComponent } from '../popups/add-new-mission-popup/add
 import { MatDialog } from '@angular/material/dialog';
 import { ViewMissionDataPopupComponent } from '../popups/view-mission-data-popup/view-mission-data-popup.component';
 import { Select } from 'primeng/select';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-outside-mission-list',
@@ -26,6 +27,7 @@ import { Select } from 'primeng/select';
     DatePickerModule,
     Select,
     FormsModule,
+    TranslatePipe,
   ],
   templateUrl: './outside-mission-list.component.html',
   styleUrl: './outside-mission-list.component.scss',
@@ -35,12 +37,12 @@ export default class OutsideMissionListComponent {
   rows: number = 10;
   date2: Date | undefined;
   missions!: any[];
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   matDialog = inject(MatDialog);
 
   ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'مهام الأعمال و الاسناد' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'مهام الأعمال و الاسناد' }];
     // Updated dummy data to match your Arabic table structure
     this.missions = [
       {

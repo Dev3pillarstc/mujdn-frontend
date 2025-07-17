@@ -53,13 +53,15 @@ export default class HolidaysListComponent extends BaseListComponent<
   translateService = inject(TranslateService);
   authService = inject(AuthService);
 
-  home: MenuItem | undefined;
+  override breadcrumbs: MenuItem[] | undefined;
   filterModel: HolidayFilter = new HolidayFilter();
   override get service() {
     return this.holidayService;
   }
 
-  override initListComponent(): void {}
+  override initListComponent(): void {
+    this.breadcrumbs = [{ label: 'HOLIDAYS_PAGE.HOLIDAYS_LIST' }];
+  }
 
   override openDialog(model: Holiday): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;

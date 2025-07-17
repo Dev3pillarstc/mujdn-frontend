@@ -68,7 +68,7 @@ export default class DepartmentListComponent extends BaseListComponent<
   private _filterModel: DepartmentFilter = new DepartmentFilter();
   private _selectedDepartment: Department | null = null;
 
-  home: MenuItem | undefined;
+  override breadcrumbs: MenuItem[] | undefined;
   date2: Date | undefined;
   adminstrations: Adminstration[] | undefined;
   selectedAdminstration: Adminstration | undefined;
@@ -95,10 +95,7 @@ export default class DepartmentListComponent extends BaseListComponent<
 
     // Explicitly set the selectedDepartment property
     this.selectedDepartment = this.rootDepartment;
-    this.items = [
-      { label: 'DEPARTMENTS_LIST_PAGE.DASHBOARD' },
-      { label: 'DEPARTMENTS_LIST_PAGE.DEPARTMENTS_LIST' },
-    ];
+    this.breadcrumbs = [{ label: 'DEPARTMENTS_LIST_PAGE.DEPARTMENTS_LIST' }];
     this.initializeFilteredCities();
   }
 

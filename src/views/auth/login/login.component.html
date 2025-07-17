@@ -17,7 +17,7 @@
               class="peer"
               type="text"
               pInputText
-              placeholder="اسم المستخدم"
+              [placeholder]="'LOGIN_PAGE.USERNAME_LBL' | translate"
               fluid="true"
             />
             <span
@@ -32,7 +32,7 @@
               id="password"
               type="password"
               pInputText
-              placeholder="كلمة المرور"
+              [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
               fluid="true"
             />
             <span

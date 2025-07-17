@@ -30,13 +30,13 @@ export default class EmployeeHolidaysComponent {
   first: number = 0;
   rows: number = 10;
   matDialog = inject(MatDialog);
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   date2: Date | undefined;
   attendance!: any[];
 
   ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الاجازات' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'قائمة الاجازات' }];
     this.attendance = [
       {
         serialNumber: 'عيد الأضحى المبارك',

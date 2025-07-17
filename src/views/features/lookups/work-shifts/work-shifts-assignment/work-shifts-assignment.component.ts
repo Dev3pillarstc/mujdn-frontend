@@ -12,6 +12,7 @@ import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { WorkShiftsAssignmentPopupComponent } from '../work-shifts-assignment-popup/work-shifts-assignment-popup.component';
+import { TranslatePipe } from '@ngx-translate/core';
 interface Adminstration {
   type: string;
 }
@@ -28,6 +29,7 @@ interface Adminstration {
     Select,
     DatePickerModule,
     FormsModule,
+    TranslatePipe,
   ],
   templateUrl: './work-shifts-assignment.component.html',
   styleUrl: './work-shifts-assignment.component.scss',

@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notifiactions',
@@ -22,6 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
     PaginatorModule,
     DatePickerModule,
     FormsModule,
+    TranslatePipe,
   ],
   templateUrl: './notifiactions.component.html',
   styleUrl: './notifiactions.component.scss',

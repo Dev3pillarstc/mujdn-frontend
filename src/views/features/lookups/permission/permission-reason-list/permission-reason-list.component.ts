@@ -14,10 +14,21 @@ import { PermissionReasonPopupComponent } from '@/views/features/lookups/permiss
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-permission-list',
-  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
+  imports: [
+    Breadcrumb,
+    TableModule,
+    PaginatorModule,
+    InputTextModule,
+    FormsModule,
+    TranslatePipe,
+    CommonModule,
+    RouterModule,
+  ],
   templateUrl: './permission-reason-list.component.html',
   styleUrl: './permission-reason-list.component.scss',
 })
@@ -37,7 +48,7 @@ export default class PermissionReasonListComponent
     maxWidth: '600px',
   };
   permissionReasonService = inject(PermissionReasonService);
-  home: MenuItem | undefined;
+  override breadcrumbs: MenuItem[] | undefined;
   filterModel: PermissionReasonFilter = new PermissionReasonFilter();
 
   override get service() {
@@ -45,7 +56,7 @@ export default class PermissionReasonListComponent
   }
 
   override initListComponent(): void {
-    // load lookups if needed
+    this.breadcrumbs = [{ label: 'PERMISSION_REASONS_PAGE.PERMISSION_REASONS_LIST' }];
   }
 
   override openDialog(model: PermissionReason): void {

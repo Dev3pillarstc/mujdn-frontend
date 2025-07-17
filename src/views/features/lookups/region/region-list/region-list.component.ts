@@ -14,10 +14,21 @@ import { TableModule } from 'primeng/table';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-region-list',
-  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
+  imports: [
+    Breadcrumb,
+    TableModule,
+    PaginatorModule,
+    InputTextModule,
+    FormsModule,
+    TranslatePipe,
+    CommonModule,
+    RouterModule,
+  ],
   templateUrl: './region-list.component.html',
   styleUrl: './region-list.component.scss',
 })
@@ -31,7 +42,7 @@ export class RegionListComponent
     maxWidth: '600px',
   };
   regionService = inject(RegionService);
-  home: MenuItem | undefined;
+  override breadcrumbs: MenuItem[] | undefined;
   filterModel: RegionFilter = new RegionFilter();
 
   override get service() {
@@ -39,7 +50,7 @@ export class RegionListComponent
   }
 
   override initListComponent(): void {
-    // load lookups if needed
+    this.breadcrumbs = [{ label: 'REGIONS_PAGE.REGIONS_LIST' }];
   }
 
   override openDialog(model: Region): void {

@@ -75,7 +75,7 @@ export default class AttendanceLogListComponent
   channels: BaseLookupModel[] = [];
   creators: BaseLookupModel[] = [];
 
-  home: MenuItem | undefined;
+  override breadcrumbs: MenuItem[] | undefined;
   filterModel: AttendanceLogFilter = new AttendanceLogFilter();
   processingStatusOptions: BooleanOptionModel[] = PROCESSING_STATUS_OPTIONS;
 
@@ -98,7 +98,7 @@ export default class AttendanceLogListComponent
 
   override initListComponent(): void {
     // Initialize breadcrumb
-    this.breadcrumbs = [{ label: 'MENU.DASHBOARD' }, { label: 'MENU.ATTENDANCE_LOGS' }];
+    this.breadcrumbs = [{ label: 'MENU.ATTENDANCE_LOGS' }];
     // Load lookups
     this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.departments = res;

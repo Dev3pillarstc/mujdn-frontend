@@ -49,7 +49,7 @@
   font-weight: 600;
   color: #161616;
 
-  & > li {
+  &>li {
     margin-top: 8px;
     padding-bottom: 8px;
     border-bottom: 1px solid #d2d6db;
@@ -188,3 +188,13 @@
 }
 
 // end kareem
+p-datepicker.ng-touched.ng-invalid {
+  input {
+    border-color: #b42318 !important;
+    color: #b42318;
+  }
+
+  ::placeholder {
+    color: #b42318;
+  }
+}

@@ -118,7 +118,12 @@
     "ADD_NEW_PERMISSION_REASON": "Add New Permission Reason",
     "EDIT_PERMISSION_REASON": "Edit Permission Reason",
     "ACTIONS": "Actions",
-    "NO_DATA_TO_SHOW": "No data to display"
+    "NO_DATA_TO_SHOW": "No data to display",
+    "PERMISSION_REASON_ADDED_SUCCESSFULLY": "Permission Reason added successfully",
+    "PERMISSION_REASON_UPDATED_SUCCESSFULLY": "Permission Reason updated successfully",
+    "BACK_TO_PERMISSION_REASONS": "Back to Permission Reasons",
+    "PERMISSIONS_SETTINGS": "Permissions Settings",
+    "PERMISSION_REASON": "Permission reason"
   },
   "CITIES_PAGE": {
     "CITY": "City",
@@ -284,12 +289,12 @@
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
-    "SHIFT_NAME": "Shift name",
+    "SHIFT_NAME_EN": "English shift name",
+    "SHIFT_NAME_AR": "Arabic shift name",
     "SHIFTS_LIST": "Work shifts list",
     "ADD_NEW_SHIFT": "Add new work shift",
-    "SHIFT_IDENTIFICATION": "Shift identifier",
-    "MAX_ATTENDANCE_TIME": "Maximum attendance time",
-    "MAX_LEAVE_TIME": "Maximum leave time",
+    "MAX_ATTENDANCE_TIME": "Grace period for check-in (min)",
+    "MAX_LEAVE_TIME": "Grace period for check-out (min)",
     "TIME_FROM_TO": "Time (from - to)"
   },
   "WORK_SHIFTS_POPUP": {
@@ -355,6 +360,7 @@
     "NOTIFICATION_CHANNELS": "Notification Settings",
     "NATIONALITIES": "Nationalities",
     "CITIES": "Cities",
-    "REGIONS": "Regions"
+    "REGIONS": "Regions",
+    "PERMISSIONS_SETTINGS": "Permissions Settings"
   }
 }

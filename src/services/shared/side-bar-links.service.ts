@@ -98,7 +98,7 @@ export class SideBarLinksService {
       iconUrl: 'assets/icons/menu-icons/settings.svg',
       children: [
         {
-          labelKey: 'MENU.PERMISSION_REASONS',
+          labelKey: 'MENU.PERMISSIONS_SETTINGS',
           routerLink: ['/permission-reasons'],
           routeId: RouteIdsEnum.PERMISSION_REASONS,
         },

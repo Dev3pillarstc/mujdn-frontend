@@ -16,7 +16,7 @@
     "ACTIVE": "نشط",
     "REQUIRED_FIELD": "هذا الحقل مطلوب",
     "MIN_LENGTH": "يجب أن يكون الحد الأدنى للحقل هو 3",
-    "MAX_LENGTH": "لقد تخطيت الحد الاقصى لطول الحقل",
+    "MAX_LENGTH": "يجب أن يكون الحد الأقصى للحقل هو 250",
     "ARABIC_ONLY": "يجب أن يحتوي هذا الحقل على أحرف عربية فقط",
     "ENGLISH_ONLY": "يجب أن يحتوي هذا الحقل على أحرف إنجليزية فقط",
     "SEARCH": "بحث",
@@ -116,7 +116,12 @@
     "ADD_NEW_PERMISSION_REASON": "إضافة سبب إذن جديد",
     "EDIT_PERMISSION_REASON": "تعديل سبب الإذن",
     "ACTIONS": "الإجراء",
-    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
+    "PERMISSION_REASON_ADDED_SUCCESSFULLY": "تم إضافة سبب الإذن بنجاح",
+    "PERMISSION_REASON_UPDATED_SUCCESSFULLY": "تم تحديث سبب الإذن بنجاح",
+    "BACK_TO_PERMISSION_REASONS": "العودة إلى أسباب الإذن",
+    "PERMISSIONS_SETTINGS": "إعدادات الأذونات",
+    "PERMISSION_REASON": "سبب الإذن"
   },
   "CITIES_PAGE": {
     "CITY": "المدينة",
@@ -282,12 +287,12 @@
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "ورديات العمل",
-    "SHIFT_NAME": "اسم الوردية",
+    "SHIFT_NAME_EN": "اسم الوردية باللغة الانجليزية",
+    "SHIFT_NAME_AR": "اسم الوردية باللغة العربية",
     "SHIFTS_LIST": "قائمة ورديات العمل",
     "ADD_NEW_SHIFT": "إضافة وردية عمل جديده",
-    "SHIFT_IDENTIFICATION": "معرف الوردية",
-    "MAX_ATTENDANCE_TIME": "الحد الأقصى للحضور",
-    "MAX_LEAVE_TIME": "الحد الأقصى للإنصراف",
+    "MAX_ATTENDANCE_TIME": "مدة السماح للحضور (دق)",
+    "MAX_LEAVE_TIME": "مدة السماح للانصراف (دق)",
     "TIME_FROM_TO": "الوقت (من - الى)"
   },
   "WORK_SHIFTS_POPUP": {
@@ -353,6 +358,7 @@
     "NOTIFICATION_CHANNELS": "إعدادات الإشعارات",
     "NATIONALITIES": "قائمة الجنسيات",
     "CITIES": "قائمة المدن",
-    "REGIONS": "قائمة المناطق"
+    "REGIONS": "قائمة المناطق",
+    "PERMISSIONS_SETTINGS": "إعدادات الأذونات"
   }
 }

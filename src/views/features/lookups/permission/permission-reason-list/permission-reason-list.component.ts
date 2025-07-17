@@ -9,7 +9,7 @@ import { PermissionReason } from '@/models/features/lookups/permission/permissio
 import { PermissionReasonFilter } from '@/models/features/lookups/permission/permission-reason-filter';
 import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { PermissionReasonPopupComponent } from '@/views/features/lookups/permission/permission-reason-popup/permission-reason-popup.component';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
@@ -41,7 +41,8 @@ export default class PermissionReasonListComponent
   >
   implements OnInit
 {
-  languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
+  languageService = inject(LanguageService);
+  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -67,11 +68,8 @@ export default class PermissionReasonListComponent
     this.openDialog(permissionReason ?? new PermissionReason());
   }
   protected override mapModelToExcelRow(model: PermissionReason): { [key: string]: any } {
-    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
-
     return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : 'Permission Reason']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]: model.getName(),
     };
   }
 }

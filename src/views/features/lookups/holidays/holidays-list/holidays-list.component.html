@@ -1,7 +1,13 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full" />
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <a [routerLink]="item.url" class="cursor-pointer">
+            <span>{{ item.label | translate }}</span>
+          </a>
+        </ng-template>
+      </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'HOLIDAYS_PAGE.HOLIDAYS_LIST' | translate }}
       </h3>

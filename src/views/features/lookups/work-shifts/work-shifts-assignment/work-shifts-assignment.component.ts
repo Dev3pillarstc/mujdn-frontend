@@ -12,6 +12,7 @@ import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { WorkShiftsAssignmentPopupComponent } from '../work-shifts-assignment-popup/work-shifts-assignment-popup.component';
+import { TranslatePipe } from '@ngx-translate/core';
 import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
 import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
 import ShiftsFilter from '@/models/features/lookups/work-shifts/shifts-filter';
@@ -32,6 +33,7 @@ interface Adminstration {
     Select,
     DatePickerModule,
     FormsModule,
+    TranslatePipe,
   ],
   templateUrl: './work-shifts-assignment.component.html',
   styleUrl: './work-shifts-assignment.component.scss',
@@ -65,7 +67,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   };
   userWorkShiftService = inject(UserWorkShiftService);
   dialog = inject(MatDialog);
-  home: MenuItem | undefined;
+  override home: MenuItem | undefined;
   date2: Date | undefined;
   adminstrations: Adminstration[] | undefined;
   selectedAdminstration: Adminstration | undefined;

@@ -90,7 +90,8 @@
     "SERVER_INVALID_OPERATION": "Invalid operation",
     "SERVER_INTERNAL_ERROR": "An internal server error occurred",
     "AUTH_EXTERNAL_ERROR": "Login failed due to an internal error",
-    "STORED_EXTERNAL_ERROR": "An internal server error occurred in stored"
+    "STORED_EXTERNAL_ERROR": "An internal server error occurred in stored",
+    "HOME": "Home"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

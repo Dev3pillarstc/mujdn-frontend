@@ -48,7 +48,7 @@ export default class WorkShiftsListComponent
     maxWidth: '1024px',
   };
   dialog = inject(MatDialog);
-  home: MenuItem | undefined;
+  override breadcrumbs: MenuItem[] | undefined;
   date2: Date | undefined;
   attendance!: any[];
   translateService = inject(TranslateService);
@@ -57,7 +57,9 @@ export default class WorkShiftsListComponent
     return this.shiftService;
   }
 
-  override initListComponent(): void {}
+  override initListComponent(): void {
+    this.breadcrumbs = [{ label: 'WORK_SHIFTS.WORK_SHIFTS' }];
+  }
 
   override ngOnInit() {
     super.ngOnInit();

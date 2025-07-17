@@ -53,7 +53,7 @@ export class RegionListComponent
   }
 
   override openDialog(model: Region): void {
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialog(RegionPopupComponent as any, model, viewMode);
   }
 

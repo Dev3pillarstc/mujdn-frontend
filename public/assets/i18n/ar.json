@@ -6,6 +6,8 @@
     "ERROR": "خطأ",
     "SUCCESS": "نجاح",
     "ALERT": "تنبيه",
+    "YES": "نعم",
+    "NO": "لا",
     "CONFIRM_DELETE": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
     "SAVED_SUCCESSFULLY": "تم الحفظ بنجاح",
     "UPDATED_SUCCESSFULLY": "تم التحديث بنجاح",
@@ -360,5 +362,14 @@
     "CITIES": "قائمة المدن",
     "REGIONS": "قائمة المناطق",
     "PERMISSIONS_SETTINGS": "إعدادات الأذونات"
+  },
+  "NOTIFICATION": {
+    "NOTIFICATION_SETTINGS": "إعدادات الإشعارات",
+    "NOTIFICATION_CHANNELS": "قنوات الإشعارات",
+    "NOTIFICATION_TEMPLATES": "قوالب الإشعارات",
+    "CHOOSE_SUPPORTED_PLATFORMS": "تحديد المنصات المدعومة",
+    "SMS": "رسائل قصيرة",
+    "MOBILE": "إشعارات الهاتف المحمول",
+    "WEB": "إشعارات الويب"
   }
 }

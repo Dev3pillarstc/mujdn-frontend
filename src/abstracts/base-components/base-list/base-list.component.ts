@@ -16,6 +16,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { CustomValidators } from '@/validators/custom-validators';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -38,7 +39,7 @@ export abstract class BaseListComponent<
   langService = inject(LanguageService);
   confirmService = inject(ConfirmationService);
   alertsService = inject(AlertService);
-  tanslateService = inject(TranslateService);
+  translateService = inject(TranslateService);
   declare selectedModel?: Model;
 
   abstract get filterModel(): FilterModel;
@@ -51,7 +52,7 @@ export abstract class BaseListComponent<
 
   abstract initListComponent(): void;
   home = {
-    label: this.tanslateService.instant('COMMON.HOME'),
+    label: this.translateService.instant('COMMON.HOME'),
     icon: 'pi pi-home',
     routerLink: '/',
   };
@@ -173,12 +174,10 @@ export abstract class BaseListComponent<
   }
 
   exportExcel(fileName: string = 'data.xlsx', isStoredProcedure: boolean = false): void {
-    const MAX_EXPORT_SIZE = 10000;
-
     const allDataParams = {
       ...this.paginationParams,
       pageNumber: 1,
-      pageSize: MAX_EXPORT_SIZE,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
     };
 
     const fetchAll = isStoredProcedure

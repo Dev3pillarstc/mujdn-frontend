@@ -96,6 +96,7 @@ export default class EmployeeListComponent
   }
 
   override initListComponent(): void {
+    this.breadcrumbs = [{ label: 'MENU.DASHBOARD' }, { label: 'MENU.EMPLOYEES' }];
     // load lookups
     this.cityService.getCitiesLookup().subscribe((res: CityLookup[]) => {
       this.cities = res;
@@ -222,11 +223,54 @@ export default class EmployeeListComponent
     this.selectedModel = model;
   }
 
+  // Excel Export Implementation
   protected override mapModelToExcelRow(model: User): { [key: string]: any } {
-    throw new Error('Method not implemented.');
+    const formatDate = (date: Date | string | undefined): string => {
+      if (!date) return '';
+      const dateObj = typeof date === 'string' ? new Date(date) : date;
+      return dateObj.toLocaleDateString('EG');
+    };
+
+    const formatBoolean = (value: boolean | undefined): string => {
+      if (value === undefined || value === null) return '';
+      return value
+        ? this.translateService.instant('COMMON.YES')
+        : this.translateService.instant('COMMON.NO');
+    };
+
+    return {
+      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH')]:
+        model.fullNameEn || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC')]:
+        model.fullNameAr || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.EMAIL')]: model.email || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.NATIONAL_ID')]: model.nationalId || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.PHONE_NUMBER')]: model.phoneNumber || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.DEPARTMENT')]:
+        this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+          ? model.department?.nameAr || ''
+          : model.department?.nameEn || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.REGION')]:
+        this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+          ? model.region?.nameAr || ''
+          : model.region?.nameEn || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.CITY')]:
+        this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+          ? model.city?.nameAr || ''
+          : model.city?.nameEn || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.JOB_TITLE_ENGLISH')]: model.jobTitleEn || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.JOB_TITLE_ARABIC')]: model.jobTitleAr || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.JOIN_DATE')]: formatDate(model.joinDate),
+      [this.translateService.instant('EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION')]: formatBoolean(
+        model.canLeaveWithoutFingerPrint
+      ),
+      [this.translateService.instant('EMPLOYEES_PAGE.ACCOUNT_STATUS')]: formatBoolean(
+        model.isActive
+      ),
+    };
   }
 
-  get departmentOptionLabel(): string {
+  get optionLabel(): string {
     const lang = this.languageService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }

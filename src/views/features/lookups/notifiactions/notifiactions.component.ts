@@ -31,12 +31,12 @@ export default class NotifiactionsComponent {
   rows: number = 10;
   date2: Date | undefined;
   notifications!: any[];
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   matDialog = inject(MatDialog);
 
   ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'الاشعارات' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'الاشعارات' }];
     // Updated dummy data to match your Arabic table structure
     this.notifications = [
       {

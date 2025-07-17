@@ -97,6 +97,8 @@ export default class AttendanceLogListComponent
   }
 
   override initListComponent(): void {
+    // Initialize breadcrumb
+    this.breadcrumbs = [{ label: 'MENU.DASHBOARD' }, { label: 'MENU.ATTENDANCE_LOGS' }];
     // Load lookups
     this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.departments = res;
@@ -106,9 +108,6 @@ export default class AttendanceLogListComponent
       this.employees = res;
       this.creators = res; // Same users can be creators
     });
-
-    // Initialize breadcrumb
-    // this.home = { icon: 'pi pi-home', routerLink: '/' };
   }
 
   override openDialog(attendanceLog?: AttendanceLog): void {

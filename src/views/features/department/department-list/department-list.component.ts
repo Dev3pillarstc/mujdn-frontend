@@ -95,7 +95,7 @@ export default class DepartmentListComponent extends BaseListComponent<
 
     // Explicitly set the selectedDepartment property
     this.selectedDepartment = this.rootDepartment;
-    this.items = [
+    this.breadcrumbs = [
       { label: 'DEPARTMENTS_LIST_PAGE.DASHBOARD' },
       { label: 'DEPARTMENTS_LIST_PAGE.DEPARTMENTS_LIST' },
     ];

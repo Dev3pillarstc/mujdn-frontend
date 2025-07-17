@@ -18,13 +18,13 @@ export default class NotificationChannelsComponent implements OnInit {
   fb: FormBuilder = inject(FormBuilder);
   service: NotificationChannelService = inject(NotificationChannelService);
 
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   model = new NotificationChannel();
   form!: FormGroup;
   loading = false;
   route = inject(ActivatedRoute);
   ngOnInit(): void {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'إعدادات الإشعارات' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'إعدادات الإشعارات' }];
     this.model = this.route.snapshot.data['channel'];
     this.form = this.fb.group(this.model.buildForm());
   }

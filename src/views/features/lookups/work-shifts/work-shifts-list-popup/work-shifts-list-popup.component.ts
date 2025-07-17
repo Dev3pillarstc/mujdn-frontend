@@ -22,6 +22,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { TranslatePipe } from '@ngx-translate/core';
+import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -32,6 +33,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     ReactiveFormsModule,
     ValidationMessagesComponent,
     TranslatePipe,
+    RequiredMarkerDirective,
   ],
   templateUrl: './work-shifts-list-popup.component.html',
   styleUrl: './work-shifts-list-popup.component.scss',
@@ -75,7 +77,21 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     this.form = this.fb.group(this.model.buildForm());
   }
   override saveFail(error: Error): void {}
+
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
+    // set seconds to 0 for both timeFrom and timeTo for comparison
+    const timeFrom: Date = form.get('timeFrom')?.value;
+    const timeTo: Date = form.get('timeTo')?.value;
+    timeFrom.setSeconds(0);
+    timeTo.setSeconds(0);
+
+    if (timeFrom && timeTo && timeFrom >= timeTo) {
+      this.alertService.showErrorMessage({
+        messages: ['WORK_SHIFTS_POPUP.TIME_FROM_MUST_BE_LESS_THAN_TIME_TO'],
+      });
+      return false;
+    }
+
     return form.valid;
   }
   override afterSave() {

@@ -24,6 +24,11 @@ export default class NotificationChannelsComponent implements OnInit {
   form!: FormGroup;
   loading = false;
   route = inject(ActivatedRoute);
+  home = {
+    label: this.translateService.instant('COMMON.HOME'),
+    icon: 'pi pi-home',
+    routerLink: '/',
+  };
   ngOnInit(): void {
     this.breadcrumbs = [
       { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },

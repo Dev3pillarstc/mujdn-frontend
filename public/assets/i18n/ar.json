@@ -281,12 +281,12 @@
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "ورديات العمل",
-    "SHIFT_NAME": "اسم الوردية",
+    "SHIFT_NAME_EN": "اسم الوردية باللغة الانجليزية",
+    "SHIFT_NAME_AR": "اسم الوردية باللغة العربية",
     "SHIFTS_LIST": "قائمة ورديات العمل",
     "ADD_NEW_SHIFT": "إضافة وردية عمل جديده",
-    "SHIFT_IDENTIFICATION": "معرف الوردية",
-    "MAX_ATTENDANCE_TIME": "الحد الأقصى للحضور",
-    "MAX_LEAVE_TIME": "الحد الأقصى للإنصراف",
+    "MAX_ATTENDANCE_TIME": "مدة السماح للحضور (دق)",
+    "MAX_LEAVE_TIME": "مدة السماح للانصراف (دق)",
     "TIME_FROM_TO": "الوقت (من - الى)"
   },
   "WORK_SHIFTS_POPUP": {

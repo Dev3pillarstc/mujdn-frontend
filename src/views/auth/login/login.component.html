@@ -1,7 +1,7 @@
 <section class="custom-container">
   <div class="px-8 py-6 sm:px-28 sm:py-20 max-w-[722px] rounded-xl bg-white">
     <header>
-      <img alt="" src="assets/imgs/Favicon-Interior.png" />
+      <img alt="" src="assets/imgs/Favicon-Interior.png"/>
       <h1 class="text-[#161616] text-2xl sm:text-4xl font-bold mt-4 mb-8">
         {{ 'LOGIN_PAGE.LOGIN_LBL' | translate }}
       </h1>
@@ -17,7 +17,7 @@
               class="peer"
               type="text"
               pInputText
-              placeholder="اسم المستخدم"
+              [placeholder]="'LOGIN_PAGE.USERNAME_LBL' | translate"
               fluid="true"
             />
             <span
@@ -32,7 +32,7 @@
               id="password"
               type="password"
               pInputText
-              placeholder="كلمة المرور"
+              [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
               fluid="true"
             />
             <span

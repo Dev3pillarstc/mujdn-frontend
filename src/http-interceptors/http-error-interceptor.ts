@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@/services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import { BACKEND_ERROR_ENUM } from '@/enums/backend-error-enum';
 
 export const httpErrorInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
@@ -20,7 +21,8 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
 
   return next(req).pipe(
     catchError((error: any) => {
-      const notAuthorizedErrorKey = 'AUTH_FORBIDDEN_ACCESS';
+      const notAuthorizedErrorKey = BACKEND_ERROR_ENUM.NOT_AUTHORIZED;
+      const validationFailedErrorKey = BACKEND_ERROR_ENUM.VALIDATION_FAILED;
       const skipKeys = ['VALIDATION_FAILED', notAuthorizedErrorKey];
       const alertService = injector.get(AlertService);
       const translateService = injector.get(TranslateService);

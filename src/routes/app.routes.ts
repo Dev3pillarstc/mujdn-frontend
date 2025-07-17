@@ -62,8 +62,8 @@ export const routes: Routes = [
       {
         // it will be 403
         canActivate: [authGuard],
-        path: '404',
-        loadComponent: () => import('@/views/shared/not-found/not-found.component'),
+        path: '403',
+        loadComponent: () => import('@/views/shared/not-authorized/not-authorized.component'),
       },
       {
         path: 'employees',

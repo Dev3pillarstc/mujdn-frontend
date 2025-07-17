@@ -25,7 +25,9 @@ export default class NotificationChannelsComponent implements OnInit {
   loading = false;
   route = inject(ActivatedRoute);
   ngOnInit(): void {
-    this.breadcrumbs = [{ label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') }];
+    this.breadcrumbs = [
+      { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
+    ];
     this.model = this.route.snapshot.data['channel'];
     this.form = this.fb.group(this.model.buildForm());
   }

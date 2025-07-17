@@ -69,7 +69,10 @@ export default class PermissionReasonListComponent
   }
   protected override mapModelToExcelRow(model: PermissionReason): { [key: string]: any } {
     return {
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]: model.getName(),
+      [this.translateService.instant('PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ARABIC')]:
+        model.nameAr,
+      [this.translateService.instant('PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ENGLISH')]:
+        model.nameEn,
     };
   }
 }

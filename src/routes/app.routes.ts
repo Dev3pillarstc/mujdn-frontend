@@ -14,6 +14,7 @@ import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
 import { loginResolver } from '@/resolvers/login.resolver';
+import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -177,6 +178,7 @@ export const routes: Routes = [
           roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.SECURITY_LEADER],
           routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
         },
+        resolve: { list: userWorkShiftResolver },
         loadComponent: () =>
           import(
             '@/views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'

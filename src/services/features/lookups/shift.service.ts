@@ -1,4 +1,5 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
+import { LookupBaseService } from '@/abstracts/lookup-base.service';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
@@ -24,7 +25,7 @@ import { CastResponse, CastResponseContainer } from 'cast-response';
     shape: { 'list.*': () => BaseLookupModel },
   },
 })
-export class ShiftService extends BaseCrudService<Shift> {
+export class ShiftService extends LookupBaseService<Shift, number> {
   override serviceName: string = 'ShiftService';
   constructor() {
     super();

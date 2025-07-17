@@ -4,108 +4,84 @@
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اسناد وردية مؤقتة لموظف</h3>
-    <form class="mt-6">
+    <form [formGroup]="form" class="mt-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">اسم الوردية</label>
+          <label class="label" for="shift-select">اسم الوردية</label>
           <div class="relative">
-            <p-select
-              [(ngModel)]="selectedAdminstration"
-              [options]="adminstrations"
-              class="w-full peer"
-              id="empoyeeName-popup"
-              name="selectedAdminstration1"
-              optionLabel="type"
-              placeholder="اسم الوردية"
-            ></p-select>
+            <p-select [options]="shifts" class="w-full peer" id="shift-select" formControlName="fkShiftId"
+              [optionLabel]="optionLabel" optionValue="id" placeholder="اسم الوردية">
+            </p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <span class="validation-message">
+            هذا الحقل مطلوب
+          </span>
         </div>
+
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">التاريخ (من)</label>
+          <label class="label" for="date-from">التاريخ (من)</label>
           <div class="relative">
-            <p-datepicker
-              [(ngModel)]="date2"
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              class="peer block w-full"
-              inputId="icondisplay"
-              placeholder="التاريخ (من)"
-            >
+            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="date-from"
+              formControlName="startDate" placeholder="التاريخ (من)">
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <span class="validation-message">
+            هذا الحقل مطلوب
+          </span>
         </div>
+
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">التاريخ (الى)</label>
+          <label class="label" for="date-to">التاريخ (الى)</label>
           <div class="relative">
-            <p-datepicker
-              [(ngModel)]="date2"
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              class="peer block w-full"
-              inputId="icondisplay"
-              placeholder="التاريخ (الى)"
-            >
+            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="date-to"
+              formControlName="endDate" placeholder="التاريخ (الى)">
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <span class="validation-message">
+            هذا الحقل مطلوب
+          </span>
         </div>
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">الإدارة</label>
+          <label class="label">الإدارة</label>
           <div class="relative">
-            <p-select
-              [(ngModel)]="selectedAdminstration"
-              [options]="adminstrations"
-              class="w-full peer"
-              id="empoyeeName-popup"
-              name="selectedAdminstration1"
-              optionLabel="type"
-              placeholder="الإدارة"
-            ></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+            <p-select [options]="departments" class="w-full peer" optionLabel="type" placeholder="الإدارة"
+              [optionLabel]="optionLabel" (onChange)="filterEmployeesByDepartment($event.value.id)">
+            </p-select>
+            <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 
+                         peer-focus-within:left-0 peer-focus-within:w-full"></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <!-- Note: not part of the formGroup -->
         </div>
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">اسم الموظف</label>
+          <label class="label" for="employee-select">اسم الموظف</label>
           <div class="relative">
-            <p-select
-              [(ngModel)]="selectedAdminstration"
-              [options]="adminstrations"
-              class="w-full peer"
-              id="empoyeeName-popup"
-              name="selectedAdminstration1"
-              optionLabel="type"
-              placeholder="اسم الموظف"
-            ></p-select>
+            <p-select [options]="usersProfiles" class="w-full peer" id="employee-select" [optionLabel]="optionLabel"
+              formControlName="fkAssignedUserId" optionLabel="type" optionValue="id" placeholder="اسم الموظف">
+            </p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <span class="validation-message">
+            هذا الحقل مطلوب
+          </span>
         </div>
       </div>
+
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button (click)="close()" class="btn gray-btn">الغاء</button>
-        <button class="btn green-btn">إضافة</button>
+        <button type="button" (click)="close()" class="btn gray-btn">الغاء</button>
+        <button type="button" (click)="save()" class="btn green-btn" [disabled]="!form.valid">إضافة</button>
       </div>
     </form>
   </div>

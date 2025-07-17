@@ -42,7 +42,6 @@ export default class PermissionReasonListComponent
   implements OnInit
 {
   languageService = inject(LanguageService);
-  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',

@@ -43,7 +43,6 @@ export class RegionListComponent
   regionService = inject(RegionService);
   override breadcrumbs: MenuItem[] | undefined;
   filterModel: RegionFilter = new RegionFilter();
-  translateService = inject(TranslateService);
   override get service() {
     return this.regionService;
   }

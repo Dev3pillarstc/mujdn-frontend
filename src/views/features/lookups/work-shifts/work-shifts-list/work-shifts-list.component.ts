@@ -51,7 +51,6 @@ export default class WorkShiftsListComponent
   override breadcrumbs: MenuItem[] | undefined;
   date2: Date | undefined;
   attendance!: any[];
-  translateService = inject(TranslateService);
 
   override get service(): ShiftService {
     return this.shiftService;

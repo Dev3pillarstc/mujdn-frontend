@@ -39,7 +39,6 @@ export default class CityListComponent extends BaseListComponent<
   CityService,
   CityFilter
 > {
-  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',

@@ -83,7 +83,6 @@ export default class PermissionsListComponent
   prmissionReasons: BaseLookupModel[] = [];
   filterModel: PermissionFilter = new PermissionFilter();
   viewMode = ViewModeEnum;
-  translateService = inject(TranslateService);
 
   override get service() {
     return this.permissionService;

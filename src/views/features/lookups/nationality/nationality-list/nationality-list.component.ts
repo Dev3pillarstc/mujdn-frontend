@@ -30,7 +30,6 @@ export default class NationalityListComponent
   >
   implements OnInit
 {
-  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',

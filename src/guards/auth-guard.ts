@@ -27,7 +27,7 @@ export const authGuard: CanActivateFn = (
     }
     const userHasRole = user.roles.some((role: string) => expectedRoles.includes(role));
     if (!userHasRole) {
-      return router.createUrlTree(['/404']);
+      return router.createUrlTree(['/403']);
     }
     return true;
   };
@@ -41,22 +41,14 @@ export const authGuard: CanActivateFn = (
       // User exists, so refresh token
       return authService.refreshToken().pipe(
         switchMap(() => authService.getUser()),
-        map((refreshedUser) => {
-          if (!refreshedUser) {
+        map((loggedInUser) => {
+          if (!loggedInUser) {
             alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
             return router.createUrlTree(['/login']);
           }
-          return checkRoles(refreshedUser);
-        }),
-        catchError(() => {
-          alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
-          return of(router.createUrlTree(['/login']));
+          return checkRoles(loggedInUser);
         })
       );
-    }),
-    catchError(() => {
-      alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHORIZED'] });
-      return of(router.createUrlTree(['/login']));
     })
   );
 };

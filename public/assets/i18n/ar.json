@@ -249,9 +249,9 @@
     "MAX_LENGTH_NAME": "الاسم لا يمكن أن يتجاوز 100 حرف"
   },
   "HOLIDAYS_PAGE": {
-    "HOLIDAYS_LIST": "قائمة العطلات",
-    "HOLIDAY_NAME_ARABIC": "العطلة بالعربية",
-    "HOLIDAY_NAME_ENGLISH": "العطلة بالانجليزية",
+    "HOLIDAYS_LIST": "قائمة الأجازات",
+    "HOLIDAY_NAME_ARABIC": "مسمى العطلة بالعربية",
+    "HOLIDAY_NAME_ENGLISH": "مسمى العطلة بالانجليزية",
     "START_DATE": "تاريخ البدء",
     "END_DATE": "تاريخ الانتهاء",
     "NOTES": "ملاحظات",
@@ -261,8 +261,8 @@
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "DATE": "التاريخ",
     "CODE": "الرقم التسلسلي",
-    "FROM": "من",
-    "TO": "إلى",
+    "FROM": "التاريخ (من)",
+    "TO": "التاريخ (إلى)",
     "HOLIDAY": "العطلة"
   },
   "PERMISSION_PAGE": {

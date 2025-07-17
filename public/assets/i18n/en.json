@@ -263,8 +263,8 @@
     "NO_DATA_TO_SHOW": "No data to display",
     "DATE": "Date",
     "CODE": "Code",
-    "FROM": "From",
-    "TO": "To",
+    "FROM": "Date (From)",
+    "TO": "Date (To)",
     "HOLIDAY": "Holiday"
   },
   "PERMISSION_PAGE": {
@@ -352,7 +352,7 @@
     "ASSIGNED_EMPLOYEES": "Assigned Employees",
     "WORK_SHIFT_TEMP": "Temporary Work Shifts",
     "WORK_SHIFT_ASSIGNMENT": "Assign Work Shifts",
-    "HOLIDAYS": "Holiday List",
+    "HOLIDAYS": "Holidays List",
     "WORK_SHIFT": "Work Shifts",
     "WORK_SHIFT_SETTINGS": "Work Shift Settings",
     "SETTINGS": "Settings",

@@ -18,6 +18,8 @@ import { LanguageService } from '@/services/shared/language.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HolidayFilter } from '@/models/features/lookups/holiday/holiday-filter';
 import { AuthService } from '@/services/auth/auth.service';
+import { MatDialogConfig } from '@angular/material/dialog';
+import { NotesPopupComponent } from '../notes-popup/notes-popup/notes-popup.component';
 
 @Component({
   selector: 'app-holidays-list',
@@ -52,7 +54,6 @@ export default class HolidaysListComponent extends BaseListComponent<
   holidayService = inject(HolidayService);
   translateService = inject(TranslateService);
   authService = inject(AuthService);
-
   override breadcrumbs: MenuItem[] | undefined;
   filterModel: HolidayFilter = new HolidayFilter();
   override get service() {
@@ -81,5 +82,10 @@ export default class HolidaysListComponent extends BaseListComponent<
   }
   showAddEditButtons() {
     return this.authService.isHROfficer;
+  }
+  openDataDialog(notes: string): void {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = { notes: notes };
+    this.matDialog.open(NotesPopupComponent as any, dialogConfig);
   }
 }

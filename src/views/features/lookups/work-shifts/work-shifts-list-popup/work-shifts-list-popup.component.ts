@@ -75,15 +75,20 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   }
   override buildForm(): void {
     this.form = this.fb.group(this.model.buildForm());
+    // turn timeFrom and timeTo to 12 hour type of time
   }
+
   override saveFail(error: Error): void {}
 
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
+    if (!form.valid) {
+      return false;
+    }
     // set seconds to 0 for both timeFrom and timeTo for comparison
     const timeFrom: Date = form.get('timeFrom')?.value;
     const timeTo: Date = form.get('timeTo')?.value;
-    timeFrom.setSeconds(0);
-    timeTo.setSeconds(0);
+    timeFrom?.setSeconds(0);
+    timeTo?.setSeconds(0);
 
     if (timeFrom && timeTo && timeFrom >= timeTo) {
       this.alertService.showErrorMessage({
@@ -92,7 +97,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       return false;
     }
 
-    return form.valid;
+    return true;
   }
   override afterSave() {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };

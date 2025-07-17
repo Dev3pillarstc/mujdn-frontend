@@ -70,3 +70,53 @@ export function convertUtcToKsaTime(utcDateTime: Date | string): Date {
 
   return ksaTime;
 }
+
+// Format time string (HH:MM:SS) to 12-hour format
+export function formatTimeTo12Hour(
+  timeString: string,
+  locale: 'en-US' | 'ar-EG' = 'en-US'
+): string {
+  if (!timeString) return '';
+
+  const [hours, minutes] = timeString.split(':').map(Number);
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+
+  return date.toLocaleTimeString(locale, {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
+// Format Date object to 12-hour format
+export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-US'): string {
+  if (!date) return '';
+
+  return date.toLocaleTimeString(locale, {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
+export function formatSwipeTime(
+  swipeTime: string | undefined,
+  locale: 'en-US' | 'ar-EG' = 'en-US'
+): { date: string; time: string } {
+  if (!swipeTime) return { date: '', time: '' };
+
+  const dateTime = new Date(swipeTime);
+  const date = dateTime.toLocaleDateString(locale, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  const time = dateTime.toLocaleTimeString(locale, {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+
+  return { date, time };
+}

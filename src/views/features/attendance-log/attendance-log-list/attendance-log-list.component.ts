@@ -33,6 +33,7 @@ import { PROCESSING_STATUS_OPTIONS } from '@/models/shared/processing-status-opt
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ibm-plex-font';
+import { formatSwipeTime } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-attendance-log-list',
@@ -96,6 +97,10 @@ export default class AttendanceLogListComponent
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
+  }
+
   override initListComponent(): void {
     // Initialize breadcrumb
     this.breadcrumbs = [{ label: 'MENU.ATTENDANCE_LOGS' }];
@@ -154,13 +159,10 @@ export default class AttendanceLogListComponent
     });
   }
 
-  formatSwipeTime(swipeTime: string | undefined): { date: string; time: string } {
+  formatSwipeTimeArEn(swipeTime: string | undefined): { date: string; time: string } {
     if (!swipeTime) return { date: '', time: '' };
-
-    const dateTime = new Date(swipeTime);
-    const date = dateTime.toLocaleDateString('EG');
-    const time = dateTime.toLocaleTimeString('EG');
-
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    const { date, time } = formatSwipeTime(swipeTime, locale);
     return { date, time };
   }
 

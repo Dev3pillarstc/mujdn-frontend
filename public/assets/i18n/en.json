@@ -221,12 +221,12 @@
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
-    "SHIFT_NAME": "Shift name",
+    "SHIFT_NAME_EN": "English shift name",
+    "SHIFT_NAME_AR": "Arabic shift name",
     "SHIFTS_LIST": "Work shifts list",
     "ADD_NEW_SHIFT": "Add new work shift",
-    "SHIFT_IDENTIFICATION": "Shift identifier",
-    "MAX_ATTENDANCE_TIME": "Maximum attendance time",
-    "MAX_LEAVE_TIME": "Maximum leave time",
+    "MAX_ATTENDANCE_TIME": "Grace period for check-in (min)",
+    "MAX_LEAVE_TIME": "Grace period for check-out (min)",
     "TIME_FROM_TO": "Time (from - to)"
   },
   "WORK_SHIFTS_POPUP": {

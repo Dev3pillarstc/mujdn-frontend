@@ -61,44 +61,46 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   dialogSize = {
     width: '100%',
     maxWidth: '1024px',
-  };
-  UserWorkShiftService = inject(UserWorkShiftService);
-  dialog = inject(MatDialog);
-  home: MenuItem | undefined;
-  date2: Date | undefined;
-  adminstrations: Adminstration[] | undefined;
-  selectedAdminstration: Adminstration | undefined;
-  attendance!: any[];
-  // first: number = 0;
-  // rows: number = 10;
-  // matDialog = inject(MatDialog);
+    override breadcrumbs: MenuItem[] | undefined;
+    dialogSize = {
+      width: '100%',
+      maxWidth: '1024px',
+    };
+    UserWorkShiftService = inject(UserWorkShiftService);
+    dialog = inject(MatDialog);
+    home: MenuItem | undefined;
+    date2: Date | undefined;
+    adminstrations: Adminstration[] | undefined;
+    selectedAdminstration: Adminstration | undefined;
+    attendance!: any[];
+    // first: number = 0;
+    // rows: number = 10;
+    // matDialog = inject(MatDialog);
 
-  // constructor() { }
+    // constructor() { }
 
-  override ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'اسناد ورديات عمل' }];
-    this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
-    // Updated dummy data to match your Arabic table structure
-    this.attendance = [
-      {
-        serialNumber: 1,
-        employeeNameAr: 'محمد أحمد طه',
-        employeeNameEn: 'mohamed taha',
-        adminstration: 'إدارة الموارد',
-        jop: 'موظف',
-        PermanentType: 'دوام كلي',
-        date: '12/12/2024',
-      },
-    ];
-  }
+    override ngOnInit() {
+      this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'اسناد ورديات عمل' }];
+      this.attendance = [
+        {
+          serialNumber: 1,
+          employeeNameAr: 'محمد أحمد طه',
+          employeeNameEn: 'mohamed taha',
+          adminstration: 'إدارة الموارد',
+          jop: 'موظف',
+          PermanentType: 'دوام كلي',
+          date: '12/12/2024',
+        },
+      ];
+    }
 
   // onPageChange(event: PaginatorState) {
   //   this.first = event.first ?? 0;
   //   this.rows = event.rows ?? 10;
   // }
   openDialog(): void {
-    const dialogRef = this.dialog.open(WorkShiftsAssignmentPopupComponent as any, this.dialogSize);
+      const dialogRef = this.dialog.open(WorkShiftsAssignmentPopupComponent as any, this.dialogSize);
 
-    dialogRef.afterClosed().subscribe();
+      dialogRef.afterClosed().subscribe();
+    }
   }
-}

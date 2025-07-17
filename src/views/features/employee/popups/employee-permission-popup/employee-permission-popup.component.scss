@@ -1,0 +1,10 @@
+.dimmed-checkbox {
+  input:checked {
+    background-color: #7c7777 !important;
+    cursor: not-allowed;
+  }
+  span {
+    color: #5c5959 !important;
+    cursor: not-allowed;
+  }
+}

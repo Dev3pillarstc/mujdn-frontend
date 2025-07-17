@@ -13,7 +13,7 @@
         <div class="flex gap-2 items-center">
           <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME' | translate }}:</span>
           <span class="font-semibold text-white">
-            {{ model.fullNameAr || model.fullNameEn || 'N/A' }}
+            {{ model.getUserName() }}
           </span>
         </div>
         <div class="flex gap-2 items-center">
@@ -39,7 +39,7 @@
         <div class="flex flex-col gap-2">
           <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.JOB_TITLE' | translate }}</span>
           <span class="font-semibold text-white">
-            {{ model.jobTitleAr || model.jobTitleEn || 'N/A' }}
+            {{ model.getJobTitleName() }}
           </span>
         </div>
       </div>
@@ -54,7 +54,7 @@
       <form [formGroup]="form">
         <div class="flex flex-wrap gap-8">
           <!-- Employee Role -->
-          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+          <label class="dimmed-checkbox flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
               type="checkbox"
               formControlName="isEmployee"

@@ -60,6 +60,12 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOME },
       },
       {
+        // it will be 403
+        canActivate: [authGuard],
+        path: '404',
+        loadComponent: () => import('@/views/shared/not-found/not-found.component'),
+      },
+      {
         path: 'employees',
         resolve: { list: userResolver },
         canActivate: [authGuard],

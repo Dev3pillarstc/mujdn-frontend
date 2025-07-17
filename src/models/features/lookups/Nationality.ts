@@ -12,16 +12,15 @@ export class Nationality extends BaseCrudModel<Nationality, NationalityService> 
   override $$__service_name__$$: string = 'NationalityService';
   declare nameAr: string;
   declare nameEn: string;
-  isActive: boolean = true;
 
   buildForm() {
-    const { nameAr, nameEn, isActive } = this;
+    const { nameAr, nameEn } = this;
     return {
       nameAr: [
         nameAr,
         [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
+          Validators.maxLength(CustomValidators.defaultLengths.SHORT_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('AR_NUM'),
         ],
@@ -30,12 +29,11 @@ export class Nationality extends BaseCrudModel<Nationality, NationalityService> 
         nameEn,
         [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
+          Validators.maxLength(CustomValidators.defaultLengths.SHORT_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('ENG_NUM'),
         ],
       ],
-      isActive: [isActive, []],
     };
   }
 }

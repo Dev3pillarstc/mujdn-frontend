@@ -1,7 +1,11 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <span>{{ item.label | translate }}</span>
+        </ng-template>
+      </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'NATIONALITIES_PAGE.NATIONALITIES_LIST' | translate }}
       </h3>
@@ -69,7 +73,7 @@
             {{ 'NATIONALITIES_PAGE.NATIONALITIES_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button class="table-head-action-btn">
+            <button (click)="exportExcel('nationalities.xlsx')" class="table-head-action-btn">
               <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button class="table-head-action-btn">
@@ -99,7 +103,7 @@
                     <button (click)="addOrEditModel(nationality)" class="table-action-gray-btn">
                       <img src="assets/icons/edit-action.svg" alt="تعديل" />
                     </button>
-                    <button class="table-action-red-btn">
+                    <button (click)="deleteModel(nationality.id)" class="table-action-red-btn">
                       <img src="assets/icons/delete-action.svg" alt="حذف" />
                     </button>
                   </div>

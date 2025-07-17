@@ -6,6 +6,8 @@
     "ERROR": "Error",
     "SUCCESS": "Success",
     "ALERT": "Alert",
+    "YES": "Yes",
+    "NO": "No",
     "CONFIRM_DELETE": "Are you sure you want to delete this item?",
     "SAVED_SUCCESSFULLY": "Saved successfully",
     "UPDATED_SUCCESSFULLY": "Updated successfully",
@@ -16,7 +18,7 @@
     "ACTIVE": "Active",
     "REQUIRED_FIELD": "This field is required",
     "MIN_LENGTH": "Minimum length is 3 characters",
-    "MAX_LENGTH": "Maximum length is 300 characters",
+    "MAX_LENGTH": "You have reached the maximum length of the field",
     "ARABIC_ONLY": "This field must contain Arabic characters only",
     "ENGLISH_ONLY": "This field must contain English characters only",
     "SEARCH": "Search",
@@ -29,7 +31,66 @@
     "ACTION": "Action",
     "EDIT": "Edit",
     "DASHBOARD": "Dashboard",
-    "NO_DATA_TO_SHOW": "No data to display"
+    "NO_DATA_TO_SHOW": "No data to display",
+    "NATIONAL_ID_VALIDATION": "National ID must be 10 digits and starts with 1",
+    "MAX_LENGTH_DYNAMIC": "You have exceeded the maximum length",
+    "POSITIVE_NUMBER_ONLY": "Only positive numbers are allowed",
+    "INVALID_NUMBER": "Please enter a valid number",
+    "NUMBER_RANGE": "Value must be between 0 and 9999",
+
+    "INTERNAL_SERVER_ERROR": "Internal server error",
+    "RESOURCE_NOT_FOUND": "Resource not found",
+    "RESOURCE_CONFLICT": "Resource already exists",
+    "RECORD_MODIFIED_BY_ANOTHER_USER": "This record was modified by another user. Please refresh and try again",
+    "BAD_REQUEST": "Bad request",
+    "INVALID_ID": "The provided ID is invalid",
+    "REQUIRED_VERSION": "Version is required to update the record",
+    "INVALID_INPUT": "The provided input is invalid",
+    "INVALID_PAGING_PARAMS": "Invalid paging parameters provided",
+    "INVALID_PAGE_NUMBER": "Page number must be greater than 0",
+    "INVALID_PAGE_SIZE": "Page size must be between 1 and 1000",
+    "INVALID_SORT_FIELD": "The specified sort field is invalid",
+    "SERIALIZATION_ERROR": "An error occurred while processing the data",
+    "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is connected/related to another entity",
+    "CANNOT_BE_DELETE": "The record can't be deleted",
+    "EXISTING_RECORD_ERROR": "This record already exists",
+
+    "AUTH_INVALID_CREDENTIALS": "Username or password is incorrect",
+    "AUTH_USER_NOT_ACTIVE": "User is not active",
+    "AUTH_INVALID_OTP": "Invalid OTP code",
+    "AUTH_OTP_EXPIRED": "OTP session has expired",
+    "AUTH_USER_NAME_EXISTS": "National ID is already registered",
+    "AUTH_Email_EXISTS": "Email is already registered",
+    "AUTH_INVALID_ROLES": "Invalid or missing role(s)",
+    "AUTH_USER_NOT_FOUND": "User not found",
+    "AUTH_USER_CREATION_FAILED": "User creation failed due to internal error",
+    "AUTH_NO_REFRESH_TOKEN_FOUND": "No refresh token found",
+    "AUTH_INVALID_REFRESH_TOKEN": "Invalid refresh token",
+    "AUTH_REFRESH_TOKEN_EXPIRED": "Refresh token has expired",
+    "AUTH_FORBIDDEN_ACCESS": "You are not authorized to access this resource",
+    "AUTH_PASSWORD_REQUIRED": "Password is required",
+
+    "PASSWORD_RESET_RATE_LIMITED": "Too many reset attempts. Please try again later",
+    "PASSWORD_RESET_INVALID_TOKEN": "Invalid or expired reset link",
+    "PASSWORD_RESET_TOKEN_EXPIRED": "Reset token has expired",
+    "PASSWORD_RESET_FAILED": "Password reset failed",
+    "PASSWORD_RESET_USER_NOT_FOUND": "User not found",
+    "PASSWORD_RESET_USER_NOT_ACT": "User account is not active",
+    "RESET_LINK_SENT": "If the provided information matches our records, a password reset link will be sent to your email",
+
+    "VALIDATION_FAILED": "Validation failed for one or more fields",
+    "INCIDENT_DRAFT_EXISTS": "User already has a draft incident",
+    "INCIDENT_CONCURRENT_UPDATE": "Incident was updated by another user",
+
+    "BADREQUEST_MISSING_PARAMETER": "Required parameter is missing",
+    "BADREQUEST_INVALID_ARGUMENT": "Invalid argument",
+    "AUTH_ACCESS_DENIED": "Access denied",
+    "SERVER_NOT_IMPLEMENTED": "Feature not implemented",
+    "SERVER_TIMEOUT": "Request timeout",
+    "SERVER_INVALID_OPERATION": "Invalid operation",
+    "SERVER_INTERNAL_ERROR": "An internal server error occurred",
+    "AUTH_EXTERNAL_ERROR": "Login failed due to an internal error",
+    "STORED_EXTERNAL_ERROR": "An internal server error occurred in stored"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -45,6 +106,7 @@
     "NATIONALITY_IN_ARABIC": "Nationality in Arabic",
     "NATIONALITY_IN_ENGLISH": "Nationality in English",
     "ADD_NEW_NATIONALITY": "Add New Nationality",
+    "EDIT_NATIONALITY": "Edit Nationality",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
   },
@@ -55,7 +117,12 @@
     "ADD_NEW_PERMISSION_REASON": "Add New Permission Reason",
     "EDIT_PERMISSION_REASON": "Edit Permission Reason",
     "ACTIONS": "Actions",
-    "NO_DATA_TO_SHOW": "No data to display"
+    "NO_DATA_TO_SHOW": "No data to display",
+    "PERMISSION_REASON_ADDED_SUCCESSFULLY": "Permission Reason added successfully",
+    "PERMISSION_REASON_UPDATED_SUCCESSFULLY": "Permission Reason updated successfully",
+    "BACK_TO_PERMISSION_REASONS": "Back to Permission Reasons",
+    "PERMISSIONS_SETTINGS": "Permissions Settings",
+    "PERMISSION_REASON": "Permission reason"
   },
   "CITIES_PAGE": {
     "CITY": "City",
@@ -221,12 +288,12 @@
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
-    "SHIFT_NAME": "Shift name",
+    "SHIFT_NAME_EN": "English shift name",
+    "SHIFT_NAME_AR": "Arabic shift name",
     "SHIFTS_LIST": "Work shifts list",
     "ADD_NEW_SHIFT": "Add new work shift",
-    "SHIFT_IDENTIFICATION": "Shift identifier",
-    "MAX_ATTENDANCE_TIME": "Maximum attendance time",
-    "MAX_LEAVE_TIME": "Maximum leave time",
+    "MAX_ATTENDANCE_TIME": "Grace period for check-in (min)",
+    "MAX_LEAVE_TIME": "Grace period for check-out (min)",
     "TIME_FROM_TO": "Time (from - to)",
     "CONFLICTING_DATES": "Conflicting shift dates",
     "DATA_NOT_COMPLETE": "Complete shift logs data",
@@ -242,7 +309,8 @@
     "TIME_TO": "Time (to)",
     "MAX_ATTENDANCE_TIME": "Maximum attendance time",
     "MAX_LEAVE_TIME": "Maximum leave time",
-    "DEFAULT_SHIFT": "Set as default shift"
+    "DEFAULT_SHIFT": "Set as default shift",
+    "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "Time from must be less than time to"
   },
   "ATTENDANCE_LOG_PAGE": {
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",
@@ -281,7 +349,7 @@
     "ATTENDANCE_REPORT": "Attendance Report",
     "ATTENDANCE_LOGS": "Attendance Logs",
     "DEPARTMENTS": "Departments",
-    "EMPLOYEES": "Employee List",
+    "EMPLOYEES": "Employees List",
     "PRESENCE_INQUIRIES": "Presence Inquiries",
     "PERMISSIONS": "Permissions",
     "ASSIGNED_EMPLOYEES": "Assigned Employees",
@@ -295,6 +363,7 @@
     "NOTIFICATION_CHANNELS": "Notification Settings",
     "NATIONALITIES": "Nationalities",
     "CITIES": "Cities",
-    "REGIONS": "Regions"
+    "REGIONS": "Regions",
+    "PERMISSIONS_SETTINGS": "Permissions Settings"
   }
 }

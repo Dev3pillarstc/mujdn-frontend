@@ -7,6 +7,7 @@ export class PermissionReasonInterceptor implements ModelInterceptorContract<Per
   }
 
   send(model: Partial<PermissionReason>): Partial<PermissionReason> {
+    delete (model as any).languageService;
     return model;
   }
 }

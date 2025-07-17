@@ -15,6 +15,7 @@ export class ValidationMessagesComponent implements OnInit {
   control = input.required<AbstractControl>();
   activeErrors$!: Observable<{ key: string; value: any }[]>;
   errorKey = ValidationErrorKeyEnum;
+
   ngOnInit(): void {
     const ctrl = this.control();
 
@@ -27,8 +28,35 @@ export class ValidationMessagesComponent implements OnInit {
       })
     );
   }
+
   getMessage(key: string): string | null {
-    return this.validationMessages[key as ValidationErrorKeyEnum] || null;
+    const message = this.validationMessages[key as ValidationErrorKeyEnum];
+
+    if (!message) return null;
+
+    // Handle dynamic messages with parameters
+    const error = this.control().errors?.[key];
+    if (error && typeof error === 'object') {
+      return this.formatMessage(message, error);
+    }
+
+    return message;
+  }
+
+  private formatMessage(message: string, errorData: any): string {
+    // Handle maxlength and minlength with dynamic values
+    if (errorData.requiredLength !== undefined) {
+      return message.replace('{length}', errorData.requiredLength.toString());
+    }
+
+    // Handle number range validation
+    if (errorData.min !== undefined && errorData.max !== undefined) {
+      return message
+        .replace('{min}', errorData.min.toString())
+        .replace('{max}', errorData.max.toString());
+    }
+
+    return message;
   }
 
   validationMessages: Record<ValidationErrorKeyEnum, string> = {
@@ -39,5 +67,9 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH',
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
     [ValidationErrorKeyEnum.STRONG_PASSWORD]: 'COMMON.STRONG_PASSWORD',
+    [ValidationErrorKeyEnum.NATIONAL_ID]: 'COMMON.NATIONAL_ID_VALIDATION',
+    [ValidationErrorKeyEnum.POSITIVE_NUMBER]: 'COMMON.POSITIVE_NUMBER_ONLY',
+    [ValidationErrorKeyEnum.INVALID_NUMBER]: 'COMMON.INVALID_NUMBER',
+    [ValidationErrorKeyEnum.NUMBER_RANGE]: 'COMMON.NUMBER_RANGE',
   };
 }

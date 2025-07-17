@@ -29,11 +29,11 @@ export default class TempShiftsComponent {
   rows: number = 10;
   date2: Date | undefined;
   attendance!: any[];
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
 
   ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'ورديات العمل المؤقتة' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'ورديات العمل المؤقتة' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [
       {

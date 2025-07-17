@@ -61,7 +61,7 @@ export default class WorkShiftsListComponent
 
   override ngOnInit() {
     super.ngOnInit();
-    this.items = [{ label: 'COMMON.DASHBOARD' }, { label: 'WORK_SHIFTS.WORK_SHIFTS' }];
+    this.breadcrumbs = [{ label: 'COMMON.DASHBOARD' }, { label: 'WORK_SHIFTS.WORK_SHIFTS' }];
   }
 
   openDialog(model: Shift): void {

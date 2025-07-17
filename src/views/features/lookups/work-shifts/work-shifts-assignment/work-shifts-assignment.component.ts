@@ -33,7 +33,7 @@ interface Adminstration {
   styleUrl: './work-shifts-assignment.component.scss',
 })
 export default class WorkShiftsAssignmentComponent {
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -51,7 +51,7 @@ export default class WorkShiftsAssignmentComponent {
   constructor() {}
 
   ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'اسناد ورديات عمل' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'اسناد ورديات عمل' }];
     this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [

@@ -22,6 +22,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
   buildForm() {
     const { nameAr, nameEn, timeFrom, timeTo, attendanceBuffer, leaveBuffer, isDefaultShift } =
       this;
+
     return {
       nameAr: [
         nameAr,
@@ -43,11 +44,24 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       ],
       timeFrom: [timeFrom ? this.timeStringToDate(timeFrom) : null, [Validators.required]],
       timeTo: [timeTo ? this.timeStringToDate(timeTo) : null, [Validators.required]],
-      attendanceBuffer: [attendanceBuffer, []],
-      leaveBuffer: [leaveBuffer, []],
+      attendanceBuffer: [
+        attendanceBuffer,
+        [
+          CustomValidators.numberMaxLength(CustomValidators.defaultLengths.NUMBERS_MAXLENGTH),
+          CustomValidators.positiveNumber(),
+        ],
+      ],
+      leaveBuffer: [
+        leaveBuffer,
+        [
+          CustomValidators.numberMaxLength(CustomValidators.defaultLengths.NUMBERS_MAXLENGTH),
+          CustomValidators.positiveNumber(),
+        ],
+      ],
       isDefaultShift: [isDefaultShift, []],
     };
   }
+
   private timeStringToDate(value: string): Date {
     const [hours, minutes, seconds] = value.split(':').map(Number);
     const date = new Date();

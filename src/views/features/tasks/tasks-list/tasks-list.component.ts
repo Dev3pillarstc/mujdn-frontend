@@ -37,7 +37,7 @@ interface Adminstration {
   styleUrl: './tasks-list.component.scss',
 })
 export default class TasksListComponent {
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -55,7 +55,7 @@ export default class TasksListComponent {
   constructor() {}
 
   ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'مهام الأعمال و الاسناد' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'مهام الأعمال و الاسناد' }];
     this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [

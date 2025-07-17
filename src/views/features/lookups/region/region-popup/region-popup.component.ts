@@ -10,6 +10,7 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
 import { Region } from '@/models/features/lookups/region/region';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-region-popup',
@@ -29,7 +30,8 @@ export class RegionPopupComponent extends BasePopupComponent<Region> implements 
   alertService = inject(AlertService);
   service = inject(RegionService);
   fb = inject(FormBuilder);
-
+  isCreateMode = false;
+  declare viewMode: ViewModeEnum;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
@@ -45,6 +47,8 @@ export class RegionPopupComponent extends BasePopupComponent<Region> implements 
 
   override initPopup() {
     this.model = this.data.model;
+    this.viewMode = this.data.viewMode;
+    this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
   }
 
   override buildForm() {

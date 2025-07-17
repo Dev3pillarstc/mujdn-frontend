@@ -115,7 +115,11 @@
     "ADD_NEW_PERMISSION_REASON": "إضافة سبب إذن جديد",
     "EDIT_PERMISSION_REASON": "تعديل سبب الإذن",
     "ACTIONS": "الإجراء",
-    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
+    "PERMISSION_REASON_ADDED_SUCCESSFULLY": "تم إضافة سبب الإذن بنجاح",
+    "PERMISSION_REASON_UPDATED_SUCCESSFULLY": "تم تحديث سبب الإذن بنجاح",
+    "BACK_TO_PERMISSION_REASONS": "العودة إلى أسباب الإذن",
+    "PERMISSIONS_SETTINGS": "إعدادات الأذونات"
   },
   "CITIES_PAGE": {
     "CITY": "المدينة",
@@ -352,6 +356,7 @@
     "NOTIFICATION_CHANNELS": "إعدادات الإشعارات",
     "NATIONALITIES": "قائمة الجنسيات",
     "CITIES": "قائمة المدن",
-    "REGIONS": "قائمة المناطق"
+    "REGIONS": "قائمة المناطق",
+    "PERMISSIONS_SETTINGS": "إعدادات الأذونات"
   }
 }

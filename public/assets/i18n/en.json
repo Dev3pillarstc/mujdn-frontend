@@ -310,11 +310,12 @@
     "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "Time from must be less than time to"
   },
   "ATTENDANCE_LOG_PAGE": {
+    "ATTENDANCE_LOGS_TITLE": "Attendance Logs",
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",
     "DEPARTMENT": "Department",
     "EMPLOYEE": "Employee",
-    "SWIPE_DATE": "Swipe Date",
-    "CHANNEL_NAME": "Channel Name",
+    "SWIPE_DATE": "Fingerprint Date",
+    "CHANNEL_NAME": "Device Name",
     "PROCESSING_STATUS": "Processing Status",
     "CREATOR": "Creator Name",
     "CREATOR_AR": "Creator (Arabic)",
@@ -323,7 +324,7 @@
     "EMPLOYEE_ID": "Employee ID",
     "EMPLOYEE_NAME_AR": "Employee Name (Arabic)",
     "EMPLOYEE_NAME_EN": "Employee Name (English)",
-    "SWIPE_TIME": "Swipe Time",
+    "SWIPE_TIME": "Fingerprint Time",
     "ACTIONS": "Actions",
     "PROCESSED": "Processed",
     "PROCESSING": "Processing",

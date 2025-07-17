@@ -180,15 +180,15 @@ export default class AttendanceLogListComponent
 
       // Inline mapping logic with translated headers
       const transformedData = this.list.map((model) => ({
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]:
-          model.employeeNameAr,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]: 'processing',
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]: model.creatorNameEn,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]: model.creatorNameAr,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
         [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]:
           model.employeeNameEn,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_ID')]: model.employeeId,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR')]: model.creatorNameAr,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]:
+          model.employeeNameAr,
       }));
 
       // Format cell values to avoid issues with Date/undefined/null
@@ -240,11 +240,12 @@ export default class AttendanceLogListComponent
     return {
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]: model.employeeNameAr,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]: model.employeeNameEn,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_ID')]: model.employeeId,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR')]: model.creatorNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]: model.creatorNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]: model.creatorNameEn,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]: 'processing',
     };
   }
 }

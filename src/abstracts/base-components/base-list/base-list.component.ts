@@ -1,4 +1,4 @@
-import { Directive, inject, OnInit } from '@angular/core';
+import { Directive, inject, OnDestroy, OnInit } from '@angular/core';
 import { PaginationInfo } from '@/models/shared/response/pagination-info';
 import { MenuItem } from 'primeng/api';
 import { BaseCrudService } from '@/abstracts/base-crud-service';
@@ -16,14 +16,16 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Directive()
 export abstract class BaseListComponent<
-  Model,
-  PopupComponent,
-  TService extends BaseCrudService<Model, string | number>,
-  FilterModel,
-> implements OnInit
+    Model,
+    PopupComponent,
+    TService extends BaseCrudService<Model, string | number>,
+    FilterModel,
+  >
+  implements OnInit, OnDestroy
 {
   abstract dialogSize: any;
   first: number = 0;
@@ -53,8 +55,10 @@ export abstract class BaseListComponent<
   home = {
     label: this.tanslateService.instant('COMMON.HOME'),
     icon: 'pi pi-home',
-    routerLink: '/',
+    routerLink: '/home',
   };
+  private langChangeSub!: Subscription;
+
   openBaseDialog(
     popupComponent: PopupComponent,
     model: Model,
@@ -95,11 +99,22 @@ export abstract class BaseListComponent<
       }
     });
   }
-
+  setHomeItem(): void {
+    this.home = {
+      label: this.tanslateService.instant('COMMON.HOME'),
+      icon: 'pi pi-home',
+      routerLink: '/home',
+    };
+  }
   ngOnInit() {
+    this.setHomeItem();
     this.list = this.activatedRoute.snapshot.data['list']?.list;
     this.paginationInfo = this.activatedRoute.snapshot.data['list']?.paginationInfo;
     this.initListComponent();
+    // Listen to language changes
+    this.langChangeSub = this.tanslateService.onLangChange.subscribe(() => {
+      this.setHomeItem();
+    });
   }
 
   loadList() {
@@ -218,5 +233,11 @@ export abstract class BaseListComponent<
         });
       }
     });
+  }
+  ngOnDestroy(): void {
+    // ✅ Clean up the subscription
+    if (this.langChangeSub) {
+      this.langChangeSub.unsubscribe();
+    }
   }
 }

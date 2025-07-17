@@ -64,9 +64,9 @@
     "AUTH_INVALID_ROLES": "Invalid or missing role(s)",
     "AUTH_USER_NOT_FOUND": "User not found",
     "AUTH_USER_CREATION_FAILED": "User creation failed due to internal error",
-    "AUTH_NO_REFRESH_TOKEN_FOUND": "No refresh token found",
-    "AUTH_INVALID_REFRESH_TOKEN": "Invalid refresh token",
-    "AUTH_REFRESH_TOKEN_EXPIRED": "Refresh token has expired",
+    "AUTH_NO_REFRESH_TOKEN_FOUND": "Login session has been expired",
+    "AUTH_INVALID_REFRESH_TOKEN": "You are not authorized to access this resource",
+    "AUTH_REFRESH_TOKEN_EXPIRED": "Login session has been expired",
     "AUTH_FORBIDDEN_ACCESS": "You are not authorized to access this resource",
     "AUTH_PASSWORD_REQUIRED": "Password is required",
 

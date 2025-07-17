@@ -6,7 +6,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { RegionPopupComponent } from '../region-popup/region-popup.component';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
@@ -36,7 +36,7 @@ export class RegionListComponent
   extends BaseListComponent<Region, RegionPopupComponent, RegionService, RegionFilter>
   implements OnInit
 {
-  languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
+  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -54,7 +54,7 @@ export class RegionListComponent
   }
 
   override openDialog(model: Region): void {
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialog(RegionPopupComponent as any, model, viewMode);
   }
 
@@ -64,10 +64,9 @@ export class RegionListComponent
   }
 
   protected override mapModelToExcelRow(model: Region): { [key: string]: any } {
-    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
     return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'المنطقة' : 'Region']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+      [this.translateService.instant('REGIONS_PAGE.REGION_IN_ARABIC')]: model.nameAr,
+      [this.translateService.instant('REGIONS_PAGE.REGION_IN_ENGLISH')]: model.nameEn,
     };
   }
 }

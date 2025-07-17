@@ -65,7 +65,6 @@ export default class EmployeeListComponent
   implements OnInit
 {
   languageService = inject(LanguageService);
-  translateService = inject(TranslateService);
   cityService = inject(CityService);
   regionService = inject(RegionService);
   departmentService = inject(DepartmentService);

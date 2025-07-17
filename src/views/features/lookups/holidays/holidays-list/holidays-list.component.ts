@@ -50,7 +50,6 @@ export default class HolidaysListComponent extends BaseListComponent<
     maxWidth: '600px',
   };
   holidayService = inject(HolidayService);
-  translateService = inject(TranslateService);
   authService = inject(AuthService);
 
   filterModel: HolidayFilter = new HolidayFilter();

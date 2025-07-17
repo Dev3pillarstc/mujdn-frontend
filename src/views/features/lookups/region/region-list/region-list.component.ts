@@ -36,14 +36,12 @@ export class RegionListComponent
   extends BaseListComponent<Region, RegionPopupComponent, RegionService, RegionFilter>
   implements OnInit
 {
-  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
   regionService = inject(RegionService);
   filterModel: RegionFilter = new RegionFilter();
-
   override get service() {
     return this.regionService;
   }

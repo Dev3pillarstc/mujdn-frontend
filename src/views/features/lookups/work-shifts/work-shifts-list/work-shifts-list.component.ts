@@ -50,7 +50,6 @@ export default class WorkShiftsListComponent
   dialog = inject(MatDialog);
   date2: Date | undefined;
   attendance!: any[];
-  translateService = inject(TranslateService);
 
   override get service(): ShiftService {
     return this.shiftService;

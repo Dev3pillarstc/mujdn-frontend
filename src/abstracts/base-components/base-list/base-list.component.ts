@@ -32,7 +32,7 @@ export abstract class BaseListComponent<
   rows: number = 10;
 
   paginationInfo: PaginationInfo = new PaginationInfo();
-  abstract breadcrumbs: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] = [];
   list: Model[] = [];
   paginationParams: PaginationParams = new PaginationParams();
   matDialog = inject(MatDialog);
@@ -106,14 +106,30 @@ export abstract class BaseListComponent<
       routerLink: '/home',
     };
   }
+  protected abstract getBreadcrumbKeys(): {
+    labelKey: string;
+    icon?: string;
+    routerLink?: string;
+  }[];
+
+  private initBreadcrumbs(): void {
+    this.breadcrumbs = this.getBreadcrumbKeys().map((item) => ({
+      label: this.tanslateService.instant(item.labelKey),
+      icon: item.icon,
+      routerLink: item.routerLink,
+    }));
+  }
+
   ngOnInit() {
     this.setHomeItem();
+    this.initBreadcrumbs();
     this.list = this.activatedRoute.snapshot.data['list']?.list;
     this.paginationInfo = this.activatedRoute.snapshot.data['list']?.paginationInfo;
     this.initListComponent();
     // Listen to language changes
     this.langChangeSub = this.tanslateService.onLangChange.subscribe(() => {
       this.setHomeItem();
+      this.initBreadcrumbs();
     });
   }
 

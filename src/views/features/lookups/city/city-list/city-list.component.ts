@@ -45,7 +45,6 @@ export default class CityListComponent extends BaseListComponent<
     maxWidth: '600px',
   };
   cityService = inject(CityService);
-  override breadcrumbs: MenuItem[] | undefined;
   filterModel: CityFilter = new CityFilter();
   regions: BaseLookupModel[] = [];
   regionService = inject(RegionService);
@@ -58,8 +57,11 @@ export default class CityListComponent extends BaseListComponent<
     this.regionService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.regions = res;
     });
-    this.breadcrumbs = [{ label: 'CITIES_PAGE.CITIES_LIST' }];
   }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'CITIES_PAGE.CITIES_LIST' }];
+  }
+
   override openDialog(model: City): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     const lookups = { regions: this.regions };

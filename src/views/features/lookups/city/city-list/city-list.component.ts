@@ -39,7 +39,6 @@ export default class CityListComponent extends BaseListComponent<
   CityService,
   CityFilter
 > {
-  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -71,8 +70,14 @@ export default class CityListComponent extends BaseListComponent<
   }
 
   protected override mapModelToExcelRow(model: City): { [key: string]: any } {
+    const regionName = this.regions.find((r) => r.id === model.fkRegionId)?.nameAr ?? '';
+    const regionNameEn = this.regions.find((r) => r.id === model.fkRegionId)?.nameEn ?? '';
+
     return {
-      [this.translateService.instant('CITIES_PAGE.CITY')]: model.getName(),
+      [this.translateService.instant('CITIES_PAGE.CITY_IN_ARABIC')]: model.nameAr,
+      [this.translateService.instant('CITIES_PAGE.CITY_IN_ENGLISH')]: model.nameEn,
+      [this.translateService.instant('REGIONS_PAGE.REGION_IN_ARABIC')]: regionName,
+      [this.translateService.instant('REGIONS_PAGE.REGION_IN_ENGLISH')]: regionNameEn,
     };
   }
 }

@@ -64,7 +64,6 @@ export default class AttendanceLogListComponent
   implements OnInit
 {
   languageService = inject(LanguageService);
-  translateService = inject(TranslateService);
   departmentService = inject(DepartmentService);
   userService = inject(UserService);
   attendanceService = inject(AttendanceService);

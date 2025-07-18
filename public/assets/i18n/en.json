@@ -375,5 +375,28 @@
     "SMS": "SMS",
     "MOBILE": "Mobile",
     "WEB": "Web"
+  },
+  "USER_WORK_SHIFT_ASSIGNMENT": {
+    "TEMP_SHIFT_ASSIGNMENT": "Temporary Shift Assignment to Employee",
+    "SHIFT_NAME": "Shift Name",
+    "START_DATE": "Date (From)",
+    "END_DATE": "Date (To)",
+    "DEPARTMENT": "Department",
+    "EMPLOYEE_NAME": "Employee Name"
+  },
+  "USER_WORK_SHIFT_PAGE": {
+    "WORK_SHIFT_ASSIGNMENT": "Assign Work Shifts",
+    "SHIFT_NAME_AR": "Shift Name (Arabic)",
+    "SHIFT_NAME_EN": "Shift Name (English)",
+    "SHIFT_NAME_PLACEHOLDER": "Shift Name",
+    "START_DATE": "Date (From)",
+    "END_DATE": "Date (To)",
+    "DATE_RANGE_PLACEHOLDER": "Date (From - To)",
+    "DEPARTMENT": "Department",
+    "EMPLOYEE_NAME": "Employee Name",
+    "SHIFT_LIST": "Work Shifts List",
+    "ASSIGN_SHIFT_TO_EMPLOYEE": "Assign Shift to Employee",
+    "EMPLOYEE_NAME_AR": "Employee Name (Arabic)",
+    "EMPLOYEE_NAME_EN": "Employee Name (English)"
   }
 }

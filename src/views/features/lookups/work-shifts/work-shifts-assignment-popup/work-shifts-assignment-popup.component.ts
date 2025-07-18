@@ -1,5 +1,11 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
@@ -20,7 +26,6 @@ import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 
-
 @Component({
   selector: 'app-work-shifts-assignment-popup',
   imports: [
@@ -30,22 +35,30 @@ import Shift from '@/models/features/lookups/work-shifts/shift';
     ReactiveFormsModule,
     RequiredMarkerDirective,
     TranslatePipe,
-    ValidationMessagesComponent
+    ValidationMessagesComponent,
   ],
   templateUrl: './work-shifts-assignment-popup.component.html',
   styleUrl: './work-shifts-assignment-popup.component.scss',
 })
-export class WorkShiftsAssignmentPopupComponent extends BasePopupComponent<UserWorkShift> implements OnInit {
-  model!: UserWorkShift; // Remove declare, use definite assignment assertion
+export class WorkShiftsAssignmentPopupComponent
+  extends BasePopupComponent<UserWorkShift>
+  implements OnInit
+{
+  model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
+  filteredUsersProfiles: UsersWithDepartmentLookup[] = [];
   departments: BaseLookupModel[] = [];
   shifts: Shift[] = [];
-  form!: FormGroup; // Remove declare, use definite assignment assertion
+  form!: FormGroup;
   viewMode!: ViewModeEnum;
   fb = inject(FormBuilder);
   alertService = inject(AlertService);
   langService = inject(LanguageService);
   isCreateMode = false;
+
+  // Date constraints
+  minEndDate: Date | null = null;
+  maxStartDate: Date | null = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -55,6 +68,7 @@ export class WorkShiftsAssignmentPopupComponent extends BasePopupComponent<UserW
     // Initialize model - either from data or create new instance
     this.model = this.data.model || new UserWorkShift();
     this.usersProfiles = this.data.lookups?.usersProfiles || [];
+    this.filteredUsersProfiles = this.usersProfiles;
     this.departments = this.data.lookups?.departments || [];
     this.shifts = this.data.lookups?.shifts || [];
     this.viewMode = this.data.viewMode;
@@ -64,13 +78,16 @@ export class WorkShiftsAssignmentPopupComponent extends BasePopupComponent<UserW
   override buildForm(): void {
     // The model's buildForm method returns the correct form structure
     this.form = this.fb.group(this.model.buildForm());
+
+    // Set initial date constraints if model has existing dates
+    this.updateDateConstraints();
   }
 
   override saveFail(error: Error): void {
     console.error('Save failed:', error);
     // Handle save failure - show error message
     this.alertService.showErrorMessage({
-      messages: ['COMMON.SAVE_FAILED']
+      messages: ['COMMON.SAVE_FAILED'],
     });
   }
 
@@ -83,23 +100,75 @@ export class WorkShiftsAssignmentPopupComponent extends BasePopupComponent<UserW
     return form.valid;
   }
 
-  override prepareModel(model: UserWorkShift, form: FormGroup): UserWorkShift | Observable<UserWorkShift> {
+  override prepareModel(
+    model: UserWorkShift,
+    form: FormGroup
+  ): UserWorkShift | Observable<UserWorkShift> {
     // Create updated model with form values
     const updatedModel = Object.assign(this.model, { ...form.value });
     return updatedModel;
   }
 
-  // Method to trigger save (called from template)
-  save(): void {
-    this.save$.next();
-  }
   get optionLabel(): string {
     const lang = this.langService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   filterEmployeesByDepartment(departmentId: number) {
-    this.usersProfiles = this.usersProfiles.filter((emp) => emp.departmentId === departmentId);
+    this.filteredUsersProfiles = this.usersProfiles.filter(
+      (emp) => emp.departmentId === departmentId
+    );
   }
-  date2: Date | undefined;
+
+  onStartDateSelect(selectedDate: Date): void {
+    if (selectedDate) {
+      this.minEndDate = new Date(selectedDate);
+
+      const currentEndDate = this.form.get('endDate')?.value;
+      if (currentEndDate && new Date(currentEndDate) < selectedDate) {
+        this.form.get('endDate')?.setValue(null);
+      }
+    } else {
+      this.minEndDate = null;
+    }
+  }
+
+  onEndDateSelect(selectedDate: Date): void {
+    if (selectedDate) {
+      this.maxStartDate = new Date(selectedDate);
+
+      const currentStartDate = this.form.get('startDate')?.value;
+      if (currentStartDate && new Date(currentStartDate) > selectedDate) {
+        this.form.get('startDate')?.setValue(null);
+      }
+    } else {
+      this.maxStartDate = null;
+    }
+  }
+
+  private updateDateConstraints(): void {
+    const startDate = this.form.get('startDate')?.value;
+    const endDate = this.form.get('endDate')?.value;
+
+    if (startDate) {
+      this.minEndDate = new Date(startDate);
+    }
+
+    if (endDate) {
+      this.maxStartDate = new Date(endDate);
+    }
+  }
+
+  get fkShiftIdControl() {
+    return this.form.get('fkShiftId') as FormControl;
+  }
+  get startDateControl() {
+    return this.form.get('startDate') as FormControl;
+  }
+  get endDateControl() {
+    return this.form.get('endDate') as FormControl;
+  }
+  get fkAssignedUserIdControl() {
+    return this.form.get('fkAssignedUserId') as FormControl;
+  }
 }

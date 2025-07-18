@@ -24,9 +24,8 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import UserWorkShiftsFilter from '@/models/features/lookups/work-shifts/user-work-shifts-filter';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import Shift from '@/models/features/lookups/work-shifts/shift';
-interface Adminstration {
-  type: string;
-}
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
+
 @Component({
   selector: 'app-work-shifts-assignment',
   imports: [
@@ -80,9 +79,17 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     this.filteredEmployees = this.usersProfiles.filter((emp) => emp.departmentId === departmentId);
   }
   protected override mapModelToExcelRow(model: UserWorkShift): { [key: string]: any } {
-    throw new Error('Method not implemented.');
+    return {
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR')]: model.shiftNameAr,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN')]: model.shiftNameEn,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_AR')]:
+        model.employeeNameAr,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_EN')]:
+        model.employeeNameEn,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.START_DATE')]: model.startDate,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.END_DATE')]: model.endDate,
+    };
   }
-  // items: MenuItem[] | undefined;
   override breadcrumbs: MenuItem[] | undefined;
   dialogSize = {
     width: '100%',
@@ -90,47 +97,21 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   };
   userWorkShiftService = inject(UserWorkShiftService);
   dialog = inject(MatDialog);
-  // override home: MenuItem | undefined;
   date2: Date | undefined;
-  adminstrations: Adminstration[] | undefined;
-  selectedAdminstration: Adminstration | undefined;
   attendance!: any[];
-  // first: number = 0;
-  // rows: number = 10;
-  // matDialog = inject(MatDialog);
-
-  // constructor() { }
 
   override ngOnInit() {
     super.ngOnInit();
-    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'اسناد ورديات عمل' }];
-    this.attendance = [
-      {
-        serialNumber: 1,
-        employeeNameAr: 'محمد أحمد طه',
-        employeeNameEn: 'mohamed taha',
-        adminstration: 'إدارة الموارد',
-        jop: 'موظف',
-        PermanentType: 'دوام كلي',
-        date: '12/12/2024',
-      },
+    this.breadcrumbs = [
+      { label: 'COMMON.DASHBOARD' },
+      { label: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' },
     ];
   }
-
-  // onPageChange(event: PaginatorState) {
-  //   this.first = event.first ?? 0;
-  //   this.rows = event.rows ?? 10;
-  // }
-  // openDialog(): void {
-  //   const dialogRef = this.dialog.open(WorkShiftsAssignmentPopupComponent as any, this.dialogSize);
-
-  //   dialogRef.afterClosed().subscribe();
-  // }
 
   addOrEditModel(): void {
     this.openDialog();
   }
-  override openDialog(): void {
+  override openDialog() {
     const dialogConfig: MatDialogConfig = new MatDialogConfig();
 
     const lookups = {
@@ -151,6 +132,10 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
 
     const dialogRef = this.dialog.open(WorkShiftsAssignmentPopupComponent as any, dialogConfig);
 
+    return dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(result);
+      console.log(result);
+    });
   }
   get optionLabel(): string {
     const lang = this.langService.getCurrentLanguage();

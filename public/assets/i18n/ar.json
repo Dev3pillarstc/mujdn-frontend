@@ -375,5 +375,28 @@
     "SMS": "رسائل قصيرة",
     "MOBILE": "إشعارات الهاتف المحمول",
     "WEB": "إشعارات الويب"
+  },
+  "USER_WORK_SHIFT_ASSIGNMENT": {
+    "TEMP_SHIFT_ASSIGNMENT": "اسناد وردية مؤقتة لموظف",
+    "SHIFT_NAME": "اسم الوردية",
+    "START_DATE": "التاريخ (من)",
+    "END_DATE": "التاريخ (الى)",
+    "DEPARTMENT": "الإدارة",
+    "EMPLOYEE_NAME": "اسم الموظف"
+  },
+  "USER_WORK_SHIFT_PAGE": {
+    "WORK_SHIFT_ASSIGNMENT": "اسناد ورديات عمل",
+    "SHIFT_NAME_AR": "اسم الوردية (عربي)",
+    "SHIFT_NAME_EN": "اسم الوردية (انجليزي)",
+    "SHIFT_NAME_PLACEHOLDER": "اسم الوردية",
+    "START_DATE": "التاريخ (من)",
+    "END_DATE": "التاريخ (الى)",
+    "DATE_RANGE_PLACEHOLDER": "التاريخ (من - الى)",
+    "DEPARTMENT": "الادارة",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "SHIFT_LIST": "قائمة ورديات العمل",
+    "ASSIGN_SHIFT_TO_EMPLOYEE": "اسناد وردية لموظف",
+    "EMPLOYEE_NAME_AR": "اسم الموظف (عربي)",
+    "EMPLOYEE_NAME_EN": "اسم الموظف (إنجليزي)"
   }
 }

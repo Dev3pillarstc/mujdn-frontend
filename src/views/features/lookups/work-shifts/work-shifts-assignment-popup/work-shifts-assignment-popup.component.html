@@ -3,85 +3,133 @@
     <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اسناد وردية مؤقتة لموظف</h3>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'USER_WORK_SHIFT_ASSIGNMENT.TEMP_SHIFT_ASSIGNMENT' | translate }}
+    </h3>
     <form [formGroup]="form" class="mt-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
         <div class="lg:col-span-2">
-          <label class="label" for="shift-select">اسم الوردية</label>
+          <label class="label" for="shift-select">{{
+            'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate
+          }}</label>
           <div class="relative">
-            <p-select [options]="shifts" class="w-full peer" id="shift-select" formControlName="fkShiftId"
-              [optionLabel]="optionLabel" optionValue="id" placeholder="اسم الوردية">
-            </p-select>
+            <p-select
+              [options]="shifts"
+              class="w-full peer"
+              id="shift-select"
+              formControlName="fkShiftId"
+              [optionLabel]="optionLabel"
+              optionValue="id"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate"
+            ></p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
-          <span class="validation-message">
-            هذا الحقل مطلوب
-          </span>
+          <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
         </div>
 
         <div class="lg:col-span-2">
-          <label class="label" for="date-from">التاريخ (من)</label>
+          <label class="label" for="date-from">{{
+            'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate
+          }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="date-from"
-              formControlName="startDate" placeholder="التاريخ (من)">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              inputId="date-from"
+              formControlName="startDate"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate"
+              [maxDate]="maxStartDate"
+              (onSelect)="onStartDateSelect($event)"
+            >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <span class="validation-message">
-            هذا الحقل مطلوب
+            <app-validation-messages [control]="startDateControl"></app-validation-messages>
           </span>
         </div>
 
         <div class="lg:col-span-2">
-          <label class="label" for="date-to">التاريخ (الى)</label>
+          <label class="label" for="date-to">{{
+            'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
+          }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="date-to"
-              formControlName="endDate" placeholder="التاريخ (الى)">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              inputId="date-to"
+              formControlName="endDate"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate"
+              [minDate]="minEndDate"
+              (onSelect)="onEndDateSelect($event)"
+            >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <span class="validation-message">
-            هذا الحقل مطلوب
+            <app-validation-messages [control]="endDateControl"></app-validation-messages>
           </span>
         </div>
+
         <div class="lg:col-span-2">
-          <label class="label">الإدارة</label>
+          <label class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
           <div class="relative">
-            <p-select [options]="departments" class="w-full peer" optionLabel="type" placeholder="الإدارة"
-              [optionLabel]="optionLabel" (onChange)="filterEmployeesByDepartment($event.value.id)">
-            </p-select>
-            <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 
-                         peer-focus-within:left-0 peer-focus-within:w-full"></span>
-          </div>
-          <!-- Note: not part of the formGroup -->
-        </div>
-        <div class="lg:col-span-2">
-          <label class="label" for="employee-select">اسم الموظف</label>
-          <div class="relative">
-            <p-select [options]="usersProfiles" class="w-full peer" id="employee-select" [optionLabel]="optionLabel"
-              formControlName="fkAssignedUserId" optionLabel="type" optionValue="id" placeholder="اسم الموظف">
-            </p-select>
+            <p-select
+              [options]="departments"
+              class="w-full peer"
+              [optionLabel]="optionLabel"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
+              (onChange)="filterEmployeesByDepartment($event.value.id)"
+            ></p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
-          <span class="validation-message">
-            هذا الحقل مطلوب
-          </span>
+        </div>
+
+        <div class="lg:col-span-2">
+          <label class="label" for="employee-select">{{
+            'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate
+          }}</label>
+          <div class="relative">
+            <p-select
+              [options]="filteredUsersProfiles"
+              class="w-full peer"
+              id="employee-select"
+              [optionLabel]="optionLabel"
+              formControlName="fkAssignedUserId"
+              optionValue="id"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="fkAssignedUserIdControl"></app-validation-messages>
         </div>
       </div>
 
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button type="button" (click)="close()" class="btn gray-btn">الغاء</button>
-        <button type="button" (click)="save()" class="btn green-btn" [disabled]="!form.valid">إضافة</button>
+        <button type="button" (click)="close()" class="btn gray-btn">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+        <button type="button" (click)="save$.next()" class="btn green-btn" [disabled]="!form.valid">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
       </div>
     </form>
   </div>

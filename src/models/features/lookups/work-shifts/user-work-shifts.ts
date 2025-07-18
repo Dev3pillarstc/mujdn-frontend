@@ -4,12 +4,14 @@ import { UserWorkShiftService } from '@/services/features/lookups/user-workshift
 import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
+import { map, Observable } from 'rxjs';
 
 const { send, receive } = new UserWorkShiftInterceptor();
 
 @InterceptModel({ send, receive })
 export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWorkShiftService> {
   override $$__service_name__$$: string = 'UserWorkShiftService';
+
   declare shiftNameAr: string;
   declare shiftNameEn: string;
   declare employeeNameAr: string;
@@ -19,6 +21,10 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   declare fkShiftId: number;
   declare fkAssignedUserId: number;
 
+  constructor(init?: Partial<UserWorkShift>) {
+    super();
+    Object.assign(this, init);
+  }
 
   buildForm() {
     const { fkShiftId, fkAssignedUserId, startDate, endDate } = this;
@@ -27,7 +33,16 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
       fkAssignedUserId: [fkAssignedUserId, [Validators.required]],
       startDate: [startDate, [Validators.required]],
       endDate: [endDate, [Validators.required]],
-    }
-    //, CustomValidators.startBeforeEnd('startDate', 'endDate')
+    };
+  }
+
+  override save(): Observable<UserWorkShift> {
+    const service = this.$$getService$$<UserWorkShiftService>();
+    return service.assignUserShift(this).pipe(
+      map((res) => {
+        Object.assign(this, res.data);
+        return this;
+      })
+    );
   }
 }

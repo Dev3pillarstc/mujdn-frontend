@@ -295,7 +295,11 @@
     "ADD_NEW_SHIFT": "إضافة وردية عمل جديده",
     "MAX_ATTENDANCE_TIME": "مدة السماح للحضور (دق)",
     "MAX_LEAVE_TIME": "مدة السماح للانصراف (دق)",
-    "TIME_FROM_TO": "الوقت (من - الى)"
+    "TIME_FROM_TO": "الوقت (من - الى)",
+    "CONFLICTING_DATES": "تعارض تاريخ الورديه",
+    "DATA_NOT_COMPLETE": "المعلومات غير مكتمله",
+    "CONFLICTING_USER_DATES": "تعارض في مواعيد الورديات الخاصه بالمستخدم",
+    "SHIFT_NAME_INVALID": "اسم الوردية غير صحيح"
   },
   "WORK_SHIFTS_POPUP": {
     "ADD_NEW_SHIFT": "إضافة وردية عمل جديدة",

@@ -71,12 +71,6 @@ export class SideBarLinksService {
       routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
     },
     {
-      labelKey: 'MENU.WORK_SHIFT_ASSIGNMENT',
-      iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
-      routerLink: ['/dashboard'],
-      routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
-    },
-    {
       labelKey: 'MENU.HOLIDAYS',
       iconUrl: 'assets/icons/menu-icons/vacations.svg',
       routerLink: ['/holidays'],
@@ -90,6 +84,11 @@ export class SideBarLinksService {
           labelKey: 'MENU.WORK_SHIFT_SETTINGS',
           routerLink: ['/work-shifts'],
           routeId: RouteIdsEnum.WORK_SHIFTS,
+        },
+        {
+          labelKey: 'MENU.WORK_SHIFT_ASSIGNMENT',
+          routerLink: ['/work-shifts-assignment'],
+          routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
         },
       ],
     },

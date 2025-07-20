@@ -48,7 +48,6 @@ export default class WorkShiftsListComponent
     maxWidth: '1024px',
   };
   dialog = inject(MatDialog);
-  override breadcrumbs: MenuItem[] | undefined;
   date2: Date | undefined;
   attendance!: any[];
 
@@ -56,13 +55,10 @@ export default class WorkShiftsListComponent
     return this.shiftService;
   }
 
-  override initListComponent(): void {
-    this.breadcrumbs = [{ label: 'WORK_SHIFTS.WORK_SHIFTS' }];
-  }
+  override initListComponent(): void {}
 
-  override ngOnInit() {
-    super.ngOnInit();
-    this.breadcrumbs = [{ label: 'COMMON.DASHBOARD' }, { label: 'WORK_SHIFTS.WORK_SHIFTS' }];
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'WORK_SHIFTS.WORK_SHIFTS' }];
   }
 
   openDialog(model: Shift): void {

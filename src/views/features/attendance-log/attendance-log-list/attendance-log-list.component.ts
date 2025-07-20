@@ -65,7 +65,6 @@ export default class AttendanceLogListComponent
   implements OnInit
 {
   languageService = inject(LanguageService);
-  translateService = inject(TranslateService);
   departmentService = inject(DepartmentService);
   userService = inject(UserService);
   attendanceService = inject(AttendanceService);
@@ -76,7 +75,6 @@ export default class AttendanceLogListComponent
   channels: BaseLookupModel[] = [];
   creators: BaseLookupModel[] = [];
 
-  override breadcrumbs: MenuItem[] | undefined;
   filterModel: AttendanceLogFilter = new AttendanceLogFilter();
   processingStatusOptions: BooleanOptionModel[] = PROCESSING_STATUS_OPTIONS;
 
@@ -102,8 +100,6 @@ export default class AttendanceLogListComponent
   }
 
   override initListComponent(): void {
-    // Initialize breadcrumb
-    this.breadcrumbs = [{ label: 'MENU.ATTENDANCE_LOGS' }];
     // Load lookups
     this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.departments = res;
@@ -113,6 +109,9 @@ export default class AttendanceLogListComponent
       this.employees = res;
       this.creators = res; // Same users can be creators
     });
+  }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'MENU.ATTENDANCE_LOGS' }];
   }
 
   override openDialog(attendanceLog?: AttendanceLog): void {

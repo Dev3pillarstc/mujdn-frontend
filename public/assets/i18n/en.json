@@ -18,7 +18,7 @@
     "ACTIVE": "Active",
     "REQUIRED_FIELD": "This field is required",
     "MIN_LENGTH": "Minimum length is 3 characters",
-    "MAX_LENGTH": "You have reached the maximum length of the field",
+    "MAX_LENGTH": "Maximum length is 250 characters",
     "ARABIC_ONLY": "This field must contain Arabic characters only",
     "ENGLISH_ONLY": "This field must contain English characters only",
     "SEARCH": "Search",
@@ -38,7 +38,6 @@
     "POSITIVE_NUMBER_ONLY": "Only positive numbers are allowed",
     "INVALID_NUMBER": "Please enter a valid number",
     "NUMBER_RANGE": "Value must be between 0 and 9999",
-
     "INTERNAL_SERVER_ERROR": "Internal server error",
     "RESOURCE_NOT_FOUND": "Resource not found",
     "RESOURCE_CONFLICT": "Resource already exists",
@@ -55,7 +54,6 @@
     "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is connected/related to another entity",
     "CANNOT_BE_DELETE": "The record can't be deleted",
     "EXISTING_RECORD_ERROR": "This record already exists",
-
     "AUTH_INVALID_CREDENTIALS": "Username or password is incorrect",
     "AUTH_USER_NOT_ACTIVE": "User is not active",
     "AUTH_INVALID_OTP": "Invalid OTP code",
@@ -71,7 +69,6 @@
     "AUTH_FORBIDDEN_ACCESS": "You are not authorized to access this resource",
     "AUTH_FORBIDDEN_ACTION": "You are not authorized to perform this action",
     "AUTH_PASSWORD_REQUIRED": "Password is required",
-
     "PASSWORD_RESET_RATE_LIMITED": "Too many reset attempts. Please try again later",
     "PASSWORD_RESET_INVALID_TOKEN": "Invalid or expired reset link",
     "PASSWORD_RESET_TOKEN_EXPIRED": "Reset token has expired",
@@ -79,11 +76,9 @@
     "PASSWORD_RESET_USER_NOT_FOUND": "User not found",
     "PASSWORD_RESET_USER_NOT_ACT": "User account is not active",
     "RESET_LINK_SENT": "If the provided information matches our records, a password reset link will be sent to your email",
-
     "VALIDATION_FAILED": "Validation failed for one or more fields",
     "INCIDENT_DRAFT_EXISTS": "User already has a draft incident",
     "INCIDENT_CONCURRENT_UPDATE": "Incident was updated by another user",
-
     "BADREQUEST_MISSING_PARAMETER": "Required parameter is missing",
     "BADREQUEST_INVALID_ARGUMENT": "Invalid argument",
     "AUTH_ACCESS_DENIED": "Access denied",
@@ -100,7 +95,7 @@
   },
   "LOGIN_PAGE": {
     "LOGIN_LBL": "Login",
-    "USERNAME_LBL": "Username",
+    "NATIONAL_ID_LBL": "National Id",
     "PASSWORD_LBL": "Password",
     "LOGIN_BTN": "Login"
   },
@@ -265,8 +260,8 @@
     "NO_DATA_TO_SHOW": "No data to display",
     "DATE": "Date",
     "CODE": "Code",
-    "FROM": "From",
-    "TO": "To",
+    "FROM": "Date (From)",
+    "TO": "Date (To)",
     "HOLIDAY": "Holiday"
   },
   "PERMISSION_PAGE": {
@@ -360,7 +355,7 @@
     "ASSIGNED_EMPLOYEES": "Assigned Employees",
     "WORK_SHIFT_TEMP": "Temporary Work Shifts",
     "WORK_SHIFT_ASSIGNMENT": "Assign Work Shifts",
-    "HOLIDAYS": "Holiday List",
+    "HOLIDAYS": "Holidays List",
     "WORK_SHIFT": "Work Shifts",
     "WORK_SHIFT_SETTINGS": "Work Shift Settings",
     "SETTINGS": "Settings",
@@ -370,5 +365,14 @@
     "CITIES": "Cities",
     "REGIONS": "Regions",
     "PERMISSIONS_SETTINGS": "Permissions Settings"
+  },
+  "NOTIFICATION": {
+    "NOTIFICATION_SETTINGS": "Notification Settings",
+    "NOTIFICATION_CHANNELS": "Notification Channels",
+    "NOTIFICATION_TEMPLATES": "Notification Templates",
+    "CHOOSE_SUPPORTED_PLATFORMS": "Choose Supported Platforms",
+    "SMS": "SMS",
+    "MOBILE": "Mobile",
+    "WEB": "Web"
   }
 }

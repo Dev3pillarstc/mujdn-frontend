@@ -30,21 +30,20 @@ export default class NationalityListComponent
   >
   implements OnInit
 {
-  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
   nationalityService = inject(NationalityService);
-  override breadcrumbs: MenuItem[] | undefined;
   filterModel: NationalityFilter = new NationalityFilter();
 
   override get service() {
     return this.nationalityService;
   }
 
-  override initListComponent(): void {
-    this.breadcrumbs = [{ label: 'MENU.NATIONALITIES' }];
+  override initListComponent(): void {}
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'NATIONALITIES_PAGE.NATIONALITIES_LIST' }];
   }
 
   override openDialog(model: Nationality): void {

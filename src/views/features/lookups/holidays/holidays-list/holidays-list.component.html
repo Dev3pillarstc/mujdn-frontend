@@ -114,9 +114,6 @@
             <button (click)="exportExcel('holidays.xlsx')" class="table-head-action-btn">
               <img alt="" src="assets/icons/excel.svg" />
             </button>
-            <button>
-              <img alt="" src="assets/icons/print.svg" />
-            </button>
             @if (showAddEditButtons()) {
               <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
                 <img alt="" src="assets/icons/plus.svg" />
@@ -140,6 +137,8 @@
                 <th>{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}</th>
                 @if (showAddEditButtons()) {
                   <th>{{ 'HOLIDAYS_PAGE.ACTIONS' | translate }}</th>
+                } @else {
+                  <th>{{ 'HOLIDAYS_PAGE.NOTES' | translate }}</th>
                 }
               </tr>
             </ng-template>
@@ -151,8 +150,8 @@
                 </td>
                 <td>{{ holiday.nameAr }}</td>
                 <td>{{ holiday.nameEn }}</td>
-                <td>{{ holiday.startDate | date }}</td>
-                <td>{{ holiday.endDate | date }}</td>
+                <td>{{ holiday.getStartDate() }}</td>
+                <td>{{ holiday.getEndDate() }}</td>
                 @if (showAddEditButtons()) {
                   <td>
                     <div class="actions flex gap-2">
@@ -164,6 +163,12 @@
                       </button>
                     </div>
                   </td>
+                } @else {
+                  <div class="actions flex gap-2">
+                    <button (click)="openDataDialog(holiday.notes)" class="table-action-gray-btn">
+                      <img alt="" src="assets/icons/view-action.svg" />
+                    </button>
+                  </div>
                 }
               </tr>
             </ng-template>

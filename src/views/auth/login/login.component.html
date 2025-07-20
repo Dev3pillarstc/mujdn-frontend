@@ -10,14 +10,16 @@
       <article>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <div class="relative mb-6">
-            <label for="userName" class="label">{{ 'LOGIN_PAGE.USERNAME_LBL' | translate }}</label>
+            <label for="userName" class="label">{{
+              'LOGIN_PAGE.NATIONAL_ID_LBL' | translate
+            }}</label>
             <input
               formControlName="username"
               id="userName"
               class="peer"
               type="text"
               pInputText
-              [placeholder]="'LOGIN_PAGE.USERNAME_LBL' | translate"
+              [placeholder]="'LOGIN_PAGE.NATIONAL_ID_LBL' | translate"
               fluid="true"
             />
             <span

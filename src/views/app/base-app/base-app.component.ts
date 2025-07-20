@@ -5,6 +5,7 @@ import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { COOKIE_ENUM } from '@/enums/cookie-enum';
 import { CookieService } from '@/services/shared/cookie.service';
 import { AuthService } from '@/services/auth/auth.service';
+import { PrimeNGTranslationServiceService } from '@/services/shared/prime-ngtranslation-service.service';
 
 @Component({
   selector: 'app-base-app',
@@ -17,6 +18,7 @@ export class BaseAppComponent implements OnInit {
   private languageService = inject(LanguageService);
   private cookieService = inject(CookieService);
   private authService = inject(AuthService);
+  private primeNGTranslationService = inject(PrimeNGTranslationServiceService);
 
   ngOnInit() {
     this.setLoggedInUser();
@@ -40,6 +42,7 @@ export class BaseAppComponent implements OnInit {
         newLanguage === LANGUAGE_ENUM.ARABIC
           ? LAYOUT_DIRECTION_ENUM.RTL
           : LAYOUT_DIRECTION_ENUM.LTR;
+      this.primeNGTranslationService.setPrimeNGTranslation(newLanguage);
     });
   }
 

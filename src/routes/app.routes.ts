@@ -47,6 +47,18 @@ export const routes: Routes = [
         resolve: { notUsed: loginResolver },
         loadComponent: () => import('@/views/auth/login/login.component'),
       },
+      {
+        path: 'forget-password',
+        loadComponent: () => import('../views/auth/forget-password/forget-password.component'),
+      },
+      {
+        path: 'new-password',
+        loadComponent: () => import('../views/auth/new-password/new-password.component'),
+      },
+      {
+        path: 'sent-link',
+        loadComponent: () => import('../views/auth/sent-link/sent-link.component'),
+      },
     ],
   },
   {

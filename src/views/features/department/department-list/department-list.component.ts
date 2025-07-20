@@ -144,12 +144,7 @@ export default class DepartmentListComponent extends BaseListComponent<
           //this.selectedDepartmentSignal.set(this.rootDepartment);
         })
       )
-      .subscribe({
-        error: () =>
-          this.alertService.showErrorMessage({
-            messages: ['COMMON.DELETION_FAILED'],
-          }),
-      });
+      .subscribe();
   }
 
   protected override mapModelToExcelRow(model: Department): { [key: string]: any } {

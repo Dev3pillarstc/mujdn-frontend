@@ -120,10 +120,7 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     });
   }
 
-  override saveFail(error: Error): void {
-    const errorObject = { messages: ['COMMON.SAVE_FAILED'] };
-    this.alertService.showErrorMessage(errorObject);
-  }
+  override saveFail(error: Error): void {}
 
   override afterSave(model: Department, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };

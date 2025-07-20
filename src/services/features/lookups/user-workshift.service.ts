@@ -1,9 +1,15 @@
 import { LookupBaseService } from '@/abstracts/lookup-base.service';
+import { UserWorkShiftInterceptor } from '@/model-interceptors/features/lookups/user-work-shift.interceptor';
 import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { SingleResponseData } from '@/models/shared/response/single-response-data';
 import { Injectable } from '@angular/core';
-import { CastResponse, CastResponseContainer, HasInterception } from 'cast-response';
+import {
+  CastResponse,
+  CastResponseContainer,
+  HasInterception,
+  InterceptParam,
+} from 'cast-response';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -27,10 +33,12 @@ export class UserWorkShiftService extends LookupBaseService<UserWorkShift, numbe
 
   @CastResponse(undefined, { fallback: '$default' })
   @HasInterception
-  assignUserShift(userWorkShift: UserWorkShift): Observable<SingleResponseData<UserWorkShift>> {
+  assignUserShift(
+    @InterceptParam() userWorkShift: UserWorkShift
+  ): Observable<SingleResponseData<UserWorkShift>> {
     return this.http.post<SingleResponseData<UserWorkShift>>(
       this.getUrlSegment() + '/AssignUserShift',
-      { userWorkShift },
+      userWorkShift, // ✅ manually transformed
       { withCredentials: true }
     );
   }

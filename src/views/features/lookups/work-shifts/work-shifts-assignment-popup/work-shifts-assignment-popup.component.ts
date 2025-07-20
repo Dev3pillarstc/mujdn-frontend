@@ -36,6 +36,7 @@ import Shift from '@/models/features/lookups/work-shifts/shift';
     RequiredMarkerDirective,
     TranslatePipe,
     ValidationMessagesComponent,
+    RequiredMarkerDirective,
   ],
   templateUrl: './work-shifts-assignment-popup.component.html',
   styleUrl: './work-shifts-assignment-popup.component.scss',

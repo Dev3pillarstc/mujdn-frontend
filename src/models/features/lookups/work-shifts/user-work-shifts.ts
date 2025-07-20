@@ -1,5 +1,6 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { UserWorkShiftInterceptor } from '@/model-interceptors/features/lookups/user-work-shift.interceptor';
+import { SingleResponseData } from '@/models/shared/response/single-response-data';
 import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
 import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
@@ -39,7 +40,7 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   override save(): Observable<UserWorkShift> {
     const service = this.$$getService$$<UserWorkShiftService>();
     return service.assignUserShift(this).pipe(
-      map((res) => {
+      map((res: SingleResponseData<UserWorkShift>) => {
         Object.assign(this, res.data);
         return this;
       })

@@ -183,7 +183,7 @@
                 <td>{{ shiftData.employeeNameAr }}</td>
                 <td>{{ shiftData.employeeNameEn }}</td>
                 <td>{{ shiftData.startDate }}</td>
-                <td>{{ shiftData.endDate }}</td>
+                <td>{{ shiftData.endDate ? shiftData.endDate : '---' }}</td>
               </tr>
             </ng-template>
           </p-table>
@@ -195,7 +195,7 @@
 
         @if (paginationInfo) {
           <p-paginator
-            (onPageChange)="onPageChange($event, true)"
+            (onPageChange)="onPageChange($event, false)"
             [first]="first"
             [rowsPerPageOptions]="[10, 20, 30]"
             [rows]="rows"

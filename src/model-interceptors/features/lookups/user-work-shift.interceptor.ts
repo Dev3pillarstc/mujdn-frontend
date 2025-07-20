@@ -7,7 +7,6 @@ export class UserWorkShiftInterceptor implements ModelInterceptorContract<UserWo
     return model;
   }
   send(model: Partial<UserWorkShift>): Partial<UserWorkShift> {
-    delete model['$$__service_name__$$'];
     delete model['employeeNameAr'];
     delete model['employeeNameEn'];
     model['startDate'] = toDateOnly(model['startDate']);

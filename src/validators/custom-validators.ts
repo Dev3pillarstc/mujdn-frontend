@@ -7,7 +7,9 @@ const defaultLengths = {
   PASSWORD_MAX: 50,
   SHORT_NAME_MAX: 30,
   ARABIC_NAME_MAX: 250,
+  ARABIC_INPUT_NAME_MAX: 100,
   ENGLISH_NAME_MAX: 250,
+  ENGLISH_INPUT_NAME_MAX: 100,
   EMAIL_MAX: 200,
   PHONE_NUMBER_MAX: 20,
   ADDRESS_MAX: 1000,
@@ -213,15 +215,15 @@ export function strongPassword(): ValidatorFn {
     return valid
       ? null
       : {
-          strongPassword: {
-            hasUpperCase,
-            hasLowerCase,
-            hasDigit,
-            hasSpecial,
-            isLongEnough,
-            isShortEnough,
-          },
-        };
+        strongPassword: {
+          hasUpperCase,
+          hasLowerCase,
+          hasDigit,
+          hasSpecial,
+          isLongEnough,
+          isShortEnough,
+        },
+      };
   };
 }
 

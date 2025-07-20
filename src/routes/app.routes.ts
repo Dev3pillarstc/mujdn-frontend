@@ -48,6 +48,18 @@ export const routes: Routes = [
         resolve: { notUsed: loginResolver },
         loadComponent: () => import('@/views/auth/login/login.component'),
       },
+      {
+        path: 'forget-password',
+        loadComponent: () => import('../views/auth/forget-password/forget-password.component'),
+      },
+      {
+        path: 'new-password',
+        loadComponent: () => import('../views/auth/new-password/new-password.component'),
+      },
+      {
+        path: 'sent-link',
+        loadComponent: () => import('../views/auth/sent-link/sent-link.component'),
+      },
     ],
   },
   {
@@ -79,7 +91,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         resolve: { list: attendanceResolver },
         data: {
-          roles: [ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.HR_OFFICER],
+          roles: [ROLES_ENUM.EMPLOYEE], // all roles can view the page
           routeId: RouteIdsEnum.ATTENDANCE_LOGS,
         },
         loadComponent: () =>

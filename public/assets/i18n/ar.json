@@ -25,6 +25,7 @@
     "RESET_SEARCH": "إعادة تعيين",
     "SEARCH_FILTERS": "تصفية البحث",
     "START_BEFORE_END": "يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء",
+    "TIME_FROM_BEFORE_TIME_TO": "يجب أن يكون الوقت البدء قبل الوقت الانتهاء",
     "UNKNOWN_ERROR": "خطأ غير معروف",
     "SERVICE_UNAVAILABLE": "الخدمة غير متاحة الآن",
     "STRONG_PASSWORD": "كلمة المرور يجب أن تكون على الأقل 8 أحرف وتحتوي على الأقل على حرف كبير وحرف صغير ورقم وحرف خاص",
@@ -37,7 +38,6 @@
     "POSITIVE_NUMBER_ONLY": "يجب أن يكون الرقم إيجابي",
     "INVALID_NUMBER": "الرقم غير صحيح",
     "NUMBER_RANGE": "القيمة يجب أن تكون بين 0 و 9999",
-
     "INTERNAL_SERVER_ERROR": "خطأ داخلي في الخادم",
     "RESOURCE_NOT_FOUND": "المورد غير موجود",
     "RESOURCE_CONFLICT": "المورد موجود بالفعل",
@@ -54,7 +54,6 @@
     "INVALID_DELETE_REQUEST": "لا يمكن حذف السجل لأنه متصل/مرتبط بكيان آخر",
     "CANNOT_BE_DELETE": "لا يمكن حذف السجل",
     "EXISTING_RECORD_ERROR": "هذا السجل موجود بالفعل",
-
     "AUTH_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",
     "AUTH_INVALID_OTP": "رمز OTP غير صحيح",
@@ -64,12 +63,12 @@
     "AUTH_INVALID_ROLES": "أدوار غير صحيحة أو مفقودة",
     "AUTH_USER_NOT_FOUND": "المستخدم غير موجود",
     "AUTH_USER_CREATION_FAILED": "فشل في إنشاء المستخدم بسبب خطأ داخلي",
-    "AUTH_NO_REFRESH_TOKEN_FOUND": "لا يوجد رمز تحديث",
-    "AUTH_INVALID_REFRESH_TOKEN": "رمز التحديث غير صحيح",
-    "AUTH_REFRESH_TOKEN_EXPIRED": "انتهت صلاحية رمز التحديث",
-    "AUTH_FORBIDDEN_ACCESS": "ليس لديك صلاحية الوصول إلى هذا المورد",
+    "AUTH_NO_REFRESH_TOKEN_FOUND": "انتهت صلاحية جلسة تسجيل الدخول",
+    "AUTH_INVALID_REFRESH_TOKEN": "غير مصرح لك بهذا الاجراء   ",
+    "AUTH_REFRESH_TOKEN_EXPIRED": "انتهت صلاحية جلسة تسجيل الدخول",
+    "AUTH_FORBIDDEN_ACCESS": "ليس لديك صلاحية هذا الاجراء",
+    "AUTH_FORBIDDEN_ACTION": "ليس لديك صلاحية هذا الاجراء",
     "AUTH_PASSWORD_REQUIRED": "كلمة المرور مطلوبة",
-
     "PASSWORD_RESET_RATE_LIMITED": "محاولات إعادة تعيين كثيرة. يرجى المحاولة لاحقاً",
     "PASSWORD_RESET_INVALID_TOKEN": "رابط إعادة التعيين غير صحيح أو منتهي الصلاحية",
     "PASSWORD_RESET_TOKEN_EXPIRED": "انتهت صلاحية رمز إعادة التعيين",
@@ -77,11 +76,9 @@
     "PASSWORD_RESET_USER_NOT_FOUND": "المستخدم غير موجود",
     "PASSWORD_RESET_USER_NOT_ACT": "حساب المستخدم غير نشط",
     "RESET_LINK_SENT": "إذا كانت المعلومات المقدمة تطابق سجلاتنا، سيتم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني",
-
     "VALIDATION_FAILED": "فشل في التحقق من صحة حقل واحد أو أكثر",
     "INCIDENT_DRAFT_EXISTS": "المستخدم لديه بالفعل مسودة حادثة",
     "INCIDENT_CONCURRENT_UPDATE": "تم تحديث الحادثة من قبل مستخدم آخر",
-
     "BADREQUEST_MISSING_PARAMETER": "معامل مطلوب مفقود",
     "BADREQUEST_INVALID_ARGUMENT": "معامل غير صحيح",
     "AUTH_ACCESS_DENIED": "تم رفض الوصول",
@@ -98,7 +95,7 @@
   },
   "LOGIN_PAGE": {
     "LOGIN_LBL": "تسجيل الدخول",
-    "USERNAME_LBL": "اسم المستخدم",
+    "NATIONAL_ID_LBL": "رقم الهوية",
     "PASSWORD_LBL": "كلمة المرور",
     "LOGIN_BTN": "دخول الآن"
   },
@@ -251,9 +248,9 @@
     "MAX_LENGTH_NAME": "الاسم لا يمكن أن يتجاوز 100 حرف"
   },
   "HOLIDAYS_PAGE": {
-    "HOLIDAYS_LIST": "قائمة العطلات",
-    "HOLIDAY_NAME_ARABIC": "العطلة بالعربية",
-    "HOLIDAY_NAME_ENGLISH": "العطلة بالانجليزية",
+    "HOLIDAYS_LIST": "قائمة الأجازات",
+    "HOLIDAY_NAME_ARABIC": "مسمى العطلة بالعربية",
+    "HOLIDAY_NAME_ENGLISH": "مسمى العطلة بالانجليزية",
     "START_DATE": "تاريخ البدء",
     "END_DATE": "تاريخ الانتهاء",
     "NOTES": "ملاحظات",
@@ -263,8 +260,8 @@
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "DATE": "التاريخ",
     "CODE": "الرقم التسلسلي",
-    "FROM": "من",
-    "TO": "إلى",
+    "FROM": "التاريخ (من)",
+    "TO": "التاريخ (إلى)",
     "HOLIDAY": "العطلة"
   },
   "PERMISSION_PAGE": {
@@ -314,16 +311,20 @@
     "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "الوقت (من) يجب أن يكون أقل من الوقت (إلى)"
   },
   "ATTENDANCE_LOG_PAGE": {
-    "ATTENDANCE_LOGS_LIST": "سجلات الحضور",
-    "DEPARTMENT": "القسم",
-    "EMPLOYEE": "الموظف",
+    "ATTENDANCE_LOGS_TITLE": "حركات حضور وانصراف الموظفين",
+    "ATTENDANCE_LOGS_LIST": "قائمة حركات الحضور والانصراف للموظفين",
+    "DEPARTMENT": "الإدارة",
+    "EMPLOYEE": "اسم الموظف",
     "SWIPE_DATE": "تاريخ البصمة",
+    "SWIPE_DATE_FROM": "التاريخ (من)",
+    "SWIPE_DATE_TO": "التاريخ (إلى)",
     "CHANNEL_NAME": "اسم الجهاز",
     "PROCESSING_STATUS": "حالة المعالجة",
     "CREATOR": "منشئ الحركة",
     "CREATOR_AR": "منشئ الحركة (عربي)",
     "CREATOR_EN": "منشئ الحركة (إنجليزي)",
-    "ADD_NEW_ATTENDANCE_LOG": "إضافة سجل حضور جديد",
+    "SYSTEM": "النظام",
+    "ADD_NEW_ATTENDANCE_LOG": "إضافة حركة جديدة",
     "EMPLOYEE_ID": "رقم الموظف",
     "EMPLOYEE_NAME_AR": "اسم الموظف (عربي)",
     "EMPLOYEE_NAME_EN": "اسم الموظف (إنجليزي)",
@@ -343,7 +344,9 @@
     "DEPARTMENT_REQUIRED": "الإدارة مطلوبة",
     "EMPLOYEE_REQUIRED": "الموظف مطلوب",
     "MOVEMENT_TYPE": "نوع الحركة",
-    "WORK_TYPE": "نوع العمل"
+    "WORK_TYPE": "نوع العمل",
+    "IDENTIFICATION_NUMBER_REQUIRED": "رقم الهوية مطلوب",
+    "SWIPE_TIME_REQUIRED": "وقت البصمة مطلوب"
   },
   "MENU": {
     "DASHBOARD": "لوحة المعلومات",

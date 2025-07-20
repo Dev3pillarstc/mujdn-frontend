@@ -17,6 +17,9 @@ export class RequiredMarkerDirective implements OnInit {
     // ⛔ Skip if marked with noAsterisk
     if (nativeEl.hasAttribute('noAsterisk')) return;
 
+    // ⛔ Skip if not inside a form
+    if (!nativeEl.closest('form')) return;
+
     const formControl = this.control.control;
     if (!formControl || !formControl.validator) return;
 
@@ -25,7 +28,8 @@ export class RequiredMarkerDirective implements OnInit {
 
     const id = nativeEl.getAttribute('id');
     if (isRequired && id) {
-      const label = document.querySelector(`label[for="${id}"]`);
+      // ✅ Scoped label lookup
+      const label = nativeEl.closest('form')?.querySelector(`label[for="${id}"]`);
       label?.classList.add('required');
     }
   }

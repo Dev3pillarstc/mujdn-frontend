@@ -17,6 +17,7 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { formatTimeTo12Hour } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-work-shifts-list',
@@ -48,7 +49,6 @@ export default class WorkShiftsListComponent
     maxWidth: '1024px',
   };
   dialog = inject(MatDialog);
-  override breadcrumbs: MenuItem[] | undefined;
   date2: Date | undefined;
   attendance!: any[];
 
@@ -56,13 +56,10 @@ export default class WorkShiftsListComponent
     return this.shiftService;
   }
 
-  override initListComponent(): void {
-    this.breadcrumbs = [{ label: 'WORK_SHIFTS.WORK_SHIFTS' }];
-  }
+  override initListComponent(): void {}
 
-  override ngOnInit() {
-    super.ngOnInit();
-    this.breadcrumbs = [{ label: 'COMMON.DASHBOARD' }, { label: 'WORK_SHIFTS.WORK_SHIFTS' }];
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'WORK_SHIFTS.WORK_SHIFTS' }];
   }
 
   openDialog(model: Shift): void {
@@ -79,6 +76,19 @@ export default class WorkShiftsListComponent
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 
+  // Format time to 12-hour format based on current language
+  formatTime12Hour(timeString: string): string {
+    if (!timeString) return '';
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    return formatTimeTo12Hour(timeString, locale);
+  }
+
+  // Get formatted time range based on current language
+  getFormattedTimeRange(timeFrom: string, timeTo: string): string {
+    const from = this.formatTime12Hour(timeFrom);
+    const to = this.formatTime12Hour(timeTo);
+    return `${from} - ${to}`;
+  }
   protected override mapModelToExcelRow(model: Shift): { [key: string]: any } {
     const translate = this.translateService;
 
@@ -87,7 +97,10 @@ export default class WorkShiftsListComponent
       [translate.instant('WORK_SHIFTS.SHIFT_NAME_EN')]: model.nameEn,
       [translate.instant('WORK_SHIFTS.MAX_ATTENDANCE_TIME')]: model.attendanceBuffer,
       [translate.instant('WORK_SHIFTS.MAX_LEAVE_TIME')]: model.leaveBuffer,
-      [translate.instant('WORK_SHIFTS.TIME_FROM_TO')]: model.timeFrom + ' - ' + model.timeTo,
+      [translate.instant('WORK_SHIFTS.TIME_FROM_TO')]: this.getFormattedTimeRange(
+        model.timeFrom || '',
+        model.timeTo || ''
+      ),
     };
   }
 }

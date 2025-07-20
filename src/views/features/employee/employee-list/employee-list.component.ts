@@ -76,7 +76,6 @@ export default class EmployeeListComponent
   departments: BaseLookupModel[] = [];
 
   userService = inject(UserService);
-  override breadcrumbs: MenuItem[] | undefined;
   filterModel: UserFilter = new UserFilter();
   accountStatusOptions: AccountStatusOption[] = ACCOUNT_STATUS_OPTIONS;
   fingerprintExemptionOptions: BooleanOptionModel[] = FINGERPRINT_EXEMPTION_OPTIONS;
@@ -95,7 +94,6 @@ export default class EmployeeListComponent
   }
 
   override initListComponent(): void {
-    this.breadcrumbs = [{ label: 'EMPLOYEES_PAGE.EMPLOYEES_LIST' }];
     // load lookups
     this.cityService.getCitiesLookup().subscribe((res: CityLookup[]) => {
       this.cities = res;
@@ -112,6 +110,9 @@ export default class EmployeeListComponent
     this.translateService.onLangChange.subscribe(() => {
       this.initializeActionList();
     });
+  }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'EMPLOYEES_PAGE.EMPLOYEES_LIST' }];
   }
 
   override openDialog(): void {

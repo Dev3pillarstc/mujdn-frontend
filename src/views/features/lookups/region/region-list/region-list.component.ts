@@ -41,16 +41,15 @@ export class RegionListComponent
     maxWidth: '600px',
   };
   regionService = inject(RegionService);
-  override breadcrumbs: MenuItem[] | undefined;
   filterModel: RegionFilter = new RegionFilter();
   override get service() {
     return this.regionService;
   }
 
-  override initListComponent(): void {
-    this.breadcrumbs = [{ label: 'REGIONS_PAGE.REGIONS_LIST' }];
+  override initListComponent(): void {}
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'REGIONS_PAGE.REGIONS_LIST' }];
   }
-
   override openDialog(model: Region): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialog(RegionPopupComponent as any, model, viewMode);

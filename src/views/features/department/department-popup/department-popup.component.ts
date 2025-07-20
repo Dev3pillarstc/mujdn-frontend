@@ -21,6 +21,7 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationMessagesComponent } from '../../../shared/validation-messages/validation-messages.component';
+import { RequiredMarkerDirective } from '../../../../directives/required-marker.directive';
 
 @Component({
   selector: 'app-department-popup',
@@ -33,6 +34,7 @@ import { ValidationMessagesComponent } from '../../../shared/validation-messages
     ReactiveFormsModule,
     TranslatePipe,
     ValidationMessagesComponent,
+    RequiredMarkerDirective,
   ],
   templateUrl: './department-popup.component.html',
   styleUrl: './department-popup.component.scss',

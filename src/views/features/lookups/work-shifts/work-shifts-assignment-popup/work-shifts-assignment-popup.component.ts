@@ -35,14 +35,15 @@ import Shift from '@/models/features/lookups/work-shifts/shift';
     ReactiveFormsModule,
     RequiredMarkerDirective,
     TranslatePipe,
-    ValidationMessagesComponent
+    ValidationMessagesComponent,
   ],
   templateUrl: './work-shifts-assignment-popup.component.html',
   styleUrl: './work-shifts-assignment-popup.component.scss',
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit {
+  implements OnInit
+{
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   filteredUsersProfiles: UsersWithDepartmentLookup[] = [];

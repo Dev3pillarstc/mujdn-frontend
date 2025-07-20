@@ -80,7 +80,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     });
   }
 
-  override saveFail(error: Error): void { }
+  override saveFail(error: Error): void {}
 
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
     // if (!form.valid) {

@@ -33,6 +33,7 @@ import { PROCESSING_STATUS_OPTIONS } from '@/models/shared/processing-status-opt
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ibm-plex-font';
+import { formatSwipeTime } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-attendance-log-list',
@@ -94,6 +95,10 @@ export default class AttendanceLogListComponent
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
+  }
+
   override initListComponent(): void {
     // Load lookups
     this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
@@ -153,13 +158,10 @@ export default class AttendanceLogListComponent
     });
   }
 
-  formatSwipeTime(swipeTime: string | undefined): { date: string; time: string } {
+  formatSwipeTimeArEn(swipeTime: string | undefined): { date: string; time: string } {
     if (!swipeTime) return { date: '', time: '' };
-
-    const dateTime = new Date(swipeTime);
-    const date = dateTime.toLocaleDateString('EG');
-    const time = dateTime.toLocaleTimeString('EG');
-
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    const { date, time } = formatSwipeTime(swipeTime, locale);
     return { date, time };
   }
 
@@ -177,15 +179,18 @@ export default class AttendanceLogListComponent
 
       // Inline mapping logic with translated headers
       const transformedData = this.list.map((model) => ({
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]:
-          model.employeeNameAr,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
+          this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
+          model.creatorNameEn ?? 'System',
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
+          model.creatorNameAr ?? 'النظام',
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
         [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]:
           model.employeeNameEn,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_ID')]: model.employeeId,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR')]: model.creatorNameAr,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]:
+          model.employeeNameAr,
       }));
 
       // Format cell values to avoid issues with Date/undefined/null
@@ -237,11 +242,15 @@ export default class AttendanceLogListComponent
     return {
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]: model.employeeNameAr,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]: model.employeeNameEn,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_ID')]: model.employeeId,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR')]: model.creatorNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
+        model.creatorNameEn ?? 'System',
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
+        model.creatorNameAr ?? 'النظام',
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
+        this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
     };
   }
 }

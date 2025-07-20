@@ -99,7 +99,7 @@
               <td>{{ shift.nameEn }}</td>
               <td>{{ shift.attendanceBuffer }}</td>
               <td>{{ shift.leaveBuffer }}</td>
-              <td>{{ shift.timeFrom }} - {{ shift.timeTo }}</td>
+              <td>{{ getFormattedTimeRange(shift.timeFrom, shift.timeTo) }}</td>
               <td>
                 <div class="actions flex gap-2">
                   <button (click)="addOrEditModel(shift)" class="table-action-gray-btn">

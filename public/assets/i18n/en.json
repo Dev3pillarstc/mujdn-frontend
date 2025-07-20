@@ -68,6 +68,7 @@
     "AUTH_INVALID_REFRESH_TOKEN": "You are not authorized to access this resource",
     "AUTH_REFRESH_TOKEN_EXPIRED": "Login session has been expired",
     "AUTH_FORBIDDEN_ACCESS": "You are not authorized to access this resource",
+    "AUTH_FORBIDDEN_ACTION": "You are not authorized to perform this action",
     "AUTH_PASSWORD_REQUIRED": "Password is required",
 
     "PASSWORD_RESET_RATE_LIMITED": "Too many reset attempts. Please try again later",
@@ -343,7 +344,9 @@
     "DEPARTMENT_REQUIRED": "Department is required",
     "EMPLOYEE_REQUIRED": "Employee is required",
     "MOVEMENT_TYPE": "Movement Type",
-    "WORK_TYPE": "Work Type"
+    "WORK_TYPE": "Work Type",
+    "IDENTIFICATION_NUMBER_REQUIRED": "Identification number is required",
+    "SWIPE_TIME_REQUIRED": "Fingerprint time is required"
   },
   "MENU": {
     "DASHBOARD": "Dashboard",

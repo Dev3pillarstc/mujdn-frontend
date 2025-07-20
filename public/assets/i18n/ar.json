@@ -66,6 +66,7 @@
     "AUTH_INVALID_REFRESH_TOKEN": "غير مصرح لك بهذا الاجراء   ",
     "AUTH_REFRESH_TOKEN_EXPIRED": "انتهت صلاحية جلسة تسجيل الدخول",
     "AUTH_FORBIDDEN_ACCESS": "ليس لديك صلاحية هذا الاجراء",
+    "AUTH_FORBIDDEN_ACTION": "ليس لديك صلاحية هذا الاجراء",
     "AUTH_PASSWORD_REQUIRED": "كلمة المرور مطلوبة",
 
     "PASSWORD_RESET_RATE_LIMITED": "محاولات إعادة تعيين كثيرة. يرجى المحاولة لاحقاً",
@@ -341,7 +342,9 @@
     "DEPARTMENT_REQUIRED": "الإدارة مطلوبة",
     "EMPLOYEE_REQUIRED": "الموظف مطلوب",
     "MOVEMENT_TYPE": "نوع الحركة",
-    "WORK_TYPE": "نوع العمل"
+    "WORK_TYPE": "نوع العمل",
+    "IDENTIFICATION_NUMBER_REQUIRED": "رقم الهوية مطلوب",
+    "SWIPE_TIME_REQUIRED": "وقت البصمة مطلوب"
   },
   "MENU": {
     "DASHBOARD": "لوحة المعلومات",

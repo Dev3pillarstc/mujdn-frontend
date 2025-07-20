@@ -244,7 +244,11 @@
                 </td>
                 <td>
                   <div class="actions flex gap-2">
-                    <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
+                    <button
+                      (click)="openDialog(attendanceLog)"
+                      [disabled]="attendanceLog.isRawData"
+                      class="table-action-gray-btn {{ attendanceLog.isRawData ? 'disabled' : '' }}"
+                    >
                       <img src="assets/icons/edit-action.svg" alt="" />
                     </button>
                     <button

@@ -12,7 +12,6 @@ import { FactoryService } from '@/services/factory-service';
 export class LanguageService {
   translateService = inject(TranslateService);
   localStorageService = inject(LocalStorageService);
-
   private _currentLanguage: string = LANGUAGE_ENUM.ENGLISH.toString();
   languageChanged$: BehaviorSubject<string> = new BehaviorSubject(this._currentLanguage);
 

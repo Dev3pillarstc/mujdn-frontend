@@ -38,7 +38,7 @@ export class UserWorkShiftService extends LookupBaseService<UserWorkShift, numbe
   ): Observable<SingleResponseData<UserWorkShift>> {
     return this.http.post<SingleResponseData<UserWorkShift>>(
       this.getUrlSegment() + '/AssignUserShift',
-      userWorkShift, // ✅ manually transformed
+      userWorkShift,
       { withCredentials: true }
     );
   }

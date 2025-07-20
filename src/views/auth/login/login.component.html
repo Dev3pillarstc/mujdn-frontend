@@ -7,31 +7,50 @@
       </h1>
     </header>
     @if (loginForm) {
-    <article>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="relative mb-6">
-          <label for="userName" class="label">{{ 'LOGIN_PAGE.USERNAME_LBL' | translate }}</label>
-          <input formControlName="username" id="userName" class="peer" type="text" pInputText
-            [placeholder]="'LOGIN_PAGE.USERNAME_LBL' | translate" fluid="true" />
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
-        </div>
-        <div class="relative mb-10">
-          <label for="password" class="label">{{ 'LOGIN_PAGE.PASSWORD_LBL' | translate }}</label>
-          <input formControlName="password" class="peer" id="password" type="password" pInputText
-            [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate" fluid="true" />
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
-        </div>
-        <div class="mt-10 flex items-center justify-between flex-wrap gap-4">
-          <button type="submit" class="btn green-btn min-w-[148px]">
-            {{ 'LOGIN_PAGE.LOGIN_BTN' | translate }}
-          </button>
-          <a class="inline-flex items-center justify-center min-h-[40px] px-3 rounded text-[14px] font-medium hover:bg-[#f1f1f1] transition"
-            href="">نسيت كلمة المرور</a>
-        </div>
-      </form>
-    </article>
+      <article>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="relative mb-6">
+            <label for="userName" class="label">{{ 'LOGIN_PAGE.USERNAME_LBL' | translate }}</label>
+            <input
+              formControlName="username"
+              id="userName"
+              class="peer"
+              type="text"
+              pInputText
+              [placeholder]="'LOGIN_PAGE.USERNAME_LBL' | translate"
+              fluid="true"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+            ></span>
+          </div>
+          <div class="relative mb-10">
+            <label for="password" class="label">{{ 'LOGIN_PAGE.PASSWORD_LBL' | translate }}</label>
+            <input
+              formControlName="password"
+              class="peer"
+              id="password"
+              type="password"
+              pInputText
+              [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
+              fluid="true"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+            ></span>
+          </div>
+          <div class="mt-10 flex items-center justify-between flex-wrap gap-4">
+            <button type="submit" class="btn green-btn min-w-[148px]">
+              {{ 'LOGIN_PAGE.LOGIN_BTN' | translate }}
+            </button>
+            <a
+              class="inline-flex items-center justify-center min-h-[40px] px-3 rounded text-[14px] font-medium hover:bg-[#f1f1f1] transition"
+              href=""
+              >نسيت كلمة المرور</a
+            >
+          </div>
+        </form>
+      </article>
     }
   </div>
 </section>

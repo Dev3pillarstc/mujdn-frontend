@@ -5,7 +5,7 @@ import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { COOKIE_ENUM } from '@/enums/cookie-enum';
 import { CookieService } from '@/services/shared/cookie.service';
 import { AuthService } from '@/services/auth/auth.service';
-import { PrimeNGTranslationServiceService } from '@/services/shared/prime-ngtranslation-service.service';
+import { PrimeNGTranslationServiceService } from '@/services/shared/prime-ng-translation.service';
 
 @Component({
   selector: 'app-base-app',

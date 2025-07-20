@@ -90,7 +90,6 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
       [this.translateService.instant('USER_WORK_SHIFT_PAGE.END_DATE')]: model.endDate,
     };
   }
-  override breadcrumbs: MenuItem[] | undefined;
   dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -100,16 +99,13 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   date2: Date | undefined;
   attendance!: any[];
 
-  override ngOnInit() {
-    super.ngOnInit();
-    this.breadcrumbs = [
-      { label: 'COMMON.DASHBOARD' },
-      { label: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' },
-    ];
-  }
+
 
   addOrEditModel(): void {
     this.openDialog();
+  }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' }];
   }
   override openDialog() {
     const dialogConfig: MatDialogConfig = new MatDialogConfig();

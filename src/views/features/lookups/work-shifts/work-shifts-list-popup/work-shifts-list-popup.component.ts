@@ -23,6 +23,7 @@ import { ValidationMessagesComponent } from '@/views/shared/validation-messages/
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { TranslatePipe } from '@ngx-translate/core';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { CustomValidators } from '@/validators/custom-validators';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -74,8 +75,9 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     this.isCreateMode = this.data.viewMode == ViewModeEnum.CREATE;
   }
   override buildForm(): void {
-    this.form = this.fb.group(this.model.buildForm());
-    // turn timeFrom and timeTo to 12 hour type of time
+    this.form = this.fb.group(this.model.buildForm(), {
+      validators: [CustomValidators.timeFromBeforeTimeTo('timeFrom', 'timeTo')],
+    });
   }
 
   override saveFail(error: Error): void {}

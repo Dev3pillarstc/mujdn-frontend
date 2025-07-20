@@ -25,6 +25,7 @@
     "RESET_SEARCH": "Reset",
     "SEARCH_FILTERS": "Search filters",
     "START_BEFORE_END": "Start date must be before end date",
+    "TIME_FROM_BEFORE_TIME_TO": "Time from must be before time to",
     "UNKNOWN_ERROR": "Unknown error",
     "SERVICE_UNAVAILABLE": "Service unavailable",
     "STRONG_PASSWORD": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character",

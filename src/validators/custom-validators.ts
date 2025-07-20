@@ -141,6 +141,23 @@ function startBeforeEnd(startField: string, endField: string): ValidatorFn {
   };
 }
 
+export function timeFromBeforeTimeTo(fromKey: string, toKey: string): ValidatorFn {
+  return (form: AbstractControl): ValidationErrors | null => {
+    const fromControl = form.get(fromKey);
+    const toControl = form.get(toKey);
+
+    if (!fromControl?.value || !toControl?.value) return null;
+
+    const from = new Date(fromControl.value);
+    const to = new Date(toControl.value);
+
+    from.setSeconds(0, 0);
+    to.setSeconds(0, 0);
+
+    return from >= to ? { timeFromAfterTimeTo: true } : null;
+  };
+}
+
 export type customValidationTypes =
   | 'ENG_NUM'
   | 'AR_NUM'
@@ -161,6 +178,7 @@ export type customValidationTypes =
   | 'URL'
   | 'HAS_LETTERS'
   | 'START_BEFORE_END'
+  | 'TIME_FROM_BEFORE_TIME_TO'
   | 'NATIONAL_ID';
 
 export const validationPatterns: any = {
@@ -233,4 +251,5 @@ export const CustomValidators = {
   numberMinLength,
   positiveNumber,
   numberRange,
+  timeFromBeforeTimeTo,
 };

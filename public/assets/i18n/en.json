@@ -18,7 +18,7 @@
     "ACTIVE": "Active",
     "REQUIRED_FIELD": "This field is required",
     "MIN_LENGTH": "Minimum length is 3 characters",
-    "MAX_LENGTH": "Maximum length is 250 characters",
+    "MAX_LENGTH": "Maximum length is {length} characters",
     "ARABIC_ONLY": "This field must contain Arabic characters only",
     "ENGLISH_ONLY": "This field must contain English characters only",
     "SEARCH": "Search",

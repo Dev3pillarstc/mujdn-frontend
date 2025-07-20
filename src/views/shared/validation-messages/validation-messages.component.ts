@@ -1,6 +1,6 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ValidationErrorKeyEnum } from '@/enums/validation-error-key-enum';
@@ -15,7 +15,7 @@ export class ValidationMessagesComponent implements OnInit {
   control = input.required<AbstractControl>();
   activeErrors$!: Observable<{ key: string; value: any }[]>;
   errorKey = ValidationErrorKeyEnum;
-
+  translateService = inject(TranslateService);
   ngOnInit(): void {
     const ctrl = this.control();
 
@@ -37,7 +37,7 @@ export class ValidationMessagesComponent implements OnInit {
     // Handle dynamic messages with parameters
     const error = this.control().errors?.[key];
     if (error && typeof error === 'object') {
-      return this.formatMessage(message, error);
+      return this.formatMessage(this.translateService.instant(message), error);
     }
 
     return message;

@@ -43,6 +43,7 @@
               [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate"
               [maxDate]="maxStartDate"
               (onSelect)="onStartDateSelect($event)"
+              id="date-from"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
@@ -71,6 +72,7 @@
               [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate"
               [minDate]="minEndDate"
               (onSelect)="onEndDateSelect($event)"
+              id="date-to"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />

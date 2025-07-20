@@ -133,8 +133,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     const dialogRef = this.dialog.open(WorkShiftsAssignmentPopupComponent as any, dialogConfig);
 
     return dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
-      console.log(result);
+      this.loadList();
     });
   }
   get optionLabel(): string {

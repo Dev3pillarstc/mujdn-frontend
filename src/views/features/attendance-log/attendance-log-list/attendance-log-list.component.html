@@ -55,47 +55,6 @@
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
-
-            <div class="relative">
-              <label class="label" for="swipeDate">{{
-                'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate
-              }}</label>
-              <p-datepicker
-                [(ngModel)]="filterModel.swipeDate"
-                [iconDisplay]="'input'"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate"
-                [showIcon]="true"
-                class="peer block w-full"
-                inputId="swipeDate"
-              >
-                <ng-template pTemplate="inputicon">
-                  <img alt="" src="assets/icons/calender-icon.svg" />
-                </ng-template>
-              </p-datepicker>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-
-            <div class="relative">
-              <label class="label" for="channelName">{{
-                'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
-              }}</label>
-              <input
-                (ngModelChange)="onChannelChange($event)"
-                [(ngModel)]="filterModel.channelName"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate"
-                class="peer"
-                fluid="true"
-                id="channelName"
-                pInputText
-                type="text"
-              />
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-
             <div class="relative">
               <label class="label" for="processingStatus">{{
                 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate
@@ -127,6 +86,67 @@
                 id="creator"
                 optionValue="id"
               ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+
+            <div class="relative">
+              <label class="label" for="swipeDateFrom">{{
+                'ATTENDANCE_LOG_PAGE.SWIPE_DATE_FROM' | translate
+              }}</label>
+              <p-datepicker
+                [(ngModel)]="filterModel.swipeDateFrom"
+                [iconDisplay]="'input'"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE_FROM' | translate"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="swipeDateFrom"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+
+            <div class="relative">
+              <label class="label" for="swipeDateTo">{{
+                'ATTENDANCE_LOG_PAGE.SWIPE_DATE_TO' | translate
+              }}</label>
+              <p-datepicker
+                [(ngModel)]="filterModel.swipeDateTo"
+                [iconDisplay]="'input'"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE_TO' | translate"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="swipeDateTo"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+
+            <div class="relative">
+              <label class="label" for="channelName">{{
+                'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
+              }}</label>
+              <input
+                (ngModelChange)="onChannelChange($event)"
+                [(ngModel)]="filterModel.channelName"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate"
+                class="peer"
+                fluid="true"
+                id="channelName"
+                pInputText
+                type="text"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>

@@ -180,9 +180,12 @@ export default class AttendanceLogListComponent
 
       // Inline mapping logic with translated headers
       const transformedData = this.list.map((model) => ({
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]: 'processing',
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]: model.creatorNameEn,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]: model.creatorNameAr,
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
+          this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
+          model.creatorNameEn ?? 'System',
+        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
+          model.creatorNameAr ?? 'النظام',
         [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
         [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
         [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]:
@@ -243,9 +246,12 @@ export default class AttendanceLogListComponent
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]: model.creatorNameAr,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]: model.creatorNameEn,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]: 'processing',
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
+        model.creatorNameEn ?? 'System',
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
+        model.creatorNameAr ?? 'النظام',
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
+        this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
     };
   }
 }

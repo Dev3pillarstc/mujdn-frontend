@@ -104,6 +104,7 @@
               formControlName="selectedTime"
               id="time-picker-popup"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.TIME' | translate }}"
+              [hourFormat]="'12'"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="Time" src="assets/icons/time-icon.svg" />

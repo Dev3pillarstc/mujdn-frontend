@@ -81,23 +81,23 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   override saveFail(error: Error): void {}
 
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
-    if (!form.valid) {
-      return false;
-    }
-    // set seconds to 0 for both timeFrom and timeTo for comparison
-    const timeFrom: Date = form.get('timeFrom')?.value;
-    const timeTo: Date = form.get('timeTo')?.value;
-    timeFrom?.setSeconds(0);
-    timeTo?.setSeconds(0);
+    // if (!form.valid) {
+    //   return false;
+    // }
+    // // set seconds to 0 for both timeFrom and timeTo for comparison
+    // const timeFrom: Date = form.get('timeFrom')?.value;
+    // const timeTo: Date = form.get('timeTo')?.value;
+    // timeFrom?.setSeconds(0);
+    // timeTo?.setSeconds(0);
 
-    if (timeFrom && timeTo && timeFrom >= timeTo) {
-      this.alertService.showErrorMessage({
-        messages: ['WORK_SHIFTS_POPUP.TIME_FROM_MUST_BE_LESS_THAN_TIME_TO'],
-      });
-      return false;
-    }
+    // if (timeFrom && timeTo && timeFrom >= timeTo) {
+    //   this.alertService.showErrorMessage({
+    //     messages: ['WORK_SHIFTS_POPUP.TIME_FROM_MUST_BE_LESS_THAN_TIME_TO'],
+    //   });
+    //   return false;
+    // }
 
-    return true;
+    return form.valid;
   }
   override afterSave() {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };

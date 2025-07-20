@@ -78,7 +78,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         resolve: { list: attendanceResolver },
         data: {
-          roles: [], // all roles can view the page
+          roles: [ROLES_ENUM.EMPLOYEE], // all roles can view the page
           routeId: RouteIdsEnum.ATTENDANCE_LOGS,
         },
         loadComponent: () =>

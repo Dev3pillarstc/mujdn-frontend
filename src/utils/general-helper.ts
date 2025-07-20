@@ -82,22 +82,36 @@ export function formatTimeTo12Hour(
   const date = new Date();
   date.setHours(hours, minutes, 0, 0);
 
-  return date.toLocaleTimeString(locale, {
+  // Always use 'en-US' to ensure numbers are Latin digits
+  const formatted = date.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
   });
+
+  if (locale === 'ar-EG') {
+    return formatted.replace('AM', 'ص').replace('PM', 'م');
+  }
+
+  return formatted;
 }
 
 // Format Date object to 12-hour format
 export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-US'): string {
   if (!date) return '';
 
-  return date.toLocaleTimeString(locale, {
+  // Always use 'en-US' to ensure numbers are Latin digits
+  const formatted = date.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
   });
+
+  if (locale === 'ar-EG') {
+    return formatted.replace('AM', 'ص').replace('PM', 'م');
+  }
+
+  return formatted;
 }
 
 export function formatSwipeTime(
@@ -107,16 +121,23 @@ export function formatSwipeTime(
   if (!swipeTime) return { date: '', time: '' };
 
   const dateTime = new Date(swipeTime);
-  const date = dateTime.toLocaleDateString(locale, {
+  const date = dateTime.toLocaleDateString('en-US', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
   });
-  const time = dateTime.toLocaleTimeString(locale, {
+  const time = dateTime.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
   });
+
+  if (locale === 'ar-EG') {
+    return {
+      date: date.replace('AM', 'ص').replace('PM', 'م'),
+      time: time.replace('AM', 'ص').replace('PM', 'م'),
+    };
+  }
 
   return { date, time };
 }

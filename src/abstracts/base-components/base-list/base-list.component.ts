@@ -1,4 +1,4 @@
-import { Directive, inject, OnInit } from '@angular/core';
+import { Directive, inject, OnDestroy, OnInit } from '@angular/core';
 import { PaginationInfo } from '@/models/shared/response/pagination-info';
 import { MenuItem } from 'primeng/api';
 import { BaseCrudService } from '@/abstracts/base-crud-service';
@@ -16,21 +16,24 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
+import { CustomValidators } from '@/validators/custom-validators';
 
 @Directive()
 export abstract class BaseListComponent<
-  Model,
-  PopupComponent,
-  TService extends BaseCrudService<Model, string | number>,
-  FilterModel,
-> implements OnInit
+    Model,
+    PopupComponent,
+    TService extends BaseCrudService<Model, string | number>,
+    FilterModel,
+  >
+  implements OnInit, OnDestroy
 {
   abstract dialogSize: any;
   first: number = 0;
   rows: number = 10;
 
   paginationInfo: PaginationInfo = new PaginationInfo();
-  abstract breadcrumbs: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] = [];
   list: Model[] = [];
   paginationParams: PaginationParams = new PaginationParams();
   matDialog = inject(MatDialog);
@@ -38,7 +41,7 @@ export abstract class BaseListComponent<
   langService = inject(LanguageService);
   confirmService = inject(ConfirmationService);
   alertsService = inject(AlertService);
-  tanslateService = inject(TranslateService);
+  translateService = inject(TranslateService);
   declare selectedModel?: Model;
 
   abstract get filterModel(): FilterModel;
@@ -51,10 +54,12 @@ export abstract class BaseListComponent<
 
   abstract initListComponent(): void;
   home = {
-    label: this.tanslateService.instant('COMMON.HOME'),
+    label: this.translateService.instant('COMMON.HOME'),
     icon: 'pi pi-home',
-    routerLink: '/',
+    routerLink: '/home',
   };
+  private langChangeSub!: Subscription;
+
   openBaseDialog(
     popupComponent: PopupComponent,
     model: Model,
@@ -95,11 +100,38 @@ export abstract class BaseListComponent<
       }
     });
   }
+  setHomeItem(): void {
+    this.home = {
+      label: this.translateService.instant('COMMON.HOME'),
+      icon: 'pi pi-home',
+      routerLink: '/home',
+    };
+  }
+  protected abstract getBreadcrumbKeys(): {
+    labelKey: string;
+    icon?: string;
+    routerLink?: string;
+  }[];
+
+  private initBreadcrumbs(): void {
+    this.breadcrumbs = this.getBreadcrumbKeys().map((item) => ({
+      label: this.translateService.instant(item.labelKey),
+      icon: item.icon,
+      routerLink: item.routerLink,
+    }));
+  }
 
   ngOnInit() {
+    this.setHomeItem();
+    this.initBreadcrumbs();
     this.list = this.activatedRoute.snapshot.data['list']?.list;
     this.paginationInfo = this.activatedRoute.snapshot.data['list']?.paginationInfo;
     this.initListComponent();
+    // Listen to language changes
+    this.langChangeSub = this.translateService.onLangChange.subscribe(() => {
+      this.setHomeItem();
+      this.initBreadcrumbs();
+    });
   }
 
   loadList() {
@@ -172,16 +204,34 @@ export abstract class BaseListComponent<
     }
   }
 
-  exportExcel(fileName: string = 'data.xlsx'): void {
-    if (this.list && this.list.length > 0) {
-      const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? true : false;
-      const transformedData = this.list.map((item) => this.mapModelToExcelRow(item));
-      const ws = XLSX.utils.json_to_sheet(transformedData);
-      const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      wb.Workbook = { Views: [{ RTL: isRTL }] };
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-      XLSX.writeFile(wb, fileName);
-    }
+  exportExcel(fileName: string = 'data.xlsx', isStoredProcedure: boolean = false): void {
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
+    };
+
+    const fetchAll = isStoredProcedure
+      ? this.service.loadPaginatedSP(allDataParams, { ...this.filterModel! })
+      : this.service.loadPaginated(allDataParams, { ...this.filterModel! });
+
+    fetchAll.subscribe({
+      next: (response) => {
+        const fullList = response.list || [];
+        if (fullList.length > 0) {
+          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+      error: (_) => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
   }
 
   protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
@@ -218,5 +268,11 @@ export abstract class BaseListComponent<
         });
       }
     });
+  }
+  ngOnDestroy(): void {
+    // ✅ Clean up the subscription
+    if (this.langChangeSub) {
+      this.langChangeSub.unsubscribe();
+    }
   }
 }

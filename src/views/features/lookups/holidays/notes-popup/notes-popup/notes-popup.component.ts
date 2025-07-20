@@ -1,4 +1,3 @@
-import { Holiday } from '@/models/features/lookups/holiday/holiday';
 import { Component, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -16,6 +15,7 @@ export class NotesPopupComponent implements OnInit {
   ngOnInit() {
     this.notes = this.data.notes;
   }
+
   close() {
     this.dialogRef.close();
   }

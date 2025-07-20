@@ -42,21 +42,20 @@ export default class PermissionReasonListComponent
   implements OnInit
 {
   languageService = inject(LanguageService);
-  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
   permissionReasonService = inject(PermissionReasonService);
-  override breadcrumbs: MenuItem[] | undefined;
   filterModel: PermissionReasonFilter = new PermissionReasonFilter();
 
   override get service() {
     return this.permissionReasonService;
   }
 
-  override initListComponent(): void {
-    this.breadcrumbs = [{ label: 'PERMISSION_REASONS_PAGE.PERMISSION_REASONS_LIST' }];
+  override initListComponent(): void {}
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'PERMISSION_REASONS_PAGE.PERMISSION_REASONS_LIST' }];
   }
 
   override openDialog(model: PermissionReason): void {
@@ -69,7 +68,10 @@ export default class PermissionReasonListComponent
   }
   protected override mapModelToExcelRow(model: PermissionReason): { [key: string]: any } {
     return {
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]: model.getName(),
+      [this.translateService.instant('PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ARABIC')]:
+        model.nameAr,
+      [this.translateService.instant('PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ENGLISH')]:
+        model.nameEn,
     };
   }
 }

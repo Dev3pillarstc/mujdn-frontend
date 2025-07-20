@@ -62,7 +62,6 @@ export default class PermissionsListComponent
   >
   implements OnInit
 {
-  override breadcrumbs: MenuItem[] | undefined;
   activeTabIndex = 0;
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
@@ -83,7 +82,6 @@ export default class PermissionsListComponent
   prmissionReasons: BaseLookupModel[] = [];
   filterModel: PermissionFilter = new PermissionFilter();
   viewMode = ViewModeEnum;
-  translateService = inject(TranslateService);
 
   override get service() {
     return this.permissionService;
@@ -106,7 +104,9 @@ export default class PermissionsListComponent
     this.prmissionReasonService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.prmissionReasons = res;
     });
-    this.breadcrumbs = [{ label: this.translateService.instant('PERMISSION_PAGE.PERMISSIONS') }];
+  }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'PERMISSION_PAGE.PERMISSIONS' }];
   }
 
   override openDialog(model: Permission, viewMode?: ViewModeEnum): void {

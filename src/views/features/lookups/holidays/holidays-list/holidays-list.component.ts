@@ -52,16 +52,16 @@ export default class HolidaysListComponent extends BaseListComponent<
     maxWidth: '600px',
   };
   holidayService = inject(HolidayService);
-  translateService = inject(TranslateService);
   authService = inject(AuthService);
-  override breadcrumbs: MenuItem[] | undefined;
+
   filterModel: HolidayFilter = new HolidayFilter();
   override get service() {
     return this.holidayService;
   }
 
-  override initListComponent(): void {
-    this.breadcrumbs = [{ label: 'HOLIDAYS_PAGE.HOLIDAYS_LIST' }];
+  override initListComponent(): void {}
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'HOLIDAYS_PAGE.HOLIDAYS_LIST' }];
   }
 
   override openDialog(model: Holiday): void {

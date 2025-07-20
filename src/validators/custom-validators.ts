@@ -19,6 +19,7 @@ const defaultLengths = {
   DECIMAL_PLACES: 2,
   EXPLANATIONS: 1333,
   _500: 500,
+  INT_MAX: 2_147_483_647,
 };
 
 export function pattern(patternName: customValidationTypes): ValidatorFn {

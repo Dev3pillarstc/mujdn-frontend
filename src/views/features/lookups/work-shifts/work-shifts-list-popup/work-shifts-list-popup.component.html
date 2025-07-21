@@ -4,71 +4,107 @@
       <i class="pi pi-times close-popup"></i>
     </button>
     @if (isCreateMode) {
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'WORK_SHIFTS_POPUP.ADD_NEW_SHIFT' | translate }}
-    </h3>
+      <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+        {{ 'WORK_SHIFTS_POPUP.ADD_NEW_SHIFT' | translate }}
+      </h3>
     } @else {
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'WORK_SHIFTS_POPUP.EDIT_SHIFT' | translate }}
-    </h3>
+      <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+        {{ 'WORK_SHIFTS_POPUP.EDIT_SHIFT' | translate }}
+      </h3>
     }
     <form [formGroup]="form" class="mt-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
         <div class="lg:col-span-2">
           <label class="label" for="shiftNameAr">{{
             'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <input [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate" class="peer" fluid="true"
-              formControlName="nameAr" id="shiftNameAr" pInputText type="text" />
+            <input
+              [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate"
+              class="peer"
+              fluid="true"
+              formControlName="nameAr"
+              id="shiftNameAr"
+              pInputText
+              type="text"
+            />
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="nameArControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="shiftNameEn">{{
             'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <input [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate" class="peer" fluid="true"
-              formControlName="nameEn" id="shiftNameEn" pInputText type="text" />
+            <input
+              [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate"
+              class="peer"
+              fluid="true"
+              formControlName="nameEn"
+              id="shiftNameEn"
+              pInputText
+              type="text"
+            />
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="nameEnControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="time-pick-from">{{
             'WORK_SHIFTS_POPUP.TIME_FROM' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [placeholder]="'WORK_SHIFTS_POPUP.TIME_FROM' | translate"
-              [showIcon]="true" [timeOnly]="true" class="peer block w-full" formControlName="timeFrom"
-              id="time-pick-from" inputId="icondisplay" name="time-pick-from" [hourFormat]="'12'">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [placeholder]="'WORK_SHIFTS_POPUP.TIME_FROM' | translate"
+              [showIcon]="true"
+              [timeOnly]="true"
+              class="peer block w-full"
+              formControlName="timeFrom"
+              id="time-pick-from"
+              inputId="icondisplay"
+              name="time-pick-from"
+              [hourFormat]="'12'"
+            >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="timeFromControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="time-pick-to">{{
             'WORK_SHIFTS_POPUP.TIME_TO' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [placeholder]="'WORK_SHIFTS_POPUP.TIME_TO' | translate"
-              [showIcon]="true" [timeOnly]="true" class="peer block w-full" formControlName="timeTo" id="time-pick-to"
-              inputId="icondisplay" name="time-pick-to" [hourFormat]="'12'">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [placeholder]="'WORK_SHIFTS_POPUP.TIME_TO' | translate"
+              [showIcon]="true"
+              [timeOnly]="true"
+              class="peer block w-full"
+              formControlName="timeTo"
+              id="time-pick-to"
+              inputId="icondisplay"
+              name="time-pick-to"
+              [hourFormat]="'12'"
+            >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="timeToControl"></app-validation-messages>
           <app-validation-messages [control]="form"></app-validation-messages>
@@ -116,62 +152,46 @@
           </label>
         </div> -->
         <div class="lg:col-span-2">
-          <label class="label" for="max-attendance-time">
-            مدة السماح للحضور (دق)
-          </label>
-          <div class="relative overflow-hidden border border-slate-300 rounded-[6px]">
-            <button class="absolute top-0 start-0 z-[99] h-full px-4 bg-gray-100">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M12 3.25a.75.75 0 0 1 .75.75v7.25H20a.75.75 0 0 1 0 1.5h-7.25V20a.75.75 0 0 1-1.5 0v-7.25H4a.75.75 0 0 1 0-1.5h7.25V4a.75.75 0 0 1 .75-.75z"
-                  fill="#161616" />
-              </svg>
-            </button>
-            <div class="relative">
-              <input class="peer block w-full border-0" fluid="true" pInputText type="text" />
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-            </div>
-            <button class="absolute top-0 end-0 z-[99] h-full px-4 bg-gray-100">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M20.75 12a.75.75 0 0 1-.75.75H4a.75.75 0 0 1 0-1.5h16a.75.75 0 0 1 .75.75z" fill="#161616" />
-              </svg>
-            </button>
-          </div>
+          <label class="label" for="max-attendance-time"> مدة السماح للحضور (دق) </label>
+          <p-inputnumber
+            [showButtons]="true"
+            buttonLayout="vertical"
+            spinnerMode="vertical"
+            inputId="vertical"
+            [inputStyle]="{ width: '3rem' }"
+          >
+            <ng-template #incrementbuttonicon>
+              <span class="pi pi-plus"></span>
+            </ng-template>
+            <ng-template #decrementbuttonicon>
+              <span class="pi pi-minus"></span>
+            </ng-template>
+          </p-inputnumber>
         </div>
         <div class="lg:col-span-2">
-          <label class="label" for="max-attendance-time">
-            مدة السماح للانصراف (دق)
-          </label>
-          <div class="relative overflow-hidden border border-slate-300 rounded-[6px]">
-            <button class="absolute top-0 start-0 z-[99] h-full px-4 bg-gray-100">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M12 3.25a.75.75 0 0 1 .75.75v7.25H20a.75.75 0 0 1 0 1.5h-7.25V20a.75.75 0 0 1-1.5 0v-7.25H4a.75.75 0 0 1 0-1.5h7.25V4a.75.75 0 0 1 .75-.75z"
-                  fill="#161616" />
-              </svg>
-            </button>
-            <div class="relative">
-              <input class="peer block w-full border-0" fluid="true" pInputText type="text" />
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-            </div>
-            <button class="absolute top-0 end-0 z-[99] h-full px-4 bg-gray-100">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                  d="M20.75 12a.75.75 0 0 1-.75.75H4a.75.75 0 0 1 0-1.5h16a.75.75 0 0 1 .75.75z" fill="#161616" />
-              </svg>
-            </button>
-          </div>
+          <label class="label" for="max-attendance-time"> مدة السماح للانصراف (دق) </label>
+          <p-inputnumber
+            [showButtons]="true"
+            buttonLayout="vertical"
+            spinnerMode="vertical"
+            inputId="vertical"
+            [inputStyle]="{ width: '3rem' }"
+          >
+            <ng-template #incrementbuttonicon>
+              <span class="pi pi-plus"></span>
+            </ng-template>
+            <ng-template #decrementbuttonicon>
+              <span class="pi pi-minus"></span>
+            </ng-template>
+          </p-inputnumber>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
+      >
         <div class="lg:col-span-6">
-          <h3 class="text-[#1f2a37 font-[600] text-lg sm:text-xl">
-            مدة التعيين ك وردية افتراضية
-          </h3>
+          <h3 class="text-[#1f2a37 font-[600] text-lg sm:text-xl">مدة التعيين ك وردية افتراضية</h3>
         </div>
         <div class="lg:col-span-2">
           <span class="text-[14px] font-normal text-[#6c737f]">تاريخ تفعيل و بدء الوردية</span>
@@ -182,15 +202,18 @@
           <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>
         </div>
         <div class="lg:col-span-2">
-          <span class="text-[14px] font-normal text-[#6c737f]">الوردية الافتراضية التالية (بعد انتهاء تلك
-            الوردية)</span>
+          <span class="text-[14px] font-normal text-[#6c737f]"
+            >الوردية الافتراضية التالية (بعد انتهاء تلك الوردية)</span
+          >
           <p class="text-[16px] font-semibold text-[#161616]">وردية مسائية</p>
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-between gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
         <div class="flex items-center justify-end gap-4">
-          <button (click)="close()" class="btn black-btn" (click)="openDurationDialog()">تعيين ك وردية افتراضية</button>
+          <button (click)="close()" class="btn black-btn" (click)="openDurationDialog()">
+            تعيين ك وردية افتراضية
+          </button>
           <button (click)="save$.next()" class="btn green-btn">
             {{ 'COMMON.SAVE' | translate }}
           </button>

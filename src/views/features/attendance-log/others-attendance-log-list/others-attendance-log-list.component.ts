@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, SimpleChanges } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
@@ -64,16 +64,17 @@ export default class OthersAttendanceLogListComponent
   implements OnInit
 {
   @Input() isActive: boolean = false;
+  @Input() creators: BaseLookupModel[] = [];
+  @Input() employees: BaseLookupModel[] = [];
+  @Input() departments: BaseLookupModel[] = [];
+
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
   userService = inject(UserService);
   attendanceService = inject(AttendanceService);
 
   actionList: MenuItem[] = [];
-  departments: BaseLookupModel[] = [];
-  employees: BaseLookupModel[] = [];
   channels: BaseLookupModel[] = [];
-  creators: BaseLookupModel[] = [];
 
   filterModel: AttendanceLogFilter = new AttendanceLogFilter();
   processingStatusOptions: BooleanOptionModel[] = PROCESSING_STATUS_OPTIONS;
@@ -99,18 +100,21 @@ export default class OthersAttendanceLogListComponent
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 
-  override initListComponent(): void {
-    // Load lookups
-    this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
-      this.departments = res;
-    });
+  override initListComponent(): void {}
 
-    this.userService.getUsersWithDepartment().subscribe((res: UsersWithDepartmentLookup[]) => {
-      this.employees = res;
-      this.creators = res; // Same users can be creators
-    });
-    console.log('others', this.isActive);
+  ngOnChanges(changes: SimpleChanges): void {
+    // Watch for changes in isActive input
+    if (changes['isActive'] && changes['isActive'].currentValue === true) {
+      console.log('Others attendance tab became active - loading data');
+      this.loadDataIfNeeded();
+    }
   }
+
+  private loadDataIfNeeded(): void {
+    // Load data when tab becomes active
+    this.loadListSP();
+  }
+
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'MENU.ATTENDANCE_LOGS' }];
   }

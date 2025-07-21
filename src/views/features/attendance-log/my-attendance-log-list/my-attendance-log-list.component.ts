@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
@@ -60,21 +60,20 @@ export default class MyAttendanceLogListComponent
     AttendanceLog,
     AttendanceLogPopupComponent,
     AttendanceService,
-    AttendanceLogFilter
+    MyAttendanceLogFilter
   >
-  implements OnInit
+  implements OnInit, OnChanges
 {
   @Input() isActive: boolean = false;
+  @Input() creators: BaseLookupModel[] = [];
+
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
   userService = inject(UserService);
   attendanceService = inject(AttendanceService);
 
   actionList: MenuItem[] = [];
-  departments: BaseLookupModel[] = [];
-  employees: BaseLookupModel[] = [];
   channels: BaseLookupModel[] = [];
-  creators: BaseLookupModel[] = [];
 
   filterModel: MyAttendanceLogFilter = new MyAttendanceLogFilter();
   processingStatusOptions: BooleanOptionModel[] = PROCESSING_STATUS_OPTIONS;
@@ -120,10 +119,21 @@ export default class MyAttendanceLogListComponent
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 
-  override initListComponent(): void {
-    this.loadListSP();
-    console.log('my', this.isActive);
+  override initListComponent(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Watch for changes in isActive input
+    if (changes['isActive'] && changes['isActive'].currentValue === true) {
+      console.log('My attendance tab became active - loading data');
+      this.loadDataIfNeeded();
+    }
   }
+
+  private loadDataIfNeeded(): void {
+    // Load data when tab becomes active
+    this.loadListSP();
+  }
+
   protected override getBreadcrumbKeys() {
     return [];
   }

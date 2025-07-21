@@ -24,10 +24,18 @@
       </p-tablist>
       <p-tabpanels>
         <p-tabpanel value="0">
-          <app-my-attendance-log-list></app-my-attendance-log-list>
+          <app-my-attendance-log-list
+            [isActive]="activeTabIndex === 0"
+            [creators]="creators"
+          ></app-my-attendance-log-list>
         </p-tabpanel>
         <p-tabpanel value="1">
-          <app-others-attendance-log-list></app-others-attendance-log-list>
+          <app-others-attendance-log-list
+            [isActive]="activeTabIndex === 1"
+            [creators]="creators"
+            [employees]="employees"
+            [departments]="departments"
+          ></app-others-attendance-log-list>
         </p-tabpanel>
       </p-tabpanels>
     </p-tabs>

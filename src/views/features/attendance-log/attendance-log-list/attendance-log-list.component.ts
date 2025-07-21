@@ -1,44 +1,17 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
-import { FormsModule } from '@angular/forms';
-import { Select } from 'primeng/select';
-import { DatePickerModule } from 'primeng/datepicker';
-import { FluidModule } from 'primeng/fluid';
-import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PaginatorModule } from 'primeng/paginator';
-import { SplitButtonModule } from 'primeng/splitbutton';
-import { MatDialogConfig } from '@angular/material/dialog';
-import { DIALOG_ENUM } from '@/enums/dialog-enum';
-import { ConfirmationService } from '@/services/shared/confirmation.service';
-import { AlertService } from '@/services/shared/alert.service';
-import { AttendanceLogPopupComponent } from '../attendance-log-popup/attendance-log-popup.component';
-import { AttendanceService } from '@/services/features/attendance-log.service';
-import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
-import { InputTextModule } from 'primeng/inputtext';
-import { LanguageService } from '@/services/shared/language.service';
-import { ViewModeEnum } from '@/enums/view-mode-enum';
-import { DepartmentService } from '@/services/features/lookups/department.service';
-import { UserService } from '@/services/features/user.service';
-import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { AttendanceLog } from '@/models/features/attendance/attendance-log/attendance-log';
-import { AttendanceLogFilter } from '@/models/features/attendance/attendance-log/attendance-log-filter';
-import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
-import { BooleanOptionModel } from '@/models/shared/boolean-option';
-import { PROCESSING_STATUS_OPTIONS } from '@/models/shared/processing-status-option';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ibm-plex-font';
-import { formatSwipeTime } from '@/utils/general-helper';
 import { Subscription } from 'rxjs';
 import OthersAttendanceLogListComponent from '../others-attendance-log-list/others-attendance-log-list.component';
 import MyAttendanceLogListComponent from '../my-attendance-log-list/my-attendance-log-list.component';
-import { Tab, TabsModule } from 'primeng/tabs';
+import { TabsModule } from 'primeng/tabs';
 import { AuthService } from '@/services/auth/auth.service';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import { UserService } from '@/services/features/user.service';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 
 @Component({
   selector: 'app-attendance-log-list',
@@ -54,16 +27,28 @@ import { AuthService } from '@/services/auth/auth.service';
   styleUrl: './attendance-log-list.component.scss',
   providers: [MessageService],
 })
-export default class AttendanceLogListComponent {
+export default class AttendanceLogListComponent implements OnInit, OnDestroy {
   breadcrumbs: MenuItem[] = [];
   translateService = inject(TranslateService);
   authService = inject(AuthService);
+  departmentService = inject(DepartmentService);
+  userService = inject(UserService);
+
+  // Track active tab
+  activeTabIndex: number = 0;
+
+  departments: BaseLookupModel[] = [];
+  employees: BaseLookupModel[] = [];
+  creators: BaseLookupModel[] = [];
+
   home = {
     label: this.translateService.instant('COMMON.HOME'),
     icon: 'pi pi-home',
     routerLink: '/home',
   };
+
   private langChangeSub!: Subscription;
+
   ngOnInit() {
     this.setHomeItem();
     this.initBreadcrumbs();
@@ -73,7 +58,21 @@ export default class AttendanceLogListComponent {
       this.setHomeItem();
       this.initBreadcrumbs();
     });
+    this.loadLookups();
   }
+
+  loadLookups(): void {
+    // Load lookups
+    this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
+      this.departments = res;
+    });
+
+    this.userService.getUsersWithDepartment().subscribe((res: UsersWithDepartmentLookup[]) => {
+      this.employees = res;
+      this.creators = res; // Same users can be creators
+    });
+  }
+
   setHomeItem(): void {
     this.home = {
       label: this.translateService.instant('COMMON.HOME'),
@@ -81,6 +80,7 @@ export default class AttendanceLogListComponent {
       routerLink: '/home',
     };
   }
+
   private initBreadcrumbs(): void {
     this.breadcrumbs = this.getBreadcrumbKeys().map((item) => ({
       label: this.translateService.instant(item.labelKey),
@@ -96,12 +96,25 @@ export default class AttendanceLogListComponent {
   }[] {
     return [{ labelKey: 'MENU.ATTENDANCE_LOGS' }];
   }
+
+  onTabChange(event: any) {
+    this.activeTabIndex = event.index;
+    console.log('Tab changed to index:', this.activeTabIndex);
+
+    // The child components will automatically detect the change in isActive
+    // and trigger their data loading
+  }
+
   clickMyAttendanceLogTab() {
     console.log('clickMyAttendanceLogTab');
+    this.activeTabIndex = 0;
   }
+
   clickOthersAttendanceLogTab() {
     console.log('clickOthersAttendanceLogTab');
+    this.activeTabIndex = 1;
   }
+
   showOthersAttendanceLogs() {
     return (
       this.authService.isSecurityLeader ||
@@ -109,5 +122,20 @@ export default class AttendanceLogListComponent {
       this.authService.isHROfficer ||
       this.authService.isAdmin
     );
+  }
+
+  // Helper methods to determine if each tab is active
+  isMyAttendanceTabActive(): boolean {
+    return this.activeTabIndex === 0;
+  }
+
+  isOthersAttendanceTabActive(): boolean {
+    return this.activeTabIndex === 1;
+  }
+
+  ngOnDestroy() {
+    if (this.langChangeSub) {
+      this.langChangeSub.unsubscribe();
+    }
   }
 }

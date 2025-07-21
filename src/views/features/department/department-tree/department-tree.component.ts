@@ -43,7 +43,6 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
     }
   });
 
-
   // Add this helper to extract all departments from the tree
   private extractAllDepartmentsFromTree(tree: Department[]): Department[] {
     const all: Department[] = [];
@@ -56,7 +55,7 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
     traverse(tree);
     return all;
   }
-  constructor() { }
+  constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['departmentsTree'] && this.departmentsTree.length > 0) {
       this.rebuildTree();

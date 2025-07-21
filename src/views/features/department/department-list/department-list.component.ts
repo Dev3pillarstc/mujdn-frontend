@@ -124,7 +124,6 @@ export default class DepartmentListComponent extends BaseListComponent<
     // Find the department being deleted to get its parent
     const departmentToDelete = this.findDepartmentInTree(departmentId);
 
-
     this.confirmationService
       .open({
         icon: 'warning',
@@ -144,11 +143,13 @@ export default class DepartmentListComponent extends BaseListComponent<
             .afterClosed()
         ),
         tap(() => {
-          // If we're deleting the currently selected department, 
+          // If we're deleting the currently selected department,
           // set the selected department to its parent
           if (this.selectedDepartment?.id === departmentId && departmentToDelete) {
             // Find the parent department in the tree
-            const parentDepartment = this.findDepartmentInTree(departmentToDelete.fkParentDepartmentId as number);
+            const parentDepartment = this.findDepartmentInTree(
+              departmentToDelete.fkParentDepartmentId as number
+            );
             if (parentDepartment) {
               this.selectedDepartmentSignal.set(parentDepartment);
               this.selectedDepartment = parentDepartment;
@@ -277,7 +278,6 @@ export default class DepartmentListComponent extends BaseListComponent<
       }
     });
   }
-
 
   loadDepartmentsTree(callback?: () => void) {
     this.departmentService.getDepartmentTreeAsync().subscribe((tree) => {

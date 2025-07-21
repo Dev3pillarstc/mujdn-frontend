@@ -82,11 +82,11 @@ export default class PermissionsListComponent
   prmissionReasons: BaseLookupModel[] = [];
   filterModel: PermissionFilter = new PermissionFilter();
   viewMode = ViewModeEnum;
+  authService = inject(AuthService);
 
   override get service() {
     return this.permissionService;
   }
-  authService = inject(AuthService);
 
   override initListComponent(): void {
     this.permissionTypeService.getLookup().subscribe((res: BaseLookupModel[]) => {
@@ -105,9 +105,6 @@ export default class PermissionsListComponent
       this.prmissionReasons = res;
     });
   }
-  protected override getBreadcrumbKeys() {
-    return [{ labelKey: 'PERMISSION_PAGE.PERMISSIONS' }];
-  }
 
   override openDialog(model: Permission, viewMode?: ViewModeEnum): void {
     const lookups = {
@@ -123,19 +120,10 @@ export default class PermissionsListComponent
     this.openDialog(permission, viewMode);
   }
 
-  protected override mapModelToExcelRow(model: Permission): { [key: string]: any } {
-    return {
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
-        model.getPermissionReasonName(),
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
-        model.getPermissionTypeName(),
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
-    };
-  }
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
+
   loadIncomingPermissions() {
     this.service
       .loadDepartmentPermissionPaginated(this.paginationParams, { ...this.filterModel! })
@@ -155,21 +143,30 @@ export default class PermissionsListComponent
         },
       });
   }
+
   clickIncomingPermissionTab() {
     this.filterModel = new PermissionFilter();
     this.activeTabIndex == PERMISSION_TABS_ENUM.MY_PERMISSIONS && this.loadIncomingPermissions();
     this.activeTabIndex = PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS;
   }
+
   clickMyPermissionTab() {
     this.filterModel = new PermissionFilter();
-    this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS && this.loadList();
+    if (this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS) {
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+    }
     this.activeTabIndex = PERMISSION_TABS_ENUM.MY_PERMISSIONS;
   }
+
   departmentPermissionSearch() {
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadIncomingPermissions();
   }
+
   departmentPermissionResetSearch() {
     this.filterModel = new PermissionFilter();
     this.paginationParams.pageNumber = 1;
@@ -177,6 +174,7 @@ export default class PermissionsListComponent
     this.first = 0;
     this.loadIncomingPermissions();
   }
+
   openDataDialog(model: Permission, canTakeAction?: ViewModeEnum): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = { model: model, ViewMode: canTakeAction };
@@ -192,6 +190,7 @@ export default class PermissionsListComponent
   showIncomingPermissions() {
     return this.authService.isDepartmentManager || this.authService.isHROfficer;
   }
+
   showAddingPermissionButton(): boolean {
     const isManagerOfRoot =
       this.authService.isDeprtmentActualManager && this.authService.isRootDeprtment;
@@ -204,5 +203,20 @@ export default class PermissionsListComponent
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     this.loadIncomingPermissions();
+  }
+
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'PERMISSION_PAGE.PERMISSIONS' }];
+  }
+
+  protected override mapModelToExcelRow(model: Permission): { [key: string]: any } {
+    return {
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
+        model.getPermissionReasonName(),
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
+        model.getPermissionTypeName(),
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
+    };
   }
 }

@@ -55,7 +55,7 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
     traverse(tree);
     return all;
   }
-  constructor() { }
+  constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['departmentsTree'] && this.departmentsTree.length > 0) {
       this.rebuildTree();
@@ -152,7 +152,6 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
 
     this.departments = this.departments.map(updateNodeLabelRecursively);
   }
-
 
   onNodeSelect(event: any) {
     if (event.node) {

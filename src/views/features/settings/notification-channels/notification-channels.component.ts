@@ -7,11 +7,12 @@ import { NotificationChannel } from '@/models/features/setting/notification-chan
 import { NotificationChannelService } from '@/services/features/setting/notification-channel.service';
 import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TabsModule } from 'primeng/tabs';
 
 @Component({
   selector: 'app-notification-channels',
   standalone: true,
-  imports: [MatDialogModule, Breadcrumb, ReactiveFormsModule, TranslatePipe],
+  imports: [MatDialogModule, Breadcrumb, ReactiveFormsModule, TranslatePipe, TabsModule],
   templateUrl: './notification-channels.component.html',
   styleUrls: ['./notification-channels.component.scss'],
 })
@@ -30,9 +31,7 @@ export default class NotificationChannelsComponent implements OnInit {
     routerLink: '/',
   };
   ngOnInit(): void {
-    this.breadcrumbs = [
-      { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
-    ];
+    this.breadcrumbs = [{ label: 'إعدادات عامة' }];
     this.model = this.route.snapshot.data['channel'];
     this.form = this.fb.group(this.model.buildForm());
   }

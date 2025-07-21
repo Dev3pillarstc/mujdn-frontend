@@ -99,8 +99,6 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   date2: Date | undefined;
   attendance!: any[];
 
-
-
   addOrEditModel(): void {
     this.openDialog();
   }

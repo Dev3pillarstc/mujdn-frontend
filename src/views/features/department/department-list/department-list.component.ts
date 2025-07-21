@@ -68,7 +68,6 @@ export default class DepartmentListComponent extends BaseListComponent<
   private _filterModel: DepartmentFilter = new DepartmentFilter();
   private _selectedDepartment: Department | null = null;
 
-  override breadcrumbs: MenuItem[] | undefined;
   date2: Date | undefined;
   adminstrations: Adminstration[] | undefined;
   selectedAdminstration: Adminstration | undefined;
@@ -95,8 +94,10 @@ export default class DepartmentListComponent extends BaseListComponent<
 
     // Explicitly set the selectedDepartment property
     this.selectedDepartment = this.rootDepartment;
-    this.breadcrumbs = [{ label: 'DEPARTMENTS_LIST_PAGE.DEPARTMENTS_LIST' }];
     this.initializeFilteredCities();
+  }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'DEPARTMENTS_LIST_PAGE.DEPARTMENTS_LIST' }];
   }
 
   private mapDataFromResolver() {

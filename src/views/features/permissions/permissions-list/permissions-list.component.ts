@@ -190,11 +190,7 @@ export default class PermissionsListComponent
   }
 
   showIncomingPermissions() {
-    return (
-      this.authService.isSecurityLeader ||
-      this.authService.isDepartmentManager ||
-      this.authService.isHROfficer
-    );
+    return this.authService.isDepartmentManager || this.authService.isHROfficer;
   }
   showAddingPermissionButton(): boolean {
     const isManagerOfRoot =

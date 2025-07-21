@@ -49,7 +49,6 @@ export class Holiday extends BaseCrudModel<Holiday, HolidayService> {
       notes: [
         notes,
         [
-          Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.NOTES),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
         ],

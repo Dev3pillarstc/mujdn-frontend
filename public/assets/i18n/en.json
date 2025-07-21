@@ -311,6 +311,8 @@
     "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "Time from must be less than time to"
   },
   "ATTENDANCE_LOG_PAGE": {
+    "MY_ATTENDANCE_LOGS": "My Attendance Logs",
+    "OTHERS_ATTENDANCE_LOGS": "Others Attendance Logs",
     "ATTENDANCE_LOGS_TITLE": "Attendance Logs",
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",
     "DEPARTMENT": "Department",

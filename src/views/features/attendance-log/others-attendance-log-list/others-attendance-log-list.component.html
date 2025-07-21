@@ -1,0 +1,268 @@
+<div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
+  <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
+    <div class="flex items-center justify-between">
+      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+        {{ 'COMMON.SEARCH_FILTERS' | translate }}
+      </h5>
+    </div>
+    <div class="pt-6">
+      <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+        <div class="relative">
+          <label class="label" for="department">{{
+            'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate
+          }}</label>
+          <p-select
+            [(ngModel)]="filterModel.departmentId"
+            [optionLabel]="optionLabel"
+            [options]="departments"
+            [placeholder]="'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate"
+            class="w-full peer"
+            id="department"
+            optionValue="id"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <div class="relative">
+          <label class="label" for="employee">{{
+            'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate
+          }}</label>
+          <p-select
+            (ngModelChange)="onEmployeeChange($event)"
+            [(ngModel)]="filterModel.employeeId"
+            [optionLabel]="optionLabel"
+            [options]="employees"
+            [placeholder]="'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate"
+            class="w-full peer"
+            id="employee"
+            optionValue="id"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+        <div class="relative">
+          <label class="label" for="processingStatus">{{
+            'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate
+          }}</label>
+          <p-select
+            [optionLabel]="optionLabel"
+            [options]="processingStatusOptions"
+            [placeholder]="'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate"
+            class="w-full peer"
+            id="processingStatus"
+            optionValue="id"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <div class="relative">
+          <label class="label" for="creator">{{ 'ATTENDANCE_LOG_PAGE.CREATOR' | translate }}</label>
+          <p-select
+            (ngModelChange)="onCreatorChange($event)"
+            [(ngModel)]="filterModel.creatorId"
+            [optionLabel]="optionLabel"
+            [options]="creators"
+            [placeholder]="'ATTENDANCE_LOG_PAGE.CREATOR' | translate"
+            class="w-full peer"
+            id="creator"
+            optionValue="id"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <div class="relative">
+          <label class="label" for="swipeDateFrom">{{
+            'ATTENDANCE_LOG_PAGE.SWIPE_DATE_FROM' | translate
+          }}</label>
+          <p-datepicker
+            [(ngModel)]="filterModel.swipeDateFrom"
+            [iconDisplay]="'input'"
+            [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE_FROM' | translate"
+            [showIcon]="true"
+            class="peer block w-full"
+            inputId="swipeDateFrom"
+          >
+            <ng-template pTemplate="inputicon">
+              <img alt="" src="assets/icons/calender-icon.svg" />
+            </ng-template>
+          </p-datepicker>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <div class="relative">
+          <label class="label" for="swipeDateTo">{{
+            'ATTENDANCE_LOG_PAGE.SWIPE_DATE_TO' | translate
+          }}</label>
+          <p-datepicker
+            [(ngModel)]="filterModel.swipeDateTo"
+            [iconDisplay]="'input'"
+            [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE_TO' | translate"
+            [showIcon]="true"
+            class="peer block w-full"
+            inputId="swipeDateTo"
+          >
+            <ng-template pTemplate="inputicon">
+              <img alt="" src="assets/icons/calender-icon.svg" />
+            </ng-template>
+          </p-datepicker>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <div class="relative">
+          <label class="label" for="channelName">{{
+            'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
+          }}</label>
+          <input
+            (ngModelChange)="onChannelChange($event)"
+            [(ngModel)]="filterModel.channelName"
+            [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate"
+            class="peer"
+            fluid="true"
+            id="channelName"
+            pInputText
+            type="text"
+          />
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+      </div>
+
+      <div class="actions flex items-center gap-4 pt-6">
+        <button (click)="search(true)" class="btn black-btn">
+          {{ 'COMMON.SEARCH' | translate }}
+        </button>
+        <button (click)="resetSearch(true)" class="btn gray-btn border border-[#d2d6db]">
+          {{ 'COMMON.RESET_SEARCH' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-6">
+    <div
+      class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+    >
+      <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+        {{ 'ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST' | translate }}
+      </h4>
+      <div class="actions flex items-center gap-4 ms-auto">
+        <button (click)="exportExcel('attendance-logs.xlsx')" class="table-head-action-btn">
+          <img alt="" src="assets/icons/excel.svg" />
+        </button>
+        <button (click)="exportPdf()" class="table-head-action-btn">
+          <img class="w-6 h-6" alt="" src="assets/icons/file.png" />
+        </button>
+
+        <button (click)="openDialog()" class="btn green-btn flex items-center">
+          <img alt="" src="assets/icons/plus.svg" />
+          <span>{{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_ATTENDANCE_LOG' | translate }}</span>
+        </button>
+      </div>
+    </div>
+    @if (list && list.length > 0) {
+      <p-table [value]="list">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR' | translate }}</th>
+            <th>{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN' | translate }}</th>
+            <th>{{ 'ATTENDANCE_LOG_PAGE.SWIPE_TIME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_AR' | translate }}</th>
+            <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_EN' | translate }}</th>
+            <th>{{ 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate }}</th>
+            <th>{{ 'ATTENDANCE_LOG_PAGE.ACTIONS' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-attendanceLog>
+          <tr>
+            <td>{{ attendanceLog.employeeNameAr }}</td>
+            <td>{{ attendanceLog.employeeNameEn }}</td>
+            <td>
+              <div class="flex flex-col items-center">
+                <span>{{ formatSwipeTimeArEn(attendanceLog.swipeTime).date }}</span>
+                <span class="text-[#64748b]">{{
+                  formatSwipeTimeArEn(attendanceLog.swipeTime).time
+                }}</span>
+              </div>
+            </td>
+            <td>{{ attendanceLog.channelName }}</td>
+            @if (!attendanceLog.isRawData) {
+              <td>{{ attendanceLog.creatorNameAr }}</td>
+              <td>{{ attendanceLog.creatorNameEn }}</td>
+            } @else {
+              <td>النظام</td>
+              <td>System</td>
+            }
+            <td>
+              <div
+                [ngClass]="[
+                  'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
+                  getProcessingStatusClass(attendanceLog.isProcessed),
+                ]"
+              >
+                <span
+                  [ngClass]="[
+                    'block w-[10px] h-[10px] rounded-full',
+                    getProcessingStatusDotClass(attendanceLog.isProcessed),
+                  ]"
+                ></span>
+                <span>
+                  {{
+                    attendanceLog.isProcessed
+                      ? ('ATTENDANCE_LOG_PAGE.PROCESSED' | translate)
+                      : ('ATTENDANCE_LOG_PAGE.PROCESSING' | translate)
+                  }}
+                </span>
+              </div>
+            </td>
+            <td>
+              <div class="actions flex gap-2">
+                <button
+                  (click)="openDialog(attendanceLog)"
+                  [disabled]="attendanceLog.isRawData"
+                  class="table-action-gray-btn {{ attendanceLog.isRawData ? 'disabled' : '' }}"
+                >
+                  <img src="assets/icons/edit-action.svg" alt="" />
+                </button>
+                <button
+                  (click)="deleteModel(attendanceLog.id, true)"
+                  [disabled]="attendanceLog.isRawData"
+                  class="table-action-red-btn {{ attendanceLog.isRawData ? 'disabled' : '' }}"
+                >
+                  <img src="assets/icons/delete-action.svg" alt="" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    } @else {
+      <div class="flex items-center justify-center h-64">
+        <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
+      </div>
+    }
+    @if (paginationInfo) {
+      <p-paginator
+        (onPageChange)="onPageChange($event, true)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="rows"
+        [showCurrentPageReport]="false"
+        [totalRecords]="paginationInfo.totalItems"
+        class="mt-6"
+      />
+    }
+    <div></div>
+  </div>
+</div>

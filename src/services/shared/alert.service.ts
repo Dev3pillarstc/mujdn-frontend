@@ -40,7 +40,7 @@ export class AlertService {
       maxWidth: string;
     }
   ) {
-    return this.matDialog.open(AlertDialogComponent, {
+    const dialog = this.matDialog.open(AlertDialogComponent, {
       width: dialogSize?.width || '100%',
       maxWidth: dialogSize?.maxWidth || '400px',
       data: <AlertDialogData>{
@@ -49,5 +49,11 @@ export class AlertService {
         buttonLabel: params.buttonLabel || 'COMMON.OK',
       },
     });
+
+    setTimeout(() => {
+      dialog.close();
+    }, 5000);
+
+    return dialog;
   }
 }

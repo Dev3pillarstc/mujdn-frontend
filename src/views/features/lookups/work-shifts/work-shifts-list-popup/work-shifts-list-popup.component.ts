@@ -7,22 +7,19 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
-import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
-import { LanguageService } from '@/services/shared/language.service';
-import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { DialogRef } from '@angular/cdk/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { M } from '@angular/material/dialog.d-B5HZULyo';
 import { Observable } from 'rxjs';
 import { ShiftService } from '@/services/features/lookups/shift.service';
 import { AlertService } from '@/services/shared/alert.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { TranslatePipe } from '@ngx-translate/core';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { DefaultShiftDurationComponent } from '../default-shift-duration/default-shift-duration.component';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -45,6 +42,11 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   service = inject(ShiftService);
   fb = inject(FormBuilder);
   isCreateMode = false;
+  durationDialogSize = {
+    width: '100%',
+    maxWidth: '504px',
+  };
+  matDialog = inject(MatDialog);
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
@@ -113,5 +115,16 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}:00`;
+  }
+  openDurationDialog(): void {
+    const model = { id: 1 };
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = { model: model, viewMode: viewMode };
+    dialogConfig.width = this.durationDialogSize.width;
+    dialogConfig.maxWidth = this.durationDialogSize.maxWidth;
+    const dialogRef = this.matDialog.open(DefaultShiftDurationComponent as any, dialogConfig);
+
+    dialogRef.afterClosed().subscribe();
   }
 }

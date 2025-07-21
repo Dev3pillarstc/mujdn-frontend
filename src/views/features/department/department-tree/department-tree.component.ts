@@ -55,7 +55,7 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
     traverse(tree);
     return all;
   }
-  constructor() {}
+  constructor() { }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['departmentsTree'] && this.departmentsTree.length > 0) {
       this.rebuildTree();
@@ -136,21 +136,23 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
   }
 
   updateTreeLabels() {
-    this.departments = this.departments.map((node) => ({
-      ...node,
-      label:
+    const updateNodeLabelRecursively = (node: TreeNode): TreeNode => {
+      const dept = node.data as Department;
+      const label =
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-          ? node.data.nameEn
-          : node.data.nameAr,
-      children: node.children?.map((child) => ({
-        ...child,
-        label:
-          this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-            ? child.data.nameEn
-            : child.data.nameAr,
-      })),
-    }));
+          ? dept.nameEn
+          : dept.nameAr;
+
+      return {
+        ...node,
+        label,
+        children: node.children?.map(updateNodeLabelRecursively) || [],
+      };
+    };
+
+    this.departments = this.departments.map(updateNodeLabelRecursively);
   }
+
 
   onNodeSelect(event: any) {
     if (event.node) {

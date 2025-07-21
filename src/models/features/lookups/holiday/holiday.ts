@@ -46,7 +46,13 @@ export class Holiday extends BaseCrudModel<Holiday, HolidayService> {
       ],
       startDate: [startDate, [Validators.required]],
       endDate: [endDate, [Validators.required]],
-      notes: [notes, [Validators.required]],
+      notes: [
+        notes,
+        [
+          Validators.maxLength(CustomValidators.defaultLengths.NOTES),
+          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
+        ],
+      ],
     };
   }
   getName(): string {

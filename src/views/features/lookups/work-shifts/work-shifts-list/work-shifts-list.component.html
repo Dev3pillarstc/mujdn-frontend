@@ -83,7 +83,7 @@
               <td>{{ shift.nameEn }}</td>
               <td>{{ shift.attendanceBuffer }}</td>
               <td>{{ shift.leaveBuffer }}</td>
-              <td>{{ shift.timeFrom }} - {{ shift.timeTo }}</td>
+              <td>{{ getFormattedTimeRange(shift.timeFrom, shift.timeTo) }}</td>
               <td>
                 <div class="flex items-center justify-center">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

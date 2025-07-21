@@ -7,7 +7,7 @@
         </ng-template>
       </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        {{ 'ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST' | translate }}
+        {{ 'ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_TITLE' | translate }}
       </h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
@@ -55,47 +55,6 @@
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
-
-            <div class="relative">
-              <label class="label" for="swipeDate">{{
-                'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate
-              }}</label>
-              <p-datepicker
-                [(ngModel)]="filterModel.swipeDate"
-                [iconDisplay]="'input'"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE' | translate"
-                [showIcon]="true"
-                class="peer block w-full"
-                inputId="swipeDate"
-              >
-                <ng-template pTemplate="inputicon">
-                  <img alt="" src="assets/icons/calender-icon.svg" />
-                </ng-template>
-              </p-datepicker>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-
-            <div class="relative">
-              <label class="label" for="channelName">{{
-                'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
-              }}</label>
-              <input
-                (ngModelChange)="onChannelChange($event)"
-                [(ngModel)]="filterModel.channelName"
-                [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate"
-                class="peer"
-                fluid="true"
-                id="channelName"
-                pInputText
-                type="text"
-              />
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-
             <div class="relative">
               <label class="label" for="processingStatus">{{
                 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate
@@ -131,6 +90,67 @@
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
+
+            <div class="relative">
+              <label class="label" for="swipeDateFrom">{{
+                'ATTENDANCE_LOG_PAGE.SWIPE_DATE_FROM' | translate
+              }}</label>
+              <p-datepicker
+                [(ngModel)]="filterModel.swipeDateFrom"
+                [iconDisplay]="'input'"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE_FROM' | translate"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="swipeDateFrom"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+
+            <div class="relative">
+              <label class="label" for="swipeDateTo">{{
+                'ATTENDANCE_LOG_PAGE.SWIPE_DATE_TO' | translate
+              }}</label>
+              <p-datepicker
+                [(ngModel)]="filterModel.swipeDateTo"
+                [iconDisplay]="'input'"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE_TO' | translate"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="swipeDateTo"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+
+            <div class="relative">
+              <label class="label" for="channelName">{{
+                'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate
+              }}</label>
+              <input
+                (ngModelChange)="onChannelChange($event)"
+                [(ngModel)]="filterModel.channelName"
+                [placeholder]="'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate"
+                class="peer"
+                fluid="true"
+                id="channelName"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
@@ -157,9 +177,7 @@
             <button (click)="exportPdf()" class="table-head-action-btn">
               <img class="w-6 h-6" alt="" src="assets/icons/file.png" />
             </button>
-            <button class="table-head-action-btn">
-              <img alt="" src="assets/icons/print.svg" />
-            </button>
+
             <button (click)="openDialog()" class="btn green-btn flex items-center">
               <img alt="" src="assets/icons/plus.svg" />
               <span>{{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_ATTENDANCE_LOG' | translate }}</span>
@@ -186,9 +204,9 @@
                 <td>{{ attendanceLog.employeeNameEn }}</td>
                 <td>
                   <div class="flex flex-col items-center">
-                    <span>{{ formatSwipeTime(attendanceLog.swipeTime).date }}</span>
+                    <span>{{ formatSwipeTimeArEn(attendanceLog.swipeTime).date }}</span>
                     <span class="text-[#64748b]">{{
-                      formatSwipeTime(attendanceLog.swipeTime).time
+                      formatSwipeTimeArEn(attendanceLog.swipeTime).time
                     }}</span>
                   </div>
                 </td>
@@ -224,7 +242,11 @@
                 </td>
                 <td>
                   <div class="actions flex gap-2">
-                    <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
+                    <button
+                      (click)="openDialog(attendanceLog)"
+                      [disabled]="attendanceLog.isRawData"
+                      class="table-action-gray-btn {{ attendanceLog.isRawData ? 'disabled' : '' }}"
+                    >
                       <img src="assets/icons/edit-action.svg" alt="" />
                     </button>
                     <button

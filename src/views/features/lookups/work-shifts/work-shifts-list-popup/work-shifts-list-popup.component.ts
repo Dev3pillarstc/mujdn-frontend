@@ -20,6 +20,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { DefaultShiftDurationComponent } from '../default-shift-duration/default-shift-duration.component';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { CustomValidators } from '@/validators/custom-validators';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -76,23 +77,29 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     this.isCreateMode = this.data.viewMode == ViewModeEnum.CREATE;
   }
   override buildForm(): void {
-    this.form = this.fb.group(this.model.buildForm());
+    this.form = this.fb.group(this.model.buildForm(), {
+      validators: [CustomValidators.timeFromBeforeTimeTo('timeFrom', 'timeTo')],
+    });
   }
+
   override saveFail(error: Error): void {}
 
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
-    // set seconds to 0 for both timeFrom and timeTo for comparison
-    const timeFrom: Date = form.get('timeFrom')?.value;
-    const timeTo: Date = form.get('timeTo')?.value;
-    timeFrom.setSeconds(0);
-    timeTo.setSeconds(0);
+    // if (!form.valid) {
+    //   return false;
+    // }
+    // // set seconds to 0 for both timeFrom and timeTo for comparison
+    // const timeFrom: Date = form.get('timeFrom')?.value;
+    // const timeTo: Date = form.get('timeTo')?.value;
+    // timeFrom?.setSeconds(0);
+    // timeTo?.setSeconds(0);
 
-    if (timeFrom && timeTo && timeFrom >= timeTo) {
-      this.alertService.showErrorMessage({
-        messages: ['WORK_SHIFTS_POPUP.TIME_FROM_MUST_BE_LESS_THAN_TIME_TO'],
-      });
-      return false;
-    }
+    // if (timeFrom && timeTo && timeFrom >= timeTo) {
+    //   this.alertService.showErrorMessage({
+    //     messages: ['WORK_SHIFTS_POPUP.TIME_FROM_MUST_BE_LESS_THAN_TIME_TO'],
+    //   });
+    //   return false;
+    // }
 
     return form.valid;
   }

@@ -25,6 +25,7 @@
     "RESET_SEARCH": "Reset",
     "SEARCH_FILTERS": "Search filters",
     "START_BEFORE_END": "Start date must be before end date",
+    "TIME_FROM_BEFORE_TIME_TO": "Time from must be before time to",
     "UNKNOWN_ERROR": "Unknown error",
     "SERVICE_UNAVAILABLE": "Service unavailable",
     "STRONG_PASSWORD": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
@@ -37,7 +38,6 @@
     "POSITIVE_NUMBER_ONLY": "Only positive numbers are allowed",
     "INVALID_NUMBER": "Please enter a valid number",
     "NUMBER_RANGE": "Value must be between 0 and 9999",
-
     "INTERNAL_SERVER_ERROR": "Internal server error",
     "RESOURCE_NOT_FOUND": "Resource not found",
     "RESOURCE_CONFLICT": "Resource already exists",
@@ -54,7 +54,6 @@
     "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is connected/related to another entity",
     "CANNOT_BE_DELETE": "The record can't be deleted",
     "EXISTING_RECORD_ERROR": "This record already exists",
-
     "AUTH_INVALID_CREDENTIALS": "Username or password is incorrect",
     "AUTH_USER_NOT_ACTIVE": "User is not active",
     "AUTH_INVALID_OTP": "Invalid OTP code",
@@ -64,12 +63,12 @@
     "AUTH_INVALID_ROLES": "Invalid or missing role(s)",
     "AUTH_USER_NOT_FOUND": "User not found",
     "AUTH_USER_CREATION_FAILED": "User creation failed due to internal error",
-    "AUTH_NO_REFRESH_TOKEN_FOUND": "No refresh token found",
-    "AUTH_INVALID_REFRESH_TOKEN": "Invalid refresh token",
-    "AUTH_REFRESH_TOKEN_EXPIRED": "Refresh token has expired",
+    "AUTH_NO_REFRESH_TOKEN_FOUND": "Login session has been expired",
+    "AUTH_INVALID_REFRESH_TOKEN": "You are not authorized to access this resource",
+    "AUTH_REFRESH_TOKEN_EXPIRED": "Login session has been expired",
     "AUTH_FORBIDDEN_ACCESS": "You are not authorized to access this resource",
+    "AUTH_FORBIDDEN_ACTION": "You are not authorized to perform this action",
     "AUTH_PASSWORD_REQUIRED": "Password is required",
-
     "PASSWORD_RESET_RATE_LIMITED": "Too many reset attempts. Please try again later",
     "PASSWORD_RESET_INVALID_TOKEN": "Invalid or expired reset link",
     "PASSWORD_RESET_TOKEN_EXPIRED": "Reset token has expired",
@@ -77,11 +76,9 @@
     "PASSWORD_RESET_USER_NOT_FOUND": "User not found",
     "PASSWORD_RESET_USER_NOT_ACT": "User account is not active",
     "RESET_LINK_SENT": "If the provided information matches our records, a password reset link will be sent to your email",
-
     "VALIDATION_FAILED": "Validation failed for one or more fields",
     "INCIDENT_DRAFT_EXISTS": "User already has a draft incident",
     "INCIDENT_CONCURRENT_UPDATE": "Incident was updated by another user",
-
     "BADREQUEST_MISSING_PARAMETER": "Required parameter is missing",
     "BADREQUEST_INVALID_ARGUMENT": "Invalid argument",
     "AUTH_ACCESS_DENIED": "Access denied",
@@ -98,7 +95,7 @@
   },
   "LOGIN_PAGE": {
     "LOGIN_LBL": "Login",
-    "USERNAME_LBL": "Username",
+    "NATIONAL_ID_LBL": "National Id",
     "PASSWORD_LBL": "Password",
     "LOGIN_BTN": "Login"
   },
@@ -263,8 +260,8 @@
     "NO_DATA_TO_SHOW": "No data to display",
     "DATE": "Date",
     "CODE": "Code",
-    "FROM": "From",
-    "TO": "To",
+    "FROM": "Date (From)",
+    "TO": "Date (To)",
     "HOLIDAY": "Holiday"
   },
   "PERMISSION_PAGE": {
@@ -310,20 +307,24 @@
     "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "Time from must be less than time to"
   },
   "ATTENDANCE_LOG_PAGE": {
+    "ATTENDANCE_LOGS_TITLE": "Attendance Logs",
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",
     "DEPARTMENT": "Department",
     "EMPLOYEE": "Employee",
-    "SWIPE_DATE": "Swipe Date",
-    "CHANNEL_NAME": "Channel Name",
-    "PROCESSING_STATUS": "Processing Status",
+    "SWIPE_DATE": "Fingerprint Date",
+    "SWIPE_DATE_FROM": "Date (From)",
+    "SWIPE_DATE_TO": "Date (To)",
+    "CHANNEL_NAME": "Device Name",
+    "PROCESSING_STATUS": "Proacessing Status",
     "CREATOR": "Creator Name",
     "CREATOR_AR": "Creator (Arabic)",
     "CREATOR_EN": "Creator (English)",
+    "SYSTEM": "System",
     "ADD_NEW_ATTENDANCE_LOG": "Add New Attendance Log",
     "EMPLOYEE_ID": "Employee ID",
     "EMPLOYEE_NAME_AR": "Employee Name (Arabic)",
     "EMPLOYEE_NAME_EN": "Employee Name (English)",
-    "SWIPE_TIME": "Swipe Time",
+    "SWIPE_TIME": "Fingerprint Time",
     "ACTIONS": "Actions",
     "PROCESSED": "Processed",
     "PROCESSING": "Processing",
@@ -339,7 +340,9 @@
     "DEPARTMENT_REQUIRED": "Department is required",
     "EMPLOYEE_REQUIRED": "Employee is required",
     "MOVEMENT_TYPE": "Movement Type",
-    "WORK_TYPE": "Work Type"
+    "WORK_TYPE": "Work Type",
+    "IDENTIFICATION_NUMBER_REQUIRED": "Identification number is required",
+    "SWIPE_TIME_REQUIRED": "Fingerprint time is required"
   },
   "MENU": {
     "DASHBOARD": "Dashboard",
@@ -352,7 +355,7 @@
     "ASSIGNED_EMPLOYEES": "Assigned Employees",
     "WORK_SHIFT_TEMP": "Temporary Work Shifts",
     "WORK_SHIFT_ASSIGNMENT": "Assign Work Shifts",
-    "HOLIDAYS": "Holiday List",
+    "HOLIDAYS": "Holidays List",
     "WORK_SHIFT": "Work Shifts",
     "WORK_SHIFT_SETTINGS": "Work Shift Settings",
     "SETTINGS": "Settings",

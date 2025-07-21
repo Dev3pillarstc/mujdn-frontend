@@ -15,7 +15,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
         <!-- Department Selection -->
         <div class="lg:col-span-3">
-          <label class="label" for="department-popup">
+          <label class="label" for="attendance-department-popup">
             {{ 'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate }}
           </label>
           <div class="relative">
@@ -25,7 +25,7 @@
               [options]="departments"
               class="w-full peer"
               formControlName="departmentId"
-              id="department-popup"
+              id="attendance-department-popup"
               name="departmentId"
               optionValue="id"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate }}"
@@ -40,7 +40,7 @@
 
         <!-- Employee Selection -->
         <div class="lg:col-span-3">
-          <label class="label" for="employee-popup">
+          <label class="label" for="attendance-employee-popup">
             {{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME' | translate }}
           </label>
           <div class="relative">
@@ -50,7 +50,7 @@
               [options]="getFilteredEmployees()"
               class="w-full peer"
               formControlName="employeeId"
-              id="employee-popup"
+              id="attendance-employee-popup"
               name="employeeId"
               optionValue="id"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME' | translate }}"
@@ -65,7 +65,7 @@
 
         <!-- Date Picker -->
         <div class="lg:col-span-3">
-          <label class="label" for="date-picker">
+          <label class="label" for="date-picker-popup">
             {{ 'ATTENDANCE_LOG_PAGE.DATE' | translate }}
           </label>
           <div class="relative">
@@ -75,7 +75,7 @@
               [showIcon]="true"
               class="peer block w-full"
               formControlName="selectedDate"
-              id="date-picker"
+              id="date-picker-popup"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.DATE' | translate }}"
             >
               <ng-template pTemplate="inputicon">
@@ -91,7 +91,7 @@
 
         <!-- Time Picker -->
         <div class="lg:col-span-3">
-          <label class="label" for="time-picker">
+          <label class="label" for="time-picker-popup">
             {{ 'ATTENDANCE_LOG_PAGE.TIME' | translate }}
           </label>
           <div class="relative">
@@ -102,8 +102,9 @@
               [timeOnly]="true"
               class="peer block w-full"
               formControlName="selectedTime"
-              id="time-picker"
+              id="time-picker-popup"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.TIME' | translate }}"
+              [hourFormat]="'12'"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="Time" src="assets/icons/time-icon.svg" />

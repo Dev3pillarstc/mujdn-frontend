@@ -23,7 +23,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
     catchError((error: any) => {
       const notAuthorizedErrorKey = BACKEND_ERROR_ENUM.NOT_AUTHORIZED;
       const validationFailedErrorKey = BACKEND_ERROR_ENUM.VALIDATION_FAILED;
-      const skipKeys = ['VALIDATION_FAILED', notAuthorizedErrorKey];
+      const skipKeys = [validationFailedErrorKey, notAuthorizedErrorKey];
       const alertService = injector.get(AlertService);
       const translateService = injector.get(TranslateService);
       const router = injector.get(Router);
@@ -48,6 +48,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
 
       const message = translateService.instant(messageKey);
 
+      alertService.showErrorMessage({ messages: [message] });
       return throwError(() => error);
     })
   );

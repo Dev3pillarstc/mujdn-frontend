@@ -121,6 +121,10 @@ export default class DepartmentListComponent extends BaseListComponent<
   openConfirmation(departmentId: number | undefined): void {
     if (!departmentId) return;
 
+    // Find the department being deleted to get its parent
+    const departmentToDelete = this.findDepartmentInTree(departmentId);
+
+
     this.confirmationService
       .open({
         icon: 'warning',
@@ -140,11 +144,40 @@ export default class DepartmentListComponent extends BaseListComponent<
             .afterClosed()
         ),
         tap(() => {
+          // If we're deleting the currently selected department, 
+          // set the selected department to its parent
+          if (this.selectedDepartment?.id === departmentId && departmentToDelete) {
+            // Find the parent department in the tree
+            const parentDepartment = this.findDepartmentInTree(departmentToDelete.fkParentDepartmentId as number);
+            if (parentDepartment) {
+              this.selectedDepartmentSignal.set(parentDepartment);
+              this.selectedDepartment = parentDepartment;
+            }
+          }
           this.onDepartmentChange();
-          //this.selectedDepartmentSignal.set(this.rootDepartment);
         })
       )
       .subscribe();
+  }
+
+  // Helper method to find a department in the tree by ID
+  private findDepartmentInTree(departmentId: number | null): Department | null {
+    if (!departmentId) return this.rootDepartment;
+
+    const findRecursive = (departments: Department[]): Department | null => {
+      for (const dept of departments) {
+        if (dept.id === departmentId) {
+          return dept;
+        }
+        if (dept.childDepartments && dept.childDepartments.length > 0) {
+          const found = findRecursive(dept.childDepartments);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+
+    return findRecursive(this.departmentsTree);
   }
 
   protected override mapModelToExcelRow(model: Department): { [key: string]: any } {
@@ -234,13 +267,17 @@ export default class DepartmentListComponent extends BaseListComponent<
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
   onDepartmentChange() {
-    this.filterModel.fkParentDepartmentId = this.rootDepartment?.id;
+    this.filterModel.fkParentDepartmentId = this.selectedDepartment?.id ?? this.rootDepartment?.id;
     this.loadChildDepartmentsAfterSelect();
     this.loadDepartmentsTree(() => {
-      this.selectedDepartmentSignal.set(this.rootDepartment);
-      this.selectedDepartment = this.rootDepartment;
+      if (this.selectedDepartment) {
+        this.selectedDepartmentSignal.set(this.selectedDepartment); // ✅ keep selected
+      } else {
+        this.selectedDepartmentSignal.set(this.rootDepartment);
+      }
     });
   }
+
 
   loadDepartmentsTree(callback?: () => void) {
     this.departmentService.getDepartmentTreeAsync().subscribe((tree) => {

@@ -150,8 +150,8 @@
                 </td>
                 <td>{{ holiday.nameAr }}</td>
                 <td>{{ holiday.nameEn }}</td>
-                <td>{{ holiday.getStartDate() }}</td>
-                <td>{{ holiday.getEndDate() }}</td>
+                <td>{{ holiday.startDate | date:'dd/MM/yyyy'  }}</td>
+                <td>{{ holiday.endDate | date:'dd/MM/yyyy'  }}</td>
                 @if (showAddEditButtons()) {
                   <td>
                     <div class="actions flex gap-2">

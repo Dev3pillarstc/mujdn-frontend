@@ -1,11 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { AddPermissionPopupComponent } from '../popups/add-permission-popup/add-permission-popup.component';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
@@ -30,10 +29,10 @@ import { PermissionsDataPopupComponent } from '../popups/permissions-data-popup/
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
-import { AuthService } from '@/services/auth/auth.service';
 import { PERMISSION_TABS_ENUM } from '@/enums/permission-tabs-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-permissions-list',
@@ -85,10 +84,11 @@ export default class PermissionsListComponent
   filterModel: PermissionFilter = new PermissionFilter();
   viewMode = ViewModeEnum;
   isIncomingPermissions: boolean = false;
+  authService = inject(AuthService);
+
   override get service() {
     return this.permissionService;
   }
-  authService = inject(AuthService);
 
   override initListComponent(): void {
     this.permissionTypeService.getLookup().subscribe((res: BaseLookupModel[]) => {
@@ -152,6 +152,7 @@ export default class PermissionsListComponent
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
+
   loadIncomingPermissions() {
     this.service
       .loadDepartmentPermissionPaginated(this.paginationParams, { ...this.filterModel! })
@@ -171,23 +172,32 @@ export default class PermissionsListComponent
         },
       });
   }
+
   clickIncomingPermissionTab() {
     this.isIncomingPermissions = true;
     this.filterModel = new PermissionFilter();
     this.activeTabIndex == PERMISSION_TABS_ENUM.MY_PERMISSIONS && this.loadIncomingPermissions();
     this.activeTabIndex = PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS;
   }
+
   clickMyPermissionTab() {
     this.isIncomingPermissions = false;
     this.filterModel = new PermissionFilter();
-    this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS && this.loadList();
+    if (this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS) {
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+    }
     this.activeTabIndex = PERMISSION_TABS_ENUM.MY_PERMISSIONS;
   }
+
   departmentPermissionSearch() {
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadIncomingPermissions();
   }
+
   departmentPermissionResetSearch() {
     this.filterModel = new PermissionFilter();
     this.paginationParams.pageNumber = 1;
@@ -195,6 +205,7 @@ export default class PermissionsListComponent
     this.first = 0;
     this.loadIncomingPermissions();
   }
+
   openDataDialog(model: Permission, canTakeAction?: ViewModeEnum): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = { model: model, ViewMode: canTakeAction };
@@ -210,6 +221,7 @@ export default class PermissionsListComponent
   showIncomingPermissions() {
     return this.authService.isDepartmentManager || this.authService.isHROfficer;
   }
+
   showAddingPermissionButton(): boolean {
     const isManagerOfRoot =
       this.authService.isdepartmentActualManager && this.authService.isRootdepartment;

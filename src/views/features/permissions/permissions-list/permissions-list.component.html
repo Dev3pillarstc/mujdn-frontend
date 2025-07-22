@@ -370,7 +370,10 @@
                     {{ 'PERMISSION_PAGE.PERMISSION_LIST' | translate }}
                   </h4>
                   <div class="actions flex items-center gap-4 ms-auto">
-                    <button (click)="exportExcel('permissions.xlsx')" class="table-head-action-btn">
+                    <button
+                      (click)="exportExcel('permissions.xlsx', true)"
+                      class="table-head-action-btn"
+                    >
                       <img alt="" src="assets/icons/excel.svg" />
                     </button>
                   </div>

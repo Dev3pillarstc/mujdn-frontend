@@ -39,33 +39,31 @@ export class PermissionsDataPopupComponent implements OnInit {
     this.model = this.data.model;
   }
 
-  afterSave() {
-    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'], icon: 'success' };
-    this.alertService.showSuccessMessage(successObject);
-  }
-
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
 
-  acceptPermissionStatus() {
+  acceptPermission() {
     this.service.acceptPermission(this.model.id).subscribe({
       next: (updatedPermission) => {
         this.model = updatedPermission; // optionally update local model
-        this.afterSave();
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: (err) => {},
+      error: (err) => {
+        this.dialogRef.close(DIALOG_ENUM.OK);
+      },
     });
   }
 
-  rejectPermissionStatus() {
+  rejectPermission() {
     this.service.rejectPermission(this.model.id).subscribe({
       next: (updatedPermission) => {
         this.model = updatedPermission; // optionally update local model
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: (err) => {},
+      error: (err) => {
+        this.dialogRef.close(DIALOG_ENUM.OK);
+      },
     });
   }
 

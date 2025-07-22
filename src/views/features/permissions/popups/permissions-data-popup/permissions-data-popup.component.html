@@ -115,10 +115,10 @@
       <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
       @if (model.canTakeAction) {
         <div class="flex gap-2">
-          <button class="btn red-btn" (click)="rejectPermissionStatus()">
+          <button class="btn red-btn" (click)="rejectPermission()">
             {{ 'PERMISSION_PAGE.DECLINE' | translate }}
           </button>
-          <button class="btn green-btn" (click)="acceptPermissionStatus()">
+          <button class="btn green-btn" (click)="acceptPermission()">
             {{ 'PERMISSION_PAGE.APPROVE' | translate }}
           </button>
         </div>

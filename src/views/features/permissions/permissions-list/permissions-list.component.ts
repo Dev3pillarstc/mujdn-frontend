@@ -32,6 +32,8 @@ import { MatDialogConfig } from '@angular/material/dialog';
 import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
 import { AuthService } from '@/services/auth/auth.service';
 import { PERMISSION_TABS_ENUM } from '@/enums/permission-tabs-enum';
+import { CustomValidators } from '@/validators/custom-validators';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-permissions-list',
@@ -82,7 +84,7 @@ export default class PermissionsListComponent
   prmissionReasons: BaseLookupModel[] = [];
   filterModel: PermissionFilter = new PermissionFilter();
   viewMode = ViewModeEnum;
-
+  isIncomingPermissions: boolean = false;
   override get service() {
     return this.permissionService;
   }
@@ -125,14 +127,28 @@ export default class PermissionsListComponent
 
   protected override mapModelToExcelRow(model: Permission): { [key: string]: any } {
     return {
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
-        model.getPermissionReasonName(),
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
         model.getPermissionTypeName(),
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
+        model.getPermissionReasonName(),
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
     };
   }
+  mapIncomingRequestsToExcelRow(model: Permission): { [key: string]: any } {
+    return {
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
+        model.getPermissionTypeName(),
+      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME')]: model.getCreationUserName(),
+      [this.translateService.instant('DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME')]:
+        model.getPermissionDepartmentName(),
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
+        model.getPermissionReasonName(),
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
+    };
+  }
+
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
@@ -156,11 +172,13 @@ export default class PermissionsListComponent
       });
   }
   clickIncomingPermissionTab() {
+    this.isIncomingPermissions = true;
     this.filterModel = new PermissionFilter();
     this.activeTabIndex == PERMISSION_TABS_ENUM.MY_PERMISSIONS && this.loadIncomingPermissions();
     this.activeTabIndex = PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS;
   }
   clickMyPermissionTab() {
+    this.isIncomingPermissions = false;
     this.filterModel = new PermissionFilter();
     this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS && this.loadList();
     this.activeTabIndex = PERMISSION_TABS_ENUM.MY_PERMISSIONS;
@@ -204,5 +222,41 @@ export default class PermissionsListComponent
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     this.loadIncomingPermissions();
+  }
+  override exportExcel(
+    fileName: string = 'data.xlsx',
+    isIncomingPermissions: boolean = false
+  ): void {
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
+    };
+
+    const fetchAll = isIncomingPermissions
+      ? this.service.loadDepartmentPermissionPaginated(allDataParams, { ...this.filterModel! })
+      : this.service.loadPaginated(allDataParams, { ...this.filterModel! });
+
+    fetchAll.subscribe({
+      next: (response) => {
+        const fullList = response.list || [];
+        if (fullList.length > 0) {
+          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+          const transformedData = fullList.map((item) =>
+            isIncomingPermissions
+              ? this.mapIncomingRequestsToExcelRow(item)
+              : this.mapModelToExcelRow(item)
+          );
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+      error: (_) => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
   }
 }

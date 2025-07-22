@@ -19,6 +19,7 @@
             class="w-full peer"
             id="department"
             optionValue="id"
+            [showClear]="true"
           ></p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -38,6 +39,7 @@
             class="w-full peer"
             id="employee"
             optionValue="id"
+            [showClear]="true"
           ></p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -54,6 +56,7 @@
             class="w-full peer"
             id="processingStatus"
             optionValue="id"
+            [showClear]="true"
           ></p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -71,6 +74,7 @@
             class="w-full peer"
             id="creator"
             optionValue="id"
+            [showClear]="true"
           ></p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -88,6 +92,7 @@
             [showIcon]="true"
             class="peer block w-full"
             inputId="swipeDateFrom"
+            [showClear]="true"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
@@ -109,6 +114,7 @@
             [showIcon]="true"
             class="peer block w-full"
             inputId="swipeDateTo"
+            [showClear]="true"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />

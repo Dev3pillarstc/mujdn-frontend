@@ -1,10 +1,7 @@
 <!-- <h2 mat-dialog-title class="text-center">{{ data.title || 'تنبيه' }}</h2> -->
 <div [dir]="direction" class="flex flex-col items-center p-6">
-  <img [src]="iconPath" alt="icon" class="w-16 h-16 mb-4" />
+  <img [src]="iconPath" alt="icon" class="w-16 h-16 mb-4"/>
   @for (item of data.messages; track $index) {
     <p class="text-[#1f2a37] text-[18px] font-semibold mb-2">{{ item | translate }}</p>
   }
-  <button (click)="onClose()" class="btn green-btn mt-2 w-full" mat-raised-button>
-    {{ data.buttonLabel || 'COMMON.OK' | translate }}
-  </button>
 </div>

@@ -182,10 +182,10 @@ export default class DepartmentListComponent extends BaseListComponent<
   }
 
   protected override mapModelToExcelRow(model: Department): { [key: string]: any } {
-    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
     return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'الإدارة' : 'Department']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC')]: model.nameAr,
+      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH')]:
+        model.nameEn,
     };
   }
 

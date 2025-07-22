@@ -37,45 +37,42 @@
             </div>
             <div class="pt-6">
               <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                @if (isCurrentLanguageEnglish()) {
-                  <div class="relative">
-                    <label for="administration" class="label">{{
-                      'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
-                    }}</label>
-                    <input
-                      id="administration"
-                      [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
-                      type="text"
-                      pInputText
-                      class="peer"
-                      fluid="true"
-                      ngModel
-                      [(ngModel)]="filterModel.nameEn"
-                    />
-                    <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                    ></span>
-                  </div>
-                } @else {
-                  <div class="relative">
-                    <label for="administration" class="label">{{
-                      'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
-                    }}</label>
-                    <input
-                      id="administration"
-                      [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
-                      type="text"
-                      pInputText
-                      class="peer"
-                      fluid="true"
-                      ngModel
-                      [(ngModel)]="filterModel.nameAr"
-                    />
-                    <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                    ></span>
-                  </div>
-                }
+                <div class="relative">
+                  <label for="administration" class="label">{{
+                    'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC' | translate
+                  }}</label>
+                  <input
+                    id="administration"
+                    [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC' | translate"
+                    type="text"
+                    pInputText
+                    class="peer"
+                    fluid="true"
+                    ngModel
+                    [(ngModel)]="filterModel.nameAr"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <div class="relative">
+                  <label for="administration" class="label">{{
+                    'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH' | translate
+                  }}</label>
+                  <input
+                    id="administration"
+                    [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH' | translate"
+                    type="text"
+                    pInputText
+                    class="peer"
+                    fluid="true"
+                    ngModel
+                    [(ngModel)]="filterModel.nameEn"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
 
                 <div class="relative">
                   <label class="label" id="region-label">{{
@@ -160,7 +157,8 @@
               <p-table [value]="childDepartments.list">
                 <ng-template #header>
                   <tr>
-                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH' | translate }}</th>
                     <th>{{ 'DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST' | translate }}</th>
                     <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME' | translate }}</th>
                     <th>{{ 'DEPARTMENTS_LIST_PAGE.ACTIONS' | translate }}</th>
@@ -168,7 +166,8 @@
                 </ng-template>
                 <ng-template #body let-row>
                   <tr>
-                    <td>{{ isCurrentLanguageEnglish() ? row?.nameEn : row?.nameAr }}</td>
+                    <td>{{ row?.nameAr }}</td>
+                    <td>{{ row?.nameEn }}</td>
                     <td>
                       <span
                         class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]"

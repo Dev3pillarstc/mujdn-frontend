@@ -35,7 +35,7 @@ export class Region extends BaseCrudModel<Region, RegionService> {
         nameAr,
         [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
+          Validators.maxLength(CustomValidators.defaultLengths.REGION_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('AR_NUM'),
         ],
@@ -44,7 +44,7 @@ export class Region extends BaseCrudModel<Region, RegionService> {
         nameEn,
         [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
+          Validators.maxLength(CustomValidators.defaultLengths.REGION_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('ENG_NUM'),
         ],

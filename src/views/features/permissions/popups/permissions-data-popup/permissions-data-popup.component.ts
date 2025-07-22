@@ -1,6 +1,7 @@
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
@@ -32,11 +33,20 @@ export class PermissionsDataPopupComponent implements OnInit {
   dialogRef = inject(MatDialogRef);
   statusEnum = PERMISSION_STATUS_ENUM;
   permissionStatusEnum = PERMISSION_STATUS_ENUM;
+  declare direction: LAYOUT_DIRECTION_ENUM;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
     this.model = this.data.model;
+    this.setLayoutDirection();
+  }
+
+  private setLayoutDirection() {
+    this.direction =
+      this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+        ? LAYOUT_DIRECTION_ENUM.LTR
+        : LAYOUT_DIRECTION_ENUM.RTL;
   }
 
   afterSave() {

@@ -18,9 +18,11 @@
     "ACTIVE": "Active",
     "REQUIRED_FIELD": "This field is required",
     "MIN_LENGTH": "Minimum length is 3 characters",
-    "MAX_LENGTH": "Maximum length is 250 characters",
+    "MAX_LENGTH": "Maximum length is {length} characters",
     "ARABIC_ONLY": "This field must contain Arabic characters only",
     "ENGLISH_ONLY": "This field must contain English characters only",
+    "EMAIL_VALIDATION": "Please enter a valid email address",
+    "PHONE_NUMBER_VALIDATION": "Please enter a valid phone number",
     "SEARCH": "Search",
     "RESET_SEARCH": "Reset",
     "SEARCH_FILTERS": "Search filters",
@@ -33,7 +35,7 @@
     "EDIT": "Edit",
     "DASHBOARD": "Dashboard",
     "NO_DATA_TO_SHOW": "No data to display",
-    "NATIONAL_ID_VALIDATION": "National ID must be 10 digits and starts with 1",
+    "NATIONAL_ID_VALIDATION": "National ID must be 10 digits and starts with 1 or 2",
     "MAX_LENGTH_DYNAMIC": "You have exceeded the maximum length",
     "POSITIVE_NUMBER_ONLY": "Only positive numbers are allowed",
     "INVALID_NUMBER": "Please enter a valid number",
@@ -51,7 +53,7 @@
     "INVALID_PAGE_SIZE": "Page size must be between 1 and 1000",
     "INVALID_SORT_FIELD": "The specified sort field is invalid",
     "SERIALIZATION_ERROR": "An error occurred while processing the data",
-    "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is connected/related to another entity",
+    "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is related to another data",
     "CANNOT_BE_DELETE": "The record can't be deleted",
     "EXISTING_RECORD_ERROR": "This record already exists",
     "AUTH_INVALID_CREDENTIALS": "Username or password is incorrect",
@@ -88,7 +90,9 @@
     "SERVER_INTERNAL_ERROR": "An internal server error occurred",
     "AUTH_EXTERNAL_ERROR": "Login failed due to an internal error",
     "STORED_EXTERNAL_ERROR": "An internal server error occurred in stored",
-    "HOME": "Home"
+    "HOME": "Home",
+    "FROM": "Date (From)",
+    "TO": "Date (To)"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -148,6 +152,8 @@
   "DEPARTMENTS_LIST_PAGE": {
     "MUJAHIDEEN_DEPARMENT": "Mujahideen Department",
     "DEPARTMENT_NAME": "Department name",
+    "DEPARTMENT_NAME_ARABIC": "Department name in Arabic",
+    "DEPARTMENT_NAME_ENGLISH": "Department name in English",
     "REGION": "Region",
     "CITY": "City",
     "PHONE": "Phone",
@@ -260,14 +266,12 @@
     "NO_DATA_TO_SHOW": "No data to display",
     "DATE": "Date",
     "CODE": "Code",
-    "FROM": "Date (From)",
-    "TO": "Date (To)",
     "HOLIDAY": "Holiday"
   },
   "PERMISSION_PAGE": {
     "PERMISSIONS": "Permissions",
-    "MY_REQUESTS": "My Requests",
-    "INCOMING_REQUESTS": "Incoming Requests",
+    "MY_REQUESTS": "My Requests Log",
+    "INCOMING_REQUESTS": "Incoming Permission Requests",
     "PERMISSION_TYPE": "Permission Type",
     "PERMISSION_DATE": "Permission Date",
     "PERMISSION_STATUS": "Request Status",

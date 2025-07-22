@@ -47,7 +47,7 @@
               'PERMISSION_PAGE.APPROVAL_DATE' | translate
             }}</span>
             <span class="text-[#161616] font-semibold">
-              <span>{{ model.actionDate ? (model.actionDate | date) : '' }}</span>
+              <span>{{ model.actionDate ? (model.actionDate | date: 'dd/MM/yyyy') : '' }}</span>
             </span>
           }
           @if (model.fkStatusId == statusEnum.Rejected) {
@@ -55,7 +55,7 @@
               'PERMISSION_PAGE.REJECTION_DATE' | translate
             }}</span>
             <span class="text-[#161616] font-semibold">
-              <span>{{ model.actionDate ? (model.actionDate | date) : '' }}</span>
+              <span>{{ model.actionDate ? (model.actionDate | date: 'dd/MM/yyyy') : '' }}</span>
             </span>
           }
         </div>
@@ -81,7 +81,9 @@
           <span class="text-sm text-[#6c737f]"
             >{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}
           </span>
-          <span class="font-semibold text-[#161616]">{{ model.permissionDate | date }}</span>
+          <span class="font-semibold text-[#161616]">{{
+            model.permissionDate | date: 'dd/MM/yyyy'
+          }}</span>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]"

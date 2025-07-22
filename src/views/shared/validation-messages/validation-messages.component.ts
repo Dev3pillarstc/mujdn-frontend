@@ -1,6 +1,6 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ValidationErrorKeyEnum } from '@/enums/validation-error-key-enum';
@@ -15,7 +15,7 @@ export class ValidationMessagesComponent implements OnInit {
   control = input.required<AbstractControl>();
   activeErrors$!: Observable<{ key: string; value: any }[]>;
   errorKey = ValidationErrorKeyEnum;
-
+  translateService = inject(TranslateService);
   ngOnInit(): void {
     const ctrl = this.control();
 
@@ -37,7 +37,7 @@ export class ValidationMessagesComponent implements OnInit {
     // Handle dynamic messages with parameters
     const error = this.control().errors?.[key];
     if (error && typeof error === 'object') {
-      return this.formatMessage(message, error);
+      return this.formatMessage(this.translateService.instant(message), error);
     }
 
     return message;
@@ -67,8 +67,10 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH',
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
     [ValidationErrorKeyEnum.TIME_FROM_AFTER_TIME_TO]: 'COMMON.TIME_FROM_BEFORE_TIME_TO',
+    [ValidationErrorKeyEnum.EMAIL]: 'COMMON.EMAIL_VALIDATION',
     [ValidationErrorKeyEnum.STRONG_PASSWORD]: 'COMMON.STRONG_PASSWORD',
     [ValidationErrorKeyEnum.NATIONAL_ID]: 'COMMON.NATIONAL_ID_VALIDATION',
+    [ValidationErrorKeyEnum.PHONE_NUMBER]: 'COMMON.PHONE_NUMBER_VALIDATION',
     [ValidationErrorKeyEnum.POSITIVE_NUMBER]: 'COMMON.POSITIVE_NUMBER_ONLY',
     [ValidationErrorKeyEnum.INVALID_NUMBER]: 'COMMON.INVALID_NUMBER',
     [ValidationErrorKeyEnum.NUMBER_RANGE]: 'COMMON.NUMBER_RANGE',

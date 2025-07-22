@@ -51,7 +51,7 @@
     "INVALID_PAGE_SIZE": "حجم الصفحة يجب أن يكون بين 1 و 1000",
     "INVALID_SORT_FIELD": "حقل الترتيب المحدد غير صحيح",
     "SERIALIZATION_ERROR": "حدث خطأ أثناء معالجة البيانات",
-    "INVALID_DELETE_REQUEST": "لا يمكن حذف السجل لأنه متصل/مرتبط بكيان آخر",
+    "INVALID_DELETE_REQUEST": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
     "CANNOT_BE_DELETE": "لا يمكن حذف السجل",
     "EXISTING_RECORD_ERROR": "هذا السجل موجود بالفعل",
     "AUTH_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
@@ -88,7 +88,9 @@
     "SERVER_INTERNAL_ERROR": "حدث خطأ داخلي في الخادم",
     "AUTH_EXTERNAL_ERROR": "فشل تسجيل الدخول بسبب خطأ داخلي",
     "STORED_EXTERNAL_ERROR": "حدث خطأ داخلي في الخادم في المخزن",
-    "HOME": "الصفحة الرئيسية"
+    "HOME": "الصفحة الرئيسية",
+    "FROM": "التاريخ (من)",
+    "TO": "التاريخ (إلى)"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -260,14 +262,12 @@
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "DATE": "التاريخ",
     "CODE": "الرقم التسلسلي",
-    "FROM": "التاريخ (من)",
-    "TO": "التاريخ (إلى)",
     "HOLIDAY": "العطلة"
   },
   "PERMISSION_PAGE": {
-    "PERMISSIONS": "الأذونات",
-    "MY_REQUESTS": "طلباتي",
-    "INCOMING_REQUESTS": "الطلبات الواردة",
+    "PERMISSIONS": "الاستئذانات",
+    "MY_REQUESTS": "سجل طلباتي",
+    "INCOMING_REQUESTS": "طلبات الاستئذان الواردة",
     "PERMISSION_TYPE": "نوع الإذن",
     "PERMISSION_DATE": "تاريخ الإذن",
     "PERMISSION_STATUS": "حالة الطلب",

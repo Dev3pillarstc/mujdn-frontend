@@ -5,10 +5,12 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { AuthService } from '@/services/auth/auth.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { of } from 'rxjs';
+import { COOKIE_ENUM } from '@/enums/cookie-enum';
+import { CookieService } from '@/services/shared/cookie.service';
 
 export const authGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
@@ -17,8 +19,17 @@ export const authGuard: CanActivateFn = (
   const authService = inject(AuthService);
   const router = inject(Router);
   const alertService = inject(AlertService);
+  const cookieService = inject(CookieService);
 
   const expectedRoles = route.data?.['roles'] as string[] | undefined;
+  const userDataCookie = cookieService.getCookie(COOKIE_ENUM.USER_DATA);
+
+  // 🚫 Cookie missing? Consider session expired → force logout
+  if (!userDataCookie) {
+    authService.setUser(undefined); // 🔁 You must implement this in AuthService
+    alertService.showErrorMessage({ messages: ['COMMON.NOT_AUTHENTICATED'] });
+    return of(router.createUrlTree(['/auth/login']));
+  }
 
   /** Function to check if user has required roles */
   const checkRoles = (user: any) => {

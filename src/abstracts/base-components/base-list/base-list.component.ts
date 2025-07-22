@@ -140,9 +140,16 @@ export abstract class BaseListComponent<
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     if (isStoredProcedure) {
-      this.loadListSP();
+      this.loadListSP().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     } else {
-      this.loadList();
+      console.log('searching with params', this.paginationParams, this.filterModel);
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     }
   }
 
@@ -152,9 +159,15 @@ export abstract class BaseListComponent<
     this.paginationParams.pageSize = 10;
     this.first = 0;
     if (isStoredProcedure) {
-      this.loadListSP();
+      this.loadListSP().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     } else {
-      this.loadList();
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     }
   }
 
@@ -164,9 +177,15 @@ export abstract class BaseListComponent<
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     if (isStoredProcedure) {
-      this.loadListSP();
+      this.loadListSP().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     } else {
-      this.loadList();
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     }
   }
 

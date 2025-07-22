@@ -194,7 +194,7 @@ export default class PermissionsListComponent
   }
   showAddingPermissionButton(): boolean {
     const isManagerOfRoot =
-      this.authService.isDeprtmentActualManager && this.authService.isRootDeprtment;
+      this.authService.isdepartmentActualManager && this.authService.isRootdepartment;
     return !isManagerOfRoot;
   }
 

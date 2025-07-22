@@ -29,11 +29,11 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
     return this.loggedInUser.value?.roles.includes(ROLES_ENUM.HR_OFFICER);
   }
 
-  get isRootDeprtment() {
+  get isRootdepartment() {
     return this.loggedInUser.value?.isInRootDepartment;
   }
 
-  get isDeprtmentActualManager() {
+  get isdepartmentActualManager() {
     return this.loggedInUser.value?.isDepartmentManager;
   }
 

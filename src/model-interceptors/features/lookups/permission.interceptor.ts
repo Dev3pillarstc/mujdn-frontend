@@ -14,7 +14,7 @@ export class PermissionInterceptor implements ModelInterceptorContract<Permissio
     delete model.permissionReason;
     delete model.permissionType;
     delete model.status;
-    delete model.deprtment;
+    delete model.department;
     delete model.creationUser;
     delete (model as any)['languageService'];
     model.permissionDate = toDateOnly(model.permissionDate);

@@ -310,8 +310,10 @@
     "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "الوقت (من) يجب أن يكون أقل من الوقت (إلى)"
   },
   "ATTENDANCE_LOG_PAGE": {
-    "ATTENDANCE_LOGS_TITLE": "حركات حضور وانصراف الموظفين",
-    "ATTENDANCE_LOGS_LIST": "قائمة حركات الحضور والانصراف للموظفين",
+    "MY_ATTENDANCE_LOGS": "سجل حضوري",
+    "OTHERS_ATTENDANCE_LOGS": "سجل حضور الموظفين التابعين",
+    "ATTENDANCE_LOGS_TITLE": "سجل حضور وانصراف",
+    "ATTENDANCE_LOGS_LIST": "قائمة سجلات الحضور والانصراف",
     "DEPARTMENT": "الإدارة",
     "EMPLOYEE": "اسم الموظف",
     "SWIPE_DATE": "تاريخ البصمة",
@@ -350,7 +352,7 @@
   "MENU": {
     "DASHBOARD": "لوحة المعلومات",
     "ATTENDANCE_REPORT": "تقرير الحضور والانصراف",
-    "ATTENDANCE_LOGS": "حركات الحضور والانصراف",
+    "ATTENDANCE_LOGS": "سجل الحضور والانصراف",
     "DEPARTMENTS": "الإدارات",
     "EMPLOYEES": "قائمة الموظفين",
     "PRESENCE_INQUIRIES": "مسائلات توثيق التواجد",

@@ -430,7 +430,9 @@
                       <td>
                         <div class="actions flex gap-2">
                           @if (
-                            permissionsRequest.status.id !== permissionStatusEnum.New ||
+                            permissionsRequest.status.id !== permissionStatusEnum.New &&
+                                    permissionsRequest.status.id !==
+                                      permissionStatusEnum.FirstAccepted &&
                             !permissionsRequest.canTakeAction
                           ) {
                             <button

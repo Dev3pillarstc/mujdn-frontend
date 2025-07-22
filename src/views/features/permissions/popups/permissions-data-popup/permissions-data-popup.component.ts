@@ -35,7 +35,7 @@ export class PermissionsDataPopupComponent implements OnInit {
   permissionStatusEnum = PERMISSION_STATUS_ENUM;
   declare direction: LAYOUT_DIRECTION_ENUM;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
     this.model = this.data.model;
@@ -43,9 +43,10 @@ export class PermissionsDataPopupComponent implements OnInit {
   }
 
   private setLayoutDirection() {
-    this.direction = this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? LAYOUT_DIRECTION_ENUM.LTR
-      : LAYOUT_DIRECTION_ENUM.RTL;
+    this.direction =
+      this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+        ? LAYOUT_DIRECTION_ENUM.LTR
+        : LAYOUT_DIRECTION_ENUM.RTL;
   }
 
   afterSave() {
@@ -64,7 +65,7 @@ export class PermissionsDataPopupComponent implements OnInit {
         this.afterSave();
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: (err) => { },
+      error: (err) => {},
     });
   }
 
@@ -74,7 +75,7 @@ export class PermissionsDataPopupComponent implements OnInit {
         this.model = updatedPermission; // optionally update local model
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: (err) => { },
+      error: (err) => {},
     });
   }
 

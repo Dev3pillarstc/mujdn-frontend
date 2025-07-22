@@ -4,141 +4,229 @@
       <i class="pi pi-times close-popup"></i>
     </button>
     @if (isCreateMode) {
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'DEPARTMENT_POPUP.ADD_DEPARTMENT' | translate }}
-    </h3>
+      <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+        {{ 'DEPARTMENT_POPUP.ADD_DEPARTMENT' | translate }}
+      </h3>
     } @else {
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'DEPARTMENT_POPUP.EDIT_DEPARTMENT' | translate }}
-    </h3>
+      <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+        {{ 'DEPARTMENT_POPUP.EDIT_DEPARTMENT' | translate }}
+      </h3>
     }
     <form [formGroup]="form" class="">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div>
           <label for="departmentName" class="label">
-            {{ 'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate }}</label>
+            {{ 'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate }}</label
+          >
           <div class="relative">
-            <input id="departmentName" [placeholder]="'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate" type="text"
-              pInputText class="peer" fluid="true" formControlName="nameAr" />
+            <input
+              id="departmentName"
+              [placeholder]="'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate"
+              type="text"
+              pInputText
+              class="peer"
+              fluid="true"
+              formControlName="nameAr"
+            />
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="nameArControl"></app-validation-messages>
         </div>
         <div>
           <label for="departmentNameEn" class="label">{{
             'DEPARTMENT_POPUP.DEPARTMENT_NAME_ENGLISH' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <input id="departmentNameEn" [placeholder]="'DEPARTMENT_POPUP.DEPARTMENT_NAME_ENGLISH' | translate"
-              type="text" pInputText class="peer" fluid="true" formControlName="nameEn" />
+            <input
+              id="departmentNameEn"
+              [placeholder]="'DEPARTMENT_POPUP.DEPARTMENT_NAME_ENGLISH' | translate"
+              type="text"
+              pInputText
+              class="peer"
+              fluid="true"
+              formControlName="nameEn"
+            />
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="nameEnControl"></app-validation-messages>
         </div>
         <div>
           <label for="regionSelect" class="label">{{
             'DEPARTMENT_POPUP.REGION' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-select name="regionSelect" [options]="regions" optionValue="id" [optionLabel]="langOptionLabel"
-              [placeholder]="'DEPARTMENT_POPUP.CHOOSE_REGION' | translate" class="w-full peer" id="regionSelect"
-              formControlName="fkRegionId" (onChange)="onRegionChange($event)">
+            <p-select
+              name="regionSelect"
+              [options]="regions"
+              optionValue="id"
+              [optionLabel]="langOptionLabel"
+              [placeholder]="'DEPARTMENT_POPUP.CHOOSE_REGION' | translate"
+              class="w-full peer"
+              id="regionSelect"
+              formControlName="fkRegionId"
+              (onChange)="onRegionChange($event)"
+            >
             </p-select>
 
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="fkRegionIdControl"></app-validation-messages>
         </div>
         <div>
           <label for="citySelect" class="label">{{ 'DEPARTMENT_POPUP.CITY' | translate }}</label>
           <div class="relative">
-            <p-select name="citySelect" [options]="filteredCities" optionValue="id" [optionLabel]="langOptionLabel"
-              [placeholder]="'DEPARTMENT_POPUP.CHOOSE_CITY' | translate" class="w-full peer" id="citySelect"
-              formControlName="fkCityId" [disabled]="filteredCities.length === 0">
+            <p-select
+              name="citySelect"
+              [options]="filteredCities"
+              optionValue="id"
+              [optionLabel]="langOptionLabel"
+              [placeholder]="'DEPARTMENT_POPUP.CHOOSE_CITY' | translate"
+              class="w-full peer"
+              id="citySelect"
+              formControlName="fkCityId"
+              [disabled]="filteredCities.length === 0"
+            >
             </p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="fkCityIdControl"></app-validation-messages>
         </div>
         <div>
           <label for="addressInput" class="label">
-            {{ 'DEPARTMENT_POPUP.ADDRESS' | translate }}</label>
+            {{ 'DEPARTMENT_POPUP.ADDRESS' | translate }}</label
+          >
           <div class="relative">
-            <input id="addressInput" [placeholder]="'DEPARTMENT_POPUP.ADDRESS' | translate" type="text" pInputText
-              class="peer" fluid="true" formControlName="address" />
+            <input
+              id="addressInput"
+              [placeholder]="'DEPARTMENT_POPUP.ADDRESS' | translate"
+              type="text"
+              pInputText
+              class="peer"
+              fluid="true"
+              formControlName="address"
+            />
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="addressControl"></app-validation-messages>
         </div>
         <div>
           <label for="phoneInput" class="label"> {{ 'DEPARTMENT_POPUP.PHONE' | translate }}</label>
           <div class="relative">
-            <input id="phoneInput" [placeholder]="'DEPARTMENT_POPUP.PHONE' | translate" type="text" pInputText
-              class="peer" fluid="true" formControlName="phoneNumber" />
+            <input
+              id="phoneInput"
+              [placeholder]="'DEPARTMENT_POPUP.PHONE' | translate"
+              type="text"
+              pInputText
+              class="peer"
+              fluid="true"
+              formControlName="phoneNumber"
+            />
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="phoneNumberControl"></app-validation-messages>
         </div>
         <div>
           <label for="faxInput" class="label"> {{ 'DEPARTMENT_POPUP.FAX' | translate }}</label>
           <div class="relative">
-            <input id="faxInput" [placeholder]="'DEPARTMENT_POPUP.FAX' | translate" type="text" pInputText class="peer"
-              fluid="true" formControlName="fax" />
+            <input
+              id="faxInput"
+              [placeholder]="'DEPARTMENT_POPUP.FAX' | translate"
+              type="text"
+              pInputText
+              class="peer"
+              fluid="true"
+              formControlName="fax"
+            />
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="faxControl"></app-validation-messages>
         </div>
         <div>
           <label for="managerSelect" class="label">{{
             'DEPARTMENT_POPUP.MANAGER_NAME' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-select name="managerSelect" [options]="usersProfiles" [optionLabel]="langOptionLabel" optionValue="id"
-              [placeholder]="'DEPARTMENT_POPUP.MANAGER_NAME' | translate" class="w-full peer" id="managerSelect"
-              formControlName="fkManagerId" [showClear]="true" [disabled]="usersProfiles.length === 0">
+            <p-select
+              name="managerSelect"
+              [options]="usersProfiles"
+              [optionLabel]="langOptionLabel"
+              optionValue="id"
+              [placeholder]="'DEPARTMENT_POPUP.MANAGER_NAME' | translate"
+              class="w-full peer"
+              id="managerSelect"
+              formControlName="fkManagerId"
+              [showClear]="true"
+              [disabled]="usersProfiles.length === 0"
+            >
             </p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
         </div>
       </div>
 
       @if (model.fkParentDepartmentId != null) {
-      <div class="mt-6 pt-6 border-t border-[#d2d6db] text-[#000]">
-        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-          {{ 'DEPARTMENT_POPUP.APPROVAL_LEVEL' | translate }}
-        </h3>
-        <div class="flex flex-wrap gap-8 items-center">
-          <label class="flex items-center cursor-pointer gap-2">
-            <input type="radio" class="hidden peer" name="isOneLevelApproval" [value]="true" id="one-level-radio"
-              formControlName="isOneLevelApproval" />
-            <span
-              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]">
-              <span class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('isOneLevelApproval')?.value === true"></span>
-            </span>
-            <span>{{ 'DEPARTMENT_POPUP.ONE_LEVEL_APPROVAL' | translate }}</span>
-          </label>
+        <div class="mt-6 pt-6 border-t border-[#d2d6db] text-[#000]">
+          <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+            {{ 'DEPARTMENT_POPUP.APPROVAL_LEVEL' | translate }}
+          </h3>
+          <div class="flex flex-wrap gap-8 items-center">
+            <label class="flex items-center cursor-pointer gap-2">
+              <input
+                type="radio"
+                class="hidden peer"
+                name="isOneLevelApproval"
+                [value]="true"
+                id="one-level-radio"
+                formControlName="isOneLevelApproval"
+              />
+              <span
+                class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
+              >
+                <span
+                  class="w-4 h-4 rounded-full bg-[#22a06b] block"
+                  *ngIf="form.get('isOneLevelApproval')?.value === true"
+                ></span>
+              </span>
+              <span>{{ 'DEPARTMENT_POPUP.ONE_LEVEL_APPROVAL' | translate }}</span>
+            </label>
 
-          <label class="flex items-center cursor-pointer gap-2">
-            <input type="radio" class="hidden peer" name="isOneLevelApproval" [value]="false" id="two-levels-radio"
-              formControlName="isOneLevelApproval" />
-            <span
-              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]">
-              <span class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('isOneLevelApproval')?.value === false"></span>
-            </span>
-            <span>{{ 'DEPARTMENT_POPUP.TWO_LEVEL_APPROVAL' | translate }}</span>
-          </label>
+            <label class="flex items-center cursor-pointer gap-2">
+              <input
+                type="radio"
+                class="hidden peer"
+                name="isOneLevelApproval"
+                [value]="false"
+                id="two-levels-radio"
+                formControlName="isOneLevelApproval"
+              />
+              <span
+                class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
+              >
+                <span
+                  class="w-4 h-4 rounded-full bg-[#22a06b] block"
+                  *ngIf="form.get('isOneLevelApproval')?.value === false"
+                ></span>
+              </span>
+              <span>{{ 'DEPARTMENT_POPUP.TWO_LEVEL_APPROVAL' | translate }}</span>
+            </label>
+          </div>
         </div>
-      </div>
       }
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button type="button" class="btn gray-btn" (click)="close()">

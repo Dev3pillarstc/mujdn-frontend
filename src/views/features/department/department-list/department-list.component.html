@@ -12,12 +12,21 @@
       </h3>
     </div>
     <section class="flex flex-col xl:flex-row gap-6 max-w-full">
-      <app-department-tree (departmentSelected)="onSelectedDepartmentChange($event)" [departmentsTree]="departmentsTree"
-        [selectedDepartmentSignal]="selectedDepartmentSignal">
+      <app-department-tree
+        (departmentSelected)="onSelectedDepartmentChange($event)"
+        [departmentsTree]="departmentsTree"
+        [selectedDepartmentSignal]="selectedDepartmentSignal"
+      >
       </app-department-tree>
       <div class="w-full xl:w-[calc(100%-274px)]">
-        <app-department-header (departmentDeleted)="openConfirmation($event)" (dialogClosed)="onDepartmentChange()"
-          [cities]="cities" [departmentData]="selectedDepartment" [regions]="regions" [usersProfiles]="usersProfiles">
+        <app-department-header
+          (departmentDeleted)="openConfirmation($event)"
+          (dialogClosed)="onDepartmentChange()"
+          [cities]="cities"
+          [departmentData]="selectedDepartment"
+          [regions]="regions"
+          [usersProfiles]="usersProfiles"
+        >
         </app-department-header>
         <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
           <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
@@ -29,50 +38,86 @@
             <div class="pt-6">
               <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 @if (isCurrentLanguageEnglish()) {
-                <div class="relative">
-                  <label for="administration" class="label">{{
-                    'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
+                  <div class="relative">
+                    <label for="administration" class="label">{{
+                      'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
                     }}</label>
-                  <input id="administration" [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
-                    type="text" pInputText class="peer" fluid="true" ngModel [(ngModel)]="filterModel.nameEn" />
-                  <span
-                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                </div>
+                    <input
+                      id="administration"
+                      [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
+                      type="text"
+                      pInputText
+                      class="peer"
+                      fluid="true"
+                      ngModel
+                      [(ngModel)]="filterModel.nameEn"
+                    />
+                    <span
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
+                  </div>
                 } @else {
-                <div class="relative">
-                  <label for="administration" class="label">{{
-                    'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
+                  <div class="relative">
+                    <label for="administration" class="label">{{
+                      'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
                     }}</label>
-                  <input id="administration" [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
-                    type="text" pInputText class="peer" fluid="true" ngModel [(ngModel)]="filterModel.nameAr" />
-                  <span
-                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                </div>
+                    <input
+                      id="administration"
+                      [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
+                      type="text"
+                      pInputText
+                      class="peer"
+                      fluid="true"
+                      ngModel
+                      [(ngModel)]="filterModel.nameAr"
+                    />
+                    <span
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
+                  </div>
                 }
 
                 <div class="relative">
                   <label class="label" id="region-label">{{
                     'DEPARTMENTS_LIST_PAGE.REGION' | translate
-                    }}</label>
-                  <p-select (onChange)="initializeFilteredCities()" [(ngModel)]="filterModel.fkRegionId"
-                    [options]="regions" [placeholder]="'DEPARTMENTS_LIST_PAGE.REGION' | translate"
-                    ariaLabelledBy="region-label" class="w-full peer" id="region-search" optionLabel="nameEn"
-                    optionValue="id" [showClear]="true">
+                  }}</label>
+                  <p-select
+                    (onChange)="initializeFilteredCities()"
+                    [(ngModel)]="filterModel.fkRegionId"
+                    [options]="regions"
+                    [placeholder]="'DEPARTMENTS_LIST_PAGE.REGION' | translate"
+                    ariaLabelledBy="region-label"
+                    class="w-full peer"
+                    id="region-search"
+                    optionLabel="nameEn"
+                    optionValue="id"
+                    [showClear]="true"
+                  >
                   </p-select>
                   <span
-                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
                 </div>
 
                 <div class="relative">
                   <label class="label" id="city-label">{{
                     'DEPARTMENTS_LIST_PAGE.CITY' | translate
-                    }}</label>
-                  <p-select [(ngModel)]="filterModel.fkCityId" [options]="filteredCities"
-                    [placeholder]="'DEPARTMENTS_LIST_PAGE.CITY' | translate" ariaLabelledBy="city-label"
-                    class="w-full peer" id="city-search" optionLabel="nameEn" optionValue="id" [showClear]="true">
+                  }}</label>
+                  <p-select
+                    [(ngModel)]="filterModel.fkCityId"
+                    [options]="filteredCities"
+                    [placeholder]="'DEPARTMENTS_LIST_PAGE.CITY' | translate"
+                    ariaLabelledBy="city-label"
+                    class="w-full peer"
+                    id="city-search"
+                    optionLabel="nameEn"
+                    optionValue="id"
+                    [showClear]="true"
+                  >
                   </p-select>
                   <span
-                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
                 </div>
               </div>
 
@@ -88,12 +133,13 @@
           </div>
           <div class="mt-6">
             <div
-              class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
+              class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+            >
               <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
                 {{
-                isCurrentLanguageEnglish()
-                ? selectedDepartment?.nameEn
-                : selectedDepartment?.nameAr
+                  isCurrentLanguageEnglish()
+                    ? selectedDepartment?.nameEn
+                    : selectedDepartment?.nameAr
                 }}
               </h4>
               <div class="actions flex items-center gap-4 ms-auto">
@@ -103,75 +149,91 @@
                 <!-- <button>
                   <img src="assets/icons/print.svg" alt="" />
                 </button> -->
-                <button (click)="addOrEditModel(selectedDepartment?.id ?? 0)" class="btn green-btn flex items-center">
+                <button
+                  (click)="addOrEditModel(selectedDepartment?.id ?? 0)"
+                  class="btn green-btn flex items-center"
+                >
                   <img alt="" src="assets/icons/plus.svg" />
                   <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_NEW_DEPARTMENT' | translate }}</span>
                 </button>
               </div>
             </div>
             @if (childDepartments.list && childDepartments.list.length > 0) {
-            <p-table [value]="childDepartments.list">
-              <ng-template #header>
-                <tr>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC' | translate }}</th>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH' | translate }}</th>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST' | translate }}</th>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ARABIC' | translate }}</th>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ENGLISH' | translate }}</th>
-                  <th>{{ 'DEPARTMENTS_LIST_PAGE.ACTIONS' | translate }}</th>
-                </tr>
-              </ng-template>
-              <ng-template #body let-row>
-                <tr>
-                  <td>{{row?.nameAr }}</td>
-                  <td>{{row?.nameEn }}</td>
-                  <td>
-                    <span
-                      class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]">
-                      {{ getApprovalLevelText(row.isOneLevelApproval) | translate }}
-                    </span>
-                  </td>
-                  <td>
-                    {{row.manager?.fullNameAr}}
-                  </td>
-                  <td>
-                    {{row.manager?.fullNameEn}}
-                  </td>
-                  <td>
-                    <div class="actions flex gap-2">
-                      <button class="btn black-btn flex items-center" (click)="addOrEditModel(row.id ?? 0)">
-                        <img src="assets/icons/plus.svg" alt="" />
-                        <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_SUB_DEPARTMENT' | translate }}</span>
-                      </button>
-                      <button class="table-action-gray-btn" (click)="addOrEditModel(0, row)">
-                        <img src="assets/icons/edit-action.svg" alt="update" />
-                      </button>
-                      <button class="bg-[#fef3f2] rounded p-2 w-[32px]" (click)="openConfirmation(row.id)">
-                        <img src="assets/icons/delete-action.svg" alt="delete" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
+              <p-table [value]="childDepartments.list">
+                <ng-template #header>
+                  <tr>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ARABIC' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ENGLISH' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.ACTIONS' | translate }}</th>
+                  </tr>
+                </ng-template>
+                <ng-template #body let-row>
+                  <tr>
+                    <td>{{ row?.nameAr }}</td>
+                    <td>{{ row?.nameEn }}</td>
+                    <td>
+                      <span
+                        class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]"
+                      >
+                        {{ getApprovalLevelText(row.isOneLevelApproval) | translate }}
+                      </span>
+                    </td>
+                    <td>
+                      {{ row.manager?.fullNameAr }}
+                    </td>
+                    <td>
+                      {{ row.manager?.fullNameEn }}
+                    </td>
+                    <td>
+                      <div class="actions flex gap-2">
+                        <button
+                          class="btn black-btn flex items-center"
+                          (click)="addOrEditModel(row.id ?? 0)"
+                        >
+                          <img src="assets/icons/plus.svg" alt="" />
+                          <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_SUB_DEPARTMENT' | translate }}</span>
+                        </button>
+                        <button class="table-action-gray-btn" (click)="addOrEditModel(0, row)">
+                          <img src="assets/icons/edit-action.svg" alt="update" />
+                        </button>
+                        <button
+                          class="bg-[#fef3f2] rounded p-2 w-[32px]"
+                          (click)="openConfirmation(row.id)"
+                        >
+                          <img src="assets/icons/delete-action.svg" alt="delete" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
             } @else {
-            <div colspan="4">
-              <div class="py-6 flex flex-col items-center justify-center text-center space-y-2">
-                <div class="">
-                  <img src="assets/icons/empty.svg" alt="" srcset="" />
+              <div colspan="4">
+                <div class="py-6 flex flex-col items-center justify-center text-center space-y-2">
+                  <div class="">
+                    <img src="assets/icons/empty.svg" alt="" srcset="" />
+                  </div>
+                  <h3 class="mt-2 text-[18px] font-bold text-[#384250]">
+                    {{ 'DEPARTMENTS_LIST_PAGE.NO_DEPARTMENTS_YET' | translate }}
+                  </h3>
+                  <p class="text-[12px] font-medium text-[#6c737f]">
+                    {{ 'DEPARTMENTS_LIST_PAGE.ADD_YOUR_DEPARTMENT' | translate }}
+                  </p>
                 </div>
-                <h3 class="mt-2 text-[18px] font-bold text-[#384250]">
-                  {{ 'DEPARTMENTS_LIST_PAGE.NO_DEPARTMENTS_YET' | translate }}
-                </h3>
-                <p class="text-[12px] font-medium text-[#6c737f]">
-                  {{ 'DEPARTMENTS_LIST_PAGE.ADD_YOUR_DEPARTMENT' | translate }}
-                </p>
               </div>
-            </div>
             }
             @if (childDepartments.list && childDepartments.list.length > 0) {
-            <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-              [totalRecords]="paginationInfo.totalItems" [rowsPerPageOptions]="[10, 20, 30]" />
+              <p-paginator
+                class="mt-6"
+                (onPageChange)="onPageChange($event)"
+                [first]="first"
+                [rows]="rows"
+                [totalRecords]="paginationInfo.totalItems"
+                [rowsPerPageOptions]="[10, 20, 30]"
+              />
             }
             <div></div>
           </div>

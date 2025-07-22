@@ -88,7 +88,10 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     this.model = this.data.model;
     this.cities = this.data.lookups.cities;
     this.regions = this.data.lookups.regions;
-    this.usersProfiles = this.data?.lookups?.usersProfiles?.filter((x: UsersWithDepartmentLookup) => x.departmentId == this.model?.id) || [];
+    this.usersProfiles =
+      this.data?.lookups?.usersProfiles?.filter(
+        (x: UsersWithDepartmentLookup) => x.departmentId == this.model?.id
+      ) || [];
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
 
@@ -121,7 +124,7 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     });
   }
 
-  override saveFail(error: Error): void { }
+  override saveFail(error: Error): void {}
 
   override afterSave(model: Department, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };

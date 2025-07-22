@@ -12,57 +12,88 @@
         <div>
           <label class="label" for="permissionType">{{
             'PERMISSION_PAGE.PERMISSION_TYPE' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-select [optionLabel]="getPropertyName()" [options]="permissionTypes" class="w-full peer"
-              formControlName="fkPermissionTypeId" id="permissionType" name="permissionType" optionLabel="type"
-              optionValue="id" placeholder="{{ 'PERMISSION_PAGE.PERMISSION_TYPE' | translate }}"></p-select>
+            <p-select
+              [optionLabel]="getPropertyName()"
+              [options]="permissionTypes"
+              class="w-full peer"
+              formControlName="fkPermissionTypeId"
+              id="permissionType"
+              name="permissionType"
+              optionLabel="type"
+              optionValue="id"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_TYPE' | translate }}"
+            ></p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="fkPermissionTypeIdControl"></app-validation-messages>
         </div>
         <div>
           <label class="label" for="permissionDate">{{
             'PERMISSION_PAGE.PERMISSION_DATE' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [showIcon]="true"
-              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}" class="peer block w-full"
-              formControlName="permissionDate" id="permissionDate" inputId="permissionDate" name="permissionDate"
-              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}"
+              class="peer block w-full"
+              formControlName="permissionDate"
+              id="permissionDate"
+              inputId="permissionDate"
+              name="permissionDate"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}"
+            >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="permissionDateControl"></app-validation-messages>
         </div>
         <div>
-          <label class="label" for="prmissionReason">{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}
+          <label class="label" for="prmissionReason"
+            >{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}
           </label>
           <div class="relative">
-            <p-select [optionLabel]="getPropertyName()" [options]="prmissionReasons" class="w-full peer"
-              formControlName="fkReasonId" id="prmissionReason" name="prmissionReason" optionLabel="type"
-              optionValue="id" placeholder="{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}"></p-select>
+            <p-select
+              [optionLabel]="getPropertyName()"
+              [options]="prmissionReasons"
+              class="w-full peer"
+              formControlName="fkReasonId"
+              id="prmissionReason"
+              name="prmissionReason"
+              optionLabel="type"
+              optionValue="id"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}"
+            ></p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="fkReasonIdControl"></app-validation-messages>
         </div>
         <div class="md:col-span-2 lg:col-span-3">
           <label class="label" for="description">{{
             'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate
-            }}</label>
+          }}</label>
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
-              formControlName="description" pTextarea id="description"
-              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate }}"></textarea>
+              formControlName="description"
+              pTextarea
+              id="description"
+              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate }}"
+            ></textarea>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="descriptionControl"></app-validation-messages>
         </div>

@@ -184,10 +184,16 @@ export default class DepartmentListComponent extends BaseListComponent<
   protected override mapModelToExcelRow(model: Department): { [key: string]: any } {
     return {
       [this.translateService.instant('DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC')]: model.nameAr,
-      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH')]: model.nameEn,
-      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST')]: model.isOneLevelApproval ? this.translateService.instant('DEPARTMENTS_LIST_PAGE.ONE_LEVEL_APPROVAL') : this.translateService.instant('DEPARTMENTS_LIST_PAGE.TWO_LEVEL_APPROVAL'),
-      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ARABIC')]: model.manager?.fullNameAr,
-      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ENGLISH')]: model.manager?.fullNameEn
+      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH')]:
+        model.nameEn,
+      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST')]:
+        model.isOneLevelApproval
+          ? this.translateService.instant('DEPARTMENTS_LIST_PAGE.ONE_LEVEL_APPROVAL')
+          : this.translateService.instant('DEPARTMENTS_LIST_PAGE.TWO_LEVEL_APPROVAL'),
+      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ARABIC')]:
+        model.manager?.fullNameAr,
+      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ENGLISH')]:
+        model.manager?.fullNameEn,
     };
   }
 

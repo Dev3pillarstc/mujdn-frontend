@@ -15,7 +15,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { filter, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { CustomValidators } from '@/validators/custom-validators';
 
 @Directive()
@@ -78,7 +78,10 @@ export abstract class BaseListComponent<
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: DIALOG_ENUM) => {
         if (result && result == DIALOG_ENUM.OK) {
-          this.loadList();
+          this.loadList().subscribe({
+            next: (response) => this.handleLoadListSuccess(response),
+            error: this.handleLoadListError,
+          });
         }
       });
   }
@@ -102,7 +105,10 @@ export abstract class BaseListComponent<
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: DIALOG_ENUM) => {
         if (result && result == DIALOG_ENUM.OK) {
-          this.loadListSP();
+          this.loadListSP().subscribe({
+            next: (response) => this.handleLoadListSuccess(response),
+            error: this.handleLoadListError,
+          });
         }
       });
   }
@@ -243,6 +249,15 @@ export abstract class BaseListComponent<
       .pipe(
         switchMap((_) => {
           return isStoredProcedure ? this.loadListSP() : this.loadList();
+        })
+      )
+      .pipe(
+        switchMap((response) => {
+          if (response.list.length === 0) {
+            this.paginationParams.pageNumber = 1;
+            return isStoredProcedure ? this.loadListSP() : this.loadList();
+          }
+          return of(response);
         })
       )
       .subscribe({

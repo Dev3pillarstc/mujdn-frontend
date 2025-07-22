@@ -234,20 +234,17 @@
             </td>
             <td>
               <div class="actions flex gap-2">
-                <button
-                  (click)="openDialog(attendanceLog)"
-                  [disabled]="attendanceLog.isRawData"
-                  class="table-action-gray-btn {{ attendanceLog.isRawData ? 'disabled' : '' }}"
-                >
-                  <img src="assets/icons/edit-action.svg" alt="" />
-                </button>
-                <button
-                  (click)="deleteModel(attendanceLog.id, true)"
-                  [disabled]="attendanceLog.isRawData"
-                  class="table-action-red-btn {{ attendanceLog.isRawData ? 'disabled' : '' }}"
-                >
-                  <img src="assets/icons/delete-action.svg" alt="" />
-                </button>
+                @if (!attendanceLog.isRawData) {
+                  <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
+                    <img src="assets/icons/edit-action.svg" alt="" />
+                  </button>
+                  <button
+                    (click)="deleteModel(attendanceLog.id, true)"
+                    class="table-action-red-btn"
+                  >
+                    <img src="assets/icons/delete-action.svg" alt="" />
+                  </button>
+                }
               </div>
             </td>
           </tr>

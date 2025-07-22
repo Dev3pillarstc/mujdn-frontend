@@ -66,7 +66,7 @@ export default class PermissionsListComponent
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '800px',
   };
   permissionService = inject(PermissionService);
   permissionTypeService = inject(PermissionTypeService);

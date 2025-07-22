@@ -75,9 +75,10 @@ export default class HolidaysListComponent extends BaseListComponent<
 
   protected override mapModelToExcelRow(model: Holiday): { [key: string]: any } {
     return {
-      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY')]: model.getName(),
-      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.getStartDate(),
-      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.getEndDate(),
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC')]: model.nameAr,
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH')]: model.nameEn,
+      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.startDate,
+      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.endDate,
     };
   }
   showAddEditButtons() {

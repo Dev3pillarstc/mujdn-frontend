@@ -3,7 +3,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { RouterModule } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import OthersAttendanceLogListComponent from '../others-attendance-log-list/others-attendance-log-list.component';
 import MyAttendanceLogListComponent from '../my-attendance-log-list/my-attendance-log-list.component';
 import { TabsModule } from 'primeng/tabs';
@@ -33,6 +33,7 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   departmentService = inject(DepartmentService);
   userService = inject(UserService);
+  destroy$: Subject<void> = new Subject<void>();
 
   // Track active tab
   activeTabIndex: number = 0;
@@ -47,14 +48,12 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
     routerLink: '/home',
   };
 
-  private langChangeSub!: Subscription;
-
   ngOnInit() {
     this.setHomeItem();
     this.initBreadcrumbs();
 
     // Listen to language changes
-    this.langChangeSub = this.translateService.onLangChange.subscribe(() => {
+    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.setHomeItem();
       this.initBreadcrumbs();
     });
@@ -134,8 +133,7 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.langChangeSub) {
-      this.langChangeSub.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
   }
 }

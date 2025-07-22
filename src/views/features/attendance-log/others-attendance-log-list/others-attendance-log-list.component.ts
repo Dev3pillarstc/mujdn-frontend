@@ -34,6 +34,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ibm-plex-font';
 import { formatSwipeTime } from '@/utils/general-helper';
+import { CustomValidators } from '@/validators/custom-validators';
 
 @Component({
   selector: 'app-others-attendance-log-list',
@@ -166,11 +167,16 @@ export default class OthersAttendanceLogListComponent
     });
   }
 
-  formatSwipeTimeArEn(swipeTime: string | undefined): { date: string; time: string } {
+  formatSwipeTimeArEn(swipeTime: string | Date | undefined): { date: string; time: string } {
     if (!swipeTime) return { date: '', time: '' };
     const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
-    const { date, time } = formatSwipeTime(swipeTime, locale);
+    const { date, time } = formatSwipeTime(swipeTime.toString(), locale);
     return { date, time };
+  }
+
+  swipeTimeArEn(swipeTime: string | Date | undefined): string {
+    const { date, time } = this.formatSwipeTimeArEn(swipeTime);
+    return `${date} ${time}`;
   }
 
   getProcessingStatusClass(isProcessed: boolean): string {
@@ -182,77 +188,96 @@ export default class OthersAttendanceLogListComponent
   }
 
   exportPdf(fileName: string = 'data.pdf'): void {
-    if (this.list && this.list.length > 0) {
-      const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX, // fetch all
+    };
 
-      // Inline mapping logic with translated headers
-      const transformedData = this.list.map((model) => ({
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
-          this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
-          model.creatorNameEn ?? 'System',
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
-          model.creatorNameAr ?? 'النظام',
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]:
-          model.employeeNameEn,
-        [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]:
-          model.employeeNameAr,
-      }));
+    const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
 
-      // Format cell values to avoid issues with Date/undefined/null
-      const formatCell = (val: any): string | number => {
-        if (val instanceof Date) {
-          return val.toLocaleString(); // You can customize formatting here
-        }
-        return val != null ? val : '';
-      };
+    this.service.loadPaginatedSP(allDataParams, { ...this.filterModel! }).subscribe({
+      next: (response) => {
+        const allData = response?.list || [];
 
-      const head = [Object.keys(transformedData[0])];
-      const body = transformedData.map((row) => Object.values(row).map(formatCell));
+        if (!allData.length) return;
 
-      const doc = new jsPDF({
-        orientation: 'landscape',
-        format: 'a4',
-      });
-      registerIBMPlexArabicFont(doc); // ✅ Call this right after creating doc
+        // Transform data for PDF
+        const transformedData = allData.map((model) => ({
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
+            this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
+            model.creatorNameEn ?? 'System',
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
+            model.creatorNameAr ?? 'النظام',
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: this.swipeTimeArEn(
+            model.swipeTime
+          ),
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]:
+            model.employeeNameEn,
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]:
+            model.employeeNameAr,
+        }));
 
-      autoTable(doc, {
-        head,
-        body,
-        styles: {
-          font: 'IBMPlexSansArabic',
-          fontStyle: 'normal',
-          halign: isRTL ? 'right' : 'left',
-        },
-        headStyles: {
-          font: 'IBMPlexSansArabic', // ✅ explicitly set here
-          fontStyle: 'normal',
-          halign: isRTL ? 'right' : 'left',
-        },
-        margin: isRTL ? { right: 10, left: 0 } : { left: 10, right: 0 },
-        didDrawPage: () => {
-          const title = isRTL ? 'سجل الحضور' : 'Attendance Log';
-          doc.setFont('IBMPlexSansArabic');
-          doc.setFontSize(12);
-          doc.text(title, isRTL ? doc.internal.pageSize.getWidth() - 20 : 10, 10, {
-            align: isRTL ? 'right' : 'left',
-          });
-        },
-      });
+        const formatCell = (val: any): string | number => {
+          if (val instanceof Date) {
+            return val.toLocaleString();
+          }
+          return val != null ? val : '';
+        };
 
-      doc.save(fileName);
-    }
+        const head = [Object.keys(transformedData[0])];
+        const body = transformedData.map((row) => Object.values(row).map(formatCell));
+
+        const doc = new jsPDF({
+          orientation: 'landscape',
+          format: 'a4',
+        });
+
+        registerIBMPlexArabicFont(doc);
+
+        autoTable(doc, {
+          head,
+          body,
+          styles: {
+            font: 'IBMPlexSansArabic',
+            fontStyle: 'normal',
+            halign: isRTL ? 'right' : 'left',
+          },
+          headStyles: {
+            font: 'IBMPlexSansArabic',
+            fontStyle: 'normal',
+            halign: isRTL ? 'right' : 'left',
+          },
+          margin: isRTL ? { right: 10, left: 0 } : { left: 10, right: 0 },
+          didDrawPage: () => {
+            const title = isRTL ? 'سجل الحضور' : 'Attendance Log';
+            doc.setFont('IBMPlexSansArabic');
+            doc.setFontSize(12);
+            doc.text(title, isRTL ? doc.internal.pageSize.getWidth() - 20 : 10, 10, {
+              align: isRTL ? 'right' : 'left',
+            });
+          },
+        });
+
+        doc.save(fileName);
+      },
+      error: (err) => {
+        console.error('Failed to fetch data for PDF export:', err);
+        // Optional: show error toast
+      },
+    });
   }
 
   protected override mapModelToExcelRow(model: AttendanceLog): { [key: string]: any } {
     return {
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]: model.employeeNameAr,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]: model.employeeNameEn,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: model.swipeTime,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: this.swipeTimeArEn(
+        model.swipeTime
+      ),
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.DEPARTMENT')]: model.departmentNameAr,
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
         model.creatorNameEn ?? 'System',
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:

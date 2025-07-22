@@ -163,7 +163,7 @@
         {{ 'ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
-        <button (click)="exportExcel('attendance-logs.xlsx')" class="table-head-action-btn">
+        <button (click)="exportExcel('attendance-logs.xlsx', true)" class="table-head-action-btn">
           <img alt="" src="assets/icons/excel.svg" />
         </button>
         <button (click)="exportPdf()" class="table-head-action-btn">

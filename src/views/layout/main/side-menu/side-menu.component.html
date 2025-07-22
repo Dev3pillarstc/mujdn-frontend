@@ -1,24 +1,11 @@
-<p-sidebar
-  [appendTo]="sidebarContainer"
-  [baseZIndex]="1000"
-  [modal]="isMobile"
-  [position]="'right'"
-  [showCloseIcon]="isMobile"
-  [style]="{ width: isMobile ? '80%' : '250px' }"
-  [visible]="sidebarVisible"
-  position="left"
-  styleClass="custom-sidebar"
->
+<p-sidebar [appendTo]="sidebarContainer" [baseZIndex]="1000" [modal]="isMobile" [position]="'right'"
+  [showCloseIcon]="isMobile" [style]="{ width: isMobile ? '80%' : '250px' }" [visible]="sidebarVisible" position="left"
+  styleClass="custom-sidebar">
   <div>
-    <div
-      class="sidebar-header p-3 border-bottom-1 surface-border flex justify-between items-center"
-    >
+    <div class="sidebar-header p-3 border-bottom-1 surface-border flex justify-between items-center">
       <img alt="" src="assets/shared/gov-logo-gam-light.png" />
       <div>
-        <button
-          (click)="closeSidebar()"
-          class="close-btn text-white cursor-pointer p-link block md:hidden"
-        >
+        <button (click)="closeSidebar()" class="close-btn text-white cursor-pointer p-link block md:hidden">
           <i class="pi pi-times close-popup"></i>
         </button>
       </div>
@@ -26,64 +13,35 @@
     <ul class="menu-list px-4 m-0 list-none">
       <li *ngFor="let item of menuItems">
         <div (click)="toggleSubmenu(item)" class="menu-item flex items-center gap-3 cursor-pointer">
-          <img
-            *ngIf="item.iconUrl"
-            [src]="item.iconUrl"
-            alt="{{ item.label }} icon"
-            class="w-5 h-5"
-          />
+          <img *ngIf="item.iconUrl" [src]="item.iconUrl" alt="{{ item.label }} icon" class="w-5 h-5" />
           <a *ngIf="!item.children" [routerLink]="item.routerLink" class="flex-1 truncate block">{{
             item.label
-          }}</a>
+            }}</a>
           <span *ngIf="item.children" class="flex-1 truncate block">{{ item.label }}</span>
-          <svg
-            *ngIf="item.children && !isSubmenuOpen(item)"
-            class="h-4 w-4 inline"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 9l-7 7-7-7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            />
+          <svg *ngIf="item.children && !isSubmenuOpen(item)" class="h-4 w-4 inline" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
-          <svg
-            *ngIf="item.children && isSubmenuOpen(item)"
-            class="h-4 w-4 inline"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 15l7-7 7 7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            />
+          <svg *ngIf="item.children && isSubmenuOpen(item)" class="h-4 w-4 inline" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 15l7-7 7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
           </svg>
         </div>
 
         <ul *ngIf="item.children && isSubmenuOpen(item)" class="submenu list-none pl-6">
           @for (child of item.children; track child.label) {
-            <li class="p-2 cursor-pointer flex items-center gap-3 sub-links">
-              <!-- <img *ngIf="child.iconUrl" [src]="child.iconUrl" alt="{{child.label}} icon" class="w-4 h-4" /> -->
-              <a [routerLink]="child.routerLink" class="flex-1 truncate block">{{ child.label }}</a>
-            </li>
+          <li class="p-2 cursor-pointer flex items-center gap-3 sub-links">
+            <!-- <img *ngIf="child.iconUrl" [src]="child.iconUrl" alt="{{child.label}} icon" class="w-4 h-4" /> -->
+            <a [routerLink]="child.routerLink" class="flex-1 truncate block">{{ child.label }}</a>
+          </li>
           }
         </ul>
       </li>
     </ul>
   </div>
-  <div class="px-3">
-    <button
-      (click)="logout()"
-      class="min-h-[32px] py-2 rounded bg-gray-100 w-full mb-2 text-[#b42318] text-sm font-medium cursor-pointer hover:bg-[#e5e7eb]"
-    >
+  <div class="px-3 absolute bottom-0 left-0 w-full">
+    <button (click)="logout()"
+      class="min-h-[32px] py-2 rounded bg-gray-100 w-full mb-2 text-[#b42318] text-sm font-medium cursor-pointer hover:bg-[#e5e7eb]">
       تسجيل خروج
     </button>
   </div>

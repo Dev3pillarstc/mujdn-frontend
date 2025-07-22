@@ -7,23 +7,42 @@
     </div>
     <div class="flex actions">
       @if (loggedInUser) {
-        <div>
-          <button
-            class="py-3 px-2 font-medium cursor-pointer flex items-center gap-2 text-sm sm:text-base text-[#384250]"
-          >
-            <img alt="" src="assets/icons/user.svg" />
-            <span class="flex flex-col justify-start items-start">
-              <strong> {{ getLoggedInUserName() }} </strong>
-              <span class="font-normal"> {{ getLoggedInUserDepartment() }} </span>
-            </span>
-          </button>
-        </div>
+      <!-- <div>
+        <button
+          class="py-3 px-2 font-medium cursor-pointer flex items-center gap-2 text-sm sm:text-base text-[#384250]">
+          <img alt="" src="assets/icons/user.svg" />
+          <span class="flex flex-col justify-start items-start">
+            <strong> {{ getLoggedInUserName() }} </strong>
+            <span class="font-normal"> {{ getLoggedInUserDepartment() }} </span>
+          </span>
+        </button>
+      </div> -->
+      <!-- الزر الذي يفتح القائمة -->
+      <div>
+        <button (click)="userMenu.toggle($event)"
+          class="py-3 px-2 font-medium cursor-pointer flex items-center gap-2 text-sm sm:text-base text-[#384250]">
+          <img alt="" src="assets/icons/user.svg" class="w-8 h-8 rounded-full" />
+          <span class="flex flex-col justify-start items-start">
+            <strong> {{ getLoggedInUserName() }} </strong>
+            <span class="font-normal"> {{ getLoggedInUserDepartment() }} </span>
+          </span>
+        </button>
+      </div>
+
+      <!-- قائمة المستخدم -->
+      <p-menu #userMenu [popup]="true" [model]="menuItems">
+        <ng-template let-item pTemplate="item">
+          <a class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <img [src]="item.icon" alt="icon" class="w-10 h-10" />
+            <span class="text-[16px] font-medium text-[#1f2a37]">{{ item.label }}</span>
+          </a>
+        </ng-template>
+      </p-menu>
+
+
       }
       <div>
-        <button
-          (click)="changeLanguage()"
-          class="py-3 text-[#161616] font-medium cursor-pointer text-sm sm:text-base"
-        >
+        <button (click)="changeLanguage()" class="py-3 text-[#161616] font-medium cursor-pointer text-sm sm:text-base">
           {{ getLanguageButtonText() }}
         </button>
       </div>

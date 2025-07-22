@@ -55,11 +55,12 @@ export default class PermissionReasonListComponent
 
   override initListComponent(): void {}
   protected override getBreadcrumbKeys() {
-    return [{ labelKey: 'PERMISSION_REASONS_PAGE.PERMISSION_REASONS_LIST' }];
+    return [{ labelKey: 'PERMISSION_REASONS_PAGE.PERMISSIONS_SETTINGS' }];
   }
 
   override openDialog(model: PermissionReason): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    model = Object.assign(new PermissionReason(), model);
     this.openBaseDialog(PermissionReasonPopupComponent as any, model, viewMode);
   }
 

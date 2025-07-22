@@ -88,4 +88,16 @@ export default class HolidaysListComponent extends BaseListComponent<
     dialogConfig.data = { notes: notes };
     this.matDialog.open(NotesPopupComponent as any, dialogConfig);
   }
+  set dateFrom(value: Date | null) {
+    this._dateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.dateTo && value && this.filterModel.dateTo < value) {
+      this.filterModel.dateTo = null; // or set it to value
+    }
+  }
+  get dateFrom(): Date | null {
+    return this._dateFrom;
+  }
+  private _dateFrom: Date | null = null;
 }

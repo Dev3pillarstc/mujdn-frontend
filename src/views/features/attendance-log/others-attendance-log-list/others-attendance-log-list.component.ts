@@ -112,7 +112,10 @@ export default class OthersAttendanceLogListComponent
 
   private loadDataIfNeeded(): void {
     // Load data when tab becomes active
-    this.loadListSP();
+    this.loadListSP().subscribe({
+      next: (response) => this.handleLoadListSuccess(response),
+      error: this.handleLoadListError,
+    });
   }
 
   protected override getBreadcrumbKeys() {

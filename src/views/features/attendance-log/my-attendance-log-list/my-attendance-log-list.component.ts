@@ -66,6 +66,7 @@ export default class MyAttendanceLogListComponent
 {
   @Input() isActive: boolean = false;
   @Input() creators: BaseLookupModel[] = [];
+  private hasInitialized: boolean = false;
 
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
@@ -96,23 +97,9 @@ export default class MyAttendanceLogListComponent
   }
 
   override loadListSP() {
-    this.service
-      .loadMyAttendanceLogPaginatedSP(this.paginationParams, { ...this.filterModel! })
-      .subscribe({
-        next: (response) => {
-          this.list = response.list || [];
-
-          if (response.paginationInfo) {
-            this.paginationInfoMap(response);
-          } else {
-            this.paginationInfo.totalItems = this.list.length;
-          }
-        },
-        error: (_) => {
-          this.list = [];
-          this.paginationInfo.totalItems = 0;
-        },
-      });
+    return this.service.loadMyAttendanceLogPaginatedSP(this.paginationParams, {
+      ...this.filterModel!,
+    });
   }
 
   isCurrentLanguageEnglish() {
@@ -122,16 +109,30 @@ export default class MyAttendanceLogListComponent
   override initListComponent(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Watch for changes in isActive input
-    if (changes['isActive'] && changes['isActive'].currentValue === true) {
-      console.log('My attendance tab became active - loading data');
-      this.loadDataIfNeeded();
+    if (changes['isActive']) {
+      const current = changes['isActive'].currentValue;
+      const previous = changes['isActive'].previousValue;
+
+      // Skip first trigger after component init
+      if (!this.hasInitialized) {
+        this.hasInitialized = true;
+        return;
+      }
+
+      // Only load data if tab is active and this is not the initial change
+      if (current === true && previous === false) {
+        console.log('My attendance tab became active - loading data');
+        this.loadDataIfNeeded();
+      }
     }
   }
 
   private loadDataIfNeeded(): void {
     // Load data when tab becomes active
-    this.loadListSP();
+    this.loadListSP().subscribe({
+      next: (response) => this.handleLoadListSuccess(response),
+      error: this.handleLoadListError,
+    });
   }
 
   protected override getBreadcrumbKeys() {

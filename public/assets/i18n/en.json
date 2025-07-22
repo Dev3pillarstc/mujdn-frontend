@@ -93,7 +93,8 @@
     "STORED_EXTERNAL_ERROR": "An internal server error occurred in stored",
     "HOME": "Home",
     "FROM": "Date (From)",
-    "TO": "Date (To)"
+    "TO": "Date (To)",
+    "LOG_OUT": "Log Out"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

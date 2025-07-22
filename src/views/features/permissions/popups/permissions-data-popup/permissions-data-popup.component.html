@@ -101,16 +101,24 @@
             <span>{{ model.description }}</span>
           </span>
         </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-[#6c737f]"
+            >{{ 'DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME' | translate }}
+          </span>
+          <span class="font-semibold text-[#161616]">
+            <span>{{ model.getPermissionDepartmentName() }}</span>
+          </span>
+        </div>
       </div>
     </div>
     <div class="actions mt-6 flex items-center justify-between gap-4">
       <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
       @if (model.canTakeAction) {
         <div class="flex gap-2">
-          <button class="btn red-btn" (click)="rejectPermissionStatus()">
+          <button class="btn red-btn" (click)="rejectPermission()">
             {{ 'PERMISSION_PAGE.DECLINE' | translate }}
           </button>
-          <button class="btn green-btn" (click)="acceptPermissionStatus()">
+          <button class="btn green-btn" (click)="acceptPermission()">
             {{ 'PERMISSION_PAGE.APPROVE' | translate }}
           </button>
         </div>

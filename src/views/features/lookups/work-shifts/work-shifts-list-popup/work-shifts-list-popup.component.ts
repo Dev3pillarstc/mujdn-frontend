@@ -21,6 +21,7 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
 import { DefaultShiftDurationComponent } from '../default-shift-duration/default-shift-duration.component';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { CustomValidators } from '@/validators/custom-validators';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -32,6 +33,7 @@ import { CustomValidators } from '@/validators/custom-validators';
     ValidationMessagesComponent,
     TranslatePipe,
     RequiredMarkerDirective,
+    InputNumberModule,
   ],
   templateUrl: './work-shifts-list-popup.component.html',
   styleUrl: './work-shifts-list-popup.component.scss',

@@ -54,7 +54,7 @@
     "INVALID_PAGE_SIZE": "Page size must be between 1 and 1000",
     "INVALID_SORT_FIELD": "The specified sort field is invalid",
     "SERIALIZATION_ERROR": "An error occurred while processing the data",
-    "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is connected/related to another entity",
+    "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is related to another data",
     "CANNOT_BE_DELETE": "The record can't be deleted",
     "EXISTING_RECORD_ERROR": "This record already exists",
     "AUTH_INVALID_CREDENTIALS": "National id or password is incorrect",
@@ -91,7 +91,9 @@
     "SERVER_INTERNAL_ERROR": "An internal server error occurred",
     "AUTH_EXTERNAL_ERROR": "Login failed due to an internal error",
     "STORED_EXTERNAL_ERROR": "An internal server error occurred in stored",
-    "HOME": "Home"
+    "HOME": "Home",
+    "FROM": "Date (From)",
+    "TO": "Date (To)"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -265,14 +267,12 @@
     "NO_DATA_TO_SHOW": "No data to display",
     "DATE": "Date",
     "CODE": "Code",
-    "FROM": "Date (From)",
-    "TO": "Date (To)",
     "HOLIDAY": "Holiday"
   },
   "PERMISSION_PAGE": {
     "PERMISSIONS": "Permissions",
-    "MY_REQUESTS": "My Requests",
-    "INCOMING_REQUESTS": "Incoming Requests",
+    "MY_REQUESTS": "My Requests Log",
+    "INCOMING_REQUESTS": "Incoming Permission Requests",
     "PERMISSION_TYPE": "Permission Type",
     "PERMISSION_DATE": "Permission Date",
     "PERMISSION_STATUS": "Request Status",

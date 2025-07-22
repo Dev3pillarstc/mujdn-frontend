@@ -6,6 +6,12 @@ div[dir='rtl'] {
   }
 
   // Arabic Sidebar
+  .p-datepicker-time-picker > div {
+    order: unset !important;
+  }
+  .p-datepicker-timeonly .p-datepicker-time-picker {
+    direction: ltr !important;
+  }
 }
 
 [dir='rtl'] ~ .p-drawer-left {

@@ -56,7 +56,7 @@
     "INVALID_DELETE_REQUEST": "لا يمكن حذف السجل لأنه متصل/مرتبط بكيان آخر",
     "CANNOT_BE_DELETE": "لا يمكن حذف السجل",
     "EXISTING_RECORD_ERROR": "هذا السجل موجود بالفعل",
-    "AUTH_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
+    "AUTH_INVALID_CREDENTIALS": "رقم الهوية أو كلمة المرور غير صحيحة",
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",
     "AUTH_INVALID_OTP": "رمز OTP غير صحيح",
     "AUTH_OTP_EXPIRED": "انتهت صلاحية جلسة OTP",

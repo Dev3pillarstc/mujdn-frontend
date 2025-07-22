@@ -38,6 +38,8 @@ import { DepartmentService } from '@/services/features/lookups/department.servic
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { AuthService } from '@/services/auth/auth.service';
+import { Observable } from 'rxjs';
+import { PaginatedList } from '@/models/shared/response/paginated-list';
 
 @Component({
   selector: 'app-employee-list',
@@ -93,6 +95,11 @@ export default class EmployeeListComponent
     return this.userService;
   }
 
+  get optionLabel(): string {
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  }
+
   override initListComponent(): void {
     // load lookups
     this.cityService.getCitiesLookup().subscribe((res: CityLookup[]) => {
@@ -110,9 +117,6 @@ export default class EmployeeListComponent
     this.translateService.onLangChange.subscribe(() => {
       this.initializeActionList();
     });
-  }
-  protected override getBreadcrumbKeys() {
-    return [{ labelKey: 'EMPLOYEES_PAGE.EMPLOYEES_LIST' }];
   }
 
   override openDialog(): void {
@@ -142,10 +146,14 @@ export default class EmployeeListComponent
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       this.selectedModel = undefined;
       if (result && result == DIALOG_ENUM.OK) {
-        this.loadList();
+        this.loadList().subscribe({
+          next: (response) => this.handleLoadListSuccess(response),
+          error: this.handleLoadListError,
+        });
       }
     });
   }
+
   onDepartmentChange(deptId: number | undefined) {
     this.filterModel.fkDepartmentId = deptId;
   }
@@ -159,7 +167,10 @@ export default class EmployeeListComponent
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       if (result && result == DIALOG_ENUM.OK) {
-        this.loadList();
+        this.loadList().subscribe({
+          next: (response) => this.handleLoadListSuccess(response),
+          error: this.handleLoadListError,
+        });
       }
     });
   }
@@ -223,6 +234,10 @@ export default class EmployeeListComponent
     this.selectedModel = model;
   }
 
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'EMPLOYEES_PAGE.EMPLOYEES_LIST' }];
+  }
+
   // Excel Export Implementation
   protected override mapModelToExcelRow(model: User): { [key: string]: any } {
     const formatDate = (date: Date | string | undefined): string => {
@@ -268,11 +283,6 @@ export default class EmployeeListComponent
         model.isActive
       ),
     };
-  }
-
-  get optionLabel(): string {
-    const lang = this.languageService.getCurrentLanguage();
-    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   private initializeActionList(): void {

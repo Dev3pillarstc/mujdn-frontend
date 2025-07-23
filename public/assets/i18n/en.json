@@ -218,6 +218,8 @@
     "PHONE_NUMBER": "Phone Number",
     "INVALID_PHONE": "Invalid phone number",
     "JOIN_DATE": "Join Date",
+    "JOIN_DATE_FROM": "Join Date (From)",
+    "JOIN_DATE_TO": "Join Date (To)",
     "ACCOUNT_STATUS": "Account Status",
     "JOB_TITLE": "Job Title",
     "JOB_TITLE_ARABIC": "Job Title in Arabic",

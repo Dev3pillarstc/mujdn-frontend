@@ -1,15 +1,16 @@
-<div dir="rtl" class="p-6 bg-[#f3f4f6] rounded-2xl">
-  <!-- Close Button -->
-  <button class="block ms-auto mb-4 text-gray-500 hover:text-red-600" (click)="close()">
-    <i class="pi pi-times text-xl"></i>
-  </button>
-
-  <!-- Description Card -->
-  <div class="p-6 bg-white rounded-2xl shadow-md">
-    <div class="flex flex-col gap-2">
-      <span class="font-semibold text-[#161616]">
-        {{ notes }}
-      </span>
+<div [dir]="direction">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'HOLIDAYS_PAGE.NOTES' | translate }}
+    </h3>
+    <span class="font-semibold text-[#161616]">
+      {{ notes }}
+    </span>
+    <div class="actions mt-6 flex items-center justify-end gap-4">
+      <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
     </div>
   </div>
 </div>

@@ -49,7 +49,7 @@
   font-weight: 600;
   color: #161616;
 
-  & > li {
+  &>li {
     margin-top: 8px;
     padding-bottom: 8px;
     border-bottom: 1px solid #d2d6db;
@@ -191,10 +191,22 @@
 p-datepicker.ng-touched.ng-invalid {
   input {
     border-color: #b42318 !important;
-    color: #b42318;
+    color: #b42318 !important;
   }
 
   ::placeholder {
     color: #b42318;
+  }
+}
+
+textarea.ng-touched.ng-invalid {
+  color: #b42318 !important;
+}
+
+textarea {
+  color: #161616 !important;
+
+  &::placeholder {
+    color: #161616 !important;
   }
 }

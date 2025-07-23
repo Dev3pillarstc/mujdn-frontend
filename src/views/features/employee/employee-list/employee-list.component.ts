@@ -254,7 +254,7 @@ export default class EmployeeListComponent
     };
 
     return {
-      [this.translateService.instant('EMPLOYEES_PAGE.NATIONAL_ID')]: model.nationalId || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_ID')]: model.nationalId || '',
       [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC')]:
         model.fullNameAr || '',
       [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH')]:

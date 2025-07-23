@@ -319,4 +319,15 @@ export default class EmployeeListComponent
       // },
     ];
   }
+  set joinDateFrom(value: Date | undefined) {
+    this.filterModel.joinDateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.joinDateTo && value && this.filterModel.joinDateTo < value) {
+      this.filterModel.joinDateTo = value; // or set it to value
+    }
+  }
+  get joinDateFrom(): Date | undefined {
+    return this.filterModel.joinDateFrom;
+  }
 }

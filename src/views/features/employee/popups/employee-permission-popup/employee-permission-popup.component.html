@@ -17,7 +17,9 @@
           </span>
         </div>
         <div class="flex gap-2 items-center">
-          <span class="text-sm text-[#fae996]">{{ 'EMPLOYEES_PAGE.EMPLOYEE_ID' | translate }}:</span>
+          <span class="text-sm text-[#fae996]"
+            >{{ 'EMPLOYEES_PAGE.EMPLOYEE_ID' | translate }}:</span
+          >
           <span class="font-semibold text-[#fae996]">{{ model.nationalId || 'N/A' }}</span>
         </div>
       </div>
@@ -28,9 +30,11 @@
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.EMAIL' | translate }}</span>
-          <span class="font-semibold text-white whitespace-nowrap overflow-hidden text-ellipsis"
-            [title]="model.email || 'N/A'">{{ model.email || 'N/A'
-            }}</span>
+          <span
+            class="font-semibold text-white whitespace-nowrap overflow-hidden text-ellipsis"
+            [title]="model.email || 'N/A'"
+            >{{ model.email || 'N/A' }}</span
+          >
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.PHONE_NUMBER' | translate }}</span>
@@ -55,13 +59,21 @@
         <div class="flex flex-wrap gap-8">
           <!-- Employee Role -->
           <label class="dimmed-checkbox flex items-center space-x-2 mb-4 cursor-pointer relative">
-            <input type="checkbox" formControlName="isEmployee"
+            <input
+              type="checkbox"
+              formControlName="isEmployee"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-              checked />
+              checked
+            />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">
@@ -71,12 +83,20 @@
 
           <!-- System Admin Role -->
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-            <input type="checkbox" formControlName="isSysAdmin"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+            <input
+              type="checkbox"
+              formControlName="isSysAdmin"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">
@@ -86,12 +106,20 @@
 
           <!-- Department Manager Role -->
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-            <input type="checkbox" formControlName="isDeptManager"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+            <input
+              type="checkbox"
+              formControlName="isDeptManager"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">
@@ -101,12 +129,20 @@
 
           <!-- Follow-up Officer Role -->
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-            <input type="checkbox" formControlName="isFollowUp"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+            <input
+              type="checkbox"
+              formControlName="isFollowUp"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">
@@ -116,12 +152,20 @@
 
           <!-- HR Officer Role -->
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-            <input type="checkbox" formControlName="isHR"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+            <input
+              type="checkbox"
+              formControlName="isHR"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">
@@ -131,12 +175,20 @@
 
           <!-- Security Member Role -->
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-            <input type="checkbox" formControlName="isSecurityMember"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+            <input
+              type="checkbox"
+              formControlName="isSecurityMember"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">
@@ -146,12 +198,20 @@
 
           <!-- Security Leader Role -->
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-            <input type="checkbox" formControlName="isSecurityLeader"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+            <input
+              type="checkbox"
+              formControlName="isSecurityLeader"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-base font-medium text-[#1f2a37]">

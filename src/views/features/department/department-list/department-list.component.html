@@ -8,17 +8,26 @@
       </p-breadcrumb>
 
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        {{ 'DEPARTMENTS_LIST_PAGE.MUJAHIDEEN_DEPARMENT' | translate }}
+        {{ 'MENU.DEPARTMENTS' | translate }}
       </h3>
     </div>
-    <section class="flex flex-col xl:flex-row gap-6 max-w-full">
+    <section class="flex items-start flex-col xl:flex-row gap-6 max-w-full">
+      <button *ngIf="!showDepartmentTree" (click)="showDepartmentTree = true">
+        <img src="/assets/icons/close-tree.svg" class="w-12" alt="Show Tree" />
+      </button>
       <app-department-tree
+        *ngIf="showDepartmentTree"
+        (closed)="onTreeClosed()"
+        [departmentsTree]="departmentsTree"
         (departmentSelected)="onSelectedDepartmentChange($event)"
         [departmentsTree]="departmentsTree"
         [selectedDepartmentSignal]="selectedDepartmentSignal"
       >
       </app-department-tree>
-      <div class="w-full xl:w-[calc(100%-274px)]">
+      <div
+        [class.w-full]="!showDepartmentTree"
+        [class.xl:w-[calc(100%-274px)]]="showDepartmentTree"
+      >
         <app-department-header
           (departmentDeleted)="openConfirmation($event)"
           (dialogClosed)="onDepartmentChange()"
@@ -91,6 +100,7 @@
                     id="region-search"
                     optionLabel="nameEn"
                     optionValue="id"
+                    [showClear]="true"
                   >
                   </p-select>
                   <span
@@ -111,6 +121,7 @@
                     id="city-search"
                     optionLabel="nameEn"
                     optionValue="id"
+                    [showClear]="true"
                   >
                   </p-select>
                   <span
@@ -141,7 +152,7 @@
                 }}
               </h4>
               <div class="actions flex items-center gap-4 ms-auto">
-                <button (click)="exportExcel()">
+                <button (click)="exportExcel(getTranslatedDepartmentLabel() + '.xlsx')">
                   <img alt="" src="assets/icons/excel.svg" />
                 </button>
                 <!-- <button>
@@ -160,15 +171,18 @@
               <p-table [value]="childDepartments.list">
                 <ng-template #header>
                   <tr>
-                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH' | translate }}</th>
                     <th>{{ 'DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST' | translate }}</th>
-                    <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ARABIC' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME_ENGLISH' | translate }}</th>
                     <th>{{ 'DEPARTMENTS_LIST_PAGE.ACTIONS' | translate }}</th>
                   </tr>
                 </ng-template>
                 <ng-template #body let-row>
                   <tr>
-                    <td>{{ isCurrentLanguageEnglish() ? row?.nameEn : row?.nameAr }}</td>
+                    <td>{{ row?.nameAr }}</td>
+                    <td>{{ row?.nameEn }}</td>
                     <td>
                       <span
                         class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]"
@@ -177,11 +191,10 @@
                       </span>
                     </td>
                     <td>
-                      {{
-                        isCurrentLanguageEnglish()
-                          ? row.manager?.fullNameEn
-                          : row.manager?.fullNameAr
-                      }}
+                      {{ row.manager?.fullNameAr }}
+                    </td>
+                    <td>
+                      {{ row.manager?.fullNameEn }}
                     </td>
                     <td>
                       <div class="actions flex gap-2">

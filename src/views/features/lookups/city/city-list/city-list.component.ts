@@ -78,8 +78,6 @@ export default class CityListComponent extends BaseListComponent<
     return {
       [this.translateService.instant('CITIES_PAGE.CITY_IN_ARABIC')]: model.nameAr,
       [this.translateService.instant('CITIES_PAGE.CITY_IN_ENGLISH')]: model.nameEn,
-      [this.translateService.instant('REGIONS_PAGE.REGION_IN_ARABIC')]: regionName,
-      [this.translateService.instant('REGIONS_PAGE.REGION_IN_ENGLISH')]: regionNameEn,
     };
   }
 }

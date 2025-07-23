@@ -48,7 +48,6 @@ export default class HolidaysListComponent extends BaseListComponent<
 > {
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
-    width: '100%',
     maxWidth: '600px',
   };
   holidayService = inject(HolidayService);
@@ -75,9 +74,10 @@ export default class HolidaysListComponent extends BaseListComponent<
 
   protected override mapModelToExcelRow(model: Holiday): { [key: string]: any } {
     return {
-      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY')]: model.getName(),
-      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.getStartDate(),
-      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.getEndDate(),
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC')]: model.nameAr,
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH')]: model.nameEn,
+      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.startDate,
+      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.endDate,
     };
   }
   showAddEditButtons() {
@@ -85,7 +85,19 @@ export default class HolidaysListComponent extends BaseListComponent<
   }
   openDataDialog(notes: string): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.width = this.dialogSize.maxWidth;
     dialogConfig.data = { notes: notes };
     this.matDialog.open(NotesPopupComponent as any, dialogConfig);
+  }
+  set dateFrom(value: Date | null) {
+    this.filterModel.dateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.dateTo && value && this.filterModel.dateTo < value) {
+      this.filterModel.dateTo = null; // or set it to value
+    }
+  }
+  get dateFrom(): Date | null | undefined {
+    return this.filterModel.dateFrom;
   }
 }

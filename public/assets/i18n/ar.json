@@ -14,6 +14,7 @@
     "DELETED_SUCCESSFULLY": "تم الحذف بنجاح",
     "DELETION_FAILED": "فشل في حذف العنصر",
     "NOT_AUTHORIZED": "ليس لديك صلاحية الوصول إلى هذه الصفحة",
+    "NOT_AUTHENTICATED": "لقد انتهت صلاحية جلسة التصفح",
     "SAVE": "حفظ",
     "ACTIVE": "نشط",
     "REQUIRED_FIELD": "هذا الحقل مطلوب",
@@ -51,10 +52,10 @@
     "INVALID_PAGE_SIZE": "حجم الصفحة يجب أن يكون بين 1 و 1000",
     "INVALID_SORT_FIELD": "حقل الترتيب المحدد غير صحيح",
     "SERIALIZATION_ERROR": "حدث خطأ أثناء معالجة البيانات",
-    "INVALID_DELETE_REQUEST": "لا يمكن حذف السجل لأنه متصل/مرتبط بكيان آخر",
+    "INVALID_DELETE_REQUEST": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
     "CANNOT_BE_DELETE": "لا يمكن حذف السجل",
     "EXISTING_RECORD_ERROR": "هذا السجل موجود بالفعل",
-    "AUTH_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
+    "AUTH_INVALID_CREDENTIALS": "رقم الهوية أو كلمة المرور غير صحيحة",
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",
     "AUTH_INVALID_OTP": "رمز OTP غير صحيح",
     "AUTH_OTP_EXPIRED": "انتهت صلاحية جلسة OTP",
@@ -81,14 +82,17 @@
     "INCIDENT_CONCURRENT_UPDATE": "تم تحديث الحادثة من قبل مستخدم آخر",
     "BADREQUEST_MISSING_PARAMETER": "معامل مطلوب مفقود",
     "BADREQUEST_INVALID_ARGUMENT": "معامل غير صحيح",
-    "AUTH_ACCESS_DENIED": "تم رفض الوصول",
+    "AUTH_ACCESS_DENIED": "لقد انتهت صلاحية جلسة التصفح",
     "SERVER_NOT_IMPLEMENTED": "الميزة غير مطبقة",
     "SERVER_TIMEOUT": "انتهت مهلة الطلب",
     "SERVER_INVALID_OPERATION": "عملية غير صحيحة",
     "SERVER_INTERNAL_ERROR": "حدث خطأ داخلي في الخادم",
     "AUTH_EXTERNAL_ERROR": "فشل تسجيل الدخول بسبب خطأ داخلي",
     "STORED_EXTERNAL_ERROR": "حدث خطأ داخلي في الخادم في المخزن",
-    "HOME": "الصفحة الرئيسية"
+    "HOME": "الصفحة الرئيسية",
+    "FROM": "التاريخ (من)",
+    "TO": "التاريخ (إلى)",
+    "LOG_OUT": "تسجيل الخروج"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -119,7 +123,7 @@
     "PERMISSION_REASON_ADDED_SUCCESSFULLY": "تم إضافة سبب الإذن بنجاح",
     "PERMISSION_REASON_UPDATED_SUCCESSFULLY": "تم تحديث سبب الإذن بنجاح",
     "BACK_TO_PERMISSION_REASONS": "العودة إلى أسباب الإذن",
-    "PERMISSIONS_SETTINGS": "إعدادات الأذونات",
+    "PERMISSIONS_SETTINGS": "إعدادات الاستئذانات",
     "PERMISSION_REASON": "سبب الإذن"
   },
   "CITIES_PAGE": {
@@ -146,14 +150,15 @@
     "MANAGER_NAME": "اسم المدير"
   },
   "DEPARTMENTS_LIST_PAGE": {
-    "MUJAHIDEEN_DEPARMENT": "ادارة المجاهدين",
+    "MUJAHIDEEN_DEPARTMENT": "ادارة المجاهدين",
     "DEPARTMENT_NAME": "اسم الإدارة",
     "REGION": "المنطقة",
     "CITY": "المدينة",
     "PHONE": "الهاتف",
     "ADDRESS": "العنوان",
     "LEAVE_REQUEST": "طلب الاذن",
-    "MANAGER_NAME": "اسم المدير",
+    "MANAGER_NAME_ARABIC": "اسم المدير بالعربية",
+    "MANAGER_NAME_ENGLISH": "اسم المدير بالإنجليزية",
     "ADD_NEW_DEPARTMENT": "إضافة إدارة جديدة",
     "ADD_SUB_DEPARTMENT": "إضافة إدارة فرعية جديدة",
     "ACTIONS": "الإجراء",
@@ -199,7 +204,7 @@
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   },
   "EMPLOYEES_PAGE": {
-    "EMPLOYEES_LIST": "قائمة الموظفين",
+    "EMPLOYEES_LIST": "الموظفين",
     "DEPARTMENT": "الإدارة",
     "EMPLOYEE_NAME": "اسم الموظف",
     "EMPLOYEE_NAME_ARABIC": "اسم الموظف بالعربية",
@@ -248,7 +253,7 @@
     "MAX_LENGTH_NAME": "الاسم لا يمكن أن يتجاوز 100 حرف"
   },
   "HOLIDAYS_PAGE": {
-    "HOLIDAYS_LIST": "قائمة الأجازات",
+    "HOLIDAYS_LIST": "الإجازات والأعياد",
     "HOLIDAY_NAME_ARABIC": "مسمى العطلة بالعربية",
     "HOLIDAY_NAME_ENGLISH": "مسمى العطلة بالانجليزية",
     "START_DATE": "تاريخ البدء",
@@ -260,18 +265,16 @@
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "DATE": "التاريخ",
     "CODE": "الرقم التسلسلي",
-    "FROM": "التاريخ (من)",
-    "TO": "التاريخ (إلى)",
     "HOLIDAY": "العطلة"
   },
   "PERMISSION_PAGE": {
-    "PERMISSIONS": "الأذونات",
-    "MY_REQUESTS": "طلباتي",
-    "INCOMING_REQUESTS": "الطلبات الواردة",
+    "PERMISSIONS": "الاستئذانات",
+    "MY_REQUESTS": "سجل طلباتي",
+    "INCOMING_REQUESTS": "طلبات الاستئذان الواردة",
     "PERMISSION_TYPE": "نوع الإذن",
     "PERMISSION_DATE": "تاريخ الإذن",
     "PERMISSION_STATUS": "حالة الطلب",
-    "PERMISSION_LIST": "قائمة الأذونات",
+    "PERMISSION_LIST": "قائمة الاستئذانات",
     "PERMISSION_DATA": "بيانات الإذن",
     "PERMISSION_REASON": "سبب الإذن",
     "PERMISSION_DESCRIPTION": "وصف الإذن",
@@ -311,8 +314,10 @@
     "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "الوقت (من) يجب أن يكون أقل من الوقت (إلى)"
   },
   "ATTENDANCE_LOG_PAGE": {
-    "ATTENDANCE_LOGS_TITLE": "حركات حضور وانصراف الموظفين",
-    "ATTENDANCE_LOGS_LIST": "قائمة حركات الحضور والانصراف للموظفين",
+    "MY_ATTENDANCE_LOGS": "سجل حضوري",
+    "OTHERS_ATTENDANCE_LOGS": "سجل حضور الموظفين التابعين",
+    "ATTENDANCE_LOGS_TITLE": "سجل حضور وانصراف",
+    "ATTENDANCE_LOGS_LIST": "قائمة سجلات الحضور والانصراف",
     "DEPARTMENT": "الإدارة",
     "EMPLOYEE": "اسم الموظف",
     "SWIPE_DATE": "تاريخ البصمة",
@@ -351,24 +356,24 @@
   "MENU": {
     "DASHBOARD": "لوحة المعلومات",
     "ATTENDANCE_REPORT": "تقرير الحضور والانصراف",
-    "ATTENDANCE_LOGS": "حركات الحضور والانصراف",
+    "ATTENDANCE_LOGS": "سجل الحضور والانصراف",
     "DEPARTMENTS": "الإدارات",
-    "EMPLOYEES": "قائمة الموظفين",
+    "EMPLOYEES": "الموظفون",
     "PRESENCE_INQUIRIES": "مسائلات توثيق التواجد",
-    "PERMISSIONS": "الأذونات",
+    "PERMISSIONS": "الاستئذانات",
     "ASSIGNED_EMPLOYEES": "الموظفون المُكلفون",
     "WORK_SHIFT_TEMP": "ورديات العمل المؤقتة",
     "WORK_SHIFT_ASSIGNMENT": "إسناد ورديات العمل",
-    "HOLIDAYS": "قائمة الإجازات والأعياد",
+    "HOLIDAYS": "الإجازات والأعياد",
     "WORK_SHIFT": "ورديات العمل",
     "WORK_SHIFT_SETTINGS": "إعدادات ورديات العمل",
     "SETTINGS": "الإعدادات",
-    "PERMISSION_REASONS": "اسباب الأذونات",
+    "PERMISSION_REASONS": "اسباب الاستئذانات",
     "NOTIFICATION_CHANNELS": "إعدادات الإشعارات",
     "NATIONALITIES": "قائمة الجنسيات",
     "CITIES": "قائمة المدن",
     "REGIONS": "قائمة المناطق",
-    "PERMISSIONS_SETTINGS": "إعدادات الأذونات"
+    "PERMISSIONS_SETTINGS": "إعدادات الاستئذانات"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "إعدادات الإشعارات",

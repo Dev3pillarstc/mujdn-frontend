@@ -1,6 +1,7 @@
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Department } from '@/models/features/lookups/department/department';
 import { LanguageService } from '@/services/shared/language.service';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   effect,
@@ -19,7 +20,7 @@ import { Tree } from 'primeng/tree';
 
 @Component({
   selector: 'app-department-tree',
-  imports: [Tree, TranslatePipe],
+  imports: [Tree, TranslatePipe, CommonModule],
   standalone: true,
   templateUrl: './department-tree.component.html',
   styleUrl: './department-tree.component.scss',
@@ -30,19 +31,16 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
   @Input() departmentsTree: Department[] = [];
   @Input() selectedDepartmentSignal!: Signal<Department | null>;
   @Output() departmentSelected = new EventEmitter<Department>();
+  @Output() closed = new EventEmitter<void>();
 
   languageService = inject(LanguageService);
-
+  ngOnInit() {
+    this.translateDepartmentName();
+  }
   // React to changes in the selectedDepartmentSignal using effect
   private readonly selectedDepartmentEffect = effect(() => {
     const selectedDepartment = this.selectedDepartmentSignal();
-    if (selectedDepartment && this.departmentsTree.length > 0) {
-      // Find the root department in the tree
-      const allDepartments = this.extractAllDepartmentsFromTree(this.departmentsTree);
-      const rootDepartment = this.findRootDepartment(selectedDepartment, allDepartments);
-      if (rootDepartment) {
-        this.departments = [this.mapDepartmentToTreeNode(rootDepartment)];
-      }
+    if (selectedDepartment && this.departments.length > 0) {
       this.selectedNode = this.findTreeNodeByDepartment(selectedDepartment, this.departments);
     }
   });
@@ -73,17 +71,24 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
       const rootDepartment = this.findRootDepartment(selectedDepartment, allDepartments);
       if (rootDepartment) {
         this.departments = [this.mapDepartmentToTreeNode(rootDepartment)];
+        this.expandAllNodes(this.departments); // ✅ expand here
       }
       this.selectedNode = this.findTreeNodeByDepartment(selectedDepartment, this.departments);
     } else if (this.departmentsTree.length > 0) {
-      // If nothing is selected, show the whole tree
       this.departments = this.mapDepartmentToTreeNodeArray(this.departmentsTree);
+      this.expandAllNodes(this.departments); // ✅ expand here too
       this.selectedNode = null;
     }
   }
 
-  ngOnInit() {
-    this.translateDepartmentName();
+  private expandAllNodes(nodes: TreeNode[]): void {
+    if (!nodes) return;
+    for (let node of nodes) {
+      node.expanded = true;
+      if (node.children?.length) {
+        this.expandAllNodes(node.children);
+      }
+    }
   }
 
   private mapDepartmentToTreeNodeArray(departments: Department[]): TreeNode[] {
@@ -133,25 +138,27 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
   }
 
   updateTreeLabels() {
-    this.departments = this.departments.map((node) => ({
-      ...node,
-      label:
+    const updateNodeLabelRecursively = (node: TreeNode): TreeNode => {
+      const dept = node.data as Department;
+      const label =
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-          ? node.data.nameEn
-          : node.data.nameAr,
-      children: node.children?.map((child) => ({
-        ...child,
-        label:
-          this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-            ? child.data.nameEn
-            : child.data.nameAr,
-      })),
-    }));
+          ? dept.nameEn
+          : dept.nameAr;
+
+      return {
+        ...node,
+        label,
+        children: node.children?.map(updateNodeLabelRecursively) || [],
+      };
+    };
+
+    this.departments = this.departments.map(updateNodeLabelRecursively);
   }
 
   onNodeSelect(event: any) {
     if (event.node) {
-      this.departmentSelected.emit(event.node.data); // Emit the selected node to the parent
+      event.node.expanded = true; // Re-expand the selected node if it collapsed
+      this.departmentSelected.emit(event.node.data);
     }
   }
 
@@ -161,5 +168,8 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
         this.updateTreeLabels();
       }
     });
+  }
+  toggleTree() {
+    this.closed.emit(); // بلغ الأب بس
   }
 }

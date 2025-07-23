@@ -62,7 +62,7 @@ export class AlertService {
       const userDataCookie = this.cookieService.getCookie(COOKIE_ENUM.USER_DATA);
       if (!userDataCookie) {
         this.authService.setUser(undefined);
-        this.authService.logout().subscribe(); // 🔁 You must implement this in AuthService
+        // this.authService.logout().subscribe(); // 🔁 You must implement this in AuthService
         this.router.navigate(['/auth/login']);
         this.matDialog.closeAll();
       }

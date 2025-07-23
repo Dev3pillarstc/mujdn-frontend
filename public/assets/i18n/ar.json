@@ -91,7 +91,8 @@
     "STORED_EXTERNAL_ERROR": "حدث خطأ داخلي في الخادم في المخزن",
     "HOME": "الصفحة الرئيسية",
     "FROM": "التاريخ (من)",
-    "TO": "التاريخ (إلى)"
+    "TO": "التاريخ (إلى)",
+    "LOG_OUT": "تسجيل الخروج"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -122,7 +123,7 @@
     "PERMISSION_REASON_ADDED_SUCCESSFULLY": "تم إضافة سبب الإذن بنجاح",
     "PERMISSION_REASON_UPDATED_SUCCESSFULLY": "تم تحديث سبب الإذن بنجاح",
     "BACK_TO_PERMISSION_REASONS": "العودة إلى أسباب الإذن",
-    "PERMISSIONS_SETTINGS": "إعدادات الأذونات",
+    "PERMISSIONS_SETTINGS": "إعدادات الاستئذانات",
     "PERMISSION_REASON": "سبب الإذن"
   },
   "CITIES_PAGE": {
@@ -273,7 +274,7 @@
     "PERMISSION_TYPE": "نوع الإذن",
     "PERMISSION_DATE": "تاريخ الإذن",
     "PERMISSION_STATUS": "حالة الطلب",
-    "PERMISSION_LIST": "قائمة الأذونات",
+    "PERMISSION_LIST": "قائمة الاستئذانات",
     "PERMISSION_DATA": "بيانات الإذن",
     "PERMISSION_REASON": "سبب الإذن",
     "PERMISSION_DESCRIPTION": "وصف الإذن",
@@ -309,8 +310,10 @@
     "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "الوقت (من) يجب أن يكون أقل من الوقت (إلى)"
   },
   "ATTENDANCE_LOG_PAGE": {
-    "ATTENDANCE_LOGS_TITLE": "حركات حضور وانصراف الموظفين",
-    "ATTENDANCE_LOGS_LIST": "قائمة حركات الحضور والانصراف للموظفين",
+    "MY_ATTENDANCE_LOGS": "سجل حضوري",
+    "OTHERS_ATTENDANCE_LOGS": "سجل حضور الموظفين التابعين",
+    "ATTENDANCE_LOGS_TITLE": "سجل حضور وانصراف",
+    "ATTENDANCE_LOGS_LIST": "قائمة سجلات الحضور والانصراف",
     "DEPARTMENT": "الإدارة",
     "EMPLOYEE": "اسم الموظف",
     "SWIPE_DATE": "تاريخ البصمة",
@@ -349,11 +352,11 @@
   "MENU": {
     "DASHBOARD": "لوحة المعلومات",
     "ATTENDANCE_REPORT": "تقرير الحضور والانصراف",
-    "ATTENDANCE_LOGS": "حركات الحضور والانصراف",
+    "ATTENDANCE_LOGS": "سجل الحضور والانصراف",
     "DEPARTMENTS": "الإدارات",
     "EMPLOYEES": "قائمة الموظفين",
     "PRESENCE_INQUIRIES": "مسائلات توثيق التواجد",
-    "PERMISSIONS": "الأذونات",
+    "PERMISSIONS": "الاستئذانات",
     "ASSIGNED_EMPLOYEES": "الموظفون المُكلفون",
     "WORK_SHIFT_TEMP": "ورديات العمل المؤقتة",
     "WORK_SHIFT_ASSIGNMENT": "إسناد ورديات العمل",
@@ -361,12 +364,12 @@
     "WORK_SHIFT": "ورديات العمل",
     "WORK_SHIFT_SETTINGS": "إعدادات ورديات العمل",
     "SETTINGS": "الإعدادات",
-    "PERMISSION_REASONS": "اسباب الأذونات",
+    "PERMISSION_REASONS": "اسباب الاستئذانات",
     "NOTIFICATION_CHANNELS": "إعدادات الإشعارات",
     "NATIONALITIES": "قائمة الجنسيات",
     "CITIES": "قائمة المدن",
     "REGIONS": "قائمة المناطق",
-    "PERMISSIONS_SETTINGS": "إعدادات الأذونات"
+    "PERMISSIONS_SETTINGS": "إعدادات الاستئذانات"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "إعدادات الإشعارات",

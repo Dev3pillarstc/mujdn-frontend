@@ -66,6 +66,7 @@
                 name="accountStatus"
                 [optionLabel]="optionLabel"
                 optionValue="id"
+                [showClear]="true"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -84,6 +85,7 @@
                 class="w-full peer"
                 id="department"
                 optionValue="id"
+                [showClear]="true"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -137,6 +139,7 @@
                 id="fingerPrint"
                 [optionLabel]="optionLabel"
                 optionValue="id"
+                [showClear]="true"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -153,6 +156,7 @@
                 [showIcon]="true"
                 class="peer block w-full"
                 inputId="joinDate"
+                [showClear]="true"
               >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
@@ -203,8 +207,8 @@
                 <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate }}</th>
+                <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.ACTIONS' | translate }}</th>
@@ -225,8 +229,8 @@
                     }
                   </div>
                 </td>
-                <td>{{ user.jobTitleEn }}</td>
                 <td>{{ user.jobTitleAr }}</td>
+                <td>{{ user.jobTitleEn }}</td>
                 <td>
                   <div class="flex justify-center gap-2">
                     @if (user.isActive) {

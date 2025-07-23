@@ -93,7 +93,8 @@
     "STORED_EXTERNAL_ERROR": "An internal server error occurred in stored",
     "HOME": "Home",
     "FROM": "Date (From)",
-    "TO": "Date (To)"
+    "TO": "Date (To)",
+    "LOG_OUT": "Log Out"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -313,6 +314,8 @@
     "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "Time from must be less than time to"
   },
   "ATTENDANCE_LOG_PAGE": {
+    "MY_ATTENDANCE_LOGS": "My Attendance Logs",
+    "OTHERS_ATTENDANCE_LOGS": "Others Attendance Logs",
     "ATTENDANCE_LOGS_TITLE": "Attendance Logs",
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",
     "DEPARTMENT": "Department",

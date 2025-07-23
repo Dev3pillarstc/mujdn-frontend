@@ -75,9 +75,10 @@ export default class HolidaysListComponent extends BaseListComponent<
 
   protected override mapModelToExcelRow(model: Holiday): { [key: string]: any } {
     return {
-      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY')]: model.getName(),
-      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.getStartDate(),
-      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.getEndDate(),
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC')]: model.nameAr,
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH')]: model.nameEn,
+      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.startDate,
+      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.endDate,
     };
   }
   showAddEditButtons() {
@@ -88,4 +89,16 @@ export default class HolidaysListComponent extends BaseListComponent<
     dialogConfig.data = { notes: notes };
     this.matDialog.open(NotesPopupComponent as any, dialogConfig);
   }
+  set dateFrom(value: Date | null) {
+    this._dateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.dateTo && value && this.filterModel.dateTo < value) {
+      this.filterModel.dateTo = null; // or set it to value
+    }
+  }
+  get dateFrom(): Date | null {
+    return this._dateFrom;
+  }
+  private _dateFrom: Date | null = null;
 }

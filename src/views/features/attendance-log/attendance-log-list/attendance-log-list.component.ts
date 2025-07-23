@@ -116,7 +116,6 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
 
   showOthersAttendanceLogs() {
     return (
-      this.authService.isSecurityLeader ||
       this.authService.isDepartmentManager ||
       this.authService.isHROfficer ||
       this.authService.isAdmin

@@ -1,6 +1,7 @@
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Department } from '@/models/features/lookups/department/department';
 import { LanguageService } from '@/services/shared/language.service';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   effect,
@@ -19,7 +20,7 @@ import { Tree } from 'primeng/tree';
 
 @Component({
   selector: 'app-department-tree',
-  imports: [Tree, TranslatePipe],
+  imports: [Tree, TranslatePipe, CommonModule],
   standalone: true,
   templateUrl: './department-tree.component.html',
   styleUrl: './department-tree.component.scss',
@@ -30,6 +31,7 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
   @Input() departmentsTree: Department[] = [];
   @Input() selectedDepartmentSignal!: Signal<Department | null>;
   @Output() departmentSelected = new EventEmitter<Department>();
+  @Output() closed = new EventEmitter<void>();
 
   languageService = inject(LanguageService);
   ngOnInit() {
@@ -166,5 +168,8 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
         this.updateTreeLabels();
       }
     });
+  }
+  toggleTree() {
+    this.closed.emit(); // بلغ الأب بس
   }
 }

@@ -84,7 +84,8 @@ export default class DepartmentListComponent extends BaseListComponent<
   alertService = inject(AlertService);
   selectedDepartmentSignal = signal<Department | null>(null);
   rootDepartment: Department | null = null;
-
+  showTree = true;
+  showDepartmentTree = true;
   initListComponent(): void {
     this.mapDataFromResolver();
     // Set the grandparent department in the signal
@@ -314,5 +315,8 @@ export default class DepartmentListComponent extends BaseListComponent<
 
   getTranslatedDepartmentLabel(): string {
     return this.translateService.instant('MENU.DEPARTMENTS');
+  }
+  onTreeClosed() {
+    this.showDepartmentTree = false;
   }
 }

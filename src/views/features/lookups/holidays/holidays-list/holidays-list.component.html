@@ -168,11 +168,13 @@
                     </div>
                   </td>
                 } @else {
-                  <div class="actions flex gap-2">
-                    <button (click)="openDataDialog(holiday.notes)" class="table-action-gray-btn">
-                      <img alt="" src="assets/icons/view-action.svg" />
-                    </button>
-                  </div>
+                  <td>
+                    <div class="actions flex gap-2">
+                      <button (click)="openDataDialog(holiday.notes)" class="table-action-gray-btn">
+                        <img alt="" src="assets/icons/view-action.svg" />
+                      </button>
+                    </div>
+                  </td>
                 }
               </tr>
             </ng-template>

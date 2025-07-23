@@ -30,7 +30,11 @@
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.EMAIL' | translate }}</span>
-          <span class="font-semibold text-white">{{ model.email || 'N/A' }}</span>
+          <span
+            class="font-semibold text-white whitespace-nowrap overflow-hidden text-ellipsis"
+            [title]="model.email || 'N/A'"
+            >{{ model.email || 'N/A' }}</span
+          >
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-white">{{ 'EMPLOYEES_PAGE.PHONE_NUMBER' | translate }}</span>

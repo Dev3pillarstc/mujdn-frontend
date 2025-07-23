@@ -235,15 +235,15 @@ export function strongPassword(): ValidatorFn {
     return valid
       ? null
       : {
-        strongPassword: {
-          hasUpperCase,
-          hasLowerCase,
-          hasDigit,
-          hasSpecial,
-          isLongEnough,
-          isShortEnough,
-        },
-      };
+          strongPassword: {
+            hasUpperCase,
+            hasLowerCase,
+            hasDigit,
+            hasSpecial,
+            isLongEnough,
+            isShortEnough,
+          },
+        };
   };
 }
 

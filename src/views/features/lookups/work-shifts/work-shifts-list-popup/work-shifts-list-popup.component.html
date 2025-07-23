@@ -152,9 +152,7 @@
           </label>
         </div> -->
 
-        <!-- hidden for release 1 -->
-
-        <!-- <div class="lg:col-span-2">
+        <div class="lg:col-span-2">
           <label class="label" for="max-attendance-time"> مدة السماح للحضور (دق) </label>
           <p-inputnumber
             [showButtons]="true"
@@ -187,10 +185,10 @@
               <span class="pi pi-minus"></span>
             </ng-template>
           </p-inputnumber>
-        </div> -->
+        </div>
       </div>
       <!-- hidden for release 1 -->
-      <!-- <div
+      <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
       >
         <div class="lg:col-span-6">
@@ -210,14 +208,14 @@
           >
           <p class="text-[16px] font-semibold text-[#161616]">وردية مسائية</p>
         </div>
-      </div> -->
+      </div>
       <div class="actions mt-6 flex items-center justify-between gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
         <div class="flex items-center justify-end gap-4">
           <!-- hidden for release 1 -->
-          <!-- <button (click)="close()" class="btn black-btn" (click)="openDurationDialog()">
+          <button (click)="close()" class="btn black-btn" (click)="openDurationDialog()">
             تعيين ك وردية افتراضية
-          </button> -->
+          </button>
           <button (click)="save$.next()" class="btn green-btn">
             {{ 'COMMON.SAVE' | translate }}
           </button>

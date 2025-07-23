@@ -285,7 +285,9 @@
     "APPROVAL_DATE": "تاريخ الموافقة",
     "REJECTION_DATE": "تاريخ الرفض",
     "APPROVE": "موافقة",
-    "DECLINE": "رفض"
+    "DECLINE": "رفض",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "DEPARTMENT": "الادارة" 
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "ورديات العمل",

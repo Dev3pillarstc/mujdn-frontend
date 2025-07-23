@@ -169,11 +169,12 @@
         <button (click)="exportPdf()" class="table-head-action-btn">
           <img class="w-6 h-6" alt="" src="assets/icons/file.png" />
         </button>
-
-        <button (click)="openDialog()" class="btn green-btn flex items-center">
-          <img alt="" src="assets/icons/plus.svg" />
-          <span>{{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_ATTENDANCE_LOG' | translate }}</span>
-        </button>
+        @if (authService.isAdmin || authService.isHROfficer) {
+          <button (click)="openDialog()" class="btn green-btn flex items-center">
+            <img alt="" src="assets/icons/plus.svg" />
+            <span>{{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_ATTENDANCE_LOG' | translate }}</span>
+          </button>
+        }
       </div>
     </div>
     @if (list && list.length > 0) {
@@ -187,7 +188,9 @@
             <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_AR' | translate }}</th>
             <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_EN' | translate }}</th>
             <th>{{ 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate }}</th>
-            <th>{{ 'ATTENDANCE_LOG_PAGE.ACTIONS' | translate }}</th>
+            @if (authService.isAdmin || authService.isHROfficer) {
+              <th>{{ 'ATTENDANCE_LOG_PAGE.ACTIONS' | translate }}</th>
+            }
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-attendanceLog>
@@ -232,21 +235,23 @@
                 </span>
               </div>
             </td>
-            <td>
-              <div class="actions flex gap-2">
-                @if (!attendanceLog.isRawData) {
-                  <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
-                    <img src="assets/icons/edit-action.svg" alt="" />
-                  </button>
-                  <button
-                    (click)="deleteModel(attendanceLog.id, true)"
-                    class="table-action-red-btn"
-                  >
-                    <img src="assets/icons/delete-action.svg" alt="" />
-                  </button>
-                }
-              </div>
-            </td>
+            @if (authService.isAdmin || authService.isHROfficer) {
+              <td>
+                <div class="actions flex gap-2">
+                  @if (!attendanceLog.isRawData) {
+                    <button (click)="openDialog(attendanceLog)" class="table-action-gray-btn">
+                      <img src="assets/icons/edit-action.svg" alt="" />
+                    </button>
+                    <button
+                      (click)="deleteModel(attendanceLog.id, true)"
+                      class="table-action-red-btn"
+                    >
+                      <img src="assets/icons/delete-action.svg" alt="" />
+                    </button>
+                  }
+                </div>
+              </td>
+            }
           </tr>
         </ng-template>
       </p-table>

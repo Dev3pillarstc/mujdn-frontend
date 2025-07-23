@@ -35,6 +35,7 @@ import autoTable from 'jspdf-autotable';
 import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ibm-plex-font';
 import { formatSwipeTime } from '@/utils/general-helper';
 import { CustomValidators } from '@/validators/custom-validators';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-others-attendance-log-list',
@@ -73,6 +74,7 @@ export default class OthersAttendanceLogListComponent
   departmentService = inject(DepartmentService);
   userService = inject(UserService);
   attendanceService = inject(AttendanceService);
+  authService = inject(AuthService);
 
   actionList: MenuItem[] = [];
   channels: BaseLookupModel[] = [];

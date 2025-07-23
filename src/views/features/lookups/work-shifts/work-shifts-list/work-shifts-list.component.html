@@ -90,7 +90,8 @@
               <th>{{ 'WORK_SHIFTS.MAX_ATTENDANCE_TIME' | translate }}</th>
               <th>{{ 'WORK_SHIFTS.MAX_LEAVE_TIME' | translate }}</th>
               <th>{{ 'WORK_SHIFTS.TIME_FROM_TO' | translate }}</th>
-              <th>الوردية الافتراضية</th>
+              <!-- hidden for release 1 -->
+              <!-- <th>الوردية الافتراضية</th> -->
               <th>{{ 'COMMON.ACTION' | translate }}</th>
             </tr>
           </ng-template>
@@ -101,7 +102,8 @@
               <td>{{ shift.attendanceBuffer }}</td>
               <td>{{ shift.leaveBuffer }}</td>
               <td>{{ getFormattedTimeRange(shift.timeFrom, shift.timeTo) }}</td>
-              <td>
+              <!-- hidden for release 1 -->
+              <!-- <td>
                 <div class="flex items-center justify-center">
                   <svg
                     width="24"
@@ -124,7 +126,7 @@
                     />
                   </svg>
                 </div>
-              </td>
+              </td> -->
               <td>
                 <div class="actions flex gap-2">
                   <button (click)="addOrEditModel(shift)" class="table-action-gray-btn">

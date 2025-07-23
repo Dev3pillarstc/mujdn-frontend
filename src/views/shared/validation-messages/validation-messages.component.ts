@@ -1,7 +1,5 @@
 import { Component, inject, input, OnInit } from '@angular/core';
-import { Component, inject, input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';

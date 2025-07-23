@@ -204,7 +204,7 @@
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   },
   "EMPLOYEES_PAGE": {
-    "EMPLOYEES_LIST": "قائمة الموظفين",
+    "EMPLOYEES_LIST": "الموظفين",
     "DEPARTMENT": "الإدارة",
     "EMPLOYEE_NAME": "اسم الموظف",
     "EMPLOYEE_NAME_ARABIC": "اسم الموظف بالعربية",
@@ -253,7 +253,7 @@
     "MAX_LENGTH_NAME": "الاسم لا يمكن أن يتجاوز 100 حرف"
   },
   "HOLIDAYS_PAGE": {
-    "HOLIDAYS_LIST": "قائمة الأجازات",
+    "HOLIDAYS_LIST": "الإجازات والأعياد",
     "HOLIDAY_NAME_ARABIC": "مسمى العطلة بالعربية",
     "HOLIDAY_NAME_ENGLISH": "مسمى العطلة بالانجليزية",
     "START_DATE": "تاريخ البدء",
@@ -354,13 +354,13 @@
     "ATTENDANCE_REPORT": "تقرير الحضور والانصراف",
     "ATTENDANCE_LOGS": "سجل الحضور والانصراف",
     "DEPARTMENTS": "الإدارات",
-    "EMPLOYEES": "قائمة الموظفين",
+    "EMPLOYEES": "الموظفون",
     "PRESENCE_INQUIRIES": "مسائلات توثيق التواجد",
     "PERMISSIONS": "الاستئذانات",
     "ASSIGNED_EMPLOYEES": "الموظفون المُكلفون",
     "WORK_SHIFT_TEMP": "ورديات العمل المؤقتة",
     "WORK_SHIFT_ASSIGNMENT": "إسناد ورديات العمل",
-    "HOLIDAYS": "قائمة الإجازات والأعياد",
+    "HOLIDAYS": "الإجازات والأعياد",
     "WORK_SHIFT": "ورديات العمل",
     "WORK_SHIFT_SETTINGS": "إعدادات ورديات العمل",
     "SETTINGS": "الإعدادات",

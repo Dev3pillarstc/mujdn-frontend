@@ -280,6 +280,7 @@
     "PERMISSION_DATA": "بيانات الإذن",
     "PERMISSION_REASON": "سبب الإذن",
     "PERMISSION_DESCRIPTION": "وصف الإذن",
+    "NOTES": "ملاحظات",
     "ADD_NEW_PERMISSION": "إضافة طلب استئذان جديد",
     "EDIT_PERMISSION": "تعديل طلب الاستئذان",
     "NEW_PERMISSION": " طلب استئذان جديد",
@@ -288,8 +289,9 @@
     "REJECTION_DATE": "تاريخ الرفض",
     "APPROVE": "موافقة",
     "DECLINE": "رفض",
+    "UNDER_REVIEW": "قيد المراجعة",
     "EMPLOYEE_NAME": "اسم الموظف",
-    "DEPARTMENT": "الادارة" 
+    "DEPARTMENT": "الادارة"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "ورديات العمل",

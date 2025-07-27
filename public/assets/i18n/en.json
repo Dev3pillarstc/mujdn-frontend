@@ -276,7 +276,7 @@
   "PERMISSION_PAGE": {
     "PERMISSIONS": "Permissions",
     "MY_REQUESTS": "My Requests Log",
-    "INCOMING_REQUESTS": "Incoming Permission Requests",
+    "INCOMING_REQUESTS": "Incoming Requests",
     "PERMISSION_TYPE": "Permission Type",
     "PERMISSION_DATE": "Permission Date",
     "PERMISSION_STATUS": "Request Status",
@@ -284,6 +284,7 @@
     "PERMISSION_DATA": "Permission Data",
     "PERMISSION_REASON": "Permission Reason",
     "PERMISSION_DESCRIPTION": "Permission Description",
+    "NOTES": "Notes",
     "ADD_NEW_PERMISSION": "Add New Permission",
     "EDIT_PERMISSION": "Edit Permission",
     "NEW_PERMISSION": "New Permission",
@@ -292,8 +293,9 @@
     "REJECTION_DATE": "Rejection Date",
     "APPROVE": "Approve",
     "DECLINE": "Decline",
+    "UNDER_REVIEW": "Under Review",
     "EMPLOYEE_NAME": "Employee Name",
-    "DEPARTMENT": "Department" 
+    "DEPARTMENT": "Department"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",

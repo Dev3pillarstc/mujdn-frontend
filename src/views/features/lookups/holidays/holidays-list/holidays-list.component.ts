@@ -48,7 +48,6 @@ export default class HolidaysListComponent extends BaseListComponent<
 > {
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
-    width: '100%',
     maxWidth: '600px',
   };
   holidayService = inject(HolidayService);
@@ -86,6 +85,7 @@ export default class HolidaysListComponent extends BaseListComponent<
   }
   openDataDialog(notes: string): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.width = this.dialogSize.maxWidth;
     dialogConfig.data = { notes: notes };
     this.matDialog.open(NotesPopupComponent as any, dialogConfig);
   }

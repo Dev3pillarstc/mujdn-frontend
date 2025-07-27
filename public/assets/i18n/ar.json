@@ -214,6 +214,8 @@
     "PHONE_NUMBER": "رقم الجوال",
     "INVALID_PHONE": "رقم الجوال غير صالح",
     "JOIN_DATE": "تاريخ الالتحاق",
+    "JOIN_DATE_FROM": "تاريخ الالتحاق (من)",
+    "JOIN_DATE_TO": "تاريخ الالتحاق (إلى)",
     "ACCOUNT_STATUS": "حالة الحساب",
     "JOB_TITLE": "المسمى الوظيفي",
     "JOB_TITLE_ARABIC": "المسمى الوظيفي بالعربية",

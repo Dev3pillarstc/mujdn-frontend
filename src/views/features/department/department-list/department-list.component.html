@@ -11,14 +11,23 @@
         {{ 'MENU.DEPARTMENTS' | translate }}
       </h3>
     </div>
-    <section class="flex flex-col xl:flex-row gap-6 max-w-full">
+    <section class="flex items-start flex-col xl:flex-row gap-6 max-w-full">
+      <button *ngIf="!showDepartmentTree" (click)="showDepartmentTree = true">
+        <img src="/assets/icons/close-tree.svg" class="w-12" alt="Show Tree" />
+      </button>
       <app-department-tree
+        *ngIf="showDepartmentTree"
+        (closed)="onTreeClosed()"
+        [departmentsTree]="departmentsTree"
         (departmentSelected)="onSelectedDepartmentChange($event)"
         [departmentsTree]="departmentsTree"
         [selectedDepartmentSignal]="selectedDepartmentSignal"
       >
       </app-department-tree>
-      <div class="w-full xl:w-[calc(100%-274px)]">
+      <div
+        [class.w-full]="!showDepartmentTree"
+        [class.xl:w-[calc(100%-274px)]]="showDepartmentTree"
+      >
         <app-department-header
           (departmentDeleted)="openConfirmation($event)"
           (dialogClosed)="onDepartmentChange()"

@@ -18,15 +18,16 @@ aside {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer; // enable selection
   }
 
   .p-tree-node-content {
     padding: 8px 16px !important;
+    padding-inline-start: 8px !important;
     border-radius: 4px;
     background-color: #fff;
-    padding-inline-start: 8px !important;
-    cursor: pointer;
     position: relative;
+    cursor: pointer;
 
     &::before {
       position: absolute;
@@ -39,7 +40,6 @@ aside {
       transition: 0.2s;
       transform: translateY(-50%);
       content: '';
-      background-color: #fff;
     }
 
     &:hover {
@@ -51,10 +51,15 @@ aside {
     }
   }
 
+  .p-tree-toggler {
+    cursor: pointer; // arrow should always be clickable
+  }
+
   .p-tree-node-leaf > .p-tree-node-content .p-tree-node-toggle-button {
     width: 0px !important;
   }
-  .p-tree-node[aria-expanded='false'] {
+
+  .p-tree-node[aria-expanded='true'] {
     .p-icon {
       &:dir(rtl) {
         transform: rotate(180deg);

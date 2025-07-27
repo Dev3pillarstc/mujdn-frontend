@@ -20,6 +20,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { Select } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { Observable } from 'rxjs';
+import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 
 interface Adminstration {
   type: string;
@@ -34,6 +35,7 @@ interface Adminstration {
     TranslatePipe,
     ReactiveFormsModule,
     ValidationMessagesComponent,
+    RequiredMarkerDirective,
   ],
   templateUrl: './add-permission-popup.component.html',
   styleUrl: './add-permission-popup.component.scss',

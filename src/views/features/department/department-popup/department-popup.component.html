@@ -169,6 +169,8 @@
               class="w-full peer"
               id="managerSelect"
               formControlName="fkManagerId"
+              [showClear]="true"
+              [disabled]="usersProfiles.length === 0"
             >
             </p-select>
             <span

@@ -1,4 +1,4 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
@@ -47,7 +47,7 @@
               'PERMISSION_PAGE.APPROVAL_DATE' | translate
             }}</span>
             <span class="text-[#161616] font-semibold">
-              <span>{{ model.actionDate ? (model.actionDate | date) : '' }}</span>
+              <span>{{ model.actionDate ? (model.actionDate | date: 'dd/MM/yyyy') : '' }}</span>
             </span>
           }
           @if (model.fkStatusId == statusEnum.Rejected) {
@@ -55,7 +55,7 @@
               'PERMISSION_PAGE.REJECTION_DATE' | translate
             }}</span>
             <span class="text-[#161616] font-semibold">
-              <span>{{ model.actionDate ? (model.actionDate | date) : '' }}</span>
+              <span>{{ model.actionDate ? (model.actionDate | date: 'dd/MM/yyyy') : '' }}</span>
             </span>
           }
         </div>
@@ -81,7 +81,9 @@
           <span class="text-sm text-[#6c737f]"
             >{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}
           </span>
-          <span class="font-semibold text-[#161616]">{{ model.permissionDate | date }}</span>
+          <span class="font-semibold text-[#161616]">{{
+            model.permissionDate | date: 'dd/MM/yyyy'
+          }}</span>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]"
@@ -99,16 +101,24 @@
             <span>{{ model.description }}</span>
           </span>
         </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-[#6c737f]"
+            >{{ 'DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME' | translate }}
+          </span>
+          <span class="font-semibold text-[#161616]">
+            <span>{{ model.getPermissionDepartmentName() }}</span>
+          </span>
+        </div>
       </div>
     </div>
     <div class="actions mt-6 flex items-center justify-between gap-4">
       <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
       @if (model.canTakeAction) {
         <div class="flex gap-2">
-          <button class="btn red-btn" (click)="rejectPermissionStatus()">
+          <button class="btn red-btn" (click)="rejectPermission()">
             {{ 'PERMISSION_PAGE.DECLINE' | translate }}
           </button>
-          <button class="btn green-btn" (click)="acceptPermissionStatus()">
+          <button class="btn green-btn" (click)="acceptPermission()">
             {{ 'PERMISSION_PAGE.APPROVE' | translate }}
           </button>
         </div>

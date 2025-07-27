@@ -7,9 +7,11 @@ const defaultLengths = {
   PASSWORD_MAX: 50,
   SHORT_NAME_MAX: 30,
   ARABIC_NAME_MAX: 250,
+  REGION_NAME_MAX: 100,
   ENGLISH_NAME_MAX: 250,
+  NOTES: 2000,
   EMAIL_MAX: 200,
-  PHONE_NUMBER_MAX: 20,
+  PHONE_NUMBER_MAX: 15,
   ADDRESS_MAX: 1000,
   QID_MIN: 11,
   QID_MAX: 11,
@@ -209,7 +211,7 @@ export const validationPatterns: any = {
   HAS_LETTERS: new RegExp(
     /^[\u0621-\u064A0-9\u0660-\u0669\u0621-\u064Aa-zA-Z0-9]*[\u0621-\u064Aa-zA-Z ]/
   ),
-  NATIONAL_ID: new RegExp(/^1\d{9}$/),
+  NATIONAL_ID: new RegExp(/^(1|2)\d{9}$/),
 };
 
 export function strongPassword(): ValidatorFn {

@@ -301,6 +301,25 @@
                       ></span>
                     </div>
                     <div class="relative">
+                      <label class="label" for="request-status-select">{{
+                        'PERMISSION_PAGE.PERMISSION_STATUS' | translate
+                      }}</label>
+                      <p-select
+                        [(ngModel)]="filterModel.fkStatusId"
+                        [optionLabel]="getPropertyName()"
+                        [options]="prmissionStatuses"
+                        [showClear]="true"
+                        class="w-full peer"
+                        id="request-status-select"
+                        optionLabel="type"
+                        optionValue="id"
+                        placeholder="{{ 'PERMISSION_PAGE.PERMISSION_STATUS' | translate }}"
+                      ></p-select>
+                      <span
+                        class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                      ></span>
+                    </div>
+                    <div class="relative">
                       <label class="label" for="permission-date-picker">{{
                         'COMMON.FROM' | translate
                       }}</label>
@@ -338,25 +357,6 @@
                           <img alt="" src="assets/icons/calender-icon.svg" />
                         </ng-template>
                       </p-datepicker>
-                      <span
-                        class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                      ></span>
-                    </div>
-                    <div class="relative">
-                      <label class="label" for="request-status-select">{{
-                        'PERMISSION_PAGE.PERMISSION_STATUS' | translate
-                      }}</label>
-                      <p-select
-                        [(ngModel)]="filterModel.fkStatusId"
-                        [optionLabel]="getPropertyName()"
-                        [options]="prmissionStatuses"
-                        [showClear]="true"
-                        class="w-full peer"
-                        id="request-status-select"
-                        optionLabel="type"
-                        optionValue="id"
-                        placeholder="{{ 'PERMISSION_PAGE.PERMISSION_STATUS' | translate }}"
-                      ></p-select>
                       <span
                         class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                       ></span>

@@ -141,7 +141,8 @@
             <th>{{ 'ATTENDANCE_LOG_PAGE.CHANNEL_NAME' | translate }}</th>
             <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_AR' | translate }}</th>
             <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_EN' | translate }}</th>
-            <th>{{ 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate }}</th>
+            <!-- hidden for release 1 -->
+            <!-- <th>{{ 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate }}</th> -->
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-attendanceLog>
@@ -162,7 +163,8 @@
               <td>النظام</td>
               <td>System</td>
             }
-            <td>
+            <!-- hidden for release 1 -->
+            <!-- <td>
               <div
                 [ngClass]="[
                   'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
@@ -183,7 +185,7 @@
                   }}
                 </span>
               </div>
-            </td>
+            </td> -->
           </tr>
         </ng-template>
       </p-table>

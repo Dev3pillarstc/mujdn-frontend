@@ -190,8 +190,9 @@ export default class MyAttendanceLogListComponent
 
         // Transform data for PDF
         const transformedData = allData.map((model) => ({
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
-            this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
+          // hidden for release 1
+          // [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
+          //   this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
           [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
             model.creatorNameEn ?? 'System',
           [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
@@ -293,8 +294,9 @@ export default class MyAttendanceLogListComponent
         model.creatorNameEn ?? 'System',
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
         model.creatorNameAr ?? 'النظام',
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
-        this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
+      // hidden for release 1
+      // [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
+      //   this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
     };
   }
 }

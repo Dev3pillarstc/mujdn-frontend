@@ -61,15 +61,33 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
   }
 
   loadLookups(): void {
-    // Load lookups
-    this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
-      this.departments = res;
-    });
+    // if user is Department manager get getMyDepartmentsLookup and getMyDepartmentUsersLookup
+    if (
+      this.authService.isDepartmentManager &&
+      !this.authService.isAdmin &&
+      !this.authService.isHROfficer
+    ) {
+      this.userService.getMyDepartmentsLookup().subscribe((res: BaseLookupModel[]) => {
+        this.departments = res;
+      });
 
-    this.userService.getUsersWithDepartment().subscribe((res: UsersWithDepartmentLookup[]) => {
-      this.employees = res;
-      this.creators = res; // Same users can be creators
-    });
+      this.userService
+        .getMyDepartmentUsersLookup()
+        .subscribe((res: UsersWithDepartmentLookup[]) => {
+          this.employees = res;
+          this.creators = res;
+        });
+    } else {
+      this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
+        this.departments = res;
+      });
+
+      this.userService.getUsersWithDepartment().subscribe((res: UsersWithDepartmentLookup[]) => {
+        this.employees = res;
+        this.creators = res;
+      });
+    }
+    // Load lookups
   }
 
   setHomeItem(): void {

@@ -34,7 +34,7 @@
     "EDIT": "تعديل",
     "DASHBOARD": "لوحة المعلومات",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
-    "NATIONAL_ID_VALIDATION": "رقم الهوية يجب أن يبدأ ب 1 و يحتوي على 10 أرقام",
+    "NATIONAL_ID_VALIDATION": "رقم الهوية يجب أن يبدأ ب 1 أو 2 ويحتوي على 10 أرقام",
     "MAX_LENGTH_DYNAMIC": "لقد تخطيت الحد الاقصى لطول الحقل",
     "POSITIVE_NUMBER_ONLY": "يجب أن يكون الرقم إيجابي",
     "INVALID_NUMBER": "الرقم غير صحيح",

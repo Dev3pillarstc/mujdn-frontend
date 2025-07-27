@@ -218,8 +218,9 @@ export default class OthersAttendanceLogListComponent
 
         // Transform data for PDF
         const transformedData = allData.map((model) => ({
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
-            this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
+          // hidden for release 1
+          // [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
+          //   this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
           [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
             model.creatorNameEn ?? 'System',
           [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
@@ -265,6 +266,13 @@ export default class OthersAttendanceLogListComponent
             halign: isRTL ? 'right' : 'left',
           },
           margin: isRTL ? { right: 10, left: 0 } : { left: 10, right: 0 },
+          /** 👇 Limit max column width by index */
+          columnStyles: {
+            2: {
+              // index of the column you want to limit, e.g. channelName
+              cellWidth: doc.internal.pageSize.getWidth() * 0.5 - 20, // 50% of width minus margin
+            },
+          },
           didDrawPage: () => {
             const title = isRTL ? 'سجل الحضور' : 'Attendance Log';
             doc.setFont('IBMPlexSansArabic');
@@ -296,8 +304,9 @@ export default class OthersAttendanceLogListComponent
         model.creatorNameEn ?? 'System',
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
         model.creatorNameAr ?? 'النظام',
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
-        this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
+      // hidden for release 1
+      // [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
+      //   this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
     };
   }
 }

@@ -173,6 +173,7 @@ export default class DepartmentListComponent extends BaseListComponent<
     this.filterModel.fkParentDepartmentId = val?.id;
   }
   onSelectedDepartmentChange(event: Department) {
+    this.filterModel = new DepartmentFilter();
     this.selectedDepartmentSignal.set(event);
     this.selectedDepartment = event;
 

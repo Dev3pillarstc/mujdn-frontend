@@ -216,6 +216,7 @@ export default class DepartmentListComponent extends BaseListComponent<
     this.filterModel.fkParentDepartmentId = val?.id;
   }
   onSelectedDepartmentChange(event: Department) {
+    this.filterModel = new DepartmentFilter();
     this.selectedDepartmentSignal.set(event);
     this.selectedDepartment = event;
 
@@ -280,23 +281,26 @@ export default class DepartmentListComponent extends BaseListComponent<
     this.filterModel.fkParentDepartmentId = this.selectedDepartment?.id ?? this.rootDepartment?.id;
     this.loadChildDepartmentsAfterSelect();
     this.loadDepartmentsTree(() => {
-      if (this.selectedDepartment) {
-        this.selectedDepartmentSignal.set(this.selectedDepartment); // ✅ keep selected
+      if (this.selectedDepartment?.id == this.rootDepartment?.id) {
+        this.selectedDepartmentSignal.set(this.rootDepartment); // ✅ keep selected
       } else {
-        this.selectedDepartmentSignal.set(this.rootDepartment);
+        this.selectedDepartmentSignal.set(this.selectedDepartment);
       }
     });
   }
 
   loadDepartmentsTree(callback?: () => void) {
     this.departmentService.getDepartmentTreeAsync().subscribe((tree) => {
-      this.departmentsTree = tree.data;
-      // Update rootDepartment after tree is loaded
+      // Force change detection by creating a new array reference
+      this.departmentsTree = [...tree.data];
+
       this.rootDepartment =
         this.departmentsTree.find((dept: Department) => dept.fkParentDepartmentId == null) ?? null;
+
       if (callback) callback();
     });
   }
+
   override search() {
     this.loadChildDepartmentsAfterSelect();
   }

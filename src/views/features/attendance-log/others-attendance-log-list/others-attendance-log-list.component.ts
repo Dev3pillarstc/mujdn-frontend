@@ -35,6 +35,7 @@ import autoTable from 'jspdf-autotable';
 import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ibm-plex-font';
 import { formatSwipeTime } from '@/utils/general-helper';
 import { CustomValidators } from '@/validators/custom-validators';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-others-attendance-log-list',
@@ -73,6 +74,7 @@ export default class OthersAttendanceLogListComponent
   departmentService = inject(DepartmentService);
   userService = inject(UserService);
   attendanceService = inject(AttendanceService);
+  authService = inject(AuthService);
 
   actionList: MenuItem[] = [];
   channels: BaseLookupModel[] = [];
@@ -185,6 +187,18 @@ export default class OthersAttendanceLogListComponent
 
   getProcessingStatusDotClass(isProcessed: boolean): string {
     return isProcessed ? 'bg-[#085d3a]' : 'bg-[#93370d]';
+  }
+
+  set swipeDateFrom(value: Date | undefined) {
+    this.filterModel.swipeDateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.swipeDateFrom && value && this.filterModel.swipeDateFrom < value) {
+      this.filterModel.swipeDateFrom = value; // or set it to value
+    }
+  }
+  get swipeDateFrom(): Date | undefined {
+    return this.filterModel.swipeDateFrom;
   }
 
   exportPdf(fileName: string = 'data.pdf'): void {

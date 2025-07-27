@@ -131,7 +131,7 @@
                 'EMPLOYEES_PAGE.JOIN_DATE_FROM' | translate
               }}</label>
               <p-datepicker
-                [(ngModel)]="filterModel.joinDateFrom"
+                [(ngModel)]="joinDateFrom"
                 [iconDisplay]="'input'"
                 [placeholder]="'EMPLOYEES_PAGE.JOIN_DATE_FROM' | translate"
                 [showIcon]="true"
@@ -153,6 +153,7 @@
               }}</label>
               <p-datepicker
                 [(ngModel)]="filterModel.joinDateTo"
+                [minDate]="joinDateFrom"
                 [iconDisplay]="'input'"
                 [placeholder]="'EMPLOYEES_PAGE.JOIN_DATE_TO' | translate"
                 [showIcon]="true"

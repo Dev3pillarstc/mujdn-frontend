@@ -274,7 +274,7 @@
   "PERMISSION_PAGE": {
     "PERMISSIONS": "Permissions",
     "MY_REQUESTS": "My Requests Log",
-    "INCOMING_REQUESTS": "Incoming Permission Requests",
+    "INCOMING_REQUESTS": "Incoming Requests",
     "PERMISSION_TYPE": "Permission Type",
     "PERMISSION_DATE": "Permission Date",
     "PERMISSION_STATUS": "Request Status",
@@ -289,7 +289,8 @@
     "APPROVAL_DATE": "Approval Date",
     "REJECTION_DATE": "Rejection Date",
     "APPROVE": "Approve",
-    "DECLINE": "Decline"
+    "DECLINE": "Decline",
+    "UNDER_REVIEW": "Under Review"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",

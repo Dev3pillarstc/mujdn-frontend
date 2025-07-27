@@ -179,7 +179,14 @@
                                 : 'bg-[#912018]',
                           ]"
                         ></span>
-                        <span>{{ permission.getStatusName() }}</span>
+                        <span>
+                          {{
+                            permission.fkStatusId === permissionStatusEnum.New ||
+                            permission.status.id === permissionStatusEnum.FirstAccepted
+                              ? ('PERMISSION_PAGE.UNDER_REVIEW' | translate)
+                              : permission.getStatusName()
+                          }}
+                        </span>
                       </div>
                     </td>
                     <td>

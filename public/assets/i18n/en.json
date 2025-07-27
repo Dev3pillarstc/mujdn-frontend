@@ -291,7 +291,9 @@
     "APPROVAL_DATE": "Approval Date",
     "REJECTION_DATE": "Rejection Date",
     "APPROVE": "Approve",
-    "DECLINE": "Decline"
+    "DECLINE": "Decline",
+    "EMPLOYEE_NAME": "Employee Name",
+    "DEPARTMENT": "Department" 
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",

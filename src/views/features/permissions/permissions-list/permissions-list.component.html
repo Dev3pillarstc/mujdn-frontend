@@ -260,7 +260,9 @@
                       ></span>
                     </div>
                     <div class="relative">
-                      <label class="label" for="employee-name-select">اسم الموظف</label>
+                      <label class="label" for="employee-name-select">{{
+                        'PERMISSION_PAGE.EMPLOYEE_NAME' | translate
+                      }}</label>
                       <p-select
                         [(ngModel)]="filterModel.creationUserId"
                         [optionLabel]="getPropertyName()"
@@ -270,14 +272,16 @@
                         id="employee-name-select"
                         optionLabel="type"
                         optionValue="id"
-                        placeholder="اسم الموظف"
+                        placeholder="{{ 'PERMISSION_PAGE.EMPLOYEE_NAME' | translate }}"
                       ></p-select>
                       <span
                         class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                       ></span>
                     </div>
                     <div class="relative">
-                      <label class="label" for="department-select">الادارة</label>
+                      <label class="label" for="department-select">{{
+                        'PERMISSION_PAGE.DEPARTMENT' | translate
+                      }}</label>
                       <p-select
                         [(ngModel)]="filterModel.fkDepartmentId"
                         [optionLabel]="getPropertyName()"
@@ -287,7 +291,7 @@
                         id="department-select"
                         optionLabel="type"
                         optionValue="id"
-                        placeholder="الادارة"
+                        placeholder="{{ 'PERMISSION_PAGE.DEPARTMENT' | translate }}"
                       ></p-select>
                       <span
                         class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"

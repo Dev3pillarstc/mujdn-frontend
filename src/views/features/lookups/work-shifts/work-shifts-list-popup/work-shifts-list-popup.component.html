@@ -16,8 +16,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
         <div class="lg:col-span-2">
           <label class="label" for="shiftNameAr">{{
-            'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate
-          }}</label>
+              'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate
+            }}</label>
           <div class="relative">
             <input
               [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate"
@@ -36,8 +36,8 @@
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="shiftNameEn">{{
-            'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate
-          }}</label>
+              'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate
+            }}</label>
           <div class="relative">
             <input
               [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate"
@@ -56,23 +56,24 @@
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="time-pick-from">{{
-            'WORK_SHIFTS_POPUP.TIME_FROM' | translate
-          }}</label>
+              'WORK_SHIFTS_POPUP.TIME_FROM' | translate
+            }}</label>
           <div class="relative">
             <p-datepicker
+              [hourFormat]="'12'"
               [iconDisplay]="'input'"
               [placeholder]="'WORK_SHIFTS_POPUP.TIME_FROM' | translate"
               [showIcon]="true"
-              [timeOnly]="true"
+              [showTime]="true"
+              [timeOnly]="false"
               class="peer block w-full"
               formControlName="timeFrom"
               id="time-pick-from"
               inputId="icondisplay"
               name="time-pick-from"
-              [hourFormat]="'12'"
             >
               <ng-template pTemplate="inputicon">
-                <img alt="" src="assets/icons/time-icon.svg" />
+                <img alt="" src="assets/icons/time-icon.svg"/>
               </ng-template>
             </p-datepicker>
             <span
@@ -83,23 +84,24 @@
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="time-pick-to">{{
-            'WORK_SHIFTS_POPUP.TIME_TO' | translate
-          }}</label>
+              'WORK_SHIFTS_POPUP.TIME_TO' | translate
+            }}</label>
           <div class="relative">
             <p-datepicker
+              [hourFormat]="'12'"
               [iconDisplay]="'input'"
               [placeholder]="'WORK_SHIFTS_POPUP.TIME_TO' | translate"
               [showIcon]="true"
-              [timeOnly]="true"
+              [showTime]="true"
+              [timeOnly]="false"
               class="peer block w-full"
               formControlName="timeTo"
               id="time-pick-to"
               inputId="icondisplay"
               name="time-pick-to"
-              [hourFormat]="'12'"
             >
               <ng-template pTemplate="inputicon">
-                <img alt="" src="assets/icons/time-icon.svg" />
+                <img alt="" src="assets/icons/time-icon.svg"/>
               </ng-template>
             </p-datepicker>
             <span
@@ -109,134 +111,120 @@
           <app-validation-messages [control]="timeToControl"></app-validation-messages>
           <app-validation-messages [control]="form"></app-validation-messages>
         </div>
+        <!--        <div class="lg:col-span-2">-->
+        <!--          <label class="label" for="max-attendance-time">{{-->
+        <!--              'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate-->
+        <!--            }}</label>-->
+        <!--          <div class="relative">-->
+        <!--            <input-->
+        <!--              [placeholder]="'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate"-->
+        <!--              class="peer block w-full"-->
+        <!--              fluid="true"-->
+        <!--              formControlName="attendanceBuffer"-->
+        <!--              id="max-attendance-time"-->
+        <!--              name="selectedAdminstration5"-->
+        <!--              pInputText-->
+        <!--              type="number"-->
+        <!--            />-->
+        <!--            <span-->
+        <!--              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"-->
+        <!--            ></span>-->
+        <!--          </div>-->
+        <!--          <app-validation-messages [control]="attendanceBufferControl"></app-validation-messages>-->
+        <!--        </div>-->
         <div class="lg:col-span-2">
           <label class="label" for="max-attendance-time">{{
-            'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate
-          }}</label>
-          <div class="relative">
-            <input
-              [placeholder]="'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate"
-              class="peer block w-full"
-              fluid="true"
-              formControlName="attendanceBuffer"
-              id="max-attendance-time"
-              name="selectedAdminstration5"
-              pInputText
-              type="number"
-            />
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
+              'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate
+            }}</label>
+          <p-inputnumber
+            [inputStyle]="{ width: '3rem' }"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            formControlName="attendanceBuffer"
+            id="max-attendance-time"
+            spinnerMode="horizontal"
+          >
+            <ng-template #incrementbuttonicon>
+              <span class="pi pi-plus"></span>
+            </ng-template>
+            <ng-template #decrementbuttonicon>
+              <span class="pi pi-minus"></span>
+            </ng-template>
+          </p-inputnumber>
           <app-validation-messages [control]="attendanceBufferControl"></app-validation-messages>
         </div>
+        <!--        <div class="lg:col-span-2">-->
+        <!--          <label class="label" for="max-leave-time">{{-->
+        <!--              'WORK_SHIFTS_POPUP.MAX_LEAVE_TIME' | translate-->
+        <!--            }}</label>-->
+        <!--          <div class="relative">-->
+        <!--            <input-->
+        <!--              [placeholder]="'WORK_SHIFTS_POPUP.MAX_LEAVE_TIME' | translate"-->
+        <!--              class="peer block w-full"-->
+        <!--              fluid="true"-->
+        <!--              formControlName="leaveBuffer"-->
+        <!--              id="max-leave-time"-->
+        <!--              name="selectedAdminstration5"-->
+        <!--              pInputText-->
+        <!--              type="number"-->
+        <!--            />-->
+        <!--            <span-->
+        <!--              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"-->
+        <!--            ></span>-->
+        <!--          </div>-->
+        <!--          <app-validation-messages [control]="leaveBufferControl"></app-validation-messages>-->
+        <!--        </div>-->
         <div class="lg:col-span-2">
           <label class="label" for="max-leave-time">{{
-            'WORK_SHIFTS_POPUP.MAX_LEAVE_TIME' | translate
-          }}</label>
-          <div class="relative">
-            <input
-              [placeholder]="'WORK_SHIFTS_POPUP.MAX_LEAVE_TIME' | translate"
-              class="peer block w-full"
-              fluid="true"
-              formControlName="leaveBuffer"
-              id="max-leave-time"
-              name="selectedAdminstration5"
-              pInputText
-              type="number"
-            />
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
+              'WORK_SHIFTS_POPUP.MAX_LEAVE_TIME' | translate
+            }}</label>
+          <p-inputnumber
+            [inputStyle]="{ width: '3rem' }"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            formControlName="leaveBuffer"
+            id="max-leave-time"
+            spinnerMode="horizontal"
+          >
+            <ng-template #incrementbuttonicon>
+              <span class="pi pi-plus"></span>
+            </ng-template>
+            <ng-template #decrementbuttonicon>
+              <span class="pi pi-minus"></span>
+            </ng-template>
+          </p-inputnumber>
           <app-validation-messages [control]="leaveBufferControl"></app-validation-messages>
         </div>
-        <div class="lg:col-span-6 border-t pt-6 border-[#d2d6db]">
-          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-            <input
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-              formControlName="isDefaultShift"
-              type="checkbox"
-            />
-            <svg
-              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              viewBox="0 0 24 24"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span class="text-base font-medium text-[#1f2a37]">{{
-              'WORK_SHIFTS_POPUP.DEFAULT_SHIFT' | translate
-            }}</span>
-          </label>
-        </div>
-
-        <div class="lg:col-span-2">
-          <label class="label" for="max-attendance-time"> مدة السماح للحضور (دق) </label>
-          <p-inputnumber
-            [showButtons]="true"
-            buttonLayout="vertical"
-            spinnerMode="vertical"
-            inputId="vertical"
-            [inputStyle]="{ width: '3rem' }"
-          >
-            <ng-template #incrementbuttonicon>
-              <span class="pi pi-plus"></span>
-            </ng-template>
-            <ng-template #decrementbuttonicon>
-              <span class="pi pi-minus"></span>
-            </ng-template>
-          </p-inputnumber>
-        </div>
-        <div class="lg:col-span-2">
-          <label class="label" for="max-attendance-time"> مدة السماح للانصراف (دق) </label>
-          <p-inputnumber
-            [showButtons]="true"
-            buttonLayout="vertical"
-            spinnerMode="vertical"
-            inputId="vertical"
-            [inputStyle]="{ width: '3rem' }"
-          >
-            <ng-template #incrementbuttonicon>
-              <span class="pi pi-plus"></span>
-            </ng-template>
-            <ng-template #decrementbuttonicon>
-              <span class="pi pi-minus"></span>
-            </ng-template>
-          </p-inputnumber>
-        </div>
       </div>
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
-      >
-        <div class="lg:col-span-6">
-          <h3 class="text-[#1f2a37 font-[600] text-lg sm:text-xl">مدة التعيين ك وردية افتراضية</h3>
-        </div>
-        <div class="lg:col-span-2">
-          <span class="text-[14px] font-normal text-[#6c737f]">تاريخ تفعيل و بدء الوردية</span>
-          <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>
-        </div>
-        <div class="lg:col-span-2">
-          <span class="text-[14px] font-normal text-[#6c737f]">تاريخ انتهاء الوردية</span>
-          <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>
-        </div>
-        <div class="lg:col-span-2">
-          <span class="text-[14px] font-normal text-[#6c737f]"
-            >الوردية الافتراضية التالية (بعد انتهاء تلك الوردية)</span
-          >
-          <p class="text-[16px] font-semibold text-[#161616]">وردية مسائية</p>
-        </div>
-      </div>
+      <!-- hidden for release 1 -->
+      <!--      <div-->
+      <!--        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"-->
+      <!--      >-->
+      <!--        <div class="lg:col-span-6">-->
+      <!--          <h3 class="text-[#1f2a37 font-[600] text-lg sm:text-xl">مدة التعيين ك وردية افتراضية</h3>-->
+      <!--        </div>-->
+      <!--        <div class="lg:col-span-2">-->
+      <!--          <span class="text-[14px] font-normal text-[#6c737f]">تاريخ تفعيل و بدء الوردية</span>-->
+      <!--          <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>-->
+      <!--        </div>-->
+      <!--        <div class="lg:col-span-2">-->
+      <!--          <span class="text-[14px] font-normal text-[#6c737f]">تاريخ انتهاء الوردية</span>-->
+      <!--          <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>-->
+      <!--        </div>-->
+      <!--        <div class="lg:col-span-2">-->
+      <!--          <span class="text-[14px] font-normal text-[#6c737f]"-->
+      <!--            >الوردية الافتراضية التالية (بعد انتهاء تلك الوردية)</span-->
+      <!--          >-->
+      <!--          <p class="text-[16px] font-semibold text-[#161616]">وردية مسائية</p>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <div class="actions mt-6 flex items-center justify-between gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
         <div class="flex items-center justify-end gap-4">
-          <button (click)="close()" class="btn black-btn" (click)="openDurationDialog()">
-            تعيين ك وردية افتراضية
-          </button>
+          <!-- hidden for release 1 -->
+          <!--          <button (click)="close()" (click)="openDurationDialog()" class="btn black-btn">-->
+          <!--            تعيين ك وردية افتراضية-->
+          <!--          </button>-->
           <button (click)="save$.next()" class="btn green-btn">
             {{ 'COMMON.SAVE' | translate }}
           </button>

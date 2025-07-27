@@ -258,7 +258,7 @@
     "HOLIDAY_NAME_ENGLISH": "مسمى العطلة بالانجليزية",
     "START_DATE": "تاريخ البدء",
     "END_DATE": "تاريخ الانتهاء",
-    "NOTES": "ملاحظات",
+    "HOLIDAY_NOTES": "ملاحظات على العطلة",
     "ADD_NEW_HOLIDAY": "إضافة عطلة جديدة",
     "EDIT_HOLIDAY": "تعديل العطلة",
     "ACTIONS": "الإجراء",

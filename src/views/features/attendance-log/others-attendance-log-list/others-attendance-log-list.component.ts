@@ -189,6 +189,18 @@ export default class OthersAttendanceLogListComponent
     return isProcessed ? 'bg-[#085d3a]' : 'bg-[#93370d]';
   }
 
+  set swipeDateFrom(value: Date | undefined) {
+    this.filterModel.swipeDateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.swipeDateFrom && value && this.filterModel.swipeDateFrom < value) {
+      this.filterModel.swipeDateFrom = value; // or set it to value
+    }
+  }
+  get swipeDateFrom(): Date | undefined {
+    return this.filterModel.swipeDateFrom;
+  }
+
   exportPdf(fileName: string = 'data.pdf'): void {
     const allDataParams = {
       ...this.paginationParams,

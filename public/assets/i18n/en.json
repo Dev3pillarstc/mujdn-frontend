@@ -284,6 +284,7 @@
     "PERMISSION_DATA": "Permission Data",
     "PERMISSION_REASON": "Permission Reason",
     "PERMISSION_DESCRIPTION": "Permission Description",
+    "NOTES": "Notes",
     "ADD_NEW_PERMISSION": "Add New Permission",
     "EDIT_PERMISSION": "Edit Permission",
     "NEW_PERMISSION": "New Permission",

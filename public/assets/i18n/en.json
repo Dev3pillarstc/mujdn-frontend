@@ -293,7 +293,9 @@
     "REJECTION_DATE": "Rejection Date",
     "APPROVE": "Approve",
     "DECLINE": "Decline",
-    "UNDER_REVIEW": "Under Review"
+    "UNDER_REVIEW": "Under Review",
+    "EMPLOYEE_NAME": "Employee Name",
+    "DEPARTMENT": "Department"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
@@ -319,7 +321,7 @@
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "My Attendance Logs",
-    "OTHERS_ATTENDANCE_LOGS": "Others Attendance Logs",
+    "OTHERS_ATTENDANCE_LOGS": "Staff Attendance Log",
     "ATTENDANCE_LOGS_TITLE": "Attendance Logs",
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",
     "DEPARTMENT": "Department",

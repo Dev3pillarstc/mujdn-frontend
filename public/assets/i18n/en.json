@@ -54,7 +54,7 @@
     "INVALID_PAGE_SIZE": "Page size must be between 1 and 1000",
     "INVALID_SORT_FIELD": "The specified sort field is invalid",
     "SERIALIZATION_ERROR": "An error occurred while processing the data",
-    "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is connected/related to another entity",
+    "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is related to another data",
     "CANNOT_BE_DELETE": "The record can't be deleted",
     "EXISTING_RECORD_ERROR": "This record already exists",
     "AUTH_INVALID_CREDENTIALS": "National id or password is incorrect",
@@ -91,7 +91,10 @@
     "SERVER_INTERNAL_ERROR": "An internal server error occurred",
     "AUTH_EXTERNAL_ERROR": "Login failed due to an internal error",
     "STORED_EXTERNAL_ERROR": "An internal server error occurred in stored",
-    "HOME": "Home"
+    "HOME": "Home",
+    "FROM": "Date (From)",
+    "TO": "Date (To)",
+    "LOG_OUT": "Log Out"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -149,7 +152,7 @@
     "MANAGER_NAME": "Manager name"
   },
   "DEPARTMENTS_LIST_PAGE": {
-    "MUJAHIDEEN_DEPARMENT": "Mujahideen Department",
+    "MUJAHIDEEN_DEPARTMENT": "Mujahideen Department",
     "DEPARTMENT_NAME": "Department name",
     "DEPARTMENT_NAME_ARABIC": "Department name in Arabic",
     "DEPARTMENT_NAME_ENGLISH": "Department name in English",
@@ -158,7 +161,8 @@
     "PHONE": "Phone",
     "ADDRESS": "Address",
     "LEAVE_REQUEST": "Leave request",
-    "MANAGER_NAME": "Manager name",
+    "MANAGER_NAME_ARABIC": "Manager name arabic",
+    "MANAGER_NAME_ENGLISH": "Manager name english",
     "ADD_NEW_DEPARTMENT": "Add new department",
     "ADD_SUB_DEPARTMENT": "Add new sub-department",
     "ACTIONS": "Actions",
@@ -214,6 +218,8 @@
     "PHONE_NUMBER": "Phone Number",
     "INVALID_PHONE": "Invalid phone number",
     "JOIN_DATE": "Join Date",
+    "JOIN_DATE_FROM": "Join Date (From)",
+    "JOIN_DATE_TO": "Join Date (To)",
     "ACCOUNT_STATUS": "Account Status",
     "JOB_TITLE": "Job Title",
     "JOB_TITLE_ARABIC": "Job Title in Arabic",
@@ -253,7 +259,7 @@
     "MAX_LENGTH_NAME": "Name cannot exceed 100 characters"
   },
   "HOLIDAYS_PAGE": {
-    "HOLIDAYS_LIST": "Holidays List",
+    "HOLIDAYS_LIST": "Holidays",
     "HOLIDAY_NAME_ARABIC": "Holiday Name in Arabic",
     "HOLIDAY_NAME_ENGLISH": "Holiday Name in English",
     "START_DATE": "Start Date",
@@ -265,14 +271,12 @@
     "NO_DATA_TO_SHOW": "No data to display",
     "DATE": "Date",
     "CODE": "Code",
-    "FROM": "Date (From)",
-    "TO": "Date (To)",
     "HOLIDAY": "Holiday"
   },
   "PERMISSION_PAGE": {
     "PERMISSIONS": "Permissions",
-    "MY_REQUESTS": "My Requests",
-    "INCOMING_REQUESTS": "Incoming Requests",
+    "MY_REQUESTS": "My Requests Log",
+    "INCOMING_REQUESTS": "Incoming Permission Requests",
     "PERMISSION_TYPE": "Permission Type",
     "PERMISSION_DATE": "Permission Date",
     "PERMISSION_STATUS": "Request Status",
@@ -312,6 +316,8 @@
     "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "Time from must be less than time to"
   },
   "ATTENDANCE_LOG_PAGE": {
+    "MY_ATTENDANCE_LOGS": "My Attendance Logs",
+    "OTHERS_ATTENDANCE_LOGS": "Others Attendance Logs",
     "ATTENDANCE_LOGS_TITLE": "Attendance Logs",
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",
     "DEPARTMENT": "Department",
@@ -354,13 +360,13 @@
     "ATTENDANCE_REPORT": "Attendance Report",
     "ATTENDANCE_LOGS": "Attendance Logs",
     "DEPARTMENTS": "Departments",
-    "EMPLOYEES": "Employees List",
+    "EMPLOYEES": "Employees",
     "PRESENCE_INQUIRIES": "Presence Inquiries",
     "PERMISSIONS": "Permissions",
     "ASSIGNED_EMPLOYEES": "Assigned Employees",
     "WORK_SHIFT_TEMP": "Temporary Work Shifts",
     "WORK_SHIFT_ASSIGNMENT": "Assign Work Shifts",
-    "HOLIDAYS": "Holidays List",
+    "HOLIDAYS": "Holidays",
     "WORK_SHIFT": "Work Shifts",
     "WORK_SHIFT_SETTINGS": "Work Shift Settings",
     "SETTINGS": "Settings",

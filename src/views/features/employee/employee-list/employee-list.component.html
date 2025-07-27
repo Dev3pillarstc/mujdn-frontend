@@ -18,7 +18,7 @@
           </h5>
         </div>
         <div class="pt-6">
-          <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="employeeNameAr">{{
                 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
@@ -54,24 +54,6 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="accountStatus">{{
-                'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
-              }}</label>
-              <p-select
-                [(ngModel)]="filterModel.isActive"
-                [options]="accountStatusOptions"
-                [placeholder]="'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate"
-                class="w-full peer"
-                id="accountStatus"
-                name="accountStatus"
-                [optionLabel]="optionLabel"
-                optionValue="id"
-              ></p-select>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
               <label class="label" for="department">{{
                 'EMPLOYEES_PAGE.DEPARTMENT' | translate
               }}</label>
@@ -84,12 +66,12 @@
                 class="w-full peer"
                 id="department"
                 optionValue="id"
+                [showClear]="true"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
-
             <div class="relative">
               <label class="label" for="jobTitleAr">{{
                 'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate
@@ -107,6 +89,7 @@
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
+
             <div class="relative">
               <label class="label" for="jobTitleEn">{{
                 'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate
@@ -137,6 +120,7 @@
                 id="fingerPrint"
                 [optionLabel]="optionLabel"
                 optionValue="id"
+                [showClear]="true"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -144,20 +128,61 @@
             </div>
             <div class="relative">
               <label class="label" for="joinDate">{{
-                'EMPLOYEES_PAGE.JOIN_DATE' | translate
+                'EMPLOYEES_PAGE.JOIN_DATE_FROM' | translate
               }}</label>
               <p-datepicker
-                [(ngModel)]="filterModel.joinDate"
+                [(ngModel)]="filterModel.joinDateFrom"
                 [iconDisplay]="'input'"
-                [placeholder]="'EMPLOYEES_PAGE.JOIN_DATE' | translate"
+                [placeholder]="'EMPLOYEES_PAGE.JOIN_DATE_FROM' | translate"
                 [showIcon]="true"
                 class="peer block w-full"
                 inputId="joinDate"
+                [showClear]="true"
               >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="joinDate">{{
+                'EMPLOYEES_PAGE.JOIN_DATE_TO' | translate
+              }}</label>
+              <p-datepicker
+                [(ngModel)]="filterModel.joinDateTo"
+                [iconDisplay]="'input'"
+                [placeholder]="'EMPLOYEES_PAGE.JOIN_DATE_TO' | translate"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="joinDate"
+                [showClear]="true"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="accountStatus">{{
+                'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate
+              }}</label>
+              <p-select
+                [(ngModel)]="filterModel.isActive"
+                [options]="accountStatusOptions"
+                [placeholder]="'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate"
+                class="w-full peer"
+                id="accountStatus"
+                name="accountStatus"
+                [optionLabel]="optionLabel"
+                optionValue="id"
+                [showClear]="true"
+              ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -203,8 +228,8 @@
                 <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate }}</th>
+                <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}</th>
                 <th>{{ 'EMPLOYEES_PAGE.ACTIONS' | translate }}</th>
@@ -213,8 +238,18 @@
             <ng-template pTemplate="body" let-user>
               <tr>
                 <td>{{ user.nationalId }}</td>
-                <td>{{ user.fullNameAr }}</td>
-                <td>{{ user.fullNameEn }}</td>
+                <td
+                  [title]="user.fullNameAr"
+                  class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
+                >
+                  {{ user.fullNameAr }}
+                </td>
+                <td
+                  [title]="user.fullNameEn"
+                  class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
+                >
+                  {{ user.fullNameEn }}
+                </td>
                 <td>{{ user.department.nameAr }}</td>
                 <td>
                   <div class="flex justify-center gap-2">
@@ -225,8 +260,18 @@
                     }
                   </div>
                 </td>
-                <td>{{ user.jobTitleEn }}</td>
-                <td>{{ user.jobTitleAr }}</td>
+                <td
+                  [title]="user.jobTitleAr"
+                  class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
+                >
+                  {{ user.jobTitleAr }}
+                </td>
+                <td
+                  [title]="user.jobTitleEn"
+                  class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
+                >
+                  {{ user.jobTitleEn }}
+                </td>
                 <td>
                   <div class="flex justify-center gap-2">
                     @if (user.isActive) {
@@ -241,7 +286,7 @@
                   <div class="flex gap-4">
                     @if (authService.isAdmin) {
                       <button
-                        class="table-action-gray-btn flex align-items gap-4 min-w-[144px]"
+                        class="table-action-gray-btn flex align-items gap-4 !min-w-[160px]"
                         (click)="openEmployeePermissionModal(user)"
                       >
                         <img src="assets/icons/edit-action.svg" alt="" />

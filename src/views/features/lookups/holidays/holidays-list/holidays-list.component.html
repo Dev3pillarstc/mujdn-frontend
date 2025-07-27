@@ -56,11 +56,12 @@
               ></span>
             </div>
             <div class="relative lg:col-span-1">
-              <label class="label" for="">{{ 'HOLIDAYS_PAGE.FROM' | translate }}</label>
+              <label class="label" for="">{{ 'COMMON.FROM' | translate }}</label>
               <p-datepicker
                 [(ngModel)]="dateFrom"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
+                [showClear]="true"
                 class="peer block w-full"
                 inputId="icondisplayFrom"
                 placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
@@ -75,12 +76,13 @@
             </div>
 
             <div class="relative lg:col-span-1">
-              <label class="label" for="">{{ 'HOLIDAYS_PAGE.TO' | translate }}</label>
+              <label class="label" for="">{{ 'COMMON.TO' | translate }}</label>
               <p-datepicker
                 [(ngModel)]="filterModel.dateTo"
                 [minDate]="dateFrom"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
+                [showClear]="true"
                 class="peer block w-full"
                 inputId="icondisplayTo"
                 placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
@@ -166,11 +168,13 @@
                     </div>
                   </td>
                 } @else {
-                  <div class="actions flex gap-2">
-                    <button (click)="openDataDialog(holiday.notes)" class="table-action-gray-btn">
-                      <img alt="" src="assets/icons/view-action.svg" />
-                    </button>
-                  </div>
+                  <td>
+                    <div class="actions flex gap-2">
+                      <button (click)="openDataDialog(holiday.notes)" class="table-action-gray-btn">
+                        <img alt="" src="assets/icons/view-action.svg" />
+                      </button>
+                    </div>
+                  </td>
                 }
               </tr>
             </ng-template>

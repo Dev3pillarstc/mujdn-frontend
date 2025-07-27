@@ -266,6 +266,13 @@ export default class OthersAttendanceLogListComponent
             halign: isRTL ? 'right' : 'left',
           },
           margin: isRTL ? { right: 10, left: 0 } : { left: 10, right: 0 },
+          /** 👇 Limit max column width by index */
+          columnStyles: {
+            2: {
+              // index of the column you want to limit, e.g. channelName
+              cellWidth: doc.internal.pageSize.getWidth() * 0.5 - 20, // 50% of width minus margin
+            },
+          },
           didDrawPage: () => {
             const title = isRTL ? 'سجل الحضور' : 'Attendance Log';
             doc.setFont('IBMPlexSansArabic');

@@ -27,6 +27,7 @@ import { CityLookup } from '@/models/features/lookups/city/city-lookup';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ROLES_ENUM } from '@/enums/roles-enum';
 import { BooleanOptionModel } from '@/models/shared/boolean-option';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-add-new-employee-popup',
@@ -40,6 +41,7 @@ import { BooleanOptionModel } from '@/models/shared/boolean-option';
     RequiredMarkerDirective,
     TranslatePipe,
     ValidationMessagesComponent,
+    PasswordModule,
   ],
   templateUrl: './add-new-employee-popup.component.html',
   styleUrl: './add-new-employee-popup.component.scss',

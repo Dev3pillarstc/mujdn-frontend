@@ -218,6 +218,8 @@
     "PHONE_NUMBER": "Phone Number",
     "INVALID_PHONE": "Invalid phone number",
     "JOIN_DATE": "Join Date",
+    "JOIN_DATE_FROM": "Join Date (From)",
+    "JOIN_DATE_TO": "Join Date (To)",
     "ACCOUNT_STATUS": "Account Status",
     "JOB_TITLE": "Job Title",
     "JOB_TITLE_ARABIC": "Job Title in Arabic",
@@ -262,6 +264,7 @@
     "HOLIDAY_NAME_ENGLISH": "Holiday Name in English",
     "START_DATE": "Start Date",
     "END_DATE": "End Date",
+    "HOLIDAY_NOTES": "Notes of Holidays",
     "NOTES": "Notes",
     "ADD_NEW_HOLIDAY": "Add New Holiday",
     "EDIT_HOLIDAY": "Edit Holiday",
@@ -274,7 +277,7 @@
   "PERMISSION_PAGE": {
     "PERMISSIONS": "Permissions",
     "MY_REQUESTS": "My Requests Log",
-    "INCOMING_REQUESTS": "Incoming Permission Requests",
+    "INCOMING_REQUESTS": "Incoming Requests",
     "PERMISSION_TYPE": "Permission Type",
     "PERMISSION_DATE": "Permission Date",
     "PERMISSION_STATUS": "Request Status",
@@ -282,6 +285,7 @@
     "PERMISSION_DATA": "Permission Data",
     "PERMISSION_REASON": "Permission Reason",
     "PERMISSION_DESCRIPTION": "Permission Description",
+    "NOTES": "Notes",
     "ADD_NEW_PERMISSION": "Add New Permission",
     "EDIT_PERMISSION": "Edit Permission",
     "NEW_PERMISSION": "New Permission",
@@ -289,7 +293,10 @@
     "APPROVAL_DATE": "Approval Date",
     "REJECTION_DATE": "Rejection Date",
     "APPROVE": "Approve",
-    "DECLINE": "Decline"
+    "DECLINE": "Decline",
+    "UNDER_REVIEW": "Under Review",
+    "EMPLOYEE_NAME": "Employee Name",
+    "DEPARTMENT": "Department"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
@@ -319,7 +326,7 @@
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "My Attendance Logs",
-    "OTHERS_ATTENDANCE_LOGS": "Others Attendance Logs",
+    "OTHERS_ATTENDANCE_LOGS": "Staff Attendance Log",
     "ATTENDANCE_LOGS_TITLE": "Attendance Logs",
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",
     "DEPARTMENT": "Department",

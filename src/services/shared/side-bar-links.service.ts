@@ -20,16 +20,17 @@ export class SideBarLinksService {
   authService = inject(AuthService);
 
   private rawMenuConfig: MenuItemConfig[] = [
-    {
-      labelKey: 'MENU.DASHBOARD',
-      iconUrl: 'assets/icons/menu-icons/home.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      labelKey: 'MENU.ATTENDANCE_REPORT',
-      iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
-      routerLink: ['/dashboard'],
-    },
+    // hidden for release 1
+    // {
+    //   labelKey: 'MENU.DASHBOARD',
+    //   iconUrl: 'assets/icons/menu-icons/home.svg',
+    //   routerLink: ['/dashboard'],
+    // },
+    // {
+    //   labelKey: 'MENU.ATTENDANCE_REPORT',
+    //   iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
+    //   routerLink: ['/dashboard'],
+    // },
     {
       labelKey: 'MENU.ATTENDANCE_LOGS',
       iconUrl: 'assets/icons/menu-icons/icon.svg',
@@ -48,28 +49,34 @@ export class SideBarLinksService {
       routerLink: ['/employees'],
       routeId: RouteIdsEnum.EMPLOYEES,
     },
-    {
-      labelKey: 'MENU.PRESENCE_INQUIRIES',
-      iconUrl: 'assets/icons/menu-icons/icon2.svg',
-      routerLink: ['/dashboard'],
-    },
+    // {
+    //   labelKey: 'MENU.PRESENCE_INQUIRIES',
+    //   iconUrl: 'assets/icons/menu-icons/icon2.svg',
+    //   routerLink: ['/dashboard'],
+    // },
     {
       labelKey: 'MENU.PERMISSIONS',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',
       routerLink: ['/permissions'],
       routeId: RouteIdsEnum.PERMISSIONS,
     },
-    {
-      labelKey: 'MENU.ASSIGNED_EMPLOYEES',
-      iconUrl: 'assets/icons/menu-icons/icon3.svg',
-      routerLink: ['/dashboard'],
-    },
-    {
-      labelKey: 'MENU.WORK_SHIFT_TEMP',
-      iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
-      routerLink: ['/dashboard'],
-      routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
-    },
+    // {
+    //   labelKey: 'MENU.ASSIGNED_EMPLOYEES',
+    //   iconUrl: 'assets/icons/menu-icons/icon3.svg',
+    //   routerLink: ['/dashboard'],
+    // },
+    // {
+    //   labelKey: 'MENU.WORK_SHIFT_TEMP',
+    //   iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
+    //   routerLink: ['/dashboard'],
+    //   routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
+    // },
+    // {
+    //   labelKey: 'MENU.WORK_SHIFT_ASSIGNMENT',
+    //   iconUrl: 'assets/icons/menu-icons/sifts-add-icon.svg',
+    //   routerLink: ['/dashboard'],
+    //   routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
+    // },
     {
       labelKey: 'MENU.HOLIDAYS',
       iconUrl: 'assets/icons/menu-icons/vacations.svg',

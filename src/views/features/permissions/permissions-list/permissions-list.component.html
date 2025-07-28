@@ -179,7 +179,14 @@
                                 : 'bg-[#912018]',
                           ]"
                         ></span>
-                        <span>{{ permission.getStatusName() }}</span>
+                        <span>
+                          {{
+                            permission.fkStatusId === permissionStatusEnum.New ||
+                            permission.status.id === permissionStatusEnum.FirstAccepted
+                              ? ('PERMISSION_PAGE.UNDER_REVIEW' | translate)
+                              : permission.getStatusName()
+                          }}
+                        </span>
                       </div>
                     </td>
                     <td>
@@ -260,7 +267,9 @@
                       ></span>
                     </div>
                     <div class="relative">
-                      <label class="label" for="employee-name-select">اسم الموظف</label>
+                      <label class="label" for="employee-name-select">{{
+                        'PERMISSION_PAGE.EMPLOYEE_NAME' | translate
+                      }}</label>
                       <p-select
                         [(ngModel)]="filterModel.creationUserId"
                         [optionLabel]="getPropertyName()"
@@ -270,14 +279,16 @@
                         id="employee-name-select"
                         optionLabel="type"
                         optionValue="id"
-                        placeholder="اسم الموظف"
+                        placeholder="{{ 'PERMISSION_PAGE.EMPLOYEE_NAME' | translate }}"
                       ></p-select>
                       <span
                         class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                       ></span>
                     </div>
                     <div class="relative">
-                      <label class="label" for="department-select">الادارة</label>
+                      <label class="label" for="department-select">{{
+                        'PERMISSION_PAGE.DEPARTMENT' | translate
+                      }}</label>
                       <p-select
                         [(ngModel)]="filterModel.fkDepartmentId"
                         [optionLabel]="getPropertyName()"
@@ -287,7 +298,26 @@
                         id="department-select"
                         optionLabel="type"
                         optionValue="id"
-                        placeholder="الادارة"
+                        placeholder="{{ 'PERMISSION_PAGE.DEPARTMENT' | translate }}"
+                      ></p-select>
+                      <span
+                        class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                      ></span>
+                    </div>
+                    <div class="relative">
+                      <label class="label" for="request-status-select">{{
+                        'PERMISSION_PAGE.PERMISSION_STATUS' | translate
+                      }}</label>
+                      <p-select
+                        [(ngModel)]="filterModel.fkStatusId"
+                        [optionLabel]="getPropertyName()"
+                        [options]="prmissionStatuses"
+                        [showClear]="true"
+                        class="w-full peer"
+                        id="request-status-select"
+                        optionLabel="type"
+                        optionValue="id"
+                        placeholder="{{ 'PERMISSION_PAGE.PERMISSION_STATUS' | translate }}"
                       ></p-select>
                       <span
                         class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -331,25 +361,6 @@
                           <img alt="" src="assets/icons/calender-icon.svg" />
                         </ng-template>
                       </p-datepicker>
-                      <span
-                        class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                      ></span>
-                    </div>
-                    <div class="relative">
-                      <label class="label" for="request-status-select">{{
-                        'PERMISSION_PAGE.PERMISSION_STATUS' | translate
-                      }}</label>
-                      <p-select
-                        [(ngModel)]="filterModel.fkStatusId"
-                        [optionLabel]="getPropertyName()"
-                        [options]="prmissionStatuses"
-                        [showClear]="true"
-                        class="w-full peer"
-                        id="request-status-select"
-                        optionLabel="type"
-                        optionValue="id"
-                        placeholder="{{ 'PERMISSION_PAGE.PERMISSION_STATUS' | translate }}"
-                      ></p-select>
                       <span
                         class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                       ></span>
@@ -435,11 +446,7 @@
                       </td>
                       <td>
                         <div class="actions flex gap-2">
-                          @if (
-                            permissionsRequest.status.id !== permissionStatusEnum.New &&
-                            permissionsRequest.status.id !== permissionStatusEnum.FirstAccepted &&
-                            !permissionsRequest.canTakeAction
-                          ) {
+                          @if (!permissionsRequest.canTakeAction) {
                             <button
                               (click)="openDataDialog(permissionsRequest)"
                               class="table-action-gray-btn"

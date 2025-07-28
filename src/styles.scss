@@ -49,7 +49,7 @@
   font-weight: 600;
   color: #161616;
 
-  & > li {
+  &>li {
     margin-top: 8px;
     padding-bottom: 8px;
     border-bottom: 1px solid #d2d6db;
@@ -208,5 +208,23 @@ textarea {
 
   &::placeholder {
     color: #161616 !important;
+  }
+}
+
+.p-overlay {
+  max-width: 100%;
+}
+
+td {
+  max-width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-mdc-dialog-component-host {
+  div[dir="rtl"] {
+    max-height: 100vh;
+    overflow-y: auto;
   }
 }

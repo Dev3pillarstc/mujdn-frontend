@@ -71,13 +71,50 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
       const rootDepartment = this.findRootDepartment(selectedDepartment, allDepartments);
       if (rootDepartment) {
         this.departments = [this.mapDepartmentToTreeNode(rootDepartment)];
-        this.expandAllNodes(this.departments); // ✅ expand here
+        // لا تقم بعمل expand هنا
       }
       this.selectedNode = this.findTreeNodeByDepartment(selectedDepartment, this.departments);
     } else if (this.departmentsTree.length > 0) {
       this.departments = this.mapDepartmentToTreeNodeArray(this.departmentsTree);
-      this.expandAllNodes(this.departments); // ✅ expand here too
+      // لا تقم بعمل expand هنا أيضًا
       this.selectedNode = null;
+    }
+  }
+
+  onNodeExpand(event: any) {
+    const expandedNode = event.node;
+
+    // ابحث عن الأب (الذي يحتوي هذا العنصر كـ child)
+    const parentNode = this.findParentNode(this.departments, expandedNode);
+
+    // أحصل على إخوان هذا العنصر فقط (نفس المستوى)
+    const siblings = parentNode?.children ?? this.departments;
+
+    siblings.forEach((sibling) => {
+      if (sibling !== expandedNode) {
+        this.collapseAll(sibling);
+      }
+    });
+  }
+
+  private findParentNode(nodes: TreeNode[], targetNode: TreeNode): TreeNode | null {
+    for (const node of nodes) {
+      if (node.children?.includes(targetNode)) {
+        return node;
+      }
+
+      if (node.children) {
+        const parent = this.findParentNode(node.children, targetNode);
+        if (parent) return parent;
+      }
+    }
+    return null;
+  }
+
+  private collapseAll(node: TreeNode): void {
+    node.expanded = false;
+    if (node.children?.length) {
+      node.children.forEach((child) => this.collapseAll(child));
     }
   }
 

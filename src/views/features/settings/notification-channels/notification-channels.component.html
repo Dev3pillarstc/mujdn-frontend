@@ -15,7 +15,8 @@
 
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
       <div
-        class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4 border-b border-[#d2d6db] pb-4">
+        class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4 border-b border-[#d2d6db] pb-4"
+      >
         <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
           {{ 'NOTIFICATION.CHOOSE_SUPPORTED_PLATFORMS' | translate }}
         </h4>
@@ -23,45 +24,69 @@
 
       <div class="flex flex-wrap gap-8 mt-8">
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input type="checkbox" formControlName="isSms"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+          <input
+            type="checkbox"
+            formControlName="isSms"
+            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+          />
           <svg
             class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-            stroke-linejoin="round">
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <polyline points="20 6 9 17 4 12" />
           </svg>
           <span class="text-base font-medium text-[#1f2a37]">{{
             'NOTIFICATION.SMS' | translate
-            }}</span>
+          }}</span>
         </label>
 
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input type="checkbox" formControlName="isMobile"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+          <input
+            type="checkbox"
+            formControlName="isMobile"
+            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+          />
           <svg
             class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-            stroke-linejoin="round">
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <polyline points="20 6 9 17 4 12" />
           </svg>
           <span class="text-base font-medium text-[#1f2a37]">{{
             'NOTIFICATION.MOBILE' | translate
-            }}</span>
+          }}</span>
         </label>
 
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input type="checkbox" formControlName="isWeb"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+          <input
+            type="checkbox"
+            formControlName="isWeb"
+            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+          />
           <svg
             class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-            stroke-linejoin="round">
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <polyline points="20 6 9 17 4 12" />
           </svg>
           <span class="text-base font-medium text-[#1f2a37]">{{
             'NOTIFICATION.WEB' | translate
-            }}</span>
+          }}</span>
         </label>
       </div>
       <div class="actions flex items-center mt-6 gap-4 ms-auto">
@@ -71,9 +96,7 @@
         <button type="button" class="btn black-btn" (click)="save()" [disabled]="form.invalid">
           {{ 'COMMON.SAVE' | translate }}
         </button>
-        <button type="button" class="btn gray-btn border border-[#d2d6db]">
-          إلغاء
-        </button>
+        <button type="button" class="btn gray-btn border border-[#d2d6db]">إلغاء</button>
       </div>
     </div>
   </div>

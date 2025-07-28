@@ -67,7 +67,7 @@ aside {
     cursor: pointer; // arrow should always be clickable
   }
 
-  .p-tree-node-leaf>.p-tree-node-content .p-tree-node-toggle-button {
+  .p-tree-node-leaf > .p-tree-node-content .p-tree-node-toggle-button {
     width: 0px !important;
   }
 

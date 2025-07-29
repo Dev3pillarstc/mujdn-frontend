@@ -66,9 +66,10 @@ export default class OthersAttendanceLogListComponent
   implements OnInit
 {
   @Input() isActive: boolean = false;
-  @Input() creators: BaseLookupModel[] = [];
-  @Input() employees: BaseLookupModel[] = [];
+  @Input() creators: UsersWithDepartmentLookup[] = [];
+  @Input() employees: UsersWithDepartmentLookup[] = [];
   @Input() departments: BaseLookupModel[] = [];
+  filteredEmployees: UsersWithDepartmentLookup[] = [];
 
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
@@ -103,13 +104,21 @@ export default class OthersAttendanceLogListComponent
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 
-  override initListComponent(): void {}
+  override initListComponent(): void {
+    // Initialize filtered employees with all employees
+    this.filteredEmployees = [...this.employees];
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     // Watch for changes in isActive input
     if (changes['isActive'] && changes['isActive'].currentValue === true) {
       console.log('Others attendance tab became active - loading data');
       this.loadDataIfNeeded();
+    }
+
+    // Watch for changes in employees input
+    if (changes['employees'] && changes['employees'].currentValue) {
+      this.filteredEmployees = [...this.employees];
     }
   }
 
@@ -134,8 +143,33 @@ export default class OthersAttendanceLogListComponent
     });
   }
 
+  // Public method to get filtered employees for template
+  getFilteredEmployees(): UsersWithDepartmentLookup[] {
+    return this.filteredEmployees;
+  }
+
+  private filterEmployeesByDepartment(departmentId: number | undefined) {
+    if (departmentId) {
+      this.filteredEmployees = this.employees.filter((emp) => emp.departmentId === departmentId);
+    } else {
+      // If no department is selected, show all employees
+      this.filteredEmployees = [...this.employees];
+    }
+  }
+
   onDepartmentChange(deptId: number | undefined) {
     this.filterModel.departmentId = deptId ?? undefined;
+
+    // Filter employees when department changes
+    this.filterEmployeesByDepartment(deptId);
+
+    // Clear selected employee if it doesn't belong to the new department
+    if (this.filterModel.employeeId && deptId) {
+      const selectedEmployee = this.employees.find((emp) => emp.id === this.filterModel.employeeId);
+      if (selectedEmployee && selectedEmployee.departmentId !== deptId) {
+        this.filterModel.employeeId = undefined;
+      }
+    }
   }
 
   onEmployeeChange(empId: number | undefined) {

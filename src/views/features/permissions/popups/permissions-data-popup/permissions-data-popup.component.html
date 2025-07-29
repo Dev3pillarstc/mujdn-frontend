@@ -18,10 +18,11 @@
               'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
               model.fkStatusId === permissionStatusEnum.Accepted
                 ? 'bg-[#ecfdf3] text-[#085d3a]'
-                : model.fkStatusId === permissionStatusEnum.New ||
-                    model.fkStatusId === permissionStatusEnum.FirstAccepted
+                : model.fkStatusId === permissionStatusEnum.New
                   ? 'bg-[#eff8ff] text-[#1849a9]'
-                  : 'bg-[#fef3f2] text-[#912018]',
+                  : model.fkStatusId === permissionStatusEnum.FirstAccepted
+                    ? 'bg-[#fffaeb] text-[#93370d]'
+                    : 'bg-[#fef3f2] text-[#912018]',
             ]"
           >
             <span
@@ -29,10 +30,11 @@
                 'block w-[10px] h-[10px] rounded-full',
                 model.fkStatusId === permissionStatusEnum.Accepted
                   ? 'bg-[#085d3a]'
-                  : model.fkStatusId === permissionStatusEnum.New ||
-                      model.fkStatusId === permissionStatusEnum.FirstAccepted
+                  : model.fkStatusId === permissionStatusEnum.New
                     ? 'bg-[#1849a9]'
-                    : 'bg-[#912018]',
+                    : model.fkStatusId === permissionStatusEnum.FirstAccepted
+                      ? 'bg-[#93370d]'
+                      : 'bg-[#912018]',
               ]"
             >
             </span>

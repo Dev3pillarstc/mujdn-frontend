@@ -232,6 +232,17 @@ export default class MyAttendanceLogListComponent
 
         registerIBMPlexArabicFont(doc);
 
+        // Calculate column width limit
+        const pageWidth = doc.internal.pageSize.getWidth() - 20; // 10 margin left/right
+        const colCount = head[0].length;
+        const maxColWidth = pageWidth / colCount;
+
+        // Build columnStyles with same maxWidth for all columns
+        const columnStyles: { [key: number]: any } = {};
+        for (let i = 0; i < colCount; i++) {
+          columnStyles[i] = { cellWidth: maxColWidth };
+        }
+
         autoTable(doc, {
           head,
           body,
@@ -245,14 +256,9 @@ export default class MyAttendanceLogListComponent
             fontStyle: 'normal',
             halign: isRTL ? 'right' : 'left',
           },
-          margin: isRTL ? { right: 10, left: 0 } : { left: 10, right: 0 },
+          margin: { right: 10, left: 10 },
           /** 👇 Limit max column width by index */
-          columnStyles: {
-            2: {
-              // index of the column you want to limit, e.g. channelName
-              cellWidth: doc.internal.pageSize.getWidth() * 0.5 - 20, // 50% of width minus margin
-            },
-          },
+          columnStyles,
           didDrawPage: () => {
             const title = isRTL ? 'سجل الحضور' : 'Attendance Log';
             doc.setFont('IBMPlexSansArabic');

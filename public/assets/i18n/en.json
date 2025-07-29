@@ -389,6 +389,7 @@
     "CHOOSE_SUPPORTED_PLATFORMS": "Choose Supported Platforms",
     "SMS": "SMS",
     "MOBILE": "Mobile",
-    "WEB": "Web"
+    "WEB": "Web",
+    "RESET": "Reset"
   }
 }

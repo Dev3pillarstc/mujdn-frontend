@@ -49,7 +49,7 @@
             'ATTENDANCE_LOG_PAGE.SWIPE_DATE_FROM' | translate
           }}</label>
           <p-datepicker
-            [(ngModel)]="filterModel.swipeDateFrom"
+            [(ngModel)]="swipeDateFrom"
             [iconDisplay]="'input'"
             [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE_FROM' | translate"
             [showIcon]="true"
@@ -72,6 +72,7 @@
           }}</label>
           <p-datepicker
             [(ngModel)]="filterModel.swipeDateTo"
+            [minDate]="swipeDateFrom"
             [iconDisplay]="'input'"
             [placeholder]="'ATTENDANCE_LOG_PAGE.SWIPE_DATE_TO' | translate"
             [showIcon]="true"

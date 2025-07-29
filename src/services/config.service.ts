@@ -13,7 +13,7 @@ export class ConfigService {
 
   load(): Observable<ConfigType> {
     return this.http
-      .get<ConfigType>('resources/environment.json')
+      .get<ConfigType>('/assets/resources/environment.json')
       .pipe(tap((res) => (this.CONFIG = { ...this.CONFIG, ...res })))
       .pipe(tap(() => this.prepareBaseUrl()));
   }

@@ -1,5 +1,6 @@
 import { FormArray, FormGroup } from '@angular/forms';
 
+// used in base-crud service for date filtering
 export const genericDateOnlyConvertor = function (model: any) {
   if (!model) return model;
 
@@ -18,6 +19,7 @@ export const genericDateOnlyConvertor = function (model: any) {
   return model;
 };
 
+// used for sending data to backend (interceptor)
 export const toDateOnly = function (date: any) {
   date = new Date(date);
   const year = date.getFullYear();
@@ -32,6 +34,7 @@ export const toDateTime = function (date: any) {
   return date;
 };
 
+// used to convert time string to date object (Receiving from backend)
 export function timeStringToDate(value: string): Date {
   const [hours, minutes, seconds] = value.split(':').map(Number);
   const date = new Date();
@@ -39,6 +42,7 @@ export function timeStringToDate(value: string): Date {
   return date;
 }
 
+// used to convert date object to time string (Sending to backend)
 export function dateToTimeString(date: Date): string | null {
   if (!date) return null;
   const hours = date.getHours().toString().padStart(2, '0');
@@ -52,26 +56,20 @@ export const toLocalTime = function (date: any) {
   return date.toLocaleString();
 };
 
-export function markFormGroupTouched(form: FormGroup | FormArray) {
-  Object.values(form.controls).forEach((control) => {
-    if (control instanceof FormGroup || control instanceof FormArray) {
-      markFormGroupTouched(control); // Recursive call
-    } else {
-      control.markAsTouched();
-    }
-  });
-}
-
-export function convertUtcToKsaTime(utcDateTime: Date | string): Date {
+// used to convert UTC time to KSA time (Interceptor function)
+export function convertUtcToSystemTime(utcDateTime: Date | string): Date {
+  // Now is KSA time
+  // based on time zone change the offset
   const utcDate = new Date(utcDateTime);
 
-  // Ensure the input is treated as UTC and add 3 hours to convert to KSA time
+  // add 3 hours to convert to KSA time
   const ksaTime = new Date(utcDate.getTime() + 3 * 60 * 60 * 1000);
 
   return ksaTime;
 }
 
-// Format time string (HH:MM:SS) to 12-hour format
+// --Formating date for view only--
+// Format time string (HH:MM:SS) to 12-hour format (No time zone conversion)
 export function formatTimeTo12Hour(
   timeString: string,
   locale: 'en-US' | 'ar-EG' = 'en-US'
@@ -96,7 +94,7 @@ export function formatTimeTo12Hour(
   return formatted;
 }
 
-// Format Date object to 12-hour format
+// Format Date object to 12-hour format (No time zone conversion)
 export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-US'): string {
   if (!date) return '';
 
@@ -140,4 +138,14 @@ export function formatSwipeTime(
   }
 
   return { date, time };
+}
+
+export function markFormGroupTouched(form: FormGroup | FormArray) {
+  Object.values(form.controls).forEach((control) => {
+    if (control instanceof FormGroup || control instanceof FormArray) {
+      markFormGroupTouched(control); // Recursive call
+    } else {
+      control.markAsTouched();
+    }
+  });
 }

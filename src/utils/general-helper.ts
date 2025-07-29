@@ -57,7 +57,7 @@ export const toLocalTime = function (date: any) {
 };
 
 // used to convert UTC time to KSA time (Interceptor function)
-export function convertUtcToSystemTime(utcDateTime: Date | string): Date {
+export function convertUtcToSystemTimeZone(utcDateTime: Date | string): Date {
   // Now is KSA time
   // based on time zone change the offset
   const utcDate = new Date(utcDateTime);

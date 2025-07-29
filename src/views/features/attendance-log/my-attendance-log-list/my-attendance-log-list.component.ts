@@ -260,7 +260,7 @@ export default class MyAttendanceLogListComponent
           /** 👇 Limit max column width by index */
           columnStyles,
           didDrawPage: () => {
-            const title = isRTL ? 'سجل الحضور' : 'Attendance Log';
+            const title = isRTL ? 'قائمة سجل الحضور والانصراف' : 'Attendance Log List';
             doc.setFont('IBMPlexSansArabic');
             doc.setFontSize(12);
             doc.text(title, isRTL ? doc.internal.pageSize.getWidth() - 20 : 10, 10, {

@@ -313,7 +313,7 @@ export default class OthersAttendanceLogListComponent
           margin: { right: 10, left: 10 },
           columnStyles,
           didDrawPage: () => {
-            const title = isRTL ? 'سجل الحضور' : 'Attendance Log';
+            const title = isRTL ? 'قائمة سجل الحضور والانصراف' : 'Attendance Log List';
             doc.setFont('IBMPlexSansArabic');
             doc.setFontSize(12);
             doc.text(title, isRTL ? doc.internal.pageSize.getWidth() - 20 : 10, 10, {

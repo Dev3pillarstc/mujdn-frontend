@@ -40,7 +40,7 @@
     "MAX_LENGTH_DYNAMIC": "You have exceeded the maximum length",
     "POSITIVE_NUMBER_ONLY": "Only positive numbers are allowed",
     "INVALID_NUMBER": "Please enter a valid number",
-    "NUMBER_RANGE": "Value must be between 0 and 9999",
+    "NUMBER_RANGE": "Number must be between 0 and 9999",
     "INTERNAL_SERVER_ERROR": "Internal server error",
     "RESOURCE_NOT_FOUND": "Resource not found",
     "RESOURCE_CONFLICT": "Resource already exists",

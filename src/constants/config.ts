@@ -4,6 +4,7 @@ export const Config = {
   ENVIRONMENTS_URLS: {},
   BASE_URL: '',
   API_VERSION: 'v1',
+  DEPLOY_VERSION: '1.0.3',
   EXTERNAL_PROTOCOLS: ['http', 'https'],
   TOKEN_HEADER_KEY: 'Authorization',
   DEV_VARIABLES: { INTEGRATION1: '', INTEGRATION2: '' },

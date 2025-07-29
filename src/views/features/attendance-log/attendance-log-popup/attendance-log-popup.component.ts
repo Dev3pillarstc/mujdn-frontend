@@ -134,11 +134,6 @@ export class AttendanceLogPopupComponent
 
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm(this.viewMode));
-    if (this.viewMode == ViewModeEnum.EDIT) {
-      this.form.get('departmentId')?.disable();
-      this.form.get('employeeId')?.disable();
-      this.form.get('selectedDate')?.disable();
-    }
 
     // Set up form subscriptions for reactive updates
     this.setupFormSubscriptions();
@@ -146,27 +141,27 @@ export class AttendanceLogPopupComponent
 
   beforeSave(model: AttendanceLog, form: FormGroup): boolean {
     // Validate that both date and time are selected
-    if (!form.get('selectedDate')?.value || !form.get('selectedTime')?.value) {
-      this.alertService.showErrorMessage({
-        messages: ['ATTENDANCE_LOG_PAGE.DATE_TIME_REQUIRED'],
-      });
-      return false;
-    }
+    // if (!form.get('selectedDate')?.value || !form.get('selectedTime')?.value) {
+    //   this.alertService.showErrorMessage({
+    //     messages: ['ATTENDANCE_LOG_PAGE.DATE_TIME_REQUIRED'],
+    //   });
+    //   return false;
+    // }
 
-    // Validate that department and employee are selected
-    if (!form.get('departmentId')?.value) {
-      this.alertService.showErrorMessage({
-        messages: ['ATTENDANCE_LOG_PAGE.DEPARTMENT_REQUIRED'],
-      });
-      return false;
-    }
+    // // Validate that department and employee are selected
+    // if (!form.get('departmentId')?.value) {
+    //   this.alertService.showErrorMessage({
+    //     messages: ['ATTENDANCE_LOG_PAGE.DEPARTMENT_REQUIRED'],
+    //   });
+    //   return false;
+    // }
 
-    if (!form.get('employeeId')?.value) {
-      this.alertService.showErrorMessage({
-        messages: ['ATTENDANCE_LOG_PAGE.EMPLOYEE_REQUIRED'],
-      });
-      return false;
-    }
+    // if (!form.get('employeeId')?.value) {
+    //   this.alertService.showErrorMessage({
+    //     messages: ['ATTENDANCE_LOG_PAGE.EMPLOYEE_REQUIRED'],
+    //   });
+    //   return false;
+    // }
 
     return form.valid;
   }

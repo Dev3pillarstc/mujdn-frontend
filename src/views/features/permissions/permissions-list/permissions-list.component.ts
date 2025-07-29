@@ -1,11 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { AddPermissionPopupComponent } from '../popups/add-permission-popup/add-permission-popup.component';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
@@ -30,8 +29,10 @@ import { PermissionsDataPopupComponent } from '../popups/permissions-data-popup/
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
-import { AuthService } from '@/services/auth/auth.service';
 import { PERMISSION_TABS_ENUM } from '@/enums/permission-tabs-enum';
+import { CustomValidators } from '@/validators/custom-validators';
+import * as XLSX from 'xlsx';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-permissions-list',
@@ -66,7 +67,7 @@ export default class PermissionsListComponent
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '800px',
   };
   permissionService = inject(PermissionService);
   permissionTypeService = inject(PermissionTypeService);
@@ -80,15 +81,14 @@ export default class PermissionsListComponent
   users: BaseLookupModel[] = [];
   prmissionStatuses: BaseLookupModel[] = [];
   prmissionReasons: BaseLookupModel[] = [];
-  home: MenuItem | undefined;
   filterModel: PermissionFilter = new PermissionFilter();
   viewMode = ViewModeEnum;
-  translateService = inject(TranslateService);
+  isIncomingPermissions: boolean = false;
+  authService = inject(AuthService);
 
   override get service() {
     return this.permissionService;
   }
-  authService = inject(AuthService);
 
   override initListComponent(): void {
     this.permissionTypeService.getLookup().subscribe((res: BaseLookupModel[]) => {
@@ -107,6 +107,9 @@ export default class PermissionsListComponent
       this.prmissionReasons = res;
     });
   }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'PERMISSION_PAGE.PERMISSIONS' }];
+  }
 
   override openDialog(model: Permission, viewMode?: ViewModeEnum): void {
     const lookups = {
@@ -124,17 +127,32 @@ export default class PermissionsListComponent
 
   protected override mapModelToExcelRow(model: Permission): { [key: string]: any } {
     return {
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
-        model.getPermissionReasonName(),
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
         model.getPermissionTypeName(),
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
+        model.getPermissionReasonName(),
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
     };
   }
+  mapIncomingRequestsToExcelRow(model: Permission): { [key: string]: any } {
+    return {
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
+        model.getPermissionTypeName(),
+      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME')]: model.getCreationUserName(),
+      [this.translateService.instant('DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME')]:
+        model.getPermissionDepartmentName(),
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
+        model.getPermissionReasonName(),
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
+    };
+  }
+
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
+
   loadIncomingPermissions() {
     this.service
       .loadDepartmentPermissionPaginated(this.paginationParams, { ...this.filterModel! })
@@ -154,21 +172,32 @@ export default class PermissionsListComponent
         },
       });
   }
+
   clickIncomingPermissionTab() {
+    this.isIncomingPermissions = true;
     this.filterModel = new PermissionFilter();
     this.activeTabIndex == PERMISSION_TABS_ENUM.MY_PERMISSIONS && this.loadIncomingPermissions();
     this.activeTabIndex = PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS;
   }
+
   clickMyPermissionTab() {
+    this.isIncomingPermissions = false;
     this.filterModel = new PermissionFilter();
-    this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS && this.loadList();
+    if (this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS) {
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+    }
     this.activeTabIndex = PERMISSION_TABS_ENUM.MY_PERMISSIONS;
   }
+
   departmentPermissionSearch() {
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadIncomingPermissions();
   }
+
   departmentPermissionResetSearch() {
     this.filterModel = new PermissionFilter();
     this.paginationParams.pageNumber = 1;
@@ -176,6 +205,7 @@ export default class PermissionsListComponent
     this.first = 0;
     this.loadIncomingPermissions();
   }
+
   openDataDialog(model: Permission, canTakeAction?: ViewModeEnum): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = { model: model, ViewMode: canTakeAction };
@@ -189,15 +219,12 @@ export default class PermissionsListComponent
   }
 
   showIncomingPermissions() {
-    return (
-      this.authService.isSecurityLeader ||
-      this.authService.isDepartmentManager ||
-      this.authService.isHROfficer
-    );
+    return this.authService.isDepartmentManager || this.authService.isHROfficer;
   }
-  showMyPermissions(): boolean {
+
+  showAddingPermissionButton(): boolean {
     const isManagerOfRoot =
-      this.authService.isDeprtmentActualManager && this.authService.isRootDeprtment;
+      this.authService.isdepartmentActualManager && this.authService.isRootdepartment;
     return !isManagerOfRoot;
   }
 
@@ -208,7 +235,40 @@ export default class PermissionsListComponent
     this.paginationParams.pageSize = this.rows;
     this.loadIncomingPermissions();
   }
-  initialTabIndex(): number {
-    return this.showMyPermissions() ? 0 : 1;
+  override exportExcel(
+    fileName: string = 'data.xlsx',
+    isIncomingPermissions: boolean = false
+  ): void {
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
+    };
+
+    const fetchAll = isIncomingPermissions
+      ? this.service.loadDepartmentPermissionPaginated(allDataParams, { ...this.filterModel! })
+      : this.service.loadPaginated(allDataParams, { ...this.filterModel! });
+
+    fetchAll.subscribe({
+      next: (response) => {
+        const fullList = response.list || [];
+        if (fullList.length > 0) {
+          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+          const transformedData = fullList.map((item) =>
+            isIncomingPermissions
+              ? this.mapIncomingRequestsToExcelRow(item)
+              : this.mapModelToExcelRow(item)
+          );
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+      error: (_) => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
   }
 }

@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full">
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
         <ng-template let-item pTemplate="item">
           <span>{{ item.label | translate }}</span>
         </ng-template>
@@ -18,32 +18,37 @@
           </h5>
         </div>
         <div class="pt-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="relative">
-              <label class="label" for="nationalityName">{{
-                'WORK_SHIFTS.SHIFT_NAME' | translate
+              <label class="label" for="shiftNameAr">{{
+                'WORK_SHIFTS.SHIFT_NAME_AR' | translate
               }}</label>
-              @if (isCurrentLanguageEnglish()) {
-                <input
-                  [placeholder]="'WORK_SHIFTS.SHIFT_NAME' | translate"
-                  class="peer"
-                  fluid="true"
-                  id="nationalityName"
-                  pInputText
-                  type="text"
-                  [(ngModel)]="filterModel.nameEn"
-                />
-              } @else {
-                <input
-                  [placeholder]="'WORK_SHIFTS.SHIFT_NAME' | translate"
-                  class="peer"
-                  fluid="true"
-                  id="nationalityName"
-                  pInputText
-                  type="text"
-                  [(ngModel)]="filterModel.nameAr"
-                />
-              }
+              <input
+                [(ngModel)]="filterModel.nameAr"
+                [placeholder]="'WORK_SHIFTS.SHIFT_NAME_AR' | translate"
+                class="peer"
+                fluid="true"
+                id="shiftNameAr"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="shiftNameEn">{{
+                'WORK_SHIFTS.SHIFT_NAME_EN' | translate
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.nameEn"
+                [placeholder]="'WORK_SHIFTS.SHIFT_NAME_EN' | translate"
+                class="peer"
+                fluid="true"
+                id="shiftNameEn"
+                pInputText
+                type="text"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -51,18 +56,10 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button
-              (click)="search()"
-              [disabled]="isCurrentLanguageEnglish() ? !filterModel.nameEn : !filterModel.nameAr"
-              class="btn black-btn"
-            >
+            <button (click)="search()" class="btn black-btn">
               {{ 'COMMON.SEARCH' | translate }}
             </button>
-            <button
-              (click)="resetSearch()"
-              [disabled]="isCurrentLanguageEnglish() ? !filterModel.nameEn : !filterModel.nameAr"
-              class="btn gray-btn border border-[#d2d6db]"
-            >
+            <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
               {{ 'COMMON.RESET_SEARCH' | translate }}
             </button>
           </div>
@@ -88,21 +85,48 @@
         <p-table [value]="list">
           <ng-template #header>
             <tr>
-              <th>{{ 'WORK_SHIFTS.SHIFT_IDENTIFICATION' | translate }}</th>
-              <th>{{ 'WORK_SHIFTS.SHIFT_NAME' | translate }}</th>
+              <th>{{ 'WORK_SHIFTS.SHIFT_NAME_AR' | translate }}</th>
+              <th>{{ 'WORK_SHIFTS.SHIFT_NAME_EN' | translate }}</th>
               <th>{{ 'WORK_SHIFTS.MAX_ATTENDANCE_TIME' | translate }}</th>
               <th>{{ 'WORK_SHIFTS.MAX_LEAVE_TIME' | translate }}</th>
               <th>{{ 'WORK_SHIFTS.TIME_FROM_TO' | translate }}</th>
+              <!-- hidden for release 1 -->
+              <!-- <th>الوردية الافتراضية</th> -->
               <th>{{ 'COMMON.ACTION' | translate }}</th>
             </tr>
           </ng-template>
           <ng-template #body let-shift>
             <tr>
-              <td>{{ shift.id }}</td>
-              <td>{{ isCurrentLanguageEnglish() ? shift.nameEn : shift.nameAr }}</td>
+              <td>{{ shift.nameAr }}</td>
+              <td>{{ shift.nameEn }}</td>
               <td>{{ shift.attendanceBuffer }}</td>
               <td>{{ shift.leaveBuffer }}</td>
-              <td>{{ shift.timeFrom }} - {{ shift.timeTo }}</td>
+              <td>{{ getFormattedTimeRange(shift.timeFrom, shift.timeTo) }}</td>
+              <!-- hidden for release 1 -->
+              <!-- <td>
+                <div class="flex items-center justify-center">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11z"
+                      fill="#fff"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11zM7.05 11.121a1 1 0 0 0 0 1.415l2.829 2.828a1 1 0 0 0 1.414 0l5.657-5.657a1 1 0 0 0-1.414-1.414l-4.95 4.95-2.122-2.122a1 1 0 0 0-1.414 0z"
+                      fill="#067647"
+                    />
+                  </svg>
+                </div>
+              </td> -->
               <td>
                 <div class="actions flex gap-2">
                   <button (click)="addOrEditModel(shift)" class="table-action-gray-btn">

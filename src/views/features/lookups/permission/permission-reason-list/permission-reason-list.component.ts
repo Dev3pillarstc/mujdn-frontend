@@ -9,15 +9,26 @@ import { PermissionReason } from '@/models/features/lookups/permission/permissio
 import { PermissionReasonFilter } from '@/models/features/lookups/permission/permission-reason-filter';
 import { PermissionReasonService } from '@/services/features/lookups/permission-reason.service';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { PermissionReasonPopupComponent } from '@/views/features/lookups/permission/permission-reason-popup/permission-reason-popup.component';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-permission-list',
-  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
+  imports: [
+    Breadcrumb,
+    TableModule,
+    PaginatorModule,
+    InputTextModule,
+    FormsModule,
+    TranslatePipe,
+    CommonModule,
+    RouterModule,
+  ],
   templateUrl: './permission-reason-list.component.html',
   styleUrl: './permission-reason-list.component.scss',
 })
@@ -30,39 +41,38 @@ export default class PermissionReasonListComponent
   >
   implements OnInit
 {
-  languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
+  languageService = inject(LanguageService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
   permissionReasonService = inject(PermissionReasonService);
-  home: MenuItem | undefined;
   filterModel: PermissionReasonFilter = new PermissionReasonFilter();
 
   override get service() {
     return this.permissionReasonService;
   }
 
-  override initListComponent(): void {
-    // load lookups if needed
+  override initListComponent(): void {}
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'PERMISSION_REASONS_PAGE.PERMISSIONS_SETTINGS' }];
   }
 
   override openDialog(model: PermissionReason): void {
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    model = Object.assign(new PermissionReason(), model);
     this.openBaseDialog(PermissionReasonPopupComponent as any, model, viewMode);
   }
 
-  addOrEditModel(permissionReason?: PermissionReason) {
-    permissionReason = permissionReason || new PermissionReason();
-    this.openDialog(permissionReason);
+  addOrEditModel(permissionReason?: PermissionReason): void {
+    this.openDialog(permissionReason ?? new PermissionReason());
   }
-
   protected override mapModelToExcelRow(model: PermissionReason): { [key: string]: any } {
-    const lang = this.languageService.getCurrentLanguage(); // 'ar' or 'en'
-
     return {
-      [lang === LANGUAGE_ENUM.ARABIC ? 'سبب الإذن' : 'Permission Reason']:
-        lang === LANGUAGE_ENUM.ARABIC ? model.nameAr : model.nameEn,
+      [this.translateService.instant('PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ARABIC')]:
+        model.nameAr,
+      [this.translateService.instant('PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ENGLISH')]:
+        model.nameEn,
     };
   }
 }

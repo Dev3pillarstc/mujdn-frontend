@@ -8,6 +8,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-temp-shifts',
   imports: [
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     PaginatorModule,
     DatePickerModule,
     FormsModule,
+    TranslatePipe,
   ],
   templateUrl: './temp-shifts.component.html',
   styleUrl: './temp-shifts.component.scss',
@@ -29,11 +31,11 @@ export default class TempShiftsComponent {
   rows: number = 10;
   date2: Date | undefined;
   attendance!: any[];
-  items: MenuItem[] | undefined;
+  breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
 
   ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'ورديات العمل المؤقتة' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'ورديات العمل المؤقتة' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [
       {

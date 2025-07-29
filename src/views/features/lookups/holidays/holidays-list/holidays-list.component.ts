@@ -18,6 +18,8 @@ import { LanguageService } from '@/services/shared/language.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { HolidayFilter } from '@/models/features/lookups/holiday/holiday-filter';
 import { AuthService } from '@/services/auth/auth.service';
+import { MatDialogConfig } from '@angular/material/dialog';
+import { NotesPopupComponent } from '../notes-popup/notes-popup/notes-popup.component';
 
 @Component({
   selector: 'app-holidays-list',
@@ -46,39 +48,56 @@ export default class HolidaysListComponent extends BaseListComponent<
 > {
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
-    width: '100%',
     maxWidth: '600px',
   };
   holidayService = inject(HolidayService);
-  translateService = inject(TranslateService);
   authService = inject(AuthService);
 
-  home: MenuItem | undefined;
   filterModel: HolidayFilter = new HolidayFilter();
   override get service() {
     return this.holidayService;
   }
 
   override initListComponent(): void {}
-
-  override openDialog(model: Holiday, viewMode?: ViewModeEnum): void {
-    this.openBaseDialog(HolidaysPopupComponent as any, model, viewMode!);
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'HOLIDAYS_PAGE.HOLIDAYS_LIST' }];
   }
 
-  addOrEditModel(holiday?: Holiday) {
-    const viewMode = holiday ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    holiday = holiday || new Holiday();
-    this.openDialog(holiday, viewMode);
+  override openDialog(model: Holiday): void {
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(HolidaysPopupComponent as any, model, viewMode);
+  }
+
+  addOrEditModel(holiday?: Holiday): void {
+    this.openDialog(holiday ?? new Holiday());
   }
 
   protected override mapModelToExcelRow(model: Holiday): { [key: string]: any } {
     return {
-      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY')]: model.getName(),
-      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.getStartDate(),
-      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.getEndDate(),
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC')]: model.nameAr,
+      [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH')]: model.nameEn,
+      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.startDate,
+      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.endDate,
     };
   }
   showAddEditButtons() {
     return this.authService.isHROfficer;
+  }
+  openDataDialog(notes: string): void {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.width = this.dialogSize.maxWidth;
+    dialogConfig.data = { notes: notes };
+    this.matDialog.open(NotesPopupComponent as any, dialogConfig);
+  }
+  set dateFrom(value: Date | null) {
+    this.filterModel.dateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.dateTo && value && this.filterModel.dateTo < value) {
+      this.filterModel.dateTo = null; // or set it to value
+    }
+  }
+  get dateFrom(): Date | null | undefined {
+    return this.filterModel.dateFrom;
   }
 }

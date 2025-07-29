@@ -1,4 +1,4 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
     <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
@@ -80,15 +80,14 @@
           <app-validation-messages [control]="fkReasonIdControl"></app-validation-messages>
         </div>
         <div class="md:col-span-2 lg:col-span-3">
-          <label class="label" for="">{{
-            'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate
-          }}</label>
+          <label class="label" for="description">{{ 'PERMISSION_PAGE.NOTES' | translate }}</label>
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
               formControlName="description"
               pTextarea
-              placeholder="{{ 'PERMISSION_PAGE.PERMISSION_DESCRIPTION' | translate }}"
+              id="description"
+              placeholder="{{ 'PERMISSION_PAGE.NOTES' | translate }}"
             ></textarea>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"

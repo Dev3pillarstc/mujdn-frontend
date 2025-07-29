@@ -12,10 +12,9 @@ export class Nationality extends BaseCrudModel<Nationality, NationalityService> 
   override $$__service_name__$$: string = 'NationalityService';
   declare nameAr: string;
   declare nameEn: string;
-  isActive: boolean = true;
 
   buildForm() {
-    const { nameAr, nameEn, isActive } = this;
+    const { nameAr, nameEn } = this;
     return {
       nameAr: [
         nameAr,
@@ -35,7 +34,6 @@ export class Nationality extends BaseCrudModel<Nationality, NationalityService> 
           CustomValidators.pattern('ENG_NUM'),
         ],
       ],
-      isActive: [isActive, []],
     };
   }
 }

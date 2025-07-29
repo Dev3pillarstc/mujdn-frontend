@@ -6,6 +6,37 @@ div[dir='rtl'] {
   }
 
   // Arabic Sidebar
+  .p-datepicker-time-picker > div {
+    order: unset !important;
+  }
+
+  .p-datepicker-timeonly .p-datepicker-time-picker {
+    direction: ltr !important;
+  }
+
+  // .p-tree-node-content.p-tree-node-selected .p-tree-node-toggle-button {
+  //   transform: scale(-1, 1);
+  // }
+
+  // .p-tree-toggler.p-tree-toggler-icon.pi-chevron-down {
+  //   transform: rotate(180deg) !important;
+  // }
+
+  // .p-tree-node-toggle-button {
+  //   transform: scale(-1, 1);
+  // }
+
+  .p-tree-node-content.p-tree-node-selected .p-tree-node-toggle-button {
+    transform: scale(-1, 1);
+  }
+
+  .p-tree-node-content .p-tree-node-toggle-button {
+    transform: rotate(180deg) !important;
+  }
+
+  .p-tree-node-children li[aria-expanded='false'] .p-ripple {
+    transform: scale(1, 1) !important;
+  }
 }
 
 [dir='rtl'] ~ .p-drawer-left {

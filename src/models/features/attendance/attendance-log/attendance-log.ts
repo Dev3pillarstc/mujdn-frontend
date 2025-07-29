@@ -23,7 +23,7 @@ export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceServic
   declare creatorNameEn?: string;
   declare creatorNameAr?: string;
   declare openType?: string | null;
-  declare isRowData?: boolean | null;
+  declare isRawData?: boolean | null;
 
   declare selectedDate?: Date;
   declare selectedTime?: Date;
@@ -32,12 +32,12 @@ export class AttendanceLog extends BaseCrudModel<AttendanceLog, AttendanceServic
     const { departmentId, employeeId, nationalId, swipeTime, selectedDate, selectedTime } = this;
 
     const controls = {
-      departmentId: [departmentId, viewMode === ViewModeEnum.CREATE ? [] : [Validators.required]],
-      employeeId: [employeeId, viewMode === ViewModeEnum.CREATE ? [] : [Validators.required]],
-      nationalId: [nationalId, viewMode === ViewModeEnum.CREATE ? [] : [Validators.required]],
+      departmentId: [departmentId, []],
+      employeeId: [employeeId, [Validators.required]],
+      nationalId: [nationalId, [Validators.required]],
       swipeTime: [swipeTime, [Validators.required]],
-      selectedDate: [selectedDate],
-      selectedTime: [selectedTime],
+      selectedDate: [selectedDate, [Validators.required]],
+      selectedTime: [selectedTime, [Validators.required]],
     };
 
     return controls;

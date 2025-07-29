@@ -1,8 +1,16 @@
 <div class="bg-white" [formGroup]="form">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" />
-      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">اعدادات الاشعارات</h3>
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <a [routerLink]="item.url" class="cursor-pointer">
+            <span>{{ item.label | translate }}</span>
+          </a>
+        </ng-template>
+      </p-breadcrumb>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'NOTIFICATION.NOTIFICATION_SETTINGS' | translate }}
+      </h3>
     </div>
 
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
@@ -10,16 +18,8 @@
         class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4 border-b border-[#d2d6db] pb-4"
       >
         <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-          تحديد المنصات المدعومة
+          {{ 'NOTIFICATION.CHOOSE_SUPPORTED_PLATFORMS' | translate }}
         </h4>
-        <div class="actions flex items-center gap-4 ms-auto">
-          <button type="button" class="btn gray-btn" (click)="form.reset(model)">
-            إعادة تعيين
-          </button>
-          <button type="button" class="btn green-btn" (click)="save()" [disabled]="form.invalid">
-            حفظ
-          </button>
-        </div>
       </div>
 
       <div class="flex flex-wrap gap-8 mt-8">
@@ -40,7 +40,9 @@
           >
             <polyline points="20 6 9 17 4 12" />
           </svg>
-          <span class="text-base font-medium text-[#1f2a37]">SMS</span>
+          <span class="text-base font-medium text-[#1f2a37]">{{
+            'NOTIFICATION.SMS' | translate
+          }}</span>
         </label>
 
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
@@ -60,7 +62,9 @@
           >
             <polyline points="20 6 9 17 4 12" />
           </svg>
-          <span class="text-base font-medium text-[#1f2a37]">Mobile</span>
+          <span class="text-base font-medium text-[#1f2a37]">{{
+            'NOTIFICATION.MOBILE' | translate
+          }}</span>
         </label>
 
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
@@ -80,8 +84,19 @@
           >
             <polyline points="20 6 9 17 4 12" />
           </svg>
-          <span class="text-base font-medium text-[#1f2a37]">Web</span>
+          <span class="text-base font-medium text-[#1f2a37]">{{
+            'NOTIFICATION.WEB' | translate
+          }}</span>
         </label>
+      </div>
+      <div class="actions flex items-center mt-6 gap-4 ms-auto">
+        <!-- <button type="button" class="btn gray-btn" (click)="form.reset(model)">
+          إعادة تعيين
+        </button> -->
+        <button type="button" class="btn black-btn" (click)="save()" [disabled]="form.invalid">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
+        <button type="button" class="btn gray-btn border border-[#d2d6db]">إلغاء</button>
       </div>
     </div>
   </div>

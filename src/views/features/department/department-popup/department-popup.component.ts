@@ -21,6 +21,8 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationMessagesComponent } from '../../../shared/validation-messages/validation-messages.component';
+import { RequiredMarkerDirective } from '../../../../directives/required-marker.directive';
+import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 
 @Component({
   selector: 'app-department-popup',
@@ -33,6 +35,7 @@ import { ValidationMessagesComponent } from '../../../shared/validation-messages
     ReactiveFormsModule,
     TranslatePipe,
     ValidationMessagesComponent,
+    RequiredMarkerDirective,
   ],
   templateUrl: './department-popup.component.html',
   styleUrl: './department-popup.component.scss',
@@ -46,7 +49,7 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
   fb = inject(FormBuilder);
   cities: City[] = [];
   regions: BaseLookupModel[] = [];
-  usersProfiles: BaseLookupModel[] = new Array<BaseLookupModel>();
+  usersProfiles: UsersWithDepartmentLookup[] = new Array<UsersWithDepartmentLookup>();
   date2: Date | undefined;
   filteredCities: City[] = [];
   levelType: string = 'one-level';
@@ -85,7 +88,10 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     this.model = this.data.model;
     this.cities = this.data.lookups.cities;
     this.regions = this.data.lookups.regions;
-    this.usersProfiles = this.data.lookups.usersProfiles || [];
+    this.usersProfiles =
+      this.data?.lookups?.usersProfiles?.filter(
+        (x: UsersWithDepartmentLookup) => x.departmentId == this.model?.id
+      ) || [];
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
 
@@ -118,10 +124,7 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
     });
   }
 
-  override saveFail(error: Error): void {
-    const errorObject = { messages: ['COMMON.SAVE_FAILED'] };
-    this.alertService.showErrorMessage(errorObject);
-  }
+  override saveFail(error: Error): void {}
 
   override afterSave(model: Department, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };

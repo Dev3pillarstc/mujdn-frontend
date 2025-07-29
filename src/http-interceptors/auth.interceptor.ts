@@ -47,7 +47,7 @@ export const AuthInterceptor: HttpInterceptorFn = (
             }
           } else {
             authService.setUser(undefined);
-            authService.logout();
+            authService.logout().subscribe();
           }
         }
       }

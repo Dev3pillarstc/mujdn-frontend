@@ -188,3 +188,43 @@
 }
 
 // end kareem
+p-datepicker.ng-touched.ng-invalid {
+  input {
+    border-color: #b42318 !important;
+    color: #b42318 !important;
+  }
+
+  ::placeholder {
+    color: #b42318;
+  }
+}
+
+textarea.ng-touched.ng-invalid {
+  color: #b42318 !important;
+}
+
+textarea {
+  color: #161616 !important;
+
+  &::placeholder {
+    color: #161616 !important;
+  }
+}
+
+.p-overlay {
+  max-width: 100%;
+}
+
+td {
+  max-width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-mdc-dialog-component-host {
+  div[dir='rtl'] {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+}

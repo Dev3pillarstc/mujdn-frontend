@@ -4,6 +4,7 @@ import { LookupBaseService } from '@/abstracts/lookup-base.service';
 import { UpdateRolesModel } from '@/models/auth/update-roles-model';
 import { User } from '@/models/auth/user';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { ResponseData } from '@/models/shared/response/response-data';
@@ -27,6 +28,11 @@ import { of, switchMap, Observable } from 'rxjs';
     model: () => UsersWithDepartmentLookup,
     unwrap: 'data',
     shape: { 'list.*': () => UsersWithDepartmentLookup },
+  },
+  $lookup: {
+    model: () => BaseLookupModel,
+    unwrap: 'data',
+    shape: { data: () => BaseLookupModel },
   },
 })
 export class UserService extends LookupBaseService<User, string> {
@@ -53,6 +59,36 @@ export class UserService extends LookupBaseService<User, string> {
     return this.http
       .get<ListResponseData<UsersWithDepartmentLookup>>(
         this.getUrlSegment() + '/' + 'lookupWithDepartment',
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        switchMap((response: ListResponseData<UsersWithDepartmentLookup>) => {
+          return of(response.data);
+        })
+      );
+  }
+  @CastResponse(undefined, { fallback: '$userWithDepartment' })
+  getMyDepartmentUsersLookup(): Observable<UsersWithDepartmentLookup[]> {
+    return this.http
+      .get<ListResponseData<UsersWithDepartmentLookup>>(
+        this.getUrlSegment() + '/' + 'myDepartmentUsersLookup',
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        switchMap((response: ListResponseData<UsersWithDepartmentLookup>) => {
+          return of(response.data);
+        })
+      );
+  }
+  @CastResponse(undefined, { fallback: '$lookup' })
+  getMyDepartmentsLookup(): Observable<UsersWithDepartmentLookup[]> {
+    return this.http
+      .get<ListResponseData<UsersWithDepartmentLookup>>(
+        this.getUrlSegment() + '/' + 'myDepartmentsLookup',
         {
           withCredentials: true,
         }

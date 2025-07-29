@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb class="max-w-full" [model]="breadcrumbs" [home]="home" />
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         مسائلات توثيق التواجد
       </h3>
@@ -176,7 +176,7 @@
                     </td>
                     <td>
                       <div class="actions flex gap-2">
-                        <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
+                        <button class="table-action-gray-btn">
                           <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                         </button>
                         <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
@@ -281,7 +281,7 @@
                 class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
               >
                 <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-                  قائمة ورديات العمل
+                  قائمة مسائلات توثيق التواجد
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
                   <button>
@@ -292,29 +292,78 @@
                   </button>
                   <button class="btn green-btn flex items-center" (click)="openDialog()">
                     <img src="assets/icons/plus.svg" alt="" />
-                    <span>اسناد وردية لموظف</span>
+                    <span>إضافة مسائلة جديدة</span>
                   </button>
                 </div>
               </div>
               <p-table [value]="attendance">
                 <ng-template #header>
                   <tr>
-                    <th>اسم الوردية</th>
+                    <th>نص الرسالة</th>
+                    <th>تاريخ المسائلة</th>
+                    <th>وقت المسائلة</th>
+                    <th>فترة السماح للتسجيل الحضور</th>
+                    <th>نتيجة المسائلة</th>
                     <th>اسم الموظف</th>
-                    <th>التاريخ (من)</th>
-                    <th>التاريخ (الى)</th>
-                    <th>الإجراء</th>
+                    <th>حالة المعالجة</th>
+                    <th>اجراء</th>
                   </tr>
                 </ng-template>
                 <ng-template #body let-attendance>
                   <tr>
-                    <td>دوام جزئي</td>
-                    <td>محمد أحمد طه</td>
-                    <td>18/12/2024</td>
-                    <td>18/12/2024</td>
+                    <td>يرجى التحقق من التواجد الان</td>
+                    <td>12/12/2024</td>
+                    <td>10:00 ص</td>
+                    <td>
+                      <span
+                        class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]"
+                        >30 دق</span
+                      >
+                    </td>
+                    <td>
+                      <span
+                        class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
+                      >
+                        <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
+                        تحت التوثيق
+                      </span>
+                      <span
+                        class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
+                      >
+                        <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
+                        تم التوثيق
+                      </span>
+                      <span
+                        class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
+                      >
+                        <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
+                        لم يتم التوثيق
+                      </span>
+                    </td>
+                    <td>محمود أيمن</td>
+                    <td>
+                      <span
+                        class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
+                      >
+                        <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
+                        تحت التوثيق
+                      </span>
+                      <span
+                        class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
+                      >
+                        <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
+                        تم التوثيق
+                      </span>
+                      <span
+                        class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
+                      >
+                        <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
+                        لم يتم التوثيق
+                      </span>
+                    </td>
                     <td>
                       <div class="actions flex gap-2">
-                        <button class="bg-[#f3f4f6] rounded p-2 w-[32px]">
+                        <button class="table-action-gray-btn">
                           <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                         </button>
                         <button class="bg-[#fef3f2] rounded p-2 w-[32px]">

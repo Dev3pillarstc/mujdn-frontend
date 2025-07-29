@@ -1,7 +1,13 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <a [routerLink]="item.url" class="cursor-pointer">
+            <span>{{ item.label | translate }}</span>
+          </a>
+        </ng-template>
+      </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
         {{ 'HOLIDAYS_PAGE.HOLIDAYS_LIST' | translate }}
       </h3>
@@ -50,13 +56,14 @@
               ></span>
             </div>
             <div class="relative lg:col-span-1">
-              <label class="label" for="">{{ 'HOLIDAYS_PAGE.FROM' | translate }}</label>
+              <label class="label" for="">{{ 'COMMON.FROM' | translate }}</label>
               <p-datepicker
-                [(ngModel)]="filterModel.dateFrom"
+                [(ngModel)]="dateFrom"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
+                [showClear]="true"
                 class="peer block w-full"
-                inputId="icondisplay"
+                inputId="icondisplayFrom"
                 placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
               >
                 <ng-template pTemplate="inputicon">
@@ -67,14 +74,17 @@
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
+
             <div class="relative lg:col-span-1">
-              <label class="label" for="">{{ 'HOLIDAYS_PAGE.TO' | translate }}</label>
+              <label class="label" for="">{{ 'COMMON.TO' | translate }}</label>
               <p-datepicker
                 [(ngModel)]="filterModel.dateTo"
+                [minDate]="dateFrom"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
+                [showClear]="true"
                 class="peer block w-full"
-                inputId="icondisplay"
+                inputId="icondisplayTo"
                 placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
               >
                 <ng-template pTemplate="inputicon">
@@ -108,9 +118,6 @@
             <button (click)="exportExcel('holidays.xlsx')" class="table-head-action-btn">
               <img alt="" src="assets/icons/excel.svg" />
             </button>
-            <button>
-              <img alt="" src="assets/icons/print.svg" />
-            </button>
             @if (showAddEditButtons()) {
               <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
                 <img alt="" src="assets/icons/plus.svg" />
@@ -134,6 +141,8 @@
                 <th>{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}</th>
                 @if (showAddEditButtons()) {
                   <th>{{ 'HOLIDAYS_PAGE.ACTIONS' | translate }}</th>
+                } @else {
+                  <th>{{ 'HOLIDAYS_PAGE.NOTES' | translate }}</th>
                 }
               </tr>
             </ng-template>
@@ -145,8 +154,8 @@
                 </td>
                 <td>{{ holiday.nameAr }}</td>
                 <td>{{ holiday.nameEn }}</td>
-                <td>{{ holiday.startDate | date }}</td>
-                <td>{{ holiday.endDate | date }}</td>
+                <td>{{ holiday.startDate | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ holiday.endDate | date: 'dd/MM/yyyy' }}</td>
                 @if (showAddEditButtons()) {
                   <td>
                     <div class="actions flex gap-2">
@@ -155,6 +164,14 @@
                       </button>
                       <button (click)="deleteModel(holiday.id)" class="table-action-red-btn">
                         <img src="assets/icons/delete-action.svg" alt="حذف" />
+                      </button>
+                    </div>
+                  </td>
+                } @else {
+                  <td>
+                    <div class="actions flex gap-2">
+                      <button (click)="openDataDialog(holiday.notes)" class="table-action-gray-btn">
+                        <img alt="" src="assets/icons/view-action.svg" />
                       </button>
                     </div>
                   </td>

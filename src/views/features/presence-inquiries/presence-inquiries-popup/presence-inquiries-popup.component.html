@@ -4,18 +4,89 @@
       <i class="pi pi-times"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اضافة مسائلة توثيق تواجد جديدة</h3>
-    <form class="mt-6">
+    <!-- <form class="mt-6" [formGroup]="yourFormGroup">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
+                <div class="lg:col-span-2">
+                    <label for="time-pick" class="label">التاريخ (من)</label>
+                    <div class="relative">
+                        <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true"
+                            placeholder="التاريخ (من)" class="peer block w-full" inputId="icondisplay">
+                            <ng-template pTemplate="inputicon">
+                                <img src="/assets/icons/calender-icon.svg" alt="" />
+                            </ng-template>
+                        </p-datepicker>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div class="lg:col-span-2">
+                    <label for="time-pick" class="label">وقت المسائلة</label>
+                    <div class="relative">
+                        <p-datepicker [iconDisplay]="'input'" placeholder="hgf" [showIcon]="true" [timeOnly]="true"
+                            appendTo="cdk-overlay-container" name="timeTo" class="peer block w-full"
+                            formControlName="timeTo" id="time-pick-to" inputId="icondisplay" name="time-pick-to">
+                            <ng-template pTemplate="inputicon">
+                                <img alt="" src="assets/icons/time-icon.svg" />
+                            </ng-template>
+                        </p-datepicker>
+
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div class="lg:col-span-2">
+                    <label for="time-pick" class="label">فترة السماح لتسجيل الحضور</label>
+                    <div class="relative">
+                        <input placeholder="فترة السماح لتسجيل الحضور" class="peer" fluid="true" id="nationalityAr"
+                            pInputText type="text" />
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div class="lg:col-span-2">
+                    <label for="time-pick" class="label">اسم الموظف</label>
+                    <div class="relative">
+                        <p-select name="selectedAdminstration1" [options]="adminstrations"
+                            [(ngModel)]="selectedAdminstration" optionLabel="type" placeholder="اسم الموظف"
+                            class="w-full peer" id="empoyeeName-popup"></p-select>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+                <div class="lg:col-span-2">
+                    <label for="time-pick" class="label">اسم الموظف</label>
+                    <div class="relative">
+                        <p-select name="selectedAdminstration1" [options]="adminstrations"
+                            [(ngModel)]="selectedAdminstration" optionLabel="type" placeholder="اسم الموظف"
+                            class="w-full peer" id="empoyeeName-popup"></p-select>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                    </div>
+                    <span class="validation-message">هذا الحقل مطلوب</span>
+                </div>
+            </div>
+            <div class="actions mt-6 flex items-center justify-end gap-4">
+                <button class="btn gray-btn" (click)="close()">الغاء</button>
+                <button class="btn green-btn">إضافة</button>
+            </div>
+        </form> -->
+
+    <form class="mt-6" [formGroup]="yourFormGroup">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
         <div class="lg:col-span-2">
-          <label for="time-pick" class="label">التاريخ (من)</label>
+          <label class="label">التاريخ (من)</label>
           <div class="relative">
             <p-datepicker
-              [(ngModel)]="date2"
+              formControlName="fromDate"
               [iconDisplay]="'input'"
               [showIcon]="true"
               placeholder="التاريخ (من)"
               class="peer block w-full"
-              inputId="icondisplay"
+              inputId="fromDate"
             >
               <ng-template pTemplate="inputicon">
                 <img src="/assets/icons/calender-icon.svg" alt="" />
@@ -25,75 +96,129 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <span
+            class="validation-message"
+            *ngIf="yourFormGroup.get('fromDate')?.invalid && yourFormGroup.get('fromDate')?.touched"
+            >هذا الحقل مطلوب</span
+          >
         </div>
+
         <div class="lg:col-span-2">
-          <label for="time-pick" class="label">فترة السماح لتسجيل الحضور</label>
-          <!-- <div class="relative">
-                        <p-datepicker [iconDisplay]="'input'" placeholder="hgf" [showIcon]="true" [timeOnly]="true"
-                            class="peer block w-full" formControlName="timeTo" id="time-pick-to" inputId="icondisplay"
-                            name="time-pick-to">
-                            <ng-template pTemplate="inputicon">
-                                <img alt="" src="assets/icons/time-icon.svg" />
-                            </ng-template>
-                        </p-datepicker>
-                        <span
-                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                    </div> -->
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <label class="label">وقت المسائلة</label>
+          <div class="relative">
+            <p-datepicker
+              formControlName="timeTo"
+              placeholder="وقت المسائلة"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              [timeOnly]="true"
+              class="peer block w-full"
+              inputId="timeTo"
+            >
+              <ng-template pTemplate="inputicon">
+                <img src="assets/icons/time-icon.svg" alt="" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span
+            class="validation-message"
+            *ngIf="yourFormGroup.get('timeTo')?.invalid && yourFormGroup.get('timeTo')?.touched"
+            >هذا الحقل مطلوب</span
+          >
         </div>
+
         <div class="lg:col-span-2">
-          <label for="time-pick" class="label">فترة السماح لتسجيل الحضور</label>
+          <label class="label">فترة السماح لتسجيل الحضور</label>
           <div class="relative">
             <input
-              placeholder="فترة السماح لتسجيل الحضور"
-              class="peer"
-              fluid="true"
-              id="nationalityAr"
               pInputText
               type="text"
+              formControlName="allowedDuration"
+              placeholder="فترة السماح لتسجيل الحضور"
+              class="peer w-full"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <span
+            class="validation-message"
+            *ngIf="
+              yourFormGroup.get('allowedDuration')?.invalid &&
+              yourFormGroup.get('allowedDuration')?.touched
+            "
+            >هذا الحقل مطلوب</span
+          >
         </div>
+
         <div class="lg:col-span-2">
-          <label for="time-pick" class="label">اسم الموظف</label>
+          <label class="label">الإدارة</label>
           <div class="relative">
             <p-select
-              name="selectedAdminstration1"
+              formControlName="employee"
               [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
               optionLabel="type"
-              placeholder="اسم الموظف"
+              placeholder="الإدارة"
               class="w-full peer"
-              id="empoyeeName-popup"
+              id="employeeName"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <span
+            class="validation-message"
+            *ngIf="yourFormGroup.get('employee')?.invalid && yourFormGroup.get('employee')?.touched"
+            >هذا الحقل مطلوب</span
+          >
         </div>
+
         <div class="lg:col-span-2">
-          <label for="time-pick" class="label">اسم الموظف</label>
+          <label class="label">اسم الموظف</label>
           <div class="relative">
             <p-select
-              name="selectedAdminstration1"
+              formControlName="employee"
               [options]="adminstrations"
-              [(ngModel)]="selectedAdminstration"
               optionLabel="type"
               placeholder="اسم الموظف"
               class="w-full peer"
-              id="empoyeeName-popup"
+              id="employeeName"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <span
+            class="validation-message"
+            *ngIf="yourFormGroup.get('employee')?.invalid && yourFormGroup.get('employee')?.touched"
+            >هذا الحقل مطلوب</span
+          >
+        </div>
+        <div class="lg:col-span-6">
+          <label class="label">نص الرسالة</label>
+          <div class="relative">
+            <input
+              pInputText
+              type="text"
+              formControlName="allowedDuration"
+              placeholder="نص الرسالة"
+              class="peer w-full"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span
+            class="validation-message"
+            *ngIf="
+              yourFormGroup.get('allowedDuration')?.invalid &&
+              yourFormGroup.get('allowedDuration')?.touched
+            "
+            >هذا الحقل مطلوب</span
+          >
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">

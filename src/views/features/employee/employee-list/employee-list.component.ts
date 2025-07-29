@@ -38,6 +38,8 @@ import { DepartmentService } from '@/services/features/lookups/department.servic
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { AuthService } from '@/services/auth/auth.service';
+import { Observable } from 'rxjs';
+import { PaginatedList } from '@/models/shared/response/paginated-list';
 
 @Component({
   selector: 'app-employee-list',
@@ -65,7 +67,6 @@ export default class EmployeeListComponent
   implements OnInit
 {
   languageService = inject(LanguageService);
-  translateService = inject(TranslateService);
   cityService = inject(CityService);
   regionService = inject(RegionService);
   departmentService = inject(DepartmentService);
@@ -77,7 +78,6 @@ export default class EmployeeListComponent
   departments: BaseLookupModel[] = [];
 
   userService = inject(UserService);
-  home: MenuItem | undefined;
   filterModel: UserFilter = new UserFilter();
   accountStatusOptions: AccountStatusOption[] = ACCOUNT_STATUS_OPTIONS;
   fingerprintExemptionOptions: BooleanOptionModel[] = FINGERPRINT_EXEMPTION_OPTIONS;
@@ -93,6 +93,11 @@ export default class EmployeeListComponent
 
   override get service() {
     return this.userService;
+  }
+
+  get optionLabel(): string {
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   override initListComponent(): void {
@@ -141,10 +146,14 @@ export default class EmployeeListComponent
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       this.selectedModel = undefined;
       if (result && result == DIALOG_ENUM.OK) {
-        this.loadList();
+        this.loadList().subscribe({
+          next: (response) => this.handleLoadListSuccess(response),
+          error: this.handleLoadListError,
+        });
       }
     });
   }
+
   onDepartmentChange(deptId: number | undefined) {
     this.filterModel.fkDepartmentId = deptId;
   }
@@ -158,7 +167,10 @@ export default class EmployeeListComponent
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       if (result && result == DIALOG_ENUM.OK) {
-        this.loadList();
+        this.loadList().subscribe({
+          next: (response) => this.handleLoadListSuccess(response),
+          error: this.handleLoadListError,
+        });
       }
     });
   }
@@ -222,13 +234,45 @@ export default class EmployeeListComponent
     this.selectedModel = model;
   }
 
-  protected override mapModelToExcelRow(model: User): { [key: string]: any } {
-    throw new Error('Method not implemented.');
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'EMPLOYEES_PAGE.EMPLOYEES_LIST' }];
   }
 
-  get departmentOptionLabel(): string {
-    const lang = this.languageService.getCurrentLanguage();
-    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  // Excel Export Implementation
+  protected override mapModelToExcelRow(model: User): { [key: string]: any } {
+    const formatDate = (date: Date | string | undefined): string => {
+      if (!date) return '';
+      const dateObj = typeof date === 'string' ? new Date(date) : date;
+      return dateObj.toLocaleDateString('EG');
+    };
+
+    const formatBoolean = (value: boolean | undefined): string => {
+      if (value === undefined || value === null) return '';
+      return value
+        ? this.translateService.instant('COMMON.YES')
+        : this.translateService.instant('COMMON.NO');
+    };
+
+    return {
+      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_ID')]: model.nationalId || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC')]:
+        model.fullNameAr || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH')]:
+        model.fullNameEn || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.DEPARTMENT')]:
+        this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+          ? model.department?.nameAr || ''
+          : model.department?.nameEn || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION')]: formatBoolean(
+        model.canLeaveWithoutFingerPrint
+      ),
+      [this.translateService.instant('EMPLOYEES_PAGE.JOB_TITLE_ARABIC')]: model.jobTitleAr || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.JOB_TITLE_ENGLISH')]: model.jobTitleEn || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.ACCOUNT_STATUS')]: formatBoolean(
+        model.isActive
+      ),
+      [this.translateService.instant('EMPLOYEES_PAGE.JOIN_DATE')]: formatDate(model.joinDate),
+    };
   }
 
   private initializeActionList(): void {
@@ -274,5 +318,16 @@ export default class EmployeeListComponent
       //   command: () => this.openConfirmation(),
       // },
     ];
+  }
+  set joinDateFrom(value: Date | undefined) {
+    this.filterModel.joinDateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.joinDateTo && value && this.filterModel.joinDateTo < value) {
+      this.filterModel.joinDateTo = value; // or set it to value
+    }
+  }
+  get joinDateFrom(): Date | undefined {
+    return this.filterModel.joinDateFrom;
   }
 }

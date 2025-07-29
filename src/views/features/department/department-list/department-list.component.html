@@ -1,24 +1,33 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full">
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
         <ng-template let-item pTemplate="item">
           <span>{{ item.label | translate }}</span>
         </ng-template>
       </p-breadcrumb>
 
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        {{ 'DEPARTMENTS_LIST_PAGE.MUJAHIDEEN_DEPARMENT' | translate }}
+        {{ 'MENU.DEPARTMENTS' | translate }}
       </h3>
     </div>
-    <section class="flex flex-col xl:flex-row gap-6 max-w-full">
+    <section class="flex items-start flex-col xl:flex-row gap-6 max-w-full">
+      <button *ngIf="!showDepartmentTree" (click)="showDepartmentTree = true">
+        <img src="/assets/icons/close-tree.svg" class="w-12" alt="Show Tree" />
+      </button>
       <app-department-tree
+        *ngIf="showDepartmentTree"
+        (closed)="onTreeClosed()"
+        [departmentsTree]="departmentsTree"
         (departmentSelected)="onSelectedDepartmentChange($event)"
         [departmentsTree]="departmentsTree"
         [selectedDepartmentSignal]="selectedDepartmentSignal"
       >
       </app-department-tree>
-      <div class="w-full xl:w-[calc(100%-274px)]">
+      <div
+        [class.w-full]="!showDepartmentTree"
+        [class.xl:w-[calc(100%-274px)]]="showDepartmentTree"
+      >
         <app-department-header
           (departmentDeleted)="openConfirmation($event)"
           (dialogClosed)="onDepartmentChange()"
@@ -37,45 +46,42 @@
             </div>
             <div class="pt-6">
               <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                @if (isCurrentLanguageEnglish()) {
-                  <div class="relative">
-                    <label for="administration" class="label">{{
-                      'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
-                    }}</label>
-                    <input
-                      id="administration"
-                      [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
-                      type="text"
-                      pInputText
-                      class="peer"
-                      fluid="true"
-                      ngModel
-                      [(ngModel)]="filterModel.nameEn"
-                    />
-                    <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                    ></span>
-                  </div>
-                } @else {
-                  <div class="relative">
-                    <label for="administration" class="label">{{
-                      'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate
-                    }}</label>
-                    <input
-                      id="administration"
-                      [placeholder]="'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate"
-                      type="text"
-                      pInputText
-                      class="peer"
-                      fluid="true"
-                      ngModel
-                      [(ngModel)]="filterModel.nameAr"
-                    />
-                    <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                    ></span>
-                  </div>
-                }
+                <div class="relative">
+                  <label for="administration" class="label">{{
+                    'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate
+                  }}</label>
+                  <input
+                    id="administration"
+                    [placeholder]="'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate"
+                    type="text"
+                    pInputText
+                    class="peer"
+                    fluid="true"
+                    ngModel
+                    [(ngModel)]="filterModel.nameAr"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <div class="relative">
+                  <label for="administration" class="label">{{
+                    'DEPARTMENT_POPUP.DEPARTMENT_NAME_ENGLISH' | translate
+                  }}</label>
+                  <input
+                    id="administration"
+                    [placeholder]="'DEPARTMENT_POPUP.DEPARTMENT_NAME_ENGLISH' | translate"
+                    type="text"
+                    pInputText
+                    class="peer"
+                    fluid="true"
+                    ngModel
+                    [(ngModel)]="filterModel.nameEn"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
 
                 <div class="relative">
                   <label class="label" id="region-label">{{
@@ -91,6 +97,7 @@
                     id="region-search"
                     optionLabel="nameEn"
                     optionValue="id"
+                    [showClear]="true"
                   >
                   </p-select>
                   <span
@@ -111,6 +118,7 @@
                     id="city-search"
                     optionLabel="nameEn"
                     optionValue="id"
+                    [showClear]="true"
                   >
                   </p-select>
                   <span
@@ -141,7 +149,7 @@
                 }}
               </h4>
               <div class="actions flex items-center gap-4 ms-auto">
-                <button (click)="exportExcel()">
+                <button (click)="exportExcel(getTranslatedDepartmentLabel() + '.xlsx')">
                   <img alt="" src="assets/icons/excel.svg" />
                 </button>
                 <!-- <button>
@@ -160,15 +168,17 @@
               <p-table [value]="childDepartments.list">
                 <ng-template #header>
                   <tr>
-                    <th>{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</th>
+                    <th>{{ 'DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC' | translate }}</th>
+                    <th>{{ 'DEPARTMENT_POPUP.DEPARTMENT_NAME_ENGLISH' | translate }}</th>
                     <th>{{ 'DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST' | translate }}</th>
-                    <th>{{ 'DEPARTMENTS_LIST_PAGE.MANAGER_NAME' | translate }}</th>
+                    <th>{{ 'DEPARTMENTS_HEADER_PAGE.MANAGER_NAME' | translate }}</th>
                     <th>{{ 'DEPARTMENTS_LIST_PAGE.ACTIONS' | translate }}</th>
                   </tr>
                 </ng-template>
                 <ng-template #body let-row>
                   <tr>
-                    <td>{{ isCurrentLanguageEnglish() ? row?.nameEn : row?.nameAr }}</td>
+                    <td>{{ row?.nameAr }}</td>
+                    <td>{{ row?.nameEn }}</td>
                     <td>
                       <span
                         class="inline-block text-[12px] font-medium text-[#1f2a37] px-2 rounded-full border border-[#e5e7eb] bg-[#f9fafb]"
@@ -176,26 +186,25 @@
                         {{ getApprovalLevelText(row.isOneLevelApproval) | translate }}
                       </span>
                     </td>
-                    <td>
-                      {{
-                        isCurrentLanguageEnglish()
-                          ? row.manager?.fullNameEn
-                          : row.manager?.fullNameAr
-                      }}
-                    </td>
+                    @if (isCurrentLanguageEnglish()) {
+                      <td>
+                        {{ row.manager?.fullNameEn }}
+                      </td>
+                    } @else {
+                      <td>
+                        {{ row.manager?.fullNameAr }}
+                      </td>
+                    }
                     <td>
                       <div class="actions flex gap-2">
                         <button
-                          class="btn black-btn flex items-center"
+                          class="btn black-btn flex items-center min-w-[230px] flex justify-center"
                           (click)="addOrEditModel(row.id ?? 0)"
                         >
                           <img src="assets/icons/plus.svg" alt="" />
                           <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_SUB_DEPARTMENT' | translate }}</span>
                         </button>
-                        <button
-                          class="bg-[#f3f4f6] rounded p-2 w-[32px]"
-                          (click)="addOrEditModel(0, row)"
-                        >
+                        <button class="table-action-gray-btn" (click)="addOrEditModel(0, row)">
                           <img src="assets/icons/edit-action.svg" alt="update" />
                         </button>
                         <button

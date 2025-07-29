@@ -1,0 +1,16 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'HOLIDAYS_PAGE.HOLIDAY_NOTES' | translate }}
+    </h3>
+    <span class="font-semibold text-[#161616]">
+      {{ notes }}
+    </span>
+    <div class="actions mt-6 flex items-center justify-end gap-4">
+      <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+    </div>
+  </div>
+</div>

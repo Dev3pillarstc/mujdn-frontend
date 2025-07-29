@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { ButtonLabel } from 'primeng/button';
 
 @Component({
   selector: 'app-permission-popup',
@@ -32,7 +34,8 @@ export class PermissionReasonPopupComponent
   alertService = inject(AlertService);
   service = inject(PermissionReasonService);
   fb = inject(FormBuilder);
-
+  isCreateMode = false;
+  declare viewMode: ViewModeEnum;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
@@ -51,6 +54,8 @@ export class PermissionReasonPopupComponent
 
   override initPopup() {
     this.model = this.data.model;
+    this.viewMode = this.data.viewMode;
+    this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
   }
 
   override buildForm() {
@@ -63,9 +68,16 @@ export class PermissionReasonPopupComponent
   }
 
   afterSave() {
-    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
+    const successObject = {
+      messages: this.isCreateMode
+        ? ['PERMISSION_REASONS_PAGE.PERMISSION_REASON_ADDED_SUCCESSFULLY']
+        : ['PERMISSION_REASONS_PAGE.PERMISSION_REASON_UPDATED_SUCCESSFULLY'],
+      buttonLabel: 'PERMISSION_REASONS_PAGE.BACK_TO_PERMISSION_REASONS',
+    };
+
     this.alertService.showSuccessMessage(successObject);
   }
+
   get nameArControl() {
     return this.form.get('nameAr') as FormControl;
   }

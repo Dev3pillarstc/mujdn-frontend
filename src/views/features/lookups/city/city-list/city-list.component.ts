@@ -14,10 +14,21 @@ import { RegionService } from '@/services/features/lookups/region.service';
 import { CityFilter } from '@/models/features/lookups/city/city-filter';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-city-list',
-  imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
+  imports: [
+    Breadcrumb,
+    TableModule,
+    PaginatorModule,
+    InputTextModule,
+    FormsModule,
+    TranslatePipe,
+    CommonModule,
+    RouterModule,
+  ],
   providers: [CityService],
   templateUrl: './city-list.component.html',
   styleUrl: './city-list.component.scss',
@@ -28,13 +39,11 @@ export default class CityListComponent extends BaseListComponent<
   CityService,
   CityFilter
 > {
-  translateService = inject(TranslateService);
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
   cityService = inject(CityService);
-  home: MenuItem | undefined;
   filterModel: CityFilter = new CityFilter();
   regions: BaseLookupModel[] = [];
   regionService = inject(RegionService);
@@ -48,21 +57,27 @@ export default class CityListComponent extends BaseListComponent<
       this.regions = res;
     });
   }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'CITIES_PAGE.CITIES_LIST' }];
+  }
 
   override openDialog(model: City): void {
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     const lookups = { regions: this.regions };
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialog(CityPopupComponent as any, model, viewMode, lookups);
   }
 
-  addOrEditModel(city?: City) {
-    city = city || new City();
-    this.openDialog(city);
+  addOrEditModel(city?: City): void {
+    this.openDialog(city ?? new City());
   }
 
   protected override mapModelToExcelRow(model: City): { [key: string]: any } {
+    const regionName = this.regions.find((r) => r.id === model.fkRegionId)?.nameAr ?? '';
+    const regionNameEn = this.regions.find((r) => r.id === model.fkRegionId)?.nameEn ?? '';
+
     return {
-      [this.translateService.instant('CITIES_PAGE.CITY')]: model.getName(),
+      [this.translateService.instant('CITIES_PAGE.CITY_IN_ARABIC')]: model.nameAr,
+      [this.translateService.instant('CITIES_PAGE.CITY_IN_ENGLISH')]: model.nameEn,
     };
   }
 }

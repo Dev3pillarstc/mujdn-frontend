@@ -11,6 +11,18 @@ aside {
     width: 100%;
   }
 
+  .p-tree-node-content.p-tree-node-selected {
+    background-color: #e5e7eb !important;
+
+    &::before {
+      background-color: #074d31;
+    }
+
+    .p-tree-node-label {
+      color: #1b8354 !important;
+    }
+  }
+
   .p-tree-node-label {
     font-size: 14px;
     font-weight: 600;
@@ -18,15 +30,16 @@ aside {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer; // enable selection
   }
 
   .p-tree-node-content {
     padding: 8px 16px !important;
+    padding-inline-start: 8px !important;
     border-radius: 4px;
     background-color: #fff;
-    padding-inline-start: 8px !important;
-    cursor: pointer;
     position: relative;
+    cursor: pointer;
 
     &::before {
       position: absolute;
@@ -39,22 +52,26 @@ aside {
       transition: 0.2s;
       transform: translateY(-50%);
       content: '';
-      background-color: #fff;
     }
 
     &:hover {
-      background-color: #e5e7eb;
+      background-color: transparent;
 
       &::before {
-        background-color: #1b8354;
+        background-color: #bebebe;
       }
     }
+  }
+
+  .p-tree-toggler {
+    cursor: pointer; // arrow should always be clickable
   }
 
   .p-tree-node-leaf > .p-tree-node-content .p-tree-node-toggle-button {
     width: 0px !important;
   }
-  .p-tree-node[aria-expanded='false'] {
+
+  .p-tree-node[aria-expanded='true'] {
     .p-icon {
       &:dir(rtl) {
         transform: rotate(180deg);

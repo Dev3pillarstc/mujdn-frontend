@@ -1,9 +1,15 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" [model]="items" class="max-w-full" />
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <a [routerLink]="item.url" class="cursor-pointer">
+            <span>{{ item.label | translate }}</span>
+          </a>
+        </ng-template>
+      </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        {{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASONS_LIST' | translate }}
+        {{ 'PERMISSION_REASONS_PAGE.PERMISSIONS_SETTINGS' | translate }}
       </h3>
     </div>
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
@@ -17,11 +23,11 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="permissionreasonAr">{{
-                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate
+                'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ARABIC' | translate
               }}</label>
               <input
                 [(ngModel)]="filterModel.nameAr"
-                [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate"
+                [placeholder]="'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ARABIC' | translate"
                 class="peer"
                 fluid="true"
                 id="permissionreasonAr"
@@ -34,11 +40,11 @@
             </div>
             <div class="relative">
               <label class="label" for="permissionreasonEn">{{
-                'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate
+                'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ENGLISH' | translate
               }}</label>
               <input
                 [(ngModel)]="filterModel.nameEn"
-                [placeholder]="'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate"
+                [placeholder]="'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ENGLISH' | translate"
                 class="peer"
                 fluid="true"
                 id="permissionreasonEn"
@@ -66,18 +72,16 @@
           class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
         >
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-            {{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASONS_LIST' | translate }}
+            {{ 'PERMISSION_REASONS_PAGE.PERMISSION_REASONS_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button (click)="exportExcel('permission-reasons.xlsx')" class="table-head-action-btn">
               <img alt="" src="assets/icons/excel.svg" />
             </button>
-            <button class="table-head-action-btn">
-              <img alt="" src="assets/icons/print.svg" />
-            </button>
+
             <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
               <img alt="" src="assets/icons/plus.svg" />
-              <span>{{ 'PERMISSIONREASONS_PAGE.ADD_NEW_PERMISSIONREASON' | translate }}</span>
+              <span>{{ 'PERMISSION_REASONS_PAGE.ADD_NEW_PERMISSION_REASON' | translate }}</span>
             </button>
           </div>
         </div>
@@ -85,9 +89,9 @@
           <p-table [value]="list">
             <ng-template pTemplate="header">
               <tr>
-                <th>{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ARABIC' | translate }}</th>
-                <th>{{ 'PERMISSIONREASONS_PAGE.PERMISSIONREASON_IN_ENGLISH' | translate }}</th>
-                <th class="w-[100px]">{{ 'PERMISSIONREASONS_PAGE.ACTIONS' | translate }}</th>
+                <th>{{ 'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ARABIC' | translate }}</th>
+                <th>{{ 'PERMISSION_REASONS_PAGE.PERMISSION_REASON_IN_ENGLISH' | translate }}</th>
+                <th class="w-[100px]">{{ 'PERMISSION_REASONS_PAGE.ACTIONS' | translate }}</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-permissionReason>
@@ -112,7 +116,7 @@
           </p-table>
         } @else {
           <div class="flex items-center justify-center h-64">
-            <p class="text-gray-500">{{ 'PERMISSIONREASONS_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+            <p class="text-gray-500">{{ 'PERMISSION_REASONS_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
           </div>
         }
         @if (paginationInfo) {

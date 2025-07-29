@@ -5,5 +5,12 @@ export enum ValidationErrorKeyEnum {
   MIN_LENGTH = 'minlength',
   MAX_LENGTH = 'maxlength',
   START_AFTER_END = 'startAfterEnd',
+  TIME_FROM_AFTER_TIME_TO = 'timeFromAfterTimeTo',
+  EMAIL = 'email',
   STRONG_PASSWORD = 'strongPassword',
+  PHONE_NUMBER = 'PHONE_NUMBER',
+  NATIONAL_ID = 'NATIONAL_ID',
+  POSITIVE_NUMBER = 'positiveNumber',
+  INVALID_NUMBER = 'invalidNumber',
+  NUMBER_RANGE = 'numberRange',
 }

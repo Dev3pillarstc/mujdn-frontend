@@ -31,7 +31,7 @@ export class DepartmentHeaderComponent {
   matDialog = inject(MatDialog);
   dialogSize = {
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '800px',
   };
 
   getApprovalLevelText(): string {

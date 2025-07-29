@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
@@ -17,6 +16,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
   selector: 'app-nationality-list',
   standalone: true,
   imports: [Breadcrumb, TableModule, PaginatorModule, InputTextModule, FormsModule, TranslatePipe],
+  providers: [NationalityService],
   templateUrl: './nationality-list.component.html',
   styleUrl: './nationality-list.component.scss',
 })
@@ -34,31 +34,31 @@ export default class NationalityListComponent
     maxWidth: '600px',
   };
   nationalityService = inject(NationalityService);
-  home: MenuItem | undefined;
   filterModel: NationalityFilter = new NationalityFilter();
 
   override get service() {
     return this.nationalityService;
   }
 
-  override initListComponent(): void {
-    // load lookups if needed
-  }
+  override initListComponent(): void {}
 
   override openDialog(model: Nationality): void {
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialog(NationalityPopupComponent as any, model, viewMode);
   }
 
-  addOrEditModel(nationality?: Nationality) {
-    const nationalityCopy = nationality
-      ? new Nationality().clone(nationality) // assuming a `clone` method exists
-      : new Nationality();
+  addOrEditModel(nationality?: Nationality): void {
+    this.openDialog(nationality ?? new Nationality());
+  }
 
-    this.openDialog(nationalityCopy);
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'NATIONALITIES_PAGE.NATIONALITIES_LIST' }];
   }
 
   protected override mapModelToExcelRow(model: Nationality): { [key: string]: any } {
-    throw new Error('Method not implemented.');
+    return {
+      [this.translateService.instant('NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC')]: model.nameAr,
+      [this.translateService.instant('NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH')]: model.nameEn,
+    };
   }
 }

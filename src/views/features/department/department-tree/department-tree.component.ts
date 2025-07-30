@@ -159,13 +159,22 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
     return current; // Return the root department (the one with fkParentDepartmentId === null)
   }
 
-  private findTreeNodeByDepartment(department: Department, nodes: TreeNode[]): TreeNode | null {
+  private findTreeNodeByDepartment(
+    department: Department,
+    nodes: TreeNode[],
+    path: TreeNode[] = []
+  ): TreeNode | null {
     for (const node of nodes) {
+      const newPath = [...path, node];
+
       if (node.data.id === department.id) {
+        // Expand all parents in the path
+        newPath.forEach((p) => (p.expanded = true));
         return node;
       }
+
       if (node.children) {
-        const childNode = this.findTreeNodeByDepartment(department, node.children);
+        const childNode = this.findTreeNodeByDepartment(department, node.children, newPath);
         if (childNode) {
           return childNode;
         }

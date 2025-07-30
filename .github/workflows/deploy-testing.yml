@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.MUJDN_BACK_SERVER_USERNAME_DEVFRONT }}
           password: ${{ secrets.MUJDN_BACK_SERVER_PASSWORD }}
           server-dir: /m-front/
-          local-dir: ./dist/browser
+          local-dir: ./dist/browser/
           protocol: ftp
           port: 21
           exclude: |

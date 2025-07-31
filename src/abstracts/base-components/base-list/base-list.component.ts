@@ -4,7 +4,6 @@ import { MenuItem } from 'primeng/api';
 import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
-import { NationalityFilter } from '@/models/features/lookups/Nationality-filter';
 import { PaginatorState } from 'primeng/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -16,7 +15,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { filter, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { CustomValidators } from '@/validators/custom-validators';
 
 @Directive()
@@ -31,6 +30,7 @@ export abstract class BaseListComponent<
   abstract dialogSize: any;
   first: number = 0;
   rows: number = 10;
+  destroy$: Subject<void> = new Subject<void>();
 
   paginationInfo: PaginationInfo = new PaginationInfo();
   breadcrumbs: MenuItem[] = [];
@@ -43,6 +43,11 @@ export abstract class BaseListComponent<
   alertsService = inject(AlertService);
   translateService = inject(TranslateService);
   declare selectedModel?: Model;
+  home = {
+    label: this.translateService.instant('COMMON.HOME'),
+    icon: 'pi pi-home',
+    routerLink: '/home',
+  };
 
   abstract get filterModel(): FilterModel;
 
@@ -53,12 +58,6 @@ export abstract class BaseListComponent<
   abstract openDialog(nationality: Model): void;
 
   abstract initListComponent(): void;
-  home = {
-    label: this.translateService.instant('COMMON.HOME'),
-    icon: 'pi pi-home',
-    routerLink: '/home',
-  };
-  private langChangeSub!: Subscription;
 
   openBaseDialog(
     popupComponent: PopupComponent,
@@ -74,12 +73,19 @@ export abstract class BaseListComponent<
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result && result == DIALOG_ENUM.OK) {
-        this.loadList();
-      }
-    });
+    return dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result: DIALOG_ENUM) => {
+        if (result && result == DIALOG_ENUM.OK) {
+          this.loadList().subscribe({
+            next: (response) => this.handleLoadListSuccess(response),
+            error: this.handleLoadListError,
+          });
+        }
+      });
   }
+
   openBaseDialogSP(
     popupComponent: PopupComponent,
     model: Model,
@@ -94,31 +100,25 @@ export abstract class BaseListComponent<
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result && result == DIALOG_ENUM.OK) {
-        this.loadListSP();
-      }
-    });
+    return dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result: DIALOG_ENUM) => {
+        if (result && result == DIALOG_ENUM.OK) {
+          this.loadListSP().subscribe({
+            next: (response) => this.handleLoadListSuccess(response),
+            error: this.handleLoadListError,
+          });
+        }
+      });
   }
+
   setHomeItem(): void {
     this.home = {
       label: this.translateService.instant('COMMON.HOME'),
       icon: 'pi pi-home',
       routerLink: '/home',
     };
-  }
-  protected abstract getBreadcrumbKeys(): {
-    labelKey: string;
-    icon?: string;
-    routerLink?: string;
-  }[];
-
-  private initBreadcrumbs(): void {
-    this.breadcrumbs = this.getBreadcrumbKeys().map((item) => ({
-      label: this.translateService.instant(item.labelKey),
-      icon: item.icon,
-      routerLink: item.routerLink,
-    }));
   }
 
   ngOnInit() {
@@ -128,55 +128,34 @@ export abstract class BaseListComponent<
     this.paginationInfo = this.activatedRoute.snapshot.data['list']?.paginationInfo;
     this.initListComponent();
     // Listen to language changes
-    this.langChangeSub = this.translateService.onLangChange.subscribe(() => {
+    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.setHomeItem();
       this.initBreadcrumbs();
     });
   }
 
   loadList() {
-    this.service.loadPaginated(this.paginationParams, { ...this.filterModel! }).subscribe({
-      next: (response) => {
-        this.list = response.list || [];
-
-        if (response.paginationInfo) {
-          this.paginationInfoMap(response);
-        } else {
-          this.paginationInfo.totalItems = this.list.length;
-        }
-      },
-      error: (_) => {
-        this.list = [];
-        this.paginationInfo.totalItems = 0;
-      },
-    });
+    return this.service.loadPaginated(this.paginationParams, { ...this.filterModel! });
   }
 
   loadListSP() {
-    this.service.loadPaginatedSP(this.paginationParams, { ...this.filterModel! }).subscribe({
-      next: (response) => {
-        this.list = response.list || [];
-
-        if (response.paginationInfo) {
-          this.paginationInfoMap(response);
-        } else {
-          this.paginationInfo.totalItems = this.list.length;
-        }
-      },
-      error: (_) => {
-        this.list = [];
-        this.paginationInfo.totalItems = 0;
-      },
-    });
+    return this.service.loadPaginatedSP(this.paginationParams, { ...this.filterModel! });
   }
 
   search(isStoredProcedure: boolean = false) {
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     if (isStoredProcedure) {
-      this.loadListSP();
+      this.loadListSP().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     } else {
-      this.loadList();
+      console.log('searching with params', this.paginationParams, this.filterModel);
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     }
   }
 
@@ -186,9 +165,15 @@ export abstract class BaseListComponent<
     this.paginationParams.pageSize = 10;
     this.first = 0;
     if (isStoredProcedure) {
-      this.loadListSP();
+      this.loadListSP().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     } else {
-      this.loadList();
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     }
   }
 
@@ -198,9 +183,15 @@ export abstract class BaseListComponent<
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     if (isStoredProcedure) {
-      this.loadListSP();
+      this.loadListSP().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     } else {
-      this.loadList();
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
     }
   }
 
@@ -234,9 +225,68 @@ export abstract class BaseListComponent<
     });
   }
 
-  protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
+  deleteModel(id: string | number, isStoredProcedure: boolean = false) {
+    const dialogRef = this.confirmService.open({
+      icon: 'warning',
+      messages: ['COMMON.CONFIRM_DELETE'],
+      confirmText: 'COMMON.OK',
+      cancelText: 'COMMON.CANCEL',
+    });
 
-  protected paginationInfoMap(response: PaginatedList<Model>) {
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        filter((result) => {
+          return result == DIALOG_ENUM.OK;
+        })
+      )
+      .pipe(
+        switchMap((_) => {
+          return this.service.delete(id);
+        })
+      )
+      .pipe(
+        switchMap((_) => {
+          return isStoredProcedure ? this.loadListSP() : this.loadList();
+        })
+      )
+      .pipe(
+        switchMap((response) => {
+          if (response.list.length === 0) {
+            this.paginationParams.pageNumber = 1;
+            return isStoredProcedure ? this.loadListSP() : this.loadList();
+          }
+          return of(response);
+        })
+      )
+      .subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+  }
+
+  handleLoadListSuccess(response: PaginatedList<Model>) {
+    this.list = response.list || [];
+
+    if (response.paginationInfo) {
+      this.paginationInfoMap(response);
+    } else {
+      this.paginationInfo.totalItems = this.list.length;
+    }
+  }
+
+  handleLoadListError() {
+    this.list = [];
+    this.paginationInfo.totalItems = 0;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  paginationInfoMap(response: PaginatedList<Model>) {
     const paginationInfo = response.paginationInfo;
     this.paginationInfo.totalItems = paginationInfo.totalItems || 0;
     this.paginationParams.pageSize = paginationInfo.pageSize || 10;
@@ -246,33 +296,19 @@ export abstract class BaseListComponent<
     this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
   }
 
-  deleteModel(id: string | number, isStoredProcedure: boolean = false) {
-    const dialogRef = this.confirmService.open({
-      icon: 'warning',
-      messages: ['COMMON.CONFIRM_DELETE'],
-      confirmText: 'COMMON.OK',
-      cancelText: 'COMMON.CANCEL',
-    });
+  protected abstract getBreadcrumbKeys(): {
+    labelKey: string;
+    icon?: string;
+    routerLink?: string;
+  }[];
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result == DIALOG_ENUM.OK) {
-        this.service.delete(id).subscribe({
-          next: () => {
-            if (isStoredProcedure) {
-              this.loadListSP();
-            } else {
-              this.loadList();
-            }
-            this.alertsService.showSuccessMessage({ messages: ['COMMON.DELETED_SUCCESSFULLY'] });
-          },
-        });
-      }
-    });
-  }
-  ngOnDestroy(): void {
-    // ✅ Clean up the subscription
-    if (this.langChangeSub) {
-      this.langChangeSub.unsubscribe();
-    }
+  protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
+
+  private initBreadcrumbs(): void {
+    this.breadcrumbs = this.getBreadcrumbKeys().map((item) => ({
+      label: this.translateService.instant(item.labelKey),
+      icon: item.icon,
+      routerLink: item.routerLink,
+    }));
   }
 }

@@ -97,23 +97,38 @@ export class User extends BaseCrudModel<User, UserService, string> {
         ],
       ],
       nationalId: [nationalId, [Validators.required, CustomValidators.pattern('NATIONAL_ID')]],
-      phoneNumber: [phoneNumber, [Validators.required]],
+      phoneNumber: [
+        phoneNumber,
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
+          CustomValidators.pattern('PHONE_NUMBER'),
+        ],
+      ],
       fkRegionId: [fkRegionId, [Validators.required]],
-      fkCityId: [fkCityId],
+      fkCityId: [fkCityId, [Validators.required]],
       // fkGenderId: [fkGenderId, [Validators.required]],
       fkDepartmentId: [fkDepartmentId, [Validators.required]],
       jobTitleEn: [
         jobTitleEn,
-        [Validators.required, Validators.maxLength(100), CustomValidators.pattern('ENG_NUM')],
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
+          CustomValidators.pattern('ENG_NUM'),
+        ],
       ],
       jobTitleAr: [
         jobTitleAr,
-        [Validators.required, Validators.maxLength(100), CustomValidators.pattern('AR_NUM')],
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
+          CustomValidators.pattern('AR_NUM'),
+        ],
       ],
       // profilePhotoKey: [profilePhotoKey],
       joinDate: [joinDate, [Validators.required]],
       canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint],
-      isActive: [isActive ?? true],
+      isActive: [isActive, [Validators.required]],
     };
   }
 

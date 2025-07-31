@@ -1,7 +1,13 @@
 <div class="bg-white" [formGroup]="form">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb [home]="home" class="max-w-full" [model]="breadcrumbs" />
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <a [routerLink]="item.url" class="cursor-pointer">
+            <span>{{ item.label | translate }}</span>
+          </a>
+        </ng-template>
+      </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">اعدادات عامة</h3>
     </div>
     <p-tabs value="0">
@@ -89,7 +95,7 @@
             </div>
           </div>
           <div class="bg-white rounded-2xl p-4 sm:p-8 mt-6">
-            <div class="actions flex items-center gap-4 ms-auto">
+            <div class="actions flex items-center mt-6 gap-4 ms-auto">
               <button
                 type="button"
                 class="btn black-btn"
@@ -263,6 +269,7 @@
               <button type="button" class="btn gray-btn" (click)="form.reset(model)">
                 إعادة تعيين
               </button>
+        <button type="button" class="btn gray-btn border border-[#d2d6db]">إلغاء</button>
             </div>
           </div>
         </p-tabpanel>

@@ -4,11 +4,11 @@ import { AttendanceLog } from '@/models/features/attendance/attendance-log/atten
 import { AttendanceService } from '@/services/features/attendance-log.service';
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, of } from 'rxjs';
 
 export const attendanceResolver: ResolveFn<PaginatedList<AttendanceLog> | null> = () => {
   const attendanceService = inject(AttendanceService);
-  return attendanceService.loadPaginatedSP(new PaginationParams()).pipe(
+  return attendanceService.loadMyAttendanceLogPaginatedSP(new PaginationParams()).pipe(
     catchError((error) => {
       return of(null); // Prevent throwing to allow route activation
     })

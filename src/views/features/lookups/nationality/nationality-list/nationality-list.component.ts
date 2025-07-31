@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
@@ -9,7 +8,7 @@ import { NationalityPopupComponent } from '@/views/features/lookups/nationality/
 import { NationalityFilter } from '@/models/features/lookups/Nationality-filter';
 import { Nationality } from '@/models/features/lookups/Nationality';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { NationalityService } from '@/services/features/lookups/nationality.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 
@@ -42,9 +41,6 @@ export default class NationalityListComponent
   }
 
   override initListComponent(): void {}
-  protected override getBreadcrumbKeys() {
-    return [{ labelKey: 'NATIONALITIES_PAGE.NATIONALITIES_LIST' }];
-  }
 
   override openDialog(model: Nationality): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
@@ -53,6 +49,10 @@ export default class NationalityListComponent
 
   addOrEditModel(nationality?: Nationality): void {
     this.openDialog(nationality ?? new Nationality());
+  }
+
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'NATIONALITIES_PAGE.NATIONALITIES_LIST' }];
   }
 
   protected override mapModelToExcelRow(model: Nationality): { [key: string]: any } {

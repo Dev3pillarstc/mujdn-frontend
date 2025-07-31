@@ -43,7 +43,7 @@ export default class TempShiftsComponent {
   dialog = inject(MatDialog);
 
   ngOnInit() {
-    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'وردياتي المؤقتة' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'وردياتي' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [
       {

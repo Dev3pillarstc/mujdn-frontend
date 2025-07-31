@@ -8,7 +8,7 @@
           </a>
         </ng-template>
       </p-breadcrumb>
-      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">وردياتي المؤقتة</h3>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">وردياتي</h3>
     </div>
     <div
       class="p-8 md:p-10 rounded-[16px] bg-[#074d31] shadow-[0_4px_6px_-2px_rgba(16,24,40,0.03),_0_12px_16px_-4px_rgba(16,24,40,0.08)] mb-6"
@@ -19,7 +19,7 @@
         <h5
           class="min-w-[152px] min-h-[32px] flex flex-row justify-center items-center px-3 rounded-full border border-[#e5e7eb] bg-[#f9fafb] text-[#1f2a37] text-[16px] font-medium"
         >
-          اسم الوردية الأساسية
+          اسم الوردية الحالية
         </h5>
         <button
           (click)="openDialog()"
@@ -133,7 +133,7 @@
           class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
         >
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-            قائمة ورديات العمل المؤقتة
+            قائمة ورديات العمل المخصصة
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button class="table-head-action-btn min-w-[40px]">
@@ -147,25 +147,23 @@
         <p-table [value]="attendance">
           <ng-template #header>
             <tr>
-              <th>معرف الوردية</th>
               <th>اسم الوردية</th>
               <th>تاريخ البداية</th>
               <th>اتاريخ الانتهاء</th>
               <th>الوقت (من - الى)</th>
-              <th>الحد الأقصى للحضور</th>
-              <th>الحد الأقصى للانصراف</th>
+              <th>مدة السماح للانصراف (دق)</th>
+              <th>مدة السماح للانصراف (دق)</th>
               <th>اجراء</th>
             </tr>
           </ng-template>
           <ng-template #body let-attendance>
             <tr>
-              <td>{{ attendance.serialNumber }}</td>
               <td>{{ attendance.PermanentType }}</td>
               <td>{{ attendance.startDate }}</td>
               <td>{{ attendance.endDate }}</td>
               <td>{{ attendance.timeRange }}</td>
-              <td>{{ attendance.maxAttendanceTime }}</td>
-              <td>{{ attendance.maxwithdrawalTime }}</td>
+              <td>30</td>
+              <td>30</td>
               <td>
                 <button
                   class="table-action-gray-btn flex align-items gap-4 min-w-[144px]"

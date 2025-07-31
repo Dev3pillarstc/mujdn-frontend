@@ -7,12 +7,13 @@ import { NotificationChannel } from '@/models/features/setting/notification-chan
 import { NotificationChannelService } from '@/services/features/setting/notification-channel.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TabsModule } from 'primeng/tabs';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-notification-channels',
   standalone: true,
-  imports: [MatDialogModule, Breadcrumb, ReactiveFormsModule, TranslatePipe, RouterModule],
+  imports: [MatDialogModule, Breadcrumb, ReactiveFormsModule, TranslatePipe, TabsModule, RouterModule],
   templateUrl: './notification-channels.component.html',
   styleUrls: ['./notification-channels.component.scss'],
 })

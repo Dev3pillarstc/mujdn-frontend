@@ -235,7 +235,7 @@ export default class OthersAttendanceLogListComponent
     return this.filterModel.swipeDateFrom;
   }
 
-  exportPdf(fileName: string = 'data.pdf'): void {
+  exportPdf(fileName: string = 'Attendance_Logs_List.pdf'): void {
     const allDataParams = {
       ...this.paginationParams,
       pageNumber: 1,

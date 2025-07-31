@@ -22,36 +22,20 @@
             <div class="relative">
               <label class="label" for="shiftNameAr">{{
                 'WORK_SHIFTS.SHIFT_NAME_AR' | translate
-              }}</label>
-              <input
-                [(ngModel)]="filterModel.nameAr"
-                [placeholder]="'WORK_SHIFTS.SHIFT_NAME_AR' | translate"
-                class="peer"
-                fluid="true"
-                id="shiftNameAr"
-                pInputText
-                type="text"
-              />
+                }}</label>
+              <input [(ngModel)]="filterModel.nameAr" [placeholder]="'WORK_SHIFTS.SHIFT_NAME_AR' | translate"
+                class="peer" fluid="true" id="shiftNameAr" pInputText type="text" />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
             <div class="relative">
               <label class="label" for="shiftNameEn">{{
                 'WORK_SHIFTS.SHIFT_NAME_EN' | translate
-              }}</label>
-              <input
-                [(ngModel)]="filterModel.nameEn"
-                [placeholder]="'WORK_SHIFTS.SHIFT_NAME_EN' | translate"
-                class="peer"
-                fluid="true"
-                id="shiftNameEn"
-                pInputText
-                type="text"
-              />
+                }}</label>
+              <input [(ngModel)]="filterModel.nameEn" [placeholder]="'WORK_SHIFTS.SHIFT_NAME_EN' | translate"
+                class="peer" fluid="true" id="shiftNameEn" pInputText type="text" />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
           </div>
 
@@ -67,16 +51,12 @@
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
-        >
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
             {{ 'WORK_SHIFTS.SHIFTS_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button
-              (click)="exportExcel('work-shifts.xlsx')"
-              class="table-head-action-btn min-w-[40px]"
-            >
+            <button (click)="exportExcel('work-shifts.xlsx')" class="table-head-action-btn min-w-[40px]">
               <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
@@ -94,7 +74,7 @@
               <th>{{ 'WORK_SHIFTS.MAX_LEAVE_TIME' | translate }}</th>
               <th>{{ 'WORK_SHIFTS.TIME_FROM_TO' | translate }}</th>
               <!-- hidden for release 1 -->
-              <!-- <th>الوردية الافتراضية</th> -->
+              <th>الوردية الافتراضية</th>
               <th>{{ 'COMMON.ACTION' | translate }}</th>
             </tr>
           </ng-template>
@@ -106,30 +86,20 @@
               <td>{{ shift.leaveBuffer }}</td>
               <td>{{ getFormattedTimeRange(shift.timeFrom, shift.timeTo) }}</td>
               <!-- hidden for release 1 -->
-              <!-- <td>
-                <div class="flex items-center justify-center">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11z"
-                      fill="#fff"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11zM7.05 11.121a1 1 0 0 0 0 1.415l2.829 2.828a1 1 0 0 0 1.414 0l5.657-5.657a1 1 0 0 0-1.414-1.414l-4.95 4.95-2.122-2.122a1 1 0 0 0-1.414 0z"
-                      fill="#067647"
-                    />
-                  </svg>
+              <td>
+                <div class="px-2 py-1 rounded-full w-fit t"
+                  class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#ecfdf3] text-[#085d3a]">
+                  <span class="block w-[10px] h-[10px] rounde"
+                    class="block w-[10px] h-[10px] rounded-full bg-[#085d3a]"></span>
+                  <span> مفعلة </span>
                 </div>
-              </td> -->
+                <div class="px-2 py-1 rounded-full w-fit t"
+                  class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#fef3f2] text-[#912018]">
+                  <span class="block w-[10px] h-[10px] rounde"
+                    class="block w-[10px] h-[10px] rounded-full bg-[#912018]"></span>
+                  <span> غير مفعلة </span>
+                </div>
+              </td>
               <td>
                 <div class="actions flex gap-2">
                   <button (click)="addOrEditModel(shift)" class="table-action-gray-btn">
@@ -140,15 +110,8 @@
             </tr>
           </ng-template>
         </p-table>
-        <p-paginator
-          (onPageChange)="onPageChange($event)"
-          [first]="first"
-          [rowsPerPageOptions]="[10, 20, 30]"
-          [rows]="rows"
-          [showCurrentPageReport]="false"
-          [totalRecords]="paginationInfo.totalItems"
-          class="mt-6"
-        />
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]"
+          [rows]="rows" [showCurrentPageReport]="false" [totalRecords]="paginationInfo.totalItems" class="mt-6" />
         <div></div>
       </div>
     </div>

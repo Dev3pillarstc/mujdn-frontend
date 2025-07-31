@@ -39,7 +39,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { AuthService } from '@/services/auth/auth.service';
 import { Observable } from 'rxjs';
-import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-employee-list',
@@ -57,6 +57,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
     PaginatorModule,
     TranslatePipe,
     InputTextModule,
+    DropdownModule,
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',

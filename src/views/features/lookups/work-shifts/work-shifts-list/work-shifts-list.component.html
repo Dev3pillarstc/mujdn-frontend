@@ -22,20 +22,36 @@
             <div class="relative">
               <label class="label" for="shiftNameAr">{{
                 'WORK_SHIFTS.SHIFT_NAME_AR' | translate
-                }}</label>
-              <input [(ngModel)]="filterModel.nameAr" [placeholder]="'WORK_SHIFTS.SHIFT_NAME_AR' | translate"
-                class="peer" fluid="true" id="shiftNameAr" pInputText type="text" />
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.nameAr"
+                [placeholder]="'WORK_SHIFTS.SHIFT_NAME_AR' | translate"
+                class="peer"
+                fluid="true"
+                id="shiftNameAr"
+                pInputText
+                type="text"
+              />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
             <div class="relative">
               <label class="label" for="shiftNameEn">{{
                 'WORK_SHIFTS.SHIFT_NAME_EN' | translate
-                }}</label>
-              <input [(ngModel)]="filterModel.nameEn" [placeholder]="'WORK_SHIFTS.SHIFT_NAME_EN' | translate"
-                class="peer" fluid="true" id="shiftNameEn" pInputText type="text" />
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.nameEn"
+                [placeholder]="'WORK_SHIFTS.SHIFT_NAME_EN' | translate"
+                class="peer"
+                fluid="true"
+                id="shiftNameEn"
+                pInputText
+                type="text"
+              />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
           </div>
 
@@ -51,12 +67,16 @@
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
             {{ 'WORK_SHIFTS.SHIFTS_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button (click)="exportExcel('work-shifts.xlsx')" class="table-head-action-btn min-w-[40px]">
+            <button
+              (click)="exportExcel('work-shifts.xlsx')"
+              class="table-head-action-btn min-w-[40px]"
+            >
               <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
@@ -87,16 +107,24 @@
               <td>{{ getFormattedTimeRange(shift.timeFrom, shift.timeTo) }}</td>
               <!-- hidden for release 1 -->
               <td>
-                <div class="px-2 py-1 rounded-full w-fit t"
-                  class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#ecfdf3] text-[#085d3a]">
-                  <span class="block w-[10px] h-[10px] rounde"
-                    class="block w-[10px] h-[10px] rounded-full bg-[#085d3a]"></span>
+                <div
+                  class="px-2 py-1 rounded-full w-fit t"
+                  class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#ecfdf3] text-[#085d3a]"
+                >
+                  <span
+                    class="block w-[10px] h-[10px] rounde"
+                    class="block w-[10px] h-[10px] rounded-full bg-[#085d3a]"
+                  ></span>
                   <span> مفعلة </span>
                 </div>
-                <div class="px-2 py-1 rounded-full w-fit t"
-                  class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#fef3f2] text-[#912018]">
-                  <span class="block w-[10px] h-[10px] rounde"
-                    class="block w-[10px] h-[10px] rounded-full bg-[#912018]"></span>
+                <div
+                  class="px-2 py-1 rounded-full w-fit t"
+                  class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#fef3f2] text-[#912018]"
+                >
+                  <span
+                    class="block w-[10px] h-[10px] rounde"
+                    class="block w-[10px] h-[10px] rounded-full bg-[#912018]"
+                  ></span>
                   <span> غير مفعلة </span>
                 </div>
               </td>
@@ -110,8 +138,15 @@
             </tr>
           </ng-template>
         </p-table>
-        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]"
-          [rows]="rows" [showCurrentPageReport]="false" [totalRecords]="paginationInfo.totalItems" class="mt-6" />
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rowsPerPageOptions]="[10, 20, 30]"
+          [rows]="rows"
+          [showCurrentPageReport]="false"
+          [totalRecords]="paginationInfo.totalItems"
+          class="mt-6"
+        />
         <div></div>
       </div>
     </div>

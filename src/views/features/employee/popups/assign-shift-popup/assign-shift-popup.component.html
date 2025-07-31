@@ -63,8 +63,14 @@
           </tr>
         </ng-template>
       </p-table>
-      <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]"
-        [rows]="rows" [totalRecords]="120" class="mt-6" />
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="rows"
+        [totalRecords]="120"
+        class="mt-6"
+      />
       <div></div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button (click)="close()" class="btn gray-btn">الغاء</button>

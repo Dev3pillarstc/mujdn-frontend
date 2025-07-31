@@ -210,3 +210,21 @@ textarea {
     color: #161616 !important;
   }
 }
+
+.p-overlay {
+  max-width: 100%;
+}
+
+td {
+  max-width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-mdc-dialog-component-host {
+  div[dir='rtl'] {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+}

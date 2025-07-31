@@ -13,7 +13,14 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-notification-channels',
   standalone: true,
-  imports: [MatDialogModule, Breadcrumb, ReactiveFormsModule, TranslatePipe, TabsModule, RouterModule],
+  imports: [
+    MatDialogModule,
+    Breadcrumb,
+    ReactiveFormsModule,
+    TranslatePipe,
+    TabsModule,
+    RouterModule,
+  ],
   templateUrl: './notification-channels.component.html',
   styleUrls: ['./notification-channels.component.scss'],
 })

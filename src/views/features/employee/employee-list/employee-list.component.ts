@@ -234,6 +234,12 @@ export default class EmployeeListComponent
     this.selectedModel = model;
   }
 
+  getDepartmentName(department: BaseLookupModel): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (department?.nameEn ?? '')
+      : (department?.nameAr ?? '');
+  }
+
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'EMPLOYEES_PAGE.EMPLOYEES_LIST' }];
   }

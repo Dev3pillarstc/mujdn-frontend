@@ -71,6 +71,7 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.STRONG_PASSWORD]: 'COMMON.STRONG_PASSWORD',
     [ValidationErrorKeyEnum.NATIONAL_ID]: 'COMMON.NATIONAL_ID_VALIDATION',
     [ValidationErrorKeyEnum.PHONE_NUMBER]: 'COMMON.PHONE_NUMBER_VALIDATION',
+    [ValidationErrorKeyEnum.FAX]: 'COMMON.FAX_VALIDATION',
     [ValidationErrorKeyEnum.POSITIVE_NUMBER]: 'COMMON.POSITIVE_NUMBER_ONLY',
     [ValidationErrorKeyEnum.INVALID_NUMBER]: 'COMMON.INVALID_NUMBER',
     [ValidationErrorKeyEnum.NUMBER_RANGE]: 'COMMON.NUMBER_RANGE',

@@ -90,13 +90,16 @@
         </label>
       </div>
       <div class="actions flex items-center mt-6 gap-4 ms-auto">
-        <!-- <button type="button" class="btn gray-btn" (click)="form.reset(model)">
-          إعادة تعيين
-        </button> -->
         <button type="button" class="btn black-btn" (click)="save()" [disabled]="form.invalid">
           {{ 'COMMON.SAVE' | translate }}
         </button>
-        <button type="button" class="btn gray-btn border border-[#d2d6db]">إلغاء</button>
+        <button
+          type="button"
+          class="btn gray-btn border border-[#d2d6db]"
+          (click)="form.reset(model)"
+        >
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
       </div>
     </div>
   </div>

@@ -168,7 +168,9 @@
                             ? 'bg-[#ecfdf3] text-[#085d3a]'
                             : permission.status.id === permissionStatusEnum.New
                               ? 'bg-[#eff8ff] text-[#1849a9]'
-                              : 'bg-[#fef3f2] text-[#912018]',
+                              : permission.status.id === permissionStatusEnum.FirstAccepted
+                                ? 'bg-[#fffaeb] text-[#93370d]'
+                                : 'bg-[#fef3f2] text-[#912018]',
                         ]"
                       >
                         <span
@@ -176,19 +178,15 @@
                             'block w-[10px] h-[10px] rounded-full',
                             permission.status.id === permissionStatusEnum.Accepted
                               ? 'bg-[#085d3a]'
-                              : permission.status.id === permissionStatusEnum.New ||
-                                  permission.status.id === permissionStatusEnum.FirstAccepted
+                              : permission.status.id === permissionStatusEnum.New
                                 ? 'bg-[#1849a9]'
-                                : 'bg-[#912018]',
+                                : permission.status.id === permissionStatusEnum.FirstAccepted
+                                  ? 'bg-[#93370d]'
+                                  : 'bg-[#912018]',
                           ]"
                         ></span>
                         <span>
-                          {{
-                            permission.fkStatusId === permissionStatusEnum.New ||
-                            permission.status.id === permissionStatusEnum.FirstAccepted
-                              ? ('PERMISSION_PAGE.UNDER_REVIEW' | translate)
-                              : permission.getStatusName()
-                          }}
+                          {{ permission.getStatusName() }}
                         </span>
                       </div>
                     </td>
@@ -425,11 +423,12 @@
                             'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
                             permissionsRequest.status.id === permissionStatusEnum.Accepted
                               ? 'bg-[#ecfdf3] text-[#085d3a]'
-                              : permissionsRequest.status.id === permissionStatusEnum.New ||
-                                  permissionsRequest.status.id ===
-                                    permissionStatusEnum.FirstAccepted
+                              : permissionsRequest.status.id === permissionStatusEnum.New
                                 ? 'bg-[#eff8ff] text-[#1849a9]'
-                                : 'bg-[#fef3f2] text-[#912018]',
+                                : permissionsRequest.status.id ===
+                                    permissionStatusEnum.FirstAccepted
+                                  ? 'bg-[#fffaeb] text-[#93370d]'
+                                  : 'bg-[#fef3f2] text-[#912018]',
                           ]"
                         >
                           <span
@@ -437,11 +436,12 @@
                               'block w-[10px] h-[10px] rounded-full',
                               permissionsRequest.status.id === permissionStatusEnum.Accepted
                                 ? 'bg-[#085d3a]'
-                                : permissionsRequest.status.id === permissionStatusEnum.New ||
-                                    permissionsRequest.status.id ===
-                                      permissionStatusEnum.FirstAccepted
+                                : permissionsRequest.status.id === permissionStatusEnum.New
                                   ? 'bg-[#1849a9]'
-                                  : 'bg-[#912018]',
+                                  : permissionsRequest.status.id ===
+                                      permissionStatusEnum.FirstAccepted
+                                    ? 'bg-[#93370d]'
+                                    : 'bg-[#912018]',
                             ]"
                           ></span>
                           <span>{{ permissionsRequest.getStatusName() }}</span>

@@ -24,6 +24,7 @@
     "ENGLISH_ONLY": "This field must contain English characters only",
     "EMAIL_VALIDATION": "Please enter a valid email address",
     "PHONE_NUMBER_VALIDATION": "Please enter a valid phone number",
+    "FAX_VALIDATION": "Please enter a valid fax number",
     "SEARCH": "Search",
     "RESET_SEARCH": "Reset",
     "SEARCH_FILTERS": "Search filters",
@@ -389,6 +390,7 @@
     "CHOOSE_SUPPORTED_PLATFORMS": "Choose Supported Platforms",
     "SMS": "SMS",
     "MOBILE": "Mobile",
-    "WEB": "Web"
+    "WEB": "Web",
+    "RESET": "Reset"
   }
 }

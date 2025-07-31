@@ -80,8 +80,8 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
       fax: [
         fax,
         [
-          Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
-          CustomValidators.pattern('PHONE_NUMBER'),
+          Validators.maxLength(CustomValidators.defaultLengths.FAX_MAX),
+          CustomValidators.pattern('FAX'),
         ],
       ],
       fkManagerId: [fkManagerId, []],

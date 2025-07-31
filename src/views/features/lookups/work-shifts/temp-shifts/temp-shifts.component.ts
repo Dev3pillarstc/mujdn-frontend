@@ -9,6 +9,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
+import { WorkDaysPopupComponent } from '../work-days-popup/work-days-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-temp-shifts',
   imports: [
@@ -34,8 +36,14 @@ export default class TempShiftsComponent {
   breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
 
+  dialogSize = {
+    width: '100%',
+    maxWidth: '600px',
+  };
+  dialog = inject(MatDialog);
+
   ngOnInit() {
-    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'ورديات العمل المؤقتة' }];
+    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'وردياتي المؤقتة' }];
     // Updated dummy data to match your Arabic table structure
     this.attendance = [
       {
@@ -52,5 +60,11 @@ export default class TempShiftsComponent {
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? 0;
     this.rows = event.rows ?? 10;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(WorkDaysPopupComponent as any, this.dialogSize);
+
+    dialogRef.afterClosed().subscribe();
   }
 }

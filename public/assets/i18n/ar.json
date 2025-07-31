@@ -25,6 +25,7 @@
     "ENGLISH_ONLY": "يجب أن يحتوي هذا الحقل على أحرف إنجليزية فقط",
     "EMAIL_VALIDATION": "يرجى إدخال عنوان بريد إلكتروني صحيح",
     "PHONE_NUMBER_VALIDATION": "يرجى إدخال رقم هاتف صحيح",
+    "FAX_VALIDATION": "يرجى إدخال رقم فاكس صحيح",
     "SEARCH": "بحث",
     "RESET_SEARCH": "إعادة تعيين",
     "SEARCH_FILTERS": "تصفية البحث",

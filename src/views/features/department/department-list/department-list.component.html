@@ -141,7 +141,7 @@
             <div
               class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
             >
-              <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+              <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616] truncate">
                 {{
                   isCurrentLanguageEnglish()
                     ? selectedDepartment?.nameEn
@@ -149,7 +149,10 @@
                 }}
               </h4>
               <div class="actions flex items-center gap-4 ms-auto">
-                <button (click)="exportExcel(getTranslatedDepartmentLabel() + '.xlsx')">
+                <button
+                  class="table-head-action-btn min-w-[40px]"
+                  (click)="exportExcel(getTranslatedDepartmentLabel() + '.xlsx')"
+                >
                   <img alt="" src="assets/icons/excel.svg" />
                 </button>
                 <!-- <button>
@@ -157,7 +160,7 @@
                 </button> -->
                 <button
                   (click)="addOrEditModel(selectedDepartment?.id ?? 0)"
-                  class="btn green-btn flex items-center"
+                  class="btn green-btn flex items-center min-w-[175px] whitespace-nowrap"
                 >
                   <img alt="" src="assets/icons/plus.svg" />
                   <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_NEW_DEPARTMENT' | translate }}</span>

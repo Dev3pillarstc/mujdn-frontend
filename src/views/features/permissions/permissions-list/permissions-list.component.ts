@@ -107,9 +107,6 @@ export default class PermissionsListComponent
       this.prmissionReasons = res;
     });
   }
-  protected override getBreadcrumbKeys() {
-    return [{ labelKey: 'PERMISSION_PAGE.PERMISSIONS' }];
-  }
 
   override openDialog(model: Permission, viewMode?: ViewModeEnum): void {
     const lookups = {
@@ -125,16 +122,6 @@ export default class PermissionsListComponent
     this.openDialog(permission, viewMode);
   }
 
-  protected override mapModelToExcelRow(model: Permission): { [key: string]: any } {
-    return {
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
-        model.getPermissionTypeName(),
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
-        model.getPermissionReasonName(),
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
-    };
-  }
   mapIncomingRequestsToExcelRow(model: Permission): { [key: string]: any } {
     return {
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
@@ -208,6 +195,8 @@ export default class PermissionsListComponent
 
   openDataDialog(model: Permission, canTakeAction?: ViewModeEnum): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
     dialogConfig.data = { model: model, ViewMode: canTakeAction };
     const dialogRef = this.matDialog.open(PermissionsDataPopupComponent as any, dialogConfig);
 
@@ -235,6 +224,7 @@ export default class PermissionsListComponent
     this.paginationParams.pageSize = this.rows;
     this.loadIncomingPermissions();
   }
+
   override exportExcel(
     fileName: string = 'data.xlsx',
     isIncomingPermissions: boolean = false
@@ -270,5 +260,20 @@ export default class PermissionsListComponent
         this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
       },
     });
+  }
+
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'PERMISSION_PAGE.PERMISSIONS' }];
+  }
+
+  protected override mapModelToExcelRow(model: Permission): { [key: string]: any } {
+    return {
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
+        model.getPermissionTypeName(),
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
+        model.getPermissionReasonName(),
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
+    };
   }
 }

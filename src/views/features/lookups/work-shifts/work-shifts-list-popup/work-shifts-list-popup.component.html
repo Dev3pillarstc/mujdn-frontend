@@ -60,7 +60,8 @@
           }}</label>
           <div class="relative">
             <p-datepicker
-             [hourFormat]="'12'" [iconDisplay]="'input'"
+              [hourFormat]="'12'"
+              [iconDisplay]="'input'"
               [placeholder]="'WORK_SHIFTS_POPUP.TIME_FROM' | translate"
               [showIcon]="true"
               [timeOnly]="true"
@@ -69,7 +70,6 @@
               id="time-pick-from"
               inputId="icondisplay"
               name="time-pick-from"
-
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
@@ -87,7 +87,8 @@
           }}</label>
           <div class="relative">
             <p-datepicker
-             [hourFormat]="'12'" [iconDisplay]="'input'"
+              [hourFormat]="'12'"
+              [iconDisplay]="'input'"
               [placeholder]="'WORK_SHIFTS_POPUP.TIME_TO' | translate"
               [showIcon]="true"
               [timeOnly]="true"
@@ -96,7 +97,6 @@
               id="time-pick-to"
               inputId="icondisplay"
               name="time-pick-to"
-
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
@@ -153,42 +153,88 @@
         </div>
       </div>
       <!-- hidden for release 1 -->
-      <!--      <div-->
-      <!--
-
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
+      >
+        <div class="md:col-span-6">
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              checked
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              disabled
+              type="checkbox"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="3"
+              viewBox="0 0 24 24"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]"> تعيين ك وردية افتراضية </span>
+          </label>
+        </div>
+        <div class="lg:col-span-2">
+          <div class="relative">
+            <label for="" class="label">تاريخ بدء العمل بالوردية ك افتراضية</label>
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              placeholder="التاريخ (من)"
+              class="peer block w-full"
+              inputId="icondisplay"
+            >
+              <ng-template pTemplate="inputicon">
+                <img src="/assets/icons/calender-icon.svg" alt="" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+        </div>
+      </div>
+      <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
-
-      -->
-      <!--      >-->
-      <!--        <div class="lg:col-span-6">-->
-      <!--          <h3 class="text-[#1f2a37 font-[600] text-lg sm:text-xl">مدة التعيين ك وردية افتراضية</h3>-->
-      <!--        </div>-->
-      <!--        <div class="lg:col-span-2">-->
-      <!--          <span class="text-[14px] font-normal text-[#6c737f]">تاريخ تفعيل و بدء الوردية</span>-->
-      <!--          <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>-->
-      <!--        </div>-->
-      <!--        <div class="lg:col-span-2">-->
-      <!--          <span class="text-[14px] font-normal text-[#6c737f]">تاريخ انتهاء الوردية</span>-->
-      <!--          <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>-->
-      <!--        </div>-->
-      <!--        <div class="lg:col-span-2">-->
-      <!--          <span class="text-[14px] font-normal text-[#6c737f]"
-            -->
-      <!-->الوردية الافتراضية التالية (بعد انتهاء تلك الوردية)</span
-          -->
-      <!--          >-->
-      <!--          <p class="text-[16px] font-semibold text-[#161616]">وردية مسائية</p>-->
-      <!--        </div>-->
-      <!--      </div>-->
+      >
+        <div class="lg:col-span-2">
+          <span class="text-[14px] font-normal text-[#6c737f]">تاريخ تفعيل و بدء الوردية</span>
+          <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>
+        </div>
+        <div class="lg:col-span-2">
+          <span class="text-[14px] font-normal text-[#6c737f]">حالة التفعيل</span>
+          <div
+            class="px-2 py-1 rounded-full w-fit t"
+            class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#ecfdf3] text-[#085d3a]"
+          >
+            <span
+              class="block w-[10px] h-[10px] rounde"
+              class="block w-[10px] h-[10px] rounded-full bg-[#085d3a]"
+            ></span>
+            <span> مفعلة </span>
+          </div>
+          <div
+            class="px-2 py-1 rounded-full w-fit t"
+            class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#fef3f2] text-[#912018]"
+          >
+            <span
+              class="block w-[10px] h-[10px] rounde"
+              class="block w-[10px] h-[10px] rounded-full bg-[#912018]"
+            ></span>
+            <span> غير مفعلة </span>
+          </div>
+        </div>
+      </div>
       <div class="actions mt-6 flex items-center justify-between gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
         <div class="flex items-center justify-end gap-4">
-          <!-- hidden for release 1 -->
-          <!--          <button (click)="close()" (click)="openDurationDialog()" class="btn black-btn">-->
-          <!--
-            تعيين ك وردية افتراضية
-          -->
-          <!--          </button>-->
+          <button (click)="close()" (click)="openDurationDialog()" class="btn black-btn">
+            تفعيل
+          </button>
           <button (click)="save$.next()" class="btn green-btn">
             {{ 'COMMON.SAVE' | translate }}
           </button>

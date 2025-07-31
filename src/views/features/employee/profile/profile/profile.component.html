@@ -1,0 +1,59 @@
+<div class="bg-white">
+    <div class="bg-[#f9fafb] p-3 sm:p-6">
+        <section>
+            <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+                <p-breadcrumb class="max-w-full" [model]="breadcrumbs" [home]="home" />
+                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+                    الملف الشخصي
+                </h3>
+            </div>
+            <div
+                class="p-8 md:p-10 rounded-[16px] bg-[#074d31] shadow-[0_4px_6px_-2px_rgba(16,24,40,0.03),_0_12px_16px_-4px_rgba(16,24,40,0.08)] mb-6">
+                <header
+                    class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 border-b border-white">
+                    <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#fff]">
+                        عبدالعزيز أحمد
+                    </h4>
+                    <div class="actions flex items-center gap-4 ms-auto pb-4">
+                        <button (click)="openEditInfoDialog()"
+                            class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-white/40">
+                            <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/edit.png" />
+                            <span class="text-base font-medium text-white">تعديل</span>
+                        </button>
+                        <button (click)="openChangePasswordDialog()"
+                            class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-[#fecdca]">
+                            <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/password.svg" />
+                            <span class="text-base font-medium text-[#fecdca]">تغيير كلمة المرور</span>
+                        </button>
+                    </div>
+                </header>
+                <article class="flex flex-col lg:flex-row gap-10 items-start mt-6">
+                    <div class="shrink-0">
+                        <div
+                            class="w-16 h-16 rounded-full bg-white text-green-900 flex items-center justify-center text-xl font-bold">
+                            AA
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+                        <div>
+                            <div class="text-sm text-gray-200 mb-2">اسم المستخدم</div>
+                            <div class="font-bold text-white">123456789</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-200 mb-2">نوع الحساب</div>
+                            <div class="font-bold text-white">مدير عام - Admin</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-200 mb-2">رقم الهاتف</div>
+                            <div class="font-bold text-white">123456899</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-200 mb-2">البريد الإلكتروني</div>
+                            <div class="font-bold text-white">abdalazizgmail.com</div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+</div>

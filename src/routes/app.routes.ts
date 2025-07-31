@@ -225,6 +225,10 @@ export const routes: Routes = [
         path: 'tasks-list',
         loadComponent: () => import('@/views/features/tasks/tasks-list/tasks-list.component'),
       },
+      {
+        path: 'profile',
+        loadComponent: () => import('@/views/features/employee/profile/profile/profile.component'),
+      },
     ],
   },
 

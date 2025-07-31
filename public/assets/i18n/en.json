@@ -40,7 +40,7 @@
     "NATIONAL_ID_VALIDATION": "National ID must be 10 digits and starts with 1 or 2",
     "POSITIVE_NUMBER_ONLY": "Only positive numbers are allowed",
     "INVALID_NUMBER": "Please enter a valid number",
-    "NUMBER_RANGE": "Value must be between 0 and 9999",
+    "NUMBER_RANGE": "Maximum length is 4 numbers",
     "INTERNAL_SERVER_ERROR": "Internal server error",
     "RESOURCE_NOT_FOUND": "Resource not found",
     "RESOURCE_CONFLICT": "Resource already exists",
@@ -100,7 +100,7 @@
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
   },
   "LOGIN_PAGE": {
-    "LOGIN_LBL": "Login 2",
+    "LOGIN_LBL": "Login",
     "NATIONAL_ID_LBL": "National Id",
     "PASSWORD_LBL": "Password",
     "LOGIN_BTN": "Login"
@@ -369,7 +369,7 @@
     "ATTENDANCE_REPORT": "Attendance Report",
     "ATTENDANCE_LOGS": "Attendance Logs",
     "DEPARTMENTS": "Departments",
-    "EMPLOYEES": "Employees",
+    "EMPLOYEES": "Employees List",
     "PRESENCE_INQUIRIES": "Presence Inquiries",
     "PERMISSIONS": "Permissions",
     "ASSIGNED_EMPLOYEES": "Assigned Employees",

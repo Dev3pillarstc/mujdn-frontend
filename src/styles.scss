@@ -13,6 +13,7 @@
 
 .p-drawer-content {
   padding: 0 !important;
+  padding-bottom: 44px !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -223,8 +224,23 @@ td {
 }
 
 .mat-mdc-dialog-component-host {
-  div[dir='rtl'] {
-    max-height: 100vh;
-    overflow-y: auto;
+  //div[dir='rtl'] {
+  //  max-height: 100vh;
+  //  overflow-y: auto;
+  //}
+  .actions {
+    justify-content: space-between;
   }
+}
+
+.p-inputnumber {
+  width: 100%;
+}
+
+.p-inputnumber-input {
+  text-align: center;
+}
+
+.p-password-toggle-mask-icon {
+  cursor: pointer;
 }

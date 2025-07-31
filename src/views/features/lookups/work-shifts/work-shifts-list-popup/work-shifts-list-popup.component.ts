@@ -21,6 +21,8 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
 import { DefaultShiftDurationComponent } from '../default-shift-duration/default-shift-duration.component';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { CustomValidators } from '@/validators/custom-validators';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { dateToTimeString } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -32,6 +34,7 @@ import { CustomValidators } from '@/validators/custom-validators';
     ValidationMessagesComponent,
     TranslatePipe,
     RequiredMarkerDirective,
+    InputNumberModule,
   ],
   templateUrl: './work-shifts-list-popup.component.html',
   styleUrl: './work-shifts-list-popup.component.scss',
@@ -85,22 +88,6 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   override saveFail(error: Error): void {}
 
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
-    // if (!form.valid) {
-    //   return false;
-    // }
-    // // set seconds to 0 for both timeFrom and timeTo for comparison
-    // const timeFrom: Date = form.get('timeFrom')?.value;
-    // const timeTo: Date = form.get('timeTo')?.value;
-    // timeFrom?.setSeconds(0);
-    // timeTo?.setSeconds(0);
-
-    // if (timeFrom && timeTo && timeFrom >= timeTo) {
-    //   this.alertService.showErrorMessage({
-    //     messages: ['WORK_SHIFTS_POPUP.TIME_FROM_MUST_BE_LESS_THAN_TIME_TO'],
-    //   });
-    //   return false;
-    // }
-
     return form.valid;
   }
   override afterSave() {
@@ -112,17 +99,11 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
 
     return Object.assign(model, {
       ...formValue,
-      timeFrom: this.dateToTimeString(formValue.timeFrom),
-      timeTo: this.dateToTimeString(formValue.timeTo),
+      timeFrom: dateToTimeString(formValue.timeFrom),
+      timeTo: dateToTimeString(formValue.timeTo),
     });
   }
 
-  private dateToTimeString(date: Date): string | null {
-    if (!date) return null;
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}:00`;
-  }
   openDurationDialog(): void {
     const model = { id: 1 };
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;

@@ -169,6 +169,8 @@
               class="w-full peer"
               id="managerSelect"
               formControlName="fkManagerId"
+              [showClear]="true"
+              [disabled]="usersProfiles.length === 0"
             >
             </p-select>
             <span
@@ -181,7 +183,7 @@
       @if (model.fkParentDepartmentId != null) {
         <div class="mt-6 pt-6 border-t border-[#d2d6db] text-[#000]">
           <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-            {{ 'DEPARTMENT_POPUP.APPROVAL_LEVEL' | translate }}
+            {{ 'DEPARTMENTS_HEADER_PAGE.LEAVE_REQUEST' | translate }}
           </h3>
           <div class="flex flex-wrap gap-8 items-center">
             <label class="flex items-center cursor-pointer gap-2">

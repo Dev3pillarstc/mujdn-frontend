@@ -9,11 +9,12 @@ import { MenuItem } from '@/models/shared/menu-item';
 import { LanguageService } from '@/services/shared/language.service';
 import { combineLatest, Subscription, switchMap } from 'rxjs';
 import { SharedService } from '@/services/shared/shared.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-side-menu',
   standalone: true,
-  imports: [SidebarModule, PanelMenuModule, RouterModule, CommonModule],
+  imports: [SidebarModule, PanelMenuModule, RouterModule, CommonModule, TranslatePipe],
   templateUrl: './side-menu.component.html',
 })
 export class SideMenuComponent implements OnInit {

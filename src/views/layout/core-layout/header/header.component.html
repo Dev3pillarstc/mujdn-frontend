@@ -13,8 +13,16 @@
           >
             <img alt="" src="assets/icons/user.svg" />
             <span class="flex flex-col justify-start items-start">
-              <strong> {{ getLoggedInUserName() }} </strong>
-              <span class="font-normal"> {{ getLoggedInUserDepartment() }} </span>
+              <strong
+                class="truncate max-w-[25ch] whitespace-nowrap overflow-hidden text-ellipsis block"
+              >
+                {{ getLoggedInUserName() }}
+              </strong>
+              <span
+                class="font-normal truncate max-w-[25ch] whitespace-nowrap overflow-hidden text-ellipsis block"
+              >
+                {{ getLoggedInUserDepartment() }}
+              </span>
             </span>
           </button>
         </div>

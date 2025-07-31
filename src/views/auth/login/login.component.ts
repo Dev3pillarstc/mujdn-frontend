@@ -5,10 +5,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '@/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { filter, take } from 'rxjs';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-login',
-  imports: [InputTextModule, TranslatePipe, ReactiveFormsModule],
+  imports: [InputTextModule, TranslatePipe, ReactiveFormsModule, PasswordModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

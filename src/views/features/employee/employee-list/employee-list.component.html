@@ -254,7 +254,7 @@
                 >
                   {{ user.fullNameEn }}
                 </td>
-                <td>{{ user.department.nameAr }}</td>
+                <td>{{ getDepartmentName(user.department) }}</td>
                 <td>
                   <div class="flex justify-center gap-2">
                     @if (user.canLeaveWithoutFingerPrint) {

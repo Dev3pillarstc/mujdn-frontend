@@ -22,7 +22,7 @@
               </div>
               <div class="pt-6">
                 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
-                  <div class="relative">
+                  <div class="relative lg:col-span-2">
                     <label class="label" for="nationalityAr">نص الرسالة</label>
                     <input
                       placeholder="نص الرسالة"
@@ -37,12 +37,30 @@
                     ></span>
                   </div>
                   <div class="relative">
-                    <label for="" class="label">التاريخ (من - الى)</label>
+                    <label for="" class="label">التاريخ من</label>
                     <p-datepicker
                       [(ngModel)]="date2"
                       [iconDisplay]="'input'"
                       [showIcon]="true"
-                      placeholder="التاريخ (من - الى)"
+                      placeholder="التاريخ من"
+                      class="peer block w-full"
+                      inputId="icondisplay"
+                    >
+                      <ng-template pTemplate="inputicon">
+                        <img src="/assets/icons/calender-icon.svg" alt="" />
+                      </ng-template>
+                    </p-datepicker>
+                    <span
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
+                  </div>
+                  <div class="relative">
+                    <label for="" class="label">التاريخ إلي</label>
+                    <p-datepicker
+                      [(ngModel)]="date2"
+                      [iconDisplay]="'input'"
+                      [showIcon]="true"
+                      placeholder="التاريخ إلي"
                       class="peer block w-full"
                       inputId="icondisplay"
                     >
@@ -97,7 +115,7 @@
                   قائمة مسائلات توثيق التواجد
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
-                  <button>
+                  <button class="table-head-action-btn min-w-[40px]">
                     <img src="assets/icons/excel.svg" alt="" />
                   </button>
                   <button class="cursor-pointer">
@@ -224,30 +242,12 @@
                     ></span>
                   </div>
                   <div class="relative">
-                    <label for="" class="label">التاريخ (من - الى)</label>
-                    <p-datepicker
-                      [(ngModel)]="date2"
-                      [iconDisplay]="'input'"
-                      [showIcon]="true"
-                      placeholder="التاريخ (من - الى)"
-                      class="peer block w-full"
-                      inputId="icondisplay"
-                    >
-                      <ng-template pTemplate="inputicon">
-                        <img src="/assets/icons/calender-icon.svg" alt="" />
-                      </ng-template>
-                    </p-datepicker>
-                    <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                    ></span>
-                  </div>
-                  <div class="relative">
-                    <label for="" class="label">نتيجة المسائلة</label>
+                    <label for="" class="label">الادارة</label>
                     <p-select
                       [options]="adminstrations"
                       [(ngModel)]="selectedAdminstration"
                       optionLabel="type"
-                      placeholder="نتيجة المسائلة"
+                      placeholder="الادارة"
                       class="w-full peer"
                     ></p-select>
                     <span
@@ -284,7 +284,7 @@
                   قائمة مسائلات توثيق التواجد
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
-                  <button>
+                  <button class="table-head-action-btn min-w-[40px]">
                     <img src="assets/icons/excel.svg" alt="" />
                   </button>
                   <button class="cursor-pointer">
@@ -363,10 +363,20 @@
                     </td>
                     <td>
                       <div class="actions flex gap-2">
+                        <button (click)="openDialog2()" class="table-action-gray-btn">
+                          <img src="/assets/icons/view.svg" alt="عرضٍ" />
+                        </button>
                         <button class="table-action-gray-btn">
                           <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                         </button>
-                        <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
+                        <button
+                          (click)="openDialog1()"
+                          class="table-action-gray-btn flex align-items gap-4 !min-w-[150px]"
+                        >
+                          <img src="/assets/icons/leading.svg" alt="اسناد" />
+                          اسناد موظفين
+                        </button>
+                        <button class="table-action-red-btn">
                           <img src="/assets/icons/delete-action.svg" alt="حذف" />
                         </button>
                       </div>
@@ -386,33 +396,8 @@
             </div>
           </div>
         </p-tabpanel>
+        <p-tabpanel value="1"> </p-tabpanel>
       </p-tabpanels>
     </p-tabs>
   </div>
 </div>
-
-<!-- <div class="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-18 items-center gap-6">
-    <div class="sm:col-span-3 lg:col-span-7">
-        <label class="label" for="adminstrations-popup">الادارة</label>
-        <div class="relative">
-            <p-select class="w-full peer" id="adminstrations-popup" name="selectedAdminstration" optionLabel="type"
-                placeholder="الادارة"></p-select>
-            <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-        </div>
-        <span class="validation-message">هذا الحقل مطلوب</span>
-    </div>
-    <div class="sm:col-span-3 lg:col-span-7">
-        <label class="label" for="shiftName">اسم الموظف</label>
-        <div class="relative">
-            <input class="peer" fluid="true" id="nationalityAr" pInputText placeholder="اسم الموظف" type="text" />
-            <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-        </div>
-        <span class="validation-message">هذا الحقل مطلوب</span>
-    </div>
-    <div class="sm:col-span-4 flex gap-4 itmes-center">
-        <button class="btn black-btn">بحث</button>
-        <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
-    </div>
-</div> -->

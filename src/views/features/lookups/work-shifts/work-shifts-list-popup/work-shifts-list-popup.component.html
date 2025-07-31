@@ -60,8 +60,7 @@
           }}</label>
           <div class="relative">
             <p-datepicker
-              [hourFormat]="'12'"
-              [iconDisplay]="'input'"
+             [hourFormat]="'12'" [iconDisplay]="'input'"
               [placeholder]="'WORK_SHIFTS_POPUP.TIME_FROM' | translate"
               [showIcon]="true"
               [timeOnly]="true"
@@ -70,6 +69,7 @@
               id="time-pick-from"
               inputId="icondisplay"
               name="time-pick-from"
+
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
@@ -87,8 +87,7 @@
           }}</label>
           <div class="relative">
             <p-datepicker
-              [hourFormat]="'12'"
-              [iconDisplay]="'input'"
+             [hourFormat]="'12'" [iconDisplay]="'input'"
               [placeholder]="'WORK_SHIFTS_POPUP.TIME_TO' | translate"
               [showIcon]="true"
               [timeOnly]="true"
@@ -97,6 +96,7 @@
               id="time-pick-to"
               inputId="icondisplay"
               name="time-pick-to"
+
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
@@ -111,7 +111,7 @@
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="max-attendance-time">{{
-            'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate
+            'WORK_SHIFTS.MAX_ATTENDANCE_TIME' | translate
           }}</label>
           <p-inputnumber
             [inputStyle]="{ width: '3rem' }"
@@ -132,7 +132,7 @@
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="max-leave-time">{{
-            'WORK_SHIFTS_POPUP.MAX_LEAVE_TIME' | translate
+            'WORK_SHIFTS.MAX_LEAVE_TIME' | translate
           }}</label>
           <p-inputnumber
             [inputStyle]="{ width: '3rem' }"
@@ -154,7 +154,11 @@
       </div>
       <!-- hidden for release 1 -->
       <!--      <div-->
-      <!--        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"-->
+      <!--
+
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
+
+      -->
       <!--      >-->
       <!--        <div class="lg:col-span-6">-->
       <!--          <h3 class="text-[#1f2a37 font-[600] text-lg sm:text-xl">مدة التعيين ك وردية افتراضية</h3>-->
@@ -168,8 +172,10 @@
       <!--          <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>-->
       <!--        </div>-->
       <!--        <div class="lg:col-span-2">-->
-      <!--          <span class="text-[14px] font-normal text-[#6c737f]"-->
-      <!--            >الوردية الافتراضية التالية (بعد انتهاء تلك الوردية)</span-->
+      <!--          <span class="text-[14px] font-normal text-[#6c737f]"
+            -->
+      <!-->الوردية الافتراضية التالية (بعد انتهاء تلك الوردية)</span
+          -->
       <!--          >-->
       <!--          <p class="text-[16px] font-semibold text-[#161616]">وردية مسائية</p>-->
       <!--        </div>-->
@@ -179,7 +185,9 @@
         <div class="flex items-center justify-end gap-4">
           <!-- hidden for release 1 -->
           <!--          <button (click)="close()" (click)="openDurationDialog()" class="btn black-btn">-->
-          <!--            تعيين ك وردية افتراضية-->
+          <!--
+            تعيين ك وردية افتراضية
+          -->
           <!--          </button>-->
           <button (click)="save$.next()" class="btn green-btn">
             {{ 'COMMON.SAVE' | translate }}

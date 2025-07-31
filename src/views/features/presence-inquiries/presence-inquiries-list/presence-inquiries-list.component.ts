@@ -12,6 +12,8 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'primeng/tabs';
 import { PresenceInquiriesPopupComponent } from '../presence-inquiries-popup/presence-inquiries-popup.component';
+import { AssignEmployeeResponsibilityPopupComponent } from '../assign-employee-responsibility-popup/assign-employee-responsibility-popup.component';
+import { ViewEmployeesCheckPopupComponent } from '../view-employees-check-popup/view-employees-check-popup.component';
 interface Adminstration {
   type: string;
 }
@@ -75,6 +77,19 @@ export default class PresenceInquiriesListComponent {
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(PresenceInquiriesPopupComponent as any, this.dialogSize);
+
+    dialogRef.afterClosed().subscribe();
+  }
+  openDialog1(): void {
+    const dialogRef = this.dialog.open(
+      AssignEmployeeResponsibilityPopupComponent as any,
+      this.dialogSize
+    );
+
+    dialogRef.afterClosed().subscribe();
+  }
+  openDialog2(): void {
+    const dialogRef = this.dialog.open(ViewEmployeesCheckPopupComponent as any, this.dialogSize);
 
     dialogRef.afterClosed().subscribe();
   }

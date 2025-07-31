@@ -53,7 +53,7 @@ export function numberMaxLength(maxLength: number): ValidatorFn {
 
     if (stringValue.length > maxLength) {
       return {
-        maxlength: {
+        numberRange: {
           requiredLength: maxLength,
           actualLength: stringValue.length,
         },
@@ -76,7 +76,7 @@ export function numberMinLength(minLength: number): ValidatorFn {
 
     if (stringValue.length < minLength) {
       return {
-        minlength: {
+        numberRange: {
           requiredLength: minLength,
           actualLength: stringValue.length,
         },

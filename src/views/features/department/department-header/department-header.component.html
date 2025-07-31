@@ -4,13 +4,16 @@
   <div
     class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 border-b border-white"
   >
-    <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#fff]">
+    <h4
+      class="text-lg sm:text-xl md:text-2xl font-bold text-[#fff] truncate"
+      title="{{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}"
+    >
       {{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}
     </h4>
     <div class="actions flex items-center gap-4 ms-auto pb-4">
       <button
         (click)="openDialog()"
-        class="flex items-center justify-center gap-1 p-2 rounded border border-white/40"
+        class="flex items-center justify-center gap-1 p-2 rounded border border-white/40 w-[40px]"
       >
         <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/edit.png" />
       </button>
@@ -18,7 +21,7 @@
         <button
           (click)="delete(departmentData?.id)"
           [disabled]="departmentData?.fkParentDepartmentId == null"
-          class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca]"
+          class="flex items-center justify-center gap-1 p-2 rounded border border-[#fecdca] w-[40px]"
         >
           <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/delete.png" />
         </button>
@@ -30,7 +33,10 @@
       <p class="text-sm text-white mb-2">
         {{ 'DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME' | translate }}
       </p>
-      <h5 class="text-base font-semibold text-white">
+      <h5
+        class="text-base font-semibold text-white truncate"
+        title="{{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}"
+      >
         {{ isCurrentLanguageEnglish() ? departmentData?.nameEn : departmentData?.nameAr }}
       </h5>
     </div>

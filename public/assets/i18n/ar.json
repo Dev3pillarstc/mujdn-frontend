@@ -13,7 +13,8 @@
     "UPDATED_SUCCESSFULLY": "تم التحديث بنجاح",
     "DELETED_SUCCESSFULLY": "تم الحذف بنجاح",
     "DELETION_FAILED": "فشل في حذف العنصر",
-    "NOT_AUTHORIZED": "ليس لديك صلاحية الوصول إلى هذه الصفحة",
+    "NOT_AUTHORIZED": "عذرًا، لا تملك الصلاحيات اللازمة للوصول إلى هذه الصفحة",
+    "NOT_AUTHORIZED_TITLE": "الوصول غير مصرح به",
     "NOT_AUTHENTICATED": "لقد انتهت صلاحية جلسة التصفح",
     "SAVE": "حفظ",
     "ACTIVE": "نشط",
@@ -22,7 +23,9 @@
     "MAX_LENGTH": "يجب أن يكون الحد الأقصى للحقل هو {length} حرف",
     "ARABIC_ONLY": "يجب أن يحتوي هذا الحقل على أحرف عربية فقط",
     "ENGLISH_ONLY": "يجب أن يحتوي هذا الحقل على أحرف إنجليزية فقط",
-    "FAX_VALIDATION": "يرجى ادخال رقم فاكس صحيح",
+    "EMAIL_VALIDATION": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+    "PHONE_NUMBER_VALIDATION": "يرجى إدخال رقم هاتف صحيح",
+    "FAX_VALIDATION": "يرجى إدخال رقم فاكس صحيح",
     "SEARCH": "بحث",
     "RESET_SEARCH": "إعادة تعيين",
     "SEARCH_FILTERS": "تصفية البحث",
@@ -147,7 +150,7 @@
     "CITY": "المدينة",
     "PHONE": "الهاتف",
     "ADDRESS": "العنوان",
-    "LEAVE_REQUEST": "طلب الاذن",
+    "PERMISSION_REQUEST": "طلب الاذن",
     "MANAGER_NAME": "اسم المدير"
   },
   "DEPARTMENTS_LIST_PAGE": {
@@ -157,7 +160,7 @@
     "CITY": "المدينة",
     "PHONE": "الهاتف",
     "ADDRESS": "العنوان",
-    "LEAVE_REQUEST": "طلب الاذن",
+    "PERMISSION_REQUEST": "طلب الاذن",
     "MANAGER_NAME_ARABIC": "اسم المدير بالعربية",
     "MANAGER_NAME_ENGLISH": "اسم المدير بالإنجليزية",
     "ADD_NEW_DEPARTMENT": "إضافة إدارة جديدة",
@@ -177,7 +180,7 @@
     "DEPARTMENT_NAME_ENGLISH": "اسم الإدارة بالانجليزية",
     "PHONE_NUMBER": "رقم الهاتف",
     "ADDRESS": "العنوان",
-    "LEAVE_REQUEST": "طلب الإذن",
+    "PERMISSION_REQUEST": "طلب الإذن",
     "REQUIRED_FIELD": "هذا الحقل مطلوب",
     "REGION": "المنطقة",
     "CHOOSE_REGION": "اختر المنطقة",
@@ -384,6 +387,7 @@
     "CHOOSE_SUPPORTED_PLATFORMS": "تحديد المنصات المدعومة",
     "SMS": "رسائل قصيرة",
     "MOBILE": "إشعارات الهاتف المحمول",
-    "WEB": "إشعارات الويب"
+    "WEB": "إشعارات الويب",
+    "RESET": "إعادة تعيين"
   }
 }

@@ -24,46 +24,80 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
                   <div class="relative lg:col-span-2">
                     <label class="label" for="nationalityAr">نص الرسالة</label>
-                    <input placeholder="نص الرسالة" class="peer" fluid="true" id="nationalityAr" pInputText
-                      type="text" />
+                    <input
+                      placeholder="نص الرسالة"
+                      class="peer"
+                      fluid="true"
+                      id="nationalityAr"
+                      pInputText
+                      type="text"
+                    />
                     <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
                   </div>
                   <div class="relative">
                     <label for="" class="label">التاريخ من</label>
-                    <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" placeholder="التاريخ من"
-                      class="peer block w-full" inputId="icondisplay">
+                    <p-datepicker
+                      [(ngModel)]="date2"
+                      [iconDisplay]="'input'"
+                      [showIcon]="true"
+                      placeholder="التاريخ من"
+                      class="peer block w-full"
+                      inputId="icondisplay"
+                    >
                       <ng-template pTemplate="inputicon">
                         <img src="/assets/icons/calender-icon.svg" alt="" />
                       </ng-template>
                     </p-datepicker>
                     <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
                   </div>
                   <div class="relative">
                     <label for="" class="label">التاريخ إلي</label>
-                    <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true"
-                      placeholder="التاريخ إلي" class="peer block w-full" inputId="icondisplay">
+                    <p-datepicker
+                      [(ngModel)]="date2"
+                      [iconDisplay]="'input'"
+                      [showIcon]="true"
+                      placeholder="التاريخ إلي"
+                      class="peer block w-full"
+                      inputId="icondisplay"
+                    >
                       <ng-template pTemplate="inputicon">
                         <img src="/assets/icons/calender-icon.svg" alt="" />
                       </ng-template>
                     </p-datepicker>
                     <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
                   </div>
                   <div class="relative">
                     <label for="" class="label">الادارة</label>
-                    <p-select [options]="adminstrations" [(ngModel)]="selectedAdminstration" optionLabel="type"
-                      placeholder="الادارة" class="w-full peer"></p-select>
+                    <p-select
+                      [options]="adminstrations"
+                      [(ngModel)]="selectedAdminstration"
+                      optionLabel="type"
+                      placeholder="الادارة"
+                      class="w-full peer"
+                    ></p-select>
                     <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
                   </div>
                   <div class="relative">
                     <label class="label" for="nationalityAr">اسم الموظف</label>
-                    <input placeholder="اسم الموظف" class="peer" fluid="true" id="nationalityAr" pInputText
-                      type="text" />
+                    <input
+                      placeholder="اسم الموظف"
+                      class="peer"
+                      fluid="true"
+                      id="nationalityAr"
+                      pInputText
+                      type="text"
+                    />
                     <span
-                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                      class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                    ></span>
                   </div>
                 </div>
 
@@ -75,7 +109,8 @@
             </div>
             <div class="mt-6">
               <div
-                class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
+                class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+              >
                 <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
                   قائمة مسائلات توثيق التواجد
                 </h4>
@@ -111,39 +146,46 @@
                     <td>10:00 ص</td>
                     <td>
                       <span
-                        class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]">30
-                        دق</span>
+                        class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]"
+                        >30 دق</span
+                      >
                     </td>
                     <td>
                       <span
-                        class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium">
+                        class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
+                      >
                         <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
                         تحت التوثيق
                       </span>
                       <span
-                        class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium">
+                        class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
+                      >
                         <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
                         تم التوثيق
                       </span>
                       <span
-                        class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium">
+                        class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
+                      >
                         <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
                         لم يتم التوثيق
                       </span>
                     </td>
                     <td>
                       <span
-                        class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium">
+                        class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
+                      >
                         <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
                         تحت التوثيق
                       </span>
                       <span
-                        class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium">
+                        class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
+                      >
                         <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
                         تم التوثيق
                       </span>
                       <span
-                        class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium">
+                        class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
+                      >
                         <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
                         لم يتم التوثيق
                       </span>
@@ -156,8 +198,10 @@
                         <button class="table-action-gray-btn">
                           <img src="/assets/icons/edit-action.svg" alt="تعديل" />
                         </button>
-                        <button (click)="openDialog1()"
-                          class="table-action-gray-btn flex align-items gap-4 !min-w-[150px]">
+                        <button
+                          (click)="openDialog1()"
+                          class="table-action-gray-btn flex align-items gap-4 !min-w-[150px]"
+                        >
                           <img src="/assets/icons/leading.svg" alt="اسناد" />
                           اسناد موظفين
                         </button>
@@ -169,15 +213,19 @@
                   </tr>
                 </ng-template>
               </p-table>
-              <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-                [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]" />
+              <p-paginator
+                class="mt-6"
+                (onPageChange)="onPageChange($event)"
+                [first]="first"
+                [rows]="rows"
+                [totalRecords]="120"
+                [rowsPerPageOptions]="[10, 20, 30]"
+              />
               <div></div>
             </div>
           </div>
         </p-tabpanel>
-        <p-tabpanel value="1">
-
-        </p-tabpanel>
+        <p-tabpanel value="1"> </p-tabpanel>
       </p-tabpanels>
     </p-tabs>
   </div>

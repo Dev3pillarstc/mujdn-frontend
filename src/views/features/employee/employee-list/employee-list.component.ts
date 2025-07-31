@@ -101,6 +101,19 @@ export default class EmployeeListComponent
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
+  get joinDateFrom(): Date | undefined {
+    return this.filterModel.joinDateFrom;
+  }
+
+  set joinDateFrom(value: Date | undefined) {
+    this.filterModel.joinDateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.joinDateTo && value && this.filterModel.joinDateTo < value) {
+      this.filterModel.joinDateTo = value; // or set it to value
+    }
+  }
+
   override initListComponent(): void {
     // load lookups
     this.cityService.getCitiesLookup().subscribe((res: CityLookup[]) => {
@@ -261,7 +274,7 @@ export default class EmployeeListComponent
     };
 
     return {
-      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_ID')]: model.nationalId || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.NATIONAL_ID')]: model.nationalId || '',
       [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC')]:
         model.fullNameAr || '',
       [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH')]:
@@ -325,16 +338,5 @@ export default class EmployeeListComponent
       //   command: () => this.openConfirmation(),
       // },
     ];
-  }
-  set joinDateFrom(value: Date | undefined) {
-    this.filterModel.joinDateFrom = value;
-
-    // If dateTo is before dateFrom, reset or adjust it
-    if (this.filterModel.joinDateTo && value && this.filterModel.joinDateTo < value) {
-      this.filterModel.joinDateTo = value; // or set it to value
-    }
-  }
-  get joinDateFrom(): Date | undefined {
-    return this.filterModel.joinDateFrom;
   }
 }

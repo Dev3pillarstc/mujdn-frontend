@@ -36,7 +36,11 @@
                 "output": "."
               },
               "src/favicon.ico",
-              "src/resources"
+              {
+                "glob": "**/*",
+                "input": "public/assets/resources",
+                "output": "assets/resources"
+              }
             ],
             "styles": [
               "./node_modules/@3p-dga-style/shared-styles/src/styles.scss",

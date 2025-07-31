@@ -65,7 +65,8 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
         [
           Validators.required,
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
-          CustomValidators.pattern('ENG_AR_ONLY'),
+          Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
+          CustomValidators.pattern('ENG_AR_NUM_ONLY'),
         ],
       ],
       phoneNumber: [
@@ -79,7 +80,6 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
       fax: [
         fax,
         [
-          Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
           CustomValidators.pattern('PHONE_NUMBER'),
         ],

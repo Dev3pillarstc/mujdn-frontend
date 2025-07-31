@@ -6,6 +6,29 @@ div[dir='rtl'] {
   }
 
   // Arabic Sidebar
+  .p-datepicker-time-picker > div {
+    order: unset !important;
+  }
+
+  .p-datepicker-timeonly .p-datepicker-time-picker {
+    direction: ltr !important;
+  }
+
+  .p-tree-node-content.p-tree-node-selected .p-tree-node-toggle-button {
+    transform: scale(-1, 1);
+  }
+
+  .p-tree-node-content .p-tree-node-toggle-button {
+    // transform: rotate(180deg) !important;
+  }
+
+  .p-tree-node-children li[aria-expanded='false'] .p-ripple {
+    transform: scale(1, 1) !important;
+  }
+
+  li[aria-expanded='true'] > div:first-of-type > button:first-of-type {
+    transform: rotate(180deg) !important;
+  }
 }
 
 [dir='rtl'] ~ .p-drawer-left {

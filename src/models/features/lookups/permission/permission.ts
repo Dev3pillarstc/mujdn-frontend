@@ -23,7 +23,7 @@ export class Permission extends BaseCrudModel<Permission, PermissionService> {
   declare creationUserId: number;
   declare description: string;
   declare creationUser: BaseLookupModel;
-  declare deprtment: BaseLookupModel;
+  declare department: BaseLookupModel;
   declare status: BaseLookupModel;
   declare permissionReason: BaseLookupModel;
   declare permissionType: BaseLookupModel;
@@ -73,7 +73,7 @@ export class Permission extends BaseCrudModel<Permission, PermissionService> {
   }
   getPermissionDepartmentName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? (this.deprtment?.nameEn ?? '')
-      : (this.deprtment?.nameAr ?? '');
+      ? (this.department?.nameEn ?? '')
+      : (this.department?.nameAr ?? '');
   }
 }

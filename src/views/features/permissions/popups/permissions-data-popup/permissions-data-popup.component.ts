@@ -1,6 +1,7 @@
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
@@ -32,40 +33,47 @@ export class PermissionsDataPopupComponent implements OnInit {
   dialogRef = inject(MatDialogRef);
   statusEnum = PERMISSION_STATUS_ENUM;
   permissionStatusEnum = PERMISSION_STATUS_ENUM;
+  declare direction: LAYOUT_DIRECTION_ENUM;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
     this.model = this.data.model;
+    this.setLayoutDirection();
   }
 
-  afterSave() {
-    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'], icon: 'success' };
-    this.alertService.showSuccessMessage(successObject);
+  private setLayoutDirection() {
+    this.direction =
+      this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+        ? LAYOUT_DIRECTION_ENUM.LTR
+        : LAYOUT_DIRECTION_ENUM.RTL;
   }
 
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
 
-  acceptPermissionStatus() {
+  acceptPermission() {
     this.service.acceptPermission(this.model.id).subscribe({
       next: (updatedPermission) => {
         this.model = updatedPermission; // optionally update local model
-        this.afterSave();
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: (err) => {},
+      error: (err) => {
+        this.dialogRef.close(DIALOG_ENUM.OK);
+      },
     });
   }
 
-  rejectPermissionStatus() {
+  rejectPermission() {
     this.service.rejectPermission(this.model.id).subscribe({
       next: (updatedPermission) => {
         this.model = updatedPermission; // optionally update local model
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: (err) => {},
+      error: (err) => {
+        this.dialogRef.close(DIALOG_ENUM.OK);
+      },
     });
   }
 

@@ -16,14 +16,7 @@ interface Adminstration {
 
 @Component({
   selector: 'app-presence-inquiries-popup',
-  imports: [
-    FormsModule,
-    Select,
-    DatePickerModule,
-    InputTextModule,
-    ReactiveFormsModule,
-    CommonModule,
-  ],
+  imports: [FormsModule, DatePickerModule, InputTextModule, ReactiveFormsModule, CommonModule],
   templateUrl: './presence-inquiries-popup.component.html',
   styleUrl: './presence-inquiries-popup.component.scss',
 })

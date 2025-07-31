@@ -4,14 +4,28 @@
       {{ 'DEPARTMENT_TREE.DEPARTMENTS_LIST' | translate }}
     </h4>
     <button (click)="toggleTree()">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd"
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
           d="M3.646 3.646a.5.5 0 0 1 .708 0L8 7.293l3.646-3.647a.5.5 0 0 1 .708.708L8.707 8l3.647 3.646a.5.5 0 0 1-.708.708L8 8.707l-3.646 3.647a.5.5 0 0 1-.708-.708L7.293 8 3.646 4.354a.5.5 0 0 1 0-.708z"
-          fill="#161616" />
+          fill="#161616"
+        />
       </svg>
     </button>
   </div>
-  <p-tree [value]="departments" selectionMode="single" [(selection)]="selectedNode"
-    (onNodeSelect)="onNodeSelect($event)" (onNodeExpand)="onNodeExpand($event)"
-    (onNodeUnselect)="unselectNode($event)"></p-tree>
+  <p-tree
+    [value]="departments"
+    selectionMode="single"
+    [(selection)]="selectedNode"
+    (onNodeSelect)="onNodeSelect($event)"
+    (onNodeExpand)="onNodeExpand($event)"
+    (onNodeUnselect)="unselectNode($event)"
+  ></p-tree>
 </aside>

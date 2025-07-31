@@ -66,9 +66,10 @@ export default class OthersAttendanceLogListComponent
   implements OnInit
 {
   @Input() isActive: boolean = false;
-  @Input() creators: BaseLookupModel[] = [];
-  @Input() employees: BaseLookupModel[] = [];
+  @Input() creators: UsersWithDepartmentLookup[] = [];
+  @Input() employees: UsersWithDepartmentLookup[] = [];
   @Input() departments: BaseLookupModel[] = [];
+  filteredEmployees: UsersWithDepartmentLookup[] = [];
 
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
@@ -103,13 +104,21 @@ export default class OthersAttendanceLogListComponent
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 
-  override initListComponent(): void {}
+  override initListComponent(): void {
+    // Initialize filtered employees with all employees
+    this.filteredEmployees = [...this.employees];
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     // Watch for changes in isActive input
     if (changes['isActive'] && changes['isActive'].currentValue === true) {
       console.log('Others attendance tab became active - loading data');
       this.loadDataIfNeeded();
+    }
+
+    // Watch for changes in employees input
+    if (changes['employees'] && changes['employees'].currentValue) {
+      this.filteredEmployees = [...this.employees];
     }
   }
 
@@ -134,8 +143,33 @@ export default class OthersAttendanceLogListComponent
     });
   }
 
+  // Public method to get filtered employees for template
+  getFilteredEmployees(): UsersWithDepartmentLookup[] {
+    return this.filteredEmployees;
+  }
+
+  private filterEmployeesByDepartment(departmentId: number | undefined) {
+    if (departmentId) {
+      this.filteredEmployees = this.employees.filter((emp) => emp.departmentId === departmentId);
+    } else {
+      // If no department is selected, show all employees
+      this.filteredEmployees = [...this.employees];
+    }
+  }
+
   onDepartmentChange(deptId: number | undefined) {
     this.filterModel.departmentId = deptId ?? undefined;
+
+    // Filter employees when department changes
+    this.filterEmployeesByDepartment(deptId);
+
+    // Clear selected employee if it doesn't belong to the new department
+    if (this.filterModel.employeeId && deptId) {
+      const selectedEmployee = this.employees.find((emp) => emp.id === this.filterModel.employeeId);
+      if (selectedEmployee && selectedEmployee.departmentId !== deptId) {
+        this.filterModel.employeeId = undefined;
+      }
+    }
   }
 
   onEmployeeChange(empId: number | undefined) {
@@ -205,7 +239,7 @@ export default class OthersAttendanceLogListComponent
     const allDataParams = {
       ...this.paginationParams,
       pageNumber: 1,
-      pageSize: CustomValidators.defaultLengths.INT_MAX, // fetch all
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
     };
 
     const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
@@ -252,6 +286,17 @@ export default class OthersAttendanceLogListComponent
 
         registerIBMPlexArabicFont(doc);
 
+        // Calculate column width limit
+        const pageWidth = doc.internal.pageSize.getWidth() - 20; // 10 margin left/right
+        const colCount = head[0].length;
+        const maxColWidth = pageWidth / colCount;
+
+        // Build columnStyles with same maxWidth for all columns
+        const columnStyles: { [key: number]: any } = {};
+        for (let i = 0; i < colCount; i++) {
+          columnStyles[i] = { cellWidth: maxColWidth };
+        }
+
         autoTable(doc, {
           head,
           body,
@@ -265,16 +310,10 @@ export default class OthersAttendanceLogListComponent
             fontStyle: 'normal',
             halign: isRTL ? 'right' : 'left',
           },
-          margin: isRTL ? { right: 10, left: 0 } : { left: 10, right: 0 },
-          /** 👇 Limit max column width by index */
-          columnStyles: {
-            2: {
-              // index of the column you want to limit, e.g. channelName
-              cellWidth: doc.internal.pageSize.getWidth() * 0.5 - 20, // 50% of width minus margin
-            },
-          },
+          margin: { right: 10, left: 10 },
+          columnStyles,
           didDrawPage: () => {
-            const title = isRTL ? 'سجل الحضور' : 'Attendance Log';
+            const title = isRTL ? 'قائمة سجل الحضور والانصراف' : 'Attendance Log List';
             doc.setFont('IBMPlexSansArabic');
             doc.setFontSize(12);
             doc.text(title, isRTL ? doc.internal.pageSize.getWidth() - 20 : 10, 10, {

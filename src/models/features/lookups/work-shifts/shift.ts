@@ -1,6 +1,7 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { ShiftInterceptor } from '@/model-interceptors/features/lookups/shift.interceptor';
 import { ShiftService } from '@/services/features/lookups/shift.service';
+import { timeStringToDate } from '@/utils/general-helper';
 import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
@@ -42,8 +43,8 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
           CustomValidators.pattern('ENG_NUM'),
         ],
       ],
-      timeFrom: [timeFrom ? this.timeStringToDate(timeFrom) : null, [Validators.required]],
-      timeTo: [timeTo ? this.timeStringToDate(timeTo) : null, [Validators.required]],
+      timeFrom: [timeFrom ? timeStringToDate(timeFrom) : null, [Validators.required]],
+      timeTo: [timeTo ? timeStringToDate(timeTo) : null, [Validators.required]],
       attendanceBuffer: [
         attendanceBuffer,
         [
@@ -60,12 +61,5 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       ],
       isDefaultShift: [isDefaultShift, []],
     };
-  }
-
-  private timeStringToDate(value: string): Date {
-    const [hours, minutes, seconds] = value.split(':').map(Number);
-    const date = new Date();
-    date.setHours(hours, minutes, seconds || 0, 0);
-    return date;
   }
 }

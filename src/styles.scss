@@ -49,7 +49,7 @@
   font-weight: 600;
   color: #161616;
 
-  &>li {
+  & > li {
     margin-top: 8px;
     padding-bottom: 8px;
     border-bottom: 1px solid #d2d6db;
@@ -222,9 +222,24 @@ td {
   text-overflow: ellipsis;
 }
 
-// .mat-mdc-dialog-component-host {
-//   div[dir='rtl'] {
-//     max-height: 100vh;
-//     overflow-y: auto;
-//   }
-// }
+.mat-mdc-dialog-component-host {
+  //div[dir='rtl'] {
+  //  max-height: 100vh;
+  //  overflow-y: auto;
+  //}
+  .actions {
+    justify-content: space-between;
+  }
+}
+
+.p-inputnumber {
+  width: 100%;
+}
+
+.p-inputnumber-input {
+  text-align: center;
+}
+
+.p-password-toggle-mask-icon {
+  cursor: pointer;
+}

@@ -12,6 +12,7 @@
             'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate
           }}</label>
           <p-select
+            (ngModelChange)="onDepartmentChange($event)"
             [(ngModel)]="filterModel.departmentId"
             [optionLabel]="optionLabel"
             [options]="departments"
@@ -34,7 +35,7 @@
             (ngModelChange)="onEmployeeChange($event)"
             [(ngModel)]="filterModel.employeeId"
             [optionLabel]="optionLabel"
-            [options]="employees"
+            [options]="getFilteredEmployees()"
             [placeholder]="'ATTENDANCE_LOG_PAGE.EMPLOYEE' | translate"
             class="w-full peer"
             id="employee"

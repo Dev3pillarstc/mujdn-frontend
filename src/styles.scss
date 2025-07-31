@@ -226,6 +226,10 @@ td {
   div[dir='rtl'] {
     max-height: 100vh;
     overflow-y: auto;
+
+    .actions {
+      justify-content: space-between;
+    }
   }
 }
 

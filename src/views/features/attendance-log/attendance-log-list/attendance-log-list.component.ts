@@ -39,8 +39,8 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
   activeTabIndex: number = 0;
 
   departments: BaseLookupModel[] = [];
-  employees: BaseLookupModel[] = [];
-  creators: BaseLookupModel[] = [];
+  employees: UsersWithDepartmentLookup[] = [];
+  creators: UsersWithDepartmentLookup[] = [];
 
   home = {
     label: this.translateService.instant('COMMON.HOME'),

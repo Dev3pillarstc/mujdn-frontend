@@ -29,7 +29,8 @@ export const toDateOnly = function (date: any) {
 };
 
 export const toDateTime = function (date: any) {
-  date = date?.toString() ?? '';
+  if (date == null) return null;
+  date = date.toString();
   date = new Date(date);
   return date;
 };

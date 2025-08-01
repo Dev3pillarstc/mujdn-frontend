@@ -3,10 +3,12 @@ import { AlertDialogData } from '@/models/shared/alert-dialog-data';
 import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { COOKIE_ENUM } from '@/enums/cookie-enum';
-import { of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { CookieService } from '@/services/shared/cookie.service';
 import { AuthService } from '@/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { ConfirmationDialogComponent } from '@/abstracts/base-components/confirmation-dialog/confirmation-dialog.component';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -70,5 +72,24 @@ export class AlertService {
     }, 5000);
 
     return dialog;
+  }
+
+  open(message: string | string[]): Observable<DIALOG_ENUM> {
+    const messages = Array.isArray(message) ? message : [message];
+
+    const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        messages, // always an array now
+        okText: 'COMMON.OK',
+        cancelText: 'COMMON.CANCEL',
+      },
+    });
+
+    return dialogRef.afterClosed().pipe(
+      map((result) => {
+        return result === DIALOG_ENUM.OK ? DIALOG_ENUM.OK : DIALOG_ENUM.CANCEL;
+      })
+    );
   }
 }

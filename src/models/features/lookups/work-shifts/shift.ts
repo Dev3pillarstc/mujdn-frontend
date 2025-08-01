@@ -19,10 +19,24 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
   declare attendanceBuffer?: number;
   declare leaveBuffer?: number;
   isDefaultShift?: boolean = false;
+  declare shiftLogStartDate?: Date | string;
+  declare shiftLogId?: number;
+  declare isActive?: boolean;
+  declare shiftActivationDate?: Date | string;
+  declare isDefaultShiftForm?: boolean;
 
   buildForm() {
-    const { nameAr, nameEn, timeFrom, timeTo, attendanceBuffer, leaveBuffer, isDefaultShift } =
-      this;
+    const {
+      nameAr,
+      nameEn,
+      timeFrom,
+      timeTo,
+      attendanceBuffer,
+      leaveBuffer,
+      isDefaultShift,
+      isDefaultShiftForm,
+      isActive,
+    } = this;
 
     return {
       nameAr: [
@@ -60,6 +74,8 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
         ],
       ],
       isDefaultShift: [isDefaultShift, []],
+      isDefaultShiftForm: [isDefaultShiftForm ?? false, []],
+      isActive: [isActive ?? false, []],
     };
   }
 }

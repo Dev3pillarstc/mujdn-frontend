@@ -4,8 +4,15 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { SingleResponseData } from '@/models/shared/response/single-response-data';
 import { Injectable } from '@angular/core';
-import { CastResponse, CastResponseContainer } from 'cast-response';
+import {
+  CastResponse,
+  CastResponseContainer,
+  HasInterception,
+  InterceptParam,
+} from 'cast-response';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -32,5 +39,18 @@ export class ShiftService extends LookupBaseService<Shift, number> {
   }
   override getUrlSegment(): string {
     return this.urlService.URLS.SHIFTS;
+  }
+
+  //@CastResponse(undefined, { fallback: '$default' })
+  @HasInterception
+  activateShift(
+    @InterceptParam() shift: Shift,
+    shiftId: number
+  ): Observable<SingleResponseData<string>> {
+    return this.http.post<SingleResponseData<string>>(
+      this.getUrlSegment() + '/AddShiftLog/' + shiftId,
+      shift,
+      { withCredentials: true }
+    );
   }
 }

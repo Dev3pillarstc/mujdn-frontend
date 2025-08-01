@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,13 +17,14 @@ import { AlertService } from '@/services/shared/alert.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { DefaultShiftDurationComponent } from '../default-shift-duration/default-shift-duration.component';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { dateToTimeString } from '@/utils/general-helper';
+import { dateToTimeString, toDateOnly } from '@/utils/general-helper';
+import { transition } from '@angular/animations';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -45,6 +47,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   alertService = inject(AlertService);
   service = inject(ShiftService);
   fb = inject(FormBuilder);
+  translateService = inject(TranslateService);
   isCreateMode = false;
   durationDialogSize = {
     width: '100%',
@@ -72,16 +75,79 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   get leaveBufferControl() {
     return this.form.get('leaveBuffer') as FormControl;
   }
+  get shiftLogStartDateControl() {
+    return this.form.get('shiftLogStartDate') as FormControl;
+  }
   // get isDefaultShiftControl() {
   //   return this.form.get('isDefaultShift') as FormControl;
   // }
   override initPopup(): void {
     this.model = this.data.model;
     this.isCreateMode = this.data.viewMode == ViewModeEnum.CREATE;
+
+    setTimeout(() => {
+      const shouldDefaultBeSet = !!this.model.shiftLogStartDate;
+      this.form.patchValue({
+        isDefaultShiftForm: shouldDefaultBeSet,
+        shiftLogStartDate: this.model.shiftLogStartDate ?? null,
+      });
+
+      if (!this.isCreateMode) {
+        Object.keys(this.form.controls).forEach((key) => {
+          if (
+            key != 'nameAr' &&
+            key != 'nameEn' &&
+            key != 'isDefaultShiftForm' &&
+            key != 'shiftLogStartDate'
+          ) {
+            this.form.get(key)?.disable({ emitEvent: false });
+          }
+        });
+
+        // Force checkbox to stay checked if shiftLogId is present
+        if (this.model.shiftLogId) {
+          this.form.get('isDefaultShiftForm')?.disable({ emitEvent: false });
+        }
+        if (this.model.shiftLogStartDate) {
+          this.form.get('shiftLogStartDate')?.disable({ emitEvent: false });
+        }
+      }
+    });
   }
+
   override buildForm(): void {
-    this.form = this.fb.group(this.model.buildForm(), {
-      validators: [CustomValidators.timeFromBeforeTimeTo('timeFrom', 'timeTo')],
+    this.form = this.fb.group(
+      {
+        ...this.model.buildForm(),
+        shiftLogStartDate: [null],
+        isActive: [this.model.isActive ?? false],
+      },
+      {
+        validators: [CustomValidators.timeFromBeforeTimeTo('timeFrom', 'timeTo')],
+      }
+    );
+
+    // Only attach valueChanges logic if not locked
+    if (!this.model.shiftLogId) {
+      this.form.get('isDefaultShiftForm')?.valueChanges.subscribe((isDefault: boolean) => {
+        const shiftLogStartDateControl = this.form.get('shiftLogStartDate');
+        if (isDefault) {
+          shiftLogStartDateControl?.setValidators([Validators.required]);
+          shiftLogStartDateControl?.enable({ emitEvent: false });
+        } else {
+          shiftLogStartDateControl?.clearValidators();
+          shiftLogStartDateControl?.setValue(null);
+          shiftLogStartDateControl?.disable({ emitEvent: false });
+        }
+        shiftLogStartDateControl?.updateValueAndValidity();
+      });
+    }
+
+    // Subscribe to shiftLogStartDate changes and set isActive
+    this.form.get('shiftLogStartDate')?.valueChanges.subscribe((dateValue) => {
+      if (dateValue) {
+        this.form.patchValue({ isActive: false }, { emitEvent: false });
+      }
     });
   }
 
@@ -95,7 +161,12 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     this.alertService.showSuccessMessage(successObject);
   }
   override prepareModel(model: Shift, form: FormGroup): Shift | Observable<Shift> {
-    const formValue = { ...form.value };
+    const formValue = { ...form.getRawValue() }; // Changed from form.value to form.getRawValue()
+
+    // Only send shiftLogStartDate if isDefaultShiftForm is true
+    if (!form.get('isDefaultShiftForm')?.value) {
+      formValue.shiftLogStartDate = null;
+    }
 
     return Object.assign(model, {
       ...formValue,
@@ -114,5 +185,53 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     const dialogRef = this.matDialog.open(DefaultShiftDurationComponent as any, dialogConfig);
 
     dialogRef.afterClosed().subscribe();
+  }
+
+  get isDefaultShiftCheckboxDisabled(): boolean {
+    return !!this.model.shiftLogId;
+  }
+
+  get isShiftLogStartDateDisabled(): boolean {
+    return !!this.model.shiftLogStartDate;
+  }
+
+  activateShift(): void {
+    const formattedDate = this.model.shiftLogStartDate
+      ? new Date(this.model.shiftLogStartDate).toLocaleDateString('en-GB') // This gives DD/MM/YYYY format
+      : 'N/A';
+
+    const confirmMessage = this.translateService.instant('WORK_SHIFTS_POPUP.ACTIVATION_CONFIRM', {
+      date: formattedDate,
+    });
+
+    this.alertService.open(confirmMessage).subscribe((result) => {
+      if (result == DIALOG_ENUM.OK) {
+        const shift = new Shift();
+        shift.isActive = true;
+        this.service.activateShift(shift, this.model.id!).subscribe({
+          next: () => {
+            this.alertService.showSuccessMessage({
+              messages: ['WORK_SHIFTS_POPUP.ACTIVATED_SUCCESSFULLY'],
+            });
+            this.close();
+          },
+          error: () => {
+            this.alertService.showErrorMessage({
+              messages: ['WORK_SHIFTS_POPUP.ACTIVATION_FAILED'],
+            });
+          },
+        });
+      }
+    });
+  }
+
+  get canActivateShift(): boolean {
+    const today = toDateOnly(new Date());
+    const shiftDate = this.model.shiftLogStartDate
+      ? toDateOnly(this.model.shiftLogStartDate)
+      : null;
+
+    // Show if not active OR shiftLogStartDate is today or before
+    return this.model.isActive === false && shiftDate !== null && shiftDate <= today;
   }
 }

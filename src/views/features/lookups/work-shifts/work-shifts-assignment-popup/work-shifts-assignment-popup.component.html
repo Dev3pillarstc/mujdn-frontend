@@ -134,166 +134,30 @@
       </div>
 
       <div class="flex flex-wrap gap-8 mt-8">
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input
-            type="checkbox"
-            [checked]="isWorkingDaySelected(1)"
-            (change)="onWorkingDayChange(1, $event)"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-          />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.SATURDAY' | translate
-          }}</span>
-        </label>
-
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input
-            type="checkbox"
-            [checked]="isWorkingDaySelected(2)"
-            (change)="onWorkingDayChange(2, $event)"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-          />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.SUNDAY' | translate
-          }}</span>
-        </label>
-
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input
-            type="checkbox"
-            [checked]="isWorkingDaySelected(3)"
-            (change)="onWorkingDayChange(3, $event)"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-          />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.MONDAY' | translate
-          }}</span>
-        </label>
-
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input
-            type="checkbox"
-            [checked]="isWorkingDaySelected(4)"
-            (change)="onWorkingDayChange(4, $event)"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-          />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.TUESDAY' | translate
-          }}</span>
-        </label>
-
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input
-            type="checkbox"
-            [checked]="isWorkingDaySelected(5)"
-            (change)="onWorkingDayChange(5, $event)"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-          />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.WEDNESDAY' | translate
-          }}</span>
-        </label>
-
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input
-            type="checkbox"
-            [checked]="isWorkingDaySelected(6)"
-            (change)="onWorkingDayChange(6, $event)"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-          />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.THURSDAY' | translate
-          }}</span>
-        </label>
-
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input
-            type="checkbox"
-            [checked]="isWorkingDaySelected(7)"
-            (change)="onWorkingDayChange(7, $event)"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-          />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.FRIDAY' | translate
-          }}</span>
-        </label>
+        @for (day of weekDays; track day.value) {
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              type="checkbox"
+              [checked]="isWorkingDaySelected(day.value)"
+              (change)="onWorkingDayChange(day.value, $event)"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]">
+              {{ day.labelKey | translate }}
+            </span>
+          </label>
+        }
       </div>
 
       <div class="actions mt-6 flex items-center justify-end gap-4">

@@ -106,31 +106,18 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     return [{ labelKey: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' }];
   }
   override openDialog() {
-    const dialogConfig: MatDialogConfig = new MatDialogConfig();
-
     const lookups = {
       usersProfiles: this.usersProfiles,
       departments: this.departments,
       shifts: this.shifts,
     };
 
-    const viewMode = ViewModeEnum.CREATE;
-
-    dialogConfig.data = {
-      lookups: lookups,
-      viewMode: viewMode,
-    };
-
-    dialogConfig.width = this.dialogSize.width;
-    dialogConfig.maxWidth = this.dialogSize.maxWidth;
-
-    const dialogRef = this.dialog.open(WorkShiftsAssignmentPopupComponent as any, dialogConfig);
-
-    return dialogRef.afterClosed().subscribe((result: any) => {
-      if (result && result == DIALOG_ENUM.OK) {
-        this.loadList();
-      }
-    });
+    return this.openBaseDialog(
+      WorkShiftsAssignmentPopupComponent,
+      new UserWorkShift(),
+      ViewModeEnum.CREATE,
+      lookups
+    );
   }
   get optionLabel(): string {
     const lang = this.langService.getCurrentLanguage();

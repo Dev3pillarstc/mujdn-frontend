@@ -209,4 +209,14 @@ export class WorkShiftsAssignmentPopupComponent
   get employeeWorkingDaysControl() {
     return this.form.get('employeeWorkingDays') as FormControl;
   }
+
+  weekDays = [
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SATURDAY', value: 1 },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SUNDAY', value: 2 },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.MONDAY', value: 3 },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.TUESDAY', value: 4 },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.WEDNESDAY', value: 5 },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.THURSDAY', value: 6 },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.FRIDAY', value: 7 },
+  ];
 }

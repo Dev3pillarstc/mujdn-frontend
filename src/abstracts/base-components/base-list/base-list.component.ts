@@ -60,7 +60,7 @@ export abstract class BaseListComponent<
   abstract initListComponent(): void;
 
   openBaseDialog(
-    popupComponent: PopupComponent,
+    popupComponent: any,
     model: Model,
     viewMode: ViewModeEnum,
     lookups?: {
@@ -71,7 +71,7 @@ export abstract class BaseListComponent<
     dialogConfig.data = { model: model, lookups: lookups, viewMode: viewMode };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
-    const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
+    const dialogRef = this.matDialog.open(popupComponent, dialogConfig);
 
     return dialogRef
       .afterClosed()

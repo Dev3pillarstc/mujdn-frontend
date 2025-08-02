@@ -120,6 +120,7 @@
             formControlName="attendanceBuffer"
             id="max-attendance-time"
             spinnerMode="horizontal"
+            [min]="0"
           >
             <ng-template #incrementbuttonicon>
               <span class="pi pi-plus"></span>
@@ -141,6 +142,7 @@
             formControlName="leaveBuffer"
             id="max-leave-time"
             spinnerMode="horizontal"
+            [min]="0"
           >
             <ng-template #incrementbuttonicon>
               <span class="pi pi-plus"></span>

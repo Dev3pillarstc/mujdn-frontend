@@ -96,7 +96,10 @@
     "HOME": "Home",
     "FROM": "Date (From)",
     "TO": "Date (To)",
-    "LOG_OUT": "Log Out"
+    "LOG_OUT": "Log Out",
+    "INTERSECTED_SHIFTS": "Shifts can't be intersected.",
+    "ACTIVATION_BLOCKED": "Cannot activate a shift with a future start date.",
+    "NO_SHIFT_TO_ACTIVATE": "No scheduled shift found to activate."
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

@@ -197,7 +197,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
 
   activateShift(): void {
     const formattedDate = this.model.shiftLogStartDate
-      ? new Date(this.model.shiftLogStartDate).toLocaleDateString('en-GB') // This gives DD/MM/YYYY format
+      ? new Date(this.model.shiftLogStartDate).toLocaleDateString('en-GB')
       : 'N/A';
 
     const confirmMessage = this.translateService.instant('WORK_SHIFTS_POPUP.ACTIVATION_CONFIRM', {
@@ -205,7 +205,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     });
 
     this.alertService.open(confirmMessage).subscribe((result) => {
-      if (result == DIALOG_ENUM.OK) {
+      if (result === DIALOG_ENUM.OK) {
         const shift = new Shift();
         shift.isActive = true;
         this.service.activateShift(shift, this.model.id!).subscribe({

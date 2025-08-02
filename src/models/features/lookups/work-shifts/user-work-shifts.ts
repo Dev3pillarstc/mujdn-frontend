@@ -13,6 +13,7 @@ const { send, receive } = new UserWorkShiftInterceptor();
 export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWorkShiftService> {
   override $$__service_name__$$: string = 'UserWorkShiftService';
 
+  declare id: number;
   declare shiftNameAr: string;
   declare shiftNameEn: string;
   declare employeeNameAr: string;
@@ -21,6 +22,8 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   declare endDate: Date | string;
   declare fkShiftId: number;
   declare fkAssignedUserId: number;
+  declare employeeWorkingDays: string;
+  declare concurrencyUpdateVersion?: Uint8Array;
 
   constructor(init?: Partial<UserWorkShift>) {
     super();
@@ -28,12 +31,13 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   }
 
   buildForm() {
-    const { fkShiftId, fkAssignedUserId, startDate, endDate } = this;
+    const { fkShiftId, fkAssignedUserId, startDate, endDate, employeeWorkingDays } = this;
     return {
       fkShiftId: [fkShiftId, [Validators.required]],
       fkAssignedUserId: [fkAssignedUserId, [Validators.required]],
       startDate: [startDate, [Validators.required]],
       endDate: [endDate, [Validators.required]],
+      employeeWorkingDays: [employeeWorkingDays || ''],
     };
   }
 

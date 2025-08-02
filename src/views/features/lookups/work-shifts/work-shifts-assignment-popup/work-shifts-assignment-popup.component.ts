@@ -55,6 +55,7 @@ export class WorkShiftsAssignmentPopupComponent
   alertService = inject(AlertService);
   langService = inject(LanguageService);
   isCreateMode = false;
+  selectedWorkingDays: number[] = [];
 
   // Date constraints
   minEndDate: Date | null = null;
@@ -73,6 +74,13 @@ export class WorkShiftsAssignmentPopupComponent
     this.shifts = this.data.lookups?.shifts || [];
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
+
+    if (this.model.employeeWorkingDays) {
+      this.selectedWorkingDays = this.model.employeeWorkingDays
+        .split(',')
+        .map((day) => parseInt(day.trim()))
+        .filter((day) => !isNaN(day));
+    }
   }
 
   override buildForm(): void {
@@ -81,6 +89,33 @@ export class WorkShiftsAssignmentPopupComponent
 
     // Set initial date constraints if model has existing dates
     this.updateDateConstraints();
+    this.updateEmployeeWorkingDaysInForm();
+  }
+  onWorkingDayChange(dayValue: number, event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+
+    if (isChecked) {
+      if (!this.selectedWorkingDays.includes(dayValue)) {
+        this.selectedWorkingDays.push(dayValue);
+      }
+    } else {
+      this.selectedWorkingDays = this.selectedWorkingDays.filter((day) => day !== dayValue);
+    }
+
+    // Sort the array to maintain consistent order
+    this.selectedWorkingDays.sort();
+
+    // Update the form control
+    this.updateEmployeeWorkingDaysInForm();
+  }
+
+  private updateEmployeeWorkingDaysInForm(): void {
+    const workingDaysString = this.selectedWorkingDays.join(',');
+    this.form.get('employeeWorkingDays')?.setValue(workingDaysString);
+  }
+
+  isWorkingDaySelected(dayValue: number): boolean {
+    return this.selectedWorkingDays.includes(dayValue);
   }
 
   override saveFail(error: Error): void {
@@ -170,5 +205,8 @@ export class WorkShiftsAssignmentPopupComponent
   }
   get fkAssignedUserIdControl() {
     return this.form.get('fkAssignedUserId') as FormControl;
+  }
+  get employeeWorkingDaysControl() {
+    return this.form.get('employeeWorkingDays') as FormControl;
   }
 }

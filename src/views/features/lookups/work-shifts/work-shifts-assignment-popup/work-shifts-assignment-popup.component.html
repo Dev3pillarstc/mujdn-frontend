@@ -135,6 +135,8 @@
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
           <input
             type="checkbox"
+            [checked]="isWorkingDaySelected(1)"
+            (change)="onWorkingDayChange(1, $event)"
             class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
           />
           <svg
@@ -150,9 +152,12 @@
           </svg>
           <span class="text-base font-medium text-[#1f2a37]">السبت</span>
         </label>
+
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
           <input
             type="checkbox"
+            [checked]="isWorkingDaySelected(2)"
+            (change)="onWorkingDayChange(2, $event)"
             class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
           />
           <svg
@@ -168,9 +173,12 @@
           </svg>
           <span class="text-base font-medium text-[#1f2a37]">الأحد</span>
         </label>
+
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
           <input
             type="checkbox"
+            [checked]="isWorkingDaySelected(3)"
+            (change)="onWorkingDayChange(3, $event)"
             class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
           />
           <svg
@@ -186,9 +194,12 @@
           </svg>
           <span class="text-base font-medium text-[#1f2a37]">الاثنين</span>
         </label>
+
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
           <input
             type="checkbox"
+            [checked]="isWorkingDaySelected(4)"
+            (change)="onWorkingDayChange(4, $event)"
             class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
           />
           <svg
@@ -204,9 +215,12 @@
           </svg>
           <span class="text-base font-medium text-[#1f2a37]">الثلاثاء</span>
         </label>
+
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
           <input
             type="checkbox"
+            [checked]="isWorkingDaySelected(5)"
+            (change)="onWorkingDayChange(5, $event)"
             class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
           />
           <svg
@@ -222,9 +236,12 @@
           </svg>
           <span class="text-base font-medium text-[#1f2a37]">الاربعاء</span>
         </label>
+
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
           <input
             type="checkbox"
+            [checked]="isWorkingDaySelected(6)"
+            (change)="onWorkingDayChange(6, $event)"
             class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
           />
           <svg
@@ -240,9 +257,12 @@
           </svg>
           <span class="text-base font-medium text-[#1f2a37]">الخميس</span>
         </label>
+
         <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
           <input
             type="checkbox"
+            [checked]="isWorkingDaySelected(7)"
+            (change)="onWorkingDayChange(7, $event)"
             class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
           />
           <svg

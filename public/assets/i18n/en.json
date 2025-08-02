@@ -417,7 +417,15 @@
     "START_DATE": "Date (From)",
     "END_DATE": "Date (To)",
     "DEPARTMENT": "Department",
-    "EMPLOYEE_NAME": "Employee Name"
+    "EMPLOYEE_NAME": "Employee Name",
+    "SATURDAY": "Saturday",
+    "SUNDAY": "Sunday",
+    "MONDAY": "Monday",
+    "TUESDAY": "Tuesday",
+    "WEDNESDAY": "Wednesday",
+    "THURSDAY": "Thursday",
+    "FRIDAY": "Friday",
+    "WORKING_DAYS": "Official working Days"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "Assign Work Shifts",

@@ -412,7 +412,15 @@
     "START_DATE": "التاريخ (من)",
     "END_DATE": "التاريخ (الى)",
     "DEPARTMENT": "الإدارة",
-    "EMPLOYEE_NAME": "اسم الموظف"
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "SATURDAY": "السبت",
+    "SUNDAY": "الأحد",
+    "MONDAY": "الإثنين",
+    "TUESDAY": "الثلاثاء",
+    "WEDNESDAY": "الأربعاء",
+    "THURSDAY": "الخميس",
+    "FRIDAY": "الجمعة",
+    "WORKING_DAYS": "أيام العمل الرسمية"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "اسناد ورديات عمل",

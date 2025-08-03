@@ -1,10 +1,14 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
 } from '@angular/forms';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
@@ -84,12 +88,15 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   override buildForm(): void {
-    // The model's buildForm method returns the correct form structure
-    this.form = this.fb.group(this.model.buildForm());
+    this.form = this.fb.group({
+      ...this.model.buildForm(),
+      employeeWorkingDays: [
+        this.selectedWorkingDays.join(','),
+        [this.validateWorkingDays()], // Use array syntax for validators
+      ],
+    });
 
-    // Set initial date constraints if model has existing dates
     this.updateDateConstraints();
-    this.updateEmployeeWorkingDaysInForm();
   }
   onWorkingDayChange(dayValue: number, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
@@ -102,18 +109,43 @@ export class WorkShiftsAssignmentPopupComponent
       this.selectedWorkingDays = this.selectedWorkingDays.filter((day) => day !== dayValue);
     }
 
-    // Sort the array to maintain consistent order
     this.selectedWorkingDays.sort();
-
-    // Update the form control
     this.updateEmployeeWorkingDaysInForm();
-  }
 
+    // Mark the field as touched so validation messages appear
+    this.form.get('employeeWorkingDays')?.markAsTouched();
+  }
+  private validateWorkingDays(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value || '';
+      const selectedDays = value.split(',').filter((day: string) => day.trim() !== '');
+
+      if (selectedDays.length === 0) {
+        return { required: true }; // This should match your ValidationErrorKeyEnum.REQUIRED
+      }
+
+      return null;
+    };
+  }
   private updateEmployeeWorkingDaysInForm(): void {
     const workingDaysString = this.selectedWorkingDays.join(',');
     this.form.get('employeeWorkingDays')?.setValue(workingDaysString);
+    this.form.get('employeeWorkingDays')?.updateValueAndValidity();
   }
+  onSaveClick(): void {
+    // Mark all fields as touched to show validation errors
+    Object.keys(this.form.controls).forEach((key) => {
+      const control = this.form.get(key);
+      if (control) {
+        control.markAsTouched();
+        control.updateValueAndValidity();
+      }
+    });
 
+    if (this.form.valid) {
+      this.save$.next();
+    }
+  }
   isWorkingDaySelected(dayValue: number): boolean {
     return this.selectedWorkingDays.includes(dayValue);
   }

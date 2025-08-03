@@ -53,9 +53,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">
-            <app-validation-messages [control]="startDateControl"></app-validation-messages>
-          </span>
+          <app-validation-messages [control]="startDateControl"></app-validation-messages>
         </div>
 
         <div class="lg:col-span-2">
@@ -82,9 +80,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">
-            <app-validation-messages [control]="endDateControl"></app-validation-messages>
-          </span>
+          <app-validation-messages [control]="endDateControl"></app-validation-messages>
         </div>
 
         <div class="lg:col-span-2">
@@ -130,6 +126,7 @@
       >
         <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
           {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
+          <span style="color: #b42318; font-weight: bold">*</span>
         </h4>
       </div>
 
@@ -160,11 +157,16 @@
         }
       </div>
 
+      <div class="mt-2">
+        <app-validation-messages [control]="employeeWorkingDaysControl"></app-validation-messages>
+      </div>
+
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button type="button" (click)="close()" class="btn gray-btn">
           {{ 'COMMON.CANCEL' | translate }}
         </button>
-        <button type="button" (click)="save$.next()" class="btn green-btn" [disabled]="!form.valid">
+        <!-- Update save button to use the new method -->
+        <button type="button" (click)="onSaveClick()" class="btn green-btn">
           {{ 'COMMON.SAVE' | translate }}
         </button>
       </div>

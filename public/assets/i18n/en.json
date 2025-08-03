@@ -99,7 +99,9 @@
     "LOG_OUT": "Log Out",
     "INTERSECTED_SHIFTS": "Shifts can't be intersected.",
     "ACTIVATION_BLOCKED": "Cannot activate a shift with a future start date.",
-    "NO_SHIFT_TO_ACTIVATE": "No scheduled shift found to activate."
+    "NO_SHIFT_TO_ACTIVATE": "No scheduled shift found to activate.",
+    "CHOOSE_DAYS_FOR_USER": "Please choose the working day(s) for the user",
+    "SHIFT_START_DATE_ERROR": "The shift start date must be at least the following day of the current active shift start date"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -316,7 +318,7 @@
     "DATA_NOT_COMPLETE": "Complete shift logs data",
     "CONFLICTING_USER_DATES": "Conflicting shift dates for this user",
     "SHIFT_NAME_INVALID": "Shift name is required",
-    "DEFAULT_SHIFT": "Default shift",
+    "DEFAULT_SHIFT": "Default shift status",
     "ACTIVE": "Active",
     "NOT_ACTIVE": "Not active"
   },

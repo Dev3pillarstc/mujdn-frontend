@@ -107,7 +107,7 @@
               <td>{{ getFormattedTimeRange(shift.timeFrom, shift.timeTo) }}</td>
               <!-- hidden for release 1 -->
               <td>
-                @if (shift.isActive) {
+                @if (shift.isActive && shift.shiftLogId != null) {
                   <div
                     class="px-2 py-1 rounded-full w-fit t"
                     class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#ecfdf3] text-[#085d3a]"
@@ -119,7 +119,7 @@
                     <span> {{ 'WORK_SHIFTS.ACTIVE' | translate }} </span>
                   </div>
                 }
-                @if (shift.isActive == false) {
+                @if (shift.isActive == false && shift.shiftLogId != null) {
                   <div
                     class="px-2 py-1 rounded-full w-fit t"
                     class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#fef3f2] text-[#912018]"
@@ -130,6 +130,11 @@
                     ></span>
                     <span> {{ 'WORK_SHIFTS.NOT_ACTIVE' | translate }}</span>
                   </div>
+                }
+                @if (
+                  shift.isActive == null || (shift.shiftLogId == null && shift.isActive == false)
+                ) {
+                  <div>---</div>
                 }
               </td>
               <td>

@@ -10,7 +10,7 @@ export class UserWorkShiftInterceptor implements ModelInterceptorContract<UserWo
     delete model['employeeNameAr'];
     delete model['employeeNameEn'];
     model['startDate'] = toDateOnly(model['startDate']);
-    model['endDate'] = toDateOnly(model['endDate']);
+    if (model['endDate']) model['endDate'] = toDateOnly(model['endDate']);
     return model;
   }
 }

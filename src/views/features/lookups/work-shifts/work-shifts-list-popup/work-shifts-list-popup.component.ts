@@ -11,7 +11,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { Observable } from 'rxjs';
+import { filter, Observable, switchMap } from 'rxjs';
 import { ShiftService } from '@/services/features/lookups/shift.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -86,11 +86,20 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     this.isCreateMode = this.data.viewMode == ViewModeEnum.CREATE;
 
     setTimeout(() => {
+      // Allow existing date during initialization
+      this._allowExistingDate = true;
+
       const shouldDefaultBeSet = !!this.model.shiftLogStartDate;
+
       this.form.patchValue({
         isDefaultShiftForm: shouldDefaultBeSet,
         shiftLogStartDate: this.model.shiftLogStartDate ?? null,
       });
+
+      // Enable minDate validation after initialization
+      setTimeout(() => {
+        this._allowExistingDate = false;
+      }, 500);
 
       if (!this.isCreateMode) {
         Object.keys(this.form.controls).forEach((key) => {
@@ -104,11 +113,8 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
           }
         });
 
-        // Force checkbox to stay checked if shiftLogId is present
-        if (this.model.shiftLogId) {
+        if (this.model.isActive) {
           this.form.get('isDefaultShiftForm')?.disable({ emitEvent: false });
-        }
-        if (this.model.shiftLogStartDate) {
           this.form.get('shiftLogStartDate')?.disable({ emitEvent: false });
         }
       }
@@ -196,33 +202,78 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   }
 
   activateShift(): void {
-    const formattedDate = this.model.shiftLogStartDate
-      ? new Date(this.model.shiftLogStartDate).toLocaleDateString('en-GB')
-      : 'N/A';
+    // Early return if model or required data is missing
+    if (!this.model?.id) {
+      this.alertService.showErrorMessage({
+        messages: ['COMMON.SERVER_INVALID_OPERATION'],
+      });
+      return;
+    }
 
-    const confirmMessage = this.translateService.instant('WORK_SHIFTS_POPUP.ACTIVATION_CONFIRM', {
+    const confirmMessage = this.buildConfirmationMessage();
+
+    this.alertService
+      .open(confirmMessage)
+      .pipe(
+        filter((result) => result === DIALOG_ENUM.OK),
+        switchMap(() => this.performShiftActivation())
+      )
+      .subscribe({
+        next: () => this.handleActivationSuccess(),
+        error: (error) => this.handleActivationError(error),
+      });
+  }
+
+  private buildConfirmationMessage(): string {
+    const formattedDate = this.formatShiftDate();
+    return this.translateService.instant('WORK_SHIFTS_POPUP.ACTIVATION_CONFIRM', {
       date: formattedDate,
     });
+  }
 
-    this.alertService.open(confirmMessage).subscribe((result) => {
-      if (result === DIALOG_ENUM.OK) {
-        const shift = new Shift();
-        shift.isActive = true;
-        this.service.activateShift(shift, this.model.id!).subscribe({
-          next: () => {
-            this.alertService.showSuccessMessage({
-              messages: ['WORK_SHIFTS_POPUP.ACTIVATED_SUCCESSFULLY'],
-            });
-            this.close();
-          },
-          error: () => {
-            this.alertService.showErrorMessage({
-              messages: ['WORK_SHIFTS_POPUP.ACTIVATION_FAILED'],
-            });
-          },
-        });
-      }
+  private formatShiftDate(): string {
+    if (!this.model.shiftLogStartDate) {
+      return this.translateService.instant('COMMON.SERVER_INVALID_OPERATION');
+    }
+
+    try {
+      return new Date(this.model.shiftLogStartDate).toLocaleDateString('en-GB');
+    } catch (error) {
+      return this.translateService.instant('COMMON.SERVER_INVALID_OPERATION');
+    }
+  }
+
+  private performShiftActivation(): Observable<any> {
+    const shift = this.createActivationShift();
+    return this.service.activateShift(shift, this.model.id!);
+  }
+
+  private createActivationShift(): Shift {
+    const shift = new Shift();
+    shift.isActive = true;
+    // Add any other required properties for activation
+    return shift;
+  }
+
+  private handleActivationSuccess(): void {
+    this.alertService.showSuccessMessage({
+      messages: ['WORK_SHIFTS_POPUP.ACTIVATED_SUCCESSFULLY'],
     });
+    this.close();
+  }
+
+  private handleActivationError(error: any): void {
+    // You can add more specific error handling based on error type
+    const errorMessage = this.getErrorMessage(error);
+
+    this.alertService.showErrorMessage({
+      messages: [errorMessage],
+    });
+  }
+
+  private getErrorMessage(error: any): string {
+    // Default error message
+    return 'WORK_SHIFTS_POPUP.ACTIVATION_FAILED';
   }
 
   get canActivateShift(): boolean {
@@ -232,6 +283,45 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       : null;
 
     // Show if not active OR shiftLogStartDate is today or before
-    return this.model.isActive === false && shiftDate !== null && shiftDate <= today;
+    return (
+      this.model.shiftLogId != null &&
+      this.model.isActive === false &&
+      shiftDate !== null &&
+      shiftDate <= today
+    );
+  }
+  private _allowExistingDate = false;
+
+  // Modified getMinimumStartDate method
+  getMinimumStartDate(): Date | null {
+    if (!this.model.activeShiftStartDate) {
+      return null;
+    }
+
+    // If we're allowing existing date (during initialization), don't apply minDate
+    if (this._allowExistingDate) {
+      return null;
+    }
+
+    let baseDate: Date;
+
+    try {
+      if (this.model.activeShiftStartDate instanceof Date) {
+        baseDate = new Date(this.model.activeShiftStartDate);
+      } else {
+        baseDate = new Date(this.model.activeShiftStartDate);
+      }
+
+      if (isNaN(baseDate.getTime())) {
+        return null;
+      }
+
+      const minDate = new Date(baseDate);
+      minDate.setDate(minDate.getDate() + 1);
+
+      return minDate;
+    } catch (error) {
+      return null;
+    }
   }
 }

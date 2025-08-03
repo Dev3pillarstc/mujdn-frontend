@@ -23,6 +23,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
   declare shiftLogId?: number;
   declare isActive?: boolean;
   declare shiftActivationDate?: Date | string;
+  declare activeShiftStartDate?: Date | string;
   declare isDefaultShiftForm?: boolean;
 
   buildForm() {

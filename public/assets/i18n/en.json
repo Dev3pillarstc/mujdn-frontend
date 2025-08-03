@@ -393,5 +393,10 @@
     "MOBILE": "Mobile",
     "WEB": "Web",
     "RESET": "Reset"
+  },
+  "PROFILE_PAGE": {
+    "PROFILE": "Profile",
+    "EDIT": "Edit",
+    "CHANGE_PASSWORD": "Change Password"
   }
 }

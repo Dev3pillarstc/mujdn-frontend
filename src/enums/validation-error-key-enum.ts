@@ -9,6 +9,7 @@ export enum ValidationErrorKeyEnum {
   EMAIL = 'email',
   STRONG_PASSWORD = 'strongPassword',
   PHONE_NUMBER = 'PHONE_NUMBER',
+  FAX = 'FAX',
   NATIONAL_ID = 'NATIONAL_ID',
   POSITIVE_NUMBER = 'positiveNumber',
   INVALID_NUMBER = 'invalidNumber',

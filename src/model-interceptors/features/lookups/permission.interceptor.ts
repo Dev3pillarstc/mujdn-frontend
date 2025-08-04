@@ -5,7 +5,7 @@ import { ModelInterceptorContract } from 'cast-response';
 export class PermissionInterceptor implements ModelInterceptorContract<Permission> {
   receive(model: Permission): Permission {
     model.permissionDate = toDateTime(model.permissionDate);
-    model.actionDate = toDateTime(model.actionDate);
+    model.actionDate = model.actionDate ? toDateTime(model.actionDate) : null;
 
     return model;
   }

@@ -12,6 +12,7 @@ const defaultLengths = {
   NOTES: 2000,
   EMAIL_MAX: 200,
   PHONE_NUMBER_MAX: 15,
+  FAX_MAX: 15,
   ADDRESS_MAX: 1000,
   QID_MIN: 11,
   QID_MAX: 11,
@@ -52,7 +53,7 @@ export function numberMaxLength(maxLength: number): ValidatorFn {
 
     if (stringValue.length > maxLength) {
       return {
-        maxlength: {
+        numberRange: {
           requiredLength: maxLength,
           actualLength: stringValue.length,
         },
@@ -75,7 +76,7 @@ export function numberMinLength(minLength: number): ValidatorFn {
 
     if (stringValue.length < minLength) {
       return {
-        minlength: {
+        numberRange: {
           requiredLength: minLength,
           actualLength: stringValue.length,
         },
@@ -177,6 +178,7 @@ export type customValidationTypes =
   | 'EMAIL'
   | 'NUM_HYPHEN_COMMA'
   | 'PHONE_NUMBER'
+  | 'FAX'
   | 'WEBSITE'
   | 'URL'
   | 'HAS_LETTERS'
@@ -202,6 +204,7 @@ export const validationPatterns: any = {
   ),
   NUM_HYPHEN_COMMA: new RegExp('^(?=.*?[1-9])[0-9-,._]+$'),
   PHONE_NUMBER: new RegExp(/^[+]?[0-9]+$/),
+  FAX: new RegExp(/^[+]?[0-9]+$/),
   WEBSITE: new RegExp(
     /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_=]+=[a-zA-Z0-9-%]+&?)?$/
   ),

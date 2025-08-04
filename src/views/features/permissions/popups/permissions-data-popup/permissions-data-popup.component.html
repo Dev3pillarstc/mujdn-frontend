@@ -1,6 +1,6 @@
 <div [dir]="direction">
   <div class="p-6">
-    <button class="block ms-auto" (click)="close()">
+    <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
@@ -18,10 +18,11 @@
               'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
               model.fkStatusId === permissionStatusEnum.Accepted
                 ? 'bg-[#ecfdf3] text-[#085d3a]'
-                : model.fkStatusId === permissionStatusEnum.New ||
-                    model.fkStatusId === permissionStatusEnum.FirstAccepted
+                : model.fkStatusId === permissionStatusEnum.New
                   ? 'bg-[#eff8ff] text-[#1849a9]'
-                  : 'bg-[#fef3f2] text-[#912018]',
+                  : model.fkStatusId === permissionStatusEnum.FirstAccepted
+                    ? 'bg-[#fffaeb] text-[#93370d]'
+                    : 'bg-[#fef3f2] text-[#912018]',
             ]"
           >
             <span
@@ -29,10 +30,11 @@
                 'block w-[10px] h-[10px] rounded-full',
                 model.fkStatusId === permissionStatusEnum.Accepted
                   ? 'bg-[#085d3a]'
-                  : model.fkStatusId === permissionStatusEnum.New ||
-                      model.fkStatusId === permissionStatusEnum.FirstAccepted
+                  : model.fkStatusId === permissionStatusEnum.New
                     ? 'bg-[#1849a9]'
-                    : 'bg-[#912018]',
+                    : model.fkStatusId === permissionStatusEnum.FirstAccepted
+                      ? 'bg-[#93370d]'
+                      : 'bg-[#912018]',
               ]"
             >
             </span>
@@ -60,7 +62,7 @@
           }
         </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]">{{
             'PERMISSION_PAGE.PERMISSION_TYPE' | translate
@@ -94,12 +96,6 @@
           </span>
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-sm text-[#6c737f]">{{ 'PERMISSION_PAGE.NOTES' | translate }} </span>
-          <span class="font-semibold text-[#161616]">
-            <span>{{ model.description }}</span>
-          </span>
-        </div>
-        <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]"
             >{{ 'DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME' | translate }}
           </span>
@@ -107,10 +103,16 @@
             <span>{{ model.getPermissionDepartmentName() }}</span>
           </span>
         </div>
+        <div class="flex flex-col gap-2 lg:col-span-3">
+          <span class="text-sm text-[#6c737f]">{{ 'PERMISSION_PAGE.NOTES' | translate }} </span>
+          <span class="font-semibold text-[#161616]">
+            <span>{{ model.description }}</span>
+          </span>
+        </div>
       </div>
     </div>
     <div class="actions mt-6 flex items-center justify-between gap-4">
-      <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
       @if (model.canTakeAction) {
         <div class="flex gap-2">
           <button class="btn red-btn" (click)="rejectPermission()">

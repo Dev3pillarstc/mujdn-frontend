@@ -187,7 +187,7 @@ export default class DepartmentListComponent extends BaseListComponent<
       [this.translateService.instant('DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC')]: model.nameAr,
       [this.translateService.instant('DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH')]:
         model.nameEn,
-      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.LEAVE_REQUEST')]:
+      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.PERMISSION_REQUEST')]:
         model.isOneLevelApproval
           ? this.translateService.instant('DEPARTMENTS_LIST_PAGE.ONE_LEVEL_APPROVAL')
           : this.translateService.instant('DEPARTMENTS_LIST_PAGE.TWO_LEVEL_APPROVAL'),

@@ -39,7 +39,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { AuthService } from '@/services/auth/auth.service';
 import { Observable } from 'rxjs';
-import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-employee-list',
@@ -57,6 +57,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
     PaginatorModule,
     TranslatePipe,
     InputTextModule,
+    DropdownModule,
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
@@ -98,6 +99,19 @@ export default class EmployeeListComponent
   get optionLabel(): string {
     const lang = this.languageService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  }
+
+  get joinDateFrom(): Date | undefined {
+    return this.filterModel.joinDateFrom;
+  }
+
+  set joinDateFrom(value: Date | undefined) {
+    this.filterModel.joinDateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.joinDateTo && value && this.filterModel.joinDateTo < value) {
+      this.filterModel.joinDateTo = value; // or set it to value
+    }
   }
 
   override initListComponent(): void {
@@ -234,6 +248,12 @@ export default class EmployeeListComponent
     this.selectedModel = model;
   }
 
+  getDepartmentName(department: BaseLookupModel): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (department?.nameEn ?? '')
+      : (department?.nameAr ?? '');
+  }
+
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'EMPLOYEES_PAGE.EMPLOYEES_LIST' }];
   }
@@ -254,7 +274,7 @@ export default class EmployeeListComponent
     };
 
     return {
-      [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_ID')]: model.nationalId || '',
+      [this.translateService.instant('EMPLOYEES_PAGE.NATIONAL_ID')]: model.nationalId || '',
       [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC')]:
         model.fullNameAr || '',
       [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH')]:
@@ -318,16 +338,5 @@ export default class EmployeeListComponent
       //   command: () => this.openConfirmation(),
       // },
     ];
-  }
-  set joinDateFrom(value: Date | undefined) {
-    this.filterModel.joinDateFrom = value;
-
-    // If dateTo is before dateFrom, reset or adjust it
-    if (this.filterModel.joinDateTo && value && this.filterModel.joinDateTo < value) {
-      this.filterModel.joinDateTo = value; // or set it to value
-    }
-  }
-  get joinDateFrom(): Date | undefined {
-    return this.filterModel.joinDateFrom;
   }
 }

@@ -22,31 +22,53 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative xl:col-span-2">
               <label class="label" for="nationalityAr">اسم المهمة</label>
-              <input class="peer" fluid="true" id="nationalityAr" pInputText placeholder="اسم المهمة" type="text" />
+              <input
+                class="peer"
+                fluid="true"
+                id="nationalityAr"
+                pInputText
+                placeholder="اسم المهمة"
+                type="text"
+              />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
             <div class="relative">
               <label class="label" for="">التاريخ من</label>
-              <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full"
-                inputId="icondisplay" placeholder="التاريخ من">
+              <p-datepicker
+                [(ngModel)]="date2"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="icondisplay"
+                placeholder="التاريخ من"
+              >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
             <div class="relative">
               <label class="label" for="">التاريخ إلي</label>
-              <p-datepicker [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full"
-                inputId="icondisplay" placeholder="التاريخ إلي">
+              <p-datepicker
+                [(ngModel)]="date2"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="icondisplay"
+                placeholder="التاريخ إلي"
+              >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
           </div>
 
@@ -58,7 +80,8 @@
       </div>
       <div class="mt-6">
         <div
-          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
             قائمة مهام الأعمال و الاسناد
           </h4>
@@ -93,17 +116,28 @@
               <td>{{ missions.endDate }}</td>
               <td>
                 <div class="actions flex gap-2">
-                  <button ngClass="" (click)="openDialog1()" class="table-action-gray-btn flex gap-2 font-medium">
+                  <button
+                    ngClass=""
+                    (click)="openDialog1()"
+                    class="table-action-gray-btn flex gap-2 font-medium"
+                  >
                     <img src="/assets/icons/leading.svg" alt="اسناد" />
                     اسناد موظفين
                   </button>
-                  <button ngClass="" (click)="viewMission()" *ngIf="missions.actions?.includes('view')"
-                    class="table-action-gray-btn flex gap-2 font-medium">
+                  <button
+                    ngClass=""
+                    (click)="viewMission()"
+                    *ngIf="missions.actions?.includes('view')"
+                    class="table-action-gray-btn flex gap-2 font-medium"
+                  >
                     <img alt="" src="assets/icons/view-action.svg" />
                     عرض التفاصيل
                   </button>
-                  <button (click)="addNewMission()" *ngIf="missions.actions?.includes('edit')"
-                    class="table-action-gray-btn">
+                  <button
+                    (click)="addNewMission()"
+                    *ngIf="missions.actions?.includes('edit')"
+                    class="table-action-gray-btn"
+                  >
                     <img alt="update" src="assets/icons/edit-action.svg" />
                   </button>
                   <button *ngIf="missions.actions?.includes('delete')" class="table-action-red-btn">
@@ -114,8 +148,14 @@
             </tr>
           </ng-template>
         </p-table>
-        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]"
-          [rows]="rows" [totalRecords]="120" class="mt-6" />
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="first"
+          [rowsPerPageOptions]="[10, 20, 30]"
+          [rows]="rows"
+          [totalRecords]="120"
+          class="mt-6"
+        />
         <div></div>
       </div>
     </div>

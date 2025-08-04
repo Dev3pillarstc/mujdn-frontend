@@ -1,160 +1,246 @@
 <div [dir]="direction">
-    <div class="p-6">
-        <button class="block ms-auto" (click)="close()">
-            <i class="pi pi-times"></i>
-        </button>
-        <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اسناد الموظفين</h3>
+  <div class="p-6">
+    <button class="block ms-auto" (click)="close()">
+      <i class="pi pi-times"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اسناد الموظفين</h3>
 
-        <form class="mt-6 mb-6" [formGroup]="yourFormGroup">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-6 items-end">
-                <div class="lg:col-span-3">
-                    <label class="label">الإدارة</label>
-                    <div class="relative">
-                        <p-select formControlName="employee" [options]="adminstrations" optionLabel="type"
-                            placeholder="الإدارة" class="w-full peer" id="employeeName"></p-select>
-                        <span
-                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                    </div>
-                    <span class="validation-message"
-                        *ngIf="yourFormGroup.get('employee')?.invalid && yourFormGroup.get('employee')?.touched">هذا
-                        الحقل مطلوب</span>
-                </div>
-                <div class="lg:col-span-3">
-                    <label class="label">اسم الموظف</label>
-                    <div class="relative">
-                        <input pInputText type="text" formControlName="allowedDuration" placeholder="اسم الموظف"
-                            class="peer w-full" />
-                        <span
-                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                    </div>
-                    <span class="validation-message" *ngIf="
+    <form class="mt-6 mb-6" [formGroup]="yourFormGroup">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-6 items-end">
+        <div class="lg:col-span-3">
+          <label class="label">الإدارة</label>
+          <div class="relative">
+            <p-select
+              formControlName="employee"
+              [options]="adminstrations"
+              optionLabel="type"
+              placeholder="الإدارة"
+              class="w-full peer"
+              id="employeeName"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span
+            class="validation-message"
+            *ngIf="yourFormGroup.get('employee')?.invalid && yourFormGroup.get('employee')?.touched"
+            >هذا الحقل مطلوب</span
+          >
+        </div>
+        <div class="lg:col-span-3">
+          <label class="label">اسم الموظف</label>
+          <div class="relative">
+            <input
+              pInputText
+              type="text"
+              formControlName="allowedDuration"
+              placeholder="اسم الموظف"
+              class="peer w-full"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span
+            class="validation-message"
+            *ngIf="
               yourFormGroup.get('allowedDuration')?.invalid &&
               yourFormGroup.get('allowedDuration')?.touched
-            ">هذا الحقل مطلوب</span>
-                </div>
-                <div class="lg:col-span-2">
-                    <div class="actions flex gap-4">
-                        <button class="btn black-btn min-h-[42px] w-full">بحث</button>
-                        <button class="btn gray-btn border border-[#d2d6db] min-h-[42px] w-full">
-                            إعادة تعيين
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-
-        <p-table [value]="attendance">
-            <ng-template #header>
-                <tr>
-                    <th>
-                        <label class="flex items-center space-x-2 cursor-pointer relative">
-                            <input
-                                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-                                type="checkbox" />
-                            <svg class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="3" viewBox="0 0 24 24">
-                                <polyline points="20 6 9 17 4 12" />
-                            </svg>
-                        </label>
-                    </th>
-                    <th>
-                        معرف الموظف
-                        (رقم الهوية)
-                    </th>
-                    <th>اسم الموظف</th>
-                    <th>الادارة</th>
-                </tr>
-            </ng-template>
-            <ng-template #body let-attendance>
-                <tr>
-                    <td>
-                        <label class="flex items-center space-x-2 cursor-pointer relative">
-                            <input
-                                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-                                type="checkbox" />
-                            <svg class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="3" viewBox="0 0 24 24">
-                                <polyline points="20 6 9 17 4 12" />
-                            </svg>
-                        </label>
-                    </td>
-                    <td>
-                        <span class="font-medium text-[#1b8354]"> 1234 </span>
-                    </td>
-                    <td>محمود أيمن</td>
-                    <td>ادارة الموارد البشرية</td>
-                </tr>
-            </ng-template>
-        </p-table>
-        <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-            [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]" />
-
-        <section class="border-t border-[#d2d6db] pt-8 mt-8">
-            <h3 class="text-[14px] font-normal text-[#6c737f] mb-6">الموظفون المعنيون بتنفيذ المهام</h3>
-            <ul class="flex flex-wrap gap-4">
-                <li
-                    class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium">
-                    <span> معتصم ماجد احمد </span>
-                    <button>
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                                fill="#161616" />
-                        </svg>
-                    </button>
-                </li>
-                <li
-                    class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium">
-                    <span> معتصم ماجد احمد </span>
-                    <button>
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                                fill="#161616" />
-                        </svg>
-                    </button>
-                </li>
-                <li
-                    class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium">
-                    <span> معتصم ماجد احمد </span>
-                    <button>
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                                fill="#161616" />
-                        </svg>
-                    </button>
-                </li>
-                <li
-                    class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium">
-                    <span> معتصم ماجد احمد </span>
-                    <button>
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                                fill="#161616" />
-                        </svg>
-                    </button>
-                </li>
-                <li
-                    class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium">
-                    <span> معتصم ماجد احمد </span>
-                    <button>
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                                fill="#161616" />
-                        </svg>
-                    </button>
-                </li>
-            </ul>
-        </section>
-
-        <div class="actions mt-6 flex items-center justify-end gap-4">
-            <button class="btn gray-btn" (click)="close()">الغاء</button>
-            <button class="btn green-btn">إسناد</button>
+            "
+            >هذا الحقل مطلوب</span
+          >
         </div>
+        <div class="lg:col-span-2">
+          <div class="actions flex gap-4">
+            <button class="btn black-btn min-h-[42px] w-full">بحث</button>
+            <button class="btn gray-btn border border-[#d2d6db] min-h-[42px] w-full">
+              إعادة تعيين
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <p-table [value]="attendance">
+      <ng-template #header>
+        <tr>
+          <th>
+            <label class="flex items-center space-x-2 cursor-pointer relative">
+              <input
+                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                type="checkbox"
+              />
+              <svg
+                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                viewBox="0 0 24 24"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </label>
+          </th>
+          <th>معرف الموظف (رقم الهوية)</th>
+          <th>اسم الموظف</th>
+          <th>الادارة</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-attendance>
+        <tr>
+          <td>
+            <label class="flex items-center space-x-2 cursor-pointer relative">
+              <input
+                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                type="checkbox"
+              />
+              <svg
+                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                viewBox="0 0 24 24"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </label>
+          </td>
+          <td>
+            <span class="font-medium text-[#1b8354]"> 1234 </span>
+          </td>
+          <td>محمود أيمن</td>
+          <td>ادارة الموارد البشرية</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-paginator
+      class="mt-6"
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="120"
+      [rowsPerPageOptions]="[10, 20, 30]"
+    />
+
+    <section class="border-t border-[#d2d6db] pt-8 mt-8">
+      <h3 class="text-[14px] font-normal text-[#6c737f] mb-6">الموظفون المعنيون بتنفيذ المهام</h3>
+      <ul class="flex flex-wrap gap-4">
+        <li
+          class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium"
+        >
+          <span> معتصم ماجد احمد </span>
+          <button>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                fill="#161616"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium"
+        >
+          <span> معتصم ماجد احمد </span>
+          <button>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                fill="#161616"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium"
+        >
+          <span> معتصم ماجد احمد </span>
+          <button>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                fill="#161616"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium"
+        >
+          <span> معتصم ماجد احمد </span>
+          <button>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                fill="#161616"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium"
+        >
+          <span> معتصم ماجد احمد </span>
+          <button>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                fill="#161616"
+              />
+            </svg>
+          </button>
+        </li>
+      </ul>
+    </section>
+
+    <div class="actions mt-6 flex items-center justify-end gap-4">
+      <button class="btn gray-btn" (click)="close()">الغاء</button>
+      <button class="btn green-btn">إسناد</button>
     </div>
+  </div>
 </div>

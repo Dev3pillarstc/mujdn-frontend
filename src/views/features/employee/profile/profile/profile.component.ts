@@ -34,7 +34,6 @@ export default class ProfileComponent implements OnInit {
 
   // Add property to hold the user profile data
   userProfile: UserProfile | null = null;
-  loading = false;
   breadcrumbs: MenuItem[] = [];
   home = {
     label: this.translateService.instant('COMMON.HOME'),

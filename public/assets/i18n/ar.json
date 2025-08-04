@@ -101,7 +101,8 @@
     "NOT_SPECIFIED": "غير محدد",
     "NO_ROLES": "لا توجد صلاحيات",
     "PROFILE_LOAD_ERROR": "حدث خطأ في تحميل بيانات الملف الشخصي",
-    "RETRY": "إعادة المحاولة"
+    "RETRY": "إعادة المحاولة",
+    "CURRENT_PASSWORD_INCORRECT": "كلمة المرور القديمة غير صحيحة"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -405,7 +406,11 @@
     "UPDATE": "تعديل",
     "PROFILE_UPDATED_SUCCESSFULLY": "تم تحديث الملف الشخصي بنجاح",
     "ERROR_LOADING_PROFILE": "خطأ في تحميل الملف الشخصي",
-    "ERROR_UPDATING_PROFILE": "خطأ في تحديث الملف الشخصي"
+    "ERROR_UPDATING_PROFILE": "خطأ في تحديث الملف الشخصي",
+    "OLD_PASSWORD": "كلمة المرور القديمة",
+    "NEW_PASSWORD": "كلمة المرور الجديدة",
+    "CONFIRM_NEW_PASSWORD": "تأكيد كلمة المرور الجديدة",
+    "PASSWORD_MISMATCH": "كلمات المرور غير متطابقة"
   },
   "ROLES": {
     "ADMIN": "مسؤول نظام",

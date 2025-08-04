@@ -101,7 +101,8 @@
     "NOT_SPECIFIED": "Not Specified",
     "NO_ROLES": "No Roles",
     "PROFILE_LOAD_ERROR": "Error loading profile data",
-    "RETRY": "Retry"
+    "RETRY": "Retry",
+    "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -409,7 +410,11 @@
     "UPDATE": "Update",
     "PROFILE_UPDATED_SUCCESSFULLY": "Profile updated successfully",
     "ERROR_LOADING_PROFILE": "Error loading profile",
-    "ERROR_UPDATING_PROFILE": "Error updating profile"
+    "ERROR_UPDATING_PROFILE": "Error updating profile",
+    "OLD_PASSWORD": "Old Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_NEW_PASSWORD": "Confirm New Password",
+    "PASSWORD_MISMATCH": "Passwords do not match"
   },
   "ROLES": {
     "ADMIN": "System Administrator",

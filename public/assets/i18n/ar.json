@@ -420,5 +420,8 @@
     "HR_OFFICER": "مسؤول HR",
     "SECURITY_MEMBER": "فرد شرطة عسكرية",
     "SECURITY_LEADER": "قائد شرطة عسكرية"
+  },
+  "RESET_PASSWORD": {
+    "FORGOT_PASSWORD": "نسيت كلمة المرور"
   }
 }

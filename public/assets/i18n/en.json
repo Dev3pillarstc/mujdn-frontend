@@ -424,5 +424,8 @@
     "HR_OFFICER": "HR Officer",
     "SECURITY_MEMBER": "Security Member",
     "SECURITY_LEADER": "Security Leader"
+  },
+  "RESET_PASSWORD": {
+    "FORGOT_PASSWORD": "Forgot Password"
   }
 }

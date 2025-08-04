@@ -7,12 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
-import { User } from '@/models/auth/user';
 import { UserProfileFilter } from '@/models/features/user-profile/user-profile-filter';
-import { UserService } from '@/services/features/user.service';
+import { UserProfileService } from '@/services/features/user-profile.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { UserProfile } from '@/models/features/user-profile/user-profile';
-import { UserProfileService } from '@/services/features/user-profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -36,18 +34,19 @@ export default class ProfileComponent extends BaseListComponent<
   override get service(): UserProfileService {
     return this.userService;
   }
-  override openDialog(model: User): void {
+  override openDialog(model: UserProfile): void {
     this.openBaseDialog(EditInfoPopupComponent as any, model, ViewModeEnum.EDIT);
   }
   override initListComponent(): void {
-    throw new Error('Method not implemented.');
+    console.log('initListComponent');
   }
-  protected override mapModelToExcelRow(model: User): { [key: string]: any } {
-    throw new Error('Method not implemented.');
+  protected override mapModelToExcelRow(model: UserProfile): { [key: string]: any } {
+    console.log('mapModelToExcelRow');
+    return {};
   }
   dialog = inject(MatDialog);
 
-  dialogSize = {
+  override dialogSize = {
     width: '100%',
     maxWidth: '504px',
   };

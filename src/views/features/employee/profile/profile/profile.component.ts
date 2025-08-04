@@ -162,6 +162,13 @@ export default class ProfileComponent implements OnInit {
       return translatedRole !== translationKey ? translatedRole : roleKey;
     });
 
+    // Move EMPLOYEE to the beginning of the list
+    const employeeIndex = translatedRoles.indexOf(this.translateService.instant('ROLES.EMPLOYEE'));
+    if (employeeIndex > 0) {
+      const employee = translatedRoles.splice(employeeIndex, 1)[0];
+      translatedRoles.unshift(employee);
+    }
+
     return translatedRoles.join(' - ');
   }
 

@@ -416,9 +416,9 @@
     "ADMIN": "مسؤول نظام",
     "EMPLOYEE": "موظف",
     "DEPARTMENT_MANAGER": "مدير إدارة",
-    "FOLLOW_UP_OFFICER": "موظف متابعة",
-    "HR_OFFICER": "موظف موارد بشرية",
-    "SECURITY_MEMBER": "عضو أمن",
-    "SECURITY_LEADER": "قائد أمن"
+    "FOLLOW_UP_OFFICER": "مسؤول قسم المتابعة",
+    "HR_OFFICER": "مسؤول HR",
+    "SECURITY_MEMBER": "فرد شرطة عسكرية",
+    "SECURITY_LEADER": "قائد شرطة عسكرية"
   }
 }

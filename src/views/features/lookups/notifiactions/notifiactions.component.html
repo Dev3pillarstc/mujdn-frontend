@@ -1,4 +1,4 @@
-<div class="bg-white">
+<!-- <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
       <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
@@ -95,6 +95,175 @@
           class="mt-6"
         />
         <div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+-------------------------------------------------------------------------------------------------------------- -->
+<div class="bg-white">
+  <div class="bg-[#f9fafb] p-3 sm:p-6">
+    <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <a [routerLink]="item.url" class="cursor-pointer">
+            <span>{{ item.label | translate }}</span>
+          </a>
+        </ng-template>
+      </p-breadcrumb>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'NOTIFICATIONS_PAGE.NOTIFICATIONS' | translate }}
+      </h3>
+    </div>
+    <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
+      <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
+        <div class="flex items-center justify-between">
+          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+            {{ 'COMMON.SEARCH_FILTERS' | translate }}
+          </h5>
+        </div>
+        <div class="pt-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div class="relative">
+              <label class="label" for="notificationAr">{{
+                'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ARABIC' | translate
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.titleAr"
+                [placeholder]="'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ARABIC' | translate"
+                class="peer"
+                fluid="true"
+                id="notificationAr"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="notificationEn">{{
+                'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ENGLISH' | translate
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.titleEn"
+                [placeholder]="'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ENGLISH' | translate"
+                class="peer"
+                fluid="true"
+                id="notificationEn"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="permission-date-picker">{{
+                'COMMON.FROM' | translate
+              }}</label>
+              <p-datepicker
+                [(ngModel)]="dateFrom"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                [showClear]="true"
+                class="peer block w-full"
+                inputId="icondisplayFrom"
+                placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="permission-date-picker">{{
+                'COMMON.TO' | translate
+              }}</label>
+              <p-datepicker
+                [(ngModel)]="filterModel.dateTo"
+                [minDate]="dateFrom"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                [showClear]="true"
+                class="peer block w-full"
+                inputId="icondisplayTo"
+                placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+          </div>
+
+          <div class="actions flex items-center gap-4 pt-6">
+            <button (click)="search()" class="btn black-btn">
+              {{ 'COMMON.SEARCH' | translate }}
+            </button>
+            <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
+              {{ 'COMMON.RESET_SEARCH' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div
+          class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+            {{ 'NOTIFICATIONS_PAGE.NOTIFICATIONS' | translate }}
+          </h4>
+          <div class="actions flex items-center gap-4 ms-auto">
+            <button (click)="exportExcel('notifications.xlsx')" class="table-head-action-btn">
+              <img alt="" src="assets/icons/excel.svg" />
+            </button>
+          </div>
+        </div>
+
+        @if (list && list.length > 0) {
+          <p-table [value]="list">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ARABIC' | translate }}</th>
+                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ENGLISH' | translate }}</th>
+                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ARABIC' | translate }}</th>
+                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ENGLISH' | translate }}</th>
+                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_DATE' | translate }}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-notification>
+              <tr>
+                <td>{{ notification.notificationType.arabicTitle }}</td>
+                <td>{{ notification.notificationType.englishTitle }}</td>
+                <td>{{ notification.contentAr }}</td>
+                <td>{{ notification.contentEn }}</td>
+                <td>{{ notification.creationDate | date: 'dd-MM-yyyy' }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        } @else {
+          <div class="flex items-center justify-center h-64">
+            <p class="text-gray-500">{{ 'NOTIFICATIONS_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+          </div>
+        }
+        @if (paginationInfo) {
+          <p-paginator
+            (onPageChange)="onPageChange($event)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
+        }
       </div>
     </div>
   </div>

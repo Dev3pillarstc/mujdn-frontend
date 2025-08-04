@@ -386,5 +386,13 @@
     "SMS": "رسائل قصيرة",
     "MOBILE": "إشعارات الهاتف المحمول",
     "WEB": "إشعارات الويب"
+  },
+  "NOTIFICATIONS_PAGE": {
+    "NOTIFICATIONS": "الإشعارات",
+    "NOTIFICATION_TITLE_ARABIC": "عنوان الإشعار بالعربية",
+    "NOTIFICATION_TITLE_ENGLISH": "عنوان الإشعار بالإنجليزية",
+    "NOTIFICATION_CONTENT_ARABIC": "محتوى الإشعار بالعربية",
+    "NOTIFICATION_CONTENT_ENGLISH": "محتوى الإشعار بالإنجليزية",
+    "NOTIFICATION_DATE": "تاريخ الإشعار"
   }
 }

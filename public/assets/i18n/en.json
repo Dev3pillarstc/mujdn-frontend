@@ -390,5 +390,13 @@
     "SMS": "SMS",
     "MOBILE": "Mobile",
     "WEB": "Web"
+  },
+  "NOTIFICATIONS_PAGE": {
+    "NOTIFICATIONS": "Notifications",
+    "NOTIFICATION_TITLE_ARABIC": "Notification Title in Arabic",
+    "NOTIFICATION_TITLE_ENGLISH": "Notification Title in English",
+    "NOTIFICATION_CONTENT_ARABIC": "Notification Content in Arabic",
+    "NOTIFICATION_CONTENT_ENGLISH": "Notification Content in English",
+    "NOTIFICATION_DATE": "Notification Date"
   }
 }

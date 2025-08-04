@@ -10,6 +10,13 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { NotificationFilter } from '@/models/features/setting/notificationFilter';
+import { RegionService } from '@/services/features/lookups/region.service';
+import { NotificationService } from '@/services/features/setting/notification.service';
+import { Notification } from '@/models/features/setting/notification';
 
 @Component({
   selector: 'app-notifiactions',
@@ -28,35 +35,43 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './notifiactions.component.html',
   styleUrl: './notifiactions.component.scss',
 })
-export default class NotifiactionsComponent {
-  first: number = 0;
-  rows: number = 10;
-  date2: Date | undefined;
-  notifications!: any[];
-  breadcrumbs: MenuItem[] | undefined;
-  home: MenuItem | undefined;
-  matDialog = inject(MatDialog);
-
-  ngOnInit() {
-    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'الاشعارات' }];
-    // Updated dummy data to match your Arabic table structure
-    this.notifications = [
-      {
-        notificationAddress: 'هنا يكون محتوى الاشعار هنا يكون محتوى الاشعار هنا يكون محتوى الاشعار',
-        notificationDate: '12/12/2024',
-      },
-      {
-        notificationAddress: 'هنا يكون محتوى الاشعار هنا يكون محتوى الاشعار هنا يكون محتوى الاشعار',
-        notificationDate: '12/12/2024',
-      },
-      {
-        notificationAddress: 'هنا يكون محتوى الاشعار هنا يكون محتوى الاشعار هنا يكون محتوى الاشعار',
-        notificationDate: '12/12/2024',
-      },
-    ];
+export default class NotifiactionsComponent extends BaseListComponent<
+  Notification,
+  any,
+  NotificationService,
+  NotificationFilter
+> {
+  override dialogSize = {
+    width: '100%',
+    maxWidth: '600px',
+  };
+  notificationService = inject(NotificationService);
+  filterModel: NotificationFilter = new NotificationFilter();
+  regions: BaseLookupModel[] = [];
+  regionService = inject(RegionService);
+  override get service() {
+    return this.notificationService;
   }
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
+
+  override initListComponent(): void {}
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'NOTIFICATIONS_PAGE.NOTIFICATIONS' }];
+  }
+
+  override openDialog(model: Notification): void {}
+
+  protected override mapModelToExcelRow(model: Notification): { [key: string]: any } {
+    return {};
+  }
+  set dateFrom(value: Date | null) {
+    this.filterModel.dateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.dateTo && value && this.filterModel.dateTo < value) {
+      this.filterModel.dateTo = null; // or set it to value
+    }
+  }
+  get dateFrom(): Date | null | undefined {
+    return this.filterModel.dateFrom;
   }
 }

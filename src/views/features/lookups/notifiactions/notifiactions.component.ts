@@ -61,7 +61,17 @@ export default class NotifiactionsComponent extends BaseListComponent<
   override openDialog(model: Notification): void {}
 
   protected override mapModelToExcelRow(model: Notification): { [key: string]: any } {
-    return {};
+    return {
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ARABIC')]:
+        model.notificationType.arabicTitle,
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ENGLISH')]:
+        model.notificationType.englishTitle,
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ARABIC')]:
+        model.contentAr,
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ENGLISH')]:
+        model.contentEn,
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_DATE')]: model.creationDate,
+    };
   }
   set dateFrom(value: Date | null) {
     this.filterModel.dateFrom = value;

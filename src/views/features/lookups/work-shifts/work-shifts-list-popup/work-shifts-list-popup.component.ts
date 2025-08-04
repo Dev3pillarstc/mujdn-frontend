@@ -49,6 +49,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   fb = inject(FormBuilder);
   translateService = inject(TranslateService);
   isCreateMode = false;
+  private _allowExistingDate = false;
   durationDialogSize = {
     width: '100%',
     maxWidth: '504px',
@@ -219,7 +220,12 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
         switchMap(() => this.performShiftActivation())
       )
       .subscribe({
-        next: () => this.handleActivationSuccess(),
+        next: () => {
+          this.alertService.showSuccessMessage({
+            messages: ['WORK_SHIFTS_POPUP.ACTIVATED_SUCCESSFULLY'],
+          });
+          this.dialogRef.close(DIALOG_ENUM.OK);
+        },
         error: (error) => this.handleActivationError(error),
       });
   }
@@ -244,36 +250,15 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   }
 
   private performShiftActivation(): Observable<any> {
-    const shift = this.createActivationShift();
+    const shift = new Shift();
+    shift.isActive = true;
     return this.service.activateShift(shift, this.model.id!);
   }
 
-  private createActivationShift(): Shift {
-    const shift = new Shift();
-    shift.isActive = true;
-    // Add any other required properties for activation
-    return shift;
-  }
-
-  private handleActivationSuccess(): void {
-    this.alertService.showSuccessMessage({
-      messages: ['WORK_SHIFTS_POPUP.ACTIVATED_SUCCESSFULLY'],
-    });
-    this.close();
-  }
-
   private handleActivationError(error: any): void {
-    // You can add more specific error handling based on error type
-    const errorMessage = this.getErrorMessage(error);
-
     this.alertService.showErrorMessage({
-      messages: [errorMessage],
+      messages: ['WORK_SHIFTS_POPUP.ACTIVATION_FAILED'],
     });
-  }
-
-  private getErrorMessage(error: any): string {
-    // Default error message
-    return 'WORK_SHIFTS_POPUP.ACTIVATION_FAILED';
   }
 
   get canActivateShift(): boolean {
@@ -290,7 +275,6 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       shiftDate <= today
     );
   }
-  private _allowExistingDate = false;
 
   // Modified getMinimumStartDate method
   getMinimumStartDate(): Date | null {

@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -30,12 +31,13 @@ export class HeaderComponent implements OnInit {
   menuItems: MenuItem[] = [];
   sharedService = inject(SharedService);
   router = inject(Router);
+  destroy$: Subject<void> = new Subject<void>();
 
   ngOnInit() {
     this.loggedInUser = this.authService.getUser().value;
     this.initializeProfileMenu();
     // Re-initialize action list when language changes
-    this.translateService.onLangChange.subscribe(() => {
+    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.initializeProfileMenu();
     });
   }
@@ -85,11 +87,15 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    // تسجيل الخروج
     this.authService.logout().subscribe();
   }
 
   openProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

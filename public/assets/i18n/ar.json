@@ -398,7 +398,14 @@
   "PROFILE_PAGE": {
     "PROFILE": "الملف الشخصي",
     "EDIT": "تعديل",
-    "CHANGE_PASSWORD": "تغيير كلمة المرور"
+    "EDIT_PERSONAL_INFO": "تعديل البيانات الشخصية",
+    "CHANGE_PASSWORD": "تغيير كلمة المرور",
+    "EMAIL": "البريد الالكتروني",
+    "PHONE_NUMBER": "رقم الجوال",
+    "UPDATE": "تعديل",
+    "PROFILE_UPDATED_SUCCESSFULLY": "تم تحديث الملف الشخصي بنجاح",
+    "ERROR_LOADING_PROFILE": "خطأ في تحميل الملف الشخصي",
+    "ERROR_UPDATING_PROFILE": "خطأ في تحديث الملف الشخصي"
   },
   "ROLES": {
     "ADMIN": "مسؤول نظام",

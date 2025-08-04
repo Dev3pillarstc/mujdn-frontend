@@ -402,7 +402,14 @@
   "PROFILE_PAGE": {
     "PROFILE": "Profile",
     "EDIT": "Edit",
-    "CHANGE_PASSWORD": "Change Password"
+    "EDIT_PERSONAL_INFO": "Edit Personal Information",
+    "CHANGE_PASSWORD": "Change Password",
+    "EMAIL": "Email Address",
+    "PHONE_NUMBER": "Phone Number",
+    "UPDATE": "Update",
+    "PROFILE_UPDATED_SUCCESSFULLY": "Profile updated successfully",
+    "ERROR_LOADING_PROFILE": "Error loading profile",
+    "ERROR_UPDATING_PROFILE": "Error updating profile"
   },
   "ROLES": {
     "ADMIN": "System Administrator",

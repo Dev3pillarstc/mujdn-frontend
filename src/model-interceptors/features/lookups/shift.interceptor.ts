@@ -6,6 +6,7 @@ export class ShiftInterceptor implements ModelInterceptorContract<Shift> {
   receive(model: Shift): Shift {
     model['shiftLogStartDate'] = toDateTime(model['shiftLogStartDate']);
     model['activeShiftStartDate'] = toDateTime(model['activeShiftStartDate']);
+    model.isDefaultShiftForm = model.isDefaultShift;
     return model;
   }
 

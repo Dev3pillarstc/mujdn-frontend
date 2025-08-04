@@ -14,168 +14,148 @@
         </h3>
       </div>
 
-      <!-- Loading State -->
-      @if (loading) {
-        <div class="flex items-center justify-center h-64">
-          <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-[#074d31]"></div>
-        </div>
-      }
-
       <!-- Profile Content -->
-      @if (!loading && userProfile) {
-        <div
-          class="p-8 md:p-10 rounded-[16px] bg-[#074d31] shadow-[0_4px_6px_-2px_rgba(16,24,40,0.03),_0_12px_16px_-4px_rgba(16,24,40,0.08)] mb-6"
+
+      <div
+        class="p-8 md:p-10 rounded-[16px] bg-[#074d31] shadow-[0_4px_6px_-2px_rgba(16,24,40,0.03),_0_12px_16px_-4px_rgba(16,24,40,0.08)] mb-6"
+      >
+        <header
+          class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 border-b border-white"
         >
-          <header
-            class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 border-b border-white"
-          >
-            <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#fff]">
-              {{ fullName }}
-            </h4>
-            <div class="actions flex items-center gap-4 ms-auto pb-4">
-              <button
-                (click)="openEditInfoDialog()"
-                class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-white/40"
-              >
-                <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/edit.png" />
-                <span class="text-base font-medium text-white">{{
-                  'PROFILE_PAGE.EDIT' | translate
-                }}</span>
-              </button>
-              <button
-                (click)="openChangePasswordDialog()"
-                class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-[#fecdca]"
-              >
-                <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/password.svg" />
-                <span class="text-base font-medium text-[#fecdca]">{{
-                  'PROFILE_PAGE.CHANGE_PASSWORD' | translate
-                }}</span>
-              </button>
-            </div>
-          </header>
-
-          <article class="flex flex-col lg:flex-row gap-10 items-start mt-6">
-            <div class="shrink-0">
-              <div
-                class="w-16 h-16 rounded-full bg-white text-green-900 flex items-center justify-center text-xl font-bold"
-              >
-                {{ getUserInitials() }}
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
-              <div>
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}
-                </div>
-                <div class="font-bold text-white">
-                  {{ department }}
-                </div>
-              </div>
-
-              <div>
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.REGION' | translate }}
-                </div>
-                <div class="font-bold text-white">
-                  {{ region }}
-                </div>
-              </div>
-
-              <div>
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.CITY' | translate }}
-                </div>
-                <div class="font-bold text-white">
-                  {{ city }}
-                </div>
-              </div>
-
-              <div>
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.JOB_TITLE' | translate }}
-                </div>
-                <div class="font-bold text-white">
-                  {{ jobTitle }}
-                </div>
-              </div>
-
-              <div>
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.PHONE_NUMBER' | translate }}
-                </div>
-                <div class="font-bold text-white">
-                  {{ userProfile.phoneNumber || ('COMMON.NOT_SPECIFIED' | translate) }}
-                </div>
-              </div>
-
-              <div>
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate }}
-                </div>
-                <div
-                  class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2"
-                  [ngClass]="getAccountStatus().class"
-                >
-                  <span
-                    class="block w-[10px] h-[10px] rounded-full"
-                    [ngClass]="userProfile.isActive ? 'bg-[#085d3a]' : 'bg-[#dc2626]'"
-                  ></span>
-                  <span class="font-medium">{{ getAccountStatus().text }}</span>
-                </div>
-              </div>
-
-              <div>
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.EMAIL' | translate }}
-                </div>
-                <div class="font-bold text-white truncate">
-                  {{ userProfile.email || ('COMMON.NOT_SPECIFIED' | translate) }}
-                </div>
-              </div>
-
-              <div>
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}
-                </div>
-                <div class="font-bold text-white">
-                  {{ userProfile.joinDate | date: 'dd/MM/yyyy' }}
-                </div>
-              </div>
-
-              <div>
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}
-                </div>
-                <div class="font-bold text-white">
-                  {{ userProfile.nationalId || ('COMMON.NOT_SPECIFIED' | translate) }}
-                </div>
-              </div>
-
-              <div class="lg:col-span-3">
-                <div class="text-sm text-gray-200 mb-2">
-                  {{ 'EMPLOYEES_PAGE.PERMISSIONS' | translate }}
-                </div>
-                <div class="font-bold text-white">
-                  {{ getRolesDisplay() }}
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      }
-
-      <!-- Error State -->
-      @if (!loading && !userProfile) {
-        <div class="flex items-center justify-center h-64">
-          <div class="text-center">
-            <p class="text-gray-500 mb-4">{{ 'COMMON.PROFILE_LOAD_ERROR' | translate }}</p>
-            <button (click)="loadUserProfile()" class="btn green-btn">
-              {{ 'COMMON.RETRY' | translate }}
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#fff]">
+            {{ fullName }}
+          </h4>
+          <div class="actions flex items-center gap-4 ms-auto pb-4">
+            <button
+              (click)="openEditInfoDialog()"
+              class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-white/40"
+            >
+              <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/edit.png" />
+              <span class="text-base font-medium text-white">{{
+                'PROFILE_PAGE.EDIT' | translate
+              }}</span>
+            </button>
+            <button
+              (click)="openChangePasswordDialog()"
+              class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-[#fecdca]"
+            >
+              <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/password.svg" />
+              <span class="text-base font-medium text-[#fecdca]">{{
+                'PROFILE_PAGE.CHANGE_PASSWORD' | translate
+              }}</span>
             </button>
           </div>
-        </div>
-      }
+        </header>
+
+        <article class="flex flex-col lg:flex-row gap-10 items-start mt-6">
+          <div class="shrink-0">
+            <div
+              class="w-16 h-16 rounded-full bg-white text-green-900 flex items-center justify-center text-xl font-bold"
+            >
+              {{ getUserInitials() }}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
+            <div>
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}
+              </div>
+              <div class="font-bold text-white">
+                {{ department }}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.REGION' | translate }}
+              </div>
+              <div class="font-bold text-white">
+                {{ region }}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.CITY' | translate }}
+              </div>
+              <div class="font-bold text-white">
+                {{ city }}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.JOB_TITLE' | translate }}
+              </div>
+              <div class="font-bold text-white">
+                {{ jobTitle }}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.PHONE_NUMBER' | translate }}
+              </div>
+              <div class="font-bold text-white">
+                {{ userProfile?.phoneNumber || ('COMMON.NOT_SPECIFIED' | translate) }}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate }}
+              </div>
+              <div
+                class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2"
+                [ngClass]="getAccountStatus().class"
+              >
+                <span
+                  class="block w-[10px] h-[10px] rounded-full"
+                  [ngClass]="userProfile?.isActive ? 'bg-[#085d3a]' : 'bg-[#dc2626]'"
+                ></span>
+                <span class="font-medium">{{ getAccountStatus().text }}</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.EMAIL' | translate }}
+              </div>
+              <div class="font-bold text-white truncate">
+                {{ userProfile?.email || ('COMMON.NOT_SPECIFIED' | translate) }}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}
+              </div>
+              <div class="font-bold text-white">
+                {{ userProfile?.joinDate | date: 'dd/MM/yyyy' }}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}
+              </div>
+              <div class="font-bold text-white">
+                {{ userProfile?.nationalId || ('COMMON.NOT_SPECIFIED' | translate) }}
+              </div>
+            </div>
+
+            <div class="lg:col-span-3">
+              <div class="text-sm text-gray-200 mb-2">
+                {{ 'EMPLOYEES_PAGE.PERMISSIONS' | translate }}
+              </div>
+              <div class="font-bold text-white">
+                {{ getRolesDisplay() }}
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
     </section>
   </div>
 </div>

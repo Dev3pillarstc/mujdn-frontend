@@ -22,6 +22,7 @@ import { UserProfileService } from '@/services/features/user-profile.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { markFormGroupTouched } from '@/utils/general-helper';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { AlertService } from '@/services/shared/alert.service';
 
 @Component({
   selector: 'app-change-password-popup',
@@ -47,6 +48,7 @@ export class ChangePasswordPopupComponent {
   dialogRef = inject(DialogRef);
   fb = inject(FormBuilder);
   userProfileService = inject(UserProfileService);
+  alertService = inject(AlertService);
 
   constructor() {
     this.form = this.createForm();
@@ -109,12 +111,17 @@ export class ChangePasswordPopupComponent {
         next: (response) => {
           // Handle success - you might want to show a success message
           this.dialogRef.close(true);
+          this.afterSave();
         },
         error: (error) => {
           // Handle error - you might want to show an error message
           console.error('Failed to change password:', error);
         },
       });
+  }
+  afterSave() {
+    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
+    this.alertService.showSuccessMessage(successObject);
   }
 
   // Getters for form controls to use in template

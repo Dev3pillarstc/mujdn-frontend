@@ -1,9 +1,7 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { UserService } from '@/services/features/user.service';
 import { Validators } from '@angular/forms';
 import { CustomValidators } from '@/validators/custom-validators';
 import { InterceptModel } from 'cast-response';
-import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BaseLookupModel } from '../lookups/base-lookup-model';
 import { UserProfileService } from '@/services/features/user-profile.service';
 import { UserProfileInterceptor } from '@/model-interceptors/features/user-profile.interceptor';
@@ -25,7 +23,11 @@ export class UserProfile extends BaseCrudModel<UserProfile, UserProfileService, 
   declare nationalId?: string;
   declare roleKeys?: string[];
 
-  buildForm(viewMode: ViewModeEnum) {
+  constructor() {
+    super();
+  }
+
+  buildForm() {
     const { email, phoneNumber } = this;
 
     return {

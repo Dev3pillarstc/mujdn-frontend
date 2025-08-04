@@ -45,4 +45,17 @@ export class UserProfileService extends BaseCrudService<UserProfile, string> {
         })
       );
   }
+
+  @CastResponse(undefined, { fallback: '$userProfile' })
+  updateUserProfile(model: UserProfile): Observable<UserProfile> {
+    return this.http
+      .put<ResponseData<UserProfile>>(this.getUrlSegment() + '/myprofile', model, {
+        withCredentials: true,
+      })
+      .pipe(
+        switchMap((response: ResponseData<UserProfile>) => {
+          return of(response.data);
+        })
+      );
+  }
 }

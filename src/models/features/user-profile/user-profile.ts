@@ -5,6 +5,8 @@ import { InterceptModel } from 'cast-response';
 import { BaseLookupModel } from '../lookups/base-lookup-model';
 import { UserProfileService } from '@/services/features/user-profile.service';
 import { UserProfileInterceptor } from '@/model-interceptors/features/user-profile.interceptor';
+import { inject } from '@angular/core';
+import { Observable } from 'rxjs';
 
 const { send, receive } = new UserProfileInterceptor();
 
@@ -48,5 +50,8 @@ export class UserProfile extends BaseCrudModel<UserProfile, UserProfileService, 
         ],
       ],
     };
+  }
+  override save(): Observable<UserProfile> {
+    return this.$$getService$$<UserProfileService>().updateUserProfile(this);
   }
 }

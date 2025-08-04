@@ -40,12 +40,7 @@
       {{ 'PROFILE_PAGE.EDIT_PERSONAL_INFO' | translate }}
     </h3>
 
-    <!-- Loading indicator -->
-    <div *ngIf="isLoading" class="flex justify-center items-center py-8">
-      <i class="pi pi-spinner pi-spin text-2xl"></i>
-    </div>
-
-    <form [formGroup]="form" class="mt-6" *ngIf="!isLoading">
+    <form [formGroup]="form" class="mt-6">
       <div class="mb-6">
         <label class="label" for="email-input">{{ 'PROFILE_PAGE.EMAIL' | translate }}</label>
         <div class="relative">
@@ -56,7 +51,6 @@
             formControlName="email"
             placeholder="{{ 'PROFILE_PAGE.EMAIL' | translate }}"
             class="peer w-full"
-            [class.error]="emailControl.invalid && emailControl.touched"
           />
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -75,7 +69,6 @@
             formControlName="phoneNumber"
             placeholder="{{ 'PROFILE_PAGE.PHONE_NUMBER' | translate }}"
             class="peer w-full"
-            [class.error]="phoneNumberControl.invalid && phoneNumberControl.touched"
           />
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -93,7 +86,6 @@
           {{ 'COMMON.CANCEL' | translate }}
         </button>
         <button type="button" class="btn green-btn" (click)="save$.next()">
-          <i *ngIf="isLoading" class="pi pi-spinner pi-spin me-2"></i>
           {{ 'PROFILE_PAGE.UPDATE' | translate }}
         </button>
       </div>

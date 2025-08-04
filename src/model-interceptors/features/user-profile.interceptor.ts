@@ -9,9 +9,16 @@ export class UserProfileInterceptor implements ModelInterceptorContract<UserProf
   }
 
   send(model: Partial<UserProfile>): Partial<UserProfile> {
+    delete model['fullName'];
     delete model['city'];
     delete model['region'];
     delete model['department'];
+    delete model['jobTitle'];
+    delete model['roleKeys'];
+    delete model['isActive'];
+    delete model['nationalId'];
+    delete model['joinDate'];
+    // only keep email and phone number
     return model;
   }
 }

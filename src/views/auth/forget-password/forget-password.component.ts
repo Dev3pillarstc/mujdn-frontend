@@ -21,6 +21,9 @@ export default class ForgetPasswordComponent implements OnDestroy {
   private resetPasswordService = inject(ResetPasswordService);
   private destroy$ = new Subject<void>();
 
+  isSentLink = false;
+  lastSubmittedData: PasswordResetRequestModel | null = null;
+
   forgetPasswordForm: FormGroup;
 
   constructor() {
@@ -37,12 +40,22 @@ export default class ForgetPasswordComponent implements OnDestroy {
         email: this.forgetPasswordForm.get('email')?.value,
       };
 
+      // Store the form data for potential resend
+      this.lastSubmittedData = formData;
+
       this.resetPasswordService
         .requestResetPassword(formData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.router.navigate(['/auth/sent-link']);
+            this.isSentLink = true;
+            // this.router.navigate(['/auth/sent-link']);
+          },
+          error: (error) => {
+            // Handle error - you might want to show an error message
+            console.error('Password reset request failed:', error);
+            // Reset the stored data if request failed
+            this.lastSubmittedData = null;
           },
         });
     } else {
@@ -53,7 +66,36 @@ export default class ForgetPasswordComponent implements OnDestroy {
     }
   }
 
+  onResendLink() {
+    if (this.lastSubmittedData) {
+      this.resetPasswordService
+        .requestResetPassword(this.lastSubmittedData)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            // You can show a success message here if needed
+            // For example, you could add a toast notification
+          },
+          error: (error) => {
+            // Handle error - you might want to show an error message
+            console.error('Resend password reset request failed:', error);
+          },
+        });
+    }
+  }
+
+  onBackToForm() {
+    this.isSentLink = false;
+    this.lastSubmittedData = null;
+    // Optionally clear the form or keep the values
+    // this.forgetPasswordForm.reset();
+  }
+
   onCancel() {
+    this.router.navigate(['/auth/login']);
+  }
+
+  onBackToLogin() {
     this.router.navigate(['/auth/login']);
   }
 

@@ -493,6 +493,10 @@
     "LINK_SENT": "Link Sent!",
     "CHECK_EMAIL": "Please check your email. A password reset link has been sent to your inbox.",
     "RESEND_LINK": "Resend Link",
-    "BACK_TO_LOGIN": "Back to Login"
+    "BACK_TO_LOGIN": "Back to Login",
+    "NEW_PASSWORD_TITLE": "Set New Password",
+    "NEW_PASSWORD_LABEL": "New Password",
+    "CONFIRM_NEW_PASSWORD_LABEL": "Confirm New Password",
+    "SET_PASSWORD_BTN": "Set Password"
   }
 }

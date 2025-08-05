@@ -20,12 +20,13 @@ import { CustomValidators } from '@/validators/custom-validators';
 
 @Directive()
 export abstract class BaseListComponent<
-  Model,
-  PopupComponent,
-  TService extends BaseCrudService<Model, string | number>,
-  FilterModel,
->
-  implements OnInit, OnDestroy {
+    Model,
+    PopupComponent,
+    TService extends BaseCrudService<Model, string | number>,
+    FilterModel,
+  >
+  implements OnInit, OnDestroy
+{
   abstract dialogSize: any;
   first: number = 0;
   rows: number = 10;

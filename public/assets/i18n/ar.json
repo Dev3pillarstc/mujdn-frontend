@@ -100,7 +100,7 @@
     "ACTIVATION_BLOCKED": "لا يمكن تفعيل وردية بتاريخ بدء مستقبلي.",
     "NO_SHIFT_TO_ACTIVATE": "لم يتم العثور على وردية مجدولة لتفعيلها.",
     "CHOOSE_DAYS_FOR_USER": "برجاء اختيار ايام العمل الخاصه بالموظف",
-    "SHIFT_START_DATE_ERROR" : "تاريخ بدايه العمل بالورديه الجديده يجب ان يكون في اليوم التالي على الاقل لتاريخ الورديه المفعله الحاليه"
+    "SHIFT_START_DATE_ERROR": "تاريخ بدايه العمل بالورديه الجديده يجب ان يكون في اليوم التالي على الاقل لتاريخ الورديه المفعله الحاليه"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -408,8 +408,15 @@
     "CHOOSE_SUPPORTED_PLATFORMS": "تحديد المنصات المدعومة",
     "SMS": "رسائل قصيرة",
     "MOBILE": "إشعارات الهاتف المحمول",
-    "WEB": "إشعارات الويب",
-    "RESET": "إعادة تعيين"
+    "WEB": "إشعارات الويب"
+  },
+  "NOTIFICATIONS_PAGE": {
+    "NOTIFICATIONS": "الإشعارات",
+    "NOTIFICATION_TITLE_ARABIC": "عنوان الإشعار بالعربية",
+    "NOTIFICATION_TITLE_ENGLISH": "عنوان الإشعار بالإنجليزية",
+    "NOTIFICATION_CONTENT_ARABIC": "محتوى الإشعار بالعربية",
+    "NOTIFICATION_CONTENT_ENGLISH": "محتوى الإشعار بالإنجليزية",
+    "NOTIFICATION_DATE": "تاريخ الإشعار"
   },
   "USER_WORK_SHIFT_ASSIGNMENT": {
     "TEMP_SHIFT_ASSIGNMENT": "اسناد وردية مؤقتة لموظف",

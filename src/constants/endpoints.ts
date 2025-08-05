@@ -16,6 +16,7 @@ export const EndPoints = {
   PERMISSION_STATUS: '/permissionstatuses',
   PERMISSIONS: '/permissions',
   SHIFTS: '/shifts',
+  NOTIFICATION: '/notifications',
   User_Work_Shifts: '/UserWorkShifts',
 };
 

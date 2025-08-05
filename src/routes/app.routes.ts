@@ -14,6 +14,7 @@ import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
 import { loginResolver } from '@/resolvers/login.resolver';
+import { notificationResolver } from '@/resolvers/setting/notification.resolver';
 import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
 
 export const routes: Routes = [
@@ -211,6 +212,7 @@ export const routes: Routes = [
       },
       {
         path: 'notifications',
+        resolve: { list: notificationResolver },
         loadComponent: () =>
           import('@/views/features/lookups/notifiactions/notifiactions.component'),
       },

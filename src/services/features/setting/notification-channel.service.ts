@@ -1,5 +1,5 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
-import { NotificationChannel } from '@/models/features/setting/notification-channel';
+import { NotificationSetting } from '@/models/features/setting/notification-setting';
 import { ResponseData } from '@/models/shared/response/response-data';
 import { Injectable } from '@angular/core';
 import {
@@ -12,33 +12,33 @@ import { catchError, Observable, of, switchMap } from 'rxjs';
 
 @CastResponseContainer({
   $default: {
-    model: () => NotificationChannel,
+    model: () => NotificationSetting,
   },
   $get: {
-    model: () => NotificationChannel,
+    model: () => NotificationSetting,
     unwrap: 'data',
-    shape: { data: () => NotificationChannel },
+    shape: { data: () => NotificationSetting },
   },
 })
 @Injectable({
   providedIn: 'root',
 })
-export class NotificationChannelService extends BaseCrudService<NotificationChannel> {
-  serviceName = 'NotificationChannelService';
+export class NotificationSettingService extends BaseCrudService<NotificationSetting> {
+  serviceName = 'NotificationSettingService';
 
   override getUrlSegment(): string {
-    return this.urlService.URLS.NOTIFICATION_CHANNELS;
+    return this.urlService.URLS.NOTIFICATION_SETTINGS;
   }
 
   @CastResponse(undefined, { fallback: '$get' })
   @HasInterception
-  get(): Observable<NotificationChannel> {
+  get(): Observable<NotificationSetting> {
     return this.http
-      .get<ResponseData<NotificationChannel>>(this.getUrlSegment(), {
+      .get<ResponseData<NotificationSetting>>(this.getUrlSegment(), {
         withCredentials: true,
       })
       .pipe(
-        switchMap((response: ResponseData<NotificationChannel>) => {
+        switchMap((response: ResponseData<NotificationSetting>) => {
           return of(response.data);
         })
       );

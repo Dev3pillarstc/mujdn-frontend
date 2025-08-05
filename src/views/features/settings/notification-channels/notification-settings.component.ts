@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NotificationChannel } from '@/models/features/setting/notification-channel';
-import { NotificationChannelService } from '@/services/features/setting/notification-channel.service';
+import { NotificationSetting } from '@/models/features/setting/notification-setting';
+import { NotificationSettingService } from '@/services/features/setting/notification-channel.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TabsModule } from 'primeng/tabs';
@@ -21,18 +21,18 @@ import { Subject, Subscription, takeUntil } from 'rxjs';
     TabsModule,
     RouterModule,
   ],
-  templateUrl: './notification-channels.component.html',
-  styleUrls: ['./notification-channels.component.scss'],
+  templateUrl: './notification-settings.component.html',
+  styleUrls: ['./notification-settings.component.scss'],
 })
-export default class NotificationChannelsComponent implements OnInit, OnDestroy {
+export default class NotificationSettingsComponent implements OnInit, OnDestroy {
   $destroy: Subject<void> = new Subject<void>();
   fb: FormBuilder = inject(FormBuilder);
-  service: NotificationChannelService = inject(NotificationChannelService);
+  service: NotificationSettingService = inject(NotificationSettingService);
   translateService: TranslateService = inject(TranslateService);
   breadcrumbs: MenuItem[] = [
     { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
   ];
-  model = new NotificationChannel();
+  model = new NotificationSetting();
   form!: FormGroup;
   loading = false;
   route = inject(ActivatedRoute);
@@ -58,8 +58,8 @@ export default class NotificationChannelsComponent implements OnInit, OnDestroy 
   save(): void {
     this.model = Object.assign(this.model, { ...this.form.value });
     this.service.update(this.model).subscribe({
-      next: (result: NotificationChannel) => {
-        this.model = Object.assign(new NotificationChannel(), result);
+      next: (result: NotificationSetting) => {
+        this.model = Object.assign(new NotificationSetting(), result);
       },
     });
   }

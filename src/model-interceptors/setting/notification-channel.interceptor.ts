@@ -1,14 +1,14 @@
 import { ModelInterceptorContract } from 'cast-response';
-import { NotificationChannel } from '@/models/features/setting/notification-channel';
+import { NotificationSetting } from '@/models/features/setting/notification-setting';
 
-export class notificationChannelInterceptor
-  implements ModelInterceptorContract<NotificationChannel>
+export class notificationSettingInterceptor
+  implements ModelInterceptorContract<NotificationSetting>
 {
-  receive(model: NotificationChannel): NotificationChannel {
+  receive(model: NotificationSetting): NotificationSetting {
     return model;
   }
 
-  send(model: Partial<NotificationChannel>): Partial<NotificationChannel> {
+  send(model: Partial<NotificationSetting>): Partial<NotificationSetting> {
     return model;
   }
 }

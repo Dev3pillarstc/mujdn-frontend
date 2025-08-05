@@ -409,7 +409,16 @@
     "SMS": "رسائل قصيرة",
     "MOBILE": "إشعارات الهاتف المحمول",
     "WEB": "إشعارات الويب",
-    "RESET": "إعادة تعيين"
+    "RESET": "إعادة تعيين",
+    "NOTIFICATION": "الإشعارات",
+    "SATURDAY": "السبت",
+    "SUNDAY": "الأحد",
+    "MONDAY": "الإثنين",
+    "TUESDAY": "الثلاثاء",
+    "WEDNESDAY": "الأربعاء",
+    "THURSDAY": "الخميس",
+    "FRIDAY": "الجمعة",
+    "WORKING_DAYS": "أيام العمل الرسمية"
   },
   "USER_WORK_SHIFT_ASSIGNMENT": {
     "TEMP_SHIFT_ASSIGNMENT": "اسناد وردية مؤقتة لموظف",

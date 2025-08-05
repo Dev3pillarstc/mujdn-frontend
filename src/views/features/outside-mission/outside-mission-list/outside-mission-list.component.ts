@@ -26,7 +26,7 @@ import { AssignEmployeesComponent } from '../popups/assign-employees/assign-empl
     CommonModule,
     PaginatorModule,
     DatePickerModule,
-    Select,
+    // Select,
     FormsModule,
     TranslatePipe,
   ],

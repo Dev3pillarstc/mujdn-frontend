@@ -9,6 +9,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TabsModule } from 'primeng/tabs';
 import { Subject, Subscription, takeUntil } from 'rxjs';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
+import { weekDays } from '@/utils/general-helper';
+import { WorkDaysSettingService } from '@/services/features/setting/work-days-setting.service';
+import { WeekDaysEnum } from '@/enums/week-days-enum';
+import { AlertService } from '@/services/shared/alert.service';
+import { NOTIFICATIONS_SETTINGS_TABS_ENUM } from '@/enums/notifications-settings-tabs-enum';
 
 @Component({
   selector: 'app-notification-channels',
@@ -28,26 +34,47 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
   $destroy: Subject<void> = new Subject<void>();
   fb: FormBuilder = inject(FormBuilder);
   service: NotificationSettingService = inject(NotificationSettingService);
+  workDaysSettingService: WorkDaysSettingService = inject(WorkDaysSettingService);
   translateService: TranslateService = inject(TranslateService);
-  breadcrumbs: MenuItem[] = [
-    { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
-  ];
-  model = new NotificationSetting();
-  form!: FormGroup;
-  loading = false;
   route = inject(ActivatedRoute);
+  alertService = inject(AlertService);
+  breadcrumbs: MenuItem[] = [];
   home: MenuItem = this.setHomeItem();
 
+  notificationSettingModel = new NotificationSetting();
+  workDaysSettingModel = new WorkDaysSetting();
+  notificationForm!: FormGroup;
+  workDaysForm!: FormGroup;
+
+  activeTab: NOTIFICATIONS_SETTINGS_TABS_ENUM = NOTIFICATIONS_SETTINGS_TABS_ENUM.NOTIFICATIONS_TAB;
+  NOTIFICATIONS_SETTINGS_TABS_ENUM = NOTIFICATIONS_SETTINGS_TABS_ENUM;
+  weekDays = weekDays;
+
   ngOnInit(): void {
-    this.model = this.route.snapshot.data['channel'];
-    this.form = this.fb.group(this.model.buildForm());
+    const data = this.route.snapshot.data['channel'];
+    this.notificationSettingModel = data.notificationSetting;
+    this.workDaysSettingModel = data.workDays;
+
+    this.notificationForm = this.fb.group({
+      ...this.notificationSettingModel.buildForm()
+    });
+
+    this.workDaysForm = this.fb.group({
+      ...this.workDaysSettingModel.buildForm()
+    });
+
     this.translateService.onLangChange.pipe(takeUntil(this.$destroy)).subscribe(() => {
       this.home = this.setHomeItem();
       this.breadcrumbs = [
-        { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
+        { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') }
       ];
     });
+
+    this.breadcrumbs = [
+      { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') }
+    ];
   }
+
   setHomeItem(): MenuItem {
     return {
       label: this.translateService.instant('COMMON.HOME'),
@@ -55,14 +82,80 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
       routerLink: '/home',
     };
   }
+
+  getFormControlName(dayValue: WeekDaysEnum): string {
+    return WeekDaysEnum[dayValue].toLowerCase();
+  }
+  afterSave() {
+    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
+    this.alertService.showSuccessMessage(successObject);
+  }
   save(): void {
-    this.model = Object.assign(this.model, { ...this.form.value });
-    this.service.update(this.model).subscribe({
-      next: (result: NotificationSetting) => {
-        this.model = Object.assign(new NotificationSetting(), result);
-      },
+    if (this.activeTab === NOTIFICATIONS_SETTINGS_TABS_ENUM.NOTIFICATIONS_TAB) {
+      this.saveNotifications();
+    } else if (this.activeTab === NOTIFICATIONS_SETTINGS_TABS_ENUM.WORK_DAYS_TAB) {
+      this.saveWorkDays();
+    }
+  }
+
+  saveNotifications(): void {
+    if (this.notificationForm.valid) {
+      const notificationData = {
+        ...this.notificationSettingModel,
+        ...this.notificationForm.value,
+      };
+      this.service.update(notificationData).subscribe({
+        next: (result) => {
+          this.notificationSettingModel = Object.assign(new NotificationSetting(), result);
+          this.notificationForm.patchValue(result);
+          this.afterSave();
+        }
+      });
+    }
+  }
+
+  saveWorkDays(): void {
+    if (this.workDaysForm.valid) {
+      const workDaysData = {
+        ...this.workDaysSettingModel,
+        ...this.workDaysForm.value,
+      };
+      this.workDaysSettingService.updateWorkDays(workDaysData).subscribe({
+        next: (result) => {
+          this.workDaysSettingModel = Object.assign(new WorkDaysSetting(), result);
+          this.workDaysForm.patchValue(result);
+          this.afterSave();
+        }
+      });
+    }
+  }
+
+  resetNotifications(): void {
+    this.notificationForm.reset();
+    this.notificationForm.patchValue({
+      isSms: this.notificationSettingModel.isSms,
+      isMobile: this.notificationSettingModel.isMobile,
+      isWeb: this.notificationSettingModel.isWeb,
     });
   }
+
+  resetWorkDays(): void {
+    this.workDaysForm.reset();
+    this.workDaysForm.patchValue({
+      sunday: this.workDaysSettingModel.sunday,
+      monday: this.workDaysSettingModel.monday,
+      tuesday: this.workDaysSettingModel.tuesday,
+      wednesday: this.workDaysSettingModel.wednesday,
+      thursday: this.workDaysSettingModel.thursday,
+      friday: this.workDaysSettingModel.friday,
+      saturday: this.workDaysSettingModel.saturday,
+    });
+  }
+  notificationChannels = [
+    { key: 'isSms', labelKey: 'NOTIFICATION.SMS' },
+    { key: 'isMobile', labelKey: 'NOTIFICATION.MOBILE' },
+    { key: 'isWeb', labelKey: 'NOTIFICATION.WEB' }
+  ];
   ngOnDestroy() {
     this.$destroy.next();
     this.$destroy.complete();

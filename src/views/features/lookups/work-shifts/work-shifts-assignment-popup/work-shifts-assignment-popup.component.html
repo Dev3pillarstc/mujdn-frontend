@@ -3,37 +3,47 @@
     <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اسناد وردية مؤقتة لموظف</h3>
-    <form class="mt-6">
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'USER_WORK_SHIFT_ASSIGNMENT.TEMP_SHIFT_ASSIGNMENT' | translate }}
+    </h3>
+    <form [formGroup]="form" class="mt-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">اسم الوردية</label>
+          <label class="label" for="shift-select">{{
+            'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate
+          }}</label>
           <div class="relative">
             <p-select
-              [(ngModel)]="selectedAdminstration"
-              [options]="adminstrations"
+              [options]="shifts"
               class="w-full peer"
-              id="empoyeeName-popup"
-              name="selectedAdminstration1"
-              optionLabel="type"
-              placeholder="اسم الوردية"
+              id="shift-select"
+              formControlName="fkShiftId"
+              [optionLabel]="optionLabel"
+              optionValue="id"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
         </div>
+
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">التاريخ (من)</label>
+          <label class="label" for="date-from">{{
+            'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate
+          }}</label>
           <div class="relative">
             <p-datepicker
-              [(ngModel)]="date2"
               [iconDisplay]="'input'"
               [showIcon]="true"
               class="peer block w-full"
-              inputId="icondisplay"
-              placeholder="التاريخ (من)"
+              inputId="date-from"
+              formControlName="startDate"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate"
+              [maxDate]="maxStartDate"
+              (onSelect)="onStartDateSelect($event)"
+              id="date-from"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
@@ -43,18 +53,24 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="startDateControl"></app-validation-messages>
         </div>
+
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">التاريخ (الى)</label>
+          <label class="label" for="date-to">{{
+            'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
+          }}</label>
           <div class="relative">
             <p-datepicker
-              [(ngModel)]="date2"
               [iconDisplay]="'input'"
               [showIcon]="true"
               class="peer block w-full"
-              inputId="icondisplay"
-              placeholder="التاريخ (الى)"
+              inputId="date-to"
+              formControlName="endDate"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate"
+              [minDate]="minEndDate"
+              (onSelect)="onEndDateSelect($event)"
+              id="date-to"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
@@ -64,48 +80,95 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="endDateControl"></app-validation-messages>
         </div>
+
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">الإدارة</label>
+          <label class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
           <div class="relative">
             <p-select
-              [(ngModel)]="selectedAdminstration"
-              [options]="adminstrations"
+              [options]="departments"
               class="w-full peer"
-              id="empoyeeName-popup"
-              name="selectedAdminstration1"
-              optionLabel="type"
-              placeholder="الإدارة"
+              [optionLabel]="optionLabel"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
+              (onChange)="filterEmployeesByDepartment($event.value.id)"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
         </div>
+
         <div class="lg:col-span-2">
-          <label class="label" for="time-pick">اسم الموظف</label>
+          <label class="label" for="employee-select">{{
+            'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate
+          }}</label>
           <div class="relative">
             <p-select
-              [(ngModel)]="selectedAdminstration"
-              [options]="adminstrations"
+              [options]="filteredUsersProfiles"
               class="w-full peer"
-              id="empoyeeName-popup"
-              name="selectedAdminstration1"
-              optionLabel="type"
-              placeholder="اسم الموظف"
+              id="employee-select"
+              [optionLabel]="optionLabel"
+              formControlName="fkAssignedUserId"
+              optionValue="id"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="fkAssignedUserIdControl"></app-validation-messages>
         </div>
       </div>
+
+      <div
+        class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4 border-t border-[#d2d6db] mt-6 pt-4"
+      >
+        <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+          {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
+          <span style="color: #b42318; font-weight: bold">*</span>
+        </h4>
+      </div>
+
+      <div class="flex flex-wrap gap-8 mt-8">
+        @for (day of weekDays; track day.value) {
+          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+            <input
+              type="checkbox"
+              [checked]="isWorkingDaySelected(day.value)"
+              (change)="onWorkingDayChange(day.value, $event)"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-base font-medium text-[#1f2a37]">
+              {{ day.labelKey | translate }}
+            </span>
+          </label>
+        }
+      </div>
+
+      <div class="mt-2">
+        <app-validation-messages [control]="employeeWorkingDaysControl"></app-validation-messages>
+      </div>
+
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button (click)="close()" class="btn gray-btn">الغاء</button>
-        <button class="btn green-btn">إضافة</button>
+        <button type="button" (click)="close()" class="btn gray-btn">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+        <!-- Update save button to use the new method -->
+        <button type="button" (click)="onSaveClick()" class="btn green-btn">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
       </div>
     </form>
   </div>

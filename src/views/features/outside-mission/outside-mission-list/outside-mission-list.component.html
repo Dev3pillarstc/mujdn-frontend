@@ -35,27 +35,32 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="adminstrations-popup">الادارة</label>
-              <p-select
-                class="w-full peer"
-                id="adminstrations-popup"
-                name="selectedAdminstration"
-                optionLabel="type"
-                placeholder="الادارة"
-              ></p-select>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
-              <label class="label" for="">التاريخ (من - الى)</label>
+              <label class="label" for="">التاريخ من</label>
               <p-datepicker
                 [(ngModel)]="date2"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
                 class="peer block w-full"
                 inputId="icondisplay"
-                placeholder="التاريخ (من - الى)"
+                placeholder="التاريخ من"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="">التاريخ إلي</label>
+              <p-datepicker
+                [(ngModel)]="date2"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="icondisplay"
+                placeholder="التاريخ إلي"
               >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
@@ -85,6 +90,10 @@
               <img alt="" src="assets/icons/excel.svg" />
             </button>
 
+            <button class="cursor-pointer">
+              <img src="assets/icons/print.svg" alt="" />
+            </button>
+
             <button (click)="addNewMission()" class="btn green-btn flex items-center">
               <img alt="" src="assets/icons/plus.svg" />
               <span>إضافة مهمة عمل جديدة </span>
@@ -97,7 +106,6 @@
               <th>اسم المهمة</th>
               <th>تاريخ البداية</th>
               <th>تاريخ النهاية</th>
-              <th>مسند المهمة</th>
               <th>اجراء</th>
             </tr>
           </ng-template>
@@ -106,15 +114,24 @@
               <td>{{ missions.taskName }}</td>
               <td>{{ missions.startDate }}</td>
               <td>{{ missions.endDate }}</td>
-              <td>{{ missions.taskPredicate }}</td>
               <td>
                 <div class="actions flex gap-2">
                   <button
+                    ngClass=""
+                    (click)="openDialog1()"
+                    class="table-action-gray-btn flex gap-2 font-medium"
+                  >
+                    <img src="/assets/icons/leading.svg" alt="اسناد" />
+                    اسناد موظفين
+                  </button>
+                  <button
+                    ngClass=""
                     (click)="viewMission()"
                     *ngIf="missions.actions?.includes('view')"
-                    class="table-action-gray-btn"
+                    class="table-action-gray-btn flex gap-2 font-medium"
                   >
                     <img alt="" src="assets/icons/view-action.svg" />
+                    عرض التفاصيل
                   </button>
                   <button
                     (click)="addNewMission()"

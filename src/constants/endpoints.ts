@@ -9,13 +9,14 @@ export const EndPoints = {
   ATTENDANCE: '/attendance',
   USERS: '/userprofiles',
   REGIONS: '/regions',
-  NOTIFICATION_CHANNELS: '/notificationchannels',
+  NOTIFICATION_SETTINGS: '/notificationsettings',
   DEPARTMENTS: '/departments',
   HOLIDAYS: '/holidays',
   PERMISSION_TYPES: '/permissiontypes',
   PERMISSION_STATUS: '/permissionstatuses',
   PERMISSIONS: '/permissions',
   SHIFTS: '/shifts',
+  User_Work_Shifts: '/UserWorkShifts',
 };
 
 export type EndpointsType = typeof EndPoints;

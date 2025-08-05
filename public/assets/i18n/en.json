@@ -101,7 +101,13 @@
     "ACTIVATION_BLOCKED": "Cannot activate a shift with a future start date.",
     "NO_SHIFT_TO_ACTIVATE": "No scheduled shift found to activate.",
     "CHOOSE_DAYS_FOR_USER": "Please choose the working day(s) for the user",
-    "SHIFT_START_DATE_ERROR": "The shift start date must be at least the following day of the current active shift start date"
+    "SHIFT_START_DATE_ERROR": "The shift start date must be at least the following day of the current active shift start date",
+    "INACTIVE": "Inactive",
+    "NOT_SPECIFIED": "Not Specified",
+    "NO_ROLES": "No Roles",
+    "PROFILE_LOAD_ERROR": "Error loading profile data",
+    "RETRY": "Retry",
+    "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -425,6 +431,14 @@
     "FRIDAY": "Friday",
     "WORKING_DAYS": "Official working Days"
   },
+  "NOTIFICATIONS_PAGE": {
+    "NOTIFICATIONS": "Notifications",
+    "NOTIFICATION_TITLE_ARABIC": "Notification Title in Arabic",
+    "NOTIFICATION_TITLE_ENGLISH": "Notification Title in English",
+    "NOTIFICATION_CONTENT_ARABIC": "Notification Content in Arabic",
+    "NOTIFICATION_CONTENT_ENGLISH": "Notification Content in English",
+    "NOTIFICATION_DATE": "Notification Date"
+  },
   "USER_WORK_SHIFT_ASSIGNMENT": {
     "TEMP_SHIFT_ASSIGNMENT": "Temporary Shift Assignment to Employee",
     "SHIFT_NAME": "Shift Name",
@@ -455,5 +469,30 @@
     "ASSIGN_SHIFT_TO_EMPLOYEE": "Assign Shift to Employee",
     "EMPLOYEE_NAME_AR": "Employee Name (Arabic)",
     "EMPLOYEE_NAME_EN": "Employee Name (English)"
+  },
+  "PROFILE_PAGE": {
+    "PROFILE": "Profile",
+    "EDIT": "Edit",
+    "EDIT_PERSONAL_INFO": "Edit Personal Information",
+    "CHANGE_PASSWORD": "Change Password",
+    "EMAIL": "Email Address",
+    "PHONE_NUMBER": "Phone Number",
+    "UPDATE": "Update",
+    "PROFILE_UPDATED_SUCCESSFULLY": "Profile updated successfully",
+    "ERROR_LOADING_PROFILE": "Error loading profile",
+    "ERROR_UPDATING_PROFILE": "Error updating profile",
+    "OLD_PASSWORD": "Old Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_NEW_PASSWORD": "Confirm New Password",
+    "PASSWORD_MISMATCH": "Passwords do not match"
+  },
+  "ROLES": {
+    "ADMIN": "System Administrator",
+    "EMPLOYEE": "Employee",
+    "DEPARTMENT_MANAGER": "Department Manager",
+    "FOLLOW_UP_OFFICER": "Follow Up Officer",
+    "HR_OFFICER": "HR Officer",
+    "SECURITY_MEMBER": "Security Member",
+    "SECURITY_LEADER": "Security Leader"
   }
 }

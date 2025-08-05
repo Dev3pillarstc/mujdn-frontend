@@ -8,10 +8,11 @@ export enum ValidationErrorKeyEnum {
   TIME_FROM_AFTER_TIME_TO = 'timeFromAfterTimeTo',
   EMAIL = 'email',
   STRONG_PASSWORD = 'strongPassword',
+  NATIONAL_ID = 'NATIONAL_ID',
   PHONE_NUMBER = 'PHONE_NUMBER',
   FAX = 'FAX',
-  NATIONAL_ID = 'NATIONAL_ID',
   POSITIVE_NUMBER = 'positiveNumber',
   INVALID_NUMBER = 'invalidNumber',
   NUMBER_RANGE = 'numberRange',
+  PASSWORD_MISMATCH = 'passwordMismatch',
 }

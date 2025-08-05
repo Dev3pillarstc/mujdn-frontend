@@ -18,30 +18,42 @@ export const AuthInterceptor: HttpInterceptorFn = (
   const configService = inject(ConfigService);
   const urlService = inject(UrlService);
 
-  // ✅ Optional filter: skip non-API or external requests
   const isExternal =
     (req.url.startsWith('https') || req.url.startsWith('http')) &&
     !req.url.startsWith(urlService.config.BASE_URL);
-  const isAsset = /\.(js|css|png|jpg|json|jpeg|svg|ico|woff2?)$/i.test(req.url);
-  const isApi = req.url.startsWith(configService.CONFIG.BASE_URL); // adjust to your API base
 
-  if (isExternal || isAsset || !isApi) {
-    return next(req); // 🚫 skip processing
+  const isAsset = /\.(js|css|png|jpg|json|jpeg|svg|ico|woff2?)$/i.test(splitQueryParams(req.url));
+  const isApi = req.url.startsWith(configService.CONFIG.BASE_URL);
+
+  function splitQueryParams(url: string): string {
+    return url.split('?')[0];
+  }
+  const excludedAuthPaths = [
+    '/auth/login',
+    '/auth/forget-password',
+    '/auth/new-password',
+    '/auth/sent-link',
+  ];
+
+  const isExcluded = excludedAuthPaths.some((path) => req.url.includes(path));
+
+  if (isExternal || isAsset || !isApi || isExcluded) {
+    return next(req); // 🚫 Skip interceptor logic
   }
 
+  // ✅ Continue with auth handling
   return next(req).pipe(
     tap((response) => {
       if (response instanceof HttpResponse) {
         if (req.url.includes('logout')) {
           authService.setUser(undefined);
           router.navigate(['/login']);
-          return; // ✅ optional, now safely exits from this block
         } else {
           const userDataCookie = cookieService.getCookie(COOKIE_ENUM.USER_DATA);
           if (userDataCookie && userDataCookie.version) {
             if (
               !authService.getUser().value ||
-              !(authService.getUser().value!.version == userDataCookie.version)
+              authService.getUser().value!.version !== userDataCookie.version
             ) {
               authService.setUser(userDataCookie);
             }

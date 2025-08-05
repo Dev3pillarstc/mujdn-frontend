@@ -422,6 +422,9 @@
     "SECURITY_LEADER": "قائد شرطة عسكرية"
   },
   "RESET_PASSWORD": {
-    "FORGOT_PASSWORD": "نسيت كلمة المرور"
+    "FORGOT_PASSWORD": "نسيت كلمة المرور",
+    "NATIONAL_ID_LABEL": "رقم هوية المستخدم",
+    "EMAIL_LABEL": "البريد الإلكتروني",
+    "SEND_RESET_LINK": "إرسال رابط إعادة التعيين"
   }
 }

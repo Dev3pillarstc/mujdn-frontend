@@ -497,6 +497,7 @@
     "NEW_PASSWORD_TITLE": "Set New Password",
     "NEW_PASSWORD_LABEL": "New Password",
     "CONFIRM_NEW_PASSWORD_LABEL": "Confirm New Password",
-    "SET_PASSWORD_BTN": "Set Password"
+    "SET_PASSWORD_BTN": "Set Password",
+    "VERIFYING_LINK": "Verifying Link..."
   }
 }

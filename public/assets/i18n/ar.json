@@ -492,6 +492,7 @@
     "NEW_PASSWORD_TITLE": "تعيين كلمة المرور الجديدة",
     "NEW_PASSWORD_LABEL": "كلمة المرور الجديدة",
     "CONFIRM_NEW_PASSWORD_LABEL": "تأكيد كلمة المرور الجديدة",
-    "SET_PASSWORD_BTN": "تعيين كلمة المرور"
+    "SET_PASSWORD_BTN": "تعيين كلمة المرور",
+    "VERIFYING_LINK": "تحقق من الرابط..."
   }
 }

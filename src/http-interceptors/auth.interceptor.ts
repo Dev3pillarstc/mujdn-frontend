@@ -33,6 +33,8 @@ export const AuthInterceptor: HttpInterceptorFn = (
     '/auth/new-password',
     '/auth/sent-link',
     '/PasswordReset/request',
+    '/PasswordReset/verify',
+    '/PasswordReset/reset',
   ];
 
   const isExcluded = excludedAuthPaths.some((path) => req.url.includes(path));

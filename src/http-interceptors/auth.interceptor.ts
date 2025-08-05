@@ -29,10 +29,10 @@ export const AuthInterceptor: HttpInterceptorFn = (
     return url.split('?')[0];
   }
   const excludedAuthPaths = [
-    '/auth/login',
     '/auth/forget-password',
     '/auth/new-password',
     '/auth/sent-link',
+    '/PasswordReset/request',
   ];
 
   const isExcluded = excludedAuthPaths.some((path) => req.url.includes(path));

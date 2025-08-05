@@ -3,22 +3,24 @@
     <h1
       class="text-[24px] sm:text-[30px] md:text-[36px] lg:text-[42px] font-bold text-[#161616] mb-[24px] sm:mb-[32px]"
     >
-      تم ارسال الرابط!
+      {{ 'RESET_PASSWORD.LINK_SENT' | translate }}
     </h1>
     <article>
       <div class="mb-5">
         <p class="text-[16px] md:text-[18px] font-medium text-[#384250]">
-          من فضلك تحقق من البريد الالكتروني الخاص بك، تم إرسال رابط إعادة تعيين كلمة المرور إلى
-          بريدك الإلكتروني
+          {{ 'RESET_PASSWORD.CHECK_EMAIL' | translate }}
         </p>
       </div>
       <div class="mt-10 flex items-center justify-between flex-wrap gap-4">
-        <button class="btn green-btn w-full">إعادة ارسال الرابط</button>
+        <button class="btn green-btn w-full">
+          {{ 'RESET_PASSWORD.RESEND_LINK' | translate }}
+        </button>
         <a
           class="btn gray-btn inline-flex items-center justify-center min-h-[40px] px-3 rounded text-[14px] font-medium hover:bg-[#f1f1f1] transition w-full border border-[#d2d6db]"
           href=""
-          >الرجوع لتسجيل الدخول</a
         >
+          {{ 'RESET_PASSWORD.BACK_TO_LOGIN' | translate }}
+        </a>
       </div>
     </article>
   </div>

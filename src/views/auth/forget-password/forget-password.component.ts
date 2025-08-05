@@ -22,7 +22,6 @@ export default class ForgetPasswordComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
 
   forgetPasswordForm: FormGroup;
-  isLoading = false;
 
   constructor() {
     this.forgetPasswordForm = this.fb.group({
@@ -32,9 +31,7 @@ export default class ForgetPasswordComponent implements OnDestroy {
   }
 
   onSubmit() {
-    if (this.forgetPasswordForm.valid && !this.isLoading) {
-      this.isLoading = true;
-
+    if (this.forgetPasswordForm.valid) {
       const formData: PasswordResetRequestModel = {
         nationalId: this.forgetPasswordForm.get('nationalId')?.value,
         email: this.forgetPasswordForm.get('email')?.value,
@@ -44,14 +41,8 @@ export default class ForgetPasswordComponent implements OnDestroy {
         .requestResetPassword(formData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (response) => {
-            this.isLoading = false;
+          next: () => {
             this.router.navigate(['/auth/sent-link']);
-          },
-          error: (error) => {
-            this.isLoading = false;
-            console.error('Password reset request failed:', error);
-            // Handle error (show toast, error message, etc.)
           },
         });
     } else {

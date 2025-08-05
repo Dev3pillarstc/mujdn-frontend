@@ -20,13 +20,12 @@ import { CustomValidators } from '@/validators/custom-validators';
 
 @Directive()
 export abstract class BaseListComponent<
-    Model,
-    PopupComponent,
-    TService extends BaseCrudService<Model, string | number>,
-    FilterModel,
-  >
-  implements OnInit, OnDestroy
-{
+  Model,
+  PopupComponent,
+  TService extends BaseCrudService<Model, string | number>,
+  FilterModel,
+>
+  implements OnInit, OnDestroy {
   abstract dialogSize: any;
   first: number = 0;
   rows: number = 10;
@@ -60,7 +59,7 @@ export abstract class BaseListComponent<
   abstract initListComponent(): void;
 
   openBaseDialog(
-    popupComponent: any,
+    popupComponent: PopupComponent,
     model: Model,
     viewMode: ViewModeEnum,
     lookups?: {
@@ -71,7 +70,7 @@ export abstract class BaseListComponent<
     dialogConfig.data = { model: model, lookups: lookups, viewMode: viewMode };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
-    const dialogRef = this.matDialog.open(popupComponent, dialogConfig);
+    const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
 
     return dialogRef
       .afterClosed()

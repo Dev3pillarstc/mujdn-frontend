@@ -23,6 +23,8 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { dateToTimeString, toDateOnly } from '@/utils/general-helper';
+import { ConfirmationService } from '@/services/shared/confirmation.service';
+import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icons-enum';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -45,6 +47,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   alertService = inject(AlertService);
   service = inject(ShiftService);
   fb = inject(FormBuilder);
+  confirmationService = inject(ConfirmationService);
   translateService = inject(TranslateService);
   isCreateMode = false;
   matDialog = inject(MatDialog);
@@ -175,9 +178,15 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
 
     const confirmMessage = this.buildConfirmationMessage();
 
+    const confirmationData = {
+      icon: CONFIRMATION_DIALOG_ICONS_ENUM.WARNING.toString(),
+      messages: [confirmMessage],
+    };
+
     this.shiftLogStartDateControl.valid &&
-      this.alertService
-        .open(confirmMessage)
+      this.confirmationService
+        .open(confirmationData)
+        .afterClosed()
         .pipe(
           filter((result) => result === DIALOG_ENUM.OK),
           switchMap(() => this.performShiftActivation())

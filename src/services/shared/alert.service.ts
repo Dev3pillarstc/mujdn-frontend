@@ -73,23 +73,4 @@ export class AlertService {
 
     return dialog;
   }
-
-  open(message: string | string[]): Observable<DIALOG_ENUM> {
-    const messages = Array.isArray(message) ? message : [message];
-
-    const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
-      width: '400px',
-      data: {
-        messages, // always an array now
-        okText: 'COMMON.OK',
-        cancelText: 'COMMON.CANCEL',
-      },
-    });
-
-    return dialogRef.afterClosed().pipe(
-      map((result) => {
-        return result === DIALOG_ENUM.OK ? DIALOG_ENUM.OK : DIALOG_ENUM.CANCEL;
-      })
-    );
-  }
 }

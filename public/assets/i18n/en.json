@@ -74,13 +74,6 @@
     "AUTH_FORBIDDEN_ACCESS": "You are not authorized to access this resource",
     "AUTH_FORBIDDEN_ACTION": "You are not authorized to perform this action",
     "AUTH_PASSWORD_REQUIRED": "Password is required",
-    "PASSWORD_RESET_RATE_LIMITED": "Too many reset attempts. Please try again later",
-    "PASSWORD_RESET_INVALID_TOKEN": "Invalid or expired reset link",
-    "PASSWORD_RESET_TOKEN_EXPIRED": "Reset token has expired",
-    "PASSWORD_RESET_FAILED": "Password reset failed",
-    "PASSWORD_RESET_USER_NOT_FOUND": "User not found",
-    "PASSWORD_RESET_USER_NOT_ACT": "User account is not active",
-    "RESET_LINK_SENT": "If the provided information matches our records, a password reset link will be sent to your email",
     "VALIDATION_FAILED": "Validation failed for one or more fields",
     "INCIDENT_DRAFT_EXISTS": "User already has a draft incident",
     "INCIDENT_CONCURRENT_UPDATE": "Incident was updated by another user",
@@ -498,6 +491,13 @@
     "NEW_PASSWORD_LABEL": "New Password",
     "CONFIRM_NEW_PASSWORD_LABEL": "Confirm New Password",
     "SET_PASSWORD_BTN": "Set Password",
-    "VERIFYING_LINK": "Verifying Link..."
+    "VERIFYING_LINK": "Verifying Link...",
+    "PASSWORD_RESET_RATE_LIMITED": "Too many reset attempts. Please try again later",
+    "PASSWORD_RESET_INVALID_TOKEN": "Invalid or expired reset link",
+    "PASSWORD_RESET_TOKEN_EXPIRED": "Reset token has expired",
+    "PASSWORD_RESET_FAILED": "Password reset failed",
+    "PASSWORD_RESET_USER_NOT_FOUND": "User not found",
+    "PASSWORD_RESET_USER_NOT_ACT": "User account is not active",
+    "RESET_LINK_SENT": "If the provided information matches our records, a password reset link will be sent to your email"
   }
 }

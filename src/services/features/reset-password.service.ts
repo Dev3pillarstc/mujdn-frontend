@@ -15,6 +15,7 @@ import { of, switchMap, Observable } from 'rxjs';
 import { UrlService } from '../url.service';
 import { PasswordResetRequestModel } from '@/models/features/password-reset/password-reset-request-model';
 import { NewPasswordModel } from '@/models/features/password-reset/new-password-model';
+import { PasswordResetResult } from '@/models/features/password-reset/password-reset-result';
 
 @Injectable({
   providedIn: 'root',
@@ -34,11 +35,11 @@ export class ResetPasswordService {
 
   requestResetPassword(data: PasswordResetRequestModel) {
     return this.http
-      .post<ResponseData<string>>(`${this.getUrlSegment()}/request`, data, {
+      .post<ResponseData<PasswordResetResult>>(`${this.getUrlSegment()}/request`, data, {
         withCredentials: true,
       })
       .pipe(
-        switchMap((response: ResponseData<string>) => {
+        switchMap((response: ResponseData<PasswordResetResult>) => {
           return of(response.data);
         })
       );
@@ -46,11 +47,11 @@ export class ResetPasswordService {
 
   updatePassword(data: NewPasswordModel) {
     return this.http
-      .post<ResponseData<string>>(`${this.getUrlSegment()}/reset`, data, {
+      .post<ResponseData<PasswordResetResult>>(`${this.getUrlSegment()}/reset`, data, {
         withCredentials: true,
       })
       .pipe(
-        switchMap((response: ResponseData<string>) => {
+        switchMap((response: ResponseData<PasswordResetResult>) => {
           return of(response.data);
         })
       );
@@ -58,11 +59,14 @@ export class ResetPasswordService {
 
   verifyResetPassword(userId: string, token: string) {
     return this.http
-      .get<ResponseData<string>>(`${this.getUrlSegment()}/verify?userId=${userId}&token=${token}`, {
-        withCredentials: true,
-      })
+      .get<ResponseData<PasswordResetResult>>(
+        `${this.getUrlSegment()}/verify?userId=${userId}&token=${token}`,
+        {
+          withCredentials: true,
+        }
+      )
       .pipe(
-        switchMap((response: ResponseData<string>) => {
+        switchMap((response: ResponseData<PasswordResetResult>) => {
           return of(response.data);
         })
       );

@@ -8,6 +8,7 @@ import { PasswordResetRequestModel } from '@/models/features/password-reset/pass
 import { CustomValidators } from '@/validators/custom-validators';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { ResetPasswordService } from '@/services/features/reset-password.service';
+import { PasswordResetResult } from '@/models/features/password-reset/password-reset-result';
 
 @Component({
   selector: 'app-forget-password',
@@ -25,6 +26,8 @@ export default class ForgetPasswordComponent implements OnDestroy {
   isSentLink = false;
   lastSubmittedData: PasswordResetRequestModel | null = null;
   errorMessage = '';
+  resendLinkErrorMessage: string | undefined = undefined;
+  resendLinkResponse: PasswordResetResult | null = null;
 
   forgetPasswordForm: FormGroup;
 
@@ -32,6 +35,14 @@ export default class ForgetPasswordComponent implements OnDestroy {
     this.forgetPasswordForm = this.fb.group({
       nationalId: ['', [Validators.required, CustomValidators.pattern('NATIONAL_ID')]],
       email: ['', [Validators.required, Validators.email]],
+    });
+  }
+
+  ngOnInit() {
+    this.translateService.onLangChange.subscribe(() => {
+      this.errorMessage = '';
+      this.resendLinkErrorMessage = '';
+      this.showResendLinkErrorMessage();
     });
   }
 
@@ -49,15 +60,16 @@ export default class ForgetPasswordComponent implements OnDestroy {
         .requestResetPassword(formData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: () => {
+          next: (response) => {
             this.isSentLink = true;
             // this.router.navigate(['/auth/sent-link']);
+            console.log(response);
           },
           error: (error) => {
             // Handle error - you might want to show an error message
             // console.error('Password reset request failed:', error);
             this.errorMessage =
-              this.translateService.instant('COMMON.' + error.error.error?.messageKey) ||
+              this.translateService.instant('RESET_PASSWORD.' + error.error.error?.messageKey) ||
               'Password reset request failed.';
             // Reset the stored data if request failed
             this.lastSubmittedData = null;
@@ -77,19 +89,32 @@ export default class ForgetPasswordComponent implements OnDestroy {
         .requestResetPassword(this.lastSubmittedData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: () => {
+          next: (response) => {
             // You can show a success message here if needed
+            console.log(response);
+            if (!response.success) {
+              this.resendLinkResponse = response;
+              this.showResendLinkErrorMessage();
+            }
             // For example, you could add a toast notification
           },
           error: (error) => {
             // Handle error - you might want to show an error message
             console.error('Resend password reset request failed:', error);
             this.errorMessage =
-              this.translateService.instant('COMMON.' + error.error.error?.messageKey) ||
+              this.translateService.instant('RESET_PASSWORD.' + error.error.error?.messageKey) ||
               'Resend password reset request failed.';
           },
         });
     }
+  }
+
+  showResendLinkErrorMessage() {
+    const currentLanguage = this.translateService.currentLang;
+    this.resendLinkErrorMessage =
+      currentLanguage === 'ar'
+        ? this.resendLinkResponse?.messageAr
+        : this.resendLinkResponse?.messageEn;
   }
 
   onBackToForm() {

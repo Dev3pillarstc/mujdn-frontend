@@ -73,13 +73,6 @@
     "AUTH_FORBIDDEN_ACCESS": "ليس لديك صلاحية هذا الاجراء",
     "AUTH_FORBIDDEN_ACTION": "ليس لديك صلاحية هذا الاجراء",
     "AUTH_PASSWORD_REQUIRED": "كلمة المرور مطلوبة",
-    "PASSWORD_RESET_RATE_LIMITED": "محاولات إعادة تعيين كثيرة. يرجى المحاولة لاحقاً",
-    "PASSWORD_RESET_INVALID_TOKEN": "رابط إعادة التعيين غير صحيح أو منتهي الصلاحية",
-    "PASSWORD_RESET_TOKEN_EXPIRED": "انتهت صلاحية رمز إعادة التعيين",
-    "PASSWORD_RESET_FAILED": "فشل في إعادة تعيين كلمة المرور",
-    "PASSWORD_RESET_USER_NOT_FOUND": "المستخدم غير موجود",
-    "PASSWORD_RESET_USER_NOT_ACT": "حساب المستخدم غير نشط",
-    "RESET_LINK_SENT": "إذا كانت المعلومات المقدمة تطابق سجلاتنا، سيتم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني",
     "VALIDATION_FAILED": "فشل في التحقق من صحة حقل واحد أو أكثر",
     "INCIDENT_DRAFT_EXISTS": "المستخدم لديه بالفعل مسودة حادثة",
     "INCIDENT_CONCURRENT_UPDATE": "تم تحديث الحادثة من قبل مستخدم آخر",
@@ -493,6 +486,13 @@
     "NEW_PASSWORD_LABEL": "كلمة المرور الجديدة",
     "CONFIRM_NEW_PASSWORD_LABEL": "تأكيد كلمة المرور الجديدة",
     "SET_PASSWORD_BTN": "تعيين كلمة المرور",
-    "VERIFYING_LINK": "تحقق من الرابط..."
+    "VERIFYING_LINK": "تحقق من الرابط...",
+    "PASSWORD_RESET_RATE_LIMITED": "محاولات إعادة تعيين كثيرة. يرجى المحاولة لاحقاً",
+    "PASSWORD_RESET_INVALID_TOKEN": "رابط إعادة التعيين غير صحيح أو منتهي الصلاحية",
+    "PASSWORD_RESET_TOKEN_EXPIRED": "انتهت صلاحية رمز إعادة التعيين",
+    "PASSWORD_RESET_FAILED": "فشل في إعادة تعيين كلمة المرور",
+    "PASSWORD_RESET_USER_NOT_FOUND": "المستخدم غير موجود",
+    "PASSWORD_RESET_USER_NOT_ACT": "حساب المستخدم غير نشط",
+    "RESET_LINK_SENT": "إذا كانت المعلومات المقدمة تطابق سجلاتنا، سيتم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني"
   }
 }

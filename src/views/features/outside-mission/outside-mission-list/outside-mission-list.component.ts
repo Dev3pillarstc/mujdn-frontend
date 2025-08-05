@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewMissionDataPopupComponent } from '../popups/view-mission-data-popup/view-mission-data-popup.component';
 import { Select } from 'primeng/select';
 import { TranslatePipe } from '@ngx-translate/core';
+import { AssignEmployeesComponent } from '../popups/assign-employees/assign-employees.component';
 
 @Component({
   selector: 'app-outside-mission-list',
@@ -33,6 +34,10 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './outside-mission-list.component.scss',
 })
 export default class OutsideMissionListComponent {
+  dialogSize = {
+    width: '100%',
+    maxWidth: '1024px',
+  };
   first: number = 0;
   rows: number = 10;
   date2: Date | undefined;
@@ -40,6 +45,7 @@ export default class OutsideMissionListComponent {
   breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   matDialog = inject(MatDialog);
+  dialog = inject(MatDialog);
 
   ngOnInit() {
     this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'مهام الأعمال و الاسناد' }];
@@ -95,6 +101,12 @@ export default class OutsideMissionListComponent {
       width: '100%',
       maxWidth: '1024px',
     });
+
+    dialogRef.afterClosed().subscribe();
+  }
+
+  openDialog1(): void {
+    const dialogRef = this.dialog.open(AssignEmployeesComponent as any, this.dialogSize);
 
     dialogRef.afterClosed().subscribe();
   }

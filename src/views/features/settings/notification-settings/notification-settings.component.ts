@@ -56,22 +56,22 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
     this.workDaysSettingModel = data.workDays;
 
     this.notificationForm = this.fb.group({
-      ...this.notificationSettingModel.buildForm()
+      ...this.notificationSettingModel.buildForm(),
     });
 
     this.workDaysForm = this.fb.group({
-      ...this.workDaysSettingModel.buildForm()
+      ...this.workDaysSettingModel.buildForm(),
     });
 
     this.translateService.onLangChange.pipe(takeUntil(this.$destroy)).subscribe(() => {
       this.home = this.setHomeItem();
       this.breadcrumbs = [
-        { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') }
+        { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
       ];
     });
 
     this.breadcrumbs = [
-      { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') }
+      { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
     ];
   }
 
@@ -109,7 +109,7 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
           this.notificationSettingModel = Object.assign(new NotificationSetting(), result);
           this.notificationForm.patchValue(result);
           this.afterSave();
-        }
+        },
       });
     }
   }
@@ -125,7 +125,7 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
           this.workDaysSettingModel = Object.assign(new WorkDaysSetting(), result);
           this.workDaysForm.patchValue(result);
           this.afterSave();
-        }
+        },
       });
     }
   }
@@ -154,7 +154,7 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
   notificationChannels = [
     { key: 'isSms', labelKey: 'NOTIFICATION.SMS' },
     { key: 'isMobile', labelKey: 'NOTIFICATION.MOBILE' },
-    { key: 'isWeb', labelKey: 'NOTIFICATION.WEB' }
+    { key: 'isWeb', labelKey: 'NOTIFICATION.WEB' },
   ];
   ngOnDestroy() {
     this.$destroy.next();

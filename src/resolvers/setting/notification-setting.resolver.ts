@@ -11,7 +11,7 @@ export const notificationSettingResolver: ResolveFn<any> = () => {
 
   return forkJoin({
     notificationSetting: notificationSettingService.get(),
-    workDays: workDaysSettingService.getWorkDays()
+    workDays: workDaysSettingService.getWorkDays(),
   }).pipe(
     catchError((error) => {
       return of({ notificationSetting: null, workDays: null });

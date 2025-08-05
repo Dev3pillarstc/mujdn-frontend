@@ -8,16 +8,19 @@
           </a>
         </ng-template>
       </p-breadcrumb>
-      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">{{'NOTIFICATION.NOTIFICATION_SETTINGS' |
-        translate}}</h3>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'NOTIFICATION.NOTIFICATION_SETTINGS' | translate }}
+      </h3>
     </div>
 
     <p-tabs [(value)]="activeTab">
       <p-tablist class="my-6">
-        <p-tab [value]="NOTIFICATIONS_SETTINGS_TABS_ENUM.NOTIFICATIONS_TAB">{{'NOTIFICATION.NOTIFICATION' |
-          translate}}</p-tab>
-        <p-tab [value]="NOTIFICATIONS_SETTINGS_TABS_ENUM.WORK_DAYS_TAB">{{'NOTIFICATION.WORKING_DAYS' |
-          translate}}</p-tab>
+        <p-tab [value]="NOTIFICATIONS_SETTINGS_TABS_ENUM.NOTIFICATIONS_TAB">{{
+          'NOTIFICATION.NOTIFICATION' | translate
+        }}</p-tab>
+        <p-tab [value]="NOTIFICATIONS_SETTINGS_TABS_ENUM.WORK_DAYS_TAB">{{
+          'NOTIFICATION.WORKING_DAYS' | translate
+        }}</p-tab>
       </p-tablist>
 
       <p-tabpanels>
@@ -29,29 +32,46 @@
               </h4>
               <div class="flex flex-wrap gap-8">
                 @for (channel of notificationChannels; track channel.key) {
-                <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-                  <input type="checkbox" [formControlName]="channel.key"
-                    class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
-                  <svg
-                    class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  <span class="text-base font-medium text-[#1f2a37]">
-                    {{ channel.labelKey | translate }}
-                  </span>
-                </label>
+                  <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+                    <input
+                      type="checkbox"
+                      [formControlName]="channel.key"
+                      class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                    />
+                    <svg
+                      class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span class="text-base font-medium text-[#1f2a37]">
+                      {{ channel.labelKey | translate }}
+                    </span>
+                  </label>
                 }
               </div>
             </div>
 
             <div class="bg-white rounded-2xl p-4 sm:p-8 mt-6">
               <div class="actions flex items-center mt-6 gap-4 ms-auto">
-                <button type="button" class="btn black-btn" (click)="save()" [disabled]="notificationForm.invalid">
+                <button
+                  type="button"
+                  class="btn black-btn"
+                  (click)="save()"
+                  [disabled]="notificationForm.invalid"
+                >
                   {{ 'COMMON.SAVE' | translate }}
                 </button>
-                <button type="button" class="btn gray-btn border border-[#d2d6db]" (click)="resetNotifications()">
+                <button
+                  type="button"
+                  class="btn gray-btn border border-[#d2d6db]"
+                  (click)="resetNotifications()"
+                >
                   {{ 'COMMON.CANCEL' | translate }}
                 </button>
               </div>
@@ -63,33 +83,50 @@
           <div [formGroup]="workDaysForm">
             <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
               <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616] mb-6">
-                {{'NOTIFICATION.WORKING_DAYS' | translate}}
+                {{ 'NOTIFICATION.WORKING_DAYS' | translate }}
               </h4>
               <div class="flex flex-wrap gap-8">
                 @for (day of weekDays; track day.value) {
-                <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-                  <input type="checkbox" [formControlName]="getFormControlName(day.value)"
-                    class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
-                  <svg
-                    class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  <span class="text-base font-medium text-[#1f2a37]">
-                    {{ day.labelKey | translate }}
-                  </span>
-                </label>
+                  <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+                    <input
+                      type="checkbox"
+                      [formControlName]="getFormControlName(day.value)"
+                      class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                    />
+                    <svg
+                      class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span class="text-base font-medium text-[#1f2a37]">
+                      {{ day.labelKey | translate }}
+                    </span>
+                  </label>
                 }
               </div>
             </div>
 
             <div class="bg-white rounded-2xl p-4 sm:p-8 mt-6">
               <div class="actions flex items-center gap-4 ms-auto">
-                <button type="button" class="btn black-btn" (click)="save()" [disabled]="workDaysForm.invalid">
+                <button
+                  type="button"
+                  class="btn black-btn"
+                  (click)="save()"
+                  [disabled]="workDaysForm.invalid"
+                >
                   {{ 'COMMON.SAVE' | translate }}
                 </button>
-                <button type="button" class="btn gray-btn border border-[#d2d6db]" (click)="resetWorkDays()">
+                <button
+                  type="button"
+                  class="btn gray-btn border border-[#d2d6db]"
+                  (click)="resetWorkDays()"
+                >
                   {{ 'COMMON.CANCEL' | translate }}
                 </button>
               </div>

@@ -1,6 +1,6 @@
 {
   "ENVIRONMENTS_URLS": {
-    "DEV": "https://localhost:7107/api",
+    "DEV": "http://localhost:7107/api",    
     "TESTING": "http://m-front.dev3pillars.org/api",
     "PRE_PRODUCTION": "http://dev3pillarstc-001-site1.rtempurl.com/api"
   },

@@ -113,7 +113,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     };
 
     return this.openBaseDialog(
-      WorkShiftsAssignmentPopupComponent,
+      WorkShiftsAssignmentPopupComponent as any,
       new UserWorkShift(),
       ViewModeEnum.CREATE,
       lookups

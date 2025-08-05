@@ -1,3 +1,4 @@
+import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { FormArray, FormGroup } from '@angular/forms';
 
 // used in base-crud service for date filtering
@@ -150,3 +151,14 @@ export function markFormGroupTouched(form: FormGroup | FormArray) {
     }
   });
 }
+
+export const weekDays =
+  [
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SATURDAY', value: WeekDaysEnum.SATURDAY },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SUNDAY', value: WeekDaysEnum.SUNDAY },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.MONDAY', value: WeekDaysEnum.MONDAY },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.TUESDAY', value: WeekDaysEnum.TUESDAY },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.WEDNESDAY', value: WeekDaysEnum.WEDNESDAY },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.THURSDAY', value: WeekDaysEnum.THURSDAY },
+    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.FRIDAY', value: WeekDaysEnum.FRIDAY }
+  ]

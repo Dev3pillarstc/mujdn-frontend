@@ -29,6 +29,8 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import Shift from '@/models/features/lookups/work-shifts/shift';
+import { WeekDaysEnum } from '@/enums/week-days-enum';
+import { weekDays } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -46,8 +48,7 @@ import Shift from '@/models/features/lookups/work-shifts/shift';
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit
-{
+  implements OnInit {
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   filteredUsersProfiles: UsersWithDepartmentLookup[] = [];
@@ -242,13 +243,5 @@ export class WorkShiftsAssignmentPopupComponent
     return this.form.get('employeeWorkingDays') as FormControl;
   }
 
-  weekDays = [
-    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SATURDAY', value: 1 },
-    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SUNDAY', value: 2 },
-    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.MONDAY', value: 3 },
-    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.TUESDAY', value: 4 },
-    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.WEDNESDAY', value: 5 },
-    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.THURSDAY', value: 6 },
-    { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.FRIDAY', value: 7 },
-  ];
+  weekDays = weekDays;
 }

@@ -92,6 +92,11 @@ export class SideBarLinksService {
           routerLink: ['/work-shifts'],
           routeId: RouteIdsEnum.WORK_SHIFTS,
         },
+        {
+          labelKey: 'MENU.WORK_SHIFT_ASSIGNMENT',
+          routerLink: ['/work-shifts-assignment'],
+          routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
+        },
       ],
     },
     {

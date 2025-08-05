@@ -101,6 +101,16 @@ export default class WorkShiftsListComponent
         model.timeFrom || '',
         model.timeTo || ''
       ),
+      [translate.instant('WORK_SHIFTS.DEFAULT_SHIFT')]: this.excelShiftStatus(model),
     };
+  }
+
+  private excelShiftStatus(model: Shift): any {
+    if (model.isActive) {
+      return this.translateService.instant('WORK_SHIFTS.ACTIVE');
+    } else {
+      if (model.isActive === false) return this.translateService.instant('WORK_SHIFTS.NOT_ACTIVE');
+      else return '---';
+    }
   }
 }

@@ -33,11 +33,11 @@ export class ValidationMessagesComponent implements OnInit {
     const message = this.validationMessages[key as ValidationErrorKeyEnum];
 
     if (!message) return null;
-
+    const translatedMessage = this.translateService.instant(message);
     // Handle dynamic messages with parameters
     const error = this.control().errors?.[key];
     if (error && typeof error === 'object') {
-      return this.formatMessage(this.translateService.instant(message), error);
+      return this.formatMessage(translatedMessage, error);
     }
 
     return message;
@@ -64,7 +64,7 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.AR_NUM]: 'COMMON.ARABIC_ONLY',
     [ValidationErrorKeyEnum.ENG_NUM]: 'COMMON.ENGLISH_ONLY',
     [ValidationErrorKeyEnum.MIN_LENGTH]: 'COMMON.MIN_LENGTH',
-    [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH',
+    [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH_DYNAMIC',
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
     [ValidationErrorKeyEnum.TIME_FROM_AFTER_TIME_TO]: 'COMMON.TIME_FROM_BEFORE_TIME_TO',
     [ValidationErrorKeyEnum.EMAIL]: 'COMMON.EMAIL_VALIDATION',

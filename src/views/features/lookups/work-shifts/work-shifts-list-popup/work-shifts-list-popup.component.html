@@ -111,7 +111,7 @@
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="max-attendance-time">{{
-            'WORK_SHIFTS.MAX_ATTENDANCE_TIME' | translate
+            'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate
           }}</label>
           <p-inputnumber
             [inputStyle]="{ width: '3rem' }"
@@ -120,6 +120,7 @@
             formControlName="attendanceBuffer"
             id="max-attendance-time"
             spinnerMode="horizontal"
+            [min]="0"
           >
             <ng-template #incrementbuttonicon>
               <span class="pi pi-plus"></span>
@@ -141,6 +142,7 @@
             formControlName="leaveBuffer"
             id="max-leave-time"
             spinnerMode="horizontal"
+            [min]="0"
           >
             <ng-template #incrementbuttonicon>
               <span class="pi pi-plus"></span>
@@ -152,17 +154,17 @@
           <app-validation-messages [control]="leaveBufferControl"></app-validation-messages>
         </div>
       </div>
-      <!-- hidden for release 1 -->
+
+      <!-- Default shift section -->
       <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
       >
         <div class="md:col-span-6">
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
             <input
-              checked
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-              disabled
               type="checkbox"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              formControlName="isDefaultShiftForm"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
@@ -175,66 +177,84 @@
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            <span class="text-base font-medium text-[#1f2a37]"> تعيين ك وردية افتراضية </span>
+            <span class="text-base font-medium text-[#1f2a37]">{{
+              'WORK_SHIFTS_POPUP.MARK_AS_DEFAULT' | translate
+            }}</span>
           </label>
         </div>
-        <div class="lg:col-span-2">
-          <div class="relative">
-            <label for="" class="label">تاريخ بدء العمل بالوردية ك افتراضية</label>
-            <p-datepicker
-              [iconDisplay]="'input'"
-              [showIcon]="true"
-              placeholder="التاريخ (من)"
-              class="peer block w-full"
-              inputId="icondisplay"
-            >
-              <ng-template pTemplate="inputicon">
-                <img src="/assets/icons/calender-icon.svg" alt="" />
-              </ng-template>
-            </p-datepicker>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+
+        @if (form.get('isDefaultShiftForm')?.value) {
+          <div class="lg:col-span-2">
+            <div class="relative">
+              <label for="" class="label">
+                {{ 'WORK_SHIFTS_POPUP.START_DATE_DEFAULT_SHIFT' | translate }}
+                <span style="color: #b42318; font-weight: bold">*</span>
+              </label>
+              <p-datepicker
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                [placeholder]="'COMMON.FROM' | translate"
+                class="peer block w-full"
+                formControlName="shiftLogStartDate"
+                inputId="icondisplay"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img src="/assets/icons/calender-icon.svg" alt="" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <app-validation-messages [control]="shiftLogStartDateControl"></app-validation-messages>
           </div>
-        </div>
+        }
       </div>
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
-      >
-        <div class="lg:col-span-2">
-          <span class="text-[14px] font-normal text-[#6c737f]">تاريخ تفعيل و بدء الوردية</span>
-          <p class="text-[16px] font-semibold text-[#161616]">12/12/2023</p>
-        </div>
-        <div class="lg:col-span-2">
-          <span class="text-[14px] font-normal text-[#6c737f]">حالة التفعيل</span>
-          <div
-            class="px-2 py-1 rounded-full w-fit t"
-            class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#ecfdf3] text-[#085d3a]"
-          >
-            <span
-              class="block w-[10px] h-[10px] rounde"
-              class="block w-[10px] h-[10px] rounded-full bg-[#085d3a]"
-            ></span>
-            <span> مفعلة </span>
+
+      @if (form.get('isDefaultShiftForm')?.value && model.shiftLogId) {
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
+        >
+          <div class="lg:col-span-2">
+            <span class="text-[14px] font-normal text-[#6c737f]">{{
+              'WORK_SHIFTS_POPUP.SHIFT_ACTIVATION_DATE' | translate
+            }}</span>
+            <p class="text-[16px] font-semibold text-[#161616]">
+              {{ model.shiftActivationDate ?? 'Not active' }}
+            </p>
           </div>
-          <div
-            class="px-2 py-1 rounded-full w-fit t"
-            class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#fef3f2] text-[#912018]"
-          >
-            <span
-              class="block w-[10px] h-[10px] rounde"
-              class="block w-[10px] h-[10px] rounded-full bg-[#912018]"
-            ></span>
-            <span> غير مفعلة </span>
+          <div class="lg:col-span-2">
+            <span class="text-[14px] font-normal text-[#6c737f]">{{
+              'WORK_SHIFTS_POPUP.ACTIVATION_STATUS' | translate
+            }}</span>
+            @if (model.isActive) {
+              <div
+                class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#ecfdf3] text-[#085d3a]"
+              >
+                <span class="block w-[10px] h-[10px] rounded-full bg-[#085d3a]"></span>
+                <span> {{ 'WORK_SHIFTS_POPUP.ACTIVE' | translate }} </span>
+              </div>
+            }
+            @if (model.isActive == false) {
+              <div
+                class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#fef3f2] text-[#912018]"
+              >
+                <span class="block w-[10px] h-[10px] rounded-full bg-[#912018]"></span>
+                <span> {{ 'WORK_SHIFTS_POPUP.NOT_ACTIVE' | translate }}</span>
+              </div>
+            }
           </div>
         </div>
-      </div>
+      }
+
       <div class="actions mt-6 flex items-center justify-between gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
         <div class="flex items-center justify-end gap-4">
-          <button (click)="close()" (click)="openDurationDialog()" class="btn black-btn">
-            تفعيل
-          </button>
+          @if (canActivateShift) {
+            <button (click)="activateShift()" class="btn black-btn">
+              {{ 'WORK_SHIFTS_POPUP.ACTIVATE' | translate }}
+            </button>
+          }
           <button (click)="save$.next()" class="btn green-btn">
             {{ 'COMMON.SAVE' | translate }}
           </button>

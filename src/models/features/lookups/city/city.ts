@@ -36,7 +36,7 @@ export class City extends BaseCrudModel<City, CityService> {
         nameAr,
         [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
+          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_INPUT_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('AR_NUM'),
         ],
@@ -45,7 +45,7 @@ export class City extends BaseCrudModel<City, CityService> {
         nameEn,
         [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
+          Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_INPUT_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('ENG_NUM'),
         ],

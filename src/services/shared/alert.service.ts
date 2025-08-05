@@ -3,7 +3,6 @@ import { AlertDialogData } from '@/models/shared/alert-dialog-data';
 import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { COOKIE_ENUM } from '@/enums/cookie-enum';
-import { of } from 'rxjs';
 import { CookieService } from '@/services/shared/cookie.service';
 import { AuthService } from '@/services/auth/auth.service';
 import { Router } from '@angular/router';

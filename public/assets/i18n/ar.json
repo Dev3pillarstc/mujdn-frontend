@@ -39,7 +39,6 @@
     "DASHBOARD": "لوحة المعلومات",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "NATIONAL_ID_VALIDATION": "رقم الهوية يجب أن يبدأ ب 1 أو 2 ويحتوي على 10 أرقام",
-    "MAX_LENGTH_DYNAMIC": "لقد تخطيت الحد الاقصى لطول الحقل",
     "POSITIVE_NUMBER_ONLY": "يجب أن يكون الرقم إيجابي",
     "INVALID_NUMBER": "الرقم غير صحيح",
     "NUMBER_RANGE": "يجب أن يكون الحد الأقصى للحقل هو 4 ارقام",
@@ -97,6 +96,11 @@
     "FROM": "التاريخ (من)",
     "TO": "التاريخ (إلى)",
     "LOG_OUT": "تسجيل الخروج",
+    "INTERSECTED_SHIFTS": "لا يمكن أن تتداخل الورديات.",
+    "ACTIVATION_BLOCKED": "لا يمكن تفعيل وردية بتاريخ بدء مستقبلي.",
+    "NO_SHIFT_TO_ACTIVATE": "لم يتم العثور على وردية مجدولة لتفعيلها.",
+    "CHOOSE_DAYS_FOR_USER": "برجاء اختيار ايام العمل الخاصه بالموظف",
+    "SHIFT_START_DATE_ERROR": "تاريخ بدايه العمل بالورديه الجديده يجب ان يكون في اليوم التالي على الاقل لتاريخ الورديه المفعله الحاليه",
     "INACTIVE": "غير مفعل",
     "NOT_SPECIFIED": "غير محدد",
     "NO_ROLES": "لا توجد صلاحيات",
@@ -312,7 +316,14 @@
     "ADD_NEW_SHIFT": "إضافة وردية عمل جديده",
     "MAX_ATTENDANCE_TIME": "مدة السماح للحضور (دق)",
     "MAX_LEAVE_TIME": "مدة السماح للانصراف (دق)",
-    "TIME_FROM_TO": "الوقت (من - الى)"
+    "TIME_FROM_TO": "الوقت (من - الى)",
+    "CONFLICTING_DATES": "تعارض تاريخ الورديه",
+    "DATA_NOT_COMPLETE": "المعلومات غير مكتمله",
+    "CONFLICTING_USER_DATES": "تعارض في مواعيد الورديات الخاصه بالمستخدم",
+    "SHIFT_NAME_INVALID": "اسم الوردية غير صحيح",
+    "DEFAULT_SHIFT": "حالة وردية افتراضية",
+    "ACTIVE": "مفعلة",
+    "NOT_ACTIVE": "غير مفعلة"
   },
   "WORK_SHIFTS_POPUP": {
     "ADD_NEW_SHIFT": "إضافة وردية عمل جديدة",
@@ -322,7 +333,17 @@
     "TIME_FROM": "الوقت (من)",
     "TIME_TO": "الوقت (إلى)",
     "DEFAULT_SHIFT": "تعيين كوردية الافتراضية",
-    "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "الوقت (من) يجب أن يكون أقل من الوقت (إلى)"
+    "TIME_FROM_MUST_BE_LESS_THAN_TIME_TO": "الوقت (من) يجب أن يكون أقل من الوقت (إلى)",
+    "ACTIVATION_CONFIRM": "هل أنت متأكد من أنك تريد تفعيل هذه الوردية؟ سيتم العمل بهذه الورديه اعتبارا من {{date}} سيتم إيقاف العمل بالورديه الحاليه",
+    "ACTIVATED_SUCCESSFULLY": "تم تفعيل الوردية بنجاح",
+    "ACTIVATION_FAILED": "فشل في تفعيل الوردية",
+    "MARK_AS_DEFAULT": "تعيين كوردية افتراضية",
+    "START_DATE_DEFAULT_SHIFT": "تاريخ بدء الوردية الافتراضية",
+    "SHIFT_ACTIVATION_DATE": "تاريخ تفعيل الوردية",
+    "ACTIVATION_STATUS": "حالة التفعيل",
+    "ACTIVE": "مفعلة",
+    "NOT_ACTIVE": "غير مفعلة",
+    "ACTIVATE": "تفعيل"
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "سجل حضوري",
@@ -393,8 +414,46 @@
     "CHOOSE_SUPPORTED_PLATFORMS": "تحديد المنصات المدعومة",
     "SMS": "رسائل قصيرة",
     "MOBILE": "إشعارات الهاتف المحمول",
-    "WEB": "إشعارات الويب",
-    "RESET": "إعادة تعيين"
+    "WEB": "إشعارات الويب"
+  },
+  "NOTIFICATIONS_PAGE": {
+    "NOTIFICATIONS": "الإشعارات",
+    "NOTIFICATION_TITLE_ARABIC": "عنوان الإشعار بالعربية",
+    "NOTIFICATION_TITLE_ENGLISH": "عنوان الإشعار بالإنجليزية",
+    "NOTIFICATION_CONTENT_ARABIC": "محتوى الإشعار بالعربية",
+    "NOTIFICATION_CONTENT_ENGLISH": "محتوى الإشعار بالإنجليزية",
+    "NOTIFICATION_DATE": "تاريخ الإشعار"
+  },
+  "USER_WORK_SHIFT_ASSIGNMENT": {
+    "TEMP_SHIFT_ASSIGNMENT": "اسناد وردية مؤقتة لموظف",
+    "SHIFT_NAME": "اسم الوردية",
+    "START_DATE": "التاريخ (من)",
+    "END_DATE": "التاريخ (الى)",
+    "DEPARTMENT": "الإدارة",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "SATURDAY": "السبت",
+    "SUNDAY": "الأحد",
+    "MONDAY": "الإثنين",
+    "TUESDAY": "الثلاثاء",
+    "WEDNESDAY": "الأربعاء",
+    "THURSDAY": "الخميس",
+    "FRIDAY": "الجمعة",
+    "WORKING_DAYS": "أيام العمل الرسمية"
+  },
+  "USER_WORK_SHIFT_PAGE": {
+    "WORK_SHIFT_ASSIGNMENT": "اسناد ورديات عمل",
+    "SHIFT_NAME_AR": "اسم الوردية (عربي)",
+    "SHIFT_NAME_EN": "اسم الوردية (انجليزي)",
+    "SHIFT_NAME_PLACEHOLDER": "اسم الوردية",
+    "START_DATE": "التاريخ (من)",
+    "END_DATE": "التاريخ (الى)",
+    "DATE_RANGE_PLACEHOLDER": "التاريخ (من - الى)",
+    "DEPARTMENT": "الادارة",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "SHIFT_LIST": "قائمة ورديات العمل",
+    "ASSIGN_SHIFT_TO_EMPLOYEE": "اسناد وردية لموظف",
+    "EMPLOYEE_NAME_AR": "اسم الموظف (عربي)",
+    "EMPLOYEE_NAME_EN": "اسم الموظف (إنجليزي)"
   },
   "PROFILE_PAGE": {
     "PROFILE": "الملف الشخصي",

@@ -6,7 +6,7 @@ import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
 import { userResolver } from '@/resolvers/user.resolver';
 import { regionResolver } from '@/resolvers/lookups/region.resolver';
-import { notificationChannelResolver } from '@/resolvers/setting/notification-channel.resolver';
+import { notificationSettingResolver } from '@/resolvers/setting/notification-setting.resolver';
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
@@ -14,6 +14,8 @@ import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
 import { loginResolver } from '@/resolvers/login.resolver';
+import { notificationResolver } from '@/resolvers/setting/notification.resolver';
+import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
 import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
 
 export const routes: Routes = [
@@ -140,9 +142,9 @@ export const routes: Routes = [
         path: 'notification-channels',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NOTIFICATION_CHANNELS },
-        resolve: { channel: notificationChannelResolver },
+        resolve: { channel: notificationSettingResolver },
         loadComponent: () =>
-          import('@/views/features/settings/notification-channels/notification-channels.component'),
+          import('@/views/features/settings/notification-settings/notification-settings.component'),
       },
       {
         path: 'permissions',
@@ -185,7 +187,12 @@ export const routes: Routes = [
       },
       {
         path: 'work-shifts-assignment',
-        data: { routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT },
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.SECURITY_LEADER],
+          routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
+        },
+        resolve: { list: userWorkShiftResolver },
         loadComponent: () =>
           import(
             '@/views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
@@ -206,6 +213,7 @@ export const routes: Routes = [
       },
       {
         path: 'notifications',
+        resolve: { list: notificationResolver },
         loadComponent: () =>
           import('@/views/features/lookups/notifiactions/notifiactions.component'),
       },

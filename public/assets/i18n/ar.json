@@ -100,7 +100,13 @@
     "ACTIVATION_BLOCKED": "لا يمكن تفعيل وردية بتاريخ بدء مستقبلي.",
     "NO_SHIFT_TO_ACTIVATE": "لم يتم العثور على وردية مجدولة لتفعيلها.",
     "CHOOSE_DAYS_FOR_USER": "برجاء اختيار ايام العمل الخاصه بالموظف",
-    "SHIFT_START_DATE_ERROR": "تاريخ بدايه العمل بالورديه الجديده يجب ان يكون في اليوم التالي على الاقل لتاريخ الورديه المفعله الحاليه"
+    "SHIFT_START_DATE_ERROR": "تاريخ بدايه العمل بالورديه الجديده يجب ان يكون في اليوم التالي على الاقل لتاريخ الورديه المفعله الحاليه",
+    "INACTIVE": "غير مفعل",
+    "NOT_SPECIFIED": "غير محدد",
+    "NO_ROLES": "لا توجد صلاحيات",
+    "PROFILE_LOAD_ERROR": "حدث خطأ في تحميل بيانات الملف الشخصي",
+    "RETRY": "إعادة المحاولة",
+    "CURRENT_PASSWORD_INCORRECT": "كلمة المرور القديمة غير صحيحة"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -448,5 +454,30 @@
     "ASSIGN_SHIFT_TO_EMPLOYEE": "اسناد وردية لموظف",
     "EMPLOYEE_NAME_AR": "اسم الموظف (عربي)",
     "EMPLOYEE_NAME_EN": "اسم الموظف (إنجليزي)"
+  },
+  "PROFILE_PAGE": {
+    "PROFILE": "الملف الشخصي",
+    "EDIT": "تعديل",
+    "EDIT_PERSONAL_INFO": "تعديل البيانات الشخصية",
+    "CHANGE_PASSWORD": "تغيير كلمة المرور",
+    "EMAIL": "البريد الالكتروني",
+    "PHONE_NUMBER": "رقم الجوال",
+    "UPDATE": "تعديل",
+    "PROFILE_UPDATED_SUCCESSFULLY": "تم تحديث الملف الشخصي بنجاح",
+    "ERROR_LOADING_PROFILE": "خطأ في تحميل الملف الشخصي",
+    "ERROR_UPDATING_PROFILE": "خطأ في تحديث الملف الشخصي",
+    "OLD_PASSWORD": "كلمة المرور القديمة",
+    "NEW_PASSWORD": "كلمة المرور الجديدة",
+    "CONFIRM_NEW_PASSWORD": "تأكيد كلمة المرور الجديدة",
+    "PASSWORD_MISMATCH": "كلمات المرور غير متطابقة"
+  },
+  "ROLES": {
+    "ADMIN": "مسؤول نظام",
+    "EMPLOYEE": "موظف",
+    "DEPARTMENT_MANAGER": "مدير إدارة",
+    "FOLLOW_UP_OFFICER": "مسؤول قسم المتابعة",
+    "HR_OFFICER": "مسؤول HR",
+    "SECURITY_MEMBER": "فرد شرطة عسكرية",
+    "SECURITY_LEADER": "قائد شرطة عسكرية"
   }
 }

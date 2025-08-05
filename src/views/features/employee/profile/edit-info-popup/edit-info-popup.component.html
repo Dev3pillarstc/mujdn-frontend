@@ -37,47 +37,58 @@
           stroke="#9DA4AE"
         />
       </svg>
-      تعديل البيانات الشخصية
+      {{ 'PROFILE_PAGE.EDIT_PERSONAL_INFO' | translate }}
     </h3>
-    <form class="mt-6">
+
+    <form [formGroup]="form" class="mt-6">
       <div class="mb-6">
-        <label class="label">البريد الالكتروني</label>
+        <label class="label" for="email-input">{{ 'PROFILE_PAGE.EMAIL' | translate }}</label>
         <div class="relative">
           <input
             pInputText
             type="email"
-            formControlName="allowedDuration"
-            placeholder="البريد الالكتروني"
+            id="email-input"
+            formControlName="email"
+            placeholder="{{ 'PROFILE_PAGE.EMAIL' | translate }}"
             class="peer w-full"
           />
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
         </div>
+        <app-validation-messages [control]="emailControl"></app-validation-messages>
       </div>
+
       <div class="mb-6">
-        <label class="label">رقم الجوال</label>
+        <label class="label" for="phone-input">{{ 'PROFILE_PAGE.PHONE_NUMBER' | translate }}</label>
         <div class="relative">
           <input
             pInputText
-            type="email"
-            formControlName="allowedDuration"
-            placeholder="رقم الجوال"
+            type="tel"
+            id="phone-input"
+            formControlName="phoneNumber"
+            placeholder="{{ 'PROFILE_PAGE.PHONE_NUMBER' | translate }}"
             class="peer w-full"
+            [dir]="direction"
           />
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
         </div>
+        <app-validation-messages [control]="phoneNumberControl"></app-validation-messages>
       </div>
+
       <div class="actions mt-6 flex items-center gap-4 mt-10">
         <button
-          class="inline-flex items-center justify-center min-h-[40px] px-3 rounded text-[14px] font-medium hover:bg-[#f1f1f1] transition border border-[#d2d6db]"
+          type="button"
+          class="inline-flex text-black items-center justify-center min-h-[40px] px-3 rounded text-[14px] font-medium hover:bg-[#f1f1f1] transition border border-[#d2d6db]"
           (click)="close()"
         >
-          الغاء
+          {{ 'COMMON.CANCEL' | translate }}
         </button>
-        <button class="btn green-btn">تعديل</button>
+        <button type="button" class="btn green-btn" (click)="save$.next()">
+          {{ 'PROFILE_PAGE.UPDATE' | translate }}
+        </button>
       </div>
     </form>
   </div>

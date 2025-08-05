@@ -11,6 +11,8 @@ import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -28,16 +30,26 @@ export class HeaderComponent implements OnInit {
   declare loggedInUser?: LoggedInUser;
   menuItems: MenuItem[] = [];
   sharedService = inject(SharedService);
+  router = inject(Router);
+  destroy$: Subject<void> = new Subject<void>();
 
   ngOnInit() {
     this.loggedInUser = this.authService.getUser().value;
+    this.initializeProfileMenu();
+    // Re-initialize action list when language changes
+    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.initializeProfileMenu();
+    });
+  }
+  private initializeProfileMenu(): void {
     this.menuItems = [
       {
-        label: 'Profile',
+        label: this.translateService.instant('PROFILE_PAGE.PROFILE'),
         icon: '/assets/icons/profile.svg',
+        command: () => this.openProfile(),
       },
       {
-        label: 'Logout',
+        label: this.translateService.instant('COMMON.LOG_OUT'),
         icon: '/assets/icons/logout.svg',
         command: () => this.logout(),
       },
@@ -75,6 +87,15 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    // تسجيل الخروج
+    this.authService.logout().subscribe();
+  }
+
+  openProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

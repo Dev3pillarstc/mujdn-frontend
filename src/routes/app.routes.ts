@@ -16,6 +16,7 @@ import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver
 import { loginResolver } from '@/resolvers/login.resolver';
 import { notificationResolver } from '@/resolvers/setting/notification.resolver';
 import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
+import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -229,6 +230,9 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.EMPLOYEE] },
+        resolve: { list: userProfileResolver },
         loadComponent: () => import('@/views/features/employee/profile/profile/profile.component'),
       },
     ],

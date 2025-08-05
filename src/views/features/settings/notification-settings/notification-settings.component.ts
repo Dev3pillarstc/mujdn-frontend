@@ -4,7 +4,7 @@ import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NotificationSetting } from '@/models/features/setting/notification-setting';
-import { NotificationSettingService } from '@/services/features/setting/notification-channel.service';
+import { NotificationSettingService } from '@/services/features/setting/notification-setting.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TabsModule } from 'primeng/tabs';

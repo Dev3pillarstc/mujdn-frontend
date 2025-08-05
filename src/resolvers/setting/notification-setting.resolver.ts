@@ -1,6 +1,6 @@
 import { ResolveFn } from '@angular/router';
 import { inject } from '@angular/core';
-import { NotificationSettingService } from '@/services/features/setting/notification-channel.service';
+import { NotificationSettingService } from '@/services/features/setting/notification-setting.service';
 import { NotificationSetting } from '@/models/features/setting/notification-setting';
 import { catchError, of, tap } from 'rxjs';
 

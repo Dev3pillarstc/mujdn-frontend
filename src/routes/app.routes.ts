@@ -6,7 +6,7 @@ import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
 import { userResolver } from '@/resolvers/user.resolver';
 import { regionResolver } from '@/resolvers/lookups/region.resolver';
-import { notificationSettingResolver } from '@/resolvers/setting/notification-channel.resolver';
+import { notificationSettingResolver } from '@/resolvers/setting/notification-setting.resolver';
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
@@ -141,7 +141,7 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NOTIFICATION_CHANNELS },
         resolve: { channel: notificationSettingResolver },
         loadComponent: () =>
-          import('@/views/features/settings/notification-channels/notification-settings.component'),
+          import('@/views/features/settings/notification-settings/notification-settings.component'),
       },
       {
         path: 'permissions',

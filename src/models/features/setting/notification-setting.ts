@@ -1,6 +1,6 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { notificationSettingInterceptor } from '@/model-interceptors/setting/notification-channel.interceptor';
-import { NotificationSettingService } from '@/services/features/setting/notification-channel.service';
+import { notificationSettingInterceptor } from '@/model-interceptors/setting/notification-setting.interceptor';
+import { NotificationSettingService } from '@/services/features/setting/notification-setting.service';
 import { InterceptModel } from 'cast-response';
 
 const { send, receive } = new notificationSettingInterceptor();

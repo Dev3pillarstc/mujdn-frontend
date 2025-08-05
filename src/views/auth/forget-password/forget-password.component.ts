@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { PasswordResetRequestModel } from '@/models/features/password-reset/password-reset-request-model';
 import { CustomValidators } from '@/validators/custom-validators';
@@ -20,9 +20,11 @@ export default class ForgetPasswordComponent implements OnDestroy {
   private router = inject(Router);
   private resetPasswordService = inject(ResetPasswordService);
   private destroy$ = new Subject<void>();
+  private translateService = inject(TranslateService);
 
   isSentLink = false;
   lastSubmittedData: PasswordResetRequestModel | null = null;
+  errorMessage = '';
 
   forgetPasswordForm: FormGroup;
 
@@ -53,7 +55,10 @@ export default class ForgetPasswordComponent implements OnDestroy {
           },
           error: (error) => {
             // Handle error - you might want to show an error message
-            console.error('Password reset request failed:', error);
+            // console.error('Password reset request failed:', error);
+            this.errorMessage =
+              this.translateService.instant('COMMON.' + error.error.error?.messageKey) ||
+              'Password reset request failed.';
             // Reset the stored data if request failed
             this.lastSubmittedData = null;
           },
@@ -79,6 +84,9 @@ export default class ForgetPasswordComponent implements OnDestroy {
           error: (error) => {
             // Handle error - you might want to show an error message
             console.error('Resend password reset request failed:', error);
+            this.errorMessage =
+              this.translateService.instant('COMMON.' + error.error.error?.messageKey) ||
+              'Resend password reset request failed.';
           },
         });
     }

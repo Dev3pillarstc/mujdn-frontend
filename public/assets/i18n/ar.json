@@ -414,7 +414,17 @@
     "CHOOSE_SUPPORTED_PLATFORMS": "تحديد المنصات المدعومة",
     "SMS": "رسائل قصيرة",
     "MOBILE": "إشعارات الهاتف المحمول",
-    "WEB": "إشعارات الويب"
+    "WEB": "إشعارات الويب",
+    "RESET": "إعادة تعيين",
+    "NOTIFICATION": "الإشعارات",
+    "SATURDAY": "السبت",
+    "SUNDAY": "الأحد",
+    "MONDAY": "الإثنين",
+    "TUESDAY": "الثلاثاء",
+    "WEDNESDAY": "الأربعاء",
+    "THURSDAY": "الخميس",
+    "FRIDAY": "الجمعة",
+    "WORKING_DAYS": "أيام العمل الرسمية"
   },
   "NOTIFICATIONS_PAGE": {
     "NOTIFICATIONS": "الإشعارات",

@@ -419,7 +419,17 @@
     "CHOOSE_SUPPORTED_PLATFORMS": "Choose Supported Platforms",
     "SMS": "SMS",
     "MOBILE": "Mobile",
-    "WEB": "Web"
+    "WEB": "Web",
+    "RESET": "Reset",
+    "NOTIFICATION": "Notifications",
+    "SATURDAY": "Saturday",
+    "SUNDAY": "Sunday",
+    "MONDAY": "Monday",
+    "TUESDAY": "Tuesday",
+    "WEDNESDAY": "Wednesday",
+    "THURSDAY": "Thursday",
+    "FRIDAY": "Friday",
+    "WORKING_DAYS": "Official working Days"
   },
   "NOTIFICATIONS_PAGE": {
     "NOTIFICATIONS": "Notifications",

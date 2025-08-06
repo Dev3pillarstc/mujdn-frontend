@@ -1,6 +1,6 @@
 import { BaseCrudServiceContract } from '@/contracts/base-crud-service-contract';
 import { OptionsContract } from '@/contracts/options-contract';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UrlService } from '@/services/url.service';

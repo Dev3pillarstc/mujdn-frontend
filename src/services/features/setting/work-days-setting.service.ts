@@ -44,7 +44,7 @@ export class WorkDaysSettingService extends BaseCrudService<WorkDaysSetting> {
       );
   }
 
-  @CastResponse(undefined, { fallback: '$get' })
+  @CastResponse(undefined, { fallback: '$default' })
   @HasInterception
   updateWorkDays(@InterceptParam() data: WorkDaysSetting): Observable<WorkDaysSetting> {
     return this.http

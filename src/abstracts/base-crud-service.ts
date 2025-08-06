@@ -1,6 +1,6 @@
 import { BaseCrudServiceContract } from '@/contracts/base-crud-service-contract';
 import { OptionsContract } from '@/contracts/options-contract';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 import { inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UrlService } from '@/services/url.service';
@@ -12,6 +12,7 @@ import { PaginatedListResponseData } from '@/models/shared/response/paginated-li
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { genericDateOnlyConvertor } from '@/utils/general-helper';
+import { ResponseData } from '@/models/shared/response/response-data';
 
 export abstract class BaseCrudService<Model, PrimaryKey = number>
   extends RegisterServiceMixin(class {})
@@ -118,7 +119,14 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   @CastResponse()
   @HasInterception
   update(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.put<Model>(this.getUrlSegment(), model, { withCredentials: true });
+    return this.http
+      .put<ResponseData<Model>>(this.getUrlSegment(), model, { withCredentials: true })
+      .pipe(
+        map((response) => response.data),
+        catchError((err) => {
+          throw err;
+        })
+      );
   }
 
   @CastResponse()

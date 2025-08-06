@@ -418,11 +418,10 @@
   },
   "NOTIFICATIONS_PAGE": {
     "NOTIFICATIONS": "الإشعارات",
-    "NOTIFICATION_TITLE_ARABIC": "عنوان الإشعار بالعربية",
-    "NOTIFICATION_TITLE_ENGLISH": "عنوان الإشعار بالإنجليزية",
-    "NOTIFICATION_CONTENT_ARABIC": "محتوى الإشعار بالعربية",
-    "NOTIFICATION_CONTENT_ENGLISH": "محتوى الإشعار بالإنجليزية",
-    "NOTIFICATION_DATE": "تاريخ الإشعار"
+    "NOTIFICATION_TITLE": "عنوان الإشعار",
+    "NOTIFICATION_CONTENT": "محتوى الإشعار",
+    "NOTIFICATION_DATE": "تاريخ الإشعار",
+    "NOTIFICATION_TIME": "وقت الإشعار"
   },
   "USER_WORK_SHIFT_ASSIGNMENT": {
     "TEMP_SHIFT_ASSIGNMENT": "اسناد وردية مؤقتة لموظف",

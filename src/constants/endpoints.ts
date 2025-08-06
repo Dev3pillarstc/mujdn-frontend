@@ -18,6 +18,7 @@ export const EndPoints = {
   SHIFTS: '/shifts',
   NOTIFICATION: '/notifications',
   User_Work_Shifts: '/UserWorkShifts',
+  NOTIFICATION_TYPES: '/notificationtypes',
 };
 
 export type EndpointsType = typeof EndPoints;

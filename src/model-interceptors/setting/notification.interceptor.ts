@@ -8,6 +8,7 @@ export class NotificationInterceptor implements ModelInterceptorContract<Notific
   }
 
   send(model: Partial<Notification>): Partial<Notification> {
+    delete (model as any).languageService;
     return model;
   }
 }

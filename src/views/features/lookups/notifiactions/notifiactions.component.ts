@@ -17,6 +17,10 @@ import { NotificationFilter } from '@/models/features/setting/notificationFilter
 import { RegionService } from '@/services/features/lookups/region.service';
 import { NotificationService } from '@/services/features/setting/notification.service';
 import { Notification } from '@/models/features/setting/notification';
+import { Select } from 'primeng/select';
+import { NotificationTypeService } from '@/services/features/setting/notification-type.service';
+import { LanguageService } from '@/services/shared/language.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Component({
   selector: 'app-notifiactions',
@@ -31,6 +35,7 @@ import { Notification } from '@/models/features/setting/notification';
     DatePickerModule,
     FormsModule,
     TranslatePipe,
+    Select,
   ],
   templateUrl: './notifiactions.component.html',
   styleUrl: './notifiactions.component.scss',
@@ -47,13 +52,17 @@ export default class NotifiactionsComponent extends BaseListComponent<
   };
   notificationService = inject(NotificationService);
   filterModel: NotificationFilter = new NotificationFilter();
-  regions: BaseLookupModel[] = [];
-  regionService = inject(RegionService);
+  notificationTypes: BaseLookupModel[] = [];
+  notificationTypeService = inject(NotificationTypeService);
   override get service() {
     return this.notificationService;
   }
 
-  override initListComponent(): void {}
+  override initListComponent(): void {
+    this.notificationTypeService.getLookup().subscribe((res: BaseLookupModel[]) => {
+      this.notificationTypes = res;
+    });
+  }
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'NOTIFICATIONS_PAGE.NOTIFICATIONS' }];
   }
@@ -83,5 +92,8 @@ export default class NotifiactionsComponent extends BaseListComponent<
   }
   get dateFrom(): Date | null | undefined {
     return this.filterModel.dateFrom;
+  }
+  getPropertyName() {
+    return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
 }

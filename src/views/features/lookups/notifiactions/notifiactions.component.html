@@ -126,38 +126,24 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             <div class="relative">
               <label class="label" for="notificationAr">{{
-                'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ARABIC' | translate
+                'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE' | translate
               }}</label>
-              <input
-                [(ngModel)]="filterModel.titleAr"
-                [placeholder]="'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ARABIC' | translate"
-                class="peer"
-                fluid="true"
-                id="notificationAr"
-                pInputText
-                type="text"
-              />
+              <p-select
+                [optionLabel]="getPropertyName()"
+                [options]="notificationTypes"
+                class="w-full peer"
+                [(ngModel)]="filterModel.notificationTypeId"
+                id="regionSelect"
+                name="regionSelect"
+                optionValue="id"
+                placeholder="{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE' | translate }}"
+              >
+              </p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
-            <div class="relative">
-              <label class="label" for="notificationEn">{{
-                'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ENGLISH' | translate
-              }}</label>
-              <input
-                [(ngModel)]="filterModel.titleEn"
-                [placeholder]="'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ENGLISH' | translate"
-                class="peer"
-                fluid="true"
-                id="notificationEn"
-                pInputText
-                type="text"
-              />
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
+
             <div class="relative">
               <label class="label" for="permission-date-picker">{{
                 'COMMON.FROM' | translate
@@ -231,20 +217,18 @@
           <p-table [value]="list">
             <ng-template pTemplate="header">
               <tr>
-                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ARABIC' | translate }}</th>
-                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ENGLISH' | translate }}</th>
-                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ARABIC' | translate }}</th>
-                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ENGLISH' | translate }}</th>
+                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_TITLE' | translate }}</th>
+                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT' | translate }}</th>
                 <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_DATE' | translate }}</th>
+                <th>{{ 'NOTIFICATIONS_PAGE.NOTIFICATION_TIME' | translate }}</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-notification>
               <tr>
-                <td>{{ notification.notificationType.arabicTitle }}</td>
-                <td>{{ notification.notificationType.englishTitle }}</td>
-                <td>{{ notification.contentAr }}</td>
-                <td>{{ notification.contentEn }}</td>
+                <td>{{ notification.getnotificationTypeTitle() }}</td>
+                <td [title]="notification.getContent()">{{ notification.getContent() }}</td>
                 <td>{{ notification.creationDate | date: 'dd-MM-yyyy' }}</td>
+                <td>{{ notification.creationDate | date: 'HH:mm:ss' }}</td>
               </tr>
             </ng-template>
           </p-table>

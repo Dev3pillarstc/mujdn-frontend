@@ -1,54 +1,65 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
-import { LanguageService } from '@/services/shared/language.service';
-import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { DialogRef } from '@angular/cdk/dialog';
-import { DatePickerModule } from 'primeng/datepicker';
-import { InputTextModule } from 'primeng/inputtext';
-import { FormGroup, FormControl } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { TextareaModule } from 'primeng/textarea';
+import { Component, Inject, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
-interface Adminstration {
-  type: string;
-}
+import { WeekDaysEnum } from '@/enums/week-days-enum';
+import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
+import EmployeeShifts from '@/models/features/lookups/work-shifts/employee-shifts';
+import { weekDays } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-work-days-popup',
-  imports: [
-    FormsModule,
-    DatePickerModule,
-    InputTextModule,
-    ReactiveFormsModule,
-    CommonModule,
-    TextareaModule,
-  ],
+  imports: [TranslatePipe],
   templateUrl: './work-days-popup.component.html',
-  styleUrl: './work-days-popup.component.scss',
 })
-export class WorkDaysPopupComponent {
-  date2: Date | undefined;
-  yourFormGroup = new FormGroup({
-    fromDate: new FormControl(null), // التاريخ (من)
-    timeTo: new FormControl(null), // وقت المساءلة
-    allowedDuration: new FormControl(null), // فترة السماح
-    employee: new FormControl(null), // اسم الموظف
-  });
+export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShifts> implements OnInit {
+  model!: EmployeeShifts;
+  form!: FormGroup;
+  translateService = inject(TranslateService);
 
-  selectedAdminstration: Adminstration | undefined;
-  declare direction: LAYOUT_DIRECTION_ENUM;
-  languageService = inject(LanguageService);
-  dialogRef = inject(DialogRef);
-  adminstrations: Adminstration[] | undefined;
-  ngOnInit() {
-    this.direction =
-      this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-        ? LAYOUT_DIRECTION_ENUM.LTR
-        : LAYOUT_DIRECTION_ENUM.RTL;
+  displayDays: { labelKey: string; value: WeekDaysEnum; isSelected: boolean }[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: { model: EmployeeShifts }
+  ) {
+    super();
+    this.model = data.model;
   }
 
-  close() {
-    this.dialogRef.close();
+  initPopup(): void {
+    this.prepareDisplayDays();
+  }
+
+  buildForm(): void {}
+
+  beforeSave(model: EmployeeShifts, form: FormGroup): boolean {
+    return true;
+  }
+
+  prepareModel(model: EmployeeShifts, form: FormGroup): EmployeeShifts {
+    return model;
+  }
+
+  saveFail(error: Error): void {}
+
+  afterSave(model: EmployeeShifts, dialogRef: any): void {}
+
+  private prepareDisplayDays(): void {
+    const workingDayValues = this.model.employeeWorkingDays
+      ? this.model.employeeWorkingDays.split(',').map((day) => parseInt(day.trim(), 10))
+      : [];
+
+    this.displayDays = weekDays
+      .filter((day) => workingDayValues.includes(day.value))
+      .map((day) => ({
+        ...day,
+        isSelected: true,
+      }));
+  }
+
+  getDayLabel(labelKey: string): string {
+    return this.translateService.instant(labelKey);
   }
 }

@@ -46,141 +46,37 @@ export default class TempShiftsComponent extends BaseListComponent<
   MyShiftsService,
   EmployeeShiftsFilter
 > {
+  // Required by BaseListComponent
   filterModel: EmployeeShiftsFilter = new EmployeeShiftsFilter();
-  override initListComponent(): void {
-  }
-  protected override getBreadcrumbKeys(): { labelKey: string; icon?: string; routerLink?: string; }[] {
-    return [{ labelKey: 'WORK_SHIFTS.WORK_SHIFTS' }];
-  }
-  protected override mapModelToExcelRow(model: EmployeeShifts): { [key: string]: any; } {
-    throw new Error('Method not implemented.');
-  }
-
-  filterOptions: EmployeeShiftsFilter = new EmployeeShiftsFilter();
-  startDate: Date | undefined;
-  endDate: Date | undefined;
-
-  employeeShifts: EmployeeShifts[] = [];
-  currentShift: EmployeeShifts = new EmployeeShifts();
   dialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
 
-  isLoading: boolean = false;
-  isSearching: boolean = false;
-
-  private dialog = inject(MatDialog);
+  filterOptions: EmployeeShiftsFilter = new EmployeeShiftsFilter();
+  employeeShifts: EmployeeShifts[] = [];
+  currentShift: EmployeeShifts | null = null;
   service = inject(MyShiftsService);
   languageService = inject(LanguageService);
 
-  private initializeBreadcrumbs(): void {
-    this.breadcrumbs = [
-      { label: 'لوحة المعلومات' },
-      { label: 'وردياتي' }
-    ];
+  override initListComponent(): void {
+    this.loadInitialData();
   }
 
-  private loadInitialData(): void {
-    const resolverData = this.activatedRoute.snapshot.data['list'];
-    if (resolverData) {
-      if (resolverData.myShifts) {
-        this.employeeShifts = resolverData.myShifts.list || [];
-        this.paginationInfo = resolverData.myShifts.paginationInfo || new PaginationInfo();
-      }
-      this.currentShift = resolverData.currentShift || null;
-    }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'MY_SHIFTS.MY_SHIFTS' }];
   }
-
-  getCurrentShiftTimeRange(): string {
-    if (this.currentShift?.timeFrom && this.currentShift?.timeTo) {
-      return `${this.currentShift.timeFrom} - ${this.currentShift.timeTo}`;
-    }
-    return '--:-- - --:--';
-  }
-
-  getCurrentShiftName(): string {
-    return this.currentShift?.nameAr || 'اسم الوردية الحالية';
-  }
-
-  formatTime(time?: number): number {
-    return time || 0;
-  }
-
-  formatDate(date?: Date | string): string {
-    if (!date) return '--/--/----';
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    return dateObj.toLocaleDateString('en-GB');
-  }
-
-  getTimeRange(shift: EmployeeShifts): string {
-    return shift.timeFrom && shift.timeTo ? `${shift.timeFrom} - ${shift.timeTo}` : '--:-- - --:--';
-  }
-
-  onSearch(): void {
-    if (this.isSearching) return;
-    this.isSearching = true;
-    this.first = 0;
-
-    const paginationParams = new PaginationParams();
-    paginationParams.pageNumber = 1;
-    paginationParams.pageSize = this.rows;
-
-    this.filterOptions.startDate = this.startDate as Date;
-    this.filterOptions.endDate = this.endDate as Date;
-
-    this.service.getMyShifts(paginationParams, this.convertFilterToOptions(this.filterOptions))
-      .subscribe({
-        next: (response) => {
-          this.employeeShifts = response.list || [];
-          this.paginationInfo = {
-            ...new PaginationInfo(),
-            ...response.paginationInfo,
-            totalItems: response.paginationInfo?.totalItems ?? 0
-          };
-          this.isSearching = false;
-        },
-        error: (error) => {
-          console.error('Error searching shifts:', error);
-          this.isSearching = false;
-        }
-      });
-  }
-
-  onResetFilters(): void {
-    this.filterOptions = new EmployeeShiftsFilter();
-    this.startDate = undefined;
-    this.endDate = undefined;
-    this.loadShifts();
-  }
-
-  private loadShifts(page: number = 1): void {
-    if (this.isLoading) return;
-    this.isLoading = true;
-
-    const paginationParams = new PaginationParams();
-    paginationParams.pageNumber = page;
-    paginationParams.pageSize = this.rows;
-
-    this.filterOptions.startDate = this.startDate as Date;
-    this.filterOptions.endDate = this.endDate as Date;
-
-    this.service.getMyShifts(paginationParams, this.convertFilterToOptions(this.filterOptions))
-      .subscribe({
-        next: (response) => {
-          this.employeeShifts = response.list || [];
-          this.paginationInfo = {
-            ...new PaginationInfo(),
-            ...response.paginationInfo,
-            totalItems: response.paginationInfo?.totalItems ?? 0
-          };
-          this.isLoading = false;
-        },
-        error: (error) => {
-          console.error('Error loading shifts:', error);
-          this.isLoading = false;
-        }
-      });
+  protected override mapModelToExcelRow(model: EmployeeShifts): { [key: string]: any } {
+    return {
+      [this.translateService.instant('MY_SHIFTS.NAME_ARABIC')]: model.nameAr || '',
+      [this.translateService.instant('MY_SHIFTS.NAME_ENGLISH')]: model.nameEn || '',
+      [this.translateService.instant('MY_SHIFTS.START_DATE')]: this.formatDate(model.startDate),
+      [this.translateService.instant('MY_SHIFTS.END_DATE')]: this.formatDate(model.endDate),
+      [this.translateService.instant('MY_SHIFTS.TIME_FROM_TO')]:
+        `${model.timeFrom} - ${model.timeTo}`,
+      [this.translateService.instant('MY_SHIFTS.ATTENDANCE_BUFFER')]: model.attendanceBuffer ?? '',
+      [this.translateService.instant('MY_SHIFTS.LEAVE_BUFFER')]: model.leaveBuffer ?? '',
+    };
   }
 
   openDialog(shift: EmployeeShifts): void {
@@ -188,31 +84,175 @@ export default class TempShiftsComponent extends BaseListComponent<
     this.openBaseDialog(WorkDaysPopupComponent as any, shift, viewMode);
   }
 
-  isCurrentLanguageEnglish() {
-    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
+  private loadInitialData(): void {
+    const resolverData = this.activatedRoute.snapshot.data['list'];
+
+    if (resolverData) {
+      // Load shifts data
+      if (resolverData.myShifts) {
+        this.employeeShifts = resolverData.myShifts.list || [];
+        this.list = this.employeeShifts; // Update base class list
+
+        // Safely handle pagination info
+        if (resolverData.myShifts.paginationInfo) {
+          this.paginationInfo = {
+            ...new PaginationInfo(),
+            ...resolverData.myShifts.paginationInfo,
+            totalItems: resolverData.myShifts.paginationInfo.totalItems || 0,
+          };
+        } else {
+          // Initialize with default values if no pagination info
+          this.paginationInfo = new PaginationInfo();
+          this.paginationInfo.totalItems = this.employeeShifts.length;
+          this.paginationInfo.currentPage = 1;
+          this.paginationInfo.pageSize = 10;
+          this.paginationInfo.totalPages = Math.ceil(this.employeeShifts.length / 10);
+        }
+      }
+
+      // Load current shift data
+      this.currentShift = resolverData.currentShift || null;
+    } else {
+      // Initialize with empty data if resolver failed
+      this.employeeShifts = [];
+      this.list = [];
+      this.currentShift = null;
+      this.paginationInfo = new PaginationInfo();
+      this.paginationInfo.totalItems = 0;
+    }
   }
 
-  onExportExcel(): void {
-    console.log('Exporting to Excel...');
+  // Current shift display methods
+  getCurrentShiftTimeRange(): string {
+    return `${this.currentShift?.timeFrom} - ${this.currentShift?.timeTo}`;
   }
 
-
-  // getTotalRecords(): number {
-  //   return this.paginationInfo.totalItems || 0;
-  // }
-
-  hasCurrentShift(): boolean {
-    return this.currentShift !== null;
+  getCurrentShiftName(): string {
+    return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (this.currentShift?.nameEn as string)
+      : (this.currentShift?.nameAr as string);
   }
 
-  hasShifts(): boolean {
-    return this.employeeShifts.length > 0;
+  // Utility methods
+  formatTime(time?: number): number {
+    return time || 0;
+  }
+
+  formatDate(date?: Date | string): string {
+    if (!date) return '';
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    return dateObj.toLocaleDateString('en-GB');
+  }
+
+  getTimeRange(shift: EmployeeShifts): string {
+    return `${shift.timeFrom} - ${shift.timeTo}`;
   }
 
   getBufferTime(minutes?: number): string {
-    return minutes?.toString() || '30';
+    return minutes?.toString() || '0';
   }
 
+  // Search functionality - override base class method
+  override search(isStoredProcedure: boolean = false): void {
+    this.first = 0;
+    this.paginationParams.pageNumber = 1;
+    this.paginationParams.pageSize = this.rows;
+
+    // Sync filter options
+    this.syncFilters();
+
+    const filterOptions = this.convertFilterToOptions(this.filterModel);
+
+    this.service.getMyShifts(this.paginationParams, filterOptions).subscribe({
+      next: (response) => {
+        this.handleSearchSuccess(response);
+      },
+      error: (error) => {
+        this.handleLoadListError();
+      },
+    });
+  }
+  override resetSearch(isStoredProcedure: boolean = false): void {
+    this.filterModel = new EmployeeShiftsFilter();
+    this.filterOptions = new EmployeeShiftsFilter();
+    this.paginationParams.pageNumber = 1;
+    this.paginationParams.pageSize = 10;
+    this.first = 0;
+    this.loadShifts();
+  }
+
+  // Custom reset method for template
+  onResetFilters(): void {
+    this.resetSearch();
+  }
+
+  // Custom search method for template
+  onSearch(): void {
+    this.syncFilters();
+    this.search();
+  }
+
+  // Page change - override base class method
+  override onPageChange(event: PaginatorState, isStoredProcedure: boolean = false): void {
+    this.first = event.first!;
+    this.rows = event.rows!;
+    this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
+    this.paginationParams.pageSize = this.rows;
+    this.loadShifts(this.paginationParams.pageNumber);
+  }
+
+  private loadShifts(page: number = 1): void {
+    this.paginationParams.pageNumber = page;
+    this.paginationParams.pageSize = this.rows;
+
+    // Update filter dates
+
+    const filterOptions = this.convertFilterToOptions(this.filterModel);
+
+    this.service.getMyShifts(this.paginationParams, filterOptions).subscribe({
+      next: (response) => {
+        this.handleLoadSuccess(response);
+      },
+      error: (error) => {
+        this.handleLoadListError();
+      },
+    });
+  }
+
+  // Handle successful responses
+  private handleSearchSuccess(response: any): void {
+    this.employeeShifts = response.list || [];
+    this.list = this.employeeShifts;
+    this.updatePaginationInfo(response);
+  }
+
+  private handleLoadSuccess(response: any): void {
+    this.employeeShifts = response.list || [];
+    this.list = this.employeeShifts;
+    this.updatePaginationInfo(response);
+  }
+
+  private updatePaginationInfo(response: any): void {
+    if (response.paginationInfo) {
+      this.paginationInfo = {
+        ...new PaginationInfo(),
+        ...response.paginationInfo,
+        totalItems: response.paginationInfo.totalItems || 0,
+      };
+    } else {
+      this.paginationInfo.totalItems = this.employeeShifts.length;
+    }
+  }
+
+  // Sync between template filters and model filters
+  private syncFilters(): void {
+    this.filterModel.nameAr = this.filterOptions.nameAr;
+    this.filterModel.nameEn = this.filterOptions.nameEn;
+    this.filterModel.startDate = this.filterOptions.startDate;
+    this.filterModel.endDate = this.filterOptions.endDate;
+  }
+
+  // Convert filter to options contract
   private convertFilterToOptions(filter: EmployeeShiftsFilter): OptionsContract {
     const options: OptionsContract = {};
 
@@ -222,5 +262,26 @@ export default class TempShiftsComponent extends BaseListComponent<
     if (filter.endDate) options['endDate'] = filter.endDate;
 
     return options;
+  }
+
+  // Additional utility methods
+  getTotalRecords(): number {
+    return this.paginationInfo?.totalItems || 0;
+  }
+
+  hasCurrentShift(): boolean {
+    return this.currentShift !== null;
+  }
+
+  hasShifts(): boolean {
+    return this.employeeShifts.length > 0;
+  }
+
+  isCurrentLanguageEnglish(): boolean {
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
+  }
+
+  onExportExcel(): void {
+    this.exportExcel('my-shifts.xlsx');
   }
 }

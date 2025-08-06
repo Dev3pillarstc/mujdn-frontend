@@ -3,37 +3,29 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">أيام العمل الخاصة بالوردية</h3>
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'MY_SHIFTS.SHIFT_DAYS' | translate }}
+    </h3>
     <div class="mt-6">
       <ul class="flex items-center gap-4 flex-wrap">
-        <li
-          class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium"
-        >
-          الأحد
-        </li>
-        <li
-          class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium"
-        >
-          الأحد
-        </li>
-        <li
-          class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium"
-        >
-          الأحد
-        </li>
-        <li
-          class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium"
-        >
-          الأحد
-        </li>
-        <li
-          class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium"
-        >
-          الأحد
-        </li>
+        @if (displayDays && displayDays.length > 0) {
+          @for (day of displayDays; track day.value) {
+            <li
+              class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium"
+            >
+              {{ getDayLabel(day.labelKey) ?? 'noting' }}
+            </li>
+          }
+        } @else {
+          <li
+            class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium"
+          >
+            {{ 'MY_SHIFTS.NO_DAYS_SELECTED' | translate }}
+          </li>
+        }
       </ul>
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn" (click)="close()">الغاء</button>
+        <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
       </div>
     </div>
   </div>

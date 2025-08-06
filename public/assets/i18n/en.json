@@ -494,5 +494,18 @@
     "HR_OFFICER": "HR Officer",
     "SECURITY_MEMBER": "Security Member",
     "SECURITY_LEADER": "Security Leader"
+  },
+  "MY_SHIFTS": {
+    "MY_SHIFTS": "My shifts",
+    "SHIFT_DAYS": "Shift working days",
+    "ASSIGNED_SHIFTS_LIST": "Assigned shifts list",
+    "NAME_ARABIC": "Shift name (Arabic)",
+    "NAME_ENGLISH": "Shift nme (English)",
+    "START_DATE": "Start date",
+    "END_DATE": "End date",
+    "TIME_FROM_TO": "Time (From - To)",
+    "ATTENDANCE_BUFFER": "Attendance grace period (min)",
+    "LEAVE_BUFFER": "Leave grace period (min)",
+    "NO_DAYS_SELECTED": "No working days selected"
   }
 }

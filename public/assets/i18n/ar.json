@@ -405,7 +405,8 @@
     "NATIONALITIES": "قائمة الجنسيات",
     "CITIES": "قائمة المدن",
     "REGIONS": "قائمة المناطق",
-    "PERMISSIONS_SETTINGS": "إعدادات الاستئذانات"
+    "PERMISSIONS_SETTINGS": "إعدادات الاستئذانات",
+    "NOTIFICATIONS": "الإشعارات"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "إعدادات الإشعارات",

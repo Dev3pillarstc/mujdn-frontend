@@ -109,6 +109,11 @@ export class SideBarLinksService {
           routeId: RouteIdsEnum.PERMISSION_REASONS,
         },
         {
+          labelKey: 'MENU.NOTIFICATIONS',
+          routerLink: ['/notifications'],
+          routeId: RouteIdsEnum.NOTIFICATIONS,
+        },
+        {
           labelKey: 'MENU.NOTIFICATION_CHANNELS',
           routerLink: ['/notification-channels'],
           routeId: RouteIdsEnum.NOTIFICATION_CHANNELS,

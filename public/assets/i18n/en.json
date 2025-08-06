@@ -410,7 +410,8 @@
     "NATIONALITIES": "Nationalities",
     "CITIES": "Cities",
     "REGIONS": "Regions",
-    "PERMISSIONS_SETTINGS": "Permissions Settings"
+    "PERMISSIONS_SETTINGS": "Permissions Settings",
+    "NOTIFICATIONS": "Notifications"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "Notification Settings",

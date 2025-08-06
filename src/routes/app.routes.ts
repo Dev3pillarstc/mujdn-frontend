@@ -213,6 +213,7 @@ export const routes: Routes = [
       },
       {
         path: 'notifications',
+        data: { routeId: RouteIdsEnum.NOTIFICATIONS },
         resolve: { list: notificationResolver },
         loadComponent: () =>
           import('@/views/features/lookups/notifiactions/notifiactions.component'),

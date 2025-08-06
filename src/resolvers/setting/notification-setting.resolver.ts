@@ -4,8 +4,9 @@ import { NotificationSettingService } from '@/services/features/setting/notifica
 import { NotificationSetting } from '@/models/features/setting/notification-setting';
 import { catchError, forkJoin, of, tap } from 'rxjs';
 import { WorkDaysSettingService } from '@/services/features/setting/work-days-setting.service';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 
-export const notificationSettingResolver: ResolveFn<any> = () => {
+export const notificationSettingResolver: ResolveFn<{ notificationSetting: NotificationSetting, workDays: WorkDaysSetting } | null> = () => {
   const notificationSettingService = inject(NotificationSettingService);
   const workDaysSettingService = inject(WorkDaysSettingService);
 
@@ -14,7 +15,7 @@ export const notificationSettingResolver: ResolveFn<any> = () => {
     workDays: workDaysSettingService.getWorkDays(),
   }).pipe(
     catchError((error) => {
-      return of({ notificationSetting: null, workDays: null });
+      return of(null);
     })
   );
 };

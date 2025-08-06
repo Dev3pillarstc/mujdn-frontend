@@ -28,6 +28,8 @@ export default class ForgetPasswordComponent implements OnDestroy {
   errorMessage = '';
   resendLinkErrorMessage: string | undefined = undefined;
   resendLinkResponse: PasswordResetResult | null = null;
+  isSendLinkErrorMessageVisible = false;
+  isResendLinkErrorMessageVisible = false;
 
   forgetPasswordForm: FormGroup;
 
@@ -40,8 +42,6 @@ export default class ForgetPasswordComponent implements OnDestroy {
 
   ngOnInit() {
     this.translateService.onLangChange.subscribe(() => {
-      this.errorMessage = '';
-      this.resendLinkErrorMessage = '';
       this.showResendLinkErrorMessage();
     });
   }
@@ -68,6 +68,7 @@ export default class ForgetPasswordComponent implements OnDestroy {
           error: (error) => {
             // Handle error - you might want to show an error message
             // console.error('Password reset request failed:', error);
+            this.isSendLinkErrorMessageVisible = true;
             this.errorMessage =
               this.translateService.instant('RESET_PASSWORD.' + error.error.error?.messageKey) ||
               'Password reset request failed.';
@@ -91,16 +92,19 @@ export default class ForgetPasswordComponent implements OnDestroy {
         .subscribe({
           next: (response) => {
             // You can show a success message here if needed
-            console.log(response);
             if (!response.success) {
+              this.isResendLinkErrorMessageVisible = true;
               this.resendLinkResponse = response;
               this.showResendLinkErrorMessage();
+            } else {
+              this.isResendLinkErrorMessageVisible = false;
             }
             // For example, you could add a toast notification
           },
           error: (error) => {
             // Handle error - you might want to show an error message
             console.error('Resend password reset request failed:', error);
+            this.isResendLinkErrorMessageVisible = true;
             this.errorMessage =
               this.translateService.instant('RESET_PASSWORD.' + error.error.error?.messageKey) ||
               'Resend password reset request failed.';
@@ -126,6 +130,16 @@ export default class ForgetPasswordComponent implements OnDestroy {
 
   onCancel() {
     this.router.navigate(['/auth/login']);
+  }
+
+  closeSendLinkErrorMessage() {
+    this.isSendLinkErrorMessageVisible = false;
+    this.errorMessage = '';
+  }
+
+  closeResendLinkErrorMessage() {
+    this.isResendLinkErrorMessageVisible = false;
+    this.resendLinkErrorMessage = '';
   }
 
   onBackToLogin() {

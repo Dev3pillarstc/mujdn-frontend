@@ -498,6 +498,11 @@
     "PASSWORD_RESET_FAILED": "Password reset failed",
     "PASSWORD_RESET_USER_NOT_FOUND": "User not found",
     "PASSWORD_RESET_USER_NOT_ACT": "User account is not active",
-    "RESET_LINK_SENT": "If the provided information matches our records, a password reset link will be sent to your email"
+    "RESET_LINK_SENT": "If the provided information matches our records, a password reset link will be sent to your email",
+    "RESEND_LINK_ERROR_MESSAGE_TITLE": "Failed to Resend reset link",
+    "SEND_LINK_ERROR_MESSAGE_TITLE": "Failed to send reset link",
+    "SEND_LINK_ERROR_MESSAGE": "Please check the correctness of the entered data and try again.",
+    "INVALID_TOKEN": "Invalid or expired reset link",
+    "INVALID_TOKEN_MESSAGE": "Sorry, this link is no longer valid. It may have expired or been used previously."
   }
 }

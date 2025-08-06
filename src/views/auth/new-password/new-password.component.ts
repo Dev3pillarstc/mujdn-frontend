@@ -139,7 +139,7 @@ export default class NewPasswordComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCancel() {
+  backToLogin() {
     this.router.navigate(['/auth/login']);
   }
 

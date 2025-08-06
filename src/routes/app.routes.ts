@@ -204,7 +204,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         data: {
           roles: [ROLES_ENUM.EMPLOYEE],
-          routeId: RouteIdsEnum.WORK_SHIFT_TEMP
+          routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
         },
         resolve: { list: myShiftsResolver },
         loadComponent: () =>

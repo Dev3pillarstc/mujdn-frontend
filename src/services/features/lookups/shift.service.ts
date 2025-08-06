@@ -38,13 +38,13 @@ import { map, Observable, of, switchMap } from 'rxjs';
     shape: { 'list.*': () => BaseLookupModel },
   },
   $currentShift: {
-    model: () => SingleResponseData<EmployeeShifts>
+    model: () => SingleResponseData<EmployeeShifts>,
   },
   $myShiftsPaginated: {
     model: () => PaginatedList<EmployeeShifts>,
     unwrap: 'data',
     shape: { 'list.*': () => EmployeeShifts },
-  }
+  },
 })
 export class ShiftService extends LookupBaseService<Shift, number> {
   override serviceName: string = 'ShiftService';
@@ -69,9 +69,10 @@ export class ShiftService extends LookupBaseService<Shift, number> {
   }
   @CastResponse(undefined, { fallback: '$currentShift' })
   getMyCurrentShift() {
-    return this.http.get<SingleResponseData<EmployeeShifts>>(this.getUrlSegment() + '/' + 'GetMyCurrentShift', {
-      withCredentials: true,
-    })
+    return this.http
+      .get<SingleResponseData<EmployeeShifts>>(this.getUrlSegment() + '/' + 'GetMyCurrentShift', {
+        withCredentials: true,
+      })
       .pipe(
         switchMap((response: SingleResponseData<EmployeeShifts>) => {
           return of(response.data);
@@ -80,8 +81,7 @@ export class ShiftService extends LookupBaseService<Shift, number> {
   }
 
   @CastResponse(undefined, { fallback: '$myShiftsPaginated' })
-  getMyShifts(paginationParams?: PaginationParams,
-    filterOptions?: OptionsContract | undefined) {
+  getMyShifts(paginationParams?: PaginationParams, filterOptions?: OptionsContract | undefined) {
     const httpParams = new HttpParams({
       fromObject: paginationParams as unknown as never,
     });

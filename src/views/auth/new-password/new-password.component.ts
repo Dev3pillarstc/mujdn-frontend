@@ -17,6 +17,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ResetPasswordService } from '@/services/features/reset-password.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AlertService } from '@/services/shared/alert.service';
 
 @Component({
   selector: 'app-new-password',
@@ -37,6 +38,7 @@ export default class NewPasswordComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private alertService = inject(AlertService);
 
   newPasswordForm: FormGroup;
   isVerifying = true;
@@ -121,6 +123,8 @@ export default class NewPasswordComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
+            const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
+            this.alertService.showSuccessMessage(successObject);
             // Navigate to success page or login
             this.router.navigate(['/auth/login'], {
               queryParams: { message: 'password_reset_success' },

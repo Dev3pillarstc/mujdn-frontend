@@ -24,12 +24,15 @@ export default class ForgetPasswordComponent implements OnDestroy {
   private translateService = inject(TranslateService);
 
   isSentLink = false;
+  isResentLink = false;
   lastSubmittedData: PasswordResetRequestModel | null = null;
-  errorMessage = '';
   resendLinkErrorMessage: string | undefined = undefined;
   resendLinkResponse: PasswordResetResult | null = null;
-  isSendLinkErrorMessageVisible = false;
-  isResendLinkErrorMessageVisible = false;
+
+  sendLinkErrorMessage: string | undefined = undefined;
+  sendLinkResponse: PasswordResetResult | null = null;
+  isSentLinkErrorMessageVisible = false;
+  isResentLinkErrorMessageVisible = false;
 
   forgetPasswordForm: FormGroup;
 
@@ -43,6 +46,7 @@ export default class ForgetPasswordComponent implements OnDestroy {
   ngOnInit() {
     this.translateService.onLangChange.subscribe(() => {
       this.showResendLinkErrorMessage();
+      this.showSendLinkErrorMessage();
     });
   }
 
@@ -61,16 +65,22 @@ export default class ForgetPasswordComponent implements OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
-            this.isSentLink = true;
-            // this.router.navigate(['/auth/sent-link']);
-            console.log(response);
+            if (!response.success) {
+              this.isSentLinkErrorMessageVisible = true;
+              this.sendLinkResponse = response;
+              console.log(this.sendLinkResponse);
+              this.showSendLinkErrorMessage();
+            } else {
+              this.isSentLink = true;
+              this.isSentLinkErrorMessageVisible = false;
+            }
           },
           error: (error) => {
             // Handle error - you might want to show an error message
             // console.error('Password reset request failed:', error);
-            this.isSendLinkErrorMessageVisible = true;
-            this.errorMessage =
-              this.translateService.instant('RESET_PASSWORD.' + error.error.error?.messageKey) ||
+            this.isSentLinkErrorMessageVisible = true;
+            this.sendLinkErrorMessage =
+              this.translateService.instant('COMMON.' + error.error.error?.messageKey) ||
               'Password reset request failed.';
             // Reset the stored data if request failed
             this.lastSubmittedData = null;
@@ -93,20 +103,21 @@ export default class ForgetPasswordComponent implements OnDestroy {
           next: (response) => {
             // You can show a success message here if needed
             if (!response.success) {
-              this.isResendLinkErrorMessageVisible = true;
+              this.isResentLinkErrorMessageVisible = true;
               this.resendLinkResponse = response;
               this.showResendLinkErrorMessage();
             } else {
-              this.isResendLinkErrorMessageVisible = false;
+              this.isResentLink = true;
+              this.isResentLinkErrorMessageVisible = false;
             }
             // For example, you could add a toast notification
           },
           error: (error) => {
             // Handle error - you might want to show an error message
             console.error('Resend password reset request failed:', error);
-            this.isResendLinkErrorMessageVisible = true;
-            this.errorMessage =
-              this.translateService.instant('RESET_PASSWORD.' + error.error.error?.messageKey) ||
+            this.isResentLinkErrorMessageVisible = true;
+            this.resendLinkErrorMessage =
+              this.translateService.instant('COMMON.' + error.error.error?.messageKey) ||
               'Resend password reset request failed.';
           },
         });
@@ -121,6 +132,14 @@ export default class ForgetPasswordComponent implements OnDestroy {
         : this.resendLinkResponse?.messageEn;
   }
 
+  showSendLinkErrorMessage() {
+    const currentLanguage = this.translateService.currentLang;
+    this.sendLinkErrorMessage =
+      currentLanguage === 'ar'
+        ? this.sendLinkResponse?.messageAr
+        : this.sendLinkResponse?.messageEn;
+  }
+
   onBackToForm() {
     this.isSentLink = false;
     this.lastSubmittedData = null;
@@ -133,12 +152,12 @@ export default class ForgetPasswordComponent implements OnDestroy {
   }
 
   closeSendLinkErrorMessage() {
-    this.isSendLinkErrorMessageVisible = false;
-    this.errorMessage = '';
+    this.isSentLinkErrorMessageVisible = false;
+    this.sendLinkErrorMessage = '';
   }
 
   closeResendLinkErrorMessage() {
-    this.isResendLinkErrorMessageVisible = false;
+    this.isResentLinkErrorMessageVisible = false;
     this.resendLinkErrorMessage = '';
   }
 

@@ -109,7 +109,6 @@ export default class ForgetPasswordComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => this.handleSendLinkResponse(response),
-        // error: (error) => this.handleSendLinkError(error),
       });
   }
 
@@ -124,13 +123,6 @@ export default class ForgetPasswordComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleSendLinkError(error: any): void {
-    this.isSentLinkErrorMessageVisible = true;
-    this.sendLinkErrorMessage =
-      this.getTranslatedErrorMessage(error) || 'Password reset request failed.';
-    this.lastSubmittedData = null;
-  }
-
   // Resend link functionality
   onResendLink(): void {
     if (!this.lastSubmittedData) {
@@ -142,7 +134,6 @@ export default class ForgetPasswordComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => this.handleResendLinkResponse(response),
-        // error: (error) => this.handleResendLinkError(error),
       });
   }
 
@@ -155,18 +146,6 @@ export default class ForgetPasswordComponent implements OnInit, OnDestroy {
       this.isResentLink = true;
       this.isResentLinkErrorMessageVisible = false;
     }
-  }
-
-  private handleResendLinkError(error: any): void {
-    console.error('Resend password reset request failed:', error);
-    this.isResentLinkErrorMessageVisible = true;
-    this.resendLinkErrorMessage =
-      this.getTranslatedErrorMessage(error) || 'Resend password reset request failed.';
-  }
-
-  // Error message handling
-  private getTranslatedErrorMessage(error: any): string {
-    return this.translateService.instant('COMMON.' + error.error.error?.messageKey);
   }
 
   showResendLinkErrorMessage(): void {

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Password } from 'primeng/password';
 import {
   AbstractControl,
@@ -19,6 +19,7 @@ import { ValidationMessagesComponent } from '@/views/shared/validation-messages/
 import { NewPasswordModel } from '@/models/features/password-reset/new-password-model';
 import { ResetPasswordService } from '@/services/features/reset-password.service';
 import { AlertService } from '@/services/shared/alert.service';
+import { PasswordResetResult } from '@/models/features/password-reset/password-reset-result';
 
 @Component({
   selector: 'app-new-password',
@@ -40,6 +41,7 @@ export default class NewPasswordComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly alertService = inject(AlertService);
+  private readonly translateService = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
 
   // Form
@@ -54,12 +56,23 @@ export default class NewPasswordComponent implements OnInit, OnDestroy {
   userId = '';
   token = '';
 
+  // Error handling for token verification
+  tokenVerificationErrorMessage: string | undefined = undefined;
+  tokenVerificationResponse: PasswordResetResult | null = null;
+  isTokenVerificationErrorMessageVisible = false;
+
+  // Error handling for password update
+  passwordUpdateErrorMessage: string | undefined = undefined;
+  passwordUpdateResponse: PasswordResetResult | null = null;
+  isPasswordUpdateErrorMessageVisible = false;
+
   constructor() {
     this.initializeForm();
   }
 
   ngOnInit(): void {
     this.setupRouteParametersSubscription();
+    this.setupLanguageChangeSubscription();
   }
 
   ngOnDestroy(): void {
@@ -86,6 +99,18 @@ export default class NewPasswordComponent implements OnInit, OnDestroy {
       return { passwordMismatch: true };
     }
     return null;
+  }
+
+  // Language change handling
+  private setupLanguageChangeSubscription(): void {
+    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.updateErrorMessagesForLanguageChange();
+    });
+  }
+
+  private updateErrorMessagesForLanguageChange(): void {
+    this.showTokenVerificationErrorMessage();
+    this.showPasswordUpdateErrorMessage();
   }
 
   // Route parameters handling
@@ -128,22 +153,23 @@ export default class NewPasswordComponent implements OnInit, OnDestroy {
       .verifyResetPassword(this.userId, encodeURIComponent(this.token))
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => this.handleTokenVerificationSuccess(),
-        // error: (error) => this.handleTokenVerificationError(error),
+        next: (response) => this.handleTokenVerificationResponse(response),
       });
   }
 
-  private handleTokenVerificationSuccess(): void {
+  private handleTokenVerificationResponse(response: PasswordResetResult): void {
     this.isVerifying = false;
-    this.isValidToken = true;
-    this.errorMessage = '';
-  }
 
-  private handleTokenVerificationError(error: any): void {
-    console.error('Token verification failed:', error);
-    this.isVerifying = false;
-    this.isValidToken = false;
-    this.errorMessage = error.error?.message || 'Invalid or expired reset link.';
+    if (!response.success) {
+      this.isValidToken = false;
+      this.isTokenVerificationErrorMessageVisible = true;
+      this.tokenVerificationResponse = response;
+      this.showTokenVerificationErrorMessage();
+    } else {
+      this.isValidToken = true;
+      this.isTokenVerificationErrorMessageVisible = false;
+      this.errorMessage = '';
+    }
   }
 
   // Form submission
@@ -177,9 +203,18 @@ export default class NewPasswordComponent implements OnInit, OnDestroy {
       .updatePassword(formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => this.handlePasswordUpdateSuccess(),
-        // error: (error) => this.handlePasswordUpdateError(error),
+        next: (response) => this.handlePasswordUpdateResponse(response),
       });
+  }
+
+  private handlePasswordUpdateResponse(response: PasswordResetResult): void {
+    if (!response.success) {
+      this.isPasswordUpdateErrorMessageVisible = true;
+      this.passwordUpdateResponse = response;
+      this.showPasswordUpdateErrorMessage();
+    } else {
+      this.handlePasswordUpdateSuccess();
+    }
   }
 
   private handlePasswordUpdateSuccess(): void {
@@ -191,9 +226,39 @@ export default class NewPasswordComponent implements OnInit, OnDestroy {
     });
   }
 
-  private handlePasswordUpdateError(error: any): void {
-    console.error('Password reset failed:', error);
-    this.errorMessage = error.error?.message || 'Password reset failed. Please try again.';
+  showTokenVerificationErrorMessage(): void {
+    if (!this.tokenVerificationResponse) {
+      return;
+    }
+
+    const currentLanguage = this.translateService.currentLang;
+    this.tokenVerificationErrorMessage =
+      currentLanguage === 'ar'
+        ? this.tokenVerificationResponse.messageAr
+        : this.tokenVerificationResponse.messageEn;
+  }
+
+  showPasswordUpdateErrorMessage(): void {
+    if (!this.passwordUpdateResponse) {
+      return;
+    }
+
+    const currentLanguage = this.translateService.currentLang;
+    this.passwordUpdateErrorMessage =
+      currentLanguage === 'ar'
+        ? this.passwordUpdateResponse.messageAr
+        : this.passwordUpdateResponse.messageEn;
+  }
+
+  // Error message visibility control
+  closeTokenVerificationErrorMessage(): void {
+    this.isTokenVerificationErrorMessageVisible = false;
+    this.tokenVerificationErrorMessage = '';
+  }
+
+  closePasswordUpdateErrorMessage(): void {
+    this.isPasswordUpdateErrorMessageVisible = false;
+    this.passwordUpdateErrorMessage = '';
   }
 
   // Navigation

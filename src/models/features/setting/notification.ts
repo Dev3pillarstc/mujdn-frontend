@@ -17,7 +17,7 @@ export class Notification extends BaseCrudModel<Notification, NotificationServic
   declare receiverProfileId?: number;
   declare initiatorProfileId?: number;
   declare notificationTypeId: number;
-  declare creationDate: Date;
+  declare creationDate: Date | string;
   declare contentAr: string;
   declare contentEn: string;
   declare notificationType: NotificationType;

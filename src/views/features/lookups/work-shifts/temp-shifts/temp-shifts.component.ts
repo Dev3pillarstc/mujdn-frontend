@@ -100,10 +100,6 @@ export default class TempShiftsComponent extends BaseListComponent<
     // Load current shift data
     this.currentShift = resolverData.currentShift || null;
   }
-  // Current shift display methods
-  getCurrentShiftTimeRange(): string {
-    return `${this.currentShift?.timeFrom} - ${this.currentShift?.timeTo}`;
-  }
 
   getCurrentShiftName(): string {
     return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH

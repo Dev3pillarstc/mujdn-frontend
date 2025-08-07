@@ -111,26 +111,6 @@ export default class TempShiftsComponent extends BaseListComponent<
       : (this.currentShift?.nameAr as string);
   }
 
-  // Utility methods
-  formatTime(time?: number): number {
-    return time || 0;
-  }
-
-  // formatDate(date?: Date | string): string {
-  //   if (!date) return '';
-  //   const dateObj = typeof date === 'string' ? toDateOnly(date) : date;
-  //   return dateObj.toString();
-  // }
-
-  getTimeRange(shift: EmployeeShifts): string {
-    return `${shift.timeFrom} - ${shift.timeTo}`;
-  }
-
-  getBufferTime(minutes?: number): string {
-    return minutes?.toString() || '0';
-  }
-
-  // Search functionality - override base class method
   override search(isStoredProcedure: boolean = false): void {
     this.first = 0;
     this.paginationParams.pageNumber = 1;
@@ -245,14 +225,6 @@ export default class TempShiftsComponent extends BaseListComponent<
   // Additional utility methods
   getTotalRecords(): number {
     return this.paginationInfo?.totalItems || 0;
-  }
-
-  hasCurrentShift(): boolean {
-    return this.currentShift !== null;
-  }
-
-  hasShifts(): boolean {
-    return this.employeeShifts.length > 0;
   }
 
   isCurrentLanguageEnglish(): boolean {

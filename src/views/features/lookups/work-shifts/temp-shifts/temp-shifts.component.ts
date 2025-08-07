@@ -23,6 +23,9 @@ import { MyShiftsService } from '@/services/features/lookups/my-shifts.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { CustomValidators } from '@/validators/custom-validators';
+import * as XLSX from 'xlsx';
+import { toDateOnly } from '@/utils/general-helper';
 @Component({
   selector: 'app-temp-shifts',
   imports: [
@@ -70,8 +73,8 @@ export default class TempShiftsComponent extends BaseListComponent<
     return {
       [this.translateService.instant('MY_SHIFTS.NAME_ARABIC')]: model.nameAr || '',
       [this.translateService.instant('MY_SHIFTS.NAME_ENGLISH')]: model.nameEn || '',
-      [this.translateService.instant('MY_SHIFTS.START_DATE')]: this.formatDate(model.startDate),
-      [this.translateService.instant('MY_SHIFTS.END_DATE')]: this.formatDate(model.endDate),
+      [this.translateService.instant('MY_SHIFTS.START_DATE')]: model.startDate,
+      [this.translateService.instant('MY_SHIFTS.END_DATE')]: model.endDate,
       [this.translateService.instant('MY_SHIFTS.TIME_FROM_TO')]:
         `${model.timeFrom} - ${model.timeTo}`,
       [this.translateService.instant('MY_SHIFTS.ATTENDANCE_BUFFER')]: model.attendanceBuffer ?? '',
@@ -87,41 +90,16 @@ export default class TempShiftsComponent extends BaseListComponent<
   private loadInitialData(): void {
     const resolverData = this.activatedRoute.snapshot.data['list'];
 
-    if (resolverData) {
-      // Load shifts data
-      if (resolverData.myShifts) {
-        this.employeeShifts = resolverData.myShifts.list || [];
-        this.list = this.employeeShifts; // Update base class list
-
-        // Safely handle pagination info
-        if (resolverData.myShifts.paginationInfo) {
-          this.paginationInfo = {
-            ...new PaginationInfo(),
-            ...resolverData.myShifts.paginationInfo,
-            totalItems: resolverData.myShifts.paginationInfo.totalItems || 0,
-          };
-        } else {
-          // Initialize with default values if no pagination info
-          this.paginationInfo = new PaginationInfo();
-          this.paginationInfo.totalItems = this.employeeShifts.length;
-          this.paginationInfo.currentPage = 1;
-          this.paginationInfo.pageSize = 10;
-          this.paginationInfo.totalPages = Math.ceil(this.employeeShifts.length / 10);
-        }
-      }
-
-      // Load current shift data
-      this.currentShift = resolverData.currentShift || null;
-    } else {
-      // Initialize with empty data if resolver failed
-      this.employeeShifts = [];
-      this.list = [];
-      this.currentShift = null;
-      this.paginationInfo = new PaginationInfo();
-      this.paginationInfo.totalItems = 0;
-    }
+    this.employeeShifts = resolverData.myShifts.list || [];
+    this.list = this.employeeShifts; // Update base class list
+    this.paginationInfo = {
+      ...new PaginationInfo(),
+      ...resolverData.myShifts.paginationInfo,
+      totalItems: resolverData.myShifts.paginationInfo.totalItems || 0,
+    };
+    // Load current shift data
+    this.currentShift = resolverData.currentShift || null;
   }
-
   // Current shift display methods
   getCurrentShiftTimeRange(): string {
     return `${this.currentShift?.timeFrom} - ${this.currentShift?.timeTo}`;
@@ -138,11 +116,11 @@ export default class TempShiftsComponent extends BaseListComponent<
     return time || 0;
   }
 
-  formatDate(date?: Date | string): string {
-    if (!date) return '';
-    const dateObj = typeof date === 'string' ? new Date(date) : date;
-    return dateObj.toLocaleDateString('en-GB');
-  }
+  // formatDate(date?: Date | string): string {
+  //   if (!date) return '';
+  //   const dateObj = typeof date === 'string' ? toDateOnly(date) : date;
+  //   return dateObj.toString();
+  // }
 
   getTimeRange(shift: EmployeeShifts): string {
     return `${shift.timeFrom} - ${shift.timeTo}`;
@@ -283,5 +261,33 @@ export default class TempShiftsComponent extends BaseListComponent<
 
   onExportExcel(): void {
     this.exportExcel('my-shifts.xlsx');
+  }
+
+  override exportExcel(fileName: string = 'my-shifts.xlsx', isStoredProcedure?: boolean): void {
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
+    };
+
+    const fetchAll = this.service.getMyShifts(allDataParams, { ...this.filterModel! });
+
+    fetchAll.subscribe({
+      next: (response) => {
+        const fullList = response.list || [];
+        if (fullList.length > 0) {
+          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+      error: (_) => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
   }
 }

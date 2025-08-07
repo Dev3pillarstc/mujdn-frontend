@@ -80,8 +80,8 @@
           </h5>
         </div>
         <div class="pt-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5 gap-8">
-            <div class="relative xl:col-span-3">
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+            <div class="relative">
               <label class="label" for="shiftName">{{ 'MY_SHIFTS.NAME_ARABIC' | translate }}</label>
               <input
                 [(ngModel)]="filterOptions.nameAr"
@@ -96,7 +96,7 @@
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
-            <div class="relative xl:col-span-3">
+            <div class="relative">
               <label class="label" for="shiftName">{{
                 'MY_SHIFTS.NAME_ENGLISH' | translate
               }}</label>
@@ -199,8 +199,8 @@
               <tr>
                 <td>{{ shift.nameAr }}</td>
                 <td>{{ shift.nameEn }}</td>
-                <td>{{ formatDate(shift.startDate) }}</td>
-                <td>{{ formatDate(shift.endDate) }}</td>
+                <td>{{ shift.startDate }}</td>
+                <td>{{ shift.endDate }}</td>
                 <td>{{ getTimeRange(shift) }}</td>
                 <td>{{ getBufferTime(shift.attendanceBuffer) }}</td>
                 <td>{{ getBufferTime(shift.leaveBuffer) }}</td>

@@ -98,7 +98,7 @@ export class SideBarLinksService {
           routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
         },
         {
-          labelKey: 'My shifts',
+          labelKey: 'MY_SHIFTS.MY_SHIFTS',
           routerLink: ['/temp-shifts'],
           routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
         },

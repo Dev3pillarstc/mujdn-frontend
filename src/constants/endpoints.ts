@@ -3,6 +3,7 @@ export const EndPoints = {
   EXAMPLES: '/examples',
   PAGINATED_EXAMPLES: '/paginatedExamples',
   AUTH: '/auth',
+  RESET_PASSWORD: '/PasswordReset',
   CITIES: 'cities',
   NATIONALITIES: '/nationalities',
   PERMISSION_REASONS: '/permissionreasons',

@@ -1,6 +1,6 @@
 import { LookupBaseService } from '@/abstracts/lookup-base.service';
 import { OptionsContract } from '@/contracts/options-contract';
-import EmployeeShifts from '@/models/features/lookups/work-shifts/employee-shifts';
+import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
@@ -16,15 +16,15 @@ import { switchMap, of, map } from 'rxjs';
 })
 @CastResponseContainer({
   $currentShift: {
-    model: () => SingleResponseData<EmployeeShifts>,
+    model: () => SingleResponseData<EmployeeShift>,
   },
   $myShiftsPaginated: {
-    model: () => PaginatedList<EmployeeShifts>,
+    model: () => PaginatedList<EmployeeShift>,
     unwrap: 'data',
-    shape: { 'list.*': () => EmployeeShifts },
+    shape: { 'list.*': () => EmployeeShift },
   },
 })
-export class MyShiftsService extends LookupBaseService<EmployeeShifts, number> {
+export class MyShiftsService extends LookupBaseService<EmployeeShift, number> {
   override serviceName: string = 'MyShiftsService';
   override getUrlSegment(): string {
     return this.urlService.URLS.SHIFTS;
@@ -32,11 +32,11 @@ export class MyShiftsService extends LookupBaseService<EmployeeShifts, number> {
   @CastResponse(undefined, { fallback: '$currentShift' })
   getMyCurrentShift() {
     return this.http
-      .get<SingleResponseData<EmployeeShifts>>(this.getUrlSegment() + '/' + 'GetMyCurrentShift', {
+      .get<SingleResponseData<EmployeeShift>>(this.getUrlSegment() + '/' + 'GetMyCurrentShift', {
         withCredentials: true,
       })
       .pipe(
-        switchMap((response: SingleResponseData<EmployeeShifts>) => {
+        switchMap((response: SingleResponseData<EmployeeShift>) => {
           return of(response.data);
         })
       );
@@ -51,7 +51,7 @@ export class MyShiftsService extends LookupBaseService<EmployeeShifts, number> {
 
     // ADD RETURN HERE!
     return this.http
-      .post<PaginatedListResponseData<EmployeeShifts>>(
+      .post<PaginatedListResponseData<EmployeeShift>>(
         this.getUrlSegment() + '/GetMyShifts',
         filterOptions || {},
         {
@@ -62,7 +62,7 @@ export class MyShiftsService extends LookupBaseService<EmployeeShifts, number> {
       .pipe(
         map((response) => {
           return {
-            list: response.data.list as EmployeeShifts[],
+            list: response.data.list as EmployeeShift[],
             paginationInfo: response.data.paginationInfo,
           };
         })

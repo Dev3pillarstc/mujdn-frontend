@@ -5,7 +5,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import EmployeeShifts from '@/models/features/lookups/work-shifts/employee-shifts';
+import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
 import { weekDays } from '@/utils/general-helper';
 
 @Component({
@@ -13,8 +13,8 @@ import { weekDays } from '@/utils/general-helper';
   imports: [TranslatePipe],
   templateUrl: './work-days-popup.component.html',
 })
-export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShifts> implements OnInit {
-  model!: EmployeeShifts;
+export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> implements OnInit {
+  model!: EmployeeShift;
   form!: FormGroup;
   translateService = inject(TranslateService);
 
@@ -22,7 +22,7 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShifts> i
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: { model: EmployeeShifts }
+    @Inject(MAT_DIALOG_DATA) public data: { model: EmployeeShift }
   ) {
     super();
     this.model = data.model;
@@ -34,17 +34,17 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShifts> i
 
   buildForm(): void {}
 
-  beforeSave(model: EmployeeShifts, form: FormGroup): boolean {
+  beforeSave(model: EmployeeShift, form: FormGroup): boolean {
     return true;
   }
 
-  prepareModel(model: EmployeeShifts, form: FormGroup): EmployeeShifts {
+  prepareModel(model: EmployeeShift, form: FormGroup): EmployeeShift {
     return model;
   }
 
   saveFail(error: Error): void {}
 
-  afterSave(model: EmployeeShifts, dialogRef: any): void {}
+  afterSave(model: EmployeeShift, dialogRef: any): void {}
 
   private prepareDisplayDays(): void {
     const workingDayValues = this.model.employeeWorkingDays

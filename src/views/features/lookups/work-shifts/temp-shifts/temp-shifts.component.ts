@@ -12,7 +12,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { WorkDaysPopupComponent } from '../work-days-popup/work-days-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
-import EmployeeShifts from '@/models/features/lookups/work-shifts/employee-shifts';
+import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
 import { ShiftService } from '@/services/features/lookups/shift.service';
 import { CityFilter } from '@/models/features/lookups/city/city-filter';
 import { EmployeeShiftsFilter } from '@/models/features/lookups/work-shifts/employee-shifts-filter';
@@ -44,7 +44,7 @@ import { toDateOnly } from '@/utils/general-helper';
   styleUrl: './temp-shifts.component.scss',
 })
 export default class TempShiftsComponent extends BaseListComponent<
-  EmployeeShifts,
+  EmployeeShift,
   WorkDaysPopupComponent,
   MyShiftsService,
   EmployeeShiftsFilter
@@ -57,8 +57,8 @@ export default class TempShiftsComponent extends BaseListComponent<
   };
 
   filterOptions: EmployeeShiftsFilter = new EmployeeShiftsFilter();
-  employeeShifts: EmployeeShifts[] = [];
-  currentShift: EmployeeShifts | null = null;
+  employeeShifts: EmployeeShift[] = [];
+  currentShift: EmployeeShift | null = null;
   service = inject(MyShiftsService);
   languageService = inject(LanguageService);
 
@@ -69,7 +69,7 @@ export default class TempShiftsComponent extends BaseListComponent<
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'MY_SHIFTS.MY_SHIFTS' }];
   }
-  protected override mapModelToExcelRow(model: EmployeeShifts): { [key: string]: any } {
+  protected override mapModelToExcelRow(model: EmployeeShift): { [key: string]: any } {
     return {
       [this.translateService.instant('MY_SHIFTS.NAME_ARABIC')]: model.nameAr || '',
       [this.translateService.instant('MY_SHIFTS.NAME_ENGLISH')]: model.nameEn || '',
@@ -82,7 +82,7 @@ export default class TempShiftsComponent extends BaseListComponent<
     };
   }
 
-  openDialog(shift: EmployeeShifts): void {
+  openDialog(shift: EmployeeShift): void {
     const viewMode = ViewModeEnum.EDIT;
     this.openBaseDialog(WorkDaysPopupComponent as any, shift, viewMode);
   }

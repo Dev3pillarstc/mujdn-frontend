@@ -5,7 +5,7 @@ import { InterceptModel } from 'cast-response';
 
 const { send, receive } = new MyShiftsInterceptor();
 @InterceptModel({ send, receive })
-export default class EmployeeShifts extends BaseCrudModel<EmployeeShifts, MyShiftsService> {
+export default class EmployeeShift extends BaseCrudModel<EmployeeShift, MyShiftsService> {
   override $$__service_name__$$: string = 'MyShiftsService';
   declare id: number;
   declare nameAr?: string;

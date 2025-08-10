@@ -1,4 +1,4 @@
-import EmployeeShifts from '@/models/features/lookups/work-shifts/employee-shifts';
+import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { MyShiftsService } from '@/services/features/lookups/my-shifts.service';
@@ -9,8 +9,8 @@ import { forkJoin, catchError, of } from 'rxjs';
 
 export const myShiftsResolver: ResolveFn<
   {
-    myShifts: PaginatedList<EmployeeShifts> | null;
-    currentShift: EmployeeShifts | null;
+    myShifts: PaginatedList<EmployeeShift> | null;
+    currentShift: EmployeeShift | null;
   } | null
 > = () => {
   const shiftService = inject(MyShiftsService);

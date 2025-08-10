@@ -17,8 +17,24 @@ export class Notification extends BaseCrudModel<Notification, NotificationServic
   declare receiverProfileId?: number;
   declare initiatorProfileId?: number;
   declare notificationTypeId: number;
-  declare creationDate: Date;
+  declare creationDate: Date | string;
   declare contentAr: string;
   declare contentEn: string;
   declare notificationType: NotificationType;
+  private languageService!: LanguageService;
+
+  constructor() {
+    super();
+    this.languageService = FactoryService.getService('LanguageService');
+  }
+  getContent(): string {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? this.contentEn
+      : this.contentAr;
+  }
+  getnotificationTypeTitle(): string {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? this.notificationType.englishTitle
+      : this.notificationType.arabicTitle;
+  }
 }

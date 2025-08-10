@@ -403,7 +403,8 @@
     "NATIONALITIES": "Nationalities",
     "CITIES": "Cities",
     "REGIONS": "Regions",
-    "PERMISSIONS_SETTINGS": "Permissions Settings"
+    "PERMISSIONS_SETTINGS": "Permissions Settings",
+    "NOTIFICATIONS": "Notifications"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "Notification Settings",
@@ -426,11 +427,10 @@
   },
   "NOTIFICATIONS_PAGE": {
     "NOTIFICATIONS": "Notifications",
-    "NOTIFICATION_TITLE_ARABIC": "Notification Title in Arabic",
-    "NOTIFICATION_TITLE_ENGLISH": "Notification Title in English",
-    "NOTIFICATION_CONTENT_ARABIC": "Notification Content in Arabic",
-    "NOTIFICATION_CONTENT_ENGLISH": "Notification Content in English",
-    "NOTIFICATION_DATE": "Notification Date"
+    "NOTIFICATION_TITLE": "Notification Title",
+    "NOTIFICATION_CONTENT": "Notification Content",
+    "NOTIFICATION_DATE": "Notification Date",
+    "NOTIFICATION_TIME": "Notification Time"
   },
   "USER_WORK_SHIFT_ASSIGNMENT": {
     "TEMP_SHIFT_ASSIGNMENT": "Temporary Shift Assignment to Employee",

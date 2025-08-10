@@ -1,42 +1,20 @@
-import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { LookupBaseService } from '@/abstracts/lookup-base.service';
 import { OptionsContract } from '@/contracts/options-contract';
-import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
-import Shift from '@/models/features/lookups/work-shifts/shift';
 import { PaginationParams } from '@/models/shared/pagination-params';
-import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { SingleResponseData } from '@/models/shared/response/single-response-data';
 import { genericDateOnlyConvertor } from '@/utils/general-helper';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  CastResponse,
-  CastResponseContainer,
-  HasInterception,
-  InterceptParam,
-} from 'cast-response';
-import { map, Observable, of, switchMap } from 'rxjs';
+import { CastResponse, CastResponseContainer } from 'cast-response';
+import { switchMap, of, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 @CastResponseContainer({
-  $default: {
-    model: () => Shift,
-  },
-  $pagination: {
-    model: () => PaginatedList<Shift>,
-    unwrap: 'data',
-    shape: { 'list.*': () => Shift },
-  },
-  $lookup: {
-    model: () => ListResponseData<BaseLookupModel>,
-    unwrap: 'data',
-    shape: { 'list.*': () => BaseLookupModel },
-  },
   $currentShift: {
     model: () => SingleResponseData<EmployeeShift>,
   },
@@ -46,26 +24,10 @@ import { map, Observable, of, switchMap } from 'rxjs';
     shape: { 'list.*': () => EmployeeShift },
   },
 })
-export class ShiftService extends LookupBaseService<Shift, number> {
-  override serviceName: string = 'ShiftService';
-  constructor() {
-    super();
-  }
+export class MyShiftsService extends LookupBaseService<EmployeeShift, number> {
+  override serviceName: string = 'MyShiftsService';
   override getUrlSegment(): string {
     return this.urlService.URLS.SHIFTS;
-  }
-
-  //@CastResponse(undefined, { fallback: '$default' })
-  @HasInterception
-  activateShift(
-    @InterceptParam() shift: Shift,
-    shiftId: number
-  ): Observable<SingleResponseData<string>> {
-    return this.http.post<SingleResponseData<string>>(
-      this.getUrlSegment() + '/AddShiftLog/' + shiftId,
-      shift,
-      { withCredentials: true }
-    );
   }
   @CastResponse(undefined, { fallback: '$currentShift' })
   getMyCurrentShift() {

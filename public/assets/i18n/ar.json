@@ -484,6 +484,19 @@
     "SECURITY_MEMBER": "فرد شرطة عسكرية",
     "SECURITY_LEADER": "قائد شرطة عسكرية"
   },
+  "MY_SHIFTS": {
+    "MY_SHIFTS": "وردياتي",
+    "SHIFT_DAYS": "أيام العمل بالوردية",
+    "ASSIGNED_SHIFTS_LIST": "قائمة ورديات العمل المخصصة",
+    "NAME_ARABIC": "اسم الوردية (عربي)",
+    "NAME_ENGLISH": "اسم الوردية (إنجليزي)",
+    "START_DATE": "تاريخ البدايه",
+    "END_DATE": "تاريخ النهايه",
+    "TIME_FROM_TO": "الوقت (من - الى)",
+    "ATTENDANCE_BUFFER": "مدة السماح للحضور(دق)",
+    "LEAVE_BUFFER": "مدة السماح للانصراف(دق)",
+    "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل"
+  },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",
     "NATIONAL_ID_LABEL": "رقم هوية المستخدم",

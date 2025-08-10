@@ -17,6 +17,7 @@ import { loginResolver } from '@/resolvers/login.resolver';
 import { notificationResolver } from '@/resolvers/setting/notification.resolver';
 import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
 import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
+import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -199,10 +200,15 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'temp-shifts',
-        data: { routeId: RouteIdsEnum.WORK_SHIFT_TEMP },
+        path: 'my-shifts',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.EMPLOYEE],
+          routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
+        },
+        resolve: { list: myShiftsResolver },
         loadComponent: () =>
-          import('@/views/features/lookups/work-shifts/temp-shifts/temp-shifts.component'),
+          import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
       },
       {
         path: 'outside-mission',

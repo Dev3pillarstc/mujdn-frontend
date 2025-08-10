@@ -200,7 +200,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'temp-shifts',
+        path: 'my-shifts',
         canActivate: [authGuard],
         data: {
           roles: [ROLES_ENUM.EMPLOYEE],
@@ -208,7 +208,7 @@ export const routes: Routes = [
         },
         resolve: { list: myShiftsResolver },
         loadComponent: () =>
-          import('@/views/features/lookups/work-shifts/temp-shifts/temp-shifts.component'),
+          import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
       },
       {
         path: 'outside-mission',

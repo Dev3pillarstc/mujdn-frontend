@@ -27,7 +27,7 @@ import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
 import { toDateOnly } from '@/utils/general-helper';
 @Component({
-  selector: 'app-temp-shifts',
+  selector: 'app-my-shifts',
   imports: [
     Breadcrumb,
     InputTextModule,
@@ -40,10 +40,10 @@ import { toDateOnly } from '@/utils/general-helper';
     FormsModule,
     TranslatePipe,
   ],
-  templateUrl: './temp-shifts.component.html',
-  styleUrl: './temp-shifts.component.scss',
+  templateUrl: './my-shifts.component.html',
+  styleUrl: './my-shifts.component.scss',
 })
-export default class TempShiftsComponent extends BaseListComponent<
+export default class MyShiftsComponent extends BaseListComponent<
   EmployeeShift,
   WorkDaysPopupComponent,
   MyShiftsService,

@@ -102,6 +102,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
         [
           Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
+          Validators.minLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
           CustomValidators.pattern('PHONE_NUMBER'),
         ],
       ],

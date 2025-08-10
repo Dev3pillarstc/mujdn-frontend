@@ -199,10 +199,14 @@ export default class ProfileComponent implements OnInit {
   };
 
   openEditInfoDialog(): void {
+    const clonedModel = Object.assign(
+      Object.create(Object.getPrototypeOf(this.userProfile)),
+      this.userProfile
+    );
     this.dialog
       .open(EditInfoPopupComponent, {
         ...this.dialogSize,
-        data: this.userProfile, // Pass current profile data to dialog
+        data: clonedModel, // Pass current profile data to dialog
       })
       .afterClosed()
       .subscribe((result) => {

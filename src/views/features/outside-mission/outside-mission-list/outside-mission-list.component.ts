@@ -15,6 +15,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { AssignEmployeesComponent } from '../popups/assign-employees/assign-employees.component';
 import { TabsModule } from 'primeng/tabs';
 import { Select } from 'primeng/select';
+import { SplitButton } from 'primeng/splitbutton';
+
 interface Adminstration {
   type: string;
 }
@@ -34,11 +36,26 @@ interface Adminstration {
     FormsModule,
     TranslatePipe,
     Select,
+    SplitButton,
   ],
   templateUrl: './outside-mission-list.component.html',
   styleUrl: './outside-mission-list.component.scss',
 })
 export default class OutsideMissionListComponent {
+  items: MenuItem[];
+  constructor() {
+    this.items = [
+      {
+        label: 'تعديل المهمة',
+        command: () => {
+          this.addNewMission();
+        },
+      },
+      { separator: true },
+      { label: 'حذف المهمة', command: () => {} },
+    ];
+  }
+
   dialogSize = {
     width: '100%',
     maxWidth: '1024px',

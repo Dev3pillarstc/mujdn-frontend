@@ -29,6 +29,9 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
   save$: Subject<void> = new Subject();
   dialogRef = inject(MatDialogRef);
 
+  // Store original model data to restore on error
+  private originalModelData: any;
+
   constructor() {
     this.direction =
       this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
@@ -39,6 +42,8 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
   ngOnInit() {
     this.initPopup();
     this.buildForm();
+    // Store original model data after initialization
+    this.storeOriginalModelData();
     this.listenToSave();
   }
 
@@ -53,6 +58,28 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
   abstract beforeSave(model: Model, form: FormGroup): Observable<boolean> | boolean;
 
   abstract prepareModel(model: Model, form: FormGroup): Observable<Model> | Model;
+
+  /**
+   * Store a deep copy of the original model data
+   */
+  private storeOriginalModelData(): void {
+    this.originalModelData = JSON.parse(JSON.stringify(this.model));
+  }
+
+  /**
+   * Restore the original model data when save fails
+   */
+  private restoreOriginalModelData(): void {
+    if (this.originalModelData) {
+      // Restore the original model data
+      Object.assign(this.model, this.originalModelData);
+
+      // Reset the form to reflect the original data
+      this.form.patchValue(this.originalModelData);
+      this.form.markAsUntouched();
+      this.form.markAsPristine();
+    }
+  }
 
   listenToSave() {
     this.save$
@@ -77,6 +104,7 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
           const save$ = (model as BaseCrudModel<any, any>).save();
           return save$.pipe(
             catchError((error) => {
+              // Keep the modified data so user can see what caused the error
               this.saveFail(error);
               return of({
                 error: error,
@@ -94,12 +122,16 @@ export abstract class BasePopupComponent<Model extends BaseCrudModel<any, any, a
         })
       )
       .subscribe((model: Model) => {
+        // Update the original model data after successful save
+        this.storeOriginalModelData();
         this.afterSave(model, this.dialogRef);
         this.dialogRef.close(DIALOG_ENUM.OK);
       });
   }
 
   close() {
+    // Restore original data when closing without saving
+    this.restoreOriginalModelData();
     this.dialogRef.close();
   }
 }

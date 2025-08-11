@@ -46,6 +46,7 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
       description: [
         description,
         [
+          Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.NOTES),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
         ],

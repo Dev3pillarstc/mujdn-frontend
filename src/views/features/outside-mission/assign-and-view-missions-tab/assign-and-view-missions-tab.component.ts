@@ -18,7 +18,7 @@ import { TableModule } from 'primeng/table';
 import { AddNewMissionPopupComponent } from '../popups/add-new-mission-popup/add-new-mission-popup.component';
 import { ViewMissionDataPopupComponent } from '../popups/view-mission-data-popup/view-mission-data-popup.component';
 import { AssignEmployeesComponent } from '../popups/assign-employees/assign-employees.component';
-import { SplitButton } from 'primeng/splitbutton';
+import { SplitButton, SplitButtonModule } from 'primeng/splitbutton';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
@@ -34,6 +34,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { MenuModule } from 'primeng/menu';
+import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
+import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 interface Adminstration {
   type: string;
 }
@@ -49,6 +51,7 @@ interface Adminstration {
     PaginatorModule,
     TranslatePipe,
     MenuModule,
+    SplitButtonModule,
   ],
   templateUrl: './assign-and-view-missions-tab.component.html',
   styleUrl: './assign-and-view-missions-tab.component.scss',
@@ -75,14 +78,17 @@ export class AssignAndViewMissionsTabComponent
   // Filter model
   filterOptions: WorkMissionFilter = new WorkMissionFilter();
 
+  assignableEmployeesPaginationInfo: PaginationInfo = new PaginationInfo();
   // Accept signals as inputs
   @Input() missionsSignal!: WritableSignal<PaginatedList<WorkMission>>;
-  @Input() assignableEmployeesSignal!: WritableSignal<ListResponseData<BaseLookupModel>>;
+  @Input() assignableEmployeesSignal!: WritableSignal<
+    PaginatedListResponseData<UserProfileDataWithNationalId>
+  >;
   @Input() departmentsSignal!: WritableSignal<BaseLookupModel[]>;
 
   // Component data
   missions: WorkMission[] = [];
-  assignableEmployees: BaseLookupModel[] = [];
+  assignableEmployees: UserProfileDataWithNationalId[] = [];
   departments: BaseLookupModel[] = [];
 
   // Base class overrides
@@ -117,8 +123,9 @@ export class AssignAndViewMissionsTabComponent
 
       effect(() => {
         const currentEmployees = this.assignableEmployeesSignal?.();
-        if (currentEmployees?.data) {
-          this.assignableEmployees = currentEmployees.data;
+        if (currentEmployees?.data.list) {
+          this.assignableEmployees = currentEmployees.data.list;
+          this.assignableEmployeesPaginationInfo = currentEmployees.data.paginationInfo || null;
         }
       });
 

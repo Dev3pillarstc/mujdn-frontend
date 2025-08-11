@@ -48,6 +48,7 @@
               class="peer"
               fluid="true"
               id="missionAr"
+              name="missionAr"
               pInputText
               placeholder="اسم المهمة"
               type="text"
@@ -66,6 +67,7 @@
               class="peer"
               fluid="true"
               id="missionEn"
+              name="missionEn"
               pInputText
               placeholder="اسم المهمة"
               type="text"
@@ -124,7 +126,7 @@
           <app-validation-messages [control]="endDateControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-4">
-          <label class="label" for="">وصف المهمة</label>
+          <label class="label" for="description">وصف المهمة</label>
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
@@ -132,6 +134,8 @@
               pTextarea
               placeholder="وصف المهمة"
               rows="5"
+              id="description"
+              name="description"
               formControlName="description"
             ></textarea>
 

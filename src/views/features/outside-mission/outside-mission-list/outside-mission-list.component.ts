@@ -22,6 +22,8 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
+import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 
 @Component({
   selector: 'app-outside-mission-list',
@@ -48,8 +50,8 @@ export default class OutsideMissionListComponent implements OnInit {
   breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   missions = signal<PaginatedList<WorkMission>>(new PaginatedList<WorkMission>());
-  assignableEmployees = signal<ListResponseData<BaseLookupModel>>(
-    new ListResponseData<BaseLookupModel>()
+  assignableEmployees = signal<PaginatedListResponseData<UserProfileDataWithNationalId>>(
+    new PaginatedListResponseData<UserProfileDataWithNationalId>()
   );
   departments = signal<BaseLookupModel[]>([]);
   matDialog = inject(MatDialog);

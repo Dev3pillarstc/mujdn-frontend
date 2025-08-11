@@ -22,6 +22,7 @@ import { M } from '@angular/material/dialog.d-B5HZULyo';
 import { Observable } from 'rxjs';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { CustomValidators } from '@/validators/custom-validators';
 
 @Component({
   selector: 'app-add-new-mission-popup',
@@ -47,12 +48,14 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
     this.model = this.data.model;
   }
   override buildForm() {
-    this.form = this.fb.group(this.model.buildForm());
+    this.form = this.fb.group(this.model.buildForm(), {
+      validators: [CustomValidators.startBeforeEnd('startDate', 'endDate')],
+    });
   }
   override saveFail(error: Error): void {}
   override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
   override beforeSave(model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
-    return true;
+    return form.valid;
   }
   override prepareModel(
     model: WorkMission,
@@ -72,8 +75,6 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
   ) {
     super();
     this.model = data.model;
-    console.log(this.form);
-    console.log(this.form);
   }
   get nameArControl() {
     return this.form.get('nameAr') as FormControl;

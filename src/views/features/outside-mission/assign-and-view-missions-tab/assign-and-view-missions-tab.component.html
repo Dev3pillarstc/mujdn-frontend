@@ -172,14 +172,15 @@
       </div>
     }
     <!-- Pagination -->
-    <p-paginator
-      *ngIf="paginationInfo"
-      (onPageChange)="onPageChange($event)"
-      [first]="(paginationInfo.currentPage - 1) * paginationInfo.pageSize"
-      [rowsPerPageOptions]="[10, 20, 30]"
-      [rows]="paginationInfo.pageSize"
-      [totalRecords]="paginationInfo.totalItems"
-      class="mt-6"
-    />
+    @if (paginationInfo) {
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="(paginationInfo.currentPage - 1) * paginationInfo.pageSize"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="paginationInfo.pageSize"
+        [totalRecords]="paginationInfo.totalItems"
+        class="mt-6"
+      />
+    }
   </div>
 </div>

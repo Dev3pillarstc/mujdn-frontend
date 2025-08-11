@@ -9,56 +9,57 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="flex flex-col gap-1 text-white">
             <span class="text-[14px]">اسم المهمة بالعربية</span>
-            <h4 class="font-semibold text-[16px]">مهمة خارجية أمنية</h4>
+            <h4 class="font-semibold text-[16px]">{{ model.nameAr }}</h4>
           </div>
           <div class="flex flex-col gap-1 text-white">
             <span class="text-[14px]">اسم المهمة بالانجليزية</span>
-            <h4 class="font-semibold text-[16px]">مهمة خارجية أمنية</h4>
+            <h4 class="font-semibold text-[16px]">{{ model.nameEn }}</h4>
           </div>
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
         <div class="flex flex-col gap-1 text-white">
           <span class="text-[14px]">تاريخ البداية</span>
-          <h4 class="font-semibold text-[16px]">12/12/2024</h4>
+          <h4 class="font-semibold text-[16px]">{{ model.startDate | date: 'dd/MM/yyyy' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
           <span class="text-[14px]">تاريخ النهاية</span>
-          <h4 class="font-semibold text-[16px]">12/12/2024</h4>
+          <h4 class="font-semibold text-[16px]">{{ model.endDate | date: 'dd/MM/yyyy' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
           <span class="text-[14px]">مسند المهمة</span>
-          <h4 class="font-semibold text-[16px]">الاسم</h4>
+          <h4 class="font-semibold text-[16px]">
+            {{
+              isCurrentLanguageEnglish()
+                ? model.missionCreator?.nameEn
+                : model.missionCreator?.nameAr
+            }}
+          </h4>
         </div>
       </div>
     </div>
     <div class="bg-[#f3f4f6] rounded-2xl p-6">
       <h4 class="text-[#6c737f] text-[14px] mb-2">وصف المهمة</h4>
       <p class="text-[#161616] text-[16px] font-semibold">
-        هنا يكون محتوى وصف المهمة هنا يكون محتوى وصف المهمة هنا يكون محتوى وصف المهمة
+        {{ model.description }}
       </p>
     </div>
     <div class="mt-6 pt-6 border-t border-[#d2d6db]">
       <h4 class="text-[#6c737f] text-[14px]">الموظفون المعنيون بتنفيذ المهام</h4>
       <div class="flex flex-wrap gap-4 mt-4">
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
+        @if (model.assignedEmployees && model.assignedEmployees.length > 0) {
+          @for (item of model.assignedEmployees; track $index) {
+            <div class="bg-[#f3f4f6] rounded-full px-3">
+              <span class="text-[#161616] font-medium"
+                >{{ isCurrentLanguageEnglish() ? item.nameEn : item.nameAr }}
+              </span>
+            </div>
+          }
+        } @else {
+          <div class="bg-[#f3f4f6] rounded-full px-3">
+            <span class="text-[#161616] font-medium">لا يوجد موظفون معينون</span>
+          </div>
+        }
       </div>
     </div>
     <div class="actions mt-6 flex items-center justify-between gap-4">

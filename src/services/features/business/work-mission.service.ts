@@ -1,12 +1,17 @@
 import { LookupBaseService } from '@/abstracts/lookup-base.service';
+import { OptionsContract } from '@/contracts/options-contract';
+import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { Department } from '@/models/features/lookups/department/department';
+import { PaginationParams } from '@/models/shared/pagination-params';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +26,9 @@ import { Observable } from 'rxjs';
     shape: { 'list.*': () => WorkMission },
   },
   $lookup: {
-    model: () => ListResponseData<BaseLookupModel>,
+    model: () => PaginatedList<UserProfileDataWithNationalId>,
     unwrap: 'data',
-    shape: { 'list.*': () => BaseLookupModel },
+    shape: { 'list.*': () => UserProfileDataWithNationalId },
   },
 })
 export class WorkMissionService extends LookupBaseService<WorkMission, number> {
@@ -34,10 +39,24 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
   }
 
   @CastResponse(undefined, { fallback: '$lookup' })
-  getEmployeesToBeAssigned(): Observable<ListResponseData<BaseLookupModel>> {
-    return this.http.get<ListResponseData<BaseLookupModel>>(
-      this.getUrlSegment() + '/' + 'GetEmployeesToBeAssigned',
-      { withCredentials: true }
-    );
+  getEmployeesToBeAssigned(
+    paginationParams?: PaginationParams,
+    filterOptions?: OptionsContract
+  ): Observable<PaginatedList<UserProfileDataWithNationalId>> {
+    // Build HttpParams safely
+    let httpParams = new HttpParams();
+    if (paginationParams) {
+      Object.entries(paginationParams).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          httpParams = httpParams.set(key, String(value));
+        }
+      });
+    }
+
+    // Make the request and rely on @CastResponse for runtime mapping
+    return this.http.post(`${this.getUrlSegment()}/GetEmployeesToBeAssigned`, filterOptions || {}, {
+      params: httpParams,
+      withCredentials: true,
+    }) as unknown as Observable<PaginatedList<UserProfileDataWithNationalId>>;
   }
 }

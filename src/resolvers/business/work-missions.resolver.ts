@@ -1,3 +1,4 @@
+import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { PaginationParams } from '@/models/shared/pagination-params';
@@ -12,7 +13,7 @@ import { catchError, forkJoin, of } from 'rxjs';
 export const WorkMissionResolver: ResolveFn<
   {
     missions: PaginatedList<WorkMission> | null;
-    assignableEmployees: ListResponseData<BaseLookupModel> | null;
+    assignableEmployees: PaginatedList<UserProfileDataWithNationalId> | null;
     departments: BaseLookupModel[] | null;
   } | null
 > = () => {
@@ -24,7 +25,7 @@ export const WorkMissionResolver: ResolveFn<
       .loadPaginated(new PaginationParams())
       .pipe(catchError(() => of(null))),
     assignableEmployees: workMissionService
-      .getEmployeesToBeAssigned()
+      .getEmployeesToBeAssigned(new PaginationParams())
       .pipe(catchError(() => of(null))),
     departments: departmentService.getLookup().pipe(catchError(() => of(null))),
   }).pipe(catchError(() => of(null)));

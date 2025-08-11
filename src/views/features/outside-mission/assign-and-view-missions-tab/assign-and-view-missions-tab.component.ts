@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, Injector, Input, OnInit, runInInjectionContext, WritableSignal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  Injector,
+  Input,
+  OnInit,
+  runInInjectionContext,
+  WritableSignal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MenuItem } from 'primeng/api';
@@ -38,17 +48,20 @@ interface Adminstration {
     InputTextModule,
     PaginatorModule,
     TranslatePipe,
-    MenuModule
+    MenuModule,
   ],
   templateUrl: './assign-and-view-missions-tab.component.html',
-  styleUrl: './assign-and-view-missions-tab.component.scss'
+  styleUrl: './assign-and-view-missions-tab.component.scss',
 })
-export class AssignAndViewMissionsTabComponent extends BaseListComponent<
-  WorkMission,
-  ViewMissionDataPopupComponent,
-  WorkMissionService,
-  WorkMissionFilter
-> implements OnInit {
+export class AssignAndViewMissionsTabComponent
+  extends BaseListComponent<
+    WorkMission,
+    ViewMissionDataPopupComponent,
+    WorkMissionService,
+    WorkMissionFilter
+  >
+  implements OnInit
+{
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -118,19 +131,20 @@ export class AssignAndViewMissionsTabComponent extends BaseListComponent<
     });
   }
 
-  protected override getBreadcrumbKeys(): { labelKey: string; icon?: string; routerLink?: string; }[] {
-    return [
-      { labelKey: 'dashboard' },
-      { labelKey: 'workMissions' }
-    ];
+  protected override getBreadcrumbKeys(): {
+    labelKey: string;
+    icon?: string;
+    routerLink?: string;
+  }[] {
+    return [{ labelKey: 'dashboard' }, { labelKey: 'workMissions' }];
   }
 
-  protected override mapModelToExcelRow(model: WorkMission): { [key: string]: any; } {
+  protected override mapModelToExcelRow(model: WorkMission): { [key: string]: any } {
     return {
       'اسم المهمة بالعربية': model.nameAr,
       'اسم المهمة بالانجليزية': model.nameEn,
       'تاريخ البداية': model.startDate,
-      'تاريخ النهاية': model.endDate
+      'تاريخ النهاية': model.endDate,
     };
   }
   addOrEditModel(mission?: WorkMission): void {
@@ -155,7 +169,7 @@ export class AssignAndViewMissionsTabComponent extends BaseListComponent<
     const dialogRef = this.dialog.open(AddNewMissionPopupComponent, {
       width: '100%',
       maxWidth: '1024px',
-      data: { mission, isEdit: true }
+      data: { mission, isEdit: true },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -177,18 +191,18 @@ export class AssignAndViewMissionsTabComponent extends BaseListComponent<
         icon: 'pi pi-pencil',
         command: () => {
           this.addOrEditModel(mission);
-        }
+        },
       },
       {
-        separator: true
+        separator: true,
       },
       {
         label: 'حذف المهمة',
         icon: 'pi pi-trash',
         command: () => {
           this.deleteMission(mission.id);
-        }
-      }
+        },
+      },
     ];
   }
 }

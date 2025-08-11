@@ -39,18 +39,18 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
     Select,
     SplitButton,
     MyMissionsTabComponent,
-    AssignAndViewMissionsTabComponent
+    AssignAndViewMissionsTabComponent,
   ],
   templateUrl: './outside-mission-list.component.html',
   styleUrl: './outside-mission-list.component.scss',
 })
 export default class OutsideMissionListComponent implements OnInit {
-
-
   breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   missions = signal<PaginatedList<WorkMission>>(new PaginatedList<WorkMission>());
-  assignableEmployees = signal<ListResponseData<BaseLookupModel>>(new ListResponseData<BaseLookupModel>());
+  assignableEmployees = signal<ListResponseData<BaseLookupModel>>(
+    new ListResponseData<BaseLookupModel>()
+  );
   departments = signal<BaseLookupModel[]>([]);
   matDialog = inject(MatDialog);
   dialog = inject(MatDialog);
@@ -61,5 +61,4 @@ export default class OutsideMissionListComponent implements OnInit {
     this.assignableEmployees.set(this.activatedRoute.snapshot.data['list'].assignableEmployees);
     this.departments.set(this.activatedRoute.snapshot.data['list'].departments);
   }
-
 }

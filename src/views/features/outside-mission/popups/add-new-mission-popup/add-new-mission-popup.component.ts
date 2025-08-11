@@ -1,5 +1,11 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { TextareaModule } from 'primeng/textarea';
 import { DialogRef } from '@angular/cdk/dialog';
@@ -31,7 +37,7 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
     ReactiveFormsModule,
     RequiredMarkerDirective,
     TranslatePipe,
-    ValidationMessagesComponent
+    ValidationMessagesComponent,
   ],
   templateUrl: './add-new-mission-popup.component.html',
   styleUrl: './add-new-mission-popup.component.scss',
@@ -43,12 +49,15 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm());
   }
-  override saveFail(error: Error): void { }
-  override afterSave(model: WorkMission, dialogRef: M<any, any>): void { }
+  override saveFail(error: Error): void {}
+  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
   override beforeSave(model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
     return true;
   }
-  override prepareModel(model: WorkMission, form: FormGroup): WorkMission | Observable<WorkMission> {
+  override prepareModel(
+    model: WorkMission,
+    form: FormGroup
+  ): WorkMission | Observable<WorkMission> {
     this.model = Object.assign(model, { ...form.value });
     return model;
   }
@@ -65,7 +74,6 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
     this.model = data.model;
     console.log(this.form);
     console.log(this.form);
-
   }
   get nameArControl() {
     return this.form.get('nameAr') as FormControl;

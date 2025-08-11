@@ -29,13 +29,12 @@ interface Adminstration {
     TabsModule,
     FormsModule,
     TranslatePipe,
-    Select
+    Select,
   ],
   templateUrl: './my-missions-tab.component.html',
-  styleUrl: './my-missions-tab.component.scss'
+  styleUrl: './my-missions-tab.component.scss',
 })
 export class MyMissionsTabComponent {
-
   adminstrations: Adminstration[] | undefined;
   first: number = 0;
   rows: number = 10;

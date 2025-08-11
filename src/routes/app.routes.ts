@@ -18,6 +18,7 @@ import { notificationResolver } from '@/resolvers/setting/notification.resolver'
 import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
 import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
+import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -211,7 +212,13 @@ export const routes: Routes = [
           import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
       },
       {
-        path: 'outside-mission',
+        path: 'work-missions',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.HR_OFFICER],
+          routeId: RouteIdsEnum.WORK_MISSION,
+        },
+        resolve: { list: WorkMissionResolver },
         loadComponent: () =>
           import(
             '@/views/features/outside-mission/outside-mission-list/outside-mission-list.component'

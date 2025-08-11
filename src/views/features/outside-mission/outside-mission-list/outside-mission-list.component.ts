@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -16,10 +16,12 @@ import { AssignEmployeesComponent } from '../popups/assign-employees/assign-empl
 import { TabsModule } from 'primeng/tabs';
 import { Select } from 'primeng/select';
 import { SplitButton } from 'primeng/splitbutton';
-
-interface Adminstration {
-  type: string;
-}
+import { MyMissionsTabComponent } from '../my-missions-tab/my-missions-tab.component';
+import { AssignAndViewMissionsTabComponent } from '../assign-and-view-missions-tab/assign-and-view-missions-tab.component';
+import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { WorkMission } from '@/models/features/business/work-mission';
+import { ListResponseData } from '@/models/shared/response/list-response-data';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 
 @Component({
   selector: 'app-outside-mission-list',
@@ -29,7 +31,6 @@ interface Adminstration {
     TableModule,
     CommonModule,
     RouterModule,
-    CommonModule,
     PaginatorModule,
     DatePickerModule,
     TabsModule,
@@ -37,102 +38,28 @@ interface Adminstration {
     TranslatePipe,
     Select,
     SplitButton,
+    MyMissionsTabComponent,
+    AssignAndViewMissionsTabComponent
   ],
   templateUrl: './outside-mission-list.component.html',
   styleUrl: './outside-mission-list.component.scss',
 })
-export default class OutsideMissionListComponent {
-  items: MenuItem[];
-  constructor() {
-    this.items = [
-      {
-        label: 'تعديل المهمة',
-        command: () => {
-          this.addNewMission();
-        },
-      },
-      { separator: true },
-      { label: 'حذف المهمة', command: () => {} },
-    ];
-  }
+export default class OutsideMissionListComponent implements OnInit {
 
-  dialogSize = {
-    width: '100%',
-    maxWidth: '1024px',
-  };
-  first: number = 0;
-  rows: number = 10;
-  date2: Date | undefined;
-  missions!: any[];
-  adminstrations: Adminstration[] | undefined;
-  selectedAdminstration: Adminstration | undefined;
+
   breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
+  missions = signal<PaginatedList<WorkMission>>(new PaginatedList<WorkMission>());
+  assignableEmployees = signal<ListResponseData<BaseLookupModel>>(new ListResponseData<BaseLookupModel>());
+  departments = signal<BaseLookupModel[]>([]);
   matDialog = inject(MatDialog);
   dialog = inject(MatDialog);
-
+  activatedRoute = inject(ActivatedRoute);
   ngOnInit() {
-    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'مهام الأعمال و الاسناد' }];
-    // Updated dummy data to match your Arabic table structure
-    this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
-    this.missions = [
-      {
-        taskName: 'حراسة البوابات',
-        startDate: '12/12/2024',
-        endDate: '18/12/2024',
-        taskPredicate: 'محمود أيمن',
-
-        actions: ['view'],
-      },
-      {
-        taskName: 'حراسة البوابات',
-        startDate: '12/12/2023',
-        endDate: '18/12/2023',
-        taskPredicate: 'محمود أيمن',
-        actions: ['view'],
-      },
-      {
-        taskName: 'حراسة البوابات',
-        startDate: '12/12/2025',
-        endDate: '18/12/2025',
-        taskPredicate: 'محمود أيمن',
-
-        actions: ['delete', 'edit', 'view'],
-      },
-      {
-        taskName: 'حراسة البوابات',
-        startDate: '12/12/2024',
-        endDate: '18/12/2024',
-        taskPredicate: 'محمود أيمن',
-
-        actions: ['view'],
-      },
-    ];
-  }
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
-  }
-  addNewMission() {
-    const dialogRef = this.matDialog.open(AddNewMissionPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe();
-  }
-  viewMission() {
-    const dialogRef = this.matDialog.open(ViewMissionDataPopupComponent, {
-      width: '100%',
-      maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe();
+    // Set the signal values
+    this.missions.set(this.activatedRoute.snapshot.data['list'].missions);
+    this.assignableEmployees.set(this.activatedRoute.snapshot.data['list'].assignableEmployees);
+    this.departments.set(this.activatedRoute.snapshot.data['list'].departments);
   }
 
-  openDialog1(): void {
-    const dialogRef = this.dialog.open(AssignEmployeesComponent as any, this.dialogSize);
-
-    dialogRef.afterClosed().subscribe();
-  }
 }

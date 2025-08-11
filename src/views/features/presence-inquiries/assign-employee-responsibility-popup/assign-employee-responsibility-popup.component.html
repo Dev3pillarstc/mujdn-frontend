@@ -6,8 +6,8 @@
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اسناد الموظفين للمسائلة</h3>
 
     <form class="mt-6 mb-6" [formGroup]="yourFormGroup">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-6 items-end">
-        <div class="lg:col-span-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-end">
+        <div>
           <label class="label">الإدارة</label>
           <div class="relative">
             <p-select
@@ -28,14 +28,14 @@
             >هذا الحقل مطلوب</span
           >
         </div>
-        <div class="lg:col-span-3">
-          <label class="label">اسم الموظف</label>
+        <div>
+          <label class="label">اسم الموظف بالعربية</label>
           <div class="relative">
             <input
               pInputText
               type="text"
               formControlName="allowedDuration"
-              placeholder="اسم الموظف"
+              placeholder="اسم الموظف بالعربية"
               class="peer w-full"
             />
             <span
@@ -51,12 +51,33 @@
             >هذا الحقل مطلوب</span
           >
         </div>
-        <div class="lg:col-span-2">
-          <div class="actions flex gap-4">
-            <button class="btn black-btn min-h-[42px] w-full">بحث</button>
-            <button class="btn gray-btn border border-[#d2d6db] min-h-[42px] w-full">
-              إعادة تعيين
-            </button>
+        <div>
+          <label class="label">اسم الموظف بالانجليزية</label>
+          <div class="relative">
+            <input
+              pInputText
+              type="text"
+              formControlName="allowedDuration"
+              placeholder="اسم الموظف بالانجليزية"
+              class="peer w-full"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span
+            class="validation-message"
+            *ngIf="
+              yourFormGroup.get('allowedDuration')?.invalid &&
+              yourFormGroup.get('allowedDuration')?.touched
+            "
+            >هذا الحقل مطلوب</span
+          >
+        </div>
+        <div class="lg:col-span-3 md:col-span-2">
+          <div class="actions !justify-start flex gap-4">
+            <button class="btn black-btn min-h-[42px]">بحث</button>
+            <button class="btn gray-btn border border-[#d2d6db] min-h-[42px]">إعادة تعيين</button>
           </div>
         </div>
       </div>
@@ -85,7 +106,8 @@
             </label>
           </th>
           <th>معرف الموظف</th>
-          <th>اسم الموظف</th>
+          <th>اسم الموظف بالعربية</th>
+          <th>اسم الموظف بالانجليزية</th>
           <th>الادارة</th>
         </tr>
       </ng-template>
@@ -114,6 +136,9 @@
             <span class="font-medium text-[#1b8354]"> 1234 </span>
           </td>
           <td>محمود أيمن</td>
+          <td>
+            <div class="text-end">محمود أيمن</div>
+          </td>
           <td>ادارة الموارد البشرية</td>
         </tr>
       </ng-template>

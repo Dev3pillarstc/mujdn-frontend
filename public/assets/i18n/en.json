@@ -532,7 +532,7 @@
     "INVALID_TOKEN": "Invalid or expired reset link",
     "INVALID_TOKEN_MESSAGE": "Sorry, this link is no longer valid. It may have expired or been used previously."
   },
-  "WORK_MISSIONS":{
+  "WORK_MISSIONS": {
     "WORK_MISSIONS": "Work missions",
     "MY_WORK_MISSIONS": "My work missions",
     "ASSIGN_WORK_MISSIONS": "Assign work missions",
@@ -541,8 +541,8 @@
     "MISSION_DATA": "Mission data",
     "WORK_MISSIONS_LIST": "Work missions list",
     "ADD_NEW_WORK_MISSION": "Add new work mission",
-    "ADD_NEW_MISSION" : "Add new mission",
-    "EDIT_MISSION" : "Edit mission",
+    "ADD_NEW_MISSION": "Add new mission",
+    "EDIT_MISSION": "Edit mission",
     "ASSIGN_EMPLOYEES": "Assign employees",
     "ASSIGN_MISSION_EMPLOYEES": "Assign mission to employees",
     "DEPARTMENT": "Department",
@@ -556,6 +556,8 @@
     "ADD_EDIT_ACTION_MAY_REQUIRE_REPROCESS": "The add / edit mission action may affect attendance and leave data of the employees assigned to it.",
     "DESCRIPTION": "description",
     "MISSION_ASSIGNER": "Mission assigner",
+    "MISSION_ASSIGNER_AR": "Mission assigner (Arabic)",
+    "MISSION_ASSIGNER_EN": "Mission assigner (English)",
     "START_DATE": "Date from",
     "END_DATE": "Date to",
     "DEPARTMENT_NAME_ARABIC": "Department name in Arabic",

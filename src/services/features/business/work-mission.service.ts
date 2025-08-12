@@ -66,4 +66,23 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
       withCredentials: true,
     });
   }
+
+  @CastResponse(undefined, { fallback: '$pagination' })
+  getMyWorkMissionsAsync(
+    paginationParams?: PaginationParams,
+    filterOptions?: OptionsContract
+  ): Observable<PaginatedListResponseData<WorkMission>> {
+    let httpParams = new HttpParams();
+    if (paginationParams) {
+      Object.entries(paginationParams).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          httpParams = httpParams.set(key, String(value));
+        }
+      });
+    }
+    return this.http.post(`${this.getUrlSegment()}/GetMyWorkMissionsAsync`, filterOptions || {}, {
+      params: httpParams,
+      withCredentials: true,
+    }) as unknown as Observable<PaginatedListResponseData<WorkMission>>;
+  }
 }

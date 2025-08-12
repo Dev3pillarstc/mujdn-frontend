@@ -538,7 +538,7 @@
     "WORK_MISSIONS_LIST": "قائمة مهام الأعمال و الاسناد",
     "ADD_NEW_WORK_MISSION": "إضافة مهمة وظيفية جديدة",
     "ADD_NEW_MISSION": "إضافة مهمة جديدة",
-    "EDIT_MISSION" : "تعديل المهمة",
+    "EDIT_MISSION": "تعديل المهمة",
     "ASSIGN_EMPLOYEES": "إسناد موظفين",
     "ASSIGN_MISSION_EMPLOYEES": "إسناد المهمة إلى الموظفين",
     "DEPARTMENT": "الإداره",
@@ -552,10 +552,11 @@
     "ADD_EDIT_ACTION_MAY_REQUIRE_REPROCESS": "قد تؤثر عملية إضافة أو تعديل المهمة على بيانات الحضور والانصراف للموظفين المسندة إليهم.",
     "DESCRIPTION": "الوصف",
     "MISSION_ASSIGNER": "مسند المهمة",
+    "MISSION_ASSIGNER_AR": "مسند المهمة (عربي)",
+    "MISSION_ASSIGNER_EN": "مسند المهمة (إنجليزي)",
     "START_DATE": "التاريخ من",
     "END_DATE": "التاريخ إلى",
     "DEPARTMENT_NAME_ARABIC": "الادارة بالعربية",
     "DEPARTMENT_NAME_ENGLISH": "الادارة بالانجليزية"
-}
-
+  }
 }

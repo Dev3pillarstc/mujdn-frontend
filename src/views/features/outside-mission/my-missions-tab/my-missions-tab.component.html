@@ -16,6 +16,7 @@
             pInputText
             placeholder="اسم المهمة بالعربية"
             type="text"
+            [(ngModel)]="filterModel.nameAr"
           />
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -32,6 +33,7 @@
             pInputText
             placeholder="اسم المهمة بالانجليزية"
             type="text"
+            [(ngModel)]="filterModel.nameEn"
           />
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -42,9 +44,10 @@
         <div class="relative">
           <label class="label" for="nationalityAr">مسند المهمة</label>
           <p-select
-            [options]="adminstrations"
-            [(ngModel)]="selectedAdminstration"
-            optionLabel="type"
+            [options]="creators"
+            [(ngModel)]="filterModel.missionCreatorId"
+            optionValue="id"
+            [optionLabel]="getPropertyName()"
             placeholder="مسند المهمة"
             class="w-full peer"
           ></p-select>
@@ -57,12 +60,12 @@
         <div class="relative">
           <label class="label" for="">التاريخ من</label>
           <p-datepicker
-            [(ngModel)]="date2"
             [iconDisplay]="'input'"
             [showIcon]="true"
             class="peer block w-full"
             inputId="icondisplay"
             placeholder="التاريخ من"
+            [(ngModel)]="filterModel.startDate"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
@@ -77,12 +80,12 @@
         <div class="relative">
           <label class="label" for="">التاريخ إلي</label>
           <p-datepicker
-            [(ngModel)]="date2"
             [iconDisplay]="'input'"
             [showIcon]="true"
             class="peer block w-full"
             inputId="icondisplay"
             placeholder="التاريخ إلي"
+            [(ngModel)]="filterModel.endDate"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
@@ -96,8 +99,10 @@
 
       <!-- Search Actions -->
       <div class="actions flex items-center gap-4 pt-6">
-        <button class="btn black-btn">بحث</button>
-        <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+        <button class="btn black-btn" (click)="search()">بحث</button>
+        <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">
+          إعادة تعيين
+        </button>
       </div>
     </div>
   </div>
@@ -113,60 +118,70 @@
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <!-- Only Excel Export Button -->
-        <button class="table-head-action-btn min-w-[40px]">
+        <button
+          class="table-head-action-btn min-w-[40px]"
+          (click)="exportExcel('my-work-missions.xlsx')"
+        >
           <img alt="" src="assets/icons/excel.svg" />
         </button>
       </div>
     </div>
-
-    <!-- Table with Task Assignee Column -->
-    <p-table [value]="missions">
-      <ng-template #header>
-        <tr>
-          <th>اسم المهمة بالعربية</th>
-          <th>اسم المهمة بالانجليزية</th>
-          <th>تاريخ البداية</th>
-          <th>تاريخ النهاية</th>
-          <th>مسند المهمة</th>
-          <th>اجراء</th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-missions>
-        <tr>
-          <td>{{ missions.taskName }}</td>
-          <td>
-            <div class="text-left">
-              {{ missions.taskName }}
-            </div>
-          </td>
-          <td>{{ missions.startDate }}</td>
-          <td>{{ missions.endDate }}</td>
-          <td>محمود أيمن</td>
-          <td>
-            <!-- Only View Action -->
-            <div class="actions flex gap-2">
-              <button
-                ngClass=""
-                (click)="viewMission()"
-                *ngIf="missions.actions?.includes('view')"
-                class="table-action-gray-btn flex gap-2 font-medium"
-              >
-                <img alt="" src="assets/icons/view-action.svg" />
-              </button>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-
+    @if (list && list.length > 0) {
+      <!-- Table with Task Assignee Column -->
+      <p-table [value]="list">
+        <ng-template #header>
+          <tr>
+            <th>اسم المهمة بالعربية</th>
+            <th>اسم المهمة بالانجليزية</th>
+            <th>تاريخ البداية</th>
+            <th>تاريخ النهاية</th>
+            <th>مسند المهمة عربي</th>
+            <th>مسند المهمة إنجليزي</th>
+            <th>اجراء</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-mission>
+          <tr>
+            <td>{{ mission.nameAr }}</td>
+            <td>
+              <div class="text-left">
+                {{ mission.nameEn }}
+              </div>
+            </td>
+            <td>{{ mission.startDate }}</td>
+            <td>{{ mission.endDate }}</td>
+            <td>{{ mission.missionCreator.nameAr }}</td>
+            <td>{{ mission.missionCreator.nameEn }}</td>
+            <td>
+              <!-- Only View Action -->
+              <div class="actions flex gap-2">
+                <button
+                  (click)="addOrEditModel(mission)"
+                  ngClass=""
+                  class="table-action-gray-btn flex gap-2 font-medium"
+                >
+                  <img alt="" src="assets/icons/view-action.svg" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    } @else {
+      <div class="flex items-center justify-center h-64">
+        <p class="text-gray-500">{{ 'CITIES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+      </div>
+    }
     <!-- Pagination -->
-    <p-paginator
-      (onPageChange)="onPageChange($event)"
-      [first]="first"
-      [rowsPerPageOptions]="[10, 20, 30]"
-      [rows]="rows"
-      [totalRecords]="120"
-      class="mt-6"
-    />
+    @if (paginationInfo) {
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="paginationInfo.pageSize"
+        [totalRecords]="paginationInfo.totalItems"
+        class="mt-6"
+      />
+    }
   </div>
 </div>

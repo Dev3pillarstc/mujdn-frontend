@@ -31,8 +31,13 @@ import { of, switchMap, Observable } from 'rxjs';
     unwrap: 'data',
     shape: { data: () => UserProfile },
   },
+  $lookup: {
+    model: () => ListResponseData<BaseLookupModel>,
+    unwrap: 'data',
+    shape: { 'data.*': () => BaseLookupModel },
+  },
 })
-export class UserProfileService extends BaseCrudService<UserProfile, string> {
+export class UserProfileService extends LookupBaseService<UserProfile, string> {
   override serviceName: string = 'UserProfileService';
 
   override getUrlSegment(): string {

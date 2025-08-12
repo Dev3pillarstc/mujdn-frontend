@@ -184,7 +184,7 @@
     @if (paginationInfo) {
       <p-paginator
         (onPageChange)="onPageChange($event)"
-        [first]="(paginationInfo.currentPage - 1) * paginationInfo.pageSize"
+        [first]="first"
         [rowsPerPageOptions]="[10, 20, 30]"
         [rows]="paginationInfo.pageSize"
         [totalRecords]="paginationInfo.totalItems"

@@ -3,6 +3,7 @@
     border-bottom: 1px solid #d2d6db;
 
     .menu-item {
+      color: #161616;
       &:hover,
       &.active {
         background-color: #e5e7eb;
@@ -11,6 +12,8 @@
   }
 
   .sub-links {
+    color: #161616;
+
     &:hover,
     &.active {
       background-color: #e5e7eb;

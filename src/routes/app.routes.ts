@@ -18,6 +18,7 @@ import { notificationResolver } from '@/resolvers/setting/notification.resolver'
 import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
 import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
+import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -226,6 +227,7 @@ export const routes: Routes = [
       },
       {
         path: 'presence-inquiries',
+        resolve: { list: presenceInquiryResolver },
         loadComponent: () =>
           import(
             '@/views/features/presence-inquiries/presence-inquiries-list/presence-inquiries-list.component'

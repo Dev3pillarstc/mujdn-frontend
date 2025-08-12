@@ -1,105 +1,18 @@
-// Start SideMenu
-.p-drawer-header {
-  display: none !important;
-}
-
-.sidebar-header {
-  background: #14573a !important;
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 9;
-}
-
-.p-drawer-content {
-  padding: 0 !important;
-  padding-bottom: 44px !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
-}
-
-.p-drawer-left,
-.p-drawer {
-  border: unset !important;
-
-  @media (min-width: 768px) {
-    width: 256px !important;
-    position: fixed !important;
-    height: 100vh !important;
-    top: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .p-overlay-mask-enter.p-drawer-mask {
-    position: fixed !important;
-    transform: unset !important;
-  }
-}
-
 .menu-list {
-  font-size: 14px;
-  font-weight: 600;
-  color: #161616;
-
   & > li {
-    margin-top: 8px;
-    padding-bottom: 8px;
     border-bottom: 1px solid #d2d6db;
 
-    &:last-child {
-      border: unset;
-    }
-
     .menu-item {
-      padding: 8px 16px;
-      border-radius: 4px;
-      background-color: #fff;
-      font-weight: 600;
-      position: relative;
-      transition: 0.2s;
-
+      color: #161616;
       &:hover,
       &.active {
         background-color: #e5e7eb;
-
-        &::before {
-          background-color: #1b8354;
-        }
-      }
-
-      &::before {
-        position: absolute;
-        top: 50%;
-        inset-inline-start: 0;
-        width: 6px;
-        height: 80%;
-        background-color: #fff;
-        border-radius: 10px;
-        transition: 0.2s;
-        transform: translateY(-50%);
-        content: '';
       }
     }
   }
 
   .sub-links {
-    border: unset;
-    padding: 8px 16px;
-    border-radius: 4px;
-    background-color: #fff;
-    margin-top: 8px;
-    font-weight: 600;
-    position: relative;
-    transition: 0.2s;
+    color: #161616;
 
     &:hover,
     &.active {
@@ -109,151 +22,18 @@
         background-color: #1b8354;
       }
     }
-
-    &::before {
-      position: absolute;
-      top: 50%;
-      inset-inline-start: 0;
-      width: 6px;
-      height: 80%;
-      background-color: #fff;
-      border-radius: 10px;
-      transition: 0.2s;
-      transform: translateY(-50%);
-      content: '';
-    }
   }
-}
-
-.p-drawer-right .p-drawer {
-  align-self: baseline !important;
-  transform: unset !important;
 }
 
 .p-drawer-mask {
   position: static !important;
 }
 
-// End SideMenu
-// start kareem
-.close-popup {
-  margin-bottom: 24px;
-}
-
-:root {
-  --p-tabs-tab-hover-background: #e5e7eb !important;
-}
-
-.p-tab {
-  position: relative;
-  border: unset !important;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 32px);
-    height: 3px;
-    background-color: #161616;
-    display: none;
-  }
-
-  &:hover {
-    &::after {
-      display: block;
-    }
-  }
-
-  &.p-tab-active {
-    &::after {
-      background-color: #1b8354;
-      display: block;
-    }
-  }
-}
-
-// end kareem
-// start kareem
-.p-datepicker-hour-picker:dir(rtl) {
-  order: 3 !important;
-}
-
-.p-datepicker-separator:dir(rtl) {
-  order: 2 !important;
-}
-
-.p-datepicker-minute-picker:dir(rtl) {
-  order: 1 !important;
-}
-
-p-splitbutton {
-  button {
-    background-color: #f3f4f6 !important;
-    border: none !important;
-    color: #161616 !important;
-    border-radius: 4px !important;
-    min-height: 36px !important;
-
-    &.p-splitbutton-button {
-      display: none;
-    }
-
-    &:hover {
-      background-color: #e5e7eb !important;
-    }
-  }
-}
-.p-tieredmenu-item-link {
-  justify-content: flex-end !important;
-  color: #161616 !important;
-}
-.p-menuitem-danger {
-  span {
-    color: #b42318 !important;
-  }
-}
-// end kareem
-p-datepicker.ng-touched.ng-invalid {
-  input {
-    border-color: #b42318 !important;
-    color: #b42318 !important;
-  }
-
-  ::placeholder {
-    color: #b42318;
-  }
-}
-
-textarea.ng-touched.ng-invalid {
-  color: #b42318 !important;
-}
-
-textarea {
-  color: #161616 !important;
-
-  &::placeholder {
-    color: #161616 !important;
-  }
-}
-
 .p-overlay {
   max-width: 100%;
 }
 
-td {
-  max-width: 400px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .mat-mdc-dialog-component-host {
-  //div[dir='rtl'] {
-  //  max-height: 100vh;
-  //  overflow-y: auto;
-  //}
   .actions {
     justify-content: space-between;
   }

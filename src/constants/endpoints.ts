@@ -21,6 +21,8 @@ export const EndPoints = {
   User_Work_Shifts: '/UserWorkShifts',
   NOTIFICATION_TYPES: '/notificationtypes',
   WORK_MISSION: '/WorkMission',
+  PRESENCE_INQUIRIES: '/presenceinquiries',
+  PRESENCE_INQUIRY_STATUS: '/presenceInquiryStatuses',
 };
 
 export type EndpointsType = typeof EndPoints;

@@ -18,6 +18,7 @@ import { notificationResolver } from '@/resolvers/setting/notification.resolver'
 import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
 import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
+import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
 import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
 
 export const routes: Routes = [
@@ -191,7 +192,7 @@ export const routes: Routes = [
         path: 'work-shifts-assignment',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.SECURITY_LEADER],
+          roles: [ROLES_ENUM.HR_OFFICER],
           routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
         },
         resolve: { list: userWorkShiftResolver },
@@ -233,6 +234,7 @@ export const routes: Routes = [
       },
       {
         path: 'presence-inquiries',
+        resolve: { list: presenceInquiryResolver },
         loadComponent: () =>
           import(
             '@/views/features/presence-inquiries/presence-inquiries-list/presence-inquiries-list.component'

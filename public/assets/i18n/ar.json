@@ -526,5 +526,13 @@
     "SEND_LINK_ERROR_MESSAGE": "يرجى التحقق من صحة البيانات المدخلة والمحاولة مرة أخرى.",
     "INVALID_TOKEN": "الرابط غير متاح!",
     "INVALID_TOKEN_MESSAGE": "عذرا، هذا الرابط لم يعد صالحًا. قد يكون انتهت صلاحيته أو تم استخدامه مسبقًا."
+  },
+  "BLACKLISTED_NATIONAL_IDS_PAGE": {
+    "BLACKLISTED_NATIONAL_IDS_LIST": "قائمة الهويات المحظورة",
+    "NATIONAL_ID": "رقم الهوية",
+    "ADD_NEW_BLACKLISTED_NATIONAL_ID": "إضافة هوية محظورة جديدة",
+    "EDIT_BLACKLISTED_NATIONAL_ID": "تعديل الهوية المحظورة",
+    "ACTIONS": "الإجراء",
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   }
 }

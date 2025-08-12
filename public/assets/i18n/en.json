@@ -530,5 +530,13 @@
     "SEND_LINK_ERROR_MESSAGE": "Please check the correctness of the entered data and try again.",
     "INVALID_TOKEN": "Invalid or expired reset link",
     "INVALID_TOKEN_MESSAGE": "Sorry, this link is no longer valid. It may have expired or been used previously."
+  },
+  "BLACKLISTED_NATIONAL_IDS_PAGE": {
+    "BLACKLISTED_NATIONAL_IDS_LIST": "Blacklisted National IDs List",
+    "NATIONAL_ID": "National ID",
+    "ADD_NEW_BLACKLISTED_NATIONAL_ID": "Add New Blacklisted National ID",
+    "EDIT_BLACKLISTED_NATIONAL_ID": "Edit Blacklisted National ID",
+    "ACTIONS": "Actions",
+    "NO_DATA_TO_SHOW": "No data to display"
   }
 }

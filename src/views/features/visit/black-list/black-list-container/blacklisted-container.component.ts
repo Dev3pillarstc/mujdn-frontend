@@ -3,15 +3,20 @@ import { Breadcrumb } from 'primeng/breadcrumb';
 import { Component } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { BlackListNationalitiesComponent } from '../black-list-nationalities/black-list-nationalities.component';
-import { BlackListNationalIdsComponent } from '../black-list-national-ids/black-list-national-ids.component';
+import { BlacklistedNationalIdListComponent } from '../black-list-national-ids/blacklisted-national-ids-list.component';
 
 @Component({
-  selector: 'app-black-list-container',
-  imports: [Breadcrumb, TabsModule, BlackListNationalitiesComponent, BlackListNationalIdsComponent],
-  templateUrl: './black-list-container.component.html',
-  styleUrl: './black-list-container.component.scss',
+  selector: 'app-blacklisted-container',
+  imports: [
+    Breadcrumb,
+    TabsModule,
+    BlackListNationalitiesComponent,
+    BlacklistedNationalIdListComponent,
+  ],
+  templateUrl: './blacklisted-container.component.html',
+  styleUrl: './blacklisted-container.component.scss',
 })
-export default class BlackListContainerComponent {
+export default class BlacklistedContainerComponent {
   items: MenuItem[] | undefined;
   home: MenuItem | undefined;
 

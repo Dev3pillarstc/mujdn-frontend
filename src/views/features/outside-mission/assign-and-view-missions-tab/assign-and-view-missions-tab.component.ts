@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  computed,
   effect,
+  ElementRef,
   inject,
   Injector,
   Input,
   OnInit,
   runInInjectionContext,
+  ViewChild,
   WritableSignal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { DatePickerModule } from 'primeng/datepicker';
 import { TableModule } from 'primeng/table';
 import { AddNewMissionPopupComponent } from '../popups/add-new-mission-popup/add-new-mission-popup.component';
@@ -26,19 +27,14 @@ import { WorkMission } from '@/models/features/business/work-mission';
 import WorkMissionFilter from '@/models/features/business/work-mission-filter';
 import { WorkMissionService } from '@/services/features/business/work-mission.service';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
-import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
-import { PaginationParams } from '@/models/shared/pagination-params';
 import { PaginationInfo } from '@/models/shared/response/pagination-info';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
-import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { MenuModule } from 'primeng/menu';
 import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
-interface Adminstration {
-  type: string;
-}
+
 @Component({
   selector: 'app-assign-and-view-missions-tab',
   imports: [
@@ -55,6 +51,7 @@ interface Adminstration {
   ],
   templateUrl: './assign-and-view-missions-tab.component.html',
   styleUrl: './assign-and-view-missions-tab.component.scss',
+  providers: [MessageService]
 })
 export class AssignAndViewMissionsTabComponent
   extends BaseListComponent<
@@ -63,12 +60,13 @@ export class AssignAndViewMissionsTabComponent
     WorkMissionService,
     WorkMissionFilter
   >
-  implements OnInit
-{
+  implements OnInit {
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
   };
+  actionList: MenuItem[] = [];
+  @ViewChild('missionContainer', { static: true }) missionContainer!: ElementRef;
 
   // Services and dependencies
   workMissionService = inject(WorkMissionService);
@@ -136,6 +134,13 @@ export class AssignAndViewMissionsTabComponent
         }
       });
     });
+
+    this.initializeActionList();
+
+    // Re-initialize action list when language changes
+    this.translateService.onLangChange.subscribe(() => {
+      this.initializeActionList();
+    });
   }
 
   protected override getBreadcrumbKeys(): {
@@ -148,10 +153,10 @@ export class AssignAndViewMissionsTabComponent
 
   protected override mapModelToExcelRow(model: WorkMission): { [key: string]: any } {
     return {
-      'اسم المهمة بالعربية': model.nameAr,
-      'اسم المهمة بالانجليزية': model.nameEn,
-      'تاريخ البداية': model.startDate,
-      'تاريخ النهاية': model.endDate,
+      [this.translateService.instant('WORK_MISSIONS.MISSION_NAME_AR')]: model.nameAr,
+      [this.translateService.instant('WORK_MISSIONS.MISSION_NAME_EN')]: model.nameEn,
+      [this.translateService.instant('WORK_MISSIONS.START_DATE')]: model.startDate,
+      [this.translateService.instant('WORK_MISSIONS.END_DATE')]: model.endDate,
     };
   }
   addOrEditModel(mission?: WorkMission): void {
@@ -191,25 +196,29 @@ export class AssignAndViewMissionsTabComponent
     this.deleteModel(missionId);
   }
 
-  getMenuItems(mission: WorkMission): MenuItem[] {
-    return [
+  setSelectedModel(model: WorkMission) {
+    this.selectedModel = model;
+  }
+
+  private initializeActionList(): void {
+    this.actionList = [
       {
-        label: 'تعديل المهمة',
-        icon: 'pi pi-pencil',
+        label: this.translateService.instant('COMMON.EDIT'),
+        icon: 'pi pi-refresh',
         command: () => {
-          this.addOrEditModel(mission);
+          this.addOrEditModel(this.selectedModel);
         },
       },
       {
         separator: true,
       },
       {
-        label: 'حذف المهمة',
-        icon: 'pi pi-trash',
+        label: this.translateService.instant('COMMON.DELETE'),
+        icon: 'pi pi-refresh',
         command: () => {
-          this.deleteMission(mission.id);
-        },
-      },
+          this.deleteMission(this.selectedModel!.id);
+        }
+      }
     ];
   }
 }

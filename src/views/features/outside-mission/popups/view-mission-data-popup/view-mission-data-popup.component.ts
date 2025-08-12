@@ -5,11 +5,11 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { DatePipe } from '@angular/common';
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-view-mission-data-popup',
-  imports: [DatePipe],
+  imports: [DatePipe, TranslatePipe],
   templateUrl: './view-mission-data-popup.component.html',
   styleUrl: './view-mission-data-popup.component.scss',
 })

@@ -10,25 +10,22 @@
         </ng-template>
       </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        مهام الأعمال و الاسناد
+        {{ 'WORK_MISSIONS.WORK_MISSIONS' | translate }}
       </h3>
     </div>
     <!-- Tabs Structure Only -->
     <p-tabs value="0">
       <p-tablist class="my-6">
-        <p-tab value="0">سجل مهامي</p-tab>
-        <p-tab value="1">اسناد مهام الأعمال</p-tab>
+        <p-tab value="0">{{ 'WORK_MISSIONS.MY_WORK_MISSIONS' | translate }}</p-tab>
+        <p-tab value="1">{{ 'WORK_MISSIONS.ASSIGN_WORK_MISSIONS' | translate }}</p-tab>
       </p-tablist>
       <p-tabpanels>
         <p-tabpanel value="0">
           <app-my-missions-tab></app-my-missions-tab>
         </p-tabpanel>
         <p-tabpanel value="1">
-          <app-assign-and-view-missions-tab
-            [missionsSignal]="missions"
-            [assignableEmployeesSignal]="assignableEmployees"
-            [departmentsSignal]="departments"
-          >
+          <app-assign-and-view-missions-tab [missionsSignal]="missions"
+            [assignableEmployeesSignal]="assignableEmployees" [departmentsSignal]="departments">
           </app-assign-and-view-missions-tab>
         </p-tabpanel>
       </p-tabpanels>

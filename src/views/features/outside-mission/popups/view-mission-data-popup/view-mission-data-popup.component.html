@@ -3,67 +3,66 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">بيانات المهمة و الاسناد</h3>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">{{'WORK_MISSIONS.MISSION_DATA' | translate}}</h3>
     <div class="bg-[#074d31] rounded-2xl p-6 mb-6">
       <div class="bg-[#1B835433] border border-[#1b8354] rounded-2xl px-6 py-3">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="flex flex-col gap-1 text-white">
-            <span class="text-[14px]">اسم المهمة بالعربية</span>
+            <span class="text-[14px]">{{ 'WORK_MISSIONS.MISSION_NAME_AR' | translate }}</span>
             <h4 class="font-semibold text-[16px]">{{ model.nameAr }}</h4>
           </div>
           <div class="flex flex-col gap-1 text-white">
-            <span class="text-[14px]">اسم المهمة بالانجليزية</span>
+            <span class="text-[14px]">{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</span>
             <h4 class="font-semibold text-[16px]">{{ model.nameEn }}</h4>
           </div>
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">تاريخ البداية</span>
+          <span class="text-[14px]">{{ 'WORK_MISSIONS.START_DATE' | translate }}</span>
           <h4 class="font-semibold text-[16px]">{{ model.startDate | date: 'dd/MM/yyyy' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">تاريخ النهاية</span>
+          <span class="text-[14px]">{{ 'WORK_MISSIONS.END_DATE' | translate }}</span>
           <h4 class="font-semibold text-[16px]">{{ model.endDate | date: 'dd/MM/yyyy' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">مسند المهمة</span>
+          <span class="text-[14px]">{{ 'WORK_MISSIONS.MISSION_ASSIGNER' | translate }}</span>
           <h4 class="font-semibold text-[16px]">
             {{
-              isCurrentLanguageEnglish()
-                ? model.missionCreator?.nameEn
-                : model.missionCreator?.nameAr
+            isCurrentLanguageEnglish()
+            ? model.missionCreator?.nameEn
+            : model.missionCreator?.nameAr
             }}
           </h4>
         </div>
       </div>
     </div>
     <div class="bg-[#f3f4f6] rounded-2xl p-6">
-      <h4 class="text-[#6c737f] text-[14px] mb-2">وصف المهمة</h4>
+      <h4 class="text-[#6c737f] text-[14px] mb-2">{{ 'WORK_MISSIONS.DESCRIPTION' | translate }}</h4>
       <p class="text-[#161616] text-[16px] font-semibold">
         {{ model.description }}
       </p>
     </div>
     <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-      <h4 class="text-[#6c737f] text-[14px]">الموظفون المعنيون بتنفيذ المهام</h4>
+      <h4 class="text-[#6c737f] text-[14px]">{{ 'WORK_MISSIONS.ASSIGNED_EMPLOYEES' | translate }}</h4>
       <div class="flex flex-wrap gap-4 mt-4">
         @if (model.assignedEmployees && model.assignedEmployees.length > 0) {
-          @for (item of model.assignedEmployees; track $index) {
-            <div class="bg-[#f3f4f6] rounded-full px-3">
-              <span class="text-[#161616] font-medium"
-                >{{ isCurrentLanguageEnglish() ? item.nameEn : item.nameAr }}
-              </span>
-            </div>
-          }
+        @for (item of model.assignedEmployees; track $index) {
+        <div class="bg-[#f3f4f6] rounded-full px-3">
+          <span class="text-[#161616] font-medium">{{ isCurrentLanguageEnglish() ? item.nameEn : item.nameAr }}
+          </span>
+        </div>
+        }
         } @else {
-          <div class="bg-[#f3f4f6] rounded-full px-3">
-            <span class="text-[#161616] font-medium">لا يوجد موظفون معينون</span>
-          </div>
+        <div class="bg-[#f3f4f6] rounded-full px-3">
+          <span class="text-[#161616] font-medium">{{ 'WORK_MISSIONS.NO_EMPLOYEES_SELECTED' | translate }}</span>
+        </div>
         }
       </div>
     </div>
     <div class="actions mt-6 flex items-center justify-between gap-4">
-      <button (click)="close()" class="btn gray-btn">الغاء</button>
+      <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
     </div>
   </div>
 </div>

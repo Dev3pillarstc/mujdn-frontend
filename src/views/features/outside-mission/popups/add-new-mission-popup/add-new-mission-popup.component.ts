@@ -23,6 +23,7 @@ import { Observable } from 'rxjs';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { CustomValidators } from '@/validators/custom-validators';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-add-new-mission-popup',
@@ -33,7 +34,6 @@ import { CustomValidators } from '@/validators/custom-validators';
     InputTextModule,
     TabsModule,
     TableModule,
-    Select,
     PaginatorModule,
     ReactiveFormsModule,
     RequiredMarkerDirective,
@@ -46,14 +46,15 @@ import { CustomValidators } from '@/validators/custom-validators';
 export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission> implements OnInit {
   override initPopup(): void {
     this.model = this.data.model;
+    this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
   }
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm(), {
       validators: [CustomValidators.startBeforeEnd('startDate', 'endDate')],
     });
   }
-  override saveFail(error: Error): void {}
-  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
+  override saveFail(error: Error): void { }
+  override afterSave(model: WorkMission, dialogRef: M<any, any>): void { }
   override beforeSave(model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
   }
@@ -67,6 +68,8 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
   date2: Date | undefined;
   model!: WorkMission;
   declare form: FormGroup;
+  declare viewMode: ViewModeEnum;
+  isCreateMode = false;
   translateService = inject(TranslateService);
 
   constructor(

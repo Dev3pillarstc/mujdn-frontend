@@ -1,46 +1,39 @@
-import { Component, inject } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Breadcrumb } from 'primeng/breadcrumb';
-import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { MatDialog } from '@angular/material/dialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { Select } from 'primeng/select';
-import { DatePickerModule } from 'primeng/datepicker';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MenuItem } from 'primeng/api';
+import { DatePickerModule } from 'primeng/datepicker';
+import { InputTextModule } from 'primeng/inputtext';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { Select } from 'primeng/select';
+import { TableModule } from 'primeng/table';
 import { TabsModule } from 'primeng/tabs';
-import { PresenceInquiriesPopupComponent } from '../presence-inquiries-popup/presence-inquiries-popup.component';
 import { AssignEmployeeResponsibilityPopupComponent } from '../assign-employee-responsibility-popup/assign-employee-responsibility-popup.component';
+import { PresenceInquiriesPopupComponent } from '../presence-inquiries-popup/presence-inquiries-popup.component';
 import { ViewEmployeesCheckPopupComponent } from '../view-employees-check-popup/view-employees-check-popup.component';
-import { MyPresenceInquiriesListComponent } from '../my-presence-inquiries-list/my-presence-inquiries-list.component';
-import { OthersPresenceInquiriesListComponent } from '../others-presence-inquiries-list/others-presence-inquiries-list.component';
 interface Adminstration {
   type: string;
 }
-
 @Component({
-  selector: 'app-presence-inquiries-list',
+  selector: 'app-others-presence-inquiries-list',
   imports: [
-    Breadcrumb,
     InputTextModule,
-    TableModule,
-    CommonModule,
-    RouterModule,
     CommonModule,
     PaginatorModule,
     Select,
     DatePickerModule,
-    FormsModule,
     TabsModule,
-    MyPresenceInquiriesListComponent,
-    OthersPresenceInquiriesListComponent,
+    TableModule,
+    FormsModule,
   ],
-  templateUrl: './presence-inquiries-list.component.html',
-  styleUrl: './presence-inquiries-list.component.scss',
+  templateUrl: './others-presence-inquiries-list.component.html',
+  styleUrl: './others-presence-inquiries-list.component.scss',
 })
-export default class PresenceInquiriesListComponent {
+export class OthersPresenceInquiriesListComponent {
+  attendance!: any[];
+  first: number = 0;
+  rows: number = 10;
   breadcrumbs: MenuItem[] | undefined;
   dialogSize = {
     width: '100%',
@@ -51,16 +44,11 @@ export default class PresenceInquiriesListComponent {
   date2: Date | undefined;
   adminstrations: Adminstration[] | undefined;
   selectedAdminstration: Adminstration | undefined;
-  attendance!: any[];
-  first: number = 0;
-  rows: number = 10;
-  matDialog = inject(MatDialog);
-
-  constructor() {}
 
   ngOnInit() {
     this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'مسائلات توثيق التواجد' }];
     this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
+
     // Updated dummy data to match your Arabic table structure
     this.attendance = [
       {

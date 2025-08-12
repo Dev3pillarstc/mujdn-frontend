@@ -11,6 +11,7 @@ import { TabsModule } from 'primeng/tabs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BlackListNationalityPopupComponent } from '../black-list-nationality-popup/black-list-nationality-popup.component';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { BlackListNationalityIdsPopupComponent } from '../black-list-nationality-ids-popup/black-list-nationality-ids-popup.component';
 @Component({
   selector: 'app-black-list-national-ids',
   imports: [
@@ -60,7 +61,10 @@ export class BlackListNationalIdsComponent {
     };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
-    const dialogRef = this.matDialog.open(BlackListNationalityPopupComponent as any, dialogConfig);
+    const dialogRef = this.matDialog.open(
+      BlackListNationalityIdsPopupComponent as any,
+      dialogConfig
+    );
 
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       console.log('closed');

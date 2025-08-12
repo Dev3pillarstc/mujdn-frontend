@@ -190,7 +190,7 @@ export const routes: Routes = [
         path: 'work-shifts-assignment',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.SECURITY_LEADER],
+          roles: [ROLES_ENUM.HR_OFFICER],
           routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
         },
         resolve: { list: userWorkShiftResolver },

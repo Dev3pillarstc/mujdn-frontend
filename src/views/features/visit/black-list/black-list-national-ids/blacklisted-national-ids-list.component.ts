@@ -13,7 +13,7 @@ import { TableModule } from 'primeng/table';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { BlackListNationalIdsPopupComponent } from '../black-list-national-ids-popup/blacklisted-national-ids-popup.component';
+import { BlacklistedNationalIdsPopupComponent } from '../black-list-national-ids-popup/blacklisted-national-ids-popup.component';
 
 @Component({
   selector: 'app-blacklisted-national-id-list',
@@ -33,7 +33,7 @@ import { BlackListNationalIdsPopupComponent } from '../black-list-national-ids-p
 export class BlacklistedNationalIdListComponent
   extends BaseListComponent<
     BlacklistedNationalId,
-    BlackListNationalIdsPopupComponent,
+    BlacklistedNationalIdsPopupComponent,
     BlacklistedNationalIdService,
     BlacklistedNationalIdFilter
   >
@@ -58,7 +58,7 @@ export class BlacklistedNationalIdListComponent
 
   override openDialog(model: BlacklistedNationalId): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    this.openBaseDialog(BlackListNationalIdsPopupComponent as any, model, viewMode);
+    this.openBaseDialog(BlacklistedNationalIdsPopupComponent as any, model, viewMode);
   }
 
   addOrEditModel(blacklistedNationalId?: BlacklistedNationalId) {

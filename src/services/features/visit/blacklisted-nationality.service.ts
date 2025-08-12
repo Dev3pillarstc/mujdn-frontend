@@ -8,12 +8,12 @@ import { Observable, of, switchMap } from 'rxjs';
 
 @CastResponseContainer({
   $default: {
-    model: () => BaseLookupModel,
+    model: () => BlacklistedNationality,
   },
   $pagination: {
-    model: () => PaginatedList<BaseLookupModel>,
+    model: () => PaginatedList<BlacklistedNationality>,
     unwrap: 'data',
-    shape: { 'list.*': () => BaseLookupModel },
+    shape: { 'list.*': () => BlacklistedNationality },
   },
 })
 @Injectable({

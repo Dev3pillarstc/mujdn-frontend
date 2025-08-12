@@ -20,6 +20,7 @@ import { userProfileResolver } from '@/resolvers/features/user-profile.resolver'
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
 import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
 import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blacklisted-national-id.resolver';
+import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -94,7 +95,7 @@ export const routes: Routes = [
       {
         path: 'black-list',
         canActivate: [authGuard],
-        resolve: { list: blacklistedNationalIdResolver },
+        resolve: { list: blacklistResolver },
         data: {
           roles: [ROLES_ENUM.SECURITY_LEADER], // all roles can view the page
           routeId: RouteIdsEnum.BLACKLIST,

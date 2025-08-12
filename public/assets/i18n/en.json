@@ -405,7 +405,8 @@
     "CITIES": "Cities",
     "REGIONS": "Regions",
     "PERMISSIONS_SETTINGS": "Permissions Settings",
-    "NOTIFICATIONS": "Notifications"
+    "NOTIFICATIONS": "Notifications",
+    "BLACKLIST": "Visitor blacklist criteria"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "Notification Settings",
@@ -536,6 +537,15 @@
     "NATIONAL_ID": "National ID",
     "ADD_NEW_BLACKLISTED_NATIONAL_ID": "Add New Blacklisted National ID",
     "EDIT_BLACKLISTED_NATIONAL_ID": "Edit Blacklisted National ID",
+    "ACTIONS": "Actions",
+    "NO_DATA_TO_SHOW": "No data to display"
+  },
+  "BLACKLISTED_NATIONALITIES_PAGE": {
+    "BLACKLISTED_NATIONALITIES_LIST": "Blacklisted Nationalities List",
+    "NATIONALITY_IN_ARABIC": "Nationality in Arabic",
+    "NATIONALITY_IN_ENGLISH": "Nationality in English",
+    "ADD_NEW_BLACKLISTED_NATIONALITY": "Add New Blacklisted Nationality",
+    "EDIT_BLACKLISTED_NATIONALITY": "Edit Blacklisted Nationality",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
   }

@@ -12,6 +12,8 @@ export class BlacklistedNationality extends BaseCrudModel<
   BlacklistedNationalityService
 > {
   override $$__service_name__$$: string = 'BlacklistedNationalityService';
+  declare nameAr: string;
+  declare nameEn: string;
   declare fkNationalityId: number;
 
   constructor() {

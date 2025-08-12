@@ -51,7 +51,7 @@ import { PaginatedListResponseData } from '@/models/shared/response/paginated-li
   ],
   templateUrl: './assign-and-view-missions-tab.component.html',
   styleUrl: './assign-and-view-missions-tab.component.scss',
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class AssignAndViewMissionsTabComponent
   extends BaseListComponent<
@@ -60,7 +60,8 @@ export class AssignAndViewMissionsTabComponent
     WorkMissionService,
     WorkMissionFilter
   >
-  implements OnInit {
+  implements OnInit
+{
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -75,18 +76,12 @@ export class AssignAndViewMissionsTabComponent
 
   // Filter model
   filterOptions: WorkMissionFilter = new WorkMissionFilter();
-
-  assignableEmployeesPaginationInfo: PaginationInfo = new PaginationInfo();
   // Accept signals as inputs
   @Input() missionsSignal!: WritableSignal<PaginatedList<WorkMission>>;
-  @Input() assignableEmployeesSignal!: WritableSignal<
-    PaginatedListResponseData<UserProfileDataWithNationalId>
-  >;
   @Input() departmentsSignal!: WritableSignal<BaseLookupModel[]>;
 
   // Component data
   missions: WorkMission[] = [];
-  assignableEmployees: UserProfileDataWithNationalId[] = [];
   departments: BaseLookupModel[] = [];
 
   // Base class overrides
@@ -116,14 +111,6 @@ export class AssignAndViewMissionsTabComponent
         if (currentMissions) {
           this.list = currentMissions.list || [];
           this.paginationInfo = currentMissions.paginationInfo || null;
-        }
-      });
-
-      effect(() => {
-        const currentEmployees = this.assignableEmployeesSignal?.();
-        if (currentEmployees?.data.list) {
-          this.assignableEmployees = currentEmployees.data.list;
-          this.assignableEmployeesPaginationInfo = currentEmployees.data.paginationInfo || null;
         }
       });
 
@@ -173,7 +160,9 @@ export class AssignAndViewMissionsTabComponent
   openAssignEmployeesDialog(mission: WorkMission): void {
     const missionObj = mission || new WorkMission();
     const viewMode = ViewModeEnum.EDIT;
-    const data = { employees: this.assignableEmployees, departments: this.departments };
+    const data = {
+      departments: this.departments,
+    };
     this.openBaseDialog(AssignEmployeesComponent as any, mission, viewMode, data);
   }
 
@@ -217,8 +206,8 @@ export class AssignAndViewMissionsTabComponent
         icon: 'pi pi-refresh',
         command: () => {
           this.deleteMission(this.selectedModel!.id);
-        }
-      }
+        },
+      },
     ];
   }
 }

@@ -557,6 +557,8 @@
     "DESCRIPTION": "description",
     "MISSION_ASSIGNER": "Mission assigner",
     "START_DATE": "Date from",
-    "END_DATE": "Date to"
+    "END_DATE": "Date to",
+    "DEPARTMENT_NAME_ARABIC": "Department name in Arabic",
+    "DEPARTMENT_NAME_ENGLISH": "Department name in English"
   }
 }

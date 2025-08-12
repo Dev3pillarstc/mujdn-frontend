@@ -13,7 +13,6 @@ import { catchError, forkJoin, of } from 'rxjs';
 export const WorkMissionResolver: ResolveFn<
   {
     missions: PaginatedList<WorkMission> | null;
-    assignableEmployees: PaginatedList<UserProfileDataWithNationalId> | null;
     departments: BaseLookupModel[] | null;
   } | null
 > = () => {
@@ -23,9 +22,6 @@ export const WorkMissionResolver: ResolveFn<
   return forkJoin({
     missions: workMissionService
       .loadPaginated(new PaginationParams())
-      .pipe(catchError(() => of(null))),
-    assignableEmployees: workMissionService
-      .getEmployeesToBeAssigned(new PaginationParams())
       .pipe(catchError(() => of(null))),
     departments: departmentService.getLookup().pipe(catchError(() => of(null))),
   }).pipe(catchError(() => of(null)));

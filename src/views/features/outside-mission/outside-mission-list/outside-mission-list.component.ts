@@ -50,9 +50,6 @@ export default class OutsideMissionListComponent implements OnInit {
   breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   missions = signal<PaginatedList<WorkMission>>(new PaginatedList<WorkMission>());
-  assignableEmployees = signal<PaginatedListResponseData<UserProfileDataWithNationalId>>(
-    new PaginatedListResponseData<UserProfileDataWithNationalId>()
-  );
   departments = signal<BaseLookupModel[]>([]);
   matDialog = inject(MatDialog);
   dialog = inject(MatDialog);
@@ -60,7 +57,6 @@ export default class OutsideMissionListComponent implements OnInit {
   ngOnInit() {
     // Set the signal values
     this.missions.set(this.activatedRoute.snapshot.data['list'].missions);
-    this.assignableEmployees.set(this.activatedRoute.snapshot.data['list'].assignableEmployees);
     this.departments.set(this.activatedRoute.snapshot.data['list'].departments);
   }
 }

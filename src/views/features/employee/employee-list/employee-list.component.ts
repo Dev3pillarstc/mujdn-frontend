@@ -65,8 +65,9 @@ import { DropdownModule } from 'primeng/dropdown';
 })
 export default class EmployeeListComponent
   extends BaseListComponent<User, AddNewEmployeePopupComponent, UserService, UserFilter>
-  implements OnInit {
-  @ViewChild('employeeContainer', { static: true }) employeeContainer!: ElementRef
+  implements OnInit
+{
+  @ViewChild('employeeContainer', { static: true }) employeeContainer!: ElementRef;
   languageService = inject(LanguageService);
   cityService = inject(CityService);
   regionService = inject(RegionService);

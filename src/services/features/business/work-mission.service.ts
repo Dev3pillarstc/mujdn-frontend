@@ -1,5 +1,6 @@
 import { LookupBaseService } from '@/abstracts/lookup-base.service';
 import { OptionsContract } from '@/contracts/options-contract';
+import { MissionEmployeesAssignement } from '@/models/features/business/mission-employees-assignment';
 import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
@@ -42,7 +43,7 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
   getEmployeesToBeAssigned(
     paginationParams?: PaginationParams,
     filterOptions?: OptionsContract
-  ): Observable<PaginatedList<UserProfileDataWithNationalId>> {
+  ): Observable<PaginatedListResponseData<UserProfileDataWithNationalId>> {
     // Build HttpParams safely
     let httpParams = new HttpParams();
     if (paginationParams) {
@@ -57,6 +58,12 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
     return this.http.post(`${this.getUrlSegment()}/GetEmployeesToBeAssigned`, filterOptions || {}, {
       params: httpParams,
       withCredentials: true,
-    }) as unknown as Observable<PaginatedList<UserProfileDataWithNationalId>>;
+    }) as unknown as Observable<PaginatedListResponseData<UserProfileDataWithNationalId>>;
+  }
+
+  addUsersToMission(model: MissionEmployeesAssignement) {
+    return this.http.post(`${this.getUrlSegment()}/AddUsersToMission`, model, {
+      withCredentials: true,
+    });
   }
 }

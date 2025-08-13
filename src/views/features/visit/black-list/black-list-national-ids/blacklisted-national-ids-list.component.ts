@@ -1,8 +1,9 @@
+// blacklisted-national-ids-list.component.ts
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { BlacklistedNationalId } from '@/models/features/visit/blacklisted-national-id';
 import { BlacklistedNationalIdFilter } from '@/models/features/visit/blacklisted-national-id-filter';
 import { BlacklistedNationalIdService } from '@/services/features/visit/blacklisted-national-id.service';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -14,6 +15,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BlacklistedNationalIdsPopupComponent } from '../black-list-national-ids-popup/blacklisted-national-ids-popup.component';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-blacklisted-national-id-list',
@@ -37,21 +39,71 @@ export class BlacklistedNationalIdListComponent
     BlacklistedNationalIdService,
     BlacklistedNationalIdFilter
   >
-  implements OnInit
+  implements OnInit, OnChanges
 {
   @Input() isActive: boolean = false;
+  @Input() shouldInitialize: boolean = false;
+
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
+
   blacklistedNationalIdService = inject(BlacklistedNationalIdService);
   filterModel: BlacklistedNationalIdFilter = new BlacklistedNationalIdFilter();
+
+  private hasLoadedData = false;
 
   override get service() {
     return this.blacklistedNationalIdService;
   }
 
-  override initListComponent(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    // Load data when shouldInitialize becomes true and we haven't loaded yet
+    if (
+      changes['shouldInitialize'] &&
+      this.shouldInitialize &&
+      this.isActive &&
+      !this.hasLoadedData
+    ) {
+      this.loadInitialData();
+    }
+  }
+
+  override ngOnInit(): void {
+    // Override the base ngOnInit to prevent automatic data loading
+    this.setHomeItem();
+    this.initListComponent();
+
+    // Only load data if we should initialize and are active
+    if (this.shouldInitialize && this.isActive && !this.hasLoadedData) {
+      this.loadInitialData();
+    }
+
+    // Listen to language changes
+    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.setHomeItem();
+    });
+  }
+
+  private loadInitialData(): void {
+    if (this.hasLoadedData) return;
+
+    this.loadList().subscribe({
+      next: (response) => {
+        this.handleLoadListSuccess(response);
+        this.hasLoadedData = true;
+      },
+      error: (error) => {
+        console.error('Error loading national ID data:', error);
+        this.handleLoadListError();
+      },
+    });
+  }
+
+  override initListComponent(): void {
+    // Any additional initialization logic specific to national ID list
+  }
 
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'BLACKLISTED_NATIONAL_IDS_PAGE.BLACKLISTED_NATIONAL_IDS_LIST' }];
@@ -62,7 +114,7 @@ export class BlacklistedNationalIdListComponent
     this.openBaseDialog(BlacklistedNationalIdsPopupComponent as any, model, viewMode);
   }
 
-  addOrEditModel(blacklistedNationalId?: BlacklistedNationalId) {
+  addOrEditModel(blacklistedNationalId?: BlacklistedNationalId): void {
     blacklistedNationalId = blacklistedNationalId || new BlacklistedNationalId();
     this.openDialog(blacklistedNationalId);
   }

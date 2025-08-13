@@ -85,7 +85,7 @@ export class SideBarLinksService {
     },
     {
       labelKey: 'MENU.VISITS',
-      iconUrl: 'assets/icons/time-icon.svg',
+      iconUrl: 'assets/icons/menu-icons/visits.svg',
       children: [
         {
           labelKey: 'MENU.BLACKLIST',

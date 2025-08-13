@@ -2,7 +2,9 @@
   "ENVIRONMENTS_URLS": {
     "DEV": "http://localhost:7107/api",
     "TESTING": "http://m-front.dev3pillars.org/api",
-    "PRE_PRODUCTION": "http://dev3pillarstc-001-site1.rtempurl.com/api"
+    "PRE_PRODUCTION": "http://10.0.3.54/api",
+    "PRE_PRODUCTION_IMAGE": "http://dev3pillarstc-001-site1.rtempurl.com/api",
+    "PRODUCTION": ""
   },
   "API_VERSION": "",
   "DEPLOY_VERSION": "1.0.5",

@@ -28,16 +28,12 @@
           <app-blacklisted-nationality-list
             [isActive]="isNationalitiesTabActive()"
             [nationalities]="nationalities"
-            [initialData]="nationalityTabData"
           />
         </p-tabpanel>
 
         <!-- National ID Tab Panel -->
         <p-tabpanel value="1">
-          <app-blacklisted-national-id-list
-            [isActive]="isNationalIdsTabActive()"
-            [shouldInitialize]="isNationalIdTabInitialized()"
-          />
+          <app-blacklisted-national-id-list [isActive]="isNationalIdsTabActive()" />
         </p-tabpanel>
       </p-tabpanels>
     </p-tabs>

@@ -40,7 +40,6 @@ export class BlacklistedNationalityListComponent
 {
   @Input() isActive: boolean = false;
   @Input() nationalities: BaseLookupModel[] = [];
-  @Input() initialData: PaginatedList<BlacklistedNationality> | null = null;
 
   override dialogSize = {
     width: '100%',
@@ -50,33 +49,36 @@ export class BlacklistedNationalityListComponent
   blacklistedNationalityService = inject(BlacklistedNationalityService);
   filterModel: BlacklistedNationalityFilter = new BlacklistedNationalityFilter();
 
-  private hasInitializedFromData = false;
+  private hasInitialized = false;
 
   override get service() {
     return this.blacklistedNationalityService;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Handle initial data changes from parent
-    if (changes['initialData'] && this.initialData && !this.hasInitializedFromData) {
-      this.initializeFromInitialData();
+    if (changes['isActive']) {
+      const current = changes['isActive'].currentValue;
+      const previous = changes['isActive'].previousValue;
+
+      // Skip first trigger after component init
+      if (!this.hasInitialized) {
+        this.hasInitialized = true;
+        return;
+      }
+
+      // Only load data if tab is active and this is not the initial change
+      if (current && !previous) {
+        this.loadDataIfNeeded();
+      }
     }
   }
 
-  override ngOnInit(): void {
-    this.initListComponent();
-
-    // Initialize from initial data if available
-    if (this.initialData && !this.hasInitializedFromData) {
-      this.initializeFromInitialData();
-    }
-  }
-
-  private initializeFromInitialData(): void {
-    if (!this.initialData) return;
-
-    this.handleLoadListSuccess(this.initialData);
-    this.hasInitializedFromData = true;
+  private loadDataIfNeeded(): void {
+    // Load data when tab becomes active
+    this.loadList().subscribe({
+      next: (response) => this.handleLoadListSuccess(response),
+      error: this.handleLoadListError,
+    });
   }
 
   override initListComponent(): void {}
@@ -99,10 +101,8 @@ export class BlacklistedNationalityListComponent
 
   protected override mapModelToExcelRow(model: BlacklistedNationality): { [key: string]: any } {
     return {
-      [this.translateService.instant('BLACKLISTED_NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC')]:
-        model.nameAr,
-      [this.translateService.instant('BLACKLISTED_NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH')]:
-        model.nameEn,
+      [this.translateService.instant('BLACKLIST_PAGE.NATIONALITY_IN_ARABIC')]: model.nameAr,
+      [this.translateService.instant('BLACKLIST_PAGE.NATIONALITY_IN_ENGLISH')]: model.nameEn,
     };
   }
 }

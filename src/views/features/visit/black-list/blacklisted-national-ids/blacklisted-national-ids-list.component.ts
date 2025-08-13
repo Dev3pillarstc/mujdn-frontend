@@ -39,7 +39,6 @@ export class BlacklistedNationalIdListComponent
   implements OnInit, OnChanges
 {
   @Input() isActive: boolean = false;
-  @Input() shouldInitialize: boolean = false;
 
   override dialogSize = {
     width: '100%',
@@ -49,45 +48,22 @@ export class BlacklistedNationalIdListComponent
   blacklistedNationalIdService = inject(BlacklistedNationalIdService);
   filterModel: BlacklistedNationalIdFilter = new BlacklistedNationalIdFilter();
 
-  private hasLoadedData = false;
-
   override get service() {
     return this.blacklistedNationalIdService;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Load data when shouldInitialize becomes true and we haven't loaded yet
-    if (
-      changes['shouldInitialize'] &&
-      this.shouldInitialize &&
-      this.isActive &&
-      !this.hasLoadedData
-    ) {
-      this.loadInitialData();
+    // Watch for changes in isActive input
+    if (changes['isActive'] && changes['isActive'].currentValue === true) {
+      this.loadDataIfNeeded();
     }
   }
 
-  override ngOnInit(): void {
-    this.initListComponent();
-
-    // Only load data if we should initialize and are active
-    if (this.shouldInitialize && this.isActive && !this.hasLoadedData) {
-      this.loadInitialData();
-    }
-  }
-
-  private loadInitialData(): void {
-    if (this.hasLoadedData) return;
-
+  private loadDataIfNeeded(): void {
+    // Load data when tab becomes active
     this.loadList().subscribe({
-      next: (response) => {
-        this.handleLoadListSuccess(response);
-        this.hasLoadedData = true;
-      },
-      error: (error) => {
-        console.error('Error loading national ID data:', error);
-        this.handleLoadListError();
-      },
+      next: (response) => this.handleLoadListSuccess(response),
+      error: this.handleLoadListError,
     });
   }
 
@@ -109,8 +85,7 @@ export class BlacklistedNationalIdListComponent
 
   protected override mapModelToExcelRow(model: BlacklistedNationalId): { [key: string]: any } {
     return {
-      [this.translateService.instant('BLACKLISTED_NATIONAL_IDS_PAGE.NATIONAL_ID')]:
-        model.nationalId,
+      [this.translateService.instant('BLACKLIST_PAGE.NATIONAL_ID')]: model.nationalId,
     };
   }
 }

@@ -12,7 +12,7 @@ import { TableModule } from 'primeng/table';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { BlacklistedNationalIdsPopupComponent } from '../black-list-national-ids-popup/blacklisted-national-ids-popup.component';
+import { BlacklistedNationalIdsPopupComponent } from '../blacklisted-national-ids-popup/blacklisted-national-ids-popup.component';
 import { takeUntil } from 'rxjs';
 
 @Component({

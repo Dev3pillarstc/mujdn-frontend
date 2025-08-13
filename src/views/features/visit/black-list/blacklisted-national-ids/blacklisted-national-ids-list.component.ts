@@ -4,10 +4,8 @@ import { BlacklistedNationalId } from '@/models/features/visit/blacklisted-natio
 import { BlacklistedNationalIdFilter } from '@/models/features/visit/blacklisted-national-id-filter';
 import { BlacklistedNationalIdService } from '@/services/features/visit/blacklisted-national-id.service';
 import { Component, inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { Breadcrumb } from 'primeng/breadcrumb';
+import { TranslatePipe } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
@@ -20,7 +18,6 @@ import { takeUntil } from 'rxjs';
 @Component({
   selector: 'app-blacklisted-national-id-list',
   imports: [
-    Breadcrumb,
     TableModule,
     PaginatorModule,
     InputTextModule,
@@ -71,19 +68,12 @@ export class BlacklistedNationalIdListComponent
   }
 
   override ngOnInit(): void {
-    // Override the base ngOnInit to prevent automatic data loading
-    this.setHomeItem();
     this.initListComponent();
 
     // Only load data if we should initialize and are active
     if (this.shouldInitialize && this.isActive && !this.hasLoadedData) {
       this.loadInitialData();
     }
-
-    // Listen to language changes
-    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.setHomeItem();
-    });
   }
 
   private loadInitialData(): void {
@@ -101,9 +91,7 @@ export class BlacklistedNationalIdListComponent
     });
   }
 
-  override initListComponent(): void {
-    // Any additional initialization logic specific to national ID list
-  }
+  override initListComponent(): void {}
 
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'BLACKLISTED_NATIONAL_IDS_PAGE.BLACKLISTED_NATIONAL_IDS_LIST' }];

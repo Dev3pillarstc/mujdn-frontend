@@ -9,11 +9,11 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         <div class="relative">
           <label class="label" for="nationalId">{{
-            'BLACKLISTED_NATIONAL_IDS_PAGE.NATIONAL_ID' | translate
+            'BLACKLIST_PAGE.NATIONAL_ID' | translate
           }}</label>
           <input
             [(ngModel)]="filterModel.nationalId"
-            [placeholder]="'BLACKLISTED_NATIONAL_IDS_PAGE.NATIONAL_ID' | translate"
+            [placeholder]="'BLACKLIST_PAGE.NATIONAL_ID' | translate"
             class="peer"
             fluid="true"
             id="nationalId"
@@ -41,7 +41,7 @@
       class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
     >
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-        {{ 'BLACKLISTED_NATIONAL_IDS_PAGE.BLACKLISTED_NATIONAL_IDS_LIST' | translate }}
+        {{ 'BLACKLIST_PAGE.BLACKLISTED_NATIONAL_IDS_LIST' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <button
@@ -52,9 +52,7 @@
         </button>
         <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
           <img alt="" src="assets/icons/plus.svg" />
-          <span>{{
-            'BLACKLISTED_NATIONAL_IDS_PAGE.ADD_NEW_BLACKLISTED_NATIONAL_ID' | translate
-          }}</span>
+          <span>{{ 'BLACKLIST_PAGE.ADD_NEW_BLACKLISTED_NATIONAL_ID' | translate }}</span>
         </button>
       </div>
     </div>
@@ -62,8 +60,8 @@
       <p-table [value]="list">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'BLACKLISTED_NATIONAL_IDS_PAGE.NATIONAL_ID' | translate }}</th>
-            <th class="w-[100px]">{{ 'BLACKLISTED_NATIONAL_IDS_PAGE.ACTIONS' | translate }}</th>
+            <th>{{ 'BLACKLIST_PAGE.NATIONAL_ID' | translate }}</th>
+            <th class="w-[100px]">{{ 'COMMON.ACTION' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-blacklistedNationalId>
@@ -91,13 +89,13 @@
     } @else {
       <div class="flex items-center justify-center h-64">
         <p class="text-gray-500">
-          {{ 'BLACKLISTED_NATIONAL_IDS_PAGE.NO_DATA_TO_SHOW' | translate }}
+          {{ 'COMMON.NO_DATA_TO_SHOW' | translate }}
         </p>
       </div>
     }
     @if (paginationInfo) {
       <p-paginator
-        (onPageChange)="onPageChange($event, true)"
+        (onPageChange)="onPageChange($event)"
         [first]="first"
         [rowsPerPageOptions]="[10, 20, 30]"
         [rows]="rows"

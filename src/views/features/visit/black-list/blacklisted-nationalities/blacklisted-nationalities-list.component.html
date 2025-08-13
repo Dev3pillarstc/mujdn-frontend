@@ -9,11 +9,11 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         <div class="relative">
           <label class="label" for="nationalityAr">{{
-            'BLACKLISTED_NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate
+            'BLACKLIST_PAGE.NATIONALITY_IN_ARABIC' | translate
           }}</label>
           <input
             [(ngModel)]="filterModel.nameAr"
-            [placeholder]="'BLACKLISTED_NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate"
+            [placeholder]="'BLACKLIST_PAGE.NATIONALITY_IN_ARABIC' | translate"
             class="peer"
             fluid="true"
             id="nationalityAr"
@@ -26,11 +26,11 @@
         </div>
         <div class="relative">
           <label class="label" for="nationalityEn">{{
-            'BLACKLISTED_NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate
+            'BLACKLIST_PAGE.NATIONALITY_IN_ENGLISH' | translate
           }}</label>
           <input
             [(ngModel)]="filterModel.nameEn"
-            [placeholder]="'BLACKLISTED_NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate"
+            [placeholder]="'BLACKLIST_PAGE.NATIONALITY_IN_ENGLISH' | translate"
             class="peer"
             fluid="true"
             id="nationalityEn"
@@ -58,7 +58,7 @@
       class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
     >
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-        {{ 'BLACKLISTED_NATIONALITIES_PAGE.BLACKLISTED_NATIONALITIES_LIST' | translate }}
+        {{ 'BLACKLIST_PAGE.BLACKLISTED_NATIONALITIES_LIST' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <button
@@ -69,9 +69,7 @@
         </button>
         <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
           <img alt="" src="assets/icons/plus.svg" />
-          <span>{{
-            'BLACKLISTED_NATIONALITIES_PAGE.ADD_NEW_BLACKLISTED_NATIONALITY' | translate
-          }}</span>
+          <span>{{ 'BLACKLIST_PAGE.ADD_NEW_BLACKLISTED_NATIONALITY' | translate }}</span>
         </button>
       </div>
     </div>
@@ -79,10 +77,10 @@
       <p-table [value]="list">
         <ng-template pTemplate="header">
           <tr>
-            <th>{{ 'BLACKLISTED_NATIONALITIES_PAGE.NATIONALITY_IN_ARABIC' | translate }}</th>
-            <th>{{ 'BLACKLISTED_NATIONALITIES_PAGE.NATIONALITY_IN_ENGLISH' | translate }}</th>
+            <th>{{ 'BLACKLIST_PAGE.NATIONALITY_IN_ARABIC' | translate }}</th>
+            <th>{{ 'BLACKLIST_PAGE.NATIONALITY_IN_ENGLISH' | translate }}</th>
             <th class="w-[100px]">
-              {{ 'BLACKLISTED_NATIONALITIES_PAGE.ACTIONS' | translate }}
+              {{ 'COMMON.ACTION' | translate }}
             </th>
           </tr>
         </ng-template>
@@ -92,12 +90,6 @@
             <td>{{ blacklistedNationality.nameEn }}</td>
             <td>
               <div class="actions flex gap-2">
-                <button
-                  (click)="addOrEditModel(blacklistedNationality)"
-                  class="table-action-gray-btn"
-                >
-                  <img src="assets/icons/edit-action.svg" alt="تعديل" />
-                </button>
                 <button
                   (click)="deleteModel(blacklistedNationality.id)"
                   class="bg-[#fef3f2] rounded p-2 w-[32px]"
@@ -112,7 +104,7 @@
     } @else {
       <div class="flex items-center justify-center h-64">
         <p class="text-gray-500">
-          {{ 'BLACKLISTED_NATIONALITIES_PAGE.NO_DATA_TO_SHOW' | translate }}
+          {{ 'COMMON.NO_DATA_TO_SHOW' | translate }}
         </p>
       </div>
     }

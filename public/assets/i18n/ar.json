@@ -531,24 +531,16 @@
   "BLACKLIST_PAGE": {
     "VISITOR_BLACKLIST_CRITERIA": "معايير حظر الزائرين",
     "NATIONALITY_TAB": "الجنسية",
-    "NATIONAL_ID_TAB": "رقم الهوية"
-  },
-  "BLACKLISTED_NATIONAL_IDS_PAGE": {
+    "NATIONAL_ID_TAB": "رقم الهوية",
     "BLACKLISTED_NATIONAL_IDS_LIST": "قائمة الهويات المحظورة",
     "NATIONAL_ID": "رقم الهوية",
     "ADD_NEW_BLACKLISTED_NATIONAL_ID": "إضافة هوية محظورة جديدة",
     "EDIT_BLACKLISTED_NATIONAL_ID": "تعديل الهوية المحظورة",
-    "ACTIONS": "الإجراء",
-    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
-  },
-  "BLACKLISTED_NATIONALITIES_PAGE": {
     "BLACKLISTED_NATIONALITIES_LIST": "قائمة الجنسيات المحظورة",
     "NATIONALITY_IN_ARABIC": "الجنسية بالعربية",
     "NATIONALITY_IN_ENGLISH": "الجنسية بالانجليزية",
     "ADD_NEW_BLACKLISTED_NATIONALITY": "إضافة جنسية محظورة جديدة",
     "EDIT_BLACKLISTED_NATIONALITY": "تعديل الجنسية المحظورة",
-    "NATIONALITY": "الجنسية",
-    "ACTIONS": "الإجراء",
-    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+    "NATIONALITY": "الجنسية"
   }
 }

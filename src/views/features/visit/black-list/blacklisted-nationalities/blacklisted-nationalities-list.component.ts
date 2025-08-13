@@ -4,16 +4,14 @@ import { BlacklistedNationality } from '@/models/features/visit/blacklisted-nati
 import { BlacklistedNationalityFilter } from '@/models/features/visit/blacklisted-nationality-filter';
 import { BlacklistedNationalityService } from '@/services/features/visit/blacklisted-nationality.service';
 import { Component, inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { Breadcrumb } from 'primeng/breadcrumb';
+import { TranslatePipe } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { RouterModule } from '@angular/router';
-import { BlacklistedNationalityPopupComponent } from '../black-list-nationality-popup/blacklisted-nationality-popup.component';
+import { BlacklistedNationalityPopupComponent } from '../blacklisted-nationality-popup/blacklisted-nationality-popup.component';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { takeUntil } from 'rxjs';
@@ -21,7 +19,6 @@ import { takeUntil } from 'rxjs';
 @Component({
   selector: 'app-blacklisted-nationality-list',
   imports: [
-    Breadcrumb,
     TableModule,
     PaginatorModule,
     InputTextModule,
@@ -67,19 +64,12 @@ export class BlacklistedNationalityListComponent
   }
 
   override ngOnInit(): void {
-    // Override the base ngOnInit to prevent automatic data loading
-    this.setHomeItem();
     this.initListComponent();
 
     // Initialize from initial data if available
     if (this.initialData && !this.hasInitializedFromData) {
       this.initializeFromInitialData();
     }
-
-    // Listen to language changes
-    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.setHomeItem();
-    });
   }
 
   private initializeFromInitialData(): void {
@@ -89,9 +79,7 @@ export class BlacklistedNationalityListComponent
     this.hasInitializedFromData = true;
   }
 
-  override initListComponent(): void {
-    // Any additional initialization logic specific to nationality list
-  }
+  override initListComponent(): void {}
 
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'BLACKLISTED_NATIONALITIES_PAGE.BLACKLISTED_NATIONALITIES_LIST' }];

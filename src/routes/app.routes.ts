@@ -102,7 +102,7 @@ export const routes: Routes = [
         },
         loadComponent: () =>
           import(
-            '@/views/features/visit/black-list/black-list-container/blacklisted-container.component'
+            '@/views/features/visit/black-list/blacklisted-container/blacklisted-container.component'
           ),
       },
       {

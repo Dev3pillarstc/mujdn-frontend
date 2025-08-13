@@ -3,8 +3,8 @@ import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
-import { BlacklistedNationalityListComponent } from '../black-list-nationalities/blacklisted-nationalities-list.component';
-import { BlacklistedNationalIdListComponent } from '../black-list-national-ids/blacklisted-national-ids-list.component';
+import { BlacklistedNationalityListComponent } from '../blacklisted-nationalities/blacklisted-nationalities-list.component';
+import { BlacklistedNationalIdListComponent } from '../blacklisted-national-ids/blacklisted-national-ids-list.component';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { NationalityService } from '@/services/features/lookups/nationality.service';
 import { BlacklistedNationalityService } from '@/services/features/visit/blacklisted-nationality.service';
@@ -53,11 +53,6 @@ export default class BlacklistedContainerComponent implements OnInit, OnDestroy 
     this.initializeComponent();
     this.loadInitialData();
     this.setupLanguageChangeListener();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   clickNationalitiesTab(): void {
@@ -193,5 +188,10 @@ export default class BlacklistedContainerComponent implements OnInit, OnDestroy 
 
   isNationalIdTabInitialized(): boolean {
     return this.tabsInitialized.has(TabIndex.NATIONAL_IDS);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

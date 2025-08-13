@@ -528,6 +528,11 @@
     "INVALID_TOKEN": "الرابط غير متاح!",
     "INVALID_TOKEN_MESSAGE": "عذرا، هذا الرابط لم يعد صالحًا. قد يكون انتهت صلاحيته أو تم استخدامه مسبقًا."
   },
+  "BLACKLIST_PAGE": {
+    "VISITOR_BLACKLIST_CRITERIA": "معايير حظر الزائرين",
+    "NATIONALITY_TAB": "الجنسية",
+    "NATIONAL_ID_TAB": "رقم الهوية"
+  },
   "BLACKLISTED_NATIONAL_IDS_PAGE": {
     "BLACKLISTED_NATIONAL_IDS_LIST": "قائمة الهويات المحظورة",
     "NATIONAL_ID": "رقم الهوية",
@@ -542,6 +547,7 @@
     "NATIONALITY_IN_ENGLISH": "الجنسية بالانجليزية",
     "ADD_NEW_BLACKLISTED_NATIONALITY": "إضافة جنسية محظورة جديدة",
     "EDIT_BLACKLISTED_NATIONALITY": "تعديل الجنسية المحظورة",
+    "NATIONALITY": "الجنسية",
     "ACTIONS": "الإجراء",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
   }

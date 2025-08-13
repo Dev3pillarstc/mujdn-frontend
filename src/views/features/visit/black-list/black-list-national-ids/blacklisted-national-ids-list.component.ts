@@ -2,7 +2,7 @@ import { BaseListComponent } from '@/abstracts/base-components/base-list/base-li
 import { BlacklistedNationalId } from '@/models/features/visit/blacklisted-national-id';
 import { BlacklistedNationalIdFilter } from '@/models/features/visit/blacklisted-national-id-filter';
 import { BlacklistedNationalIdService } from '@/services/features/visit/blacklisted-national-id.service';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -39,6 +39,7 @@ export class BlacklistedNationalIdListComponent
   >
   implements OnInit
 {
+  @Input() isActive: boolean = false;
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',

@@ -2,7 +2,7 @@ import { BaseListComponent } from '@/abstracts/base-components/base-list/base-li
 import { BlacklistedNationality } from '@/models/features/visit/blacklisted-nationality';
 import { BlacklistedNationalityFilter } from '@/models/features/visit/blacklisted-nationality-filter';
 import { BlacklistedNationalityService } from '@/services/features/visit/blacklisted-nationality.service';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -14,6 +14,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BlacklistedNationalityPopupComponent } from '../black-list-nationality-popup/blacklisted-nationality-popup.component';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 
 @Component({
   selector: 'app-blacklisted-nationality-list',
@@ -39,6 +40,8 @@ export class BlacklistedNationalityListComponent
   >
   implements OnInit
 {
+  @Input() isActive: boolean = false;
+  @Input() nationalities: BaseLookupModel[] = [];
   override dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -58,7 +61,9 @@ export class BlacklistedNationalityListComponent
 
   override openDialog(model: BlacklistedNationality): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    this.openBaseDialog(BlacklistedNationalityPopupComponent as any, model, viewMode);
+    this.openBaseDialog(BlacklistedNationalityPopupComponent as any, model, viewMode, {
+      nationalities: this.nationalities,
+    });
   }
 
   addOrEditModel(blacklistedNationality?: BlacklistedNationality) {

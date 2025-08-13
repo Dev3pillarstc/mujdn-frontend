@@ -532,6 +532,11 @@
     "INVALID_TOKEN": "Invalid or expired reset link",
     "INVALID_TOKEN_MESSAGE": "Sorry, this link is no longer valid. It may have expired or been used previously."
   },
+  "BLACKLIST_PAGE": {
+    "VISITOR_BLACKLIST_CRITERIA": "Visitor Blacklist Criteria",
+    "NATIONALITY_TAB": "Nationality",
+    "NATIONAL_ID_TAB": "National ID"
+  },
   "BLACKLISTED_NATIONAL_IDS_PAGE": {
     "BLACKLISTED_NATIONAL_IDS_LIST": "Blacklisted National IDs List",
     "NATIONAL_ID": "National ID",
@@ -546,6 +551,7 @@
     "NATIONALITY_IN_ENGLISH": "Nationality in English",
     "ADD_NEW_BLACKLISTED_NATIONALITY": "Add New Blacklisted Nationality",
     "EDIT_BLACKLISTED_NATIONALITY": "Edit Blacklisted Nationality",
+    "NATIONALITY": "Nationality",
     "ACTIONS": "Actions",
     "NO_DATA_TO_SHOW": "No data to display"
   }

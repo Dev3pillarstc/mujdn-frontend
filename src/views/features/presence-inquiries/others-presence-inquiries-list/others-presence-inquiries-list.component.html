@@ -1,17 +1,94 @@
 <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
   <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
     <div class="flex items-center justify-between">
-      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+        {{ 'COMMON.SEARCH_FILTERS' | translate }}
+      </h5>
     </div>
     <div class="pt-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
         <div class="relative">
-          <label class="label" for="nationalityAr">نص الرسالة</label>
+          <label class="label" for="permission-date-picker">{{ 'COMMON.FROM' | translate }}</label>
+          <p-datepicker
+            [(ngModel)]="dateFrom"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            [showClear]="true"
+            class="peer block w-full"
+            inputId="icondisplayFrom"
+            placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
+          >
+            <ng-template pTemplate="inputicon">
+              <img alt="" src="assets/icons/calender-icon.svg" />
+            </ng-template>
+          </p-datepicker>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+        <div class="relative">
+          <label class="label" for="permission-date-picker">{{ 'COMMON.TO' | translate }}</label>
+          <p-datepicker
+            [(ngModel)]="filterModel.dateTo"
+            [minDate]="dateFrom"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            [showClear]="true"
+            class="peer block w-full"
+            inputId="icondisplayTo"
+            placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
+          >
+            <ng-template pTemplate="inputicon">
+              <img alt="" src="assets/icons/calender-icon.svg" />
+            </ng-template>
+          </p-datepicker>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+        <div class="relative">
+          <label for="" class="label">حالة المسائلة</label>
+          <p-select
+            [(ngModel)]="filterModel.statusId"
+            [optionLabel]="getPropertyName()"
+            [options]="presenceInquiryStatuses"
+            [showClear]="true"
+            class="w-full peer"
+            id="request-status-select"
+            optionLabel="type"
+            optionValue="id"
+            placeholder="نتيجة المسائلة"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+        <div class="relative">
+          <label for="department" class="label">الادارة</label>
+          <p-select
+            [options]="departments"
+            [(ngModel)]="filterModel.departmentId"
+            [optionLabel]="getPropertyName()"
+            [showClear]="true"
+            [filter]="true"
+            class="w-full peer"
+            id="department"
+            optionLabel="type"
+            optionValue="id"
+            placeholder="الادارة"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+        <div class="relative">
+          <label class="label" for="employeeNameAr">اسم الموظف عربي</label>
           <input
-            placeholder="نص الرسالة"
+            placeholder="اسم الموظف"
+            [(ngModel)]="filterModel.employeeNameAr"
             class="peer"
             fluid="true"
-            id="nationalityAr"
+            id="employeeNameAr"
             pInputText
             type="text"
           />
@@ -20,25 +97,13 @@
           ></span>
         </div>
         <div class="relative">
-          <label for="" class="label">الادارة</label>
-          <p-select
-            [options]="adminstrations"
-            [(ngModel)]="selectedAdminstration"
-            optionLabel="type"
-            placeholder="الادارة"
-            class="w-full peer"
-          ></p-select>
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
-        </div>
-        <div class="relative">
-          <label class="label" for="nationalityAr">اسم الموظف</label>
+          <label class="label" for="employeeNameEn">اسم الموظف إنجليزي</label>
           <input
             placeholder="اسم الموظف"
+            [(ngModel)]="filterModel.employeeNameEn"
             class="peer"
             fluid="true"
-            id="nationalityAr"
+            id="employeeNameEn"
             pInputText
             type="text"
           />
@@ -49,8 +114,12 @@
       </div>
 
       <div class="actions flex items-center gap-4 pt-6">
-        <button class="btn black-btn">بحث</button>
-        <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+        <button (click)="search()" class="btn black-btn">
+          {{ 'COMMON.SEARCH' | translate }}
+        </button>
+        <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
+          {{ 'COMMON.RESET_SEARCH' | translate }}
+        </button>
       </div>
     </div>
   </div>
@@ -59,7 +128,7 @@
       class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
     >
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-        قائمة مسائلات توثيق التواجد
+        {{ 'INQUIRIES_PAGE.PRESENCE_INQUIRIES' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <button class="table-head-action-btn min-w-[40px]">
@@ -68,108 +137,106 @@
         <button class="cursor-pointer">
           <img src="assets/icons/print.svg" alt="" />
         </button>
-        <button class="btn green-btn flex items-center" (click)="openDialog()">
+        <button class="btn green-btn flex items-center" (click)="addOrEditModel()">
           <img src="assets/icons/plus.svg" alt="" />
-          <span>إضافة مسائلة جديدة</span>
+          <span>{{ 'INQUIRIES_PAGE.ADD_NEW_INQUIRY' | translate }} </span>
         </button>
       </div>
     </div>
-    <p-table [value]="attendance">
-      <ng-template #header>
-        <tr>
-          <th>نص الرسالة</th>
-          <th>تاريخ المسائلة</th>
-          <th>وقت المسائلة</th>
-          <th>فترة السماح للتسجيل الحضور</th>
-          <th>نتيجة المسائلة</th>
-          <th>اسم الموظف</th>
-          <th>حالة المعالجة</th>
-          <th>اجراء</th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-attendance>
-        <tr>
-          <td>يرجى التحقق من التواجد الان</td>
-          <td>12/12/2024</td>
-          <td>10:00 ص</td>
-          <td>
-            <span
-              class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]"
-              >30 دق</span
-            >
-          </td>
-          <td>
-            <span
-              class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
-              تحت التوثيق
-            </span>
-            <span
-              class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
-              تم التوثيق
-            </span>
-            <span
-              class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
-              لم يتم التوثيق
-            </span>
-          </td>
-          <td>محمود أيمن</td>
-          <td>
-            <span
-              class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
-              تحت التوثيق
-            </span>
-            <span
-              class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
-              تم التوثيق
-            </span>
-            <span
-              class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
-              لم يتم التوثيق
-            </span>
-          </td>
-          <td>
-            <div class="actions flex gap-2">
-              <button (click)="openDialog2()" class="table-action-gray-btn">
-                <img src="/assets/icons/view.svg" alt="عرضٍ" />
-              </button>
-              <button class="table-action-gray-btn">
-                <img src="/assets/icons/edit-action.svg" alt="تعديل" />
-              </button>
-              <button
-                (click)="openDialog1()"
-                class="table-action-gray-btn flex align-items gap-4 !min-w-[150px]"
+    @if (list && list.length > 0) {
+      <p-table [value]="list">
+        <ng-template #header>
+          <tr>
+            <th>{{ 'INQUIRIES_PAGE.INQUIRY_DATE' | translate }}</th>
+            <th>{{ 'INQUIRIES_PAGE.INQUIRY_TIME' | translate }}</th>
+            <th>{{ 'INQUIRIES_PAGE.ALLOWED_ATTENDANCE_PERIOD' | translate }}</th>
+            <th>{{ 'INQUIRIES_PAGE.PROCESSING_STATUS' | translate }}</th>
+            <th>{{ 'COMMON.ACTION' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-inquiry>
+          <tr>
+            @if (inquiry.assignedDate) {
+              <td>{{ inquiry.assignedDate | date: 'dd-MM-yyyy' }}</td>
+              <td>{{ inquiry.assignedDate | date: 'HH:mm:ss' }}</td>
+            } @else {
+              <td>_</td>
+              <td>_</td>
+            }
+            <td>
+              <span
+                class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]"
+                >{{ inquiry.buffer }}</span
               >
-                <img src="/assets/icons/leading.svg" alt="اسناد" />
-                اسناد موظفين
-              </button>
-              <button class="table-action-red-btn">
-                <img src="/assets/icons/delete-action.svg" alt="حذف" />
-              </button>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-    <p-paginator
-      class="mt-6"
-      (onPageChange)="onPageChange($event)"
-      [first]="first"
-      [rows]="rows"
-      [totalRecords]="120"
-      [rowsPerPageOptions]="[10, 20, 30]"
-    />
+            </td>
+            <td>
+              @if (inquiry.statusId === inquiryStatusEnum.ACTIVE) {
+                <span
+                  class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
+                >
+                  <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
+                  جاري التوثيق
+                </span>
+              }
+              @if (inquiry.statusId === inquiryStatusEnum.INACTIVE) {
+                <span
+                  class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
+                >
+                  <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
+                  تم انتهاء وقت التوثيق
+                </span>
+              }
+              @if (inquiry.statusId === inquiryStatusEnum.NOT_ASSIGNED) {
+                <span
+                  class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
+                >
+                  <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
+                  لم يتم الإسناد
+                </span>
+              }
+            </td>
+
+            <td>
+              <div class="actions flex gap-2">
+                <button (click)="openDataModal(inquiry)" class="table-action-gray-btn">
+                  <img src="/assets/icons/view.svg" alt="عرضٍ" />
+                </button>
+                <button (click)="addOrEditModel(inquiry)" class="table-action-gray-btn">
+                  <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                </button>
+                <button
+                  (click)="openModal()"
+                  class="table-action-gray-btn flex align-items gap-4 !min-w-[150px]"
+                >
+                  <img src="/assets/icons/leading.svg" alt="اسناد" />
+                  اسناد موظفين
+                </button>
+                <button class="table-action-red-btn">
+                  <img src="/assets/icons/delete-action.svg" alt="حذف" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    } @else {
+      <div class="flex items-center justify-center h-64">
+        <p class="text-gray-500">
+          {{ 'COMMON.NO_DATA_TO_SHOW' | translate }}
+        </p>
+      </div>
+    }
+    @if (paginationInfo) {
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="rows"
+        [showCurrentPageReport]="false"
+        [totalRecords]="paginationInfo.totalItems"
+        class="mt-6"
+      />
+    }
     <div></div>
   </div>
 </div>

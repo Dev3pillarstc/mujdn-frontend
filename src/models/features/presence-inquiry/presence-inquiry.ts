@@ -18,39 +18,24 @@ export class PresenceInquiry extends BaseCrudModel<PresenceInquiry, PresenceInqu
   declare messageEn: string;
   declare buffer: number;
   declare assignedUsers?: UserProfilePresenceInquiry[];
-  declare assignedDate?: Date | string;
+  declare assignedDate?: Date | null | string;
   declare statusId?: number;
   declare departmentId?: number;
-  private languageService?: LanguageService;
-
-  constructor() {
-    super();
-    this.languageService = FactoryService.getService('LanguageService');
-  }
 
   buildForm() {
-    const { messageAr, messageEn, buffer, departmentId, assignedDate } = this;
+    const { messageAr, messageEn, buffer } = this;
 
     return {
-      messageAr: [
-        messageAr,
+      messageAr: [messageAr, [Validators.required]],
+      messageEn: [messageEn, [Validators.required]],
+      buffer: [
+        buffer,
         [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
-          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
+          Validators.min(CustomValidators.defaultLengths.INQUIRY_MIN_BUFFER),
+          Validators.max(CustomValidators.defaultLengths.INQUIRY_MAX_BUFFER),
         ],
       ],
-      messageEn: [
-        messageEn,
-        [
-          Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
-          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
-        ],
-      ],
-      buffer: [buffer, [Validators.required, Validators.min(0)]],
-      departmentId: [departmentId],
-      assignedDate: [assignedDate],
     };
   }
 }

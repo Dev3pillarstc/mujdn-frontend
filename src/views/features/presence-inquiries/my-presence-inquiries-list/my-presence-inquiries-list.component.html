@@ -1,7 +1,9 @@
 <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
   <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
     <div class="flex items-center justify-between">
-      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+        {{ 'COMMON.SEARCH_FILTERS' | translate }}
+      </h5>
     </div>
     <div class="pt-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
@@ -45,7 +47,7 @@
           ></span>
         </div>
         <div class="relative">
-          <label for="" class="label">نتيجة المسائلة</label>
+          <label for="" class="label">{{ 'INQUIRIES_PAGE.CONFIRMATION_STATUS' | translate }}</label>
           <p-select
             [(ngModel)]="filterModel.statusId"
             [optionLabel]="getPropertyName()"
@@ -55,7 +57,7 @@
             id="request-status-select"
             optionLabel="type"
             optionValue="id"
-            placeholder="نتيجة المسائلة"
+            placeholder="{{ 'INQUIRIES_PAGE.CONFIRMATION_STATUS' | translate }}"
           ></p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -87,69 +89,78 @@
         <button class="cursor-pointer">
           <img src="assets/icons/print.svg" alt="" />
         </button>
-        <button class="btn green-btn flex items-center" (click)="addOrEditModel()">
-          <img src="assets/icons/plus.svg" alt="" />
-          <span>إضافة مسائلة جديدة</span>
-        </button>
       </div>
     </div>
-    <p-table [value]="list">
-      <ng-template #header>
-        <tr>
-          <th>تاريخ المسائلة</th>
-          <th>وقت المسائلة</th>
-          <th>فترة السماح للتسجيل الحضور</th>
-          <th>نتيجة المسائلة</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-inquiry>
-        <tr>
-          <td>{{ inquiry.assignedDate | date: 'dd-MM-yyyy' }}</td>
-          <td>{{ inquiry.assignedDate | date: 'HH:mm:ss' }}</td>
-          <td>
-            <span
-              class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]"
-              >{{ inquiry.buffer }}</span
-            >
-          </td>
+    @if (list && list.length > 0) {
+      <p-table [value]="list">
+        <ng-template #header>
+          <tr>
+            <th>تاريخ المسائلة</th>
+            <th>وقت المسائلة</th>
+            <th>فترة السماح للتسجيل الحضور</th>
+            <th>نتيجة المسائلة</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-inquiry>
+          <tr>
+            <td>{{ inquiry.assignedDate | date: 'dd-MM-yyyy' }}</td>
+            <td>{{ inquiry.assignedDate | date: 'HH:mm:ss' }}</td>
+            <td>
+              <span
+                class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]"
+                >{{ inquiry.buffer }}</span
+              >
+            </td>
 
-          <td>
-            @if (inquiry.statusId === inquiryStatusEnum.UNDER_CONFIRMATION) {
-              <span
-                class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
-              >
-                <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
-                تحت التوثيق
-              </span>
-            }
-            @if (inquiry.statusId === inquiryStatusEnum.CONFIRMED) {
-              <span
-                class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
-              >
-                <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
-                تم التوثيق
-              </span>
-            }
-            @if (inquiry.statusId === inquiryStatusEnum.NOT_CONFIRMED) {
-              <span
-                class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
-              >
-                <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
-                لم يتم التوثيق
-              </span>
-            }
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-    <p-paginator
-      class="mt-6"
-      (onPageChange)="onPageChange($event)"
-      [first]="first"
-      [rows]="rows"
-      [totalRecords]="120"
-      [rowsPerPageOptions]="[10, 20, 30]"
-    />
+            <td>
+              @if (
+                inquiry.assignedUsers[0]?.inquiryStatusId === inquiryStatusEnum.UNDER_CONFIRMATION
+              ) {
+                <span
+                  class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
+                >
+                  <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
+                  تحت التوثيق
+                </span>
+              }
+              @if (inquiry.assignedUsers[0]?.inquiryStatusId === inquiryStatusEnum.CONFIRMED) {
+                <span
+                  class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
+                >
+                  <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
+                  تم التوثيق
+                </span>
+              }
+              @if (inquiry.assignedUsers[0]?.inquiryStatusId === inquiryStatusEnum.NOT_CONFIRMED) {
+                <span
+                  class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
+                >
+                  <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
+                  لم يتم التوثيق
+                </span>
+              }
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    } @else {
+      <div class="flex items-center justify-center h-64">
+        <p class="text-gray-500">
+          {{ 'COMMON.NO_DATA_TO_SHOW' | translate }}
+        </p>
+      </div>
+    }
+    @if (paginationInfo) {
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="rows"
+        [showCurrentPageReport]="false"
+        [totalRecords]="paginationInfo.totalItems"
+        class="mt-6"
+      />
+    }
     <div></div>
   </div>
 </div>

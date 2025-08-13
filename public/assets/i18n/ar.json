@@ -101,7 +101,9 @@
     "NO_ROLES": "لا توجد صلاحيات",
     "PROFILE_LOAD_ERROR": "حدث خطأ في تحميل بيانات الملف الشخصي",
     "RETRY": "إعادة المحاولة",
-    "CURRENT_PASSWORD_INCORRECT": "كلمة المرور القديمة غير صحيحة"
+    "CURRENT_PASSWORD_INCORRECT": "كلمة المرور القديمة غير صحيحة",
+    "MIN_VALUE": "يجب أن تكون القيمة على الأقل {min} (تم الحصول على {actual})",
+    "MAX_VALUE": "يجب أن تكون القيمة على الأكثر {max} (تم الحصول على {actual})"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -526,5 +528,14 @@
     "SEND_LINK_ERROR_MESSAGE": "يرجى التحقق من صحة البيانات المدخلة والمحاولة مرة أخرى.",
     "INVALID_TOKEN": "الرابط غير متاح!",
     "INVALID_TOKEN_MESSAGE": "عذرا، هذا الرابط لم يعد صالحًا. قد يكون انتهت صلاحيته أو تم استخدامه مسبقًا."
+  },
+  "INQUIRIES_PAGE": {
+    "INQUIRY_DATE": "تاريخ المسائلة",
+    "INQUIRY_TIME": "وقت المسائلة",
+    "ALLOWED_ATTENDANCE_PERIOD": "فترة السماح للتسجيل الحضور",
+    "PROCESSING_STATUS": "حالة المعالجة",
+    "PRESENCE_INQUIRIES": "قائمة مسائلات توثيق التواجد",
+    "ADD_NEW_INQUIRY": "إضافة مسائلة جديدة",
+    "CONFIRMATION_STATUS": "حالة التوثيق"
   }
 }

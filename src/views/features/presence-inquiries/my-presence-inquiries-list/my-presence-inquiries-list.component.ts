@@ -1,31 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MenuItem } from 'primeng/api';
-import { Breadcrumb } from 'primeng/breadcrumb';
+import { Component, inject, input, SimpleChanges } from '@angular/core';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { Select } from 'primeng/select';
 import { TabsModule } from 'primeng/tabs';
 import { TableModule } from 'primeng/table';
-import { AssignEmployeeResponsibilityPopupComponent } from '../assign-employee-responsibility-popup/assign-employee-responsibility-popup.component';
 import { PresenceInquiriesPopupComponent } from '../presence-inquiries-popup/presence-inquiries-popup.component';
-import { ViewEmployeesCheckPopupComponent } from '../view-employees-check-popup/view-employees-check-popup.component';
 import { FormsModule } from '@angular/forms';
 import { PresenceInquiryFilter } from '@/models/features/presence-inquiry/presence-inquiry-filter';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { UserProfilePresenceInquiry } from '@/models/features/presence-inquiry/user-profile-presence-inquiry';
-import { DepartmentService } from '@/services/features/lookups/department.service';
-import { LanguageService } from '@/services/shared/language.service';
 import { PresenceInquiryService } from '@/services/features/presence-inquiry.service';
 import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
 import { TranslatePipe } from '@ngx-translate/core';
-import { PermissionStatusService } from '@/services/features/lookups/permission-status.service';
 import { PresenceInquiryStatusService } from '@/services/features/presence-inquiry-status.service';
-import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { USER_PRESENCE_INQUIRY_STATUS_ENUM } from '@/enums/user-presence-inquiry-status-enum';
 interface Adminstration {
   type: string;
@@ -60,11 +50,11 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
 
   presenceInquiryService = inject(PresenceInquiryService);
   filterModel: PresenceInquiryFilter = new PresenceInquiryFilter();
-  departments: BaseLookupModel[] = [];
-  departmentService = inject(DepartmentService);
   presenceInquiryStatusService = inject(PresenceInquiryStatusService);
   presenceInquiryStatuses: BaseLookupModel[] = [];
   inquiryStatusEnum = USER_PRESENCE_INQUIRY_STATUS_ENUM;
+  isActive = input.required<boolean>();
+  private hasInitialized: boolean = false;
 
   override get service() {
     return this.presenceInquiryService;
@@ -80,10 +70,8 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
     return [{ labelKey: 'PRESENCE_INQUIRIES_PAGE.PRESENCE_INQUIRIES' }];
   }
 
-  override openDialog(model: PresenceInquiry): void {
-    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    this.openBaseDialog(PresenceInquiriesPopupComponent as any, model, viewMode);
-  }
+  override openDialog(model: PresenceInquiry): void {}
+
   loadMyPresenceInquiriesList() {
     this.service
       .loadMyPresenceInquiriesPaginated(this.paginationParams, { ...this.filterModel! })
@@ -103,6 +91,23 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
         },
       });
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isActive']) {
+      const current = changes['isActive'].currentValue;
+      const previous = changes['isActive'].previousValue;
+
+      // Skip first trigger after component init
+      if (!this.hasInitialized) {
+        this.hasInitialized = true;
+        return;
+      }
+
+      // Only load data if tab is active and this is not the initial change
+      if (current === true && previous === false) {
+        this.loadMyPresenceInquiriesList();
+      }
+    }
+  }
 
   override search() {
     this.paginationParams.pageNumber = 1;
@@ -118,9 +123,6 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
     this.loadMyPresenceInquiriesList();
   }
 
-  addOrEditModel(presenceInquiry?: PresenceInquiry): void {
-    this.openDialog(presenceInquiry ?? new PresenceInquiry());
-  }
   protected override mapModelToExcelRow(model: PresenceInquiry): { [key: string]: any } {
     return {
       // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.EMPLOYEE_NAME_AR')]: model.fullNameAr,
@@ -145,5 +147,13 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
 
   getPropertyName() {
     return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+  }
+
+  override onPageChange(event: PaginatorState, isStoredProcedure: boolean = false) {
+    this.first = event.first!;
+    this.rows = event.rows!;
+    this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
+    this.paginationParams.pageSize = this.rows;
+    this.loadMyPresenceInquiriesList();
   }
 }

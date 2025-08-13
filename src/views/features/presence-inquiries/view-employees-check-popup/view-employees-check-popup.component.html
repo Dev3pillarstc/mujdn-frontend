@@ -3,133 +3,107 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">مسائلة توثيق التواجد</h3>
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">مسائلة توثيق التواجد</h3>
+
+    <!-- Header Info -->
     <div class="bg-[#074d31] rounded-2xl p-6 mb-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="flex flex-col gap-1 text-white">
           <span class="text-[14px]">تاريخ المسائلة</span>
-          <h4 class="font-semibold text-[16px]">12/12/2024</h4>
+          <h4 class="font-semibold text-[16px]">{{ model.assignedDate | date: 'dd/MM/yyyy' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
           <span class="text-[14px]">وقت المسائلة</span>
-          <h4 class="font-semibold text-[16px]">10:00 ص</h4>
+          <h4 class="font-semibold text-[16px]">{{ model.assignedDate | date: 'hh:mm:ss a' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
           <span class="text-[14px]">فترة السماح لتسجيل الحضور</span>
           <h4
             class="inline-flex items-center gap-3 text-[#000] text-base w-fit font-medium px-4 rounded-full bg-[#fff]"
           >
-            10 دق
+            {{ model.buffer }} دق
           </h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
           <span class="text-[14px]">نتيجة المسائلة</span>
-          <h4
-            class="inline-flex items-center gap-3 text-[#912018] w-fit text-base font-medium px-4 rounded-full bg-[#fef3f2]"
-          >
-            <span class="block w-[10px] h-[10px] rounded-full bg-[#912018]"></span>
-            تم انتهاء وقت التوثيق
+          <h4 class="inline-flex items-center gap-3 w-fit text-base font-medium px-4 rounded-full">
+            @if (model.statusId === inquiryStatusEnum.ACTIVE) {
+              <span
+                class="text-[14px] text-[#067647] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
+              >
+                <span class="w-[10px] h-[10px] bg-[#067647] rounded-full"></span>
+                جاري التوثيق
+              </span>
+            }
+            @if (model.statusId === inquiryStatusEnum.INACTIVE) {
+              <span
+                class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
+              >
+                <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
+                تم انتهاء وقت التوثيق
+              </span>
+            }
+            @if (model.statusId === inquiryStatusEnum.NOT_ASSIGNED) {
+              <span
+                class="text-[14px] text-[#4d5761] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#f3f4f6] font-medium"
+              >
+                <span class="w-[10px] h-[10px] bg-[#4d5761] rounded-full"></span>
+                لم يتم الإسناد
+              </span>
+            }
           </h4>
         </div>
       </div>
     </div>
+
+    <!-- Task Description -->
     <div class="bg-[#f3f4f6] rounded-2xl p-6">
       <h4 class="text-[#6c737f] text-[14px] mb-2">نص المسائلة</h4>
       <p class="text-[#161616] text-[16px] font-semibold">
-        هنا يكون محتوى وصف المهمة هنا يكون محتوى وصف المهمة هنا يكون محتوى وصف المهمة
+        {{ model.messageAr }}
       </p>
     </div>
+
     <h4 class="text-[#1f2a37] text-[18px] font-semibold mt-8">الموظفون المعنيون بتنفيذ المهام</h4>
-    <div class="mt-4 pt-6 border-t border-[#d2d6db]">
-      <div>
-        <span
-          class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full bg-[#067647] font-medium"
-        >
-          <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-          تم التوثيق
-        </span>
-      </div>
-      <div class="flex flex-wrap gap-4 mt-4">
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
+
+    <!-- Group by inquiryStatusId -->
+    <ng-container *ngFor="let statusGroup of statusGroups">
+      <div class="mt-4 pt-6 border-t border-[#d2d6db]">
+        <div>
+          @if (statusGroup.id === userInquiryStatusEnum.CONFIRMED) {
+            <span
+              class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#067647]"
+            >
+              <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
+              تم التوثيق
+            </span>
+          }
+          @if (statusGroup.id === userInquiryStatusEnum.UNDER_CONFIRMATION) {
+            <span
+              class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#4d5761]"
+            >
+              <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
+              قيد التوثيق
+            </span>
+          }
+          @if (statusGroup.id === userInquiryStatusEnum.NOT_CONFIRMED) {
+            <span
+              class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#d92d20]"
+            >
+              <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
+              لم يتم التوثيق
+            </span>
+          }
         </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-      </div>
-    </div>
-    <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-      <div>
-        <span
-          class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full bg-[#4d5761] font-medium"
-        >
-          <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-          تم التوثيق
-        </span>
-      </div>
-      <div class="flex flex-wrap gap-4 mt-4">
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
+
+        <div class="flex flex-wrap gap-4 mt-4">
+          <div *ngFor="let user of statusGroup.users" class="bg-[#f3f4f6] rounded-full px-3">
+            <span class="text-[#161616] font-medium">{{ user.fullNameAr }}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-      <div>
-        <span
-          class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full bg-[#d92d20] font-medium"
-        >
-          <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-          تم التوثيق
-        </span>
-      </div>
-      <div class="flex flex-wrap gap-4 mt-4">
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">محمد احمد طه</span>
-        </div>
-      </div>
-    </div>
+    </ng-container>
+
     <div class="actions mt-6 flex items-center justify-end gap-4">
       <button class="btn gray-btn" (click)="close()">الغاء</button>
     </div>

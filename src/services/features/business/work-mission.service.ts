@@ -55,14 +55,18 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
     }
 
     // Make the request and rely on @CastResponse for runtime mapping
-    return this.http.post(`${this.getUrlSegment()}/GetEmployeesToBeAssigned`, filterOptions || {}, {
-      params: httpParams,
-      withCredentials: true,
-    }) as unknown as Observable<PaginatedListResponseData<UserProfileDataWithNationalId>>;
+    return this.http.post(
+      this.getUrlSegment() + '/' + 'GetEmployeesToBeAssigned',
+      filterOptions || {},
+      {
+        params: httpParams,
+        withCredentials: true,
+      }
+    ) as unknown as Observable<PaginatedListResponseData<UserProfileDataWithNationalId>>;
   }
 
   addUsersToMission(model: MissionEmployeesAssignement) {
-    return this.http.post(`${this.getUrlSegment()}/AddUsersToMission`, model, {
+    return this.http.post(this.getUrlSegment() + '/' + 'AddUsersToMission', model, {
       withCredentials: true,
     });
   }
@@ -80,9 +84,13 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
         }
       });
     }
-    return this.http.post(`${this.getUrlSegment()}/GetMyWorkMissionsAsync`, filterOptions || {}, {
-      params: httpParams,
-      withCredentials: true,
-    }) as unknown as Observable<PaginatedListResponseData<WorkMission>>;
+    return this.http.post(
+      this.getUrlSegment() + '/' + 'GetMyWorkMissionsAsync',
+      filterOptions || {},
+      {
+        params: httpParams,
+        withCredentials: true,
+      }
+    ) as unknown as Observable<PaginatedListResponseData<WorkMission>>;
   }
 }

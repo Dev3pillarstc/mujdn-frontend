@@ -552,11 +552,13 @@
     "ADD_EDIT_ACTION_MAY_REQUIRE_REPROCESS": "قد تؤثر عملية إضافة أو تعديل المهمة على بيانات الحضور والانصراف للموظفين المسندة إليهم.",
     "DESCRIPTION": "الوصف",
     "MISSION_ASSIGNER": "مسند المهمة",
-    "MISSION_ASSIGNER_AR": "مسند المهمة (عربي)",
-    "MISSION_ASSIGNER_EN": "مسند المهمة (إنجليزي)",
+    "MISSION_ASSIGNER_AR": "مسند المهمة عربي",
+    "MISSION_ASSIGNER_EN": "مسند المهمة إنجليزي",
     "START_DATE": "التاريخ من",
     "END_DATE": "التاريخ إلى",
     "DEPARTMENT_NAME_ARABIC": "الادارة بالعربية",
-    "DEPARTMENT_NAME_ENGLISH": "الادارة بالانجليزية"
+    "DEPARTMENT_NAME_ENGLISH": "الادارة بالانجليزية",
+    "STARTING_DATE": "تاريخ البدايه",
+    "ENDING_DATE": "تاريخ النهايه"
   }
 }

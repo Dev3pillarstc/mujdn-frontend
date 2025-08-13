@@ -56,7 +56,10 @@ export class MyMissionsTabComponent extends BaseListComponent<
   creators: BaseLookupModel[] = [];
   myMissions: WorkMission[] = [];
   override list: WorkMission[] = [];
-  override dialogSize: any;
+  override dialogSize: any = {
+    width: '100%',
+    maxWidth: '1024px',
+  };
   override get filterModel(): MyWorkMissionFilter {
     return this.filterOptions;
   }
@@ -126,9 +129,9 @@ export class MyMissionsTabComponent extends BaseListComponent<
       [this.translateService.instant('WORK_MISSIONS.START_DATE')]: model.startDate,
       [this.translateService.instant('WORK_MISSIONS.END_DATE')]: model.endDate,
       [this.translateService.instant('WORK_MISSIONS.MISSION_ASSIGNER_AR')]:
-        model.missionCreator?.nameAr || '',
+        model.missionAssigner?.nameAr || '',
       [this.translateService.instant('WORK_MISSIONS.MISSION_ASSIGNER_EN')]:
-        model.missionCreator?.nameEn || '',
+        model.missionAssigner?.nameEn || '',
     };
   }
   override exportExcel(

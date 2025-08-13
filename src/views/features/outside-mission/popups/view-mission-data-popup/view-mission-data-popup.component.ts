@@ -1,4 +1,5 @@
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { LanguageService } from '@/services/shared/language.service';
 import { DialogRef } from '@angular/cdk/dialog';
@@ -17,8 +18,13 @@ export class ViewMissionDataPopupComponent {
   dialogRef = inject(DialogRef);
   languageService = inject(LanguageService);
   model!: WorkMission;
+  declare direction: LAYOUT_DIRECTION_ENUM;
   constructor(@Inject(MAT_DIALOG_DATA) public data: { model: WorkMission }) {
     this.model = data.model;
+    this.direction =
+      this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+        ? LAYOUT_DIRECTION_ENUM.LTR
+        : LAYOUT_DIRECTION_ENUM.RTL;
   }
 
   isCurrentLanguageEnglish() {

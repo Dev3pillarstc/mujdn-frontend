@@ -14,7 +14,7 @@ import { TableModule } from 'primeng/table';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { M } from '@angular/material/dialog.d-B5HZULyo';
-import { Observable } from 'rxjs';
+import { Observable, timeout } from 'rxjs';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
@@ -66,7 +66,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
       viewMode: ViewModeEnum;
       lookups: {
         departments: BaseLookupModel[];
-        paginationInfo: PaginationInfo[]; // Array of pagination info
       };
     }
   ) {
@@ -75,8 +74,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   override initPopup(): void {
     this.model = this.data.model;
     this.loadEmployees();
-    // this.employees = this.data.lookups.employees;
-    // this.paginationInfo = this.data.lookups.paginationInfo?.[0] || new PaginationInfo();
     this.departments = this.data.lookups.departments;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
@@ -93,7 +90,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   ): WorkMission | Observable<WorkMission> {
     return model;
   }
-  attendance!: any[];
   first: number = 0;
   rows: number = 10;
   date2: Date | undefined;

@@ -16,7 +16,7 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
   declare startDate: Date | string;
   declare endDate: Date | string;
   declare description: string;
-  declare missionCreator?: BaseLookupModel;
+  declare missionAssigner?: BaseLookupModel;
   declare assignedEmployees?: BaseLookupModel[];
   declare concurrencyUpdateVersion?: Uint8Array;
 

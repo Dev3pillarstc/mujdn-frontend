@@ -158,7 +158,6 @@ export class AssignAndViewMissionsTabComponent
   }
 
   openAssignEmployeesDialog(mission: WorkMission): void {
-    const missionObj = mission || new WorkMission();
     const viewMode = ViewModeEnum.EDIT;
     const data = {
       departments: this.departments,

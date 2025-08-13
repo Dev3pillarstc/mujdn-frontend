@@ -1,4 +1,4 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
@@ -33,8 +33,8 @@
           <h4 class="font-semibold text-[16px]">
             {{
               isCurrentLanguageEnglish()
-                ? model.missionCreator?.nameEn
-                : model.missionCreator?.nameAr
+                ? model.missionAssigner?.nameEn
+                : model.missionAssigner?.nameAr
             }}
           </h4>
         </div>

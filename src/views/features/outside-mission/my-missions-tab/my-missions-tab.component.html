@@ -2,19 +2,23 @@
   <!-- Search Filter Section -->
   <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
     <div class="flex items-center justify-between">
-      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+        {{ 'COMMON.SEARCH_FILTERS' | translate }}
+      </h5>
     </div>
     <div class="pt-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         <!-- Arabic Task Name -->
         <div class="relative">
-          <label class="label" for="nationalityAr">اسم المهمة بالعربية</label>
+          <label class="label" for="nationalityAr">{{
+            'WORK_MISSIONS.MISSION_NAME_AR' | translate
+          }}</label>
           <input
             class="peer"
             fluid="true"
             id="nationalityAr"
             pInputText
-            placeholder="اسم المهمة بالعربية"
+            [placeholder]="'WORK_MISSIONS.MISSION_NAME_AR' | translate"
             type="text"
             [(ngModel)]="filterModel.nameAr"
           />
@@ -25,13 +29,15 @@
 
         <!-- English Task Name -->
         <div class="relative">
-          <label class="label" for="nationalityAr">اسم المهمة بالانجليزية</label>
+          <label class="label" for="nationalityAr">{{
+            'WORK_MISSIONS.MISSION_NAME_EN' | translate
+          }}</label>
           <input
             class="peer"
             fluid="true"
             id="nationalityAr"
             pInputText
-            placeholder="اسم المهمة بالانجليزية"
+            [placeholder]="'WORK_MISSIONS.MISSION_NAME_EN' | translate"
             type="text"
             [(ngModel)]="filterModel.nameEn"
           />
@@ -42,13 +48,15 @@
 
         <!-- Task Assignee Dropdown -->
         <div class="relative">
-          <label class="label" for="nationalityAr">مسند المهمة</label>
+          <label class="label" for="nationalityAr">{{
+            'WORK_MISSIONS.MISSION_ASSIGNER' | translate
+          }}</label>
           <p-select
             [options]="creators"
-            [(ngModel)]="filterModel.missionCreatorId"
+            [(ngModel)]="filterModel.missionAssignerId"
             optionValue="id"
             [optionLabel]="getPropertyName()"
-            placeholder="مسند المهمة"
+            [placeholder]="'WORK_MISSIONS.MISSION_ASSIGNER' | translate"
             class="w-full peer"
           ></p-select>
           <span
@@ -58,13 +66,13 @@
 
         <!-- Date From -->
         <div class="relative">
-          <label class="label" for="">التاريخ من</label>
+          <label class="label" for="">{{ 'WORK_MISSIONS.START_DATE' | translate }}</label>
           <p-datepicker
             [iconDisplay]="'input'"
             [showIcon]="true"
             class="peer block w-full"
             inputId="icondisplay"
-            placeholder="التاريخ من"
+            [placeholder]="'WORK_MISSIONS.START_DATE' | translate"
             [(ngModel)]="filterModel.startDate"
           >
             <ng-template pTemplate="inputicon">
@@ -78,13 +86,13 @@
 
         <!-- Date To -->
         <div class="relative">
-          <label class="label" for="">التاريخ إلي</label>
+          <label class="label" for="">{{ 'WORK_MISSIONS.END_DATE' | translate }}</label>
           <p-datepicker
             [iconDisplay]="'input'"
             [showIcon]="true"
             class="peer block w-full"
             inputId="icondisplay"
-            placeholder="التاريخ إلي"
+            [placeholder]="'WORK_MISSIONS.END_DATE' | translate"
             [(ngModel)]="filterModel.endDate"
           >
             <ng-template pTemplate="inputicon">
@@ -99,9 +107,9 @@
 
       <!-- Search Actions -->
       <div class="actions flex items-center gap-4 pt-6">
-        <button class="btn black-btn" (click)="search()">بحث</button>
+        <button class="btn black-btn" (click)="search()">{{ 'COMMON.SEARCH' | translate }}</button>
         <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">
-          إعادة تعيين
+          {{ 'COMMON.RESET_SEARCH' | translate }}
         </button>
       </div>
     </div>
@@ -114,7 +122,7 @@
       class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
     >
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-        قائمة مهام الأعمال و الاسناد
+        {{ 'WORK_MISSIONS.WORK_MISSIONS_LIST' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <!-- Only Excel Export Button -->
@@ -131,13 +139,13 @@
       <p-table [value]="list">
         <ng-template #header>
           <tr>
-            <th>اسم المهمة بالعربية</th>
-            <th>اسم المهمة بالانجليزية</th>
-            <th>تاريخ البداية</th>
-            <th>تاريخ النهاية</th>
-            <th>مسند المهمة عربي</th>
-            <th>مسند المهمة إنجليزي</th>
-            <th>اجراء</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_NAME_AR' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_ASSIGNER_AR' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_ASSIGNER_EN' | translate }}</th>
+            <th>{{ 'COMMON.RESET_SEARCH' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template #body let-mission>
@@ -150,8 +158,8 @@
             </td>
             <td>{{ mission.startDate }}</td>
             <td>{{ mission.endDate }}</td>
-            <td>{{ mission.missionCreator.nameAr }}</td>
-            <td>{{ mission.missionCreator.nameEn }}</td>
+            <td>{{ mission.missionAssigner.nameAr }}</td>
+            <td>{{ mission.missionAssigner.nameEn }}</td>
             <td>
               <!-- Only View Action -->
               <div class="actions flex gap-2">

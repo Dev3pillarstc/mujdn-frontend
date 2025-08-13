@@ -3,5 +3,5 @@ export default class MyWorkMissionFilter {
   declare nameAr?: string;
   declare startDate?: Date;
   declare endDate?: Date;
-  declare missionCreatorId?: number;
+  declare missionAssignerId?: number;
 }

@@ -93,7 +93,7 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.EMPLOYEES },
       },
       {
-        path: 'black-list',
+        path: 'blacklist',
         canActivate: [authGuard],
         resolve: { list: blacklistResolver },
         data: {
@@ -102,7 +102,7 @@ export const routes: Routes = [
         },
         loadComponent: () =>
           import(
-            '@/views/features/visit/black-list/blacklisted-container/blacklisted-container.component'
+            '@/views/features/visit/blacklist/blacklisted-container/blacklisted-container.component'
           ),
       },
       {

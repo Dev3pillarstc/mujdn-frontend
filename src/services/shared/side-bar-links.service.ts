@@ -84,6 +84,17 @@ export class SideBarLinksService {
       routeId: RouteIdsEnum.HOLIDAYS,
     },
     {
+      labelKey: 'MENU.VISITS',
+      iconUrl: 'assets/icons/time-icon.svg',
+      children: [
+        {
+          labelKey: 'MENU.BLACKLIST',
+          routerLink: ['/blacklist'],
+          routeId: RouteIdsEnum.BLACKLIST,
+        },
+      ],
+    },
+    {
       labelKey: 'MENU.WORK_SHIFT',
       iconUrl: 'assets/icons/time-icon.svg',
       children: [

@@ -7,34 +7,55 @@
       {{ 'WORK_MISSIONS.ASSIGN_EMPLOYEES' | translate }}
     </h3>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-end bg-[#f3f4f6] rounded-2xl p-8">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-end bg-[#f3f4f6] rounded-2xl p-8"
+    >
       <div>
         <label class="label">{{ 'WORK_MISSIONS.DEPARTMENT' | translate }}</label>
         <div class="relative">
-          <p-select [options]="departments" [optionLabel]="getPropertyName()" optionValue="id"
-            [placeholder]="'WORK_MISSIONS.DEPARTMENT' | translate" class="w-full peer"
-            [(ngModel)]="filterModel['departmentId']" id="employeeName">
+          <p-select
+            [options]="departments"
+            [optionLabel]="getPropertyName()"
+            optionValue="id"
+            [placeholder]="'WORK_MISSIONS.DEPARTMENT' | translate"
+            class="w-full peer"
+            [(ngModel)]="filterModel['departmentId']"
+            id="employeeName"
+          >
           </p-select>
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
         </div>
       </div>
       <div>
         <label class="label">{{ 'WORK_MISSIONS.EMPLOYEE_NAME_AR' | translate }}</label>
         <div class="relative">
-          <input pInputText type="text" [placeholder]="'WORK_MISSIONS.EMPLOYEE_NAME_AR' | translate" class="peer w-full"
-            [(ngModel)]="filterModel['nameAr']" />
+          <input
+            pInputText
+            type="text"
+            [placeholder]="'WORK_MISSIONS.EMPLOYEE_NAME_AR' | translate"
+            class="peer w-full"
+            [(ngModel)]="filterModel['nameAr']"
+          />
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
         </div>
       </div>
       <div>
         <label class="label">{{ 'WORK_MISSIONS.EMPLOYEE_NAME_EN' | translate }}</label>
         <div class="relative">
-          <input pInputText type="text" [placeholder]="'WORK_MISSIONS.EMPLOYEE_NAME_EN' | translate" class="peer w-full"
-            [(ngModel)]="filterModel['nameEn']" />
+          <input
+            pInputText
+            type="text"
+            [placeholder]="'WORK_MISSIONS.EMPLOYEE_NAME_EN' | translate"
+            class="peer w-full"
+            [(ngModel)]="filterModel['nameEn']"
+          />
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
         </div>
       </div>
 
@@ -43,72 +64,96 @@
           <button class="btn black-btn min-h-[42px] w-fit" (click)="search()">
             {{ 'COMMON.SEARCH' | translate }}
           </button>
-          <button class="btn gray-btn border border-[#d2d6db] min-h-[42px] w-fit" (click)="resetSearch()">
+          <button
+            class="btn gray-btn border border-[#d2d6db] min-h-[42px] w-fit"
+            (click)="resetSearch()"
+          >
             {{ 'COMMON.RESET_SEARCH' | translate }}
           </button>
         </div>
       </div>
     </div>
     @if (employees && employees.length > 0) {
-    <p-table [value]="employees">
-      <ng-template #header>
-        <tr>
-          <th>
-            <label class="flex items-center space-x-2 cursor-pointer relative">
-              <input
-                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-                type="checkbox" [checked]="returnCheckAllStatus()" (change)="toggleAll($any($event.target).checked)" />
-              <svg
-                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </label>
-          </th>
-          <th>{{ 'WORK_MISSIONS.NATIONAL_ID' | translate }}</th>
-          <th>{{ 'WORK_MISSIONS.EMPLOYEE_NAME_AR' | translate }}</th>
-          <th>{{ 'WORK_MISSIONS.EMPLOYEE_NAME_EN' | translate }}</th>
-          <th>{{ 'WORK_MISSIONS.DEPARTMENT_NAME_ARABIC' | translate }}</th>
-          <th>{{ 'WORK_MISSIONS.DEPARTMENT_NAME_ENGLISH' | translate }}</th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-employee>
-        <tr>
-          <td>
-            <label class="flex items-center space-x-2 cursor-pointer relative">
-              <input
-                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-                type="checkbox" [checked]="isUserSelected(employee.id)"
-                (change)="toggleUserSelection(employee.id, $event)" />
-              <svg
-                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                viewBox="0 0 24 24">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </label>
-          </td>
-          <td>
-            <span class="font-medium text-[#1b8354]"> {{ employee.nationalId }} </span>
-          </td>
-          <td>{{ employee.nameAr }}</td>
-          <td>
-            <div class="text-end">{{ employee.nameEn }}</div>
-          </td>
-          <td>{{ employee.departmentNameAr }}</td>
-          <td>{{ employee.departmentNameEn }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+      <p-table [value]="employees">
+        <ng-template #header>
+          <tr>
+            <th>
+              <label class="flex items-center space-x-2 cursor-pointer relative">
+                <input
+                  class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                  type="checkbox"
+                  [checked]="returnCheckAllStatus()"
+                  (change)="toggleAll($any($event.target).checked)"
+                />
+                <svg
+                  class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="3"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </label>
+            </th>
+            <th>{{ 'WORK_MISSIONS.NATIONAL_ID' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.EMPLOYEE_NAME_AR' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.EMPLOYEE_NAME_EN' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.DEPARTMENT_NAME_ARABIC' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.DEPARTMENT_NAME_ENGLISH' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-employee>
+          <tr>
+            <td>
+              <label class="flex items-center space-x-2 cursor-pointer relative">
+                <input
+                  class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                  type="checkbox"
+                  [checked]="isUserSelected(employee.id)"
+                  (change)="toggleUserSelection(employee.id, $event)"
+                />
+                <svg
+                  class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="3"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </label>
+            </td>
+            <td>
+              <span class="font-medium text-[#1b8354]"> {{ employee.nationalId }} </span>
+            </td>
+            <td>{{ employee.nameAr }}</td>
+            <td>
+              <div class="text-end">{{ employee.nameEn }}</div>
+            </td>
+            <td>{{ employee.departmentNameAr }}</td>
+            <td>{{ employee.departmentNameEn }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     } @else {
-    <div class="flex items-center justify-center h-64">
-      <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
-    </div>
+      <div class="flex items-center justify-center h-64">
+        <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
+      </div>
     }
     @if (paginationInfo) {
-    <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-      [totalRecords]="paginationInfo.totalItems" [rowsPerPageOptions]="[10, 20, 30]" />
+      <p-paginator
+        class="mt-6"
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rows]="rows"
+        [totalRecords]="paginationInfo.totalItems"
+        [rowsPerPageOptions]="[10, 20, 30]"
+      />
     }
     <section class="border-t border-[#d2d6db] pt-8 mt-8">
       <h3 class="text-[14px] font-normal text-[#6c737f] mb-6">
@@ -116,28 +161,36 @@
       </h3>
       <ul class="flex flex-wrap gap-4">
         @for (employee of selectedEmployees; track employee.id) {
-        <li
-          class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium">
-          <span>{{
-            isCurrentLanguageEnglish()
-            ? employee.nameEn
-            : employee.nameAr
-            }}</span>
-          <button (click)="toggleUserSelection(employee.id!)">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                fill="#161616" />
-            </svg>
-          </button>
-        </li>
+          <li
+            class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium"
+          >
+            <span>{{ isCurrentLanguageEnglish() ? employee.nameEn : employee.nameAr }}</span>
+            <button (click)="toggleUserSelection(employee.id!)">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                  fill="#161616"
+                />
+              </svg>
+            </button>
+          </li>
         }
       </ul>
     </section>
 
     <div class="actions mt-6 flex items-center justify-end gap-4">
       <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
-      <button class="btn green-btn" (click)="saveAssignments()">{{ 'COMMON.SAVE' | translate }}</button>
+      <button class="btn green-btn" (click)="saveAssignments()">
+        {{ 'COMMON.SAVE' | translate }}
+      </button>
     </div>
   </div>
 </div>

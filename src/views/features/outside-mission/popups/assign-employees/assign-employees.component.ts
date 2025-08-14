@@ -90,15 +90,14 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
 
       // Fill employee IDs for checkbox checking
       this.selectedUsers.employeesIds = this.model.assignedEmployees
-        .filter(emp => emp.id !== undefined)
-        .map(emp => emp.id as number);
+        .filter((emp) => emp.id !== undefined)
+        .map((emp) => emp.id as number);
     }
-
   }
 
-  override buildForm(): void { }
-  override saveFail(error: Error): void { }
-  override afterSave(model: WorkMission, dialogRef: M<any, any>): void { }
+  override buildForm(): void {}
+  override saveFail(error: Error): void {}
+  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
   override beforeSave(model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
   }
@@ -128,7 +127,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
           this.employees = response.data.list;
           this.paginationInfo = response.data.paginationInfo;
         },
-        error: () => { },
+        error: () => {},
       });
   }
   // Add this method to check if all employees on current page are selected
@@ -137,8 +136,8 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
       return false;
     }
 
-    return this.employees.every(employee =>
-      employee.id && this.selectedUsers.employeesIds.includes(employee.id)
+    return this.employees.every(
+      (employee) => employee.id && this.selectedUsers.employeesIds.includes(employee.id)
     );
   }
 
@@ -161,8 +160,8 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     } else {
       // Remove all employees from current page
       const currentPageEmployeeIds = this.employees
-        .filter(u => u.id !== undefined)
-        .map(u => u.id as number);
+        .filter((u) => u.id !== undefined)
+        .map((u) => u.id as number);
 
       this.selectedUsers.employeesIds = this.selectedUsers.employeesIds.filter(
         (userId) => !currentPageEmployeeIds.includes(userId)
@@ -189,7 +188,9 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
       }
     } else {
       // Remove if unchecked
-      this.selectedUsers.employeesIds = this.selectedUsers.employeesIds.filter((id) => id !== userId);
+      this.selectedUsers.employeesIds = this.selectedUsers.employeesIds.filter(
+        (id) => id !== userId
+      );
       this.selectedEmployees = this.selectedEmployees.filter((emp) => emp.id !== userId);
     }
   }
@@ -202,7 +203,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     );
   }
   getSelectedEmployeeName(employeeId: number): string {
-    const employee = this.selectedEmployees.find(emp => emp.id === employeeId);
+    const employee = this.selectedEmployees.find((emp) => emp.id === employeeId);
 
     if (!employee) {
       return 'Employee ID: ' + employeeId; // Fallback
@@ -211,8 +212,8 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     // Return name based on current language
     const currentLang = this.languageService.getCurrentLanguage();
     return currentLang === LANGUAGE_ENUM.ENGLISH
-      ? (employee.nameEn || employee.nameAr || 'N/A')
-      : (employee.nameAr || employee.nameEn || 'N/A');
+      ? employee.nameEn || employee.nameAr || 'N/A'
+      : employee.nameAr || employee.nameEn || 'N/A';
   }
   search() {
     this.first = 0;
@@ -229,7 +230,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
           this.employees = response.data.list;
           this.paginationInfo = response.data.paginationInfo;
         },
-        error: () => { },
+        error: () => {},
       });
   }
   resetSearch() {
@@ -241,22 +242,18 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   }
 
   getPropertyName(): string {
-    return this.isCurrentLanguageEnglish()
-      ? 'nameEn'
-      : 'nameAr';
+    return this.isCurrentLanguageEnglish() ? 'nameEn' : 'nameAr';
   }
   saveAssignments() {
     this.selectedUsers.missionId = this.model?.id;
-    this.workMissionService
-      .addUsersToMission(this.selectedUsers)
-      .subscribe({
-        next: (response) => {
-          this.dialogRef.close(DIALOG_ENUM.OK);
-        },
-        error: () => { },
-      });
+    this.workMissionService.addUsersToMission(this.selectedUsers).subscribe({
+      next: (response) => {
+        this.dialogRef.close(DIALOG_ENUM.OK);
+      },
+      error: () => {},
+    });
   }
   isCurrentLanguageEnglish() {
-    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
   }
 }

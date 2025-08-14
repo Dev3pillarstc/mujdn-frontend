@@ -1,0 +1,5 @@
+export enum PRESENCE_INQUIRY_STATUS_ENUM {
+  ACTIVE = 1,
+  INACTIVE = 2,
+  NOT_ASSIGNED = 3,
+}

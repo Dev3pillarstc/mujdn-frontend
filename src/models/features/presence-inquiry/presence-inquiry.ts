@@ -26,8 +26,8 @@ export class PresenceInquiry extends BaseCrudModel<PresenceInquiry, PresenceInqu
     const { messageAr, messageEn, buffer } = this;
 
     return {
-      messageAr: [messageAr, [Validators.required]],
-      messageEn: [messageEn, [Validators.required]],
+      messageAr: [messageAr, [Validators.required, CustomValidators.pattern('AR_NUM')]],
+      messageEn: [messageEn, [Validators.required, CustomValidators.pattern('ENG_NUM')]],
       buffer: [
         buffer,
         [

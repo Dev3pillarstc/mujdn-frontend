@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, SimpleChanges } from '@angular/core';
+import { Component, inject, input, model, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
@@ -21,7 +21,7 @@ import { PresenceInquiryService } from '@/services/features/presence-inquiry.ser
 import { TranslatePipe } from '@ngx-translate/core';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { MatDialogConfig } from '@angular/material/dialog';
-import { takeUntil } from 'rxjs';
+import { filter, of, switchMap, takeUntil, tap } from 'rxjs';
 import { PRESENCE_INQUIRY_STATUS_ENUM } from '@/enums/presence-inquiry-status-enum';
 import { AssignEmployeeResponsibilityPopupComponent } from '../assign-employee-responsibility-popup/assign-employee-responsibility-popup.component';
 import { ViewEmployeesCheckPopupComponent } from '../view-employees-check-popup/view-employees-check-popup.component';
@@ -195,19 +195,16 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
   getPropertyName() {
     return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
-  openModal() {
+  openModal(id: number) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = {};
+    dialogConfig.data = { id: id };
     dialogConfig.width = '100%';
     dialogConfig.maxWidth = '1024px';
     const dialogRef = this.matDialog.open(AssignEmployeeResponsibilityPopupComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       if (result && result == DIALOG_ENUM.OK) {
-        this.loadList().subscribe({
-          next: (response) => this.handleLoadListSuccess(response),
-          error: this.handleLoadListError,
-        });
+        this.loadPresenceInquiriesList();
       }
     });
   }
@@ -220,11 +217,31 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       if (result && result == DIALOG_ENUM.OK) {
-        this.loadList().subscribe({
-          next: (response) => this.handleLoadListSuccess(response),
-          error: this.handleLoadListError,
-        });
+        this.loadPresenceInquiriesList();
       }
     });
+  }
+  override deleteModel(id: number) {
+    const dialogRef = this.confirmService.open({
+      icon: 'warning',
+      messages: ['COMMON.CONFIRM_DELETE'],
+      confirmText: 'COMMON.OK',
+      cancelText: 'COMMON.CANCEL',
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((result) => result === DIALOG_ENUM.OK),
+        switchMap(() => this.service.delete(id)),
+        tap(() => {
+          this.loadPresenceInquiriesList(); // Just trigger the side effect
+        })
+      )
+      .subscribe({
+        next: () => {}, // No response expected since loadPresenceInquiriesList() handles updates
+        error: this.handleLoadListError,
+      });
   }
 }

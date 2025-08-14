@@ -95,10 +95,10 @@
       <p-table [value]="list">
         <ng-template #header>
           <tr>
-            <th>تاريخ المسائلة</th>
-            <th>وقت المسائلة</th>
-            <th>فترة السماح للتسجيل الحضور</th>
-            <th>نتيجة المسائلة</th>
+            <th>{{ 'INQUIRIES_PAGE.INQUIRY_DATE' | translate }}</th>
+            <th>{{ 'INQUIRIES_PAGE.INQUIRY_TIME' | translate }}</th>
+            <th>{{ 'INQUIRIES_PAGE.ALLOWED_ATTENDANCE_PERIOD' | translate }}</th>
+            <th>{{ 'INQUIRIES_PAGE.PROCESSING_STATUS' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-inquiry>

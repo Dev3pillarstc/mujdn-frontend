@@ -198,22 +198,25 @@
 
             <td>
               <div class="actions flex gap-2">
-                <button (click)="openDataModal(inquiry)" class="table-action-gray-btn">
-                  <img src="/assets/icons/view.svg" alt="عرضٍ" />
-                </button>
-                <button (click)="addOrEditModel(inquiry)" class="table-action-gray-btn">
-                  <img src="/assets/icons/edit-action.svg" alt="تعديل" />
-                </button>
-                <button
-                  (click)="openModal()"
-                  class="table-action-gray-btn flex align-items gap-4 !min-w-[150px]"
-                >
-                  <img src="/assets/icons/leading.svg" alt="اسناد" />
-                  اسناد موظفين
-                </button>
-                <button class="table-action-red-btn">
-                  <img src="/assets/icons/delete-action.svg" alt="حذف" />
-                </button>
+                @if (!inquiry.assignedDate) {
+                  <button (click)="addOrEditModel(inquiry)" class="table-action-gray-btn">
+                    <img src="/assets/icons/edit-action.svg" alt="تعديل" />
+                  </button>
+                  <button
+                    (click)="openModal(inquiry.id)"
+                    class="table-action-gray-btn flex align-items gap-4 !min-w-[150px]"
+                  >
+                    <img src="/assets/icons/leading.svg" alt="اسناد" />
+                    اسناد موظفين
+                  </button>
+                  <button (click)="deleteModel(inquiry.id)" class="table-action-red-btn">
+                    <img src="assets/icons/delete-action.svg" alt="حذف" />
+                  </button>
+                } @else {
+                  <button (click)="openDataModal(inquiry)" class="table-action-gray-btn">
+                    <img src="/assets/icons/view.svg" alt="عرضٍ" />
+                  </button>
+                }
               </div>
             </td>
           </tr>

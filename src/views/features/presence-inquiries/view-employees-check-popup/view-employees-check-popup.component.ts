@@ -2,6 +2,7 @@ import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-
 import { PRESENCE_INQUIRY_STATUS_ENUM } from '@/enums/presence-inquiry-status-enum';
 import { USER_PRESENCE_INQUIRY_STATUS_ENUM } from '@/enums/user-presence-inquiry-status-enum';
 import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
+import { UserProfilePresenceInquiry } from '@/models/features/presence-inquiry/user-profile-presence-inquiry';
 import { AlertService } from '@/services/shared/alert.service';
 import { DialogRef } from '@angular/cdk/dialog';
 import { CommonModule } from '@angular/common';
@@ -46,7 +47,7 @@ export class ViewEmployeesCheckPopupComponent
           acc[user.inquiryStatusId].push(user);
           return acc;
         },
-        {} as Record<number, any[]>
+        {} as Record<number, UserProfilePresenceInquiry[]>
       ) ?? {};
 
     this.statusGroups = Object.keys(grouped).map((id) => ({

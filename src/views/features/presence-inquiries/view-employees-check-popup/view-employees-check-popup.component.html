@@ -67,42 +67,46 @@
     <h4 class="text-[#1f2a37] text-[18px] font-semibold mt-8">الموظفون المعنيون بتنفيذ المهام</h4>
 
     <!-- Group by inquiryStatusId -->
-    <ng-container *ngFor="let statusGroup of statusGroups">
-      <div class="mt-4 pt-6 border-t border-[#d2d6db]">
-        <div>
-          @if (statusGroup.id === userInquiryStatusEnum.CONFIRMED) {
-            <span
-              class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#067647]"
-            >
-              <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-              تم التوثيق
-            </span>
-          }
-          @if (statusGroup.id === userInquiryStatusEnum.UNDER_CONFIRMATION) {
-            <span
-              class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#4d5761]"
-            >
-              <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-              قيد التوثيق
-            </span>
-          }
-          @if (statusGroup.id === userInquiryStatusEnum.NOT_CONFIRMED) {
-            <span
-              class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#d92d20]"
-            >
-              <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-              لم يتم التوثيق
-            </span>
-          }
-        </div>
+    @for (statusGroup of statusGroups; track $index) {
+      <ng-container>
+        <div class="mt-4 pt-6 border-t border-[#d2d6db]">
+          <div>
+            @if (statusGroup.id === userInquiryStatusEnum.CONFIRMED) {
+              <span
+                class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#067647]"
+              >
+                <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
+                تم التوثيق
+              </span>
+            }
+            @if (statusGroup.id === userInquiryStatusEnum.UNDER_CONFIRMATION) {
+              <span
+                class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#4d5761]"
+              >
+                <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
+                قيد التوثيق
+              </span>
+            }
+            @if (statusGroup.id === userInquiryStatusEnum.NOT_CONFIRMED) {
+              <span
+                class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#d92d20]"
+              >
+                <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
+                لم يتم التوثيق
+              </span>
+            }
+          </div>
 
-        <div class="flex flex-wrap gap-4 mt-4">
-          <div *ngFor="let user of statusGroup.users" class="bg-[#f3f4f6] rounded-full px-3">
-            <span class="text-[#161616] font-medium">{{ user.fullNameAr }}</span>
+          <div class="flex flex-wrap gap-4 mt-4">
+            @for (user of statusGroup.users; track $index) {
+              <div class="bg-[#f3f4f6] rounded-full px-3">
+                <span class="text-[#161616] font-medium">{{ user.fullNameAr }}</span>
+              </div>
+            }
           </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
+    }
 
     <div class="actions mt-6 flex items-center justify-end gap-4">
       <button class="btn gray-btn" (click)="close()">الغاء</button>

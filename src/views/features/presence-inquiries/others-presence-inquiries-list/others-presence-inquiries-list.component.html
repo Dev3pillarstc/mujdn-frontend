@@ -16,7 +16,7 @@
             [showClear]="true"
             class="peer block w-full"
             inputId="icondisplayFrom"
-            placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
+            placeholder="{{ 'COMMON.FROM' | translate }}"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
@@ -36,7 +36,7 @@
             [showClear]="true"
             class="peer block w-full"
             inputId="icondisplayTo"
-            placeholder="{{ 'HOLIDAYS_PAGE.DATE' | translate }}"
+            placeholder="{{ 'COMMON.TO' | translate }}"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
@@ -47,7 +47,7 @@
           ></span>
         </div>
         <div class="relative">
-          <label for="" class="label">حالة المسائلة</label>
+          <label for="" class="label"> {{ 'INQUIRIES_PAGE.INQUIRY_STATUS' | translate }}</label>
           <p-select
             [(ngModel)]="filterModel.statusId"
             [optionLabel]="getPropertyName()"
@@ -57,14 +57,16 @@
             id="request-status-select"
             optionLabel="type"
             optionValue="id"
-            placeholder="نتيجة المسائلة"
+            placeholder="{{ 'INQUIRIES_PAGE.INQUIRY_STATUS' | translate }}"
           ></p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
         </div>
         <div class="relative">
-          <label for="department" class="label">الادارة</label>
+          <label for="department" class="label">
+            {{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</label
+          >
           <p-select
             [options]="departments"
             [(ngModel)]="filterModel.departmentId"
@@ -82,9 +84,11 @@
           ></span>
         </div>
         <div class="relative">
-          <label class="label" for="employeeNameAr">اسم الموظف عربي</label>
+          <label class="label" for="employeeNameAr">{{
+            'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
+          }}</label>
           <input
-            placeholder="اسم الموظف"
+            placeholder="{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}"
             [(ngModel)]="filterModel.employeeNameAr"
             class="peer"
             fluid="true"
@@ -97,9 +101,11 @@
           ></span>
         </div>
         <div class="relative">
-          <label class="label" for="employeeNameEn">اسم الموظف إنجليزي</label>
+          <label class="label" for="employeeNameEn">{{
+            'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate
+          }}</label>
           <input
-            placeholder="اسم الموظف"
+            placeholder="{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}"
             [(ngModel)]="filterModel.employeeNameEn"
             class="peer"
             fluid="true"
@@ -175,7 +181,7 @@
                   class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
                 >
                   <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
-                  جاري التوثيق
+                  {{ 'INQUIRIES_PAGE.UNDER_PROCESSING' | translate }}
                 </span>
               }
               @if (inquiry.statusId === inquiryStatusEnum.INACTIVE) {
@@ -183,7 +189,7 @@
                   class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
                 >
                   <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
-                  تم انتهاء وقت التوثيق
+                  {{ 'INQUIRIES_PAGE.TIME_EXPIRED' | translate }}
                 </span>
               }
               @if (inquiry.statusId === inquiryStatusEnum.NOT_ASSIGNED) {
@@ -191,7 +197,7 @@
                   class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
                 >
                   <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
-                  لم يتم الإسناد
+                  {{ 'INQUIRIES_PAGE.NOT_ASSIGNED' | translate }}
                 </span>
               }
             </td>

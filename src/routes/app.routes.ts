@@ -21,6 +21,7 @@ import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
 import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
 import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blacklisted-national-id.resolver';
 import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
+import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -234,7 +235,13 @@ export const routes: Routes = [
           import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
       },
       {
-        path: 'outside-mission',
+        path: 'work-missions',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.HR_OFFICER],
+          routeId: RouteIdsEnum.WORK_MISSION,
+        },
+        resolve: { list: WorkMissionResolver },
         loadComponent: () =>
           import(
             '@/views/features/outside-mission/outside-mission-list/outside-mission-list.component'

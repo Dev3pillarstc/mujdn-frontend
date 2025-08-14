@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
@@ -67,6 +67,7 @@ export default class EmployeeListComponent
   extends BaseListComponent<User, AddNewEmployeePopupComponent, UserService, UserFilter>
   implements OnInit
 {
+  @ViewChild('employeeContainer', { static: true }) employeeContainer!: ElementRef;
   languageService = inject(LanguageService);
   cityService = inject(CityService);
   regionService = inject(RegionService);

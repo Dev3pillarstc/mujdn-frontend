@@ -77,6 +77,7 @@
                   <input
                     class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
                     type="checkbox"
+                    [checked]="returnCheckAllStatus()"
                     (change)="toggleAll($any($event.target).checked)"
                   />
                   <svg

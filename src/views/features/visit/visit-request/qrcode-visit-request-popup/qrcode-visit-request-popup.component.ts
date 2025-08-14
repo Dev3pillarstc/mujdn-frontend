@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-qrcode-visit-request-popup',
   imports: [],
   templateUrl: './qrcode-visit-request-popup.component.html',
-  styleUrl: './qrcode-visit-request-popup.component.scss'
+  styleUrl: './qrcode-visit-request-popup.component.scss',
 })
-export class QrcodeVisitRequestPopupComponent {
-
-}
+export class QrcodeVisitRequestPopupComponent {}

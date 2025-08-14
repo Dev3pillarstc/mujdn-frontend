@@ -13,14 +13,14 @@ export class NotificationSetting extends BaseCrudModel<
   override $$__service_name__$$: string = 'NotificationSettingService';
 
   isSms: boolean = true;
-  isMobile: boolean = true;
+  isEmail: boolean = true;
   isWeb: boolean = true;
 
   buildForm() {
-    const { isSms, isMobile, isWeb } = this;
+    const { isSms, isEmail, isWeb } = this;
     const form = {
       isSms: [isSms, []],
-      isMobile: [isMobile, []],
+      isEmail: [isEmail, []],
       isWeb: [isWeb, []],
     };
 

@@ -81,7 +81,10 @@ export class MyCreatedVisitRequestListComponent {
     };
     dialogConfig.width = this.dialogSize2.width;
     dialogConfig.maxWidth = this.dialogSize2.maxWidth;
-    const dialogRef = this.matDialog.open(ViewActionVisitRequestPopupComponent as any, dialogConfig);
+    const dialogRef = this.matDialog.open(
+      ViewActionVisitRequestPopupComponent as any,
+      dialogConfig
+    );
 
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       console.log('closed');

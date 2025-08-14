@@ -57,7 +57,7 @@
             <label class="flex items-center space-x-2 cursor-pointer relative">
               <input
                 class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-                type="checkbox" (change)="toggleAll($any($event.target).checked)" />
+                type="checkbox" [checked]="returnCheckAllStatus()" (change)="toggleAll($any($event.target).checked)" />
               <svg
                 class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
                 fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"

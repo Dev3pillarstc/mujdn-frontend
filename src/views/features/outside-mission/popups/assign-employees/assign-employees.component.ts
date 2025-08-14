@@ -196,7 +196,11 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   isUserSelected(userId: number): boolean {
     return this.selectedUsers.employeesIds.some((id) => id === userId);
   }
-
+  returnCheckAllStatus() {
+    return this.employees.every((emp) =>
+      this.selectedEmployees.map((selectedUser) => selectedUser.id).includes(emp.id)
+    );
+  }
   getSelectedEmployeeName(employeeId: number): string {
     const employee = this.selectedEmployees.find(emp => emp.id === employeeId);
 

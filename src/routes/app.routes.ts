@@ -92,6 +92,13 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.EMPLOYEES },
       },
       {
+        path: 'black-list',
+        loadComponent: () =>
+          import(
+            '@/views/features/visit/black-list/black-list-container/black-list-container.component'
+          ),
+      },
+      {
         path: 'attendance-logs',
         canActivate: [authGuard],
         resolve: { list: attendanceResolver },

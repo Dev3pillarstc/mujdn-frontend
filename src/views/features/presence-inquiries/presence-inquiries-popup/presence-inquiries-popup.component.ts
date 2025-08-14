@@ -18,6 +18,7 @@ import { ValidationMessagesComponent } from '@/views/shared/validation-messages/
 import { TranslatePipe } from '@ngx-translate/core';
 import { RequiredMarkerDirective } from '../../../../directives/required-marker.directive';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-presence-inquiries-popup',
@@ -41,13 +42,16 @@ export class PresenceInquiriesPopupComponent
 {
   declare model: PresenceInquiry;
   declare form: FormGroup;
-
+  isCreateMode = false;
+  declare viewMode: ViewModeEnum;
   alertService = inject(AlertService);
   fb = inject(FormBuilder);
   data = inject(MAT_DIALOG_DATA);
 
   override initPopup() {
     this.model = this.data.model ?? new PresenceInquiry();
+    this.viewMode = this.data.viewMode;
+    this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
   }
 
   override buildForm() {

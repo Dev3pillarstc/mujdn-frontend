@@ -5,20 +5,20 @@
     </button>
 
     <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'PRESENCE_INQUIRY_PAGE.NEW_INQUIRY' | translate }}
+      {{
+        (isCreateMode ? 'INQUIRIES_PAGE.ADD_NEW_INQUIRY' : 'INQUIRIES_PAGE.EDIT_INQUIRY')
+          | translate
+      }}
     </h3>
 
     <form [formGroup]="form">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Buffer -->
         <div>
-          <label class="label" for="buffer">
-            {{ 'PRESENCE_INQUIRY_PAGE.BUFFER' | translate }}
-          </label>
           <div class="lg:col-span-2">
-            <label class="label" for="max-attendance-time">{{
-              'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate
-            }}</label>
+            <label class="label" for="buffer">
+              {{ 'INQUIRIES_PAGE.BUFFER' | translate }}
+            </label>
             <p-inputnumber
               [inputStyle]="{ width: '3rem' }"
               [showButtons]="true"
@@ -42,7 +42,7 @@
         <!-- Message Text -->
         <div class="md:col-span-2 lg:col-span-3">
           <label class="label" for="messageAr">
-            {{ 'PRESENCE_INQUIRY_PAGE.MESSAGE_TEXT' | translate }}
+            {{ 'INQUIRIES_PAGE.MESSAGE_AR' | translate }}
           </label>
           <div class="relative w-full">
             <textarea
@@ -50,7 +50,7 @@
               formControlName="messageAr"
               pTextarea
               id="messageAr"
-              placeholder="{{ 'PRESENCE_INQUIRY_PAGE.MESSAGE_TEXT' | translate }}"
+              placeholder="{{ 'INQUIRIES_PAGE.MESSAGE_AR' | translate }}"
             ></textarea>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
@@ -61,7 +61,7 @@
         <!-- Message Text -->
         <div class="md:col-span-2 lg:col-span-3">
           <label class="label" for="messageEn">
-            {{ 'PRESENCE_INQUIRY_PAGE.MESSAGE_TEXT' | translate }}
+            {{ 'INQUIRIES_PAGE.MESSAGE_EN' | translate }}
           </label>
           <div class="relative w-full">
             <textarea
@@ -69,7 +69,7 @@
               formControlName="messageEn"
               pTextarea
               id="messageEn"
-              placeholder="{{ 'PRESENCE_INQUIRY_PAGE.MESSAGE_TEXT' | translate }}"
+              placeholder="{{ 'INQUIRIES_PAGE.MESSAGE_EN' | translate }}"
             ></textarea>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"

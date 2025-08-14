@@ -405,7 +405,9 @@
     "CITIES": "Cities",
     "REGIONS": "Regions",
     "PERMISSIONS_SETTINGS": "Permissions Settings",
-    "NOTIFICATIONS": "Notifications"
+    "NOTIFICATIONS": "Notifications",
+    "VISITS": "Visits",
+    "BLACKLIST": "Visitor blacklist criteria"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "Notification Settings",
@@ -530,5 +532,20 @@
     "SEND_LINK_ERROR_MESSAGE": "Please check the correctness of the entered data and try again.",
     "INVALID_TOKEN": "Invalid or expired reset link",
     "INVALID_TOKEN_MESSAGE": "Sorry, this link is no longer valid. It may have expired or been used previously."
+  },
+  "BLACKLIST_PAGE": {
+    "VISITOR_BLACKLIST_CRITERIA": "Visitor Blacklist Criteria",
+    "NATIONALITY_TAB": "Nationality",
+    "NATIONAL_ID_TAB": "National ID",
+    "BLACKLISTED_NATIONAL_IDS_LIST": "Blacklisted National IDs List",
+    "NATIONAL_ID": "National ID",
+    "ADD_NEW_BLACKLISTED_NATIONAL_ID": "Add New Blacklisted National ID",
+    "EDIT_BLACKLISTED_NATIONAL_ID": "Edit Blacklisted National ID",
+    "BLACKLISTED_NATIONALITIES_LIST": "Blacklisted Nationalities List",
+    "NATIONALITY_IN_ARABIC": "Nationality in Arabic",
+    "NATIONALITY_IN_ENGLISH": "Nationality in English",
+    "ADD_NEW_BLACKLISTED_NATIONALITY": "Add New Blacklisted Nationality",
+    "EDIT_BLACKLISTED_NATIONALITY": "Edit Blacklisted Nationality",
+    "NATIONALITY": "Nationality"
   }
 }

@@ -3,6 +3,7 @@ import { Nationality } from '@/models/features/lookups/Nationality';
 import { Injectable } from '@angular/core';
 import { CastResponseContainer } from 'cast-response';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { LookupBaseService } from '@/abstracts/lookup-base.service';
 
 @CastResponseContainer({
   $default: {
@@ -17,7 +18,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 @Injectable({
   providedIn: 'root',
 })
-export class NationalityService extends BaseCrudService<Nationality> {
+export class NationalityService extends LookupBaseService<Nationality, number> {
   serviceName: string = 'NationalityService';
 
   override getUrlSegment(): string {

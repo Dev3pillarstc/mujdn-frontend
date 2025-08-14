@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { TabsModule } from 'primeng/tabs';
@@ -30,7 +29,6 @@ interface Adminstration {
     RouterModule,
     CommonModule,
     PaginatorModule,
-    Select,
     DatePickerModule,
     FormsModule,
     TabsModule,

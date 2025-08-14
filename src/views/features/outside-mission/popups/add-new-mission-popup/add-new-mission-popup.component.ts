@@ -5,7 +5,6 @@ import { TextareaModule } from 'primeng/textarea';
 import { DialogRef } from '@angular/cdk/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabsModule } from 'primeng/tabs';
-import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 
@@ -18,7 +17,6 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
     InputTextModule,
     TabsModule,
     TableModule,
-    Select,
     PaginatorModule,
   ],
   templateUrl: './add-new-mission-popup.component.html',

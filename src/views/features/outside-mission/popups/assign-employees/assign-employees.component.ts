@@ -25,10 +25,6 @@ import { WorkMissionService } from '@/services/features/business/work-mission.se
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { OptionsContract } from '@/contracts/options-contract';
 import { TranslatePipe } from '@ngx-translate/core';
-interface Adminstration {
-  type: string;
-}
-
 @Component({
   selector: 'app-assign-employees',
   imports: [
@@ -50,30 +46,18 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   override form: FormGroup<any> = new FormGroup({});
   declare viewMode: ViewModeEnum;
   isCreateMode = false;
-  employeesData: PaginatedList<UserProfileDataWithNationalId> =
-    new PaginatedList<UserProfileDataWithNationalId>();
   employees: UserProfileDataWithNationalId[] = [];
   paginationInfo: PaginationInfo = new PaginationInfo();
   departments: BaseLookupModel[] = [];
   workMissionService = inject(WorkMissionService);
   paginationParams: PaginationParams = new PaginationParams();
   filterModel: OptionsContract = {};
-  constructor(
-    private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA)
-    public data: {
-      model: WorkMission;
-      viewMode: ViewModeEnum;
-      lookups: {
-        departments: BaseLookupModel[];
-      };
-    }
-  ) {
+  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
   override initPopup(): void {
-    this.model = this.data.model;
     this.loadEmployees();
+    this.model = this.data.model;
     this.departments = this.data.lookups.departments;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
@@ -93,10 +77,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   first: number = 0;
   rows: number = 10;
   date2: Date | undefined;
-
-  selectedAdminstration: Adminstration | undefined;
-  declare direction: LAYOUT_DIRECTION_ENUM;
-  adminstrations: Adminstration[] | undefined;
 
   onPageChange(event: PaginatorState) {
     this.first = event.first!;

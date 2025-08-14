@@ -134,7 +134,7 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
     this.notificationForm.reset();
     this.notificationForm.patchValue({
       isSms: this.notificationSettingModel.isSms,
-      isMobile: this.notificationSettingModel.isMobile,
+      isEmail: this.notificationSettingModel.isEmail,
       isWeb: this.notificationSettingModel.isWeb,
     });
   }
@@ -153,7 +153,7 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
   }
   notificationChannels = [
     { key: 'isSms', labelKey: 'NOTIFICATION.SMS' },
-    { key: 'isMobile', labelKey: 'NOTIFICATION.MOBILE' },
+    { key: 'isEmail', labelKey: 'NOTIFICATION.EMAIL' },
     { key: 'isWeb', labelKey: 'NOTIFICATION.WEB' },
   ];
   ngOnDestroy() {

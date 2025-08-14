@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-view-action-visit-request-popup',
   imports: [],
   templateUrl: './view-action-visit-request-popup.component.html',
-  styleUrl: './view-action-visit-request-popup.component.scss'
+  styleUrl: './view-action-visit-request-popup.component.scss',
 })
-export class ViewActionVisitRequestPopupComponent {
-
-}
+export class ViewActionVisitRequestPopupComponent {}

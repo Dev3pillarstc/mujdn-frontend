@@ -5,8 +5,6 @@ import { InputText } from 'primeng/inputtext';
   selector: 'app-visitor-selection-popup',
   imports: [InputText],
   templateUrl: './visitor-selection-popup.component.html',
-  styleUrl: './visitor-selection-popup.component.scss'
+  styleUrl: './visitor-selection-popup.component.scss',
 })
-export class VisitorSelectionPopupComponent {
-
-}
+export class VisitorSelectionPopupComponent {}

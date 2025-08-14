@@ -1,17 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
 import { AlertService } from '@/services/shared/alert.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { UserProfilePresenceInquiry } from '@/models/features/presence-inquiry/user-profile-presence-inquiry';
 import { DepartmentService } from '@/services/features/lookups/department.service';
@@ -68,7 +66,6 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
       this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
         ? LAYOUT_DIRECTION_ENUM.LTR
         : LAYOUT_DIRECTION_ENUM.RTL;
-    console.log(this.data.id);
     this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.departments = res;
     });
@@ -86,14 +83,6 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
         this.availableUsers = res.list; // or res depending on what you want
         this.paginationInfo = res.paginationInfo;
       });
-  }
-
-  prepareModel(
-    model: PresenceInquiry,
-    form: FormGroup
-  ): PresenceInquiry | Observable<PresenceInquiry> {
-    this.model = Object.assign(model, { ...form.value });
-    return this.model;
   }
 
   toggleUserSelection(userId: number, event?: Event) {
@@ -127,18 +116,20 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
       )
       .subscribe({
         next: (res) => {
-          this.close();
+          this.dialogRef.close(DIALOG_ENUM.OK);
         },
       });
   }
 
   toggleAll(checked: boolean): void {
     if (checked) {
-      this.selectedUsers = [...this.selectedUsers, ...this.availableUsers];
+      // select exactly the available users
+      this.selectedUsers = [...this.availableUsers];
     } else {
-      this.selectedUsers = this.selectedUsers.filter(
-        (user) => !this.availableUsers.some((u) => u.id === user.id)
-      );
+      // unselect all available users (leave others, if you track any)
+      const availableIds = new Set(this.availableUsers.map((u) => u.id));
+      this.selectedUsers = this.selectedUsers.filter((u) => !availableIds.has(u.id));
+      // or simply: this.selectedUsers = [];
     }
   }
 
@@ -162,9 +153,11 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
     this.first = 0;
     this.loadUsersAvailableForPresenceInquiriesPaginated();
   }
+
   close() {
-    this.dialogRef.close(DIALOG_ENUM.OK);
+    this.dialogRef.close();
   }
+
   resetSearch() {
     this.filterModel = new UserFilter();
     this.paginationParams.pageNumber = 1;
@@ -172,7 +165,14 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
     this.first = 0;
     this.loadUsersAvailableForPresenceInquiriesPaginated();
   }
+
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+  }
+
+  returnCheckAllStatus() {
+    return this.availableUsers.every((availableUser) =>
+      this.selectedUsers.map((selectedUser) => selectedUser.id).includes(availableUser.id)
+    );
   }
 }

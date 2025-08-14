@@ -120,7 +120,7 @@
           <th>منشئ الزيارة</th>
           <th>دخول</th>
           <th>خروج</th>
-          <th>اجراء</th>
+          <th class="w-[36px] whitespace-nowrap">اجراء</th>
         </tr>
       </ng-template>
       <ng-template #body let-nationality>
@@ -154,13 +154,13 @@
           <td>08:00 ص</td>
           <td>08:00 ص</td>
           <td>
-            <div class="actions flex gap-2" >
+            <div class="actions flex gap-2">
               <button class="table-action-gray-btn" (click)="openQrcodeDialog()">
                 <img alt="" src="assets/icons/view.svg" />
               </button>
               <button class="black-table-btn-action" (click)="openViewDialog()">
                 <img alt="" src="assets/icons/small-edit.svg" />
-                <span>اجراء</span>
+                <span >اجراء</span>
               </button>
               <button class="table-action-gray-btn">
                 <img alt="" src="assets/icons/edit-action.svg" />

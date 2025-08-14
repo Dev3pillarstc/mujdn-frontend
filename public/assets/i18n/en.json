@@ -418,7 +418,7 @@
     "NOTIFICATION_TEMPLATES": "Notification Templates",
     "CHOOSE_SUPPORTED_PLATFORMS": "Choose Supported Platforms",
     "SMS": "SMS",
-    "MOBILE": "Mobile",
+    "EMAIL": "Email",
     "WEB": "Web",
     "RESET": "Reset",
     "NOTIFICATION": "Notifications",

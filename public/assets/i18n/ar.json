@@ -414,7 +414,7 @@
     "NOTIFICATION_TEMPLATES": "قوالب الإشعارات",
     "CHOOSE_SUPPORTED_PLATFORMS": "تحديد المنصات المدعومة",
     "SMS": "رسائل قصيرة",
-    "MOBILE": "إشعارات الهاتف المحمول",
+    "EMAIL": "البريد الإلكتروني",
     "WEB": "إشعارات الويب",
     "RESET": "إعادة تعيين",
     "NOTIFICATION": "الإشعارات",

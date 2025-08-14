@@ -106,6 +106,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'visit-request',
+        loadComponent: () =>
+          import(
+            '@/views/features/visit/visit-request/visit-request-container/visit-request-container.component'
+          ),
+      },
+      {
         path: 'attendance-logs',
         canActivate: [authGuard],
         resolve: { list: attendanceResolver },

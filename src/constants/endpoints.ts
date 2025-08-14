@@ -24,6 +24,7 @@ export const EndPoints = {
   PRESENCE_INQUIRY_STATUS: '/presenceInquiryStatuses',
   BLACKLISTED_NATIONAL_IDS: '/blacklisted-national-ids',
   BLACKLISTED_NATIONALITIES: '/blacklisted-nationalities',
+  VISITS: '/visits',
 };
 
 export type EndpointsType = typeof EndPoints;

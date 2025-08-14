@@ -84,6 +84,17 @@ export class SideBarLinksService {
       routeId: RouteIdsEnum.HOLIDAYS,
     },
     {
+      labelKey: 'MENU.VISITS',
+      iconUrl: 'assets/icons/menu-icons/visits.svg',
+      children: [
+        {
+          labelKey: 'MENU.BLACKLIST',
+          routerLink: ['/blacklist'],
+          routeId: RouteIdsEnum.BLACKLIST,
+        },
+      ],
+    },
+    {
       labelKey: 'Work missions',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',
       routerLink: ['/work-missions'],

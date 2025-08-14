@@ -19,6 +19,8 @@ import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resol
 import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
 import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
+import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blacklisted-national-id.resolver';
+import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
 import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
 
 export const routes: Routes = [
@@ -92,10 +94,23 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.EMPLOYEES },
       },
       {
-        path: 'black-list',
+        path: 'blacklist',
+        canActivate: [authGuard],
+        resolve: { list: blacklistResolver },
+        data: {
+          roles: [ROLES_ENUM.SECURITY_LEADER], // all roles can view the page
+          routeId: RouteIdsEnum.BLACKLIST,
+        },
         loadComponent: () =>
           import(
-            '@/views/features/visit/black-list/black-list-container/black-list-container.component'
+            '@/views/features/visit/blacklist/blacklisted-container/blacklisted-container.component'
+          ),
+      },
+      {
+        path: 'visit-request',
+        loadComponent: () =>
+          import(
+            '@/views/features/visit/visit-request/visit-request-container/visit-request-container.component'
           ),
       },
       {

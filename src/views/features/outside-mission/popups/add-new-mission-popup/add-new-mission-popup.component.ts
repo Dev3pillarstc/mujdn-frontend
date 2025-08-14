@@ -11,7 +11,6 @@ import { TextareaModule } from 'primeng/textarea';
 import { DialogRef } from '@angular/cdk/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabsModule } from 'primeng/tabs';
-import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';

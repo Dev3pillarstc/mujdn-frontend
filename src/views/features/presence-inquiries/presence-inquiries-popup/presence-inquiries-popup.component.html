@@ -1,62 +1,92 @@
 <div [dir]="direction">
   <div class="p-6">
     <button (click)="close()" class="block ms-auto">
-      <i class="pi pi-times"></i>
+      <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اضافة مسائلة توثيق تواجد جديدة</h3>
-    <form [formGroup]="yourFormGroup" class="mt-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-        <div class="lg:col-span-2">
-          <label class="label">فترة السماح لتسجيل الحضور</label>
-          <div class="relative">
-            <input
-              class="peer w-full"
-              formControlName="allowedDuration"
-              pInputText
-              placeholder="فترة السماح لتسجيل الحضور"
-              type="text"
-            />
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'PRESENCE_INQUIRY_PAGE.NEW_INQUIRY' | translate }}
+    </h3>
+
+    <form [formGroup]="form">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Buffer -->
+        <div>
+          <label class="label" for="buffer">
+            {{ 'PRESENCE_INQUIRY_PAGE.BUFFER' | translate }}
+          </label>
+          <div class="lg:col-span-2">
+            <label class="label" for="max-attendance-time">{{
+              'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate
+            }}</label>
+            <p-inputnumber
+              [inputStyle]="{ width: '3rem' }"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              formControlName="buffer"
+              id="max-attendance-time"
+              spinnerMode="horizontal"
+              [min]="0"
+            >
+              <ng-template #incrementbuttonicon>
+                <span class="pi pi-plus"></span>
+              </ng-template>
+              <ng-template #decrementbuttonicon>
+                <span class="pi pi-minus"></span>
+              </ng-template>
+            </p-inputnumber>
+            <app-validation-messages [control]="bufferControl"></app-validation-messages>
           </div>
-          <span
-            *ngIf="
-              yourFormGroup.get('allowedDuration')?.invalid &&
-              yourFormGroup.get('allowedDuration')?.touched
-            "
-            class="validation-message"
-            >هذا الحقل مطلوب</span
-          >
         </div>
 
-        <div class="lg:col-span-6">
-          <label class="label">نص الرسالة</label>
-          <div class="relative">
-            <input
-              class="peer w-full"
-              formControlName="allowedDuration"
-              pInputText
-              placeholder="نص الرسالة"
-              type="text"
-            />
+        <!-- Message Text -->
+        <div class="md:col-span-2 lg:col-span-3">
+          <label class="label" for="messageAr">
+            {{ 'PRESENCE_INQUIRY_PAGE.MESSAGE_TEXT' | translate }}
+          </label>
+          <div class="relative w-full">
+            <textarea
+              class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-3 focus:outline-none resize-none peer"
+              formControlName="messageAr"
+              pTextarea
+              id="messageAr"
+              placeholder="{{ 'PRESENCE_INQUIRY_PAGE.MESSAGE_TEXT' | translate }}"
+            ></textarea>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
             ></span>
           </div>
-          <span
-            *ngIf="
-              yourFormGroup.get('allowedDuration')?.invalid &&
-              yourFormGroup.get('allowedDuration')?.touched
-            "
-            class="validation-message"
-            >هذا الحقل مطلوب</span
-          >
+          <app-validation-messages [control]="messageArControl"></app-validation-messages>
+        </div>
+        <!-- Message Text -->
+        <div class="md:col-span-2 lg:col-span-3">
+          <label class="label" for="messageEn">
+            {{ 'PRESENCE_INQUIRY_PAGE.MESSAGE_TEXT' | translate }}
+          </label>
+          <div class="relative w-full">
+            <textarea
+              class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-3 focus:outline-none resize-none peer"
+              formControlName="messageEn"
+              pTextarea
+              id="messageEn"
+              placeholder="{{ 'PRESENCE_INQUIRY_PAGE.MESSAGE_TEXT' | translate }}"
+            ></textarea>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="messageEnControl"></app-validation-messages>
         </div>
       </div>
+
+      <!-- Actions -->
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button (click)="close()" class="btn gray-btn">الغاء</button>
-        <button class="btn green-btn">إضافة</button>
+        <button type="button" (click)="close()" class="btn gray-btn">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+        <button type="button" (click)="save$.next()" class="btn green-btn">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
       </div>
     </form>
   </div>

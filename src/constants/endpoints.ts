@@ -23,6 +23,8 @@ export const EndPoints = {
   WORK_MISSION: '/WorkMission',
   PRESENCE_INQUIRIES: '/presenceinquiries',
   PRESENCE_INQUIRY_STATUS: '/presenceInquiryStatuses',
+  BLACKLISTED_NATIONAL_IDS: '/blacklisted-national-ids',
+  BLACKLISTED_NATIONALITIES: '/blacklisted-nationalities',
 };
 
 export type EndpointsType = typeof EndPoints;

@@ -26,7 +26,7 @@ import { UserProfileDataWithNationalId } from '@/models/features/business/user-p
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 
 @Component({
-  selector: 'app-outside-mission-list',
+  selector: 'app-work-mission-container',
   imports: [
     Breadcrumb,
     InputTextModule,
@@ -43,10 +43,10 @@ import { PaginatedListResponseData } from '@/models/shared/response/paginated-li
     MyWorkMissionListComponent,
     AssignWorkMissionListComponent,
   ],
-  templateUrl: './outside-mission-list.component.html',
-  styleUrl: './outside-mission-list.component.scss',
+  templateUrl: './work-mission-container.component.html',
+  styleUrl: './work-mission-container.component.scss',
 })
-export default class OutsideMissionListComponent implements OnInit {
+export default class WorkMissionContainerComponent implements OnInit {
   breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   missions = signal<PaginatedList<WorkMission>>(new PaginatedList<WorkMission>());

@@ -1,0 +1,261 @@
+<div dir="rtl">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة مهمة جديدة</h3>
+
+    <form class="">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div>
+          <label class="label" for="nationalityAr">رقم الهوية</label>
+          <div class="relative">
+            <input
+              class="peer"
+              fluid="true"
+              id="nationalityAr"
+              pInputText
+              placeholder="رقم الهوية"
+              type="text"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="startDate">تاريخ انتهاء الهوية</label>
+          <div class="relative">
+            <p-datepicker
+              [(ngModel)]="date2"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              id="startDate"
+              inputId="startDate"
+              name="startDate"
+              placeholder="تاريخ انتهاء الهوية"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/calender-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="nationalityAr">اسم الزائر</label>
+          <div class="relative">
+            <input
+              class="peer"
+              fluid="true"
+              id="nationalityAr"
+              pInputText
+              placeholder="اسم الزائر"
+              type="text"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="attendance-department-popup"> الجنسية </label>
+          <div class="relative">
+            <p-select
+              class="w-full peer"
+              id="attendance-department-popup"
+              name="departmentId"
+              placeholder="الجنسية"
+            >
+            </p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+        </div>
+        <div>
+          <label class="label" for="nationalityAr">الجهة التابع لها الزائر</label>
+          <div class="relative">
+            <input
+              class="peer"
+              fluid="true"
+              id="nationalityAr"
+              pInputText
+              placeholder="الجهة التابع لها الزائر"
+              type="text"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="attendance-department-popup"> الإدارة المستهدفة </label>
+          <div class="relative">
+            <p-select
+              class="w-full peer"
+              id="attendance-department-popup"
+              name="departmentId"
+              placeholder="الإدارة المستهدفة"
+            >
+            </p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+        </div>
+        <div>
+          <label class="label" for="nationalityAr">رقم الجوال</label>
+          <div class="relative">
+            <input
+              class="peer"
+              fluid="true"
+              id="nationalityAr"
+              pInputText
+              placeholder="رقم الجوال"
+              type="text"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="nationalityAr">العنوان</label>
+          <div class="relative">
+            <input
+              class="peer"
+              fluid="true"
+              id="nationalityAr"
+              pInputText
+              placeholder="العنوان"
+              type="text"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="nationalityAr">البريد الالكتروني</label>
+          <div class="relative">
+            <input
+              class="peer"
+              fluid="true"
+              id="nationalityAr"
+              pInputText
+              placeholder="البريد الالكتروني"
+              type="text"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="startDate">تاريخ الزيارة</label>
+          <div class="relative">
+            <p-datepicker
+              [(ngModel)]="date2"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              id="startDate"
+              inputId="startDate"
+              name="startDate"
+              placeholder="تاريخ الزيارة"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/calender-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="startDate">وقت الزيارة (من)</label>
+          <div class="relative">
+            <p-datepicker
+              [(ngModel)]="date2"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              [timeOnly]="true"
+              class="peer block w-full"
+              id="startDate"
+              inputId="startDate"
+              name="startDate"
+              placeholder="تاريخ الزيارة"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/time-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div>
+          <label class="label" for="startDate">وقت الزيارة (الي)</label>
+          <div class="relative">
+            <p-datepicker
+              [(ngModel)]="date2"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              [timeOnly]="true"
+              class="peer block w-full"
+              id="startDate"
+              inputId="startDate"
+              name="startDate"
+              placeholder="تاريخ الزيارة"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/time-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+        <div class="lg:col-span-3 md:col-span-2 col-span-1">
+          <label class="label" for="">سبب الزيارة</label>
+          <div class="relative w-full">
+            <textarea
+              class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
+              cols="30"
+              pTextarea
+              placeholder="سبب الزيارة"
+              rows="5"
+            ></textarea>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+            ></span>
+          </div>
+          <span class="validation-message">هذا الحقل مطلوب</span>
+        </div>
+      </div>
+      <div class="actions mt-6 flex items-center justify-between gap-4">
+        <button (click)="close()" class="btn gray-btn">الغاء</button>
+        <button class="btn green-btn flex items-center">
+          <span>حفظ</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

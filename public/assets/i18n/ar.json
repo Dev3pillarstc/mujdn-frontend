@@ -403,7 +403,9 @@
     "CITIES": "قائمة المدن",
     "REGIONS": "قائمة المناطق",
     "PERMISSIONS_SETTINGS": "إعدادات الاستئذانات",
-    "NOTIFICATIONS": "الإشعارات"
+    "NOTIFICATIONS": "الإشعارات",
+    "VISITS": "الزيارات",
+    "BLACKLIST": "معايير حظر الزائرين"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "إعدادات الإشعارات",
@@ -537,5 +539,20 @@
     "PRESENCE_INQUIRIES": "قائمة مسائلات توثيق التواجد",
     "ADD_NEW_INQUIRY": "إضافة مسائلة جديدة",
     "CONFIRMATION_STATUS": "حالة التوثيق"
+  },
+  "BLACKLIST_PAGE": {
+    "VISITOR_BLACKLIST_CRITERIA": "معايير حظر الزائرين",
+    "NATIONALITY_TAB": "الجنسية",
+    "NATIONAL_ID_TAB": "رقم الهوية",
+    "BLACKLISTED_NATIONAL_IDS_LIST": "قائمة الهويات المحظورة",
+    "NATIONAL_ID": "رقم الهوية",
+    "ADD_NEW_BLACKLISTED_NATIONAL_ID": "إضافة هوية محظورة جديدة",
+    "EDIT_BLACKLISTED_NATIONAL_ID": "تعديل الهوية المحظورة",
+    "BLACKLISTED_NATIONALITIES_LIST": "قائمة الجنسيات المحظورة",
+    "NATIONALITY_IN_ARABIC": "الجنسية بالعربية",
+    "NATIONALITY_IN_ENGLISH": "الجنسية بالانجليزية",
+    "ADD_NEW_BLACKLISTED_NATIONALITY": "إضافة جنسية محظورة جديدة",
+    "EDIT_BLACKLISTED_NATIONALITY": "تعديل الجنسية المحظورة",
+    "NATIONALITY": "الجنسية"
   }
 }

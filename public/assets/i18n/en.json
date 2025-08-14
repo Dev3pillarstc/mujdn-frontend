@@ -407,7 +407,9 @@
     "CITIES": "Cities",
     "REGIONS": "Regions",
     "PERMISSIONS_SETTINGS": "Permissions Settings",
-    "NOTIFICATIONS": "Notifications"
+    "NOTIFICATIONS": "Notifications",
+    "VISITS": "Visits",
+    "BLACKLIST": "Visitor blacklist criteria"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "Notification Settings",
@@ -541,5 +543,20 @@
     "PRESENCE_INQUIRIES": "Presence Inquiries List",
     "ADD_NEW_INQUIRY": "Add New Inquiry",
     "CONFIRMATION_STATUS": "Confirmation Status"
+  },
+  "BLACKLIST_PAGE": {
+    "VISITOR_BLACKLIST_CRITERIA": "Visitor Blacklist Criteria",
+    "NATIONALITY_TAB": "Nationality",
+    "NATIONAL_ID_TAB": "National ID",
+    "BLACKLISTED_NATIONAL_IDS_LIST": "Blacklisted National IDs List",
+    "NATIONAL_ID": "National ID",
+    "ADD_NEW_BLACKLISTED_NATIONAL_ID": "Add New Blacklisted National ID",
+    "EDIT_BLACKLISTED_NATIONAL_ID": "Edit Blacklisted National ID",
+    "BLACKLISTED_NATIONALITIES_LIST": "Blacklisted Nationalities List",
+    "NATIONALITY_IN_ARABIC": "Nationality in Arabic",
+    "NATIONALITY_IN_ENGLISH": "Nationality in English",
+    "ADD_NEW_BLACKLISTED_NATIONALITY": "Add New Blacklisted Nationality",
+    "EDIT_BLACKLISTED_NATIONALITY": "Edit Blacklisted Nationality",
+    "NATIONALITY": "Nationality"
   }
 }

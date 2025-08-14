@@ -51,3 +51,22 @@
 .p-inputnumber-input {
   text-align: center;
 }
+
+// start kareem
+.black-table-btn-action {
+  background-color: #0d121c;
+  color: #fff;
+  font-size: 0.875rem; /* 14px */
+  gap: 0.25rem; /* 4px */
+  padding: 0.5rem 0.75rem; /* py-2 px-3 */
+  border-radius: 0.25rem; /* rounded */
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  min-width: 75px;
+  &:hover {
+    background-color: #1f2a37;
+  }
+}
+// end kareem

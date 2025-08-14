@@ -28,7 +28,7 @@ interface Adminstration {
   type: string;
 }
 @Component({
-  selector: 'app-my-missions-tab',
+  selector: 'app-my-work-mission-list',
   imports: [
     InputTextModule,
     TableModule,
@@ -42,10 +42,10 @@ interface Adminstration {
     TranslatePipe,
     Select,
   ],
-  templateUrl: './my-missions-tab.component.html',
-  styleUrl: './my-missions-tab.component.scss',
+  templateUrl: './my-work-mission-list.component.html',
+  styleUrl: './my-work-mission-list.component.scss',
 })
-export class MyMissionsTabComponent extends BaseListComponent<
+export class MyWorkMissionListComponent extends BaseListComponent<
   WorkMission,
   ViewMissionDataPopupComponent,
   WorkMissionService,

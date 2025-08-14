@@ -36,7 +36,7 @@ import { UserProfileDataWithNationalId } from '@/models/features/business/user-p
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 
 @Component({
-  selector: 'app-assign-and-view-missions-tab',
+  selector: 'app-assign-work-mission-list',
   imports: [
     CommonModule,
     FormsModule,
@@ -49,11 +49,11 @@ import { PaginatedListResponseData } from '@/models/shared/response/paginated-li
     MenuModule,
     SplitButtonModule,
   ],
-  templateUrl: './assign-and-view-missions-tab.component.html',
-  styleUrl: './assign-and-view-missions-tab.component.scss',
+  templateUrl: './assign-work-mission-list.component.html',
+  styleUrl: './assign-work-mission-list.component.scss',
   providers: [MessageService],
 })
-export class AssignAndViewMissionsTabComponent
+export class AssignWorkMissionListComponent
   extends BaseListComponent<
     WorkMission,
     ViewMissionDataPopupComponent,

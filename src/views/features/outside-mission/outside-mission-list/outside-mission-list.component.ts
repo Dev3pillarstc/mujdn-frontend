@@ -17,7 +17,7 @@ import { TabsModule } from 'primeng/tabs';
 import { Select } from 'primeng/select';
 import { SplitButton } from 'primeng/splitbutton';
 import { MyMissionsTabComponent } from '../my-missions-tab/my-missions-tab.component';
-import { AssignAndViewMissionsTabComponent } from '../assign-and-view-missions-tab/assign-and-view-missions-tab.component';
+import { AssignWorkMissionListComponent } from '@/views/features/outside-mission/assign-work-mission-list/assign-work-mission-list.component';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
@@ -41,7 +41,7 @@ import { PaginatedListResponseData } from '@/models/shared/response/paginated-li
     Select,
     SplitButton,
     MyMissionsTabComponent,
-    AssignAndViewMissionsTabComponent,
+    AssignWorkMissionListComponent,
   ],
   templateUrl: './outside-mission-list.component.html',
   styleUrl: './outside-mission-list.component.scss',

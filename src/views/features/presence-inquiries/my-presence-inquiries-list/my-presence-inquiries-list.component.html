@@ -80,7 +80,7 @@
       class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
     >
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-        قائمة مسائلات توثيق التواجد
+        {{ 'INQUIRIES_PAGE.PRESENCE_INQUIRIES' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <button class="table-head-action-btn min-w-[40px]">
@@ -120,7 +120,7 @@
                   class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
                 >
                   <span class="w-[10px] h-[10px] bg-[#93370d] rounded-full"></span>
-                  تحت التوثيق
+        {{ 'INQUIRIES_PAGE.UNDER_CONFIRMATION' | translate }}
                 </span>
               }
               @if (inquiry.assignedUsers[0]?.inquiryStatusId === inquiryStatusEnum.CONFIRMED) {
@@ -128,7 +128,7 @@
                   class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
                 >
                   <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
-                  تم التوثيق
+                  {{ 'INQUIRIES_PAGE.CONFIRMED' | translate }}
                 </span>
               }
               @if (inquiry.assignedUsers[0]?.inquiryStatusId === inquiryStatusEnum.NOT_CONFIRMED) {
@@ -136,7 +136,7 @@
                   class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
                 >
                   <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
-                  لم يتم التوثيق
+                  {{ 'INQUIRIES_PAGE.NOT_CONFIRMED' | translate }}
                 </span>
               }
             </td>

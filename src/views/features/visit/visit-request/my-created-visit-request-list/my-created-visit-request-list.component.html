@@ -8,14 +8,15 @@
     <div class="pt-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         <div class="relative">
-          <label class="label" for="nationalityAr">
+          <label class="label" for="nationalId">
             {{ 'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate }}
           </label>
           <input
+            [(ngModel)]="filterModel.nationalId"
             [placeholder]="'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate"
             class="peer"
             fluid="true"
-            id="nationalityAr"
+            id="nationalId"
             pInputText
             type="text"
           />
@@ -28,6 +29,7 @@
             {{ 'VISIT_REQUEST_PAGE.VISITOR_NAME' | translate }}
           </label>
           <input
+            [(ngModel)]="filterModel.fullName"
             [placeholder]="'VISIT_REQUEST_PAGE.VISITOR_NAME' | translate"
             class="peer"
             fluid="true"
@@ -44,7 +46,11 @@
             {{ 'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate }}
           </label>
           <p-select
+            [(ngModel)]="filterModel.fkTargetDepartmentId"
+            [options]="departments"
             [placeholder]="'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate"
+            optionLabel="nameAr"
+            optionValue="id"
             class="w-full peer"
             id="department"
           >
@@ -54,14 +60,16 @@
           ></span>
         </div>
         <div class="relative">
-          <label class="label" for="joinDate">
+          <label class="label" for="dateFrom">
             {{ 'VISIT_REQUEST_PAGE.DATE_FROM' | translate }}
           </label>
           <p-datepicker
+            [(ngModel)]="filterModel.dateFrom"
             [iconDisplay]="'input'"
             [placeholder]="'VISIT_REQUEST_PAGE.DATE_FROM' | translate"
             [showIcon]="true"
             class="peer block w-full"
+            id="dateFrom"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
@@ -72,14 +80,16 @@
           ></span>
         </div>
         <div class="relative">
-          <label class="label" for="joinDateTo">
+          <label class="label" for="dateTo">
             {{ 'VISIT_REQUEST_PAGE.DATE_TO' | translate }}
           </label>
           <p-datepicker
+            [(ngModel)]="filterModel.dateTo"
             [iconDisplay]="'input'"
             [placeholder]="'VISIT_REQUEST_PAGE.DATE_TO' | translate"
             [showIcon]="true"
             class="peer block w-full"
+            id="dateTo"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
@@ -94,7 +104,11 @@
             {{ 'VISIT_REQUEST_PAGE.VISIT_STATUS' | translate }}
           </label>
           <p-select
+            [(ngModel)]="filterModel.visitStatus"
+            [options]="visitStatusOptions"
             [placeholder]="'VISIT_REQUEST_PAGE.VISIT_STATUS' | translate"
+            optionLabel="label"
+            optionValue="value"
             class="w-full peer"
             id="visitStatus"
           >
@@ -105,10 +119,10 @@
         </div>
       </div>
       <div class="actions flex items-center gap-4 pt-6">
-        <button class="btn black-btn">
+        <button class="btn black-btn" (click)="search()">
           {{ 'VISIT_REQUEST_PAGE.SEARCH' | translate }}
         </button>
-        <button class="btn gray-btn border border-[#d2d6db]">
+        <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">
           {{ 'VISIT_REQUEST_PAGE.RESET_SEARCH' | translate }}
         </button>
       </div>
@@ -122,7 +136,7 @@
         {{ 'VISIT_REQUEST_PAGE.VISIT_REQUEST_LIST' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
-        <button class="table-head-action-btn">
+        <button class="table-head-action-btn" (click)="exportExcel()">
           <img src="assets/icons/excel.svg" alt="" />
         </button>
         <button (click)="openDialog()" class="btn green-btn">
@@ -148,50 +162,38 @@
             </th>
           </tr>
         </ng-template>
-        <ng-template #body let-nationality>
+        <ng-template #body let-visit>
           <tr>
-            <td>142563</td>
-            <td>محمد أحمد طه</td>
-            <td>142563</td>
-            <td>اسم الجهة</td>
-            <td>ادارة الموارد البشرية</td>
+            <td>{{ visit.nationalId }}</td>
+            <td>{{ visit.fullName }}</td>
+            <td>{{ visit.phoneNumber }}</td>
+            <td>{{ visit.visitorOrganization }}</td>
+            <td>{{ getDepartmentName(visit) }}</td>
             <td>
-              <span
-                class="text-[14px] text-[#1849a9] px-2 py-1 w-fit inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#eff8ff] font-medium"
-              >
-                <span class="w-[10px] h-[10px] bg-[#1849a9] rounded-full"></span>
-                {{ 'VISIT_REQUEST_PAGE.NEW' | translate }}
-              </span>
-              <span
-                class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
-              >
-                <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
-                {{ 'VISIT_REQUEST_PAGE.REJECTED' | translate }}
-              </span>
-              <span
-                class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
-              >
-                <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
-                {{ 'VISIT_REQUEST_PAGE.ACCEPTED' | translate }}
+              <span [class]="getStatusBadgeClass(visit.visitStatus)">
+                <span [class]="getStatusBadgeDotClass(visit.visitStatus)"></span>
+                {{ getStatusText(visit.visitStatus) }}
               </span>
             </td>
-            <td>08:00 ص</td>
-            <td>08:00 ص</td>
+            <td>{{ formatTime(visit.visitTimeFrom) }}</td>
+            <td>{{ formatTime(visit.visitTimeTo) }}</td>
             <td>
               <div class="actions flex gap-2">
-                <button class="table-action-gray-btn" (click)="openViewDialog()">
+                <button class="table-action-gray-btn" (click)="openViewDialog(visit)">
                   <img alt="" src="assets/icons/view.svg" />
                 </button>
                 <button class="black-table-btn-action">
                   <img alt="" src="assets/icons/small-edit.svg" />
                   <span>{{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}</span>
                 </button>
-                <button class="table-action-gray-btn">
-                  <img alt="" src="assets/icons/edit-action.svg" />
-                </button>
-                <button class="table-action-red-btn">
-                  <img alt="" src="assets/icons/delete-action.svg" />
-                </button>
+                @if (visit.isEditable) {
+                  <button class="table-action-gray-btn" (click)="openEditDialog(visit)">
+                    <img alt="" src="assets/icons/edit-action.svg" />
+                  </button>
+                  <button class="table-action-red-btn" (click)="deleteModel(visit.id)">
+                    <img alt="" src="assets/icons/delete-action.svg" />
+                  </button>
+                }
               </div>
             </td>
           </tr>
@@ -202,7 +204,7 @@
         <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
       </div>
     }
-    @if (paginationInfo) {
+    @if (paginationInfo && paginationInfo.totalItems > 0) {
       <p-paginator
         (onPageChange)="onPageChange($event, true)"
         [first]="first"
@@ -213,6 +215,5 @@
         class="mt-6"
       />
     }
-    <div></div>
   </div>
 </div>

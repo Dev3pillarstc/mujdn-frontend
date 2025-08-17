@@ -27,7 +27,7 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   declare visitPurpose: string;
   declare visitStatus: number;
   declare isEditable: boolean;
-  declare creationUserId: number;
+  declare creationUser: BaseLookupModel;
 
   constructor() {
     super();

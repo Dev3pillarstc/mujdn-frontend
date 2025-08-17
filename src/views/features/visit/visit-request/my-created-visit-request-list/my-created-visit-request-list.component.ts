@@ -6,7 +6,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker, DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
-import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
@@ -21,6 +21,12 @@ import { VisitService } from '@/services/features/visit/visit.service';
 import { MyCreatedVisitFilter } from '@/models/features/visit/my-created-visit-filter';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { takeUntil } from 'rxjs';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import { VisitStatusEnum } from '@/enums/visit-status-enum';
+import { formatTimeTo12Hour } from '@/utils/general-helper';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { LanguageService } from '@/services/shared/language.service';
 
 @Component({
   selector: 'app-my-created-visit-request-list',
@@ -29,7 +35,6 @@ import { takeUntil } from 'rxjs';
     TableModule,
     CommonModule,
     RouterModule,
-    CommonModule,
     PaginatorModule,
     DatePickerModule,
     FormsModule,
@@ -48,22 +53,26 @@ export class MyCreatedVisitRequestListComponent
     VisitService,
     MyCreatedVisitFilter
   >
-  implements OnChanges
+  implements OnChanges, OnInit
 {
   @Input() isActive: boolean = false;
 
   override filterModel: MyCreatedVisitFilter = new MyCreatedVisitFilter();
   visitService = inject(VisitService);
+  languageService = inject(LanguageService);
 
   private hasInitialized = false;
+
+  // Lookups
+  departments: BaseLookupModel[] = [];
+  visitStatusOptions: { label: string; value: number }[] = [];
+
+  // Enum reference for template
+  VisitStatusEnum = VisitStatusEnum;
 
   override get service(): VisitService {
     return this.visitService;
   }
-
-  date2: Date | undefined;
-  nationalities!: any[];
-  items: MenuItem[] | undefined;
 
   dialogSize = {
     width: '100%',
@@ -91,26 +100,97 @@ export class MyCreatedVisitRequestListComponent
       }
     }
   }
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
+  }
+
+  formatTime(timeString: string): string {
+    if (!timeString) return '';
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    return formatTimeTo12Hour(timeString, locale);
+  }
+
+  private initializeVisitStatusOptions(): void {
+    this.visitStatusOptions = [
+      {
+        label: this.translateService.instant('VISIT_REQUEST_PAGE.NEW'),
+        value: VisitStatusEnum.NEW,
+      },
+      {
+        label: this.translateService.instant('VISIT_REQUEST_PAGE.APPROVED'),
+        value: VisitStatusEnum.APPROVED,
+      },
+      {
+        label: this.translateService.instant('VISIT_REQUEST_PAGE.REJECTED'),
+        value: VisitStatusEnum.REJECTED,
+      },
+    ];
+  }
+
+  override loadList() {
+    return this.service.loadMyCreatedVisitsPaginated(this.paginationParams, {
+      ...this.filterModel!,
+    });
+  }
 
   private loadDataIfNeeded(): void {
-    // Load data when tab becomes active using the specific method
-    const paginationParams = new PaginationParams();
+    // Load data when tab becomes active
+    this.loadList().subscribe({
+      next: (response) => this.handleLoadListSuccess(response),
+      error: this.handleLoadListError,
+    });
+  }
 
-    this.visitService
-      .loadMyCreatedVisitsPaginated(paginationParams, this.filterModel)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (response) => {
-          this.handleLoadListSuccess(response);
-        },
-        error: (error) => {
-          this.handleLoadListError();
-        },
-      });
+  // Status badge methods
+  getStatusBadgeClass(status: number): string {
+    switch (status) {
+      case VisitStatusEnum.NEW:
+        return 'text-[14px] text-[#1849a9] px-2 py-1 w-fit inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#eff8ff] font-medium';
+      case VisitStatusEnum.APPROVED:
+        return 'text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium';
+      case VisitStatusEnum.REJECTED:
+        return 'text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium';
+      default:
+        return 'text-[14px] text-gray-600 px-2 py-1 rounded-full bg-gray-100 font-medium';
+    }
+  }
+
+  getStatusBadgeDotClass(status: number): string {
+    switch (status) {
+      case VisitStatusEnum.NEW:
+        return 'w-[10px] h-[10px] bg-[#1849a9] rounded-full';
+      case VisitStatusEnum.APPROVED:
+        return 'w-[10px] h-[10px] bg-[#085d3a] rounded-full';
+      case VisitStatusEnum.REJECTED:
+        return 'w-[10px] h-[10px] bg-[#912018] rounded-full';
+      default:
+        return 'w-[10px] h-[10px] bg-gray-600 rounded-full';
+    }
+  }
+
+  getStatusText(status: number): string {
+    switch (status) {
+      case VisitStatusEnum.NEW:
+        return this.translateService.instant('VISIT_REQUEST_PAGE.NEW');
+      case VisitStatusEnum.APPROVED:
+        return this.translateService.instant('VISIT_REQUEST_PAGE.ACCEPTED');
+      case VisitStatusEnum.REJECTED:
+        return this.translateService.instant('VISIT_REQUEST_PAGE.REJECTED');
+      default:
+        return '';
+    }
+  }
+
+  // Department name display
+  getDepartmentName(visit: Visit): string {
+    if (this.isCurrentLanguageEnglish()) {
+      return visit.targetDepartment?.nameEn || '';
+    }
+    return visit.targetDepartment?.nameAr || '';
   }
 
   override initListComponent(): void {
-    // Initial component setup if needed
+    this.initializeVisitStatusOptions();
   }
 
   protected override getBreadcrumbKeys(): {
@@ -129,10 +209,15 @@ export class MyCreatedVisitRequestListComponent
         model.visitorOrganization,
       [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_DATE')]: model.visitDate,
       [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_PURPOSE')]: model.visitPurpose,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.TARGET_DEPARTMENT')]:
+        this.getDepartmentName(model),
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_STATUS')]: this.getStatusText(
+        model.visitStatus
+      ),
     };
   }
 
-  openDialog(model?: any) {
+  openDialog(model?: Visit) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
@@ -142,11 +227,13 @@ export class MyCreatedVisitRequestListComponent
     const dialogRef = this.matDialog.open(VisitorSelectionPopupComponent as any, dialogConfig);
 
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      console.log('closed');
+      if (result === DIALOG_ENUM.OK) {
+        this.loadDataIfNeeded();
+      }
     });
   }
 
-  openViewDialog(model?: any) {
+  openViewDialog(model?: Visit) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
@@ -159,7 +246,25 @@ export class MyCreatedVisitRequestListComponent
     );
 
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      console.log('closed');
+      if (result === DIALOG_ENUM.OK) {
+        this.loadDataIfNeeded();
+      }
+    });
+  }
+
+  openEditDialog(model: Visit) {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      model: model,
+    };
+    dialogConfig.width = this.dialogSize2.width;
+    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
+    const dialogRef = this.matDialog.open(AddEditVisitRequestPopupComponent as any, dialogConfig);
+
+    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result === DIALOG_ENUM.OK) {
+        this.loadDataIfNeeded();
+      }
     });
   }
 }

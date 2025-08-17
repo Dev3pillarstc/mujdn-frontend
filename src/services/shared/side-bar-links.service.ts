@@ -60,6 +60,12 @@ export class SideBarLinksService {
       routerLink: ['/permissions'],
       routeId: RouteIdsEnum.PERMISSIONS,
     },
+    {
+      labelKey: 'MENU.PRESENCE_INQUIRIES',
+      iconUrl: 'assets/icons/menu-icons/tools.svg',
+      routerLink: ['/presence-inquiries'],
+      routeId: RouteIdsEnum.PRESENCE_INQUIRIES,
+    },
     // {
     //   labelKey: 'MENU.ASSIGNED_EMPLOYEES',
     //   iconUrl: 'assets/icons/menu-icons/icon3.svg',

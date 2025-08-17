@@ -256,6 +256,7 @@ export const routes: Routes = [
       },
       {
         path: 'presence-inquiries',
+        data: { routeId: RouteIdsEnum.PRESENCE_INQUIRIES },
         resolve: { list: presenceInquiryResolver },
         loadComponent: () =>
           import(

@@ -542,8 +542,21 @@
     "ALLOWED_ATTENDANCE_PERIOD": "Allowed Attendance Period",
     "PROCESSING_STATUS": "Processing Status",
     "PRESENCE_INQUIRIES": "Presence Inquiries List",
+    "MY_INQUIRIES": "My Inquiries",
+    "OTHERS_INQUIRIES": "Employees Inquiries",
     "ADD_NEW_INQUIRY": "Add New Inquiry",
-    "CONFIRMATION_STATUS": "Confirmation Status"
+    "EDIT_INQUIRY": "Edit Inquiry",
+    "CONFIRMATION_STATUS": "Confirmation Status",
+    "INQUIRY_STATUS": "Inquiry Status",
+    "BUFFER": "Presence Inquiry Buffer",
+    "MESSAGE_AR": "Message (Arabic)",
+    "MESSAGE_EN": "Message (English)",
+    "UNDER_CONFIRMATION": "Under Confirmation",
+    "CONFIRMED": "Confirmed",
+    "NOT_CONFIRMED": "Not Confirmed",
+    "UNDER_PROCESSING": "Under Processing",
+    "TIME_EXPIRED": "Time Expired",
+    "NOT_ASSIGNED": "Not Assigned"
   },
   "BLACKLIST_PAGE": {
     "VISITOR_BLACKLIST_CRITERIA": "Visitor Blacklist Criteria",

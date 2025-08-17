@@ -104,7 +104,8 @@
     "RETRY": "Retry",
     "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect",
     "MIN_VALUE": "Value must be at least {min} (got {actual})",
-    "MAX_VALUE": "Value must be at most {max} (got {actual})"
+    "MAX_VALUE": "Value must be at most {max} (got {actual})",
+    "CONFLICTING_USER_DATES": "Conflicting shift dates for this user"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -319,7 +320,6 @@
     "TIME_FROM_TO": "Time (from - to)",
     "CONFLICTING_DATES": "Conflicting shift dates",
     "DATA_NOT_COMPLETE": "Complete shift logs data",
-    "CONFLICTING_USER_DATES": "Conflicting shift dates for this user",
     "SHIFT_NAME_INVALID": "Shift name is required",
     "DEFAULT_SHIFT": "Default shift status",
     "ACTIVE": "Active",

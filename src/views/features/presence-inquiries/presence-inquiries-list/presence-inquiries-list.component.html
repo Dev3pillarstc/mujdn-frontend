@@ -12,11 +12,11 @@
           >{{ 'INQUIRIES_PAGE.MY_INQUIRIES' | translate }}
         </p-tab>
 
-        <!-- @if (showOthersInquiries()) { -->
+        @if (showOthersInquiries()) {
         <p-tab (click)="clickOthersTab()" value="1"
           >{{ 'INQUIRIES_PAGE.OTHERS_INQUIRIES' | translate }}
         </p-tab>
-        <!-- } -->
+        }
       </p-tablist>
       <p-tabpanels>
         <p-tabpanel value="0">

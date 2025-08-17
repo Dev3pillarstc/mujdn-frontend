@@ -101,6 +101,12 @@ export class SideBarLinksService {
       ],
     },
     {
+      labelKey: 'Work missions',
+      iconUrl: 'assets/icons/menu-icons/permissions.svg',
+      routerLink: ['/work-missions'],
+      routeId: RouteIdsEnum.WORK_MISSION,
+    },
+    {
       labelKey: 'MENU.WORK_SHIFT',
       iconUrl: 'assets/icons/time-icon.svg',
       children: [

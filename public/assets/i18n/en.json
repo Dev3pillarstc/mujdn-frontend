@@ -561,7 +561,7 @@
     "NATIONALITY": "Nationality"
   },
   "VISIT_REQUEST_PAGE": {
-    "VISITOR_BLACKLIST_CRITERIA": "Visitor Blacklist Criteria",
+    "VISITOR_REQUESTS_LIST": "Visitor Requests List",
     "MY_VISITS": "My Visits",
     "ALL_VISITS": "All Visits",
     "VISIT_REQUEST_LIST": "Visit Request List",
@@ -569,7 +569,7 @@
     "NATIONAL_ID": "National ID",
     "VISITOR_NAME": "Visitor Name",
     "TARGET_DEPARTMENT": "Target Department",
-    "VISIT_ORIGIN": "Visit Origin",
+    "VISIT_CREATOR": "Visit Creator",
     "DATE_FROM": "Date (From)",
     "DATE_TO": "Date (To)",
     "VISIT_STATUS": "Visit Status",
@@ -584,10 +584,6 @@
     "ACTIONS": "Actions",
     "NEW": "New",
     "REJECTED": "Rejected",
-    "ACCEPTED": "Accepted",
-    "VIEW": "View",
-    "EDIT": "Edit",
-    "DELETE": "Delete",
-    "EXPORT_EXCEL": "Export to Excel"
+    "ACCEPTED": "Accepted"
   }
 }

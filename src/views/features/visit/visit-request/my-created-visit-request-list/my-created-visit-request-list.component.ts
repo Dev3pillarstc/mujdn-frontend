@@ -74,11 +74,11 @@ export class MyCreatedVisitRequestListComponent
     return this.visitService;
   }
 
-  dialogSize = {
+  dialogSize2 = {
     width: '100%',
     maxWidth: '600px',
   };
-  dialogSize2 = {
+  override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
   };
@@ -201,29 +201,13 @@ export class MyCreatedVisitRequestListComponent
     return [{ labelKey: 'VISIT_REQUEST_PAGE.MY_CREATED_VISITS' }];
   }
 
-  protected override mapModelToExcelRow(model: Visit): { [key: string]: any } {
-    return {
-      [this.translateService.instant('VISIT_REQUEST_PAGE.NATIONAL_ID')]: model.nationalId,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.FULL_NAME')]: model.fullName,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION')]:
-        model.visitorOrganization,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_DATE')]: model.visitDate,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_PURPOSE')]: model.visitPurpose,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.TARGET_DEPARTMENT')]:
-        this.getDepartmentName(model),
-      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_STATUS')]: this.getStatusText(
-        model.visitStatus
-      ),
-    };
-  }
-
   openDialog(model?: Visit) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
     };
-    dialogConfig.width = this.dialogSize.width;
-    dialogConfig.maxWidth = this.dialogSize.maxWidth;
+    dialogConfig.width = this.dialogSize2.width;
+    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
     const dialogRef = this.matDialog.open(VisitorSelectionPopupComponent as any, dialogConfig);
 
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
@@ -266,5 +250,21 @@ export class MyCreatedVisitRequestListComponent
         this.loadDataIfNeeded();
       }
     });
+  }
+
+  protected override mapModelToExcelRow(model: Visit): { [key: string]: any } {
+    return {
+      [this.translateService.instant('VISIT_REQUEST_PAGE.NATIONAL_ID')]: model.nationalId,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.FULL_NAME')]: model.fullName,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION')]:
+        model.visitorOrganization,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_DATE')]: model.visitDate,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_PURPOSE')]: model.visitPurpose,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.TARGET_DEPARTMENT')]:
+        this.getDepartmentName(model),
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_STATUS')]: this.getStatusText(
+        model.visitStatus
+      ),
+    };
   }
 }

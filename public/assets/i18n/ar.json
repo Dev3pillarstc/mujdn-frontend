@@ -557,7 +557,7 @@
     "NATIONALITY": "الجنسية"
   },
   "VISIT_REQUEST_PAGE": {
-    "VISITOR_BLACKLIST_CRITERIA": "معايير حظر الزائرين",
+    "VISITOR_REQUESTS_LIST": "قائمة طلبات الزيارات",
     "MY_VISITS": "زياراتي",
     "ALL_VISITS": "كل الزيارات",
     "VISIT_REQUEST_LIST": "قائمة طلبات الزيارة",
@@ -565,7 +565,7 @@
     "NATIONAL_ID": "رقم الهوية",
     "VISITOR_NAME": "اسم الزائر",
     "TARGET_DEPARTMENT": "الادارة المستهدفة",
-    "VISIT_ORIGIN": "منشئ الزيارة",
+    "VISIT_CREATOR": "منشئ الزيارة",
     "DATE_FROM": "التاريخ (من)",
     "DATE_TO": "التاريخ (الي)",
     "VISIT_STATUS": "حالة الزيارة",
@@ -580,10 +580,6 @@
     "ACTIONS": "اجراءات",
     "NEW": "جديد",
     "REJECTED": "مرفوض",
-    "ACCEPTED": "مقبول",
-    "VIEW": "عرض",
-    "EDIT": "تعديل",
-    "DELETE": "حذف",
-    "EXPORT_EXCEL": "تصدير إكسل"
+    "ACCEPTED": "مقبول"
   }
 }

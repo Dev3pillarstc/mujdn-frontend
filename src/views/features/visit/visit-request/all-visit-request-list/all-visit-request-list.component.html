@@ -60,17 +60,17 @@
           ></span>
         </div>
         <div class="relative">
-          <label class="label" for="visitOrigin">
-            {{ 'VISIT_REQUEST_PAGE.VISIT_ORIGIN' | translate }}
+          <label class="label" for="visitCreator">
+            {{ 'VISIT_REQUEST_PAGE.VISIT_CREATOR' | translate }}
           </label>
           <p-select
             [(ngModel)]="filterModel.creationUserId"
-            [options]="visitOriginOptions"
-            [placeholder]="'VISIT_REQUEST_PAGE.VISIT_ORIGIN' | translate"
+            [options]="visitCreatorOptions"
+            [placeholder]="'VISIT_REQUEST_PAGE.VISIT_CREATOR' | translate"
             optionLabel="label"
             optionValue="value"
             class="w-full peer"
-            id="visitOrigin"
+            id="visitCreator"
           >
           </p-select>
           <span
@@ -173,7 +173,7 @@
             <th>{{ 'VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION' | translate }}</th>
             <th>{{ 'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate }}</th>
             <th>{{ 'VISIT_REQUEST_PAGE.VISIT_STATUS' | translate }}</th>
-            <th>{{ 'VISIT_REQUEST_PAGE.VISIT_ORIGIN' | translate }}</th>
+            <th>{{ 'VISIT_REQUEST_PAGE.VISIT_CREATOR' | translate }}</th>
             <th>{{ 'VISIT_REQUEST_PAGE.ENTRY' | translate }}</th>
             <th>{{ 'VISIT_REQUEST_PAGE.EXIT' | translate }}</th>
             <th class="w-[36px] whitespace-nowrap">

@@ -61,7 +61,7 @@ export class AllVisitRequestListComponent
   // Lookups
   departments: BaseLookupModel[] = [];
   visitStatusOptions: { label: string; value: number }[] = [];
-  visitOriginOptions: { label: string; value: number }[] = [];
+  visitCreatorOptions: { label: string; value: number }[] = [];
 
   // Enum reference for template
   VisitStatusEnum = VisitStatusEnum;
@@ -124,9 +124,9 @@ export class AllVisitRequestListComponent
     ];
   }
 
-  private initializeVisitOriginOptions(): void {
+  private initializeVisitCreatorOptions(): void {
     // Add your visit origin options here based on your requirements
-    this.visitOriginOptions = [
+    this.visitCreatorOptions = [
       {
         label: this.translateService.instant('VISIT_REQUEST_PAGE.INTERNAL'),
         value: 1,
@@ -196,7 +196,7 @@ export class AllVisitRequestListComponent
 
   override initListComponent(): void {
     this.initializeVisitStatusOptions();
-    this.initializeVisitOriginOptions();
+    this.initializeVisitCreatorOptions();
   }
 
   protected override getBreadcrumbKeys(): {

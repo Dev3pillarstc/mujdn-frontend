@@ -66,13 +66,11 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
     this.translateService.onLangChange.pipe(takeUntil(this.$destroy)).subscribe(() => {
       this.home = this.setHomeItem();
       this.breadcrumbs = [
-        { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
+        { label: this.translateService.instant('NOTIFICATION.GENERAL_SETTINGS') },
       ];
     });
 
-    this.breadcrumbs = [
-      { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
-    ];
+    this.breadcrumbs = [{ label: this.translateService.instant('NOTIFICATION.GENERAL_SETTINGS') }];
   }
 
   setHomeItem(): MenuItem {

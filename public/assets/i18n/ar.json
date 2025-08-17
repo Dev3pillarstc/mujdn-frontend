@@ -406,7 +406,8 @@
     "PERMISSIONS_SETTINGS": "إعدادات الاستئذانات",
     "NOTIFICATIONS": "الإشعارات",
     "VISITS": "الزيارات",
-    "BLACKLIST": "معايير حظر الزائرين"
+    "BLACKLIST": "معايير حظر الزائرين",
+    "WORK_MISSIONS": "مهام الأعمال و الاسناد"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "إعدادات الإشعارات",

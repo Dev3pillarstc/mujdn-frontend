@@ -410,7 +410,8 @@
     "PERMISSIONS_SETTINGS": "Permissions Settings",
     "NOTIFICATIONS": "Notifications",
     "VISITS": "Visits",
-    "BLACKLIST": "Visitor blacklist criteria"
+    "BLACKLIST": "Visitor blacklist criteria",
+    "WORK_MISSIONS": "Work missions"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "Notification Settings",

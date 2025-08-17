@@ -10,23 +10,29 @@ export class SpinnerService {
   private loadingCount = 0;
 
   show(): void {
-    this.loadingCount++;
-    if (this.loadingCount === 1) {
-      this.loadingSubject.next(true);
-    }
+    setTimeout(() => {
+      this.loadingCount++;
+      if (this.loadingCount === 1) {
+        this.loadingSubject.next(true);
+      }
+    });
   }
 
   hide(): void {
-    this.loadingCount--;
-    if (this.loadingCount <= 0) {
-      this.loadingCount = 0;
-      this.loadingSubject.next(false);
-    }
+    setTimeout(() => {
+      this.loadingCount--;
+      if (this.loadingCount <= 0) {
+        this.loadingCount = 0;
+        this.loadingSubject.next(false);
+      }
+    });
   }
 
   // Force hide (useful for error scenarios)
   forceHide(): void {
-    this.loadingCount = 0;
-    this.loadingSubject.next(false);
+    setTimeout(() => {
+      this.loadingCount = 0;
+      this.loadingSubject.next(false);
+    });
   }
 }

@@ -1,0 +1,195 @@
+<div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
+  <!-- Search Filter Section -->
+  <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
+    <div class="flex items-center justify-between">
+      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+        {{ 'COMMON.SEARCH_FILTERS' | translate }}
+      </h5>
+    </div>
+    <div class="pt-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+        <!-- Arabic Task Name -->
+        <div class="relative">
+          <label class="label" for="nationalityAr">{{
+            'WORK_MISSIONS.MISSION_NAME_AR' | translate
+          }}</label>
+          <input
+            class="peer"
+            fluid="true"
+            id="nationalityAr"
+            pInputText
+            [placeholder]="'WORK_MISSIONS.MISSION_NAME_AR' | translate"
+            type="text"
+            [(ngModel)]="filterModel.nameAr"
+          />
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <!-- English Task Name -->
+        <div class="relative">
+          <label class="label" for="nationalityAr">{{
+            'WORK_MISSIONS.MISSION_NAME_EN' | translate
+          }}</label>
+          <input
+            class="peer"
+            fluid="true"
+            id="nationalityAr"
+            pInputText
+            [placeholder]="'WORK_MISSIONS.MISSION_NAME_EN' | translate"
+            type="text"
+            [(ngModel)]="filterModel.nameEn"
+          />
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <!-- Task Assignee Dropdown -->
+        <div class="relative">
+          <label class="label" for="nationalityAr">{{
+            'WORK_MISSIONS.MISSION_ASSIGNER' | translate
+          }}</label>
+          <p-select
+            [options]="creators"
+            [(ngModel)]="filterModel.missionAssignerId"
+            optionValue="id"
+            [optionLabel]="getPropertyName()"
+            [placeholder]="'WORK_MISSIONS.MISSION_ASSIGNER' | translate"
+            class="w-full peer"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <!-- Date From -->
+        <div class="relative">
+          <label class="label" for="">{{ 'WORK_MISSIONS.START_DATE' | translate }}</label>
+          <p-datepicker
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            class="peer block w-full"
+            inputId="icondisplay"
+            [placeholder]="'WORK_MISSIONS.START_DATE' | translate"
+            [(ngModel)]="filterModel.startDate"
+          >
+            <ng-template pTemplate="inputicon">
+              <img alt="" src="assets/icons/calender-icon.svg" />
+            </ng-template>
+          </p-datepicker>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <!-- Date To -->
+        <div class="relative">
+          <label class="label" for="">{{ 'WORK_MISSIONS.END_DATE' | translate }}</label>
+          <p-datepicker
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            class="peer block w-full"
+            inputId="icondisplay"
+            [placeholder]="'WORK_MISSIONS.END_DATE' | translate"
+            [(ngModel)]="filterModel.endDate"
+          >
+            <ng-template pTemplate="inputicon">
+              <img alt="" src="assets/icons/calender-icon.svg" />
+            </ng-template>
+          </p-datepicker>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+      </div>
+
+      <!-- Search Actions -->
+      <div class="actions flex items-center gap-4 pt-6">
+        <button class="btn black-btn" (click)="search()">{{ 'COMMON.SEARCH' | translate }}</button>
+        <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">
+          {{ 'COMMON.RESET_SEARCH' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="mt-6">
+    <!-- Table Header -->
+    <div
+      class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+    >
+      <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+        {{ 'WORK_MISSIONS.WORK_MISSIONS_LIST' | translate }}
+      </h4>
+      <div class="actions flex items-center gap-4 ms-auto">
+        <!-- Only Excel Export Button -->
+        <button
+          class="table-head-action-btn min-w-[40px]"
+          (click)="exportExcel('my-work-missions.xlsx')"
+        >
+          <img alt="" src="assets/icons/excel.svg" />
+        </button>
+      </div>
+    </div>
+    @if (list && list.length > 0) {
+      <!-- Table with Task Assignee Column -->
+      <p-table [value]="list">
+        <ng-template #header>
+          <tr>
+            <th>{{ 'WORK_MISSIONS.MISSION_NAME_AR' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_ASSIGNER_AR' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_ASSIGNER_EN' | translate }}</th>
+            <th>{{ 'COMMON.RESET_SEARCH' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-mission>
+          <tr>
+            <td>{{ mission.nameAr }}</td>
+            <td>
+              <div class="text-left">
+                {{ mission.nameEn }}
+              </div>
+            </td>
+            <td>{{ mission.startDate }}</td>
+            <td>{{ mission.endDate }}</td>
+            <td>{{ mission.missionAssigner.nameAr }}</td>
+            <td>{{ mission.missionAssigner.nameEn }}</td>
+            <td>
+              <!-- Only View Action -->
+              <div class="actions flex gap-2">
+                <button
+                  (click)="addOrEditModel(mission)"
+                  ngClass=""
+                  class="table-action-gray-btn flex gap-2 font-medium"
+                >
+                  <img alt="" src="assets/icons/view-action.svg" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    } @else {
+      <div class="flex items-center justify-center h-64">
+        <p class="text-gray-500">{{ 'CITIES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+      </div>
+    }
+    <!-- Pagination -->
+    @if (paginationInfo) {
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="paginationInfo.pageSize"
+        [totalRecords]="paginationInfo.totalItems"
+        class="mt-6"
+      />
+    }
+  </div>
+</div>

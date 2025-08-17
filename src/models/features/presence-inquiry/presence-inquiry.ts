@@ -7,6 +7,7 @@ import { FactoryService } from '@/services/factory-service';
 import { PresenceInquiryService } from '@/services/features/presence-inquiry.service';
 import { UserProfilePresenceInquiry } from './user-profile-presence-inquiry';
 import { PresenceInquiryInterceptor } from '@/model-interceptors/features/presence-inquiry.interceptor';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 const { send, receive } = new PresenceInquiryInterceptor();
 
@@ -21,7 +22,17 @@ export class PresenceInquiry extends BaseCrudModel<PresenceInquiry, PresenceInqu
   declare assignedDate?: Date | null | string;
   declare statusId?: number;
   declare departmentId?: number;
+  private languageService?: LanguageService;
 
+  constructor() {
+    super();
+    this.languageService = FactoryService.getService('LanguageService');
+  }
+    getName(): string {
+      return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+        ? this.messageEn
+        : this.messageAr;
+    }
   buildForm() {
     const { messageAr, messageEn, buffer } = this;
 

@@ -543,6 +543,7 @@
     "EDIT_INQUIRY": "تعديل المسائلة",
     "CONFIRMATION_STATUS": "حالة التوثيق",
     "INQUIRY_STATUS": "حالة المسائلة",
+    "INQUIRY_RESULT": "نتيجة المسائلة",
     "BUFFER": "فترة السماح لتسجيل الحضور",
     "MESSAGE_AR": "الرسالة (عربي)",
     "MESSAGE_EN": "الرسالة (إنجليزي)",
@@ -551,7 +552,10 @@
     "NOT_CONFIRMED": "لم يتم التوثيق",
     "UNDER_PROCESSING": "جاري التوثيق",
     "TIME_EXPIRED": "تم انتهاء وقت التوثيق",
-    "NOT_ASSIGNED": " لم يتم الإسناد"
+    "NOT_ASSIGNED": " لم يتم الإسناد",
+    "DOCUMENTATION_INQUIRY": "مسائلة توثيق التواجد",
+    "INQUIRY_TEXT": "نص المسائلة",
+    "ASSIGNED_USERS": "الموظفون المعنيون بتنفيذ المهام"
   },
   "BLACKLIST_PAGE": {
     "VISITOR_BLACKLIST_CRITERIA": "معايير حظر الزائرين",

@@ -6,7 +6,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker, DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
@@ -19,6 +19,8 @@ import { Visit } from '@/models/features/visit/visit';
 import { VisitService } from '@/services/features/visit/visit.service';
 import { VisitFilter } from '@/models/features/visit/visit-filter';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { takeUntil } from 'rxjs';
+
 @Component({
   selector: 'app-all-visit-request-list',
   imports: [
@@ -38,37 +40,25 @@ import { BaseListComponent } from '@/abstracts/base-components/base-list/base-li
   templateUrl: './all-visit-request-list.component.html',
   styleUrl: './all-visit-request-list.component.scss',
 })
-export class AllVisitRequestListComponent extends BaseListComponent<
-  Visit,
-  AddEditVisitRequestPopupComponent,
-  VisitService,
-  VisitFilter
-> {
-  override get filterModel(): VisitFilter {
-    throw new Error('Method not implemented.');
-  }
-  override set filterModel(val: VisitFilter) {
-    throw new Error('Method not implemented.');
-  }
+export class AllVisitRequestListComponent
+  extends BaseListComponent<Visit, AddEditVisitRequestPopupComponent, VisitService, VisitFilter>
+  implements OnInit, OnChanges
+{
+  @Input() isActive: boolean = false;
+
+  override filterModel: VisitFilter = new VisitFilter();
+  visitService = inject(VisitService);
+
+  private hasInitialized = false;
+
   override get service(): VisitService {
-    throw new Error('Method not implemented.');
+    return this.visitService;
   }
-  override initListComponent(): void {
-    throw new Error('Method not implemented.');
-  }
-  protected override getBreadcrumbKeys(): {
-    labelKey: string;
-    icon?: string;
-    routerLink?: string;
-  }[] {
-    throw new Error('Method not implemented.');
-  }
-  protected override mapModelToExcelRow(model: Visit): { [key: string]: any } {
-    throw new Error('Method not implemented.');
-  }
+
   date2: Date | undefined;
   nationalities!: any[];
   items: MenuItem[] | undefined;
+
   dialogSize = {
     width: '100%',
     maxWidth: '600px',
@@ -77,6 +67,69 @@ export class AllVisitRequestListComponent extends BaseListComponent<
     width: '100%',
     maxWidth: '1024px',
   };
+
+  override ngOnInit() {
+    super.ngOnInit();
+    this.items = [{ label: 'لوحة المعلومات' }, { label: 'معايير حظر الزائرين' }];
+    // Updated dummy data to match your Arabic table structure
+    this.nationalities = [
+      {
+        nationalityAr: 'الجنسية ',
+        nationalityEn: 'nationality',
+      },
+    ];
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isActive']) {
+      const current = changes['isActive'].currentValue;
+      const previous = changes['isActive'].previousValue;
+
+      // Skip first trigger after component init
+      if (!this.hasInitialized) {
+        this.hasInitialized = true;
+        return;
+      }
+
+      // Only load data if tab is active and this is not the initial change
+      if (current && !previous) {
+        this.loadDataIfNeeded();
+      }
+    }
+  }
+
+  private loadDataIfNeeded(): void {
+    // Load data when tab becomes active using the generic loadList function
+    this.loadList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: (error) => this.handleLoadListError(),
+      });
+  }
+
+  override initListComponent(): void {
+    // Initial component setup if needed
+  }
+
+  protected override getBreadcrumbKeys(): {
+    labelKey: string;
+    icon?: string;
+    routerLink?: string;
+  }[] {
+    return [{ labelKey: 'VISIT_REQUEST_PAGE.ALL_VISITS' }];
+  }
+
+  protected override mapModelToExcelRow(model: Visit): { [key: string]: any } {
+    return {
+      [this.translateService.instant('VISIT_REQUEST_PAGE.NATIONAL_ID')]: model.nationalId,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.FULL_NAME')]: model.fullName,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION')]:
+        model.visitorOrganization,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_DATE')]: model.visitDate,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_PURPOSE')]: model.visitPurpose,
+    };
+  }
 
   openDialog(model?: any) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
@@ -91,6 +144,7 @@ export class AllVisitRequestListComponent extends BaseListComponent<
       console.log('closed');
     });
   }
+
   openViewDialog(model?: any) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -107,6 +161,7 @@ export class AllVisitRequestListComponent extends BaseListComponent<
       console.log('closed');
     });
   }
+
   openQrcodeDialog(model?: any) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {

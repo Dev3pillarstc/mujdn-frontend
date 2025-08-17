@@ -143,7 +143,9 @@
                 <th>{{ 'HOLIDAYS_PAGE.START_DATE' | translate }}</th>
                 <th>{{ 'HOLIDAYS_PAGE.END_DATE' | translate }}</th>
                 @if (showAddEditButtons()) {
-                  <th>{{ 'HOLIDAYS_PAGE.ACTIONS' | translate }}</th>
+                  <th class="w-[36px] whitespace-nowrap">
+                    {{ 'HOLIDAYS_PAGE.ACTIONS' | translate }}
+                  </th>
                 } @else {
                   <th>{{ 'HOLIDAYS_PAGE.NOTES' | translate }}</th>
                 }

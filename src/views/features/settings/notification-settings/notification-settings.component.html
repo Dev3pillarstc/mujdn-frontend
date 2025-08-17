@@ -57,22 +57,22 @@
               </div>
             </div>
 
-            <div class="bg-white rounded-2xl p-4 sm:p-8 mt-6">
-              <div class="actions flex items-center mt-6 gap-4 ms-auto">
+            <div class="bg-white rounded-xl p-4 mt-6">
+              <div class="actions flex items-center justify-between gap-4 ms-auto">
                 <button
                   type="button"
-                  class="btn black-btn"
+                  class="btn gray-btn !bg-white hover:!bg-[#e5e7eb] border border-[#d2d6db]"
+                  (click)="resetNotifications()"
+                >
+                  {{ 'COMMON.CANCEL' | translate }}
+                </button>
+                <button
+                  type="button"
+                  class="btn green-btn"
                   (click)="save()"
                   [disabled]="notificationForm.invalid"
                 >
                   {{ 'COMMON.SAVE' | translate }}
-                </button>
-                <button
-                  type="button"
-                  class="btn gray-btn border border-[#d2d6db]"
-                  (click)="resetNotifications()"
-                >
-                  {{ 'COMMON.CANCEL' | translate }}
                 </button>
               </div>
             </div>
@@ -112,22 +112,22 @@
               </div>
             </div>
 
-            <div class="bg-white rounded-2xl p-4 sm:p-8 mt-6">
-              <div class="actions flex items-center gap-4 ms-auto">
+            <div class="bg-white rounded-xl p-4 mt-6">
+              <div class="actions flex items-center justify-between gap-4 ms-auto">
                 <button
                   type="button"
-                  class="btn black-btn"
+                  class="btn gray-btn !bg-white hover:!bg-[#e5e7eb] border border-[#d2d6db]"
+                  (click)="resetWorkDays()"
+                >
+                  {{ 'COMMON.CANCEL' | translate }}
+                </button>
+                <button
+                  type="button"
+                  class="btn green-btn"
                   (click)="save()"
                   [disabled]="workDaysForm.invalid"
                 >
                   {{ 'COMMON.SAVE' | translate }}
-                </button>
-                <button
-                  type="button"
-                  class="btn gray-btn border border-[#d2d6db]"
-                  (click)="resetWorkDays()"
-                >
-                  {{ 'COMMON.CANCEL' | translate }}
                 </button>
               </div>
             </div>

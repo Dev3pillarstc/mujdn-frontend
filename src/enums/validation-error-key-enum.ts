@@ -4,6 +4,8 @@ export enum ValidationErrorKeyEnum {
   ENG_NUM = 'ENG_NUM',
   MIN_LENGTH = 'minlength',
   MAX_LENGTH = 'maxlength',
+  MIN = 'min',
+  MAX = 'max',
   START_AFTER_END = 'startAfterEnd',
   TIME_FROM_AFTER_TIME_TO = 'timeFromAfterTimeTo',
   EMAIL = 'email',

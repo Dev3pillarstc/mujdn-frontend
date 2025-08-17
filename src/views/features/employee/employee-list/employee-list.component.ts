@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
@@ -67,6 +67,7 @@ export default class EmployeeListComponent
   extends BaseListComponent<User, AddNewEmployeePopupComponent, UserService, UserFilter>
   implements OnInit
 {
+  @ViewChild('employeeContainer', { static: true }) employeeContainer!: ElementRef;
   languageService = inject(LanguageService);
   cityService = inject(CityService);
   regionService = inject(RegionService);
@@ -151,8 +152,9 @@ export default class EmployeeListComponent
       [key: string]: any[];
     }
   ) {
+    const clonedModel = Object.assign(Object.create(Object.getPrototypeOf(model)), model);
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = { model: model, lookups: lookups, viewMode: viewMode };
+    dialogConfig.data = { model: clonedModel, lookups: lookups, viewMode: viewMode };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);

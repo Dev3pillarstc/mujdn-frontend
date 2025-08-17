@@ -60,7 +60,6 @@ export default class PermissionReasonListComponent
 
   override openDialog(model: PermissionReason): void {
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    model = Object.assign(new PermissionReason(), model);
     this.openBaseDialog(PermissionReasonPopupComponent as any, model, viewMode);
   }
 

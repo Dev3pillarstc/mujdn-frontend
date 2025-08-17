@@ -67,8 +67,13 @@ export abstract class BaseListComponent<
       [key: string]: any[];
     }
   ) {
+    const clonedModel = Object.assign(Object.create(Object.getPrototypeOf(model)), model);
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = { model: model, lookups: lookups, viewMode: viewMode };
+    dialogConfig.data = {
+      model: clonedModel,
+      lookups: lookups,
+      viewMode: viewMode,
+    };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
@@ -94,8 +99,13 @@ export abstract class BaseListComponent<
       [key: string]: any[];
     }
   ) {
+    const clonedModel = Object.assign(Object.create(Object.getPrototypeOf(model)), model);
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = { model: model, lookups: lookups, viewMode: viewMode };
+    dialogConfig.data = {
+      model: clonedModel,
+      lookups: lookups,
+      viewMode: viewMode,
+    };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);

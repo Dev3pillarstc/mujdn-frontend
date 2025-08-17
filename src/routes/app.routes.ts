@@ -18,6 +18,10 @@ import { notificationResolver } from '@/resolvers/setting/notification.resolver'
 import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
 import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
+import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
+import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blacklisted-national-id.resolver';
+import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
+import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -88,6 +92,26 @@ export const routes: Routes = [
         loadComponent: () =>
           import('@/views/features/employee/employee-list/employee-list.component'),
         data: { roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.EMPLOYEES },
+      },
+      {
+        path: 'blacklist',
+        canActivate: [authGuard],
+        resolve: { list: blacklistResolver },
+        data: {
+          roles: [ROLES_ENUM.SECURITY_LEADER], // all roles can view the page
+          routeId: RouteIdsEnum.BLACKLIST,
+        },
+        loadComponent: () =>
+          import(
+            '@/views/features/visit/blacklist/blacklisted-container/blacklisted-container.component'
+          ),
+      },
+      {
+        path: 'visit-request',
+        loadComponent: () =>
+          import(
+            '@/views/features/visit/visit-request/visit-request-container/visit-request-container.component'
+          ),
       },
       {
         path: 'attendance-logs',
@@ -190,7 +214,7 @@ export const routes: Routes = [
         path: 'work-shifts-assignment',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.SECURITY_LEADER],
+          roles: [ROLES_ENUM.HR_OFFICER],
           routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
         },
         resolve: { list: userWorkShiftResolver },
@@ -211,7 +235,13 @@ export const routes: Routes = [
           import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
       },
       {
-        path: 'outside-mission',
+        path: 'work-missions',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.HR_OFFICER],
+          routeId: RouteIdsEnum.WORK_MISSION,
+        },
+        resolve: { list: WorkMissionResolver },
         loadComponent: () =>
           import(
             '@/views/features/outside-mission/outside-mission-list/outside-mission-list.component'
@@ -226,6 +256,8 @@ export const routes: Routes = [
       },
       {
         path: 'presence-inquiries',
+        data: { routeId: RouteIdsEnum.PRESENCE_INQUIRIES },
+        resolve: { list: presenceInquiryResolver },
         loadComponent: () =>
           import(
             '@/views/features/presence-inquiries/presence-inquiries-list/presence-inquiries-list.component'

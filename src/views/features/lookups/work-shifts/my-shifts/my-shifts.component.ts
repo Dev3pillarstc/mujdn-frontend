@@ -25,7 +25,7 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
-import { toDateOnly } from '@/utils/general-helper';
+import { formatDateTo12Hour, formatTimeTo12Hour, toDateOnly } from '@/utils/general-helper';
 @Component({
   selector: 'app-my-shifts',
   imports: [
@@ -99,6 +99,10 @@ export default class MyShiftsComponent extends BaseListComponent<
     };
     // Load current shift data
     this.currentShift = resolverData.currentShift || null;
+    if (this.currentShift) {
+      this.currentShift.timeFrom = formatTimeTo12Hour(this.currentShift.timeFrom as string);
+      this.currentShift.timeTo = formatTimeTo12Hour(this.currentShift.timeTo as string);
+    }
   }
 
   getCurrentShiftName(): string {

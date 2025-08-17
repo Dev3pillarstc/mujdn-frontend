@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { AllVisitRequestListComponent } from '../all-visit-request-list/all-visit-request-list.component';
 import { MyCreatedVisitRequestListComponent } from '../my-created-visit-request-list/my-created-visit-request-list.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-visit-request-container',
@@ -12,6 +13,7 @@ import { MyCreatedVisitRequestListComponent } from '../my-created-visit-request-
     TabsModule,
     AllVisitRequestListComponent,
     MyCreatedVisitRequestListComponent,
+    TranslatePipe,
   ],
   templateUrl: './visit-request-container.component.html',
   styleUrl: './visit-request-container.component.scss',

@@ -262,4 +262,11 @@ export default class MyShiftsComponent extends BaseListComponent<
       },
     });
   }
+  get startDate() {
+    return this.filterOptions.startDate as Date
+  }
+
+  get endDate() {
+    return this.filterOptions.endDate as Date
+  }
 }

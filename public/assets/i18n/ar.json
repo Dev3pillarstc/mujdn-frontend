@@ -546,7 +546,7 @@
     "CONFIRMATION_STATUS": "حالة التوثيق",
     "INQUIRY_STATUS": "حالة المسائلة",
     "INQUIRY_RESULT": "نتيجة المسائلة",
-    "BUFFER": "فترة السماح لتسجيل الحضور",
+    "BUFFER": "فترة السماح لتسجيل الحضور (دق)",
     "MESSAGE_AR": "الرسالة (عربي)",
     "MESSAGE_EN": "الرسالة (إنجليزي)",
     "UNDER_CONFIRMATION": "تحت التوثيق",
@@ -557,7 +557,8 @@
     "NOT_ASSIGNED": " لم يتم الإسناد",
     "DOCUMENTATION_INQUIRY": "مسائلة توثيق التواجد",
     "INQUIRY_TEXT": "نص المسائلة",
-    "ASSIGNED_USERS": "الموظفون المعنيون بتنفيذ المهام"
+    "ASSIGNED_USERS": "الموظفون المعنيون بتنفيذ المهام",
+    "ASSIGN_EMPLOYEES": "اسناد الموظفين للمسائلة"
   },
   "BLACKLIST_PAGE": {
     "VISITOR_BLACKLIST_CRITERIA": "معايير حظر الزائرين",

@@ -550,7 +550,7 @@
     "CONFIRMATION_STATUS": "Confirmation Status",
     "INQUIRY_STATUS": "Inquiry Status",
     "INQUIRY_RESULT": "Inquiry Result",
-    "BUFFER": "Presence Inquiry Buffer",
+    "BUFFER": "Presence Inquiry Buffer (min)",
     "MESSAGE_AR": "Message (Arabic)",
     "MESSAGE_EN": "Message (English)",
     "UNDER_CONFIRMATION": "Under Confirmation",
@@ -561,7 +561,8 @@
     "NOT_ASSIGNED": "Not Assigned",
     "DOCUMENTATION_INQUIRY": "Presence Inquiry",
     "INQUIRY_TEXT": "Inquiry Text",
-    "ASSIGNED_USERS": "Assigned Users"
+    "ASSIGNED_USERS": "Assigned Users",
+    "ASSIGN_EMPLOYEES": "Assign Employees"
   },
   "BLACKLIST_PAGE": {
     "VISITOR_BLACKLIST_CRITERIA": "Visitor Blacklist Criteria",

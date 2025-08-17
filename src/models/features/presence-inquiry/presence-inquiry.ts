@@ -28,11 +28,11 @@ export class PresenceInquiry extends BaseCrudModel<PresenceInquiry, PresenceInqu
     super();
     this.languageService = FactoryService.getService('LanguageService');
   }
-    getName(): string {
-      return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-        ? this.messageEn
-        : this.messageAr;
-    }
+  getName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? this.messageEn
+      : this.messageAr;
+  }
   buildForm() {
     const { messageAr, messageEn, buffer } = this;
 

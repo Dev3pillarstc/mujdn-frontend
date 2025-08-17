@@ -27,6 +27,7 @@ import { VisitStatusEnum } from '@/enums/visit-status-enum';
 import { formatTimeTo12Hour } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-my-created-visit-request-list',
@@ -65,6 +66,7 @@ export class MyCreatedVisitRequestListComponent
 
   // Lookups
   departments: BaseLookupModel[] = [];
+  nationalities: BaseLookupModel[] = [];
   visitStatusOptions: { label: string; value: number }[] = [];
 
   // Enum reference for template
@@ -236,20 +238,26 @@ export class MyCreatedVisitRequestListComponent
     });
   }
 
-  openEditDialog(model: Visit) {
-    let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      model: model,
-    };
-    dialogConfig.width = this.dialogSize2.width;
-    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
-    const dialogRef = this.matDialog.open(AddEditVisitRequestPopupComponent as any, dialogConfig);
-
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result === DIALOG_ENUM.OK) {
-        this.loadDataIfNeeded();
-      }
+  openEditDialog(model?: Visit) {
+    const visit = model ?? new Visit();
+    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialogSP(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
+      departments: this.departments,
+      nationalities: this.nationalities,
     });
+    // let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    // dialogConfig.data = {
+    //   model: model,
+    // };
+    // dialogConfig.width = this.dialogSize2.width;
+    // dialogConfig.maxWidth = this.dialogSize2.maxWidth;
+    // const dialogRef = this.matDialog.open(AddEditVisitRequestPopupComponent as any, dialogConfig);
+
+    // return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+    //   if (result === DIALOG_ENUM.OK) {
+    //     this.loadDataIfNeeded();
+    //   }
+    // });
   }
 
   protected override mapModelToExcelRow(model: Visit): { [key: string]: any } {

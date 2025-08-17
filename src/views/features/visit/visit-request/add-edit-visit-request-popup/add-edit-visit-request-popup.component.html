@@ -1,41 +1,56 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
     <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة مهمة جديدة</h3>
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
+      {{
+        (isCreateMode
+          ? 'VISIT_REQUEST_PAGE.ADD_NEW_VISIT_REQUEST'
+          : 'VISIT_REQUEST_PAGE.EDIT_VISIT_REQUEST'
+        ) | translate
+      }}
+    </h3>
 
-    <form class="">
+    <form [formGroup]="form">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- National ID -->
         <div>
-          <label class="label" for="nationalityAr">رقم الهوية</label>
+          <label class="label" for="nationalId">{{
+            'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="nationalityAr"
+              id="nationalId"
+              formControlName="nationalId"
               pInputText
-              placeholder="رقم الهوية"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate }}"
               type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="nationalIdControl"></app-validation-messages>
         </div>
+
+        <!-- National ID Expiry Date -->
         <div>
-          <label class="label" for="startDate">تاريخ انتهاء الهوية</label>
+          <label class="label" for="nationalIdExpiryDate">{{
+            'VISIT_REQUEST_PAGE.NATIONAL_ID_EXPIRY_DATE' | translate
+          }}</label>
           <div class="relative">
             <p-datepicker
-              [(ngModel)]="date2"
               [iconDisplay]="'input'"
               [showIcon]="true"
               class="peer block w-full"
-              id="startDate"
-              inputId="startDate"
-              name="startDate"
-              placeholder="تاريخ انتهاء الهوية"
+              formControlName="nationalIdExpiryDate"
+              id="nationalIdExpiryDate"
+              inputId="nationalIdExpiryDate"
+              name="nationalIdExpiryDate"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.NATIONAL_ID_EXPIRY_DATE' | translate }}"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
@@ -45,135 +60,180 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages
+            [control]="nationalIdExpiryDateControl"
+          ></app-validation-messages>
         </div>
+
+        <!-- Visitor Name -->
         <div>
-          <label class="label" for="nationalityAr">اسم الزائر</label>
+          <label class="label" for="fullName">{{
+            'VISIT_REQUEST_PAGE.VISITOR_NAME' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="nationalityAr"
+              id="fullName"
+              formControlName="fullName"
               pInputText
-              placeholder="اسم الزائر"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.VISITOR_NAME' | translate }}"
               type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="fullNameControl"></app-validation-messages>
         </div>
+
+        <!-- Nationality -->
         <div>
-          <label class="label" for="attendance-department-popup"> الجنسية </label>
+          <label class="label" for="nationality">{{
+            'VISIT_REQUEST_PAGE.NATIONALITY' | translate
+          }}</label>
           <div class="relative">
             <p-select
+              [optionLabel]="langOptionLabel"
+              [options]="nationalities"
               class="w-full peer"
-              id="attendance-department-popup"
-              name="departmentId"
-              placeholder="الجنسية"
+              formControlName="fkNationalityId"
+              id="nationality"
+              name="nationality"
+              optionValue="id"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.NATIONALITY' | translate }}"
             >
             </p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
+          <app-validation-messages [control]="nationalityControl"></app-validation-messages>
         </div>
+
+        <!-- Visitor Organization -->
         <div>
-          <label class="label" for="nationalityAr">الجهة التابع لها الزائر</label>
+          <label class="label" for="visitorOrganization">{{
+            'VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="nationalityAr"
+              id="visitorOrganization"
+              formControlName="visitorOrganization"
               pInputText
-              placeholder="الجهة التابع لها الزائر"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION' | translate }}"
               type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="visitorOrganizationControl"></app-validation-messages>
         </div>
+
+        <!-- Target Department -->
         <div>
-          <label class="label" for="attendance-department-popup"> الإدارة المستهدفة </label>
+          <label class="label" for="targetDepartment">{{
+            'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate
+          }}</label>
           <div class="relative">
             <p-select
+              [optionLabel]="langOptionLabel"
+              [options]="departments"
               class="w-full peer"
-              id="attendance-department-popup"
-              name="departmentId"
-              placeholder="الإدارة المستهدفة"
+              formControlName="fkTargetDepartmentId"
+              id="targetDepartment"
+              name="targetDepartment"
+              optionValue="id"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate }}"
             >
             </p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
+          <app-validation-messages [control]="targetDepartmentControl"></app-validation-messages>
         </div>
+
+        <!-- Phone Number -->
         <div>
-          <label class="label" for="nationalityAr">رقم الجوال</label>
+          <label class="label" for="phoneNumber">{{
+            'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="nationalityAr"
+              id="phoneNumber"
+              formControlName="phoneNumber"
               pInputText
-              placeholder="رقم الجوال"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate }}"
               type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="phoneNumberControl"></app-validation-messages>
         </div>
+
+        <!-- Address -->
         <div>
-          <label class="label" for="nationalityAr">العنوان</label>
+          <label class="label" for="address">{{ 'VISIT_REQUEST_PAGE.ADDRESS' | translate }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="nationalityAr"
+              id="address"
+              formControlName="address"
               pInputText
-              placeholder="العنوان"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.ADDRESS' | translate }}"
               type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="addressControl"></app-validation-messages>
         </div>
+
+        <!-- Email -->
         <div>
-          <label class="label" for="nationalityAr">البريد الالكتروني</label>
+          <label class="label" for="email">{{ 'VISIT_REQUEST_PAGE.EMAIL' | translate }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="nationalityAr"
+              id="email"
+              formControlName="email"
               pInputText
-              placeholder="البريد الالكتروني"
-              type="text"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.EMAIL' | translate }}"
+              type="email"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="emailControl"></app-validation-messages>
         </div>
+
+        <!-- Visit Date -->
         <div>
-          <label class="label" for="startDate">تاريخ الزيارة</label>
+          <label class="label" for="visitDate">{{
+            'VISIT_REQUEST_PAGE.VISIT_DATE' | translate
+          }}</label>
           <div class="relative">
             <p-datepicker
-              [(ngModel)]="date2"
               [iconDisplay]="'input'"
               [showIcon]="true"
               class="peer block w-full"
-              id="startDate"
-              inputId="startDate"
-              name="startDate"
-              placeholder="تاريخ الزيارة"
+              formControlName="visitDate"
+              id="visitDate"
+              inputId="visitDate"
+              name="visitDate"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.VISIT_DATE' | translate }}"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
@@ -183,21 +243,25 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="visitDateControl"></app-validation-messages>
         </div>
+
+        <!-- Visit Time From -->
         <div>
-          <label class="label" for="startDate">وقت الزيارة (من)</label>
+          <label class="label" for="visitTimeFrom">{{
+            'VISIT_REQUEST_PAGE.VISIT_TIME_FROM' | translate
+          }}</label>
           <div class="relative">
             <p-datepicker
-              [(ngModel)]="date2"
               [iconDisplay]="'input'"
               [showIcon]="true"
               [timeOnly]="true"
               class="peer block w-full"
-              id="startDate"
-              inputId="startDate"
-              name="startDate"
-              placeholder="تاريخ الزيارة"
+              formControlName="visitTimeFrom"
+              id="visitTimeFrom"
+              inputId="visitTimeFrom"
+              name="visitTimeFrom"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.VISIT_TIME_FROM' | translate }}"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
@@ -207,21 +271,25 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="visitTimeFromControl"></app-validation-messages>
         </div>
+
+        <!-- Visit Time To -->
         <div>
-          <label class="label" for="startDate">وقت الزيارة (الي)</label>
+          <label class="label" for="visitTimeTo">{{
+            'VISIT_REQUEST_PAGE.VISIT_TIME_TO' | translate
+          }}</label>
           <div class="relative">
             <p-datepicker
-              [(ngModel)]="date2"
               [iconDisplay]="'input'"
               [showIcon]="true"
               [timeOnly]="true"
               class="peer block w-full"
-              id="startDate"
-              inputId="startDate"
-              name="startDate"
-              placeholder="تاريخ الزيارة"
+              formControlName="visitTimeTo"
+              id="visitTimeTo"
+              inputId="visitTimeTo"
+              name="visitTimeTo"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.VISIT_TIME_TO' | translate }}"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
@@ -231,29 +299,86 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="visitTimeToControl"></app-validation-messages>
         </div>
+
+        <!-- Visit Purpose -->
         <div class="lg:col-span-3 md:col-span-2 col-span-1">
-          <label class="label" for="">سبب الزيارة</label>
+          <label class="label" for="visitPurpose">{{
+            'VISIT_REQUEST_PAGE.VISIT_PURPOSE' | translate
+          }}</label>
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
               cols="30"
+              formControlName="visitPurpose"
+              id="visitPurpose"
               pTextarea
-              placeholder="سبب الزيارة"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.VISIT_PURPOSE' | translate }}"
               rows="5"
             ></textarea>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="visitPurposeControl"></app-validation-messages>
         </div>
       </div>
-      <div class="actions mt-6 flex items-center justify-between gap-4">
-        <button (click)="close()" class="btn gray-btn">الغاء</button>
-        <button class="btn green-btn flex items-center">
-          <span>حفظ</span>
+
+      <!-- Employee Selection Section -->
+      <div class="mt-6 pt-6 border-t border-[#d2d6db]">
+        <h3 class="text-[#1f2a37] font-[600] text-sm sm:text-base mb-4">
+          {{ 'VISIT_REQUEST_PAGE.SELECT_EMPLOYEES' | translate }}
+        </h3>
+
+        <p-table
+          [value]="employees"
+          [paginator]="false"
+          [rows]="rows"
+          [first]="first"
+          class="custom-table"
+          styleClass="p-datatable-sm"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th>{{ 'VISIT_REQUEST_PAGE.EMPLOYEE_ID' | translate }}</th>
+              <th>{{ 'VISIT_REQUEST_PAGE.EMPLOYEE_NAME_AR' | translate }}</th>
+              <th>{{ 'VISIT_REQUEST_PAGE.EMPLOYEE_NAME_EN' | translate }}</th>
+              <th>{{ 'VISIT_REQUEST_PAGE.ADMINISTRATION' | translate }}</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-employee>
+            <tr>
+              <td>
+                <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+              </td>
+              <td>{{ employee.employeeId }}</td>
+              <td>{{ employee.employeeNameAr }}</td>
+              <td>{{ employee.employeeNameEn }}</td>
+              <td>{{ employee.administration }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+        <p-paginator
+          [first]="first"
+          [rows]="rows"
+          [totalRecords]="employees.length"
+          (onPageChange)="onPageChange($event)"
+          class="mt-4"
+        ></p-paginator>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button (click)="close()" type="button" class="btn gray-btn">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+        <button (click)="save$.next()" type="button" class="btn green-btn flex items-center">
+          <span>{{ (model.id ? 'COMMON.SAVE' : 'COMMON.ADD') | translate }}</span>
         </button>
       </div>
     </form>

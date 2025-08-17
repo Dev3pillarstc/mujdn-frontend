@@ -409,7 +409,8 @@
     "PERMISSIONS_SETTINGS": "Permissions Settings",
     "NOTIFICATIONS": "Notifications",
     "VISITS": "Visits",
-    "BLACKLIST": "Visitor blacklist criteria"
+    "BLACKLIST": "Visitor blacklist criteria",
+    "VISIT_REQUESTS": "Visit Request"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "Notification Settings",

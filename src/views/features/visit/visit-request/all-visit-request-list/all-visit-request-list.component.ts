@@ -68,18 +68,6 @@ export class AllVisitRequestListComponent
     maxWidth: '1024px',
   };
 
-  override ngOnInit() {
-    super.ngOnInit();
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'معايير حظر الزائرين' }];
-    // Updated dummy data to match your Arabic table structure
-    this.nationalities = [
-      {
-        nationalityAr: 'الجنسية ',
-        nationalityEn: 'nationality',
-      },
-    ];
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isActive']) {
       const current = changes['isActive'].currentValue;

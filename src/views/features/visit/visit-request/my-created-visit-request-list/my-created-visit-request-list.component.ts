@@ -6,7 +6,7 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker, DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
-import { Component, inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
@@ -48,7 +48,7 @@ export class MyCreatedVisitRequestListComponent
     VisitService,
     MyCreatedVisitFilter
   >
-  implements OnInit, OnChanges
+  implements OnChanges
 {
   @Input() isActive: boolean = false;
 
@@ -73,18 +73,6 @@ export class MyCreatedVisitRequestListComponent
     width: '100%',
     maxWidth: '1024px',
   };
-
-  override ngOnInit() {
-    super.ngOnInit();
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'معايير حظر الزائرين' }];
-    // Updated dummy data to match your Arabic table structure
-    this.nationalities = [
-      {
-        nationalityAr: 'الجنسية ',
-        nationalityEn: 'nationality',
-      },
-    ];
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isActive']) {

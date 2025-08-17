@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 import { VisitInterceptor } from '@/model-interceptors/features/visit/visit.interceptor';
 import { VisitService } from '@/services/features/visit/visit.service';
+import { BaseLookupModel } from '../lookups/base-lookup-model';
 
 const { send, receive } = new VisitInterceptor();
 
@@ -16,7 +17,7 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   declare fkNationalityId: number;
   declare visitorOrganization: string;
   declare fkTargetDepartmentId: number;
-  declare targetDepartment: string;
+  declare targetDepartment: BaseLookupModel;
   declare phoneNumber: string;
   declare address: string;
   declare email: string;

@@ -5,10 +5,10 @@ import { PaginationParams } from '@/models/shared/pagination-params';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { genericDateOnlyConvertor } from '@/utils/general-helper';
-import { HttpParams } from '@angular/common/module.d-CnjH8Dlt';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { map, Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 @CastResponseContainer({
   $default: {

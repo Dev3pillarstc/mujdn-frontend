@@ -131,79 +131,88 @@
         </button>
       </div>
     </div>
-    <p-table [value]="nationalities">
-      <ng-template #header>
-        <tr>
-          <th>{{ 'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate }}</th>
-          <th>{{ 'VISIT_REQUEST_PAGE.VISITOR_NAME' | translate }}</th>
-          <th>{{ 'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate }}</th>
-          <th>{{ 'VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION' | translate }}</th>
-          <th>{{ 'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate }}</th>
-          <th>{{ 'VISIT_REQUEST_PAGE.VISIT_STATUS' | translate }}</th>
-          <th>{{ 'VISIT_REQUEST_PAGE.ENTRY' | translate }}</th>
-          <th>{{ 'VISIT_REQUEST_PAGE.EXIT' | translate }}</th>
-          <th class="w-[36px] whitespace-nowrap">
-            {{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-nationality>
-        <tr>
-          <td>142563</td>
-          <td>محمد أحمد طه</td>
-          <td>142563</td>
-          <td>اسم الجهة</td>
-          <td>ادارة الموارد البشرية</td>
-          <td>
-            <span
-              class="text-[14px] text-[#1849a9] px-2 py-1 w-fit inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#eff8ff] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#1849a9] rounded-full"></span>
-              {{ 'VISIT_REQUEST_PAGE.NEW' | translate }}
-            </span>
-            <span
-              class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
-              {{ 'VISIT_REQUEST_PAGE.REJECTED' | translate }}
-            </span>
-            <span
-              class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
-              {{ 'VISIT_REQUEST_PAGE.ACCEPTED' | translate }}
-            </span>
-          </td>
-          <td>08:00 ص</td>
-          <td>08:00 ص</td>
-          <td>
-            <div class="actions flex gap-2">
-              <button class="table-action-gray-btn" (click)="openViewDialog()">
-                <img alt="" src="assets/icons/view.svg" />
-              </button>
-              <button class="black-table-btn-action">
-                <img alt="" src="assets/icons/small-edit.svg" />
-                <span>{{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}</span>
-              </button>
-              <button class="table-action-gray-btn">
-                <img alt="" src="assets/icons/edit-action.svg" />
-              </button>
-              <button class="table-action-red-btn">
-                <img alt="" src="assets/icons/delete-action.svg" />
-              </button>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-    <p-paginator
-      class="mt-6"
-      (onPageChange)="onPageChange($event)"
-      [first]="first"
-      [rows]="rows"
-      [totalRecords]="120"
-      [rowsPerPageOptions]="[10, 20, 30]"
-    />
+    @if (list && list.length > 0) {
+      <p-table [value]="list">
+        <ng-template #header>
+          <tr>
+            <th>{{ 'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate }}</th>
+            <th>{{ 'VISIT_REQUEST_PAGE.VISITOR_NAME' | translate }}</th>
+            <th>{{ 'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate }}</th>
+            <th>{{ 'VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION' | translate }}</th>
+            <th>{{ 'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate }}</th>
+            <th>{{ 'VISIT_REQUEST_PAGE.VISIT_STATUS' | translate }}</th>
+            <th>{{ 'VISIT_REQUEST_PAGE.ENTRY' | translate }}</th>
+            <th>{{ 'VISIT_REQUEST_PAGE.EXIT' | translate }}</th>
+            <th class="w-[36px] whitespace-nowrap">
+              {{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-nationality>
+          <tr>
+            <td>142563</td>
+            <td>محمد أحمد طه</td>
+            <td>142563</td>
+            <td>اسم الجهة</td>
+            <td>ادارة الموارد البشرية</td>
+            <td>
+              <span
+                class="text-[14px] text-[#1849a9] px-2 py-1 w-fit inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#eff8ff] font-medium"
+              >
+                <span class="w-[10px] h-[10px] bg-[#1849a9] rounded-full"></span>
+                {{ 'VISIT_REQUEST_PAGE.NEW' | translate }}
+              </span>
+              <span
+                class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
+              >
+                <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
+                {{ 'VISIT_REQUEST_PAGE.REJECTED' | translate }}
+              </span>
+              <span
+                class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
+              >
+                <span class="w-[10px] h-[10px] bg-[#085d3a] rounded-full"></span>
+                {{ 'VISIT_REQUEST_PAGE.ACCEPTED' | translate }}
+              </span>
+            </td>
+            <td>08:00 ص</td>
+            <td>08:00 ص</td>
+            <td>
+              <div class="actions flex gap-2">
+                <button class="table-action-gray-btn" (click)="openViewDialog()">
+                  <img alt="" src="assets/icons/view.svg" />
+                </button>
+                <button class="black-table-btn-action">
+                  <img alt="" src="assets/icons/small-edit.svg" />
+                  <span>{{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}</span>
+                </button>
+                <button class="table-action-gray-btn">
+                  <img alt="" src="assets/icons/edit-action.svg" />
+                </button>
+                <button class="table-action-red-btn">
+                  <img alt="" src="assets/icons/delete-action.svg" />
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    } @else {
+      <div class="flex items-center justify-center h-64">
+        <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
+      </div>
+    }
+    @if (paginationInfo) {
+      <p-paginator
+        (onPageChange)="onPageChange($event, true)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="rows"
+        [showCurrentPageReport]="false"
+        [totalRecords]="paginationInfo.totalItems"
+        class="mt-6"
+      />
+    }
     <div></div>
   </div>
 </div>

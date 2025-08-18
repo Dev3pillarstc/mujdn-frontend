@@ -74,9 +74,19 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     this.usersProfiles = this.activatedRoute.snapshot.data['list'].users;
     this.departments = this.activatedRoute.snapshot.data['list'].departments;
     this.filteredEmployees = this.usersProfiles;
+    this.departments = this.sortByName(this.departments, this.optionLabel);
+    this.filteredEmployees = this.sortByName(this.filteredEmployees, this.optionLabel);
+  }
+  private sortByName<T extends { [key: string]: any }>(arr: T[], key: string): T[] {
+    return [...arr].sort((a, b) => {
+      const nameA = (a[key] || '').toString().toLowerCase();
+      const nameB = (b[key] || '').toString().toLowerCase();
+      return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+    });
   }
   filterEmployeesByDepartment(departmentId: number) {
     this.filteredEmployees = this.usersProfiles.filter((emp) => emp.departmentId === departmentId);
+    this.filteredEmployees = this.sortByName(this.filteredEmployees, this.optionLabel);
   }
   protected override mapModelToExcelRow(model: UserWorkShift): { [key: string]: any } {
     return {

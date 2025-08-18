@@ -48,8 +48,7 @@ import { weekDays } from '@/utils/general-helper';
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit
-{
+  implements OnInit {
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   filteredUsersProfiles: UsersWithDepartmentLookup[] = [];
@@ -75,11 +74,15 @@ export class WorkShiftsAssignmentPopupComponent
     // Initialize model - either from data or create new instance
     this.model = this.data.model || new UserWorkShift();
     this.usersProfiles = this.data.lookups?.usersProfiles || [];
-    this.filteredUsersProfiles = this.usersProfiles;
     this.departments = this.data.lookups?.departments || [];
     this.shifts = this.data.lookups?.shifts || [];
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
+
+    this.usersProfiles = this.sortByName(this.usersProfiles, this.optionLabel);
+    this.filteredUsersProfiles = this.usersProfiles;
+    this.departments = this.sortByName(this.departments, this.optionLabel);
+    this.shifts = this.sortByName(this.shifts, this.optionLabel);
 
     if (this.model.employeeWorkingDays) {
       this.selectedWorkingDays = this.model.employeeWorkingDays
@@ -152,7 +155,7 @@ export class WorkShiftsAssignmentPopupComponent
     return this.selectedWorkingDays.includes(dayValue);
   }
 
-  override saveFail(error: Error): void {}
+  override saveFail(error: Error): void { }
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -171,10 +174,19 @@ export class WorkShiftsAssignmentPopupComponent
     const updatedModel = Object.assign(this.model, { ...form.value });
     return updatedModel;
   }
-
+  private sortByName<T extends { [key: string]: any }>(arr: T[], key: string): T[] {
+    return [...arr].sort((a, b) => {
+      const nameA = (a[key] || '').toString().toLowerCase();
+      const nameB = (b[key] || '').toString().toLowerCase();
+      return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+    });
+  }
+  getCurrentLanguage() {
+    return this.langService.getCurrentLanguage();
+  }
   get optionLabel(): string {
-    const lang = this.langService.getCurrentLanguage();
-    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+    return this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+      ? 'nameAr' : 'nameEn';
   }
 
   filterEmployeesByDepartment(departmentId: number) {

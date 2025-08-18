@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@/services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BACKEND_ERROR_ENUM } from '@/enums/backend-error-enum';
+import { buildTranslationParams } from '@/utils/general-helper';
 
 // const excludedErrorPaths = [
 //   '/PasswordReset/request',
@@ -29,17 +30,12 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ) => {
   const injector = inject(Injector);
-
   return next(req).pipe(
     catchError((error: any) => {
-      // ✅ Exclude specific URLs from error handling
-      // if (isExcludedErrorUrl(req.url)) {
-      //   return throwError(() => error);
-      // }
-
       const notAuthorizedErrorKey = BACKEND_ERROR_ENUM.NOT_AUTHORIZED;
       const validationFailedErrorKey = BACKEND_ERROR_ENUM.VALIDATION_FAILED;
       const skipKeys = [validationFailedErrorKey, notAuthorizedErrorKey];
+
       const alertService = injector.get(AlertService);
       const translateService = injector.get(TranslateService);
       const router = injector.get(Router);
@@ -48,6 +44,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
 
       let messageKey = 'COMMON.UNKNOWN_ERROR';
       let backendError = error?.error?.error;
+      console.log('Backend error response:', backendError); // Debug log
 
       if (backendError?.messageKey === notAuthorizedErrorKey && authService.isAuthenticated) {
         matDialog.closeAll();
@@ -56,13 +53,25 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
 
       if (backendError?.messageKey) {
         messageKey = 'COMMON.' + backendError?.messageKey;
+        console.log('Message key:', messageKey); // Debug log
 
         if (skipKeys.includes(backendError?.messageKey)) {
+          return throwError(() => error);
+        }
+
+        if (backendError?.details) {
+          console.log('Details received:', backendError.details); // Debug log
+          const translationParams = buildTranslationParams(backendError.details, translateService);
+          console.log('Translation params:', translationParams); // Debug log
+          const message = translateService.instant(messageKey, translationParams);
+          console.log('Translated message:', message); // Debug log
+          alertService.showErrorMessage({ messages: [message] });
           return throwError(() => error);
         }
       }
 
       const message = translateService.instant(messageKey);
+      console.log('Default message:', message); // Debug log
       alertService.showErrorMessage({ messages: [message] });
       return throwError(() => error);
     })

@@ -238,7 +238,7 @@ export const routes: Routes = [
         path: 'work-missions',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.HR_OFFICER],
+          roles: [ROLES_ENUM.EMPLOYEE],
           routeId: RouteIdsEnum.WORK_MISSION,
         },
         resolve: { list: WorkMissionResolver },

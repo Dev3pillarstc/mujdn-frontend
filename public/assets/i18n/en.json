@@ -603,9 +603,6 @@
     "ACCEPTED": "Accepted",
     "VISITOR_SELECTION": "Visitor Selection",
     "LOAD_EXISTING_VISITOR": "Load Existing Visitor Data",
-    "ADD_NEW_VISITOR": "Add New Visitor",
-    "NATIONAL_ID_REQUIRED": "National ID is required",
-    "VISITOR_NOT_FOUND": "Visitor not found with this National ID",
-    "ERROR_LOADING_VISITOR": "Error loading visitor data"
+    "ADD_NEW_VISITOR": "Add New Visitor"
   }
 }

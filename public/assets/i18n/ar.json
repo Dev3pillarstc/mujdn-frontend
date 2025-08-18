@@ -599,8 +599,6 @@
     "ACCEPTED": "مقبول",
     "VISITOR_SELECTION": "اختيار الزائر",
     "LOAD_EXISTING_VISITOR": "استدعاء بيانات زائر سابق",
-    "ADD_NEW_VISITOR": "اضافة زائر جديد",
-    "NATIONAL_ID_REQUIRED": "رقم الهوية مطلوب",
-    "ERROR_LOADING_VISITOR": "خطأ في تحميل بيانات الزائر"
+    "ADD_NEW_VISITOR": "اضافة زائر جديد"
   }
 }

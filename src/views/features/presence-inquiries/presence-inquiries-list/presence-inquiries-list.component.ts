@@ -85,7 +85,7 @@ export default class PresenceInquiriesListComponent implements OnInit, OnDestroy
     icon?: string;
     routerLink?: string;
   }[] {
-    return [{ labelKey: 'MENU.ATTENDANCE_LOGS' }];
+    return [{ labelKey: 'INQUIRIES_PAGE.PRESENCE_INQUIRIES' }];
   }
 
   onTabChange(event: any) {

@@ -123,4 +123,12 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     const lang = this.langService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
+
+  get startDate() {
+    return this.filterOptions.startDate as Date;
+  }
+
+  get endDate() {
+    return this.filterOptions.endDate as Date;
+  }
 }

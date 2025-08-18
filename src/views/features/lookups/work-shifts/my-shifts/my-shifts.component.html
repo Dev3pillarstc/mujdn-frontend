@@ -121,6 +121,7 @@
                 [(ngModel)]="filterOptions.startDate"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
+                [maxDate]="endDate"
                 class="peer block w-full"
                 inputId="dateFrom"
                 [placeholder]="'MY_SHIFTS.START_DATE' | translate"
@@ -138,6 +139,7 @@
               <p-datepicker
                 [(ngModel)]="filterOptions.endDate"
                 [iconDisplay]="'input'"
+                [minDate]="startDate"
                 [showIcon]="true"
                 class="peer block w-full"
                 inputId="dateTo"

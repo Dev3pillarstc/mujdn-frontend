@@ -5,6 +5,7 @@ import { PaginationParams } from '@/models/shared/pagination-params';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
+import { AuthService } from '@/services/auth/auth.service';
 import { WorkMissionService } from '@/services/features/business/work-mission.service';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { UserProfileService } from '@/services/features/user-profile.service';
@@ -23,16 +24,35 @@ export const WorkMissionResolver: ResolveFn<
   const workMissionService = inject(WorkMissionService);
   const departmentService = inject(DepartmentService);
   const userProfileService = inject(UserProfileService);
+  const authService = inject(AuthService);
+
+  const user = authService.getUser().value;
+
+  const canLoadMissionsAndDepartments = !!(authService.isDepartmentManager || authService.isHROfficer);
 
   return forkJoin({
-    missions: workMissionService
-      .loadPaginated(new PaginationParams())
-      .pipe(catchError(() => of(null))),
-    departments: departmentService.getLookup().pipe(catchError(() => of(null))),
-    myMissions: workMissionService.getMyWorkMissionsAsync(new PaginationParams(), {}).pipe(
-      map((response: PaginatedListResponseData<WorkMission>) => response?.data || null),
-      catchError(() => of(null))
-    ),
-    creators: userProfileService.getLookup().pipe(catchError(() => of([]))),
+    missions: canLoadMissionsAndDepartments
+      ? workMissionService
+        .loadPaginated(new PaginationParams())
+        .pipe(catchError(() => of(null)))
+      : of(null),
+
+    departments: canLoadMissionsAndDepartments
+      ? departmentService.getLookup().pipe(catchError(() => of(null)))
+      : of(null),
+
+    myMissions: workMissionService
+      .getMyWorkMissionsAsync(new PaginationParams(), {})
+      .pipe(
+        map(
+          (response: PaginatedListResponseData<WorkMission>) =>
+            response?.data || null
+        ),
+        catchError(() => of(null))
+      ),
+
+    creators: userProfileService
+      .getLookup()
+      .pipe(catchError(() => of([]))),
   }).pipe(catchError(() => of(null)));
 };

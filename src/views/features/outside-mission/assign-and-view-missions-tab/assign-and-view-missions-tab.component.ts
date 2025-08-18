@@ -60,7 +60,8 @@ export class AssignAndViewMissionsTabComponent
     WorkMissionService,
     WorkMissionFilter
   >
-  implements OnInit {
+  implements OnInit
+{
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -142,8 +143,14 @@ export class AssignAndViewMissionsTabComponent
     return {
       [this.translateService.instant('WORK_MISSIONS.MISSION_NAME_AR')]: model.nameAr,
       [this.translateService.instant('WORK_MISSIONS.MISSION_NAME_EN')]: model.nameEn,
-      [this.translateService.instant('WORK_MISSIONS.START_DATE')]: datePipe.transform(model.startDate, 'dd/MM/yyyy'),
-      [this.translateService.instant('WORK_MISSIONS.END_DATE')]: datePipe.transform(model.endDate, 'dd/MM/yyyy'),
+      [this.translateService.instant('WORK_MISSIONS.START_DATE')]: datePipe.transform(
+        model.startDate,
+        'dd/MM/yyyy'
+      ),
+      [this.translateService.instant('WORK_MISSIONS.END_DATE')]: datePipe.transform(
+        model.endDate,
+        'dd/MM/yyyy'
+      ),
     };
   }
   addOrEditModel(mission?: WorkMission): void {

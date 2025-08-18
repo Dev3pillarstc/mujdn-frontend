@@ -28,31 +28,24 @@ export const WorkMissionResolver: ResolveFn<
 
   const user = authService.getUser().value;
 
-  const canLoadMissionsAndDepartments = !!(authService.isDepartmentManager || authService.isHROfficer);
+  const canLoadMissionsAndDepartments = !!(
+    authService.isDepartmentManager || authService.isHROfficer
+  );
 
   return forkJoin({
     missions: canLoadMissionsAndDepartments
-      ? workMissionService
-        .loadPaginated(new PaginationParams())
-        .pipe(catchError(() => of(null)))
+      ? workMissionService.loadPaginated(new PaginationParams()).pipe(catchError(() => of(null)))
       : of(null),
 
     departments: canLoadMissionsAndDepartments
       ? departmentService.getLookup().pipe(catchError(() => of(null)))
       : of(null),
 
-    myMissions: workMissionService
-      .getMyWorkMissionsAsync(new PaginationParams(), {})
-      .pipe(
-        map(
-          (response: PaginatedListResponseData<WorkMission>) =>
-            response?.data || null
-        ),
-        catchError(() => of(null))
-      ),
+    myMissions: workMissionService.getMyWorkMissionsAsync(new PaginationParams(), {}).pipe(
+      map((response: PaginatedListResponseData<WorkMission>) => response?.data || null),
+      catchError(() => of(null))
+    ),
 
-    creators: userProfileService
-      .getLookup()
-      .pipe(catchError(() => of([]))),
+    creators: userProfileService.getLookup().pipe(catchError(() => of([]))),
   }).pipe(catchError(() => of(null)));
 };

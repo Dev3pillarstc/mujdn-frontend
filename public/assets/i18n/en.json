@@ -8,6 +8,7 @@
     "ALERT": "Alert",
     "YES": "Yes",
     "NO": "No",
+    "NEXT": "Next",
     "CONFIRM_DELETE": "Are you sure you want to delete this item?",
     "SAVED_SUCCESSFULLY": "Saved successfully",
     "UPDATED_SUCCESSFULLY": "Updated successfully",
@@ -103,7 +104,8 @@
     "RETRY": "Retry",
     "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect",
     "MIN_VALUE": "Value must be at least {min} (got {actual})",
-    "MAX_VALUE": "Value must be at most {max} (got {actual})"
+    "MAX_VALUE": "Value must be at most {max} (got {actual})",
+    "VISITOR_NOT_FOUND": "Visitor not found with this National ID"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -598,6 +600,12 @@
     "ACTIONS": "Actions",
     "NEW": "New",
     "REJECTED": "Rejected",
-    "ACCEPTED": "Accepted"
+    "ACCEPTED": "Accepted",
+    "VISITOR_SELECTION": "Visitor Selection",
+    "LOAD_EXISTING_VISITOR": "Load Existing Visitor Data",
+    "ADD_NEW_VISITOR": "Add New Visitor",
+    "NATIONAL_ID_REQUIRED": "National ID is required",
+    "VISITOR_NOT_FOUND": "Visitor not found with this National ID",
+    "ERROR_LOADING_VISITOR": "Error loading visitor data"
   }
 }

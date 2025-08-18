@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { map, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { ResponseData } from '@/models/shared/response/response-data';
 
 @CastResponseContainer({
   $default: {
@@ -32,11 +33,18 @@ export class VisitService extends BaseCrudService<Visit> {
 
   @CastResponse(undefined, { fallback: '$visitor' })
   loadVisitorByNationalId(nationalId: string): Observable<Visit> {
-    return this.http.get<Visit>(this.getUrlSegment() + '/visitor', {
-      params: {
-        nationalId,
-      },
-    });
+    return this.http
+      .get<ResponseData<Visit>>(this.getUrlSegment() + '/visitor', {
+        params: {
+          nationalId,
+        },
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => {
+          return response.data;
+        })
+      );
   }
 
   @CastResponse(undefined, { fallback: '$pagination' })

@@ -8,6 +8,7 @@
     "ALERT": "تنبيه",
     "YES": "نعم",
     "NO": "لا",
+    "NEXT": "التالي",
     "CONFIRM_DELETE": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
     "SAVED_SUCCESSFULLY": "تم الحفظ بنجاح",
     "UPDATED_SUCCESSFULLY": "تم التحديث بنجاح",
@@ -103,7 +104,8 @@
     "RETRY": "إعادة المحاولة",
     "CURRENT_PASSWORD_INCORRECT": "كلمة المرور القديمة غير صحيحة",
     "MIN_VALUE": "يجب أن تكون القيمة على الأقل {min} (تم الحصول على {actual})",
-    "MAX_VALUE": "يجب أن تكون القيمة على الأكثر {max} (تم الحصول على {actual})"
+    "MAX_VALUE": "يجب أن تكون القيمة على الأكثر {max} (تم الحصول على {actual})",
+    "VISITOR_NOT_FOUND": "لم يتم العثور على زائر بهذا الرقم"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -594,6 +596,11 @@
     "ACTIONS": "اجراءات",
     "NEW": "جديد",
     "REJECTED": "مرفوض",
-    "ACCEPTED": "مقبول"
+    "ACCEPTED": "مقبول",
+    "VISITOR_SELECTION": "اختيار الزائر",
+    "LOAD_EXISTING_VISITOR": "استدعاء بيانات زائر سابق",
+    "ADD_NEW_VISITOR": "اضافة زائر جديد",
+    "NATIONAL_ID_REQUIRED": "رقم الهوية مطلوب",
+    "ERROR_LOADING_VISITOR": "خطأ في تحميل بيانات الزائر"
   }
 }

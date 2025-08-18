@@ -206,14 +206,18 @@ export class MyCreatedVisitRequestListComponent
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
+      departments: this.departments,
+      nationalities: this.nationalities,
     };
     dialogConfig.width = this.dialogSize2.width;
     dialogConfig.maxWidth = this.dialogSize2.maxWidth;
+
     const dialogRef = this.matDialog.open(VisitorSelectionPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result === DIALOG_ENUM.OK) {
-        this.loadDataIfNeeded();
+    return dialogRef.afterClosed().subscribe((result: { action: DIALOG_ENUM; visitor?: Visit }) => {
+      if (result?.action === DIALOG_ENUM.OK && result.visitor) {
+        // open edit dialog with visitor
+        this.openEditDialog(result.visitor);
       }
     });
   }

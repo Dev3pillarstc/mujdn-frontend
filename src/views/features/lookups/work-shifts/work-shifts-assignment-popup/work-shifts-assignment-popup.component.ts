@@ -48,7 +48,8 @@ import { weekDays } from '@/utils/general-helper';
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit {
+  implements OnInit
+{
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   filteredUsersProfiles: UsersWithDepartmentLookup[] = [];
@@ -155,7 +156,7 @@ export class WorkShiftsAssignmentPopupComponent
     return this.selectedWorkingDays.includes(dayValue);
   }
 
-  override saveFail(error: Error): void { }
+  override saveFail(error: Error): void {}
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -185,8 +186,7 @@ export class WorkShiftsAssignmentPopupComponent
     return this.langService.getCurrentLanguage();
   }
   get optionLabel(): string {
-    return this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
-      ? 'nameAr' : 'nameEn';
+    return this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   filterEmployeesByDepartment(departmentId: number) {

@@ -300,6 +300,7 @@
             ></span>
           </div>
           <app-validation-messages [control]="visitTimeToControl"></app-validation-messages>
+          <app-validation-messages [control]="form"></app-validation-messages>
         </div>
 
         <!-- Visit Purpose -->
@@ -323,53 +324,6 @@
           </div>
           <app-validation-messages [control]="visitPurposeControl"></app-validation-messages>
         </div>
-      </div>
-
-      <!-- Employee Selection Section -->
-      <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-        <h3 class="text-[#1f2a37] font-[600] text-sm sm:text-base mb-4">
-          {{ 'VISIT_REQUEST_PAGE.SELECT_EMPLOYEES' | translate }}
-        </h3>
-
-        <p-table
-          [value]="employees"
-          [paginator]="false"
-          [rows]="rows"
-          [first]="first"
-          class="custom-table"
-          styleClass="p-datatable-sm"
-        >
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="width: 3rem">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
-              <th>{{ 'VISIT_REQUEST_PAGE.EMPLOYEE_ID' | translate }}</th>
-              <th>{{ 'VISIT_REQUEST_PAGE.EMPLOYEE_NAME_AR' | translate }}</th>
-              <th>{{ 'VISIT_REQUEST_PAGE.EMPLOYEE_NAME_EN' | translate }}</th>
-              <th>{{ 'VISIT_REQUEST_PAGE.ADMINISTRATION' | translate }}</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-employee>
-            <tr>
-              <td>
-                <p-tableCheckbox [value]="employee"></p-tableCheckbox>
-              </td>
-              <td>{{ employee.employeeId }}</td>
-              <td>{{ employee.employeeNameAr }}</td>
-              <td>{{ employee.employeeNameEn }}</td>
-              <td>{{ employee.administration }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-
-        <p-paginator
-          [first]="first"
-          [rows]="rows"
-          [totalRecords]="employees.length"
-          (onPageChange)="onPageChange($event)"
-          class="mt-4"
-        ></p-paginator>
       </div>
 
       <!-- Action Buttons -->

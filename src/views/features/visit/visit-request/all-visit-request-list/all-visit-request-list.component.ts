@@ -50,6 +50,8 @@ export class AllVisitRequestListComponent
   implements OnInit, OnChanges
 {
   @Input() isActive: boolean = false;
+  @Input() departments: BaseLookupModel[] = [];
+  @Input() nationalities: BaseLookupModel[] = [];
 
   override filterModel: VisitFilter = new VisitFilter();
   visitService = inject(VisitService);
@@ -58,8 +60,6 @@ export class AllVisitRequestListComponent
 
   private hasInitialized = false;
 
-  // Lookups
-  departments: BaseLookupModel[] = [];
   visitStatusOptions: { label: string; value: number }[] = [];
   visitCreatorOptions: { label: string; value: number }[] = [];
 

@@ -25,12 +25,20 @@
       <p-tabpanels>
         <!-- My Visits Tab Panel -->
         <p-tabpanel value="0">
-          <app-my-created-visit-request-list [isActive]="isMyVisitsTabActive()" />
+          <app-my-created-visit-request-list
+            [isActive]="isMyVisitsTabActive()"
+            [departments]="departments"
+            [nationalities]="nationalities"
+          />
         </p-tabpanel>
 
         <!-- All Visits Tab Panel -->
         <p-tabpanel value="1">
-          <app-all-visit-request-list [isActive]="isAllVisitsTabActive()" />
+          <app-all-visit-request-list
+            [isActive]="isAllVisitsTabActive()"
+            [departments]="departments"
+            [nationalities]="nationalities"
+          />
         </p-tabpanel>
       </p-tabpanels>
     </p-tabs>

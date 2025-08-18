@@ -4,6 +4,8 @@ import { InterceptModel } from 'cast-response';
 import { VisitInterceptor } from '@/model-interceptors/features/visit/visit.interceptor';
 import { VisitService } from '@/services/features/visit/visit.service';
 import { BaseLookupModel } from '../lookups/base-lookup-model';
+import { CustomValidators } from '@/validators/custom-validators';
+import { timeStringToDate } from '@/utils/general-helper';
 
 const { send, receive } = new VisitInterceptor();
 
@@ -12,7 +14,7 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   override $$__service_name__$$: string = 'VisitService';
   declare id: number;
   declare nationalId: string;
-  declare nationalIdExpiryDate: string;
+  declare nationalIdExpiryDate: Date | string | null;
   declare fullName: string;
   declare fkNationalityId: number;
   declare visitorOrganization: string;
@@ -21,9 +23,9 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   declare phoneNumber: string;
   declare address: string;
   declare email: string;
-  declare visitDate: string;
-  declare visitTimeFrom: string;
-  declare visitTimeTo: string;
+  declare visitDate: Date | string | null;
+  declare visitTimeFrom?: Date | string | null;
+  declare visitTimeTo?: Date | string | null;
   declare visitPurpose: string;
   declare visitStatus: number;
   declare isEditable: boolean;
@@ -50,18 +52,46 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
       visitPurpose,
     } = this;
     return {
-      nationalId: [nationalId, [Validators.required]],
+      nationalId: [nationalId, [Validators.required, CustomValidators.pattern('NATIONAL_ID')]],
       nationalIdExpiryDate: [nationalIdExpiryDate, [Validators.required]],
-      fullName: [fullName, [Validators.required]],
+      fullName: [
+        fullName,
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
+          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
+        ],
+      ],
       fkNationalityId: [fkNationalityId, [Validators.required]],
       visitorOrganization: [visitorOrganization, [Validators.required]],
       fkTargetDepartmentId: [fkTargetDepartmentId, [Validators.required]],
-      phoneNumber: [phoneNumber, [Validators.required]],
+      phoneNumber: [
+        phoneNumber,
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
+          Validators.minLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
+          CustomValidators.pattern('PHONE_NUMBER'),
+        ],
+      ],
       address: [address, [Validators.required]],
-      email: [email, [Validators.required]],
+      email: [
+        email,
+        [
+          Validators.required,
+          CustomValidators.pattern('EMAIL'),
+          Validators.maxLength(CustomValidators.defaultLengths.EMAIL_MAX),
+        ],
+      ],
       visitDate: [visitDate, [Validators.required]],
-      visitTimeFrom: [visitTimeFrom, [Validators.required]],
-      visitTimeTo: [visitTimeTo, [Validators.required]],
+      visitTimeFrom: [
+        visitTimeFrom ? timeStringToDate(visitTimeFrom.toString()) : null,
+        [Validators.required],
+      ],
+      visitTimeTo: [
+        visitTimeTo ? timeStringToDate(visitTimeTo.toString()) : null,
+        [Validators.required],
+      ],
       visitPurpose: [visitPurpose, [Validators.required]],
     };
   }

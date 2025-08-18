@@ -6,6 +6,9 @@ import { AllVisitRequestListComponent } from '../all-visit-request-list/all-visi
 import { MyCreatedVisitRequestListComponent } from '../my-created-visit-request-list/my-created-visit-request-list.component';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import { NationalityService } from '@/services/features/lookups/nationality.service';
 
 enum TabIndex {
   MY_VISITS = 0,
@@ -27,6 +30,10 @@ enum TabIndex {
 export default class VisitRequestContainerComponent implements OnInit, OnDestroy {
   items: MenuItem[] = [];
   home: MenuItem | undefined;
+  departments: BaseLookupModel[] = [];
+  nationalities: BaseLookupModel[] = [];
+  departmentService = inject(DepartmentService);
+  nationalityService = inject(NationalityService);
 
   private readonly translateService = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
@@ -53,6 +60,24 @@ export default class VisitRequestContainerComponent implements OnInit, OnDestroy
   private initializeComponent(): void {
     this.setHomeItem();
     this.initBreadcrumbs();
+    this.loadLookups();
+  }
+
+  private loadLookups(): void {
+    this.loadDepartments();
+    this.loadNationalities();
+  }
+
+  private loadDepartments(): void {
+    this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
+      this.departments = res;
+    });
+  }
+
+  private loadNationalities(): void {
+    this.nationalityService.getLookup().subscribe((res: BaseLookupModel[]) => {
+      this.nationalities = res;
+    });
   }
 
   private setupLanguageChangeListener(): void {

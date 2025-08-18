@@ -57,6 +57,8 @@ export class MyCreatedVisitRequestListComponent
   implements OnChanges, OnInit
 {
   @Input() isActive: boolean = false;
+  @Input() departments: BaseLookupModel[] = [];
+  @Input() nationalities: BaseLookupModel[] = [];
 
   override filterModel: MyCreatedVisitFilter = new MyCreatedVisitFilter();
   visitService = inject(VisitService);
@@ -64,9 +66,6 @@ export class MyCreatedVisitRequestListComponent
 
   private hasInitialized = false;
 
-  // Lookups
-  departments: BaseLookupModel[] = [];
-  nationalities: BaseLookupModel[] = [];
   visitStatusOptions: { label: string; value: number }[] = [];
 
   // Enum reference for template
@@ -241,7 +240,7 @@ export class MyCreatedVisitRequestListComponent
   openEditDialog(model?: Visit) {
     const visit = model ?? new Visit();
     const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
-    this.openBaseDialogSP(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
+    this.openBaseDialog(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
       departments: this.departments,
       nationalities: this.nationalities,
     });

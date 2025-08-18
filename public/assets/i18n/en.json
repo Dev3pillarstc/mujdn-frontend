@@ -105,7 +105,8 @@
     "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect",
     "MIN_VALUE": "Value must be at least {min} (got {actual})",
     "MAX_VALUE": "Value must be at most {max} (got {actual})",
-    "CONFLICTING_USER_DATES": "Conflicting shift dates for this user - overlapping with shift: {{shiftName}}"
+    "CONFLICTING_USER_DATES": "Conflicting shift dates for this user - overlapping with shift: {{shiftName}}",
+    "RESET_PASSWORD_INVALID_DATA": "Please check the entered data and try again."
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

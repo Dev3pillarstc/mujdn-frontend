@@ -131,4 +131,23 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   get endDate() {
     return this.filterOptions.endDate as Date;
   }
+
+  override resetSearch(isStoredProcedure: boolean = false) {
+    this.filterModel = {} as UserWorkShiftsFilter;
+    this.filteredEmployees = this.usersProfiles;
+    this.paginationParams.pageNumber = 1;
+    this.paginationParams.pageSize = 10;
+    this.first = 0;
+    if (isStoredProcedure) {
+      this.loadListSP().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+    } else {
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+    }
+  }
 }

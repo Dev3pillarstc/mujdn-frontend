@@ -73,5 +73,4 @@ export class ViewEmployeesCheckPopupComponent
   override saveFail(error: Error): void {
     // optional error handling
   }
-
 }

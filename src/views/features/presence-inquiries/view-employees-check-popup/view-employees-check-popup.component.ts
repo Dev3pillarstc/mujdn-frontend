@@ -1,4 +1,5 @@
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { PRESENCE_INQUIRY_STATUS_ENUM } from '@/enums/presence-inquiry-status-enum';
 import { USER_PRESENCE_INQUIRY_STATUS_ENUM } from '@/enums/user-presence-inquiry-status-enum';
 import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
@@ -37,6 +38,7 @@ export class ViewEmployeesCheckPopupComponent
   inquiryStatusEnum = PRESENCE_INQUIRY_STATUS_ENUM;
   userInquiryStatusEnum = USER_PRESENCE_INQUIRY_STATUS_ENUM;
   statusGroups: any[] = [];
+  isArabicLang = this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
 
   override initPopup() {
     this.model = this.data.model ?? new PresenceInquiry();
@@ -71,4 +73,5 @@ export class ViewEmployeesCheckPopupComponent
   override saveFail(error: Error): void {
     // optional error handling
   }
+
 }

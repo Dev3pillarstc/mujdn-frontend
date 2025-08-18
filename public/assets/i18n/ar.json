@@ -558,7 +558,7 @@
     "DOCUMENTATION_INQUIRY": "مسائلة توثيق التواجد",
     "INQUIRY_TEXT": "نص المسائلة",
     "ASSIGNED_USERS": "الموظفون المعنيون بتنفيذ المهام",
-    "ASSIGN_EMPLOYEES": "اسناد الموظفين للمسائلة"
+    "ASSIGN_EMPLOYEES": "اسناد الموظفين"
   },
   "BLACKLIST_PAGE": {
     "VISITOR_BLACKLIST_CRITERIA": "معايير حظر الزائرين",

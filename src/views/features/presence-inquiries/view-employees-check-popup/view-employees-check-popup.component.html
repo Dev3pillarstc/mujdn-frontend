@@ -82,7 +82,7 @@
                 class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#067647]"
               >
                 <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-                تم التوثيق
+                {{ 'INQUIRIES_PAGE.CONFIRMED' | translate }}
               </span>
             }
             @if (statusGroup.id === userInquiryStatusEnum.UNDER_CONFIRMATION) {
@@ -90,7 +90,7 @@
                 class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#4d5761]"
               >
                 <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-                قيد التوثيق
+                {{ 'INQUIRIES_PAGE.UNDER_CONFIRMATION' | translate }}
               </span>
             }
             @if (statusGroup.id === userInquiryStatusEnum.NOT_CONFIRMED) {
@@ -98,7 +98,7 @@
                 class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#d92d20]"
               >
                 <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-                لم يتم التوثيق
+                {{ 'INQUIRIES_PAGE.NOT_CONFIRMED' | translate }}
               </span>
             }
           </div>
@@ -106,7 +106,9 @@
           <div class="flex flex-wrap gap-4 mt-4">
             @for (user of statusGroup.users; track $index) {
               <div class="bg-[#f3f4f6] rounded-full px-3">
-                <span class="text-[#161616] font-medium">{{ user.fullNameAr }}</span>
+                <span class="text-[#161616] font-medium">
+                  {{ isArabicLang ? user.fullNameAr : user.fullNameEn }}
+                </span>
               </div>
             }
           </div>
@@ -115,7 +117,7 @@
     }
 
     <div class="actions mt-6 flex items-center justify-end gap-4">
-      <button class="btn gray-btn" (click)="close()">الغاء</button>
+      <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
     </div>
   </div>
 </div>

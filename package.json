@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@3p-dga-style/shared-styles": "^1.8.9",
+    "@3p-dga-style/shared-styles": "^1.9.1",
     "@angular/animations": "^19.2.14",
     "@angular/cdk": "^19.2.18",
     "@angular/common": "^19.2.14",

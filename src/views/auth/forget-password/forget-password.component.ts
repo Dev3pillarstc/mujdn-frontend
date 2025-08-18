@@ -44,16 +44,63 @@ export default class ForgetPasswordComponent implements OnInit, OnDestroy {
   resendLinkErrorMessage: string | undefined = undefined;
   resendLinkResponse: PasswordResetResult | null = null;
   isResentLinkErrorMessageVisible = false;
+  // start countdown
+  // Countdown spinner state
+  private countdownIntervalId: any;
+  readonly countdownRadius = 45; // must match SVG r
+  readonly countdownStrokeWidth = 8;
+  private readonly COUNTDOWN_SECONDS = 120; // 02:00
+  private readonly MIN_VISIBLE_PROGRESS = 0.02; // ensure arc visible at start
+  private readonly FULL_CIRCLE_SECONDS = 120; // full circle reference (2 minutes)
+  countdownTotalSeconds = this.COUNTDOWN_SECONDS;
+  elapsedSeconds = 0;
 
+  get remainingSeconds(): number {
+    return Math.max(0, this.countdownTotalSeconds - this.elapsedSeconds);
+  }
+
+  get circumference(): number {
+    return 2 * Math.PI * this.countdownRadius;
+  }
+
+  get progress(): number {
+    const remaining = this.remainingSeconds;
+    if (remaining === 0) return 0; // clear arc at end
+    // Progress based on remaining over a 60s full circle so 30s shows half
+    const p = remaining / this.FULL_CIRCLE_SECONDS;
+    return Math.min(1, Math.max(this.MIN_VISIBLE_PROGRESS, p));
+  }
+
+  get dashOffset(): number {
+    // Show more arc as time elapses
+    return this.circumference * (1 - this.progress);
+  }
+
+  get formattedTime(): string {
+    const remaining = this.remainingSeconds;
+    const m = Math.floor(remaining / 60)
+      .toString()
+      .padStart(2, '0');
+    const s = Math.floor(remaining % 60)
+      .toString()
+      .padStart(2, '0');
+    return `${m}:${s}`;
+  }
+  // end countdown
   constructor() {
     this.initializeForm();
   }
 
   ngOnInit(): void {
     this.setupLanguageChangeSubscription();
+    // Auto-start countdown if we're already on the confirmation view
+    if (!this.isSentLink) {
+      this.startCountdown(this.COUNTDOWN_SECONDS);
+    }
   }
 
   ngOnDestroy(): void {
+    this.clearCountdown();
     this.destroy$.next();
     this.destroy$.complete();
   }
@@ -120,6 +167,7 @@ export default class ForgetPasswordComponent implements OnInit, OnDestroy {
     } else {
       this.isSentLink = true;
       this.isSentLinkErrorMessageVisible = false;
+      this.startCountdown(this.COUNTDOWN_SECONDS);
     }
   }
 
@@ -145,6 +193,7 @@ export default class ForgetPasswordComponent implements OnInit, OnDestroy {
     } else {
       this.isResentLink = true;
       this.isResentLinkErrorMessageVisible = false;
+      this.startCountdown(this.COUNTDOWN_SECONDS);
     }
   }
 
@@ -197,5 +246,26 @@ export default class ForgetPasswordComponent implements OnInit, OnDestroy {
 
   private navigateToLogin(): void {
     this.router.navigate(['/auth/login']);
+  }
+
+  // Countdown controls
+  private startCountdown(seconds: number): void {
+    this.clearCountdown();
+    this.countdownTotalSeconds = seconds;
+    this.elapsedSeconds = 0;
+
+    this.countdownIntervalId = setInterval(() => {
+      this.elapsedSeconds += 1;
+      if (this.elapsedSeconds >= this.countdownTotalSeconds) {
+        this.clearCountdown();
+      }
+    }, 1000);
+  }
+
+  private clearCountdown(): void {
+    if (this.countdownIntervalId) {
+      clearInterval(this.countdownIntervalId);
+      this.countdownIntervalId = undefined;
+    }
   }
 }

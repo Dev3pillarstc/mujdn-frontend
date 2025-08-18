@@ -125,10 +125,10 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   }
 
   get startDate() {
-    return this.filterOptions.startDate as Date
+    return this.filterOptions.startDate as Date;
   }
 
   get endDate() {
-    return this.filterOptions.endDate as Date
+    return this.filterOptions.endDate as Date;
   }
 }

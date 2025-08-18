@@ -16,7 +16,7 @@ import { switchMap, of, map } from 'rxjs';
 })
 @CastResponseContainer({
   $currentShift: {
-    model: () => SingleResponseData<EmployeeShift>
+    model: () => SingleResponseData<EmployeeShift>,
   },
   $myShiftsPaginated: {
     model: () => PaginatedList<EmployeeShift>,

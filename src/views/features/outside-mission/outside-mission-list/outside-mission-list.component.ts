@@ -62,8 +62,6 @@ export default class OutsideMissionListComponent implements OnInit {
     // Set the signal values
     this.missions.set(this.activatedRoute.snapshot.data['list'].missions);
     this.departments.set(this.activatedRoute.snapshot.data['list'].departments);
-    this.canAssign = !!(
-      this.authService.isDepartmentManager || this.authService.isHROfficer
-    );
+    this.canAssign = !!(this.authService.isDepartmentManager || this.authService.isHROfficer);
   }
 }

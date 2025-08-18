@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   Component,
   effect,
@@ -139,11 +139,18 @@ export class AssignAndViewMissionsTabComponent
   }
 
   protected override mapModelToExcelRow(model: WorkMission): { [key: string]: any } {
+    const datePipe = new DatePipe('en-US');
     return {
       [this.translateService.instant('WORK_MISSIONS.MISSION_NAME_AR')]: model.nameAr,
       [this.translateService.instant('WORK_MISSIONS.MISSION_NAME_EN')]: model.nameEn,
-      [this.translateService.instant('WORK_MISSIONS.START_DATE')]: model.startDate,
-      [this.translateService.instant('WORK_MISSIONS.END_DATE')]: model.endDate,
+      [this.translateService.instant('WORK_MISSIONS.START_DATE')]: datePipe.transform(
+        model.startDate,
+        'dd/MM/yyyy'
+      ),
+      [this.translateService.instant('WORK_MISSIONS.END_DATE')]: datePipe.transform(
+        model.endDate,
+        'dd/MM/yyyy'
+      ),
     };
   }
   addOrEditModel(mission?: WorkMission): void {

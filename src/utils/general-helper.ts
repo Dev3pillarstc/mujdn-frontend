@@ -159,9 +159,10 @@ export function buildTranslationParams(details: any, translateService: any): any
   console.log('Details received:', details); // Debug log
   console.log('Current language:', currentLang); // Debug log
 
-  Object.keys(details).forEach(key => {
+  Object.keys(details).forEach((key) => {
     // Extract the first value from the array, as Details is IDictionary<string, string[]>
-    const value = Array.isArray(details[key]) && details[key].length > 0 ? details[key][0] : details[key];
+    const value =
+      Array.isArray(details[key]) && details[key].length > 0 ? details[key][0] : details[key];
     if (key.endsWith('En') && currentLang === 'en') {
       const baseKey = key.replace('En', '');
       translationParams[baseKey] = value;
@@ -177,7 +178,6 @@ export function buildTranslationParams(details: any, translateService: any): any
   console.log('Translation params:', translationParams); // Debug log
   return translationParams;
 }
-
 
 export const weekDays = [
   { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SATURDAY', value: WeekDaysEnum.SATURDAY },

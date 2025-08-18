@@ -57,6 +57,7 @@ export class AllVisitRequestListComponent
   visitService = inject(VisitService);
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
+  visitCreators: BaseLookupModel[] = [];
 
   private hasInitialized = false;
 

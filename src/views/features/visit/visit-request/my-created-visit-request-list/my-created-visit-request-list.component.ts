@@ -205,7 +205,7 @@ export class MyCreatedVisitRequestListComponent
     return dialogRef.afterClosed().subscribe((result: { action: DIALOG_ENUM; visitor?: Visit }) => {
       if (result?.action === DIALOG_ENUM.OK && result.visitor) {
         // open edit dialog with visitor
-        this.openEditDialog(result.visitor);
+        this.openEditDialog(result.visitor, ViewModeEnum.CREATE_FROM_EXISTING);
       }
     });
   }
@@ -250,9 +250,9 @@ export class MyCreatedVisitRequestListComponent
     });
   }
 
-  openEditDialog(model?: Visit) {
+  openEditDialog(model?: Visit, viewMode?: ViewModeEnum) {
     const visit = model ?? new Visit();
-    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    viewMode = viewMode ?? (model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE);
     this.openBaseDialog(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
       departments: this.departments,
       nationalities: this.nationalities,

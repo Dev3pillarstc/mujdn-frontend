@@ -57,6 +57,7 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   service = inject(VisitService);
   fb = inject(FormBuilder);
   isCreateMode = false;
+  isCreateFromExistingMode = false;
 
   // Lookup data
   nationalities: BaseLookupModel[] = [];
@@ -75,6 +76,44 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   get langOptionLabel(): string {
     const lang = this.languageService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  }
+
+  override initPopup() {
+    this.model = this.data.model;
+    this.nationalities = this.data.lookups.nationalities || [];
+    this.departments = this.data.lookups.departments || [];
+    this.viewMode = this.data.viewMode;
+    this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
+    this.isCreateFromExistingMode = this.viewMode == ViewModeEnum.CREATE_FROM_EXISTING;
+  }
+
+  override prepareModel(model: Visit, form: FormGroup): Visit | Observable<Visit> {
+    const formValue = form.value;
+    this.model = Object.assign(model, { ...formValue });
+    return this.model;
+  }
+
+  override buildForm() {
+    this.form = this.fb.group(this.model.buildForm(), {
+      validators: [CustomValidators.timeFromBeforeTimeTo('visitTimeFrom', 'visitTimeTo')],
+    });
+    if (this.isCreateFromExistingMode) {
+      this.form.get('nationalId')?.disable();
+    }
+  }
+
+  override saveFail(error: Error): void {
+    // Handle save error - could show error message
+    console.error('Save failed:', error);
+  }
+
+  override afterSave() {
+    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
+    this.alertService.showSuccessMessage(successObject);
+  }
+
+  override beforeSave(model: Visit, form: FormGroup): Observable<boolean> | boolean {
+    return form.valid;
   }
 
   // Form control getters
@@ -128,39 +167,5 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
 
   get visitPurposeControl() {
     return this.form.get('visitPurpose') as FormControl;
-  }
-
-  override initPopup() {
-    this.model = this.data.model;
-    this.nationalities = this.data.lookups.nationalities || [];
-    this.departments = this.data.lookups.departments || [];
-    this.viewMode = this.data.viewMode;
-    this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
-  }
-
-  override prepareModel(model: Visit, form: FormGroup): Visit | Observable<Visit> {
-    const formValue = form.value;
-    this.model = Object.assign(model, { ...formValue });
-    return this.model;
-  }
-
-  override buildForm() {
-    this.form = this.fb.group(this.model.buildForm(), {
-      validators: [CustomValidators.timeFromBeforeTimeTo('visitTimeFrom', 'visitTimeTo')],
-    });
-  }
-
-  override saveFail(error: Error): void {
-    // Handle save error - could show error message
-    console.error('Save failed:', error);
-  }
-
-  override afterSave() {
-    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
-    this.alertService.showSuccessMessage(successObject);
-  }
-
-  override beforeSave(model: Visit, form: FormGroup): Observable<boolean> | boolean {
-    return form.valid;
   }
 }

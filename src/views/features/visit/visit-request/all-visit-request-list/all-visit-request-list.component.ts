@@ -28,6 +28,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { UserService } from '@/services/features/user.service';
 
 @Component({
   selector: 'app-all-visit-request-list',
@@ -59,7 +60,8 @@ export class AllVisitRequestListComponent
   override filterModel: VisitFilter = new VisitFilter();
   visitService = inject(VisitService);
   languageService = inject(LanguageService);
-  departmentService = inject(DepartmentService);
+  userService = inject(UserService);
+
   visitCreators: BaseLookupModel[] = [];
 
   private hasInitialized = false;
@@ -115,37 +117,6 @@ export class AllVisitRequestListComponent
     const lang = this.languageService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
-
-  // private initializeVisitStatusOptions(): void {
-  //   this.visitStatusOptions = [
-  //     {
-  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.NEW'),
-  //       value: VisitStatusEnum.NEW,
-  //     },
-  //     {
-  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.APPROVED'),
-  //       value: VisitStatusEnum.APPROVED,
-  //     },
-  //     {
-  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.REJECTED'),
-  //       value: VisitStatusEnum.REJECTED,
-  //     },
-  //   ];
-  // }
-
-  // private initializeVisitCreatorOptions(): void {
-  //   // Add your visit origin options here based on your requirements
-  //   this.visitCreatorOptions = [
-  //     {
-  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.INTERNAL'),
-  //       value: 1,
-  //     },
-  //     {
-  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.EXTERNAL'),
-  //       value: 2,
-  //     },
-  //   ];
-  // }
 
   private loadDataIfNeeded(): void {
     // Load data when tab becomes active
@@ -204,8 +175,9 @@ export class AllVisitRequestListComponent
   }
 
   override initListComponent(): void {
-    // this.initializeVisitStatusOptions();
-    // this.initializeVisitCreatorOptions();
+    this.userService.getLookup().subscribe((response) => {
+      this.visitCreators = response;
+    });
   }
 
   protected override getBreadcrumbKeys(): {

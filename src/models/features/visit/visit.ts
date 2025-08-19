@@ -74,11 +74,10 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
           CustomValidators.pattern('PHONE_NUMBER'),
         ],
       ],
-      address: [address, [Validators.required]],
+      address: [address, []],
       email: [
         email,
         [
-          Validators.required,
           CustomValidators.pattern('EMAIL'),
           Validators.maxLength(CustomValidators.defaultLengths.EMAIL_MAX),
         ],

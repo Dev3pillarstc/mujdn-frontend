@@ -85,15 +85,50 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     return this.form.get('shiftLogStartDate') as FormControl;
   }
 
-  get canActivateShift(): boolean {
-    const today = toDateOnly(new Date());
-    const shiftDate = this.model.shiftLogStartDate
-      ? toDateOnly(this.model.shiftLogStartDate)
+  private isShiftDateValidAndAfterActive(): boolean {
+    const shiftDate = toDateOnly(this.form.get('shiftLogStartDate')?.value);
+    const activeShiftDate = this.model.activeShiftStartDate
+      ? toDateOnly(this.model.activeShiftStartDate)
       : null;
 
-    return !this.model.isActive && shiftDate !== null && shiftDate <= today;
+    // shift date must exist and be valid
+    if (!shiftDate || !this.form.get('shiftLogStartDate')?.valid) {
+      return false;
+    }
+
+    // if there is no active shift yet, allow as long as date is in the past
+    if (!activeShiftDate) {
+      return shiftDate < toDateOnly(new Date());
+    }
+
+    // enforce that shiftDate is strictly greater than activeShiftStartDate
+    return shiftDate > activeShiftDate && shiftDate <= toDateOnly(new Date());
   }
 
+  get canActivateShift(): boolean {
+    if (this.isCreateMode) {
+      return false; // never show in create mode
+    }
+
+    return !this.model.isActive && this.isShiftDateValidAndAfterActive();
+  }
+
+  get canSaveAndActivateShift(): boolean {
+    if (this.isCreateMode) {
+      return (
+        this.form.valid &&
+        this.form.get('isDefaultShiftForm')?.value &&
+        this.isShiftDateValidAndAfterActive()
+      );
+    }
+
+    return !this.model.isActive && this.isShiftDateValidAndAfterActive();
+  }
+
+  saveAndActivateShift() {
+    this.form.get('isActive')?.setValue(true);
+    this.save$.next();
+  }
   override initPopup(): void {
     this.model = this.data.model;
     this.isCreateMode = this.data.viewMode == ViewModeEnum.CREATE;
@@ -227,5 +262,10 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     this.alertService.showErrorMessage({
       messages: ['WORK_SHIFTS_POPUP.ACTIVATION_FAILED'],
     });
+  }
+
+  updateShiftMainData() {
+    this.form.get('isUpdateOnly')?.setValue(true);
+    this.save$.next();
   }
 }

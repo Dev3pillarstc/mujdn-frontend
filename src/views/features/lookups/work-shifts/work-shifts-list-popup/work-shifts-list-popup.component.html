@@ -250,12 +250,25 @@
       <div class="actions mt-6 flex items-center justify-between gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
         <div class="flex items-center justify-end gap-4">
-          @if (canActivateShift) {
-            <button (click)="activateShift()" class="btn black-btn">
+          @if (
+            canActivateShift &&
+            form.get('isDefaultShiftForm')?.value &&
+            shiftLogStartDateControl.valid
+          ) {
+            <button (click)="saveAndActivateShift()" class="btn black-btn">
               {{ 'WORK_SHIFTS_POPUP.ACTIVATE' | translate }}
             </button>
           }
-          <button (click)="save$.next()" class="btn green-btn">
+          @if (
+            canSaveAndActivateShift &&
+            form.get('isDefaultShiftForm')?.value &&
+            shiftLogStartDateControl.valid
+          ) {
+            <button (click)="saveAndActivateShift()" class="btn black-btn">
+              Save And Activate
+            </button>
+          }
+          <button (click)="updateShiftMainData()" class="btn green-btn">
             {{ 'COMMON.SAVE' | translate }}
           </button>
         </div>

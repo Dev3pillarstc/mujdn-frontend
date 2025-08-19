@@ -397,7 +397,7 @@
     "PERMISSIONS": "Permissions",
     "ASSIGNED_EMPLOYEES": "Assigned Employees",
     "WORK_SHIFT_TEMP": "Temporary Work Shifts",
-    "WORK_SHIFT_ASSIGNMENT": "Assign Work Shifts",
+    "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
     "HOLIDAYS": "Holidays",
     "WORK_SHIFT": "Work Shifts",
     "WORK_SHIFT_SETTINGS": "Work Shift Settings",
@@ -456,7 +456,7 @@
     "WORKING_DAYS": "Official working Days"
   },
   "USER_WORK_SHIFT_PAGE": {
-    "WORK_SHIFT_ASSIGNMENT": "Assign Work Shifts",
+    "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
     "SHIFT_NAME_AR": "Shift Name (Arabic)",
     "SHIFT_NAME_EN": "Shift Name (English)",
     "SHIFT_NAME_PLACEHOLDER": "Shift Name",

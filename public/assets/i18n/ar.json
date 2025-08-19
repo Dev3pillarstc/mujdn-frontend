@@ -394,7 +394,7 @@
     "PERMISSIONS": "الاستئذانات",
     "ASSIGNED_EMPLOYEES": "الموظفون المُكلفون",
     "WORK_SHIFT_TEMP": "ورديات العمل المؤقتة",
-    "WORK_SHIFT_ASSIGNMENT": "إسناد ورديات العمل",
+    "WORK_SHIFT_ASSIGNMENT": "اسناد وردية لموظف",
     "HOLIDAYS": "قائمة الإجازات والأعياد",
     "WORK_SHIFT": "ورديات العمل",
     "WORK_SHIFT_SETTINGS": "إعدادات ورديات العمل",
@@ -453,7 +453,7 @@
     "WORKING_DAYS": "أيام العمل الرسمية"
   },
   "USER_WORK_SHIFT_PAGE": {
-    "WORK_SHIFT_ASSIGNMENT": "اسناد ورديات عمل",
+    "WORK_SHIFT_ASSIGNMENT": "اسناد وردية لموظف",
     "SHIFT_NAME_AR": "اسم الوردية (عربي)",
     "SHIFT_NAME_EN": "اسم الوردية (انجليزي)",
     "SHIFT_NAME_PLACEHOLDER": "اسم الوردية",

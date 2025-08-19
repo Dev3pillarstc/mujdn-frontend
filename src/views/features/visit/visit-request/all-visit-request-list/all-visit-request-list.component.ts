@@ -174,6 +174,13 @@ export class AllVisitRequestListComponent
     return visit.targetDepartment?.nameAr || '';
   }
 
+  getVisitCreatorName(visit: Visit): string {
+    if (this.isCurrentLanguageEnglish()) {
+      return visit.creationUser?.nameEn || '';
+    }
+    return visit.creationUser?.nameAr || '';
+  }
+
   override initListComponent(): void {
     this.userService.getLookup().subscribe((response) => {
       this.visitCreators = response;
@@ -191,16 +198,19 @@ export class AllVisitRequestListComponent
   protected override mapModelToExcelRow(model: Visit): { [key: string]: any } {
     return {
       [this.translateService.instant('VISIT_REQUEST_PAGE.NATIONAL_ID')]: model.nationalId,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.FULL_NAME')]: model.fullName,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISITOR_NAME')]: model.fullName,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.MOBILE_NUMBER')]: model.phoneNumber,
       [this.translateService.instant('VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION')]:
         model.visitorOrganization,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_DATE')]: model.visitDate,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_PURPOSE')]: model.visitPurpose,
       [this.translateService.instant('VISIT_REQUEST_PAGE.TARGET_DEPARTMENT')]:
         this.getDepartmentName(model),
       [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_STATUS')]: this.getStatusText(
         model.visitStatus
       ),
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_CREATOR')]:
+        this.getVisitCreatorName(model),
+      [this.translateService.instant('VISIT_REQUEST_PAGE.ENTRY')]: model.visitTimeFrom,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.EXIT')]: model.visitTimeTo,
     };
   }
 

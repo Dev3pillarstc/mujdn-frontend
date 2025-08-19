@@ -202,12 +202,14 @@ export class MyCreatedVisitRequestListComponent
 
     const dialogRef = this.matDialog.open(VisitorSelectionPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: { action: DIALOG_ENUM; visitor?: Visit }) => {
-      if (result?.action === DIALOG_ENUM.OK && result.visitor) {
-        // open edit dialog with visitor
-        this.openEditDialog(result.visitor, ViewModeEnum.CREATE_FROM_EXISTING);
-      }
-    });
+    return dialogRef
+      .afterClosed()
+      .subscribe((result: { action: DIALOG_ENUM; visitor?: Visit; viewMode?: ViewModeEnum }) => {
+        if (result?.action === DIALOG_ENUM.OK && result.visitor) {
+          // open edit dialog with visitor
+          this.openEditDialog(result.visitor, result.viewMode);
+        }
+      });
   }
 
   openViewDialog(model?: Visit) {
@@ -262,16 +264,17 @@ export class MyCreatedVisitRequestListComponent
   protected override mapModelToExcelRow(model: Visit): { [key: string]: any } {
     return {
       [this.translateService.instant('VISIT_REQUEST_PAGE.NATIONAL_ID')]: model.nationalId,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.FULL_NAME')]: model.fullName,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.VISITOR_NAME')]: model.fullName,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.MOBILE_NUMBER')]: model.phoneNumber,
       [this.translateService.instant('VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION')]:
         model.visitorOrganization,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_DATE')]: model.visitDate,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_PURPOSE')]: model.visitPurpose,
       [this.translateService.instant('VISIT_REQUEST_PAGE.TARGET_DEPARTMENT')]:
         this.getDepartmentName(model),
       [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_STATUS')]: this.getStatusText(
         model.visitStatus
       ),
+      [this.translateService.instant('VISIT_REQUEST_PAGE.ENTRY')]: model.visitTimeFrom,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.EXIT')]: model.visitTimeTo,
     };
   }
 }

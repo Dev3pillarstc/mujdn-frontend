@@ -83,7 +83,11 @@ export class VisitorSelectionPopupComponent implements OnInit {
   onNext() {
     if (this.selectedOption === 'new') {
       // Return empty Visit to parent
-      this.dialogRef.close({ action: DIALOG_ENUM.OK, visitor: new Visit() });
+      this.dialogRef.close({
+        action: DIALOG_ENUM.OK,
+        visitor: new Visit(),
+        viewMode: ViewModeEnum.CREATE,
+      });
     } else if (this.selectedOption === 'existing') {
       if (this.form.invalid) {
         this.form.markAllAsTouched();
@@ -103,7 +107,11 @@ export class VisitorSelectionPopupComponent implements OnInit {
         if (visitor) {
           visitor.nationalIdExpiryDate = toDateTime(visitor.nationalIdExpiryDate);
           // Return visitor to parent
-          this.dialogRef.close({ action: DIALOG_ENUM.OK, visitor });
+          this.dialogRef.close({
+            action: DIALOG_ENUM.OK,
+            visitor,
+            viewMode: ViewModeEnum.CREATE_FROM_EXISTING,
+          });
         }
       },
     });

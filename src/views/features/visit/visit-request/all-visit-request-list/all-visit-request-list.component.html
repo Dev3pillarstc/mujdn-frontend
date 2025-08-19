@@ -195,7 +195,7 @@
                 {{ getStatusText(visit.visitStatus) }}
               </span>
             </td>
-            <td>{{ visit.creationUser?.nameAr || visit.creationUser?.nameEn || '' }}</td>
+            <td>{{ getVisitCreatorName(visit) }}</td>
             <td>{{ formatTime(visit.visitTimeFrom) }}</td>
             <td>{{ formatTime(visit.visitTimeTo) }}</td>
             <td>

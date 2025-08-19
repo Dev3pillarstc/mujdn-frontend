@@ -44,7 +44,7 @@
           <span class="text-[14px] text-[#6c737f]">
             {{ 'VISIT_REQUEST_PAGE.NATIONAL_ID_EXPIRY_DATE' | translate }}:
           </span>
-          <h4 class="font-semibold text-[#161616]">{{ model.nationalIdExpiryDate | date }}</h4>
+          <h4 class="font-semibold text-[#161616]">{{ formatDate(model.nationalIdExpiryDate) }}</h4>
         </div>
 
         <!-- Nationality -->

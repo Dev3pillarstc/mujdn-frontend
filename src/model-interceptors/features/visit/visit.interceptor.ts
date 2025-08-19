@@ -5,6 +5,7 @@ import { ModelInterceptorContract } from 'cast-response';
 export class VisitInterceptor implements ModelInterceptorContract<Visit> {
   receive(model: Visit): Visit {
     model.visitDate = toDateTime(model.visitDate);
+    model.nationalIdExpiryDate = toDateTime(model.nationalIdExpiryDate);
     return model;
   }
 

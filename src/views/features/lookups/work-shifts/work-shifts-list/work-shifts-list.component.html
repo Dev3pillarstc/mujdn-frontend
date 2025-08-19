@@ -142,6 +142,9 @@
                   <button (click)="addOrEditModel(shift)" class="table-action-gray-btn">
                     <img [alt]="'COMMON.EDIT' | translate" src="assets/icons/edit-action.svg" />
                   </button>
+                  <button (click)="deleteModel(shift.id)" class="table-action-red-btn">
+                    <img src="assets/icons/delete-action.svg" alt="" />
+                  </button>
                 </div>
               </td>
             </tr>

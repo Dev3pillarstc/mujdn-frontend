@@ -453,7 +453,7 @@
     "WEDNESDAY": "Wednesday",
     "THURSDAY": "Thursday",
     "FRIDAY": "Friday",
-    "WORKING_DAYS": "Official working Days"
+    "WORKING_DAYS": "Shift Working Days"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",

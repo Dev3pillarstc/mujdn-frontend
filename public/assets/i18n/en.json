@@ -609,5 +609,13 @@
     "BLOCK_VISITOR": "Block Visitor",
     "ACCEPT": "Accept",
     "REJECT": "Reject"
+  },
+  "QR_CODE_POPUP": {
+    "GENERAL_WARNINGS": "General Warnings",
+    "NO_SMOKING": "No Smoking",
+    "NO_PARKING": "No Parking",
+    "DOWNLOAD_AS_FILE": "Download as File",
+    "DOWNLOAD_SUCCESS": "QR Code downloaded successfully",
+    "DOWNLOAD_ERROR": "Error downloading QR Code. Please try again."
   }
 }

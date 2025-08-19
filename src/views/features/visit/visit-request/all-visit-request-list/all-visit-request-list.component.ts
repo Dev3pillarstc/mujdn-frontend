@@ -293,8 +293,8 @@ export class AllVisitRequestListComponent
     dialogConfig.data = {
       model: model,
     };
-    dialogConfig.width = this.dialogSize.width;
-    dialogConfig.maxWidth = this.dialogSize.maxWidth;
+    dialogConfig.width = this.visitorSelectionDialogSize.width;
+    dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;
     const dialogRef = this.matDialog.open(QrcodeVisitRequestPopupComponent as any, dialogConfig);
 
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {

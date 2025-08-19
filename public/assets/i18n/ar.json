@@ -605,5 +605,13 @@
     "BLOCK_VISITOR": "حظر الزائر",
     "ACCEPT": "قبول",
     "REJECT": "رفض"
+  },
+  "QR_CODE_POPUP": {
+    "GENERAL_WARNINGS": "تحذيرات عامة",
+    "NO_SMOKING": "ممنوع التدخين",
+    "NO_PARKING": "ممنوع الوقوف",
+    "DOWNLOAD_AS_FILE": "تحميل كملف",
+    "DOWNLOAD_SUCCESS": "تم تحميل رمز الاستجابة السريعة بنجاح",
+    "DOWNLOAD_ERROR": "خطأ في تحميل رمز الاستجابة السريعة. يرجى المحاولة مرة أخرى."
   }
 }

@@ -27,6 +27,7 @@ import { formatTimeTo12Hour } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-all-visit-request-list',
@@ -73,11 +74,11 @@ export class AllVisitRequestListComponent
     return this.visitService;
   }
 
-  dialogSize = {
+  visitorSelectionDialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
-  dialogSize2 = {
+  override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
   };
@@ -236,8 +237,8 @@ export class AllVisitRequestListComponent
     dialogConfig.data = {
       model: model,
     };
-    dialogConfig.width = this.dialogSize2.width;
-    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
+    dialogConfig.width = this.visitorSelectionDialogSize.width;
+    dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;
     const dialogRef = this.matDialog.open(AddEditVisitRequestPopupComponent as any, dialogConfig);
 
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
@@ -252,8 +253,29 @@ export class AllVisitRequestListComponent
     dialogConfig.data = {
       model: model,
     };
-    dialogConfig.width = this.dialogSize2.width;
-    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
+    const dialogRef = this.matDialog.open(
+      ViewActionVisitRequestPopupComponent as any,
+      dialogConfig
+    );
+
+    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result === DIALOG_ENUM.OK) {
+        this.loadDataIfNeeded();
+      }
+    });
+  }
+
+  openTakeActionDialog(model: Visit) {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      model: model,
+      viewMode: ViewModeEnum.TAKE_ACTION,
+    };
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
+
     const dialogRef = this.matDialog.open(
       ViewActionVisitRequestPopupComponent as any,
       dialogConfig
@@ -282,19 +304,12 @@ export class AllVisitRequestListComponent
     });
   }
 
-  openEditDialog(model: Visit) {
-    let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      model: model,
-    };
-    dialogConfig.width = this.dialogSize2.width;
-    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
-    const dialogRef = this.matDialog.open(AddEditVisitRequestPopupComponent as any, dialogConfig);
-
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result === DIALOG_ENUM.OK) {
-        this.loadDataIfNeeded();
-      }
+  openEditDialog(model?: Visit) {
+    const visit = model ?? new Visit();
+    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    this.openBaseDialog(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
+      departments: this.departments,
+      nationalities: this.nationalities,
     });
   }
 }

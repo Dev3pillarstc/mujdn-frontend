@@ -114,6 +114,20 @@ export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-U
   return formatted;
 }
 
+export function formatDateOnly(date: any): string {
+  if (!date) return '';
+
+  date = new Date(date);
+  // Always use 'en-US' to ensure numbers are Latin digits
+  const formatted = date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
+  return formatted;
+}
+
 export function formatSwipeTime(
   swipeTime: string | undefined,
   locale: 'en-US' | 'ar-EG' = 'en-US'

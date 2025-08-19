@@ -599,6 +599,11 @@
     "ACCEPTED": "مقبول",
     "VISITOR_SELECTION": "اختيار الزائر",
     "LOAD_EXISTING_VISITOR": "استدعاء بيانات زائر سابق",
-    "ADD_NEW_VISITOR": "اضافة زائر جديد"
+    "ADD_NEW_VISITOR": "اضافة زائر جديد",
+    "VISIT_DATA": "بيانات الزيارة",
+    "VISIT_TIME_FROM_TO": "وقت الزيارة (من-الى)",
+    "BLOCK_VISITOR": "حظر الزائر",
+    "ACCEPT": "قبول",
+    "REJECT": "رفض"
   }
 }

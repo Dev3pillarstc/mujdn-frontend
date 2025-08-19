@@ -603,6 +603,11 @@
     "ACCEPTED": "Accepted",
     "VISITOR_SELECTION": "Visitor Selection",
     "LOAD_EXISTING_VISITOR": "Load Existing Visitor Data",
-    "ADD_NEW_VISITOR": "Add New Visitor"
+    "ADD_NEW_VISITOR": "Add New Visitor",
+    "VISIT_DATA": "Visit Data",
+    "VISIT_TIME_FROM_TO": "Visit Time (From-To)",
+    "BLOCK_VISITOR": "Block Visitor",
+    "ACCEPT": "Accept",
+    "REJECT": "Reject"
   }
 }

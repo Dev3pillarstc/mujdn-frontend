@@ -229,6 +229,27 @@ export class MyCreatedVisitRequestListComponent
     });
   }
 
+  openTakeActionDialog(model: Visit) {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      model: model,
+      viewMode: ViewModeEnum.TAKE_ACTION,
+    };
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
+
+    const dialogRef = this.matDialog.open(
+      ViewActionVisitRequestPopupComponent as any,
+      dialogConfig
+    );
+
+    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result === DIALOG_ENUM.OK) {
+        this.loadDataIfNeeded();
+      }
+    });
+  }
+
   openEditDialog(model?: Visit) {
     const visit = model ?? new Visit();
     const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
@@ -236,19 +257,6 @@ export class MyCreatedVisitRequestListComponent
       departments: this.departments,
       nationalities: this.nationalities,
     });
-    // let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    // dialogConfig.data = {
-    //   model: model,
-    // };
-    // dialogConfig.width = this.dialogSize2.width;
-    // dialogConfig.maxWidth = this.dialogSize2.maxWidth;
-    // const dialogRef = this.matDialog.open(AddEditVisitRequestPopupComponent as any, dialogConfig);
-
-    // return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-    //   if (result === DIALOG_ENUM.OK) {
-    //     this.loadDataIfNeeded();
-    //   }
-    // });
   }
 
   protected override mapModelToExcelRow(model: Visit): { [key: string]: any } {

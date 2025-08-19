@@ -209,8 +209,12 @@ export class AllVisitRequestListComponent
       ),
       [this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_CREATOR')]:
         this.getVisitCreatorName(model),
-      [this.translateService.instant('VISIT_REQUEST_PAGE.ENTRY')]: model.visitTimeFrom,
-      [this.translateService.instant('VISIT_REQUEST_PAGE.EXIT')]: model.visitTimeTo,
+      [this.translateService.instant('VISIT_REQUEST_PAGE.ENTRY')]: this.formatTime(
+        model.visitTimeFrom?.toString() || ''
+      ),
+      [this.translateService.instant('VISIT_REQUEST_PAGE.EXIT')]: this.formatTime(
+        model.visitTimeTo?.toString() || ''
+      ),
     };
   }
 

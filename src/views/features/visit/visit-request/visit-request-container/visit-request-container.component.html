@@ -8,7 +8,7 @@
         </ng-template>
       </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        {{ 'MENU.VISIT_REQUESTS' | translate }}
+        {{ 'MENU.VISIT_REQUEST' | translate }}
       </h3>
     </div>
 
@@ -29,6 +29,7 @@
             [isActive]="isMyVisitsTabActive()"
             [departments]="departments"
             [nationalities]="nationalities"
+            [visitStatusOptions]="visitStatusOptions"
           />
         </p-tabpanel>
 
@@ -38,6 +39,7 @@
             [isActive]="isAllVisitsTabActive()"
             [departments]="departments"
             [nationalities]="nationalities"
+            [visitStatusOptions]="visitStatusOptions"
           />
         </p-tabpanel>
       </p-tabpanels>

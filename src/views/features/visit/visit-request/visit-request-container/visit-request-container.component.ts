@@ -9,6 +9,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { NationalityService } from '@/services/features/lookups/nationality.service';
+import {
+  VISIT_STATUS_OPTIONS,
+  VisitStatusOption,
+} from '@/models/features/visit/visit-status-option';
 
 enum TabIndex {
   MY_VISITS = 0,
@@ -32,6 +36,7 @@ export default class VisitRequestContainerComponent implements OnInit, OnDestroy
   home: MenuItem | undefined;
   departments: BaseLookupModel[] = [];
   nationalities: BaseLookupModel[] = [];
+  visitStatusOptions: VisitStatusOption[] = VISIT_STATUS_OPTIONS;
   departmentService = inject(DepartmentService);
   nationalityService = inject(NationalityService);
 
@@ -130,7 +135,7 @@ export default class VisitRequestContainerComponent implements OnInit, OnDestroy
     icon?: string;
     routerLink?: string;
   }> {
-    return [{ labelKey: 'MENU.VISIT_REQUESTS' }];
+    return [{ labelKey: 'MENU.VISIT_REQUEST' }];
   }
 
   // Helper methods for template

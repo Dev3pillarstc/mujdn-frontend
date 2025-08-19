@@ -26,6 +26,7 @@ import { VisitStatusEnum } from '@/enums/visit-status-enum';
 import { formatTimeTo12Hour } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
+import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
 
 @Component({
   selector: 'app-all-visit-request-list',
@@ -52,6 +53,7 @@ export class AllVisitRequestListComponent
   @Input() isActive: boolean = false;
   @Input() departments: BaseLookupModel[] = [];
   @Input() nationalities: BaseLookupModel[] = [];
+  @Input() visitStatusOptions: VisitStatusOption[] = [];
 
   override filterModel: VisitFilter = new VisitFilter();
   visitService = inject(VisitService);
@@ -61,8 +63,8 @@ export class AllVisitRequestListComponent
 
   private hasInitialized = false;
 
-  visitStatusOptions: { label: string; value: number }[] = [];
-  visitCreatorOptions: { label: string; value: number }[] = [];
+  // visitStatusOptions: { label: string; value: number }[] = [];
+  // visitCreatorOptions: { label: string; value: number }[] = [];
 
   // Enum reference for template
   VisitStatusEnum = VisitStatusEnum;
@@ -108,36 +110,41 @@ export class AllVisitRequestListComponent
     return formatTimeTo12Hour(timeString, locale);
   }
 
-  private initializeVisitStatusOptions(): void {
-    this.visitStatusOptions = [
-      {
-        label: this.translateService.instant('VISIT_REQUEST_PAGE.NEW'),
-        value: VisitStatusEnum.NEW,
-      },
-      {
-        label: this.translateService.instant('VISIT_REQUEST_PAGE.APPROVED'),
-        value: VisitStatusEnum.APPROVED,
-      },
-      {
-        label: this.translateService.instant('VISIT_REQUEST_PAGE.REJECTED'),
-        value: VisitStatusEnum.REJECTED,
-      },
-    ];
+  get langOptionLabel(): string {
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
-  private initializeVisitCreatorOptions(): void {
-    // Add your visit origin options here based on your requirements
-    this.visitCreatorOptions = [
-      {
-        label: this.translateService.instant('VISIT_REQUEST_PAGE.INTERNAL'),
-        value: 1,
-      },
-      {
-        label: this.translateService.instant('VISIT_REQUEST_PAGE.EXTERNAL'),
-        value: 2,
-      },
-    ];
-  }
+  // private initializeVisitStatusOptions(): void {
+  //   this.visitStatusOptions = [
+  //     {
+  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.NEW'),
+  //       value: VisitStatusEnum.NEW,
+  //     },
+  //     {
+  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.APPROVED'),
+  //       value: VisitStatusEnum.APPROVED,
+  //     },
+  //     {
+  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.REJECTED'),
+  //       value: VisitStatusEnum.REJECTED,
+  //     },
+  //   ];
+  // }
+
+  // private initializeVisitCreatorOptions(): void {
+  //   // Add your visit origin options here based on your requirements
+  //   this.visitCreatorOptions = [
+  //     {
+  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.INTERNAL'),
+  //       value: 1,
+  //     },
+  //     {
+  //       label: this.translateService.instant('VISIT_REQUEST_PAGE.EXTERNAL'),
+  //       value: 2,
+  //     },
+  //   ];
+  // }
 
   private loadDataIfNeeded(): void {
     // Load data when tab becomes active
@@ -196,8 +203,8 @@ export class AllVisitRequestListComponent
   }
 
   override initListComponent(): void {
-    this.initializeVisitStatusOptions();
-    this.initializeVisitCreatorOptions();
+    // this.initializeVisitStatusOptions();
+    // this.initializeVisitCreatorOptions();
   }
 
   protected override getBreadcrumbKeys(): {

@@ -412,7 +412,7 @@
     "NOTIFICATIONS": "Notifications",
     "VISITS": "Visits",
     "BLACKLIST": "Visitor blacklist criteria",
-    "VISIT_REQUESTS": "Visit Request"
+    "VISIT_REQUEST": "Visit Request"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "Notification Settings",

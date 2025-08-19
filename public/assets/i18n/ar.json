@@ -408,7 +408,7 @@
     "NOTIFICATIONS": "الإشعارات",
     "VISITS": "الزيارات",
     "BLACKLIST": "معايير حظر الزائرين",
-    "VISIT_REQUESTS": "طلبات الزيارات"
+    "VISIT_REQUEST": "طلبات الزيارات"
   },
   "NOTIFICATION": {
     "NOTIFICATION_SETTINGS": "إعدادات الإشعارات",

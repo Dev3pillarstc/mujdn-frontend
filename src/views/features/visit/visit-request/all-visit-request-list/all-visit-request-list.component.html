@@ -65,7 +65,6 @@
           </label>
           <p-select
             [(ngModel)]="filterModel.creationUserId"
-            [options]="visitCreatorOptions"
             [placeholder]="'VISIT_REQUEST_PAGE.VISIT_CREATOR' | translate"
             optionLabel="label"
             optionValue="value"
@@ -125,7 +124,7 @@
             [(ngModel)]="filterModel.visitStatus"
             [options]="visitStatusOptions"
             [placeholder]="'VISIT_REQUEST_PAGE.VISIT_STATUS' | translate"
-            optionLabel="label"
+            [optionLabel]="langOptionLabel"
             optionValue="value"
             class="w-full peer"
             id="visitStatus"
@@ -156,10 +155,6 @@
       <div class="actions flex items-center gap-4 ms-auto">
         <button class="table-head-action-btn" (click)="exportExcel()">
           <img src="assets/icons/excel.svg" alt="" />
-        </button>
-        <button (click)="openDialog()" class="btn green-btn">
-          <img src="assets/icons/plus.svg" alt="" />
-          <span>{{ 'VISIT_REQUEST_PAGE.ADD_NEW_VISIT_REQUEST' | translate }}</span>
         </button>
       </div>
     </div>

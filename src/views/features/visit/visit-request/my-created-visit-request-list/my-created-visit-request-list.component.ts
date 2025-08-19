@@ -28,6 +28,7 @@ import { formatTimeTo12Hour } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
 
 @Component({
   selector: 'app-my-created-visit-request-list',
@@ -59,14 +60,13 @@ export class MyCreatedVisitRequestListComponent
   @Input() isActive: boolean = false;
   @Input() departments: BaseLookupModel[] = [];
   @Input() nationalities: BaseLookupModel[] = [];
+  @Input() visitStatusOptions: VisitStatusOption[] = [];
 
   override filterModel: MyCreatedVisitFilter = new MyCreatedVisitFilter();
   visitService = inject(VisitService);
   languageService = inject(LanguageService);
 
   private hasInitialized = false;
-
-  visitStatusOptions: { label: string; value: number }[] = [];
 
   // Enum reference for template
   VisitStatusEnum = VisitStatusEnum;
@@ -75,7 +75,7 @@ export class MyCreatedVisitRequestListComponent
     return this.visitService;
   }
 
-  dialogSize2 = {
+  visitorSelectionDialogSize = {
     width: '100%',
     maxWidth: '600px',
   };
@@ -111,21 +111,9 @@ export class MyCreatedVisitRequestListComponent
     return formatTimeTo12Hour(timeString, locale);
   }
 
-  private initializeVisitStatusOptions(): void {
-    this.visitStatusOptions = [
-      {
-        label: this.translateService.instant('VISIT_REQUEST_PAGE.NEW'),
-        value: VisitStatusEnum.NEW,
-      },
-      {
-        label: this.translateService.instant('VISIT_REQUEST_PAGE.APPROVED'),
-        value: VisitStatusEnum.APPROVED,
-      },
-      {
-        label: this.translateService.instant('VISIT_REQUEST_PAGE.REJECTED'),
-        value: VisitStatusEnum.REJECTED,
-      },
-    ];
+  get langOptionLabel(): string {
+    const lang = this.languageService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   override loadList() {
@@ -191,7 +179,7 @@ export class MyCreatedVisitRequestListComponent
   }
 
   override initListComponent(): void {
-    this.initializeVisitStatusOptions();
+    // this.initializeVisitStatusOptions();
   }
 
   protected override getBreadcrumbKeys(): {
@@ -209,8 +197,8 @@ export class MyCreatedVisitRequestListComponent
       departments: this.departments,
       nationalities: this.nationalities,
     };
-    dialogConfig.width = this.dialogSize2.width;
-    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
+    dialogConfig.width = this.visitorSelectionDialogSize.width;
+    dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;
 
     const dialogRef = this.matDialog.open(VisitorSelectionPopupComponent as any, dialogConfig);
 
@@ -227,8 +215,8 @@ export class MyCreatedVisitRequestListComponent
     dialogConfig.data = {
       model: model,
     };
-    dialogConfig.width = this.dialogSize2.width;
-    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(
       ViewActionVisitRequestPopupComponent as any,
       dialogConfig

@@ -95,17 +95,18 @@
 
       <div class="flex flex-wrap gap-8 mt-8">
         @for (day of weekDays; track day.value) {
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-          <input type="checkbox" [checked]="isWorkingDaySelected(day.value)"
+        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative"
+          [class.opacity-50]="isWeekDayDisabled(day.value)" [class.cursor-not-allowed]="isWeekDayDisabled(day.value)">
+          <input type="checkbox" [checked]="isWorkingDaySelected(day.value)" [disabled]="isWeekDayDisabled(day.value)"
             (change)="onWorkingDayChange(day.value, $event)"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer" />
+            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed" />
           <svg
             class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
             stroke-linejoin="round">
             <polyline points="20 6 9 17 4 12" />
           </svg>
-          <span class="text-base font-medium text-[#1f2a37]">
+          <span class="text-base font-medium text-[#1f2a37]" [class.text-gray-400]="isWeekDayDisabled(day.value)">
             {{ day.labelKey | translate }}
           </span>
         </label>

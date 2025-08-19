@@ -48,8 +48,7 @@ import { weekDays } from '@/utils/general-helper';
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit
-{
+  implements OnInit {
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   filteredUsersProfiles: UsersWithDepartmentLookup[] = [];
@@ -104,6 +103,7 @@ export class WorkShiftsAssignmentPopupComponent
 
     this.updateDateConstraints();
   }
+
   onWorkingDayChange(dayValue: number, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
 
@@ -121,6 +121,7 @@ export class WorkShiftsAssignmentPopupComponent
     // Mark the field as touched so validation messages appear
     this.form.get('employeeWorkingDays')?.markAsTouched();
   }
+
   private validateWorkingDays(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value || '';
@@ -133,11 +134,13 @@ export class WorkShiftsAssignmentPopupComponent
       return null;
     };
   }
+
   private updateEmployeeWorkingDaysInForm(): void {
     const workingDaysString = this.selectedWorkingDays.join(',');
     this.form.get('employeeWorkingDays')?.setValue(workingDaysString);
     this.form.get('employeeWorkingDays')?.updateValueAndValidity();
   }
+
   onSaveClick(): void {
     // Mark all fields as touched to show validation errors
     Object.keys(this.form.controls).forEach((key) => {
@@ -152,11 +155,51 @@ export class WorkShiftsAssignmentPopupComponent
       this.save$.next();
     }
   }
+
   isWorkingDaySelected(dayValue: number): boolean {
     return this.selectedWorkingDays.includes(dayValue);
   }
 
-  override saveFail(error: Error): void {}
+  // NEW METHOD: Check if a weekday should be disabled based on date range
+  isWeekDayDisabled(dayValue: number): boolean {
+    const startDate = this.form.get('startDate')?.value;
+    const endDate = this.form.get('endDate')?.value;
+
+    // If only start date is selected or no dates selected, don't disable any days
+    if (!startDate || !endDate) {
+      return false;
+    }
+
+    // Get the allowed weekdays for the date range
+    const allowedDays = this.getAllowedWeekDaysInRange(startDate, endDate);
+
+    // Disable if the day is not in the allowed range
+    return !allowedDays.includes(dayValue);
+  }
+
+  // NEW METHOD: Get all weekdays that fall within the date range
+  private getAllowedWeekDaysInRange(startDate: Date, endDate: Date): number[] {
+    const allowedDays = new Set<number>();
+    const currentDate = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Iterate through each day in the range
+    while (currentDate <= end) {
+      // JavaScript's getDay() returns 0 for Sunday, 1 for Monday, etc.
+      // Your WeekDaysEnum: SUNDAY = 0, MONDAY = 1, TUESDAY = 2, WEDNESDAY = 3, THURSDAY = 4, FRIDAY = 5, SATURDAY = 6
+      const jsDay = currentDate.getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
+
+      // Your enum matches JavaScript's getDay() exactly, so no conversion needed
+      allowedDays.add(jsDay);
+
+      // Move to next day
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return Array.from(allowedDays);
+  }
+
+  override saveFail(error: Error): void { }
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -175,6 +218,7 @@ export class WorkShiftsAssignmentPopupComponent
     const updatedModel = Object.assign(this.model, { ...form.value });
     return updatedModel;
   }
+
   private sortByName<T extends { [key: string]: any }>(arr: T[], key: string): T[] {
     return [...arr].sort((a, b) => {
       const nameA = (a[key] || '').toString().toLowerCase();
@@ -182,9 +226,11 @@ export class WorkShiftsAssignmentPopupComponent
       return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
     });
   }
+
   getCurrentLanguage() {
     return this.langService.getCurrentLanguage();
   }
+
   get optionLabel(): string {
     return this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
@@ -206,6 +252,9 @@ export class WorkShiftsAssignmentPopupComponent
     } else {
       this.minEndDate = null;
     }
+
+    // Clear selected working days that are no longer valid
+    this.validateAndUpdateWorkingDays();
   }
 
   onEndDateSelect(selectedDate: Date): void {
@@ -218,6 +267,26 @@ export class WorkShiftsAssignmentPopupComponent
       }
     } else {
       this.maxStartDate = null;
+    }
+
+    // Clear selected working days that are no longer valid
+    this.validateAndUpdateWorkingDays();
+  }
+
+  // NEW METHOD: Remove selected working days that are not allowed in the new date range
+  private validateAndUpdateWorkingDays(): void {
+    const startDate = this.form.get('startDate')?.value;
+    const endDate = this.form.get('endDate')?.value;
+
+    if (startDate && endDate) {
+      const allowedDays = this.getAllowedWeekDaysInRange(startDate, endDate);
+
+      // Remove any selected days that are not allowed in the new range
+      this.selectedWorkingDays = this.selectedWorkingDays.filter(day =>
+        allowedDays.includes(day)
+      );
+
+      this.updateEmployeeWorkingDaysInForm();
     }
   }
 

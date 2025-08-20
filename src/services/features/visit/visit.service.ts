@@ -28,6 +28,10 @@ import { ResponseData } from '@/models/shared/response/response-data';
     model: () => String,
     unwrap: 'data',
   },
+  $isVisitorExists: {
+    model: () => Boolean,
+    unwrap: 'data',
+  },
 })
 @Injectable({
   providedIn: 'root',
@@ -42,6 +46,21 @@ export class VisitService extends BaseCrudService<Visit> {
   loadVisitorByNationalId(nationalId: string): Observable<Visit> {
     return this.http
       .get<ResponseData<Visit>>(this.getUrlSegment() + '/visitor', {
+        params: {
+          nationalId,
+        },
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => {
+          return response.data;
+        })
+      );
+  }
+  @CastResponse(undefined, { fallback: '$isVisitorExists' })
+  isVisitorExists(nationalId: string): Observable<boolean> {
+    return this.http
+      .get<ResponseData<boolean>>(this.getUrlSegment() + '/is-visitor-exists', {
         params: {
           nationalId,
         },

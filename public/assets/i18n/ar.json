@@ -608,7 +608,9 @@
     "VISIT_TIME_FROM_TO": "وقت الزيارة (من-الى)",
     "BLOCK_VISITOR": "حظر الزائر",
     "ACCEPT": "قبول",
-    "REJECT": "رفض"
+    "REJECT": "رفض",
+    "VISITOR_EXISTS_CONFIRMATION": "تأكيد وجود الزائر",
+    "DO_YOU_WANT_TO_CONTINUE": "الزائر الذي يحمل هذا الرقم الوطني موجود بالفعل، هل تريد الاستمرار في تحديث بيانات الزائر؟"
   },
   "QR_CODE_POPUP": {
     "GENERAL_WARNINGS": "تحذيرات عامة",

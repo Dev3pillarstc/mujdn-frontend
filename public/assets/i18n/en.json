@@ -612,7 +612,9 @@
     "VISIT_TIME_FROM_TO": "Visit Time (From-To)",
     "BLOCK_VISITOR": "Block Visitor",
     "ACCEPT": "Accept",
-    "REJECT": "Reject"
+    "REJECT": "Reject",
+    "VISITOR_EXISTS_CONFIRMATION": "Visitor exists confirmation",
+    "DO_YOU_WANT_TO_CONTINUE": "Visitor with this National ID already exists, Do you want to continue to update the visitor data?"
   },
   "QR_CODE_POPUP": {
     "GENERAL_WARNINGS": "General Warnings",

@@ -7,6 +7,7 @@ import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
 import { weekDays } from '@/utils/general-helper';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 
 @Component({
   selector: 'app-work-days-popup',
@@ -17,22 +18,23 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> im
   model!: EmployeeShift;
   form!: FormGroup;
   translateService = inject(TranslateService);
-
+  workDays: WorkDaysSetting = new WorkDaysSetting();
   displayDays: { labelKey: string; value: WeekDaysEnum; isSelected: boolean }[] = [];
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: { model: EmployeeShift }
+    @Inject(MAT_DIALOG_DATA) public data: { model: EmployeeShift, lookups: { defaultWorkDays: WorkDaysSetting[] } }
   ) {
     super();
     this.model = data.model;
   }
 
   initPopup(): void {
+    this.workDays = this.data.lookups?.defaultWorkDays[0]!;
     this.prepareDisplayDays();
   }
 
-  buildForm(): void {}
+  buildForm(): void { }
 
   beforeSave(model: EmployeeShift, form: FormGroup): boolean {
     return true;
@@ -42,9 +44,9 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> im
     return model;
   }
 
-  saveFail(error: Error): void {}
+  saveFail(error: Error): void { }
 
-  afterSave(model: EmployeeShift, dialogRef: any): void {}
+  afterSave(model: EmployeeShift, dialogRef: any): void { }
 
   private prepareDisplayDays(): void {
     const workingDayValues = this.model.employeeWorkingDays

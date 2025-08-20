@@ -536,7 +536,7 @@
   "INQUIRIES_PAGE": {
     "INQUIRY_DATE": "تاريخ المسائلة",
     "INQUIRY_TIME": "وقت المسائلة",
-    "ALLOWED_ATTENDANCE_PERIOD": "فترة السماح للتسجيل الحضور",
+    "ALLOWED_ATTENDANCE_PERIOD": "فترة السماح لتسجيل الحضور",
     "PROCESSING_STATUS": "حالة المعالجة",
     "PRESENCE_INQUIRIES": "قائمة مسائلات توثيق التواجد",
     "MY_INQUIRIES": "مسائلاتي",
@@ -554,7 +554,7 @@
     "NOT_CONFIRMED": "لم يتم التوثيق",
     "UNDER_PROCESSING": "جاري التوثيق",
     "TIME_EXPIRED": "تم انتهاء وقت التوثيق",
-    "NOT_ASSIGNED": " لم يتم الإسناد",
+    "NOT_ASSIGNED": "لم يتم الإسناد",
     "DOCUMENTATION_INQUIRY": "مسائلة توثيق التواجد",
     "INQUIRY_TEXT": "نص المسائلة",
     "ASSIGNED_USERS": "الموظفون المعنيون بتنفيذ المهام",

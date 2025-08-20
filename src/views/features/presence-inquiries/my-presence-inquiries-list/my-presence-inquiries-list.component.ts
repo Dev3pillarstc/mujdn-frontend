@@ -15,11 +15,8 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { PresenceInquiryService } from '@/services/features/presence-inquiry.service';
 import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
 import { TranslatePipe } from '@ngx-translate/core';
-import { PresenceInquiryStatusService } from '@/services/features/presence-inquiry-status.service';
 import { USER_PRESENCE_INQUIRY_STATUS_ENUM } from '@/enums/user-presence-inquiry-status-enum';
-interface Adminstration {
-  type: string;
-}
+import { UserPresenceInquiryStatusService } from '@/services/features/user-presence-inquiry-status.service';
 
 @Component({
   selector: 'app-my-presence-inquiries-list',
@@ -50,9 +47,9 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
 
   presenceInquiryService = inject(PresenceInquiryService);
   filterModel: PresenceInquiryFilter = new PresenceInquiryFilter();
-  presenceInquiryStatusService = inject(PresenceInquiryStatusService);
-  presenceInquiryStatuses: BaseLookupModel[] = [];
-  inquiryStatusEnum = USER_PRESENCE_INQUIRY_STATUS_ENUM;
+  userPresenceInquiryStatusService = inject(UserPresenceInquiryStatusService);
+  userPresenceInquiryStatuses: BaseLookupModel[] = [];
+  userInquiryStatusEnum = USER_PRESENCE_INQUIRY_STATUS_ENUM;
   isActive = input.required<boolean>();
   private hasInitialized: boolean = false;
 
@@ -61,8 +58,8 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
   }
 
   override initListComponent(): void {
-    this.presenceInquiryStatusService.getLookup().subscribe((res: BaseLookupModel[]) => {
-      this.presenceInquiryStatuses = res;
+    this.userPresenceInquiryStatusService.getLookup().subscribe((res: BaseLookupModel[]) => {
+      this.userPresenceInquiryStatuses = res;
     });
   }
 

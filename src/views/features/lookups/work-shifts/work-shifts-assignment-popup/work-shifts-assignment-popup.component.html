@@ -11,37 +11,56 @@
         <div class="lg:col-span-2">
           <label class="label" for="shift-select">{{
             'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-select [options]="shifts" class="w-full peer" id="shift-select" formControlName="fkShiftId"
-              [optionLabel]="optionLabel" optionValue="id"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate"></p-select>
+            <p-select
+              [options]="shifts"
+              class="w-full peer"
+              id="shift-select"
+              formControlName="fkShiftId"
+              [optionLabel]="optionLabel"
+              optionValue="id"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate"
+            ></p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-2">
           <label class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
           <div class="relative">
-            <p-select [options]="departments" class="w-full peer" [optionLabel]="optionLabel"
+            <p-select
+              [options]="departments"
+              class="w-full peer"
+              [optionLabel]="optionLabel"
               [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
-              (onChange)="filterEmployeesByDepartment($event.value.id)"></p-select>
+              (onChange)="filterEmployeesByDepartment($event.value.id)"
+            ></p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
         </div>
 
         <div class="lg:col-span-2">
           <label class="label" for="employee-select">{{
             'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-select [options]="filteredUsersProfiles" class="w-full peer" id="employee-select"
-              [optionLabel]="optionLabel" formControlName="fkAssignedUserId" optionValue="id"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate"></p-select>
+            <p-select
+              [options]="filteredUsersProfiles"
+              class="w-full peer"
+              id="employee-select"
+              [optionLabel]="optionLabel"
+              formControlName="fkAssignedUserId"
+              optionValue="id"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate"
+            ></p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="fkAssignedUserIdControl"></app-validation-messages>
         </div>
@@ -49,17 +68,26 @@
         <div class="lg:col-span-2">
           <label class="label" for="date-from">{{
             'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="date-from"
-              formControlName="startDate" [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate"
-              [maxDate]="maxStartDate" (onSelect)="onStartDateSelect($event)" id="date-from">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              inputId="date-from"
+              formControlName="startDate"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate"
+              [maxDate]="maxStartDate"
+              (onSelect)="onStartDateSelect($event)"
+              id="date-from"
+            >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="startDateControl"></app-validation-messages>
         </div>
@@ -67,26 +95,34 @@
         <div class="lg:col-span-2">
           <label class="label" for="date-to">{{
             'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="date-to"
-              formControlName="endDate" [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate"
-              [minDate]="minEndDate" (onSelect)="onEndDateSelect($event)" id="date-to">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              inputId="date-to"
+              formControlName="endDate"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate"
+              [minDate]="minEndDate"
+              (onSelect)="onEndDateSelect($event)"
+              id="date-to"
+            >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="endDateControl"></app-validation-messages>
         </div>
-
-
       </div>
 
       <div
-        class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4 border-t border-[#d2d6db] mt-6 pt-4">
+        class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4 border-t border-[#d2d6db] mt-6 pt-4"
+      >
         <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
           {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
           <span style="color: #b42318; font-weight: bold">*</span>
@@ -95,21 +131,36 @@
 
       <div class="flex flex-wrap gap-8 mt-8">
         @for (day of weekDays; track day.value) {
-        <label class="flex items-center space-x-2 mb-4 cursor-pointer relative"
-          [class.opacity-50]="isWeekDayDisabled(day.value)" [class.cursor-not-allowed]="isWeekDayDisabled(day.value)">
-          <input type="checkbox" [checked]="isWorkingDaySelected(day.value)" [disabled]="isWeekDayDisabled(day.value)"
-            (change)="onWorkingDayChange(day.value, $event)"
-            class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed" />
-          <svg
-            class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-            stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-          <span class="text-base font-medium text-[#1f2a37]" [class.text-gray-400]="isWeekDayDisabled(day.value)">
-            {{ day.labelKey | translate }}
-          </span>
-        </label>
+          <label
+            class="flex items-center space-x-2 mb-4 cursor-pointer relative"
+            [class.opacity-50]="isWeekDayDisabled(day.value)"
+            [class.cursor-not-allowed]="isWeekDayDisabled(day.value)"
+          >
+            <input
+              type="checkbox"
+              [checked]="isWorkingDaySelected(day.value)"
+              [disabled]="isWeekDayDisabled(day.value)"
+              (change)="onWorkingDayChange(day.value, $event)"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed"
+            />
+            <svg
+              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span
+              class="text-base font-medium text-[#1f2a37]"
+              [class.text-gray-400]="isWeekDayDisabled(day.value)"
+            >
+              {{ day.labelKey | translate }}
+            </span>
+          </label>
         }
       </div>
 

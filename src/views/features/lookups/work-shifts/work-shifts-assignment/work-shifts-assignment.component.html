@@ -195,12 +195,17 @@
                 <td>{{ shiftData.startDate }}</td>
                 <td>{{ shiftData.endDate ? shiftData.endDate : '---' }}</td>
                 <td>
-                  <button
-                    (click)="deleteUserShiftAssignment(shiftData.id)"
-                    class="table-action-red-btn"
-                  >
-                    <img src="assets/icons/delete-action.svg" alt="" />
-                  </button>
+                  <div class="actions flex gap-2">
+                    <button (click)="addOrEditModel(shiftData)" class="table-action-gray-btn">
+                      <img src="assets/icons/edit-action.svg" alt="" />
+                    </button>
+                    <button
+                      (click)="deleteUserShiftAssignment(shiftData.id)"
+                      class="table-action-red-btn"
+                    >
+                      <img src="assets/icons/delete-action.svg" alt="" />
+                    </button>
+                  </div>
                 </td>
               </tr>
             </ng-template>

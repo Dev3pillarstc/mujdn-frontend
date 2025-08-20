@@ -49,7 +49,8 @@ import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit {
+  implements OnInit
+{
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
@@ -90,6 +91,23 @@ export class WorkShiftsAssignmentPopupComponent
       // Initialize selected working days
       this.workDays = this.data.lookups?.defaultWorkDays[0]!;
       this.initializeSelectedWorkingDays();
+    } else {
+      // For edit mode, initialize working days from model
+      this.initializeSelectedWorkingDays();
+      // Pre-filter employees if we have department info
+      this.preFilterEmployeesForEditMode();
+    }
+  }
+
+  private preFilterEmployeesForEditMode(): void {
+    if (!this.isCreateMode && this.model.fkAssignedUserId) {
+      // Find the selected employee to get their department
+      const selectedEmployee = this.usersProfiles.find(
+        (emp) => emp.id === this.model.fkAssignedUserId
+      );
+      if (selectedEmployee && selectedEmployee.departmentId) {
+        this.filterEmployeesByDepartment(selectedEmployee.departmentId);
+      }
     }
   }
 
@@ -101,8 +119,8 @@ export class WorkShiftsAssignmentPopupComponent
       // Priority 1: Parse from model string
       this.selectedWorkingDays = this.model.employeeWorkingDays
         .split(',')
-        .map(day => parseInt(day.trim(), 10))
-        .filter(day => !isNaN(day));
+        .map((day) => parseInt(day.trim(), 10))
+        .filter((day) => !isNaN(day));
     } else if (this.workDays) {
       // Priority 2: Map boolean flags to enum values
       const mapping: { [key: string]: WeekDaysEnum } = {
@@ -123,7 +141,6 @@ export class WorkShiftsAssignmentPopupComponent
     this.selectedWorkingDays.sort((a, b) => a - b);
   }
 
-
   override buildForm(): void {
     this.form = this.fb.group({
       ...this.model.buildForm(),
@@ -133,7 +150,48 @@ export class WorkShiftsAssignmentPopupComponent
       ],
     });
 
+    // Set the correct values for dropdowns after form is built
+    this.setDropdownValues();
     this.updateDateConstraints();
+  }
+
+  private setDropdownValues(): void {
+    if (!this.isCreateMode) {
+      // Set shift dropdown value
+      if (this.model.fkShiftId) {
+        const selectedShift = this.shifts.find((shift) => shift.id === this.model.fkShiftId);
+        if (selectedShift) {
+          this.form.get('fkShiftId')?.setValue(selectedShift.id);
+        }
+      }
+
+      // Set employee dropdown value
+      if (this.model.fkAssignedUserId) {
+        const selectedEmployee = this.usersProfiles.find(
+          (emp) => emp.id === this.model.fkAssignedUserId
+        );
+        if (selectedEmployee) {
+          this.form.get('fkAssignedUserId')?.setValue(selectedEmployee.id);
+        }
+      }
+
+      // Set date picker values - convert strings to Date objects if needed
+      if (this.model.startDate) {
+        const startDate =
+          typeof this.model.startDate === 'string'
+            ? new Date(this.model.startDate)
+            : this.model.startDate;
+        this.form.get('startDate')?.setValue(startDate);
+      }
+
+      if (this.model.endDate) {
+        const endDate =
+          typeof this.model.endDate === 'string'
+            ? new Date(this.model.endDate)
+            : this.model.endDate;
+        this.form.get('endDate')?.setValue(endDate);
+      }
+    }
   }
 
   onWorkingDayChange(dayValue: number, event: Event): void {
@@ -231,7 +289,7 @@ export class WorkShiftsAssignmentPopupComponent
     return Array.from(allowedDays);
   }
 
-  override saveFail(error: Error): void { }
+  override saveFail(error: Error): void {}
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -246,9 +304,17 @@ export class WorkShiftsAssignmentPopupComponent
     model: UserWorkShift,
     form: FormGroup
   ): UserWorkShift | Observable<UserWorkShift> {
-    // Create updated model with form values
-    const updatedModel = Object.assign(this.model, { ...form.value });
-    return updatedModel;
+    // Only update the specific fields that should be sent to the API
+    const formValue = form.value;
+
+    // Update only the necessary properties
+    this.model.startDate = formValue.startDate;
+    this.model.endDate = formValue.endDate;
+    this.model.employeeWorkingDays = formValue.employeeWorkingDays;
+    this.model.fkAssignedUserId = formValue.fkAssignedUserId;
+    this.model.fkShiftId = formValue.fkShiftId;
+
+    return this.model;
   }
 
   private sortByName<T extends { [key: string]: any }>(arr: T[], key: string): T[] {
@@ -271,6 +337,20 @@ export class WorkShiftsAssignmentPopupComponent
     this.filteredUsersProfiles = this.usersProfiles.filter(
       (emp) => emp.departmentId === departmentId
     );
+
+    // If we're in edit mode and the currently selected employee is not in the filtered list,
+    // we need to add them to maintain the selection
+    if (!this.isCreateMode && this.model.fkAssignedUserId) {
+      const selectedEmployee = this.usersProfiles.find(
+        (emp) => emp.id === this.model.fkAssignedUserId
+      );
+      if (
+        selectedEmployee &&
+        !this.filteredUsersProfiles.find((emp) => emp.id === this.model.fkAssignedUserId)
+      ) {
+        this.filteredUsersProfiles.unshift(selectedEmployee);
+      }
+    }
   }
 
   onStartDateSelect(selectedDate: Date): void {
@@ -314,7 +394,7 @@ export class WorkShiftsAssignmentPopupComponent
       const allowedDays = this.getAllowedWeekDaysInRange(startDate, endDate);
 
       // Remove any selected days that are not allowed in the new range
-      this.selectedWorkingDays = this.selectedWorkingDays.filter(day =>
+      this.selectedWorkingDays = this.selectedWorkingDays.filter((day) =>
         allowedDays.includes(day)
       );
 

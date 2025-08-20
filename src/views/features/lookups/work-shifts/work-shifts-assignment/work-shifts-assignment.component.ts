@@ -125,8 +125,9 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' }];
   }
-  override openDialog(model: UserWorkShift) {
-    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+  override openDialog(userWorkShift: UserWorkShift) {
+    const viewMode = userWorkShift.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const model = userWorkShift ?? new UserWorkShift();
     const lookups = {
       usersProfiles: this.usersProfiles,
       departments: this.departments,
@@ -134,12 +135,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
       defaultWorkDays: [this.defaultWorkDays],
     };
 
-    return this.openBaseDialog(
-      WorkShiftsAssignmentPopupComponent as any,
-      new UserWorkShift(),
-      viewMode,
-      lookups
-    );
+    return this.openBaseDialog(WorkShiftsAssignmentPopupComponent as any, model, viewMode, lookups);
   }
   get optionLabel(): string {
     const lang = this.langService.getCurrentLanguage();

@@ -85,44 +85,68 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     return this.form.get('shiftLogStartDate') as FormControl;
   }
 
-  private isShiftDateValidAndAfterActive(): boolean {
-    const shiftDate = toDateOnly(this.form.get('shiftLogStartDate')?.value);
-    const activeShiftDate = this.model.activeShiftStartDate
-      ? toDateOnly(this.model.activeShiftStartDate)
-      : null;
+  get canActivateShift(): boolean {
+    const rawShiftDate = this.form.get('shiftLogStartDate')?.value;
+    const rawActiveShiftDate = this.model.activeShiftStartDate;
 
-    // shift date must exist and be valid
-    if (!shiftDate || !this.form.get('shiftLogStartDate')?.valid) {
+    if (!rawShiftDate) {
       return false;
     }
 
-    // if there is no active shift yet, allow as long as date is in the past
-    if (!activeShiftDate) {
-      return shiftDate < toDateOnly(new Date());
-    }
+    const shiftDate = new Date(toDateOnly(rawShiftDate));
+    const today = new Date(toDateOnly(new Date()));
 
-    // enforce that shiftDate is strictly greater than activeShiftStartDate
-    return shiftDate > activeShiftDate && shiftDate <= toDateOnly(new Date());
+    // Check if user changed the date compared to the original value from backend
+    const originalShiftDate = this.model.shiftLogStartDate
+      ? new Date(toDateOnly(this.model.shiftLogStartDate))
+      : null;
+
+    const isDateChanged =
+      originalShiftDate !== null && shiftDate.getTime() !== originalShiftDate.getTime();
+
+    const result =
+      !this.model.isActive &&
+      this.model.id != null &&
+      this.model.shiftLogId != null &&
+      shiftDate <= today &&
+      (!rawActiveShiftDate || shiftDate > new Date(toDateOnly(rawActiveShiftDate))) &&
+      // NEW: only allow if date wasn't changed in update mode
+      (!isDateChanged || this.isCreateMode);
+
+    return result;
   }
 
-  get canActivateShift(): boolean {
-    if (this.isCreateMode) {
-      return false; // never show in create mode
-    }
-
-    return !this.model.isActive && this.isShiftDateValidAndAfterActive();
-  }
 
   get canSaveAndActivateShift(): boolean {
-    if (this.isCreateMode) {
-      return (
-        this.form.valid &&
-        this.form.get('isDefaultShiftForm')?.value &&
-        this.isShiftDateValidAndAfterActive()
-      );
+    const rawShiftDate = this.form.get('shiftLogStartDate')?.value;
+    const today = new Date(toDateOnly(new Date()));
+
+    // Basic requirements for both modes
+    const basicRequirements = (
+      this.form.valid &&
+      this.form.get('isDefaultShiftForm')?.value === true &&
+      rawShiftDate &&
+      this.form.get('shiftLogStartDate')?.valid
+    );
+
+    if (!basicRequirements) {
+      return false;
     }
 
-    return !this.model.isActive && this.isShiftDateValidAndAfterActive();
+    const shiftDate = new Date(toDateOnly(rawShiftDate));
+
+    // Show button only if shift date is today or before today (hide if future date)
+    const isDateTodayOrBefore = shiftDate <= today;
+
+    if (this.isCreateMode) {
+      return isDateTodayOrBefore;
+    }
+
+    // For update mode, same date logic + model must not be active
+    return (
+      !this.model.isActive &&
+      isDateTodayOrBefore
+    );
   }
 
   saveAndActivateShift() {
@@ -176,7 +200,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     });
   }
 
-  override saveFail(error: Error): void {}
+  override saveFail(error: Error): void { }
 
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
@@ -253,9 +277,15 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   }
 
   private performShiftActivation(): Observable<any> {
-    const shift = new Shift();
-    shift.isActive = true;
-    return this.service.activateShift(shift, this.model.id!);
+    const preparedModel = this.prepareModel(this.model, this.form) as Shift;
+    preparedModel.isActive = true;
+
+    // Add null check for safety
+    if (!this.model.id) {
+      console.log('ID is missing');
+    }
+
+    return this.service.activateShift(preparedModel, this.model.id);
   }
 
   private handleActivationError(error: any): void {

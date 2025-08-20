@@ -119,7 +119,6 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     return [{ labelKey: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' }];
   }
   override openDialog(model: UserWorkShift) {
-
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     const lookups = {
       usersProfiles: this.usersProfiles,
@@ -138,6 +137,10 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   get optionLabel(): string {
     const lang = this.langService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  }
+
+  isCurrentLanguageEnglish() {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
   }
 
   get startDate() {

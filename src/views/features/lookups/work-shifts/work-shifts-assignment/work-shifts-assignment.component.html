@@ -27,73 +27,115 @@
               <label class="label" for="nationalityAr">
                 {{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR' | translate }}
               </label>
-              <input class="peer" [(ngModel)]="filterOptions.nameAr" fluid="true" id="nationalityAr" pInputText
-                [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_NAME_PLACEHOLDER' | translate" type="text" />
+              <input
+                class="peer"
+                [(ngModel)]="filterOptions.nameAr"
+                fluid="true"
+                id="nationalityAr"
+                pInputText
+                [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_NAME_PLACEHOLDER' | translate"
+                type="text"
+              />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
 
             <div class="relative">
               <label class="label" for="nationalityEn">
                 {{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN' | translate }}
               </label>
-              <input class="peer" [(ngModel)]="filterOptions.nameEn" fluid="true" id="nationalityEn" pInputText
-                [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_NAME_PLACEHOLDER' | translate" type="text" />
+              <input
+                class="peer"
+                [(ngModel)]="filterOptions.nameEn"
+                fluid="true"
+                id="nationalityEn"
+                pInputText
+                [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_NAME_PLACEHOLDER' | translate"
+                type="text"
+              />
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
 
             <div class="relative">
               <label class="label">
                 {{ 'USER_WORK_SHIFT_PAGE.START_DATE' | translate }}
               </label>
-              <p-datepicker [(ngModel)]="filterOptions.startDate" [iconDisplay]="'input'" [showIcon]="true"
-                [maxDate]="endDate" class="peer block w-full" inputId="startDate"
-                [placeholder]="'USER_WORK_SHIFT_PAGE.START_DATE' | translate">
+              <p-datepicker
+                [(ngModel)]="filterOptions.startDate"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                [maxDate]="endDate"
+                class="peer block w-full"
+                inputId="startDate"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.START_DATE' | translate"
+              >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
 
             <div class="relative">
               <label class="label">
                 {{ 'USER_WORK_SHIFT_PAGE.END_DATE' | translate }}
               </label>
-              <p-datepicker [(ngModel)]="filterOptions.endDate" [iconDisplay]="'input'" [showIcon]="true"
-                class="peer block w-full" inputId="endDate" [minDate]="startDate"
-                [placeholder]="'USER_WORK_SHIFT_PAGE.END_DATE' | translate">
+              <p-datepicker
+                [(ngModel)]="filterOptions.endDate"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                class="peer block w-full"
+                inputId="endDate"
+                [minDate]="startDate"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.END_DATE' | translate"
+              >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
 
             <div class="relative">
               <label class="label">
                 {{ 'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate }}
               </label>
-              <p-select [(ngModel)]="filterOptions.fkDepartmentId" [options]="departments" class="w-full peer"
-                [optionLabel]="optionLabel" optionValue="id"
+              <p-select
+                [(ngModel)]="filterOptions.fkDepartmentId"
+                [options]="departments"
+                class="w-full peer"
+                [optionLabel]="optionLabel"
+                optionValue="id"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"
-                (onChange)="filterEmployeesByDepartment($event.value)"></p-select>
+                (onChange)="filterEmployeesByDepartment($event.value)"
+              ></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
 
             <div class="relative">
               <label class="label">
                 {{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}
               </label>
-              <p-select [options]="filteredEmployees" [(ngModel)]="filterOptions.fkAssignedUserId" class="w-full peer"
-                [optionLabel]="optionLabel" optionValue="id"
-                [placeholder]="'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate"></p-select>
+              <p-select
+                [options]="filteredEmployees"
+                [(ngModel)]="filterOptions.fkAssignedUserId"
+                class="w-full peer"
+                [optionLabel]="optionLabel"
+                optionValue="id"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate"
+              ></p-select>
               <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
           </div>
 
@@ -110,12 +152,16 @@
 
       <div class="mt-6">
         <div
-          class="flex items-start xl:items-center justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
+          class="flex items-start xl:items-center justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
             {{ 'USER_WORK_SHIFT_PAGE.SHIFT_LIST' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button class="table-head-action-btn min-w-[40px]" (click)="exportExcel('users-work-shifts.xlsx')">
+            <button
+              class="table-head-action-btn min-w-[40px]"
+              (click)="exportExcel('users-work-shifts.xlsx')"
+            >
               <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
@@ -126,37 +172,46 @@
         </div>
 
         @if (list && list.length > 0) {
-        <p-table [value]="list">
-          <ng-template #header>
-            <tr>
-              <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR' | translate }}</th>
-              <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN' | translate }}</th>
-              <th>{{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_AR' | translate }}</th>
-              <th>{{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_EN' | translate }}</th>
-              <th>{{ 'USER_WORK_SHIFT_PAGE.START_DATE' | translate }}</th>
-              <th>{{ 'USER_WORK_SHIFT_PAGE.END_DATE' | translate }}</th>
-            </tr>
-          </ng-template>
-          <ng-template #body let-shiftData>
-            <tr>
-              <td>{{ shiftData.shiftNameAr }}</td>
-              <td>{{ shiftData.shiftNameEn }}</td>
-              <td>{{ shiftData.employeeNameAr }}</td>
-              <td>{{ shiftData.employeeNameEn }}</td>
-              <td>{{ shiftData.startDate }}</td>
-              <td>{{ shiftData.endDate ? shiftData.endDate : '---' }}</td>
-            </tr>
-          </ng-template>
-        </p-table>
+          <p-table [value]="list">
+            <ng-template #header>
+              <tr>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.START_DATE' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.END_DATE' | translate }}</th>
+              </tr>
+            </ng-template>
+            <ng-template #body let-shiftData>
+              <tr>
+                <td>{{ shiftData.shiftNameAr }}</td>
+                <td>{{ shiftData.shiftNameEn }}</td>
+                <td>
+                  {{
+                    isCurrentLanguageEnglish() ? shiftData.employeeNameEn : shiftData.employeeNameAr
+                  }}
+                </td>
+                <td>{{ shiftData.startDate }}</td>
+                <td>{{ shiftData.endDate ? shiftData.endDate : '---' }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
         } @else {
-        <div class="flex items-center justify-center h-64">
-          <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
-        </div>
+          <div class="flex items-center justify-center h-64">
+            <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
+          </div>
         }
 
         @if (paginationInfo) {
-        <p-paginator (onPageChange)="onPageChange($event, false)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]"
-          [rows]="rows" [showCurrentPageReport]="false" [totalRecords]="paginationInfo.totalItems" class="mt-6" />
+          <p-paginator
+            (onPageChange)="onPageChange($event, false)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
         }
       </div>
     </div>

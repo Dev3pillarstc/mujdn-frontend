@@ -23,7 +23,8 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> im
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: { model: EmployeeShift, lookups: { defaultWorkDays: WorkDaysSetting[] } }
+    @Inject(MAT_DIALOG_DATA)
+    public data: { model: EmployeeShift; lookups: { defaultWorkDays: WorkDaysSetting[] } }
   ) {
     super();
     this.model = data.model;
@@ -34,7 +35,7 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> im
     this.prepareDisplayDays();
   }
 
-  buildForm(): void { }
+  buildForm(): void {}
 
   beforeSave(model: EmployeeShift, form: FormGroup): boolean {
     return true;
@@ -44,15 +45,46 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> im
     return model;
   }
 
-  saveFail(error: Error): void { }
+  saveFail(error: Error): void {}
 
-  afterSave(model: EmployeeShift, dialogRef: any): void { }
+  afterSave(model: EmployeeShift, dialogRef: any): void {}
 
   private prepareDisplayDays(): void {
-    const workingDayValues = this.model.employeeWorkingDays
-      ? this.model.employeeWorkingDays.split(',').map((day) => parseInt(day.trim(), 10))
-      : [];
+    let workingDayValues: number[] = [];
 
+    if (this.model.employeeWorkingDays) {
+      // case 1: from model
+      workingDayValues = this.model.employeeWorkingDays
+        .split(',')
+        .map((day) => parseInt(day.trim(), 10))
+        .filter((day) => !isNaN(day));
+    } else {
+      // case 2: fallback to workDays settings
+      workingDayValues = weekDays
+        .filter((day) => {
+          switch (day.value) {
+            case WeekDaysEnum.SUNDAY:
+              return this.workDays.sunday;
+            case WeekDaysEnum.MONDAY:
+              return this.workDays.monday;
+            case WeekDaysEnum.TUESDAY:
+              return this.workDays.tuesday;
+            case WeekDaysEnum.WEDNESDAY:
+              return this.workDays.wednesday;
+            case WeekDaysEnum.THURSDAY:
+              return this.workDays.thursday;
+            case WeekDaysEnum.FRIDAY:
+              return this.workDays.friday;
+            case WeekDaysEnum.SATURDAY:
+              return this.workDays.saturday;
+            default:
+              return false;
+          }
+        })
+        .map((day) => day.value);
+    }
+
+    // build display list
     this.displayDays = weekDays
       .filter((day) => workingDayValues.includes(day.value))
       .map((day) => ({
@@ -60,7 +92,6 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> im
         isSelected: true,
       }));
   }
-
   getDayLabel(labelKey: string): string {
     return this.translateService.instant(labelKey);
   }

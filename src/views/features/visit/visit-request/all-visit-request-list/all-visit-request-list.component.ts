@@ -128,8 +128,23 @@ export class AllVisitRequestListComponent
     });
   }
 
-  showActionsButton() {
-    return this.authService.isSecurityLeader;
+  showActionsButton(visit: Visit): boolean {
+    if (!this.authService.isSecurityLeader) {
+      return false;
+    }
+
+    if (!visit?.visitDate) {
+      return false;
+    }
+
+    const visitDate = new Date(visit.visitDate);
+    const today = new Date();
+
+    // Reset time to compare only by date
+    visitDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    return visitDate > today;
   }
 
   // Status badge methods
@@ -241,6 +256,9 @@ export class AllVisitRequestListComponent
   }
 
   openViewDialog(model?: Visit) {
+    if (model?.visitStatus === VisitStatusEnum.APPROVED) {
+      return this.openQrcodeDialog(model);
+    }
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,

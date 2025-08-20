@@ -200,10 +200,10 @@
             <td>{{ formatTime(visit.visitTimeTo) }}</td>
             <td>
               <div class="actions flex gap-2">
-                <button class="table-action-gray-btn" (click)="openQrcodeDialog(visit)">
+                <button class="table-action-gray-btn" (click)="openViewDialog(visit)">
                   <img alt="" src="assets/icons/view.svg" />
                 </button>
-                @if (showActionsButton()) {
+                @if (showActionsButton(visit)) {
                   <button class="black-table-btn-action" (click)="openTakeActionDialog(visit)">
                     <img alt="" src="assets/icons/small-edit.svg" />
                     <span>{{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}</span>

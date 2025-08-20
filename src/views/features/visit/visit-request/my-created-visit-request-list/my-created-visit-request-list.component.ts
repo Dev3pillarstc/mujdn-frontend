@@ -30,6 +30,7 @@ import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
 import { AuthService } from '@/services/auth/auth.service';
+import { QrcodeVisitRequestPopupComponent } from '../qrcode-visit-request-popup/qrcode-visit-request-popup.component';
 
 @Component({
   selector: 'app-my-created-visit-request-list',
@@ -192,8 +193,23 @@ export class MyCreatedVisitRequestListComponent
     return [{ labelKey: 'VISIT_REQUEST_PAGE.MY_CREATED_VISITS' }];
   }
 
-  showActionsButton() {
-    return this.authService.isSecurityLeader;
+  showActionsButton(visit: Visit): boolean {
+    if (!this.authService.isSecurityLeader) {
+      return false;
+    }
+
+    if (!visit?.visitDate) {
+      return false;
+    }
+
+    const visitDate = new Date(visit.visitDate);
+    const today = new Date();
+
+    // Reset time to compare only by date
+    visitDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    return visitDate > today;
   }
 
   openDialog(model?: Visit) {
@@ -218,7 +234,26 @@ export class MyCreatedVisitRequestListComponent
       });
   }
 
+  openQrcodeDialog(model?: Visit) {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      model: model,
+    };
+    dialogConfig.width = this.visitorSelectionDialogSize.width;
+    dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;
+    const dialogRef = this.matDialog.open(QrcodeVisitRequestPopupComponent as any, dialogConfig);
+
+    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result === DIALOG_ENUM.OK) {
+        this.loadDataIfNeeded();
+      }
+    });
+  }
+
   openViewDialog(model?: Visit) {
+    if (model?.visitStatus === VisitStatusEnum.APPROVED) {
+      return this.openQrcodeDialog(model);
+    }
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,

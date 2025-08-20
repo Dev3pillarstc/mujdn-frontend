@@ -67,6 +67,7 @@
                 [(ngModel)]="filterOptions.startDate"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
+                [maxDate]="endDate"
                 class="peer block w-full"
                 inputId="startDate"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.DATE_RANGE_PLACEHOLDER' | translate"
@@ -90,6 +91,7 @@
                 [showIcon]="true"
                 class="peer block w-full"
                 inputId="endDate"
+                [minDate]="startDate"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.DATE_RANGE_PLACEHOLDER' | translate"
               >
                 <ng-template pTemplate="inputicon">

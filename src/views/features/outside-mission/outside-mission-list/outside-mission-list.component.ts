@@ -24,6 +24,7 @@ import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-outside-mission-list',
@@ -54,9 +55,13 @@ export default class OutsideMissionListComponent implements OnInit {
   matDialog = inject(MatDialog);
   dialog = inject(MatDialog);
   activatedRoute = inject(ActivatedRoute);
+  authService = inject(AuthService); // 👈 inject here
+
+  canAssign = false;
   ngOnInit() {
     // Set the signal values
     this.missions.set(this.activatedRoute.snapshot.data['list'].missions);
     this.departments.set(this.activatedRoute.snapshot.data['list'].departments);
+    this.canAssign = !!(this.authService.isDepartmentManager || this.authService.isHROfficer);
   }
 }

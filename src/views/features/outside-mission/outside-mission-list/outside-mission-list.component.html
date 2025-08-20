@@ -17,7 +17,9 @@
     <p-tabs value="0">
       <p-tablist class="my-6">
         <p-tab value="0">{{ 'WORK_MISSIONS.MY_WORK_MISSIONS' | translate }}</p-tab>
-        <p-tab value="1">{{ 'WORK_MISSIONS.ASSIGN_WORK_MISSIONS' | translate }}</p-tab>
+        @if (canAssign) {
+          <p-tab value="1">{{ 'WORK_MISSIONS.ASSIGN_WORK_MISSIONS' | translate }}</p-tab>
+        }
       </p-tablist>
       <p-tabpanels>
         <p-tabpanel value="0">

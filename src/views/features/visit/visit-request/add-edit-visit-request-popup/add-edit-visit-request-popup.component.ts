@@ -97,7 +97,7 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
     this.form = this.fb.group(this.model.buildForm(), {
       validators: [CustomValidators.timeFromBeforeTimeTo('visitTimeFrom', 'visitTimeTo')],
     });
-    if (this.isCreateFromExistingMode) {
+    if (this.isCreateFromExistingMode || !this.isCreateMode) {
       this.form.get('nationalId')?.disable();
     }
   }

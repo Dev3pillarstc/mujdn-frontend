@@ -103,8 +103,8 @@
     "PROFILE_LOAD_ERROR": "Error loading profile data",
     "RETRY": "Retry",
     "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect",
-    "MIN_VALUE": "Value must be at least {min} (got {actual})",
-    "MAX_VALUE": "Value must be at most {max} (got {actual})"
+    "MIN_VALUE": "The minimum allowed time is {min}",
+    "MAX_VALUE": "The maximum allowed time is {max}"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

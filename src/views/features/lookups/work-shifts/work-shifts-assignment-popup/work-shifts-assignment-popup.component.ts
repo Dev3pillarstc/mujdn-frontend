@@ -31,6 +31,7 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { weekDays } from '@/utils/general-helper';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -51,6 +52,7 @@ export class WorkShiftsAssignmentPopupComponent
   implements OnInit {
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
+  workDays: WorkDaysSetting = new WorkDaysSetting();
   filteredUsersProfiles: UsersWithDepartmentLookup[] = [];
   departments: BaseLookupModel[] = [];
   shifts: Shift[] = [];
@@ -84,13 +86,43 @@ export class WorkShiftsAssignmentPopupComponent
     this.departments = this.sortByName(this.departments, this.optionLabel);
     this.shifts = this.sortByName(this.shifts, this.optionLabel);
 
-    if (this.model.employeeWorkingDays) {
-      this.selectedWorkingDays = this.model.employeeWorkingDays
-        .split(',')
-        .map((day) => parseInt(day.trim()))
-        .filter((day) => !isNaN(day));
+    if (this.isCreateMode) {
+      // Initialize selected working days
+      this.workDays = this.data.lookups?.defaultWorkDays[0]!;
+      this.initializeSelectedWorkingDays();
     }
   }
+
+  private initializeSelectedWorkingDays(): void {
+    // Reset
+    this.selectedWorkingDays = [];
+
+    if (this.model.employeeWorkingDays) {
+      // Priority 1: Parse from model string
+      this.selectedWorkingDays = this.model.employeeWorkingDays
+        .split(',')
+        .map(day => parseInt(day.trim(), 10))
+        .filter(day => !isNaN(day));
+    } else if (this.workDays) {
+      // Priority 2: Map boolean flags to enum values
+      const mapping: { [key: string]: WeekDaysEnum } = {
+        saturday: WeekDaysEnum.SATURDAY,
+        sunday: WeekDaysEnum.SUNDAY,
+        monday: WeekDaysEnum.MONDAY,
+        tuesday: WeekDaysEnum.TUESDAY,
+        wednesday: WeekDaysEnum.WEDNESDAY,
+        thursday: WeekDaysEnum.THURSDAY,
+        friday: WeekDaysEnum.FRIDAY,
+      };
+
+      this.selectedWorkingDays = Object.entries(mapping)
+        .filter(([key]) => (this.workDays as any)[key])
+        .map(([, value]) => value);
+    }
+
+    this.selectedWorkingDays.sort((a, b) => a - b);
+  }
+
 
   override buildForm(): void {
     this.form = this.fb.group({

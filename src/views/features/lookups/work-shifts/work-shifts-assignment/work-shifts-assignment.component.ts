@@ -25,6 +25,7 @@ import UserWorkShiftsFilter from '@/models/features/lookups/work-shifts/user-wor
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 
 @Component({
   selector: 'app-work-shifts-assignment',
@@ -53,6 +54,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   usersProfiles: UsersWithDepartmentLookup[] = [];
   userWorkShift: UserWorkShift[] = [];
   departments: BaseLookupModel[] = [];
+  defaultWorkDays: WorkDaysSetting = new WorkDaysSetting();
   filteredEmployees: UsersWithDepartmentLookup[] = [];
   filterOptions: UserWorkShiftsFilter = new UserWorkShiftsFilter();
   shifts: Shift[] = [];
@@ -73,6 +75,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     this.paginationInfo = userShifts.paginationInfo;
     this.usersProfiles = this.activatedRoute.snapshot.data['list'].users;
     this.departments = this.activatedRoute.snapshot.data['list'].departments;
+    this.defaultWorkDays = this.activatedRoute.snapshot.data['list'].defaultworkDays;
     this.filteredEmployees = this.usersProfiles;
     this.departments = this.sortByName(this.departments, this.optionLabel);
     this.filteredEmployees = this.sortByName(this.filteredEmployees, this.optionLabel);
@@ -109,23 +112,26 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   date2: Date | undefined;
   attendance!: any[];
 
-  addOrEditModel(): void {
-    this.openDialog();
+  addOrEditModel(userWorkShift?: UserWorkShift): void {
+    this.openDialog(userWorkShift ?? new UserWorkShift());
   }
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' }];
   }
-  override openDialog() {
+  override openDialog(model: UserWorkShift) {
+
+    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     const lookups = {
       usersProfiles: this.usersProfiles,
       departments: this.departments,
       shifts: this.shifts,
+      defaultWorkDays: [this.defaultWorkDays],
     };
 
     return this.openBaseDialog(
       WorkShiftsAssignmentPopupComponent as any,
       new UserWorkShift(),
-      ViewModeEnum.CREATE,
+      viewMode,
       lookups
     );
   }

@@ -17,9 +17,11 @@
         <p-tab (click)="clickMyVisitsTab()" value="0">
           {{ 'VISIT_REQUEST_PAGE.MY_VISITS' | translate }}
         </p-tab>
-        <p-tab (click)="clickAllVisitsTab()" value="1">
-          {{ 'VISIT_REQUEST_PAGE.ALL_VISITS' | translate }}
-        </p-tab>
+        @if (showAllVisitsTab()) {
+          <p-tab (click)="clickAllVisitsTab()" value="1">
+            {{ 'VISIT_REQUEST_PAGE.ALL_VISITS' | translate }}
+          </p-tab>
+        }
       </p-tablist>
 
       <p-tabpanels>

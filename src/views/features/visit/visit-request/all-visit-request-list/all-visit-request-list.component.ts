@@ -29,6 +29,7 @@ import { LanguageService } from '@/services/shared/language.service';
 import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { UserService } from '@/services/features/user.service';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-all-visit-request-list',
@@ -61,6 +62,7 @@ export class AllVisitRequestListComponent
   visitService = inject(VisitService);
   languageService = inject(LanguageService);
   userService = inject(UserService);
+  authService = inject(AuthService);
 
   visitCreators: BaseLookupModel[] = [];
 
@@ -124,6 +126,10 @@ export class AllVisitRequestListComponent
       next: (response) => this.handleLoadListSuccess(response),
       error: this.handleLoadListError,
     });
+  }
+
+  showActionsButton() {
+    return this.authService.isSecurityLeader;
   }
 
   // Status badge methods

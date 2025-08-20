@@ -13,6 +13,7 @@ import {
   VISIT_STATUS_OPTIONS,
   VisitStatusOption,
 } from '@/models/features/visit/visit-status-option';
+import { AuthService } from '@/services/auth/auth.service';
 
 enum TabIndex {
   MY_VISITS = 0,
@@ -39,6 +40,7 @@ export default class VisitRequestContainerComponent implements OnInit, OnDestroy
   visitStatusOptions: VisitStatusOption[] = VISIT_STATUS_OPTIONS;
   departmentService = inject(DepartmentService);
   nationalityService = inject(NationalityService);
+  authService = inject(AuthService);
 
   private readonly translateService = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
@@ -60,6 +62,10 @@ export default class VisitRequestContainerComponent implements OnInit, OnDestroy
 
   clickAllVisitsTab(): void {
     this.switchToTab(TabIndex.ALL_VISITS);
+  }
+
+  showAllVisitsTab() {
+    return this.authService.isSecurityLeader || this.authService.isSecurityMember;
   }
 
   private initializeComponent(): void {

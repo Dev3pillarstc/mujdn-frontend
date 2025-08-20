@@ -29,6 +29,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-my-created-visit-request-list',
@@ -65,6 +66,7 @@ export class MyCreatedVisitRequestListComponent
   override filterModel: MyCreatedVisitFilter = new MyCreatedVisitFilter();
   visitService = inject(VisitService);
   languageService = inject(LanguageService);
+  authService = inject(AuthService);
 
   private hasInitialized = false;
 
@@ -188,6 +190,10 @@ export class MyCreatedVisitRequestListComponent
     routerLink?: string;
   }[] {
     return [{ labelKey: 'VISIT_REQUEST_PAGE.MY_CREATED_VISITS' }];
+  }
+
+  showActionsButton() {
+    return this.authService.isSecurityLeader;
   }
 
   openDialog(model?: Visit) {

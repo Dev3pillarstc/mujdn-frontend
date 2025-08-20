@@ -105,7 +105,11 @@
     "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect",
     "MIN_VALUE": "Value must be at least {min} (got {actual})",
     "MAX_VALUE": "Value must be at most {max} (got {actual})",
-    "VISITOR_NOT_FOUND": "Visitor not found with this National ID"
+    "VISITOR_NOT_FOUND": "Visitor not found with this National ID",
+    "VISITOR_NATIONAL_ID_BLACKLISTED": "Sorry, you can't submit a visit request because the visitor is blacklisted",
+    "VISITOR_NATIONALITY_BLACKLISTED": "Sorry, you can't submit a visit request because the visitor nationality is blacklisted",
+    "VISITOR_CANNOT_BE_BLOCKED": "Sorry, you can't block the visitor",
+    "VISIT_NOT_FOUND": "Visit not found"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

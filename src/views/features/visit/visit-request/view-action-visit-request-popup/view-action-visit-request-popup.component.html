@@ -128,9 +128,11 @@
     <!-- Action Buttons - Only show for TAKE_ACTION mode -->
     <div class="actions flex items-center justify-between mt-6">
       <div class="flex gap-2">
-        <button class="btn gray-btn" (click)="close()">
-          {{ 'COMMON.CANCEL' | translate }}
-        </button>
+        @if (canViewCancel()) {
+          <button class="btn gray-btn" (click)="close()">
+            {{ 'COMMON.CANCEL' | translate }}
+          </button>
+        }
 
         @if (canBlockVisitor()) {
           <button
@@ -148,7 +150,7 @@
           <button class="btn bg-[#fef3f2] !text-[#b42318] hover:!bg-[#fee4e2]" (click)="onReject()">
             {{ 'VISIT_REQUEST_PAGE.REJECT' | translate }}
           </button>
-          <button class="btn green-btn" (click)="onAccept()">
+          <button class="btn green-btn" (click)="onApprove()">
             {{ 'VISIT_REQUEST_PAGE.ACCEPT' | translate }}
           </button>
         </div>

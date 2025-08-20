@@ -24,12 +24,19 @@ import { ResponseData } from '@/models/shared/response/response-data';
     model: () => Visit,
     unwrap: 'data',
   },
+  $action: {
+    model: () => String,
+    unwrap: 'data',
+  },
 })
 @Injectable({
   providedIn: 'root',
 })
 export class VisitService extends BaseCrudService<Visit> {
   override serviceName: string = 'VisitService';
+  override getUrlSegment(): string {
+    return this.urlService.URLS.VISITS;
+  }
 
   @CastResponse(undefined, { fallback: '$visitor' })
   loadVisitorByNationalId(nationalId: string): Observable<Visit> {
@@ -75,7 +82,40 @@ export class VisitService extends BaseCrudService<Visit> {
       );
   }
 
-  override getUrlSegment(): string {
-    return this.urlService.URLS.VISITS;
+  @CastResponse(undefined, { fallback: '$action' })
+  blockVisitor(nationalId: string, visitLogId: number): Observable<string> {
+    return this.http
+      .post<
+        ResponseData<string>
+      >(this.getUrlSegment() + '/block-visitor?nationalId=' + nationalId + '&visitLogId=' + visitLogId, {}, { withCredentials: true })
+      .pipe(
+        map((response: ResponseData<string>) => {
+          return response.data;
+        })
+      );
+  }
+  @CastResponse(undefined, { fallback: '$action' })
+  approveVisit(visitLogId: number): Observable<string> {
+    return this.http
+      .post<
+        ResponseData<string>
+      >(this.getUrlSegment() + '/approve-visit?visitLogId=' + visitLogId, {}, { withCredentials: true })
+      .pipe(
+        map((response: ResponseData<string>) => {
+          return response.data;
+        })
+      );
+  }
+  @CastResponse(undefined, { fallback: '$action' })
+  rejectVisit(visitLogId: number): Observable<string> {
+    return this.http
+      .post<
+        ResponseData<string>
+      >(this.getUrlSegment() + '/reject-visit?visitLogId=' + visitLogId, {}, { withCredentials: true })
+      .pipe(
+        map((response: ResponseData<string>) => {
+          return response.data;
+        })
+      );
   }
 }

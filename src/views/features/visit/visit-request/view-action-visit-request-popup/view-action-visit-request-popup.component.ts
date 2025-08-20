@@ -15,6 +15,7 @@ import { FormGroup } from '@angular/forms';
 import { M } from '@angular/material/dialog.d-B5HZULyo';
 import { Observable } from 'rxjs';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
 @Component({
   selector: 'app-view-action-visit-request-popup',
@@ -35,6 +36,8 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   // Enum references for template
   ViewModeEnum = ViewModeEnum;
   VisitStatusEnum = VisitStatusEnum;
+
+  successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.direction =
@@ -102,25 +105,35 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   }
 
   // Action button methods - to be implemented later
-  onAccept(): void {
+  onApprove(): void {
     // Implementation to be added later
     console.log('Accept visit request:', this.model.id);
     // Call visit service to accept the request
-    // this.visitService.acceptVisit(this.model.id).subscribe(...)
+    this.visitService.approveVisit(this.model.id).subscribe((response) => {
+      this.alertService.showSuccessMessage(this.successObject);
+      this.dialogRef.close(DIALOG_ENUM.OK);
+    });
   }
 
   onReject(): void {
     // Implementation to be added later
     console.log('Reject visit request:', this.model.id);
     // Call visit service to reject the request
-    // this.visitService.rejectVisit(this.model.id).subscribe(...)
+    this.visitService.rejectVisit(this.model.id).subscribe((response) => {
+      this.alertService.showSuccessMessage(this.successObject);
+      this.dialogRef.close(DIALOG_ENUM.OK);
+    });
   }
 
   onBlockVisitor(): void {
     // Implementation to be added later
     console.log('Block visitor:', this.model.nationalId);
+
     // Call visit service to block the visitor
-    // this.visitService.blockVisitor(this.model.nationalId).subscribe(...)
+    this.visitService.blockVisitor(this.model.nationalId, this.model.id).subscribe((response) => {
+      this.alertService.showSuccessMessage(this.successObject);
+      this.dialogRef.close(DIALOG_ENUM.OK);
+    });
   }
 
   close() {
@@ -134,11 +147,15 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
 
   // Check if visitor can be blocked (business logic can be added here)
   canBlockVisitor(): boolean {
-    return this.shouldShowActions() && this.model.visitStatus !== VisitStatusEnum.APPROVED;
+    return this.shouldShowActions();
   }
 
   // Check if request can be accepted/rejected
   canTakeAction(): boolean {
     return this.shouldShowActions() && this.model.visitStatus === VisitStatusEnum.NEW;
+  }
+
+  canViewCancel(): boolean {
+    return !this.shouldShowActions();
   }
 }

@@ -180,6 +180,7 @@
                 <th>{{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.START_DATE' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.END_DATE' | translate }}</th>
+                <th>{{ 'COMMON.ACTIONS' | translate }}</th>
               </tr>
             </ng-template>
             <ng-template #body let-shiftData>
@@ -193,6 +194,14 @@
                 </td>
                 <td>{{ shiftData.startDate }}</td>
                 <td>{{ shiftData.endDate ? shiftData.endDate : '---' }}</td>
+                <td>
+                  <button
+                    (click)="deleteUserShiftAssignment(shiftData.id)"
+                    class="table-action-red-btn"
+                  >
+                    <img src="assets/icons/delete-action.svg" alt="" />
+                  </button>
+                </td>
               </tr>
             </ng-template>
           </p-table>

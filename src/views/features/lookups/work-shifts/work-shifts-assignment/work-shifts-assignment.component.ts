@@ -5,7 +5,7 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { WorkShiftsListPopupComponent } from '../work-shifts-list-popup/work-shifts-list-popup.component';
 import { Select } from 'primeng/select';
@@ -26,6 +26,10 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
+import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icons-enum';
+import { ConfirmationService } from '@/services/shared/confirmation.service';
+import { filter, switchMap } from 'rxjs';
+import { AlertService } from '@/services/shared/alert.service';
 
 @Component({
   selector: 'app-work-shifts-assignment',
@@ -58,6 +62,9 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   filteredEmployees: UsersWithDepartmentLookup[] = [];
   filterOptions: UserWorkShiftsFilter = new UserWorkShiftsFilter();
   shifts: Shift[] = [];
+
+  confirmationService = inject(ConfirmationService);
+  alertService = inject(AlertService);
   userworkShiftService = inject(UserWorkShiftService);
   override get filterModel(): UserWorkShiftsFilter {
     return this.filterOptions;
@@ -168,5 +175,36 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
         error: this.handleLoadListError,
       });
     }
+  }
+
+  deleteUserShiftAssignment(shiftLogId: number) {
+    const confirmMessage = this.translateService.instant('COMMON.CONFIRM_DELETE');
+    const confirmationData = {
+      icon: CONFIRMATION_DIALOG_ICONS_ENUM.WARNING.toString(),
+      messages: [confirmMessage],
+    };
+
+    this.confirmationService
+      .open(confirmationData)
+      .afterClosed()
+      .pipe(
+        filter((result) => result === DIALOG_ENUM.OK),
+        switchMap(() => this.userworkShiftService.deleteUserShiftAssignment(shiftLogId)),
+        switchMap(() => this.userworkShiftService.loadPaginated())
+      )
+      .subscribe({
+        next: (response: PaginatedList<UserWorkShift>) => {
+          this.list = response.list;
+          this.paginationInfo = response.paginationInfo;
+          this.alertService.showSuccessMessage({
+            messages: ['COMMON.DELETED_SUCCESSFULLY'],
+          });
+        },
+        error: () => {
+          this.alertService.showErrorMessage({
+            messages: ['COMMON.DELETION_FAILED'],
+          });
+        },
+      });
   }
 }

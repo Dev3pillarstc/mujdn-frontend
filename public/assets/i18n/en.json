@@ -345,7 +345,8 @@
     "ACTIVATION_STATUS": "Activation status",
     "ACTIVE": "Active",
     "NOT_ACTIVE": "Not active",
-    "ACTIVATE": "Activate"
+    "ACTIVATE": "Activate",
+    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "New default shift to will be added, The other default shift will not be default anymore"
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "My Attendance Logs",

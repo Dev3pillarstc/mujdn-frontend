@@ -116,18 +116,16 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     return result;
   }
 
-
   get canSaveAndActivateShift(): boolean {
     const rawShiftDate = this.form.get('shiftLogStartDate')?.value;
     const today = new Date(toDateOnly(new Date()));
 
     // Basic requirements for both modes
-    const basicRequirements = (
+    const basicRequirements =
       this.form.valid &&
       this.form.get('isDefaultShiftForm')?.value === true &&
       rawShiftDate &&
-      this.form.get('shiftLogStartDate')?.valid
-    );
+      this.form.get('shiftLogStartDate')?.valid;
 
     if (!basicRequirements) {
       return false;
@@ -143,10 +141,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     }
 
     // For update mode, same date logic + model must not be active
-    return (
-      !this.model.isActive &&
-      isDateTodayOrBefore
-    );
+    return !this.model.isActive && isDateTodayOrBefore;
   }
 
   saveAndActivateShift() {
@@ -200,7 +195,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     });
   }
 
-  override saveFail(error: Error): void { }
+  override saveFail(error: Error): void {}
 
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
@@ -296,6 +291,34 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
 
   updateShiftMainData() {
     this.form.get('isUpdateOnly')?.setValue(true);
-    this.save$.next();
+
+    if (this.model.isAvailableDefaultShift && this.form.get('isDefaultShiftForm')?.value) {
+      const confirmMessage = this.translateService.instant(
+        'WORK_SHIFTS_POPUP.NEW_DEFAULT_SHIFT_TO_BE_ADDED'
+      );
+      const confirmationData = {
+        icon: CONFIRMATION_DIALOG_ICONS_ENUM.WARNING.toString(),
+        messages: [confirmMessage],
+      };
+
+      this.confirmationService
+        .open(confirmationData)
+        .afterClosed()
+        .pipe(
+          filter((result) => result === DIALOG_ENUM.OK),
+          switchMap(() => {
+            this.save$.next();
+            return this.save$;
+          })
+        )
+        .subscribe({
+          next: () => {
+            this.dialogRef.close(DIALOG_ENUM.OK);
+          },
+          error: (error) => {},
+        });
+    } else {
+      this.save$.next();
+    }
   }
 }

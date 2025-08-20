@@ -343,7 +343,8 @@
     "ACTIVATION_STATUS": "حالة التفعيل",
     "ACTIVE": "مفعلة",
     "NOT_ACTIVE": "غير مفعلة",
-    "ACTIVATE": "تفعيل"
+    "ACTIVATE": "تفعيل",
+    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "سيتم إضافة وردية افتراضية جديدة، لن تكون الوردية الافتراضية السابقة افتراضية بعد الآن"
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "سجل حضوري",

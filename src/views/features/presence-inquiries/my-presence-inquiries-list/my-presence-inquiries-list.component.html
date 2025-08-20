@@ -83,11 +83,8 @@
         {{ 'INQUIRIES_PAGE.PRESENCE_INQUIRIES' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
-        <button class="table-head-action-btn min-w-[40px]">
+        <button (click)="exportExcel()" class="table-head-action-btn min-w-[40px]">
           <img src="assets/icons/excel.svg" alt="" />
-        </button>
-        <button class="cursor-pointer">
-          <img src="assets/icons/print.svg" alt="" />
         </button>
       </div>
     </div>
@@ -103,8 +100,8 @@
         </ng-template>
         <ng-template pTemplate="body" let-inquiry>
           <tr>
-            <td>{{ inquiry.assignedDate | date: 'dd-MM-yyyy' }}</td>
-            <td>{{ inquiry.assignedDate | date: 'HH:mm:ss' }}</td>
+            <td>{{ formatDate(inquiry.assignedDate) }}</td>
+            <td>{{ formatTime(inquiry.assignedDate) }}</td>
             <td>
               <span
                 class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]"

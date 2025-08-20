@@ -540,7 +540,7 @@
   "INQUIRIES_PAGE": {
     "INQUIRY_DATE": "Inquiry Date",
     "INQUIRY_TIME": "Inquiry Time",
-    "ALLOWED_ATTENDANCE_PERIOD": "Allowed Attendance Period",
+    "ALLOWED_ATTENDANCE_PERIOD": "Allowed Attendance Period (min)",
     "PROCESSING_STATUS": "Processing Status",
     "PRESENCE_INQUIRIES": "Presence Proof Inquiries",
     "MY_INQUIRIES": "My Inquiries",

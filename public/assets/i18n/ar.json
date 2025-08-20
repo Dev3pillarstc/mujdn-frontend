@@ -537,7 +537,7 @@
   "INQUIRIES_PAGE": {
     "INQUIRY_DATE": "تاريخ المسائلة",
     "INQUIRY_TIME": "وقت المسائلة",
-    "ALLOWED_ATTENDANCE_PERIOD": "فترة السماح لتسجيل الحضور",
+    "ALLOWED_ATTENDANCE_PERIOD": "(دق) فترة السماح لتسجيل الحضور",
     "PROCESSING_STATUS": "حالة المعالجة",
     "PRESENCE_INQUIRIES": "قائمة مسائلات توثيق التواجد",
     "MY_INQUIRIES": "مسائلاتي",

@@ -592,7 +592,7 @@
     "EMPLOYEE_NAME_AR": "Employee name in Arabic",
     "EMPLOYEE_NAME_EN": "Employee name in English",
     "NATIONAL_ID": "National ID",
-    "ASSIGNED_EMPLOYEES": "Assigned employees",
+    "ASSIGNED_EMPLOYEES": "Employees responsible for executing the missions",
     "NO_EMPLOYEES_SELECTED": "No employees assigned",
     "ACTION_MAY_REQUIRE_REPROCESS": "This action may require reprocessing the data after saving",
     "ADD_EDIT_ACTION_MAY_REQUIRE_REPROCESS": "The add / edit mission action may affect attendance and leave data of the employees assigned to it.",

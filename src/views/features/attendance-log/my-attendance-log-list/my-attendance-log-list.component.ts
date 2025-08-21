@@ -194,7 +194,7 @@ export default class MyAttendanceLogListComponent
 
     const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
 
-    this.service.loadMyAttendanceLogPaginatedSP(allDataParams, this.filterModel!).subscribe({
+    this.service.loadMyAttendanceLogPaginatedSP(allDataParams, this.appliedFilterModel!).subscribe({
       next: (response) => {
         const allData = response?.list || [];
 

@@ -131,231 +131,248 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
       pdf.setLineWidth(0.5);
       pdf.rect(15, contentY, pageWidth - 30, boxHeight);
 
-      // QR Code section (left side)
+      // QR Code section
       const qrSize = 60;
-      const qrX = 25;
+      const qrX = isEnglish ? pageWidth - 85 : 25; // Right for English, left for Arabic
       const qrY = contentY + 15;
 
-      // For now, create a simple QR-like pattern
-      // In production, you should generate actual QR code here
-      pdf.setFillColor(255, 255, 255);
-      pdf.rect(qrX, qrY, qrSize, qrSize, 'F');
+      // Load and add QR code image
+      const img = new Image();
+      img.onload = () => {
+        // Add QR code image to PDF
+        pdf.addImage(img, 'PNG', qrX, qrY, qrSize, qrSize);
 
-      // QR border
-      pdf.setDrawColor(0, 0, 0);
-      pdf.setLineWidth(2);
-      pdf.rect(qrX, qrY, qrSize, qrSize);
-
-      // Simple QR pattern
-      pdf.setFillColor(0, 0, 0);
-      const cellSize = 4;
-      for (let i = 0; i < 15; i++) {
-        for (let j = 0; j < 15; j++) {
-          // Create a checkerboard-like pattern
-          if ((i + j) % 2 === 0 || (i < 3 && j < 3) || (i > 11 && j < 3) || (i < 3 && j > 11)) {
-            pdf.rect(qrX + i * cellSize, qrY + j * cellSize, cellSize, cellSize, 'F');
-          }
-        }
-      }
-
-      // Visitor information (right side)
-      const infoStartX = qrX + qrSize + 20;
-      let infoY = contentY + 20;
-
-      // Helper function to add info field
-      const addInfoField = (label: string, value: string, y: number) => {
-        if (!isEnglish) {
-          pdf.setFont('IBMPlexSansArabic', 'normal');
-          pdf.setFontSize(10);
-          pdf.setTextColor(108, 115, 127); // Secondary color
-          pdf.text(label, pageWidth - 25, y, { align: 'right' });
-
-          pdf.setFont('IBMPlexSansArabic', 'normal');
-          pdf.setFontSize(12);
-          pdf.setTextColor(22, 22, 22);
-          pdf.text(value, pageWidth - 25, y + 6, { align: 'right' });
-        } else {
-          pdf.setFont('helvetica', 'normal');
-          pdf.setFontSize(10);
-          pdf.setTextColor(108, 115, 127);
-          pdf.text(label, infoStartX, y);
-
-          pdf.setFont('helvetica', 'bold');
-          pdf.setFontSize(12);
-          pdf.setTextColor(22, 22, 22);
-          pdf.text(value, infoStartX, y + 6);
-        }
+        // Continue with the rest of the PDF generation after image loads
+        this.generatePDFContent(
+          pdf,
+          isEnglish,
+          pageWidth,
+          pageHeight,
+          contentY,
+          boxHeight,
+          qrSize,
+          qrX
+        );
       };
 
-      // Add visitor information
-      if (!isEnglish) {
-        addInfoField('اسم الزائر:', this.model.fullName || 'visi sd tor 2', infoY);
-        infoY += 20;
-        addInfoField('رقم الهوية:', this.model.nationalId || '1234567899', infoY);
-        infoY += 20;
-        addInfoField('رقم الجوال:', this.model.phoneNumber || '5467891235', infoY);
-        infoY += 20;
-        addInfoField('الإدارة المستهدفة:', this.getDepartmentName() || 'إدارة الدعم الفني', infoY);
-      } else {
-        addInfoField('Visitor Name:', this.model.fullName || 'visi sd tor 2', infoY);
-        infoY += 20;
-        addInfoField('National ID:', this.model.nationalId || '1234567899', infoY);
-        infoY += 20;
-        addInfoField('Mobile Number:', this.model.phoneNumber || '5467891235', infoY);
-        infoY += 20;
-        addInfoField(
-          'Target Department:',
-          this.getDepartmentName() || 'Technical Support Department',
-          infoY
+      img.onerror = () => {
+        console.warn('Could not load QR code image, generating PDF without it');
+        // Generate PDF without QR code if image fails to load
+        this.generatePDFContent(
+          pdf,
+          isEnglish,
+          pageWidth,
+          pageHeight,
+          contentY,
+          boxHeight,
+          qrSize,
+          qrX
         );
-      }
+      };
 
-      // Visit details section (below the main box)
-      currentY = contentY + boxHeight - 55;
-
-      // Two column layout for visit details
-      const col1X = 25;
-      const col2X = pageWidth / 2 + 10;
-
-      if (!isEnglish) {
-        // Visit Date (right column)
-        pdf.setFont('IBMPlexSansArabic', 'normal');
-        pdf.setFontSize(10);
-        pdf.setTextColor(108, 115, 127);
-        pdf.text('تاريخ الزيارة:', pageWidth - 25, currentY, { align: 'right' });
-
-        pdf.setFontSize(12);
-        pdf.setTextColor(22, 22, 22);
-        const visitDate = this.formatDate(this.model.visitDate) || '08/11/2025';
-        pdf.text(visitDate, pageWidth - 25, currentY + 8, { align: 'right' });
-
-        // Visit Time (left column)
-        pdf.setFontSize(10);
-        pdf.setTextColor(108, 115, 127);
-        pdf.text('وقت الزيارة (من-إلى):', col2X + 20, currentY, { align: 'right' });
-
-        pdf.setFontSize(12);
-        pdf.setTextColor(22, 22, 22);
-        const visitTimeFrom = this.formatTime(this.model.visitTimeFrom) || '11:01 ص';
-        const visitTimeTo = this.formatTime(this.model.visitTimeTo) || '3:48 م';
-        pdf.text(`${visitTimeFrom} - ${visitTimeTo}`, col2X + 20, currentY + 8, { align: 'right' });
-
-        currentY += 25;
-
-        // Visit Creator (right column)
-        pdf.setFontSize(10);
-        pdf.setTextColor(108, 115, 127);
-        pdf.text('منشئ الزيارة:', pageWidth - 25, currentY, { align: 'right' });
-
-        pdf.setFontSize(12);
-        pdf.setTextColor(22, 22, 22);
-        const creatorName = this.getCreatorName() || 'مدير النظام';
-        pdf.text(creatorName, pageWidth - 25, currentY + 8, { align: 'right' });
-
-        // Mobile (left column - duplicate)
-        pdf.setFontSize(10);
-        pdf.setTextColor(108, 115, 127);
-        pdf.text('رقم الجوال:', col2X + 20, currentY, { align: 'right' });
-
-        pdf.setFontSize(12);
-        pdf.setTextColor(22, 22, 22);
-        pdf.text(this.model.phoneNumber || '5467891235', col2X + 20, currentY + 8, {
-          align: 'right',
-        });
-      } else {
-        // English version
-        addInfoField(
-          'Visit Date:',
-          this.formatDate(this.model.visitDate) || '08/11/2025',
-          currentY
-        );
-
-        const visitTimeFrom = this.formatTime(this.model.visitTimeFrom) || '11:01 AM';
-        const visitTimeTo = this.formatTime(this.model.visitTimeTo) || '3:48 PM';
-
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(10);
-        pdf.setTextColor(108, 115, 127);
-        pdf.text('Visit Time (From-To):', col2X + 20, currentY);
-
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(12);
-        pdf.setTextColor(22, 22, 22);
-        pdf.text(`${visitTimeFrom} - ${visitTimeTo}`, col2X + 20, currentY + 8);
-
-        currentY += 25;
-
-        addInfoField('Visit Creator:', this.getCreatorName() || 'System Admin', currentY);
-
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(10);
-        pdf.setTextColor(108, 115, 127);
-        pdf.text('Mobile Number:', col2X + 20, currentY);
-
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(12);
-        pdf.setTextColor(22, 22, 22);
-        pdf.text(this.model.phoneNumber || '5467891235', col2X + 20, currentY + 8);
-      }
-
-      // Warning section
-      currentY += 40;
-      const warningBoxHeight = 25;
-
-      // Warning background
-      pdf.setFillColor(254, 223, 137);
-      pdf.rect(15, currentY, pageWidth - 30, warningBoxHeight, 'F');
-
-      // Warning left border
-      pdf.setFillColor(220, 104, 3);
-      pdf.rect(15, currentY, 3, warningBoxHeight, 'F');
-
-      // Warning icon (triangle)
-      pdf.setFillColor(220, 104, 3);
-      const iconX = 25;
-      const iconY = currentY + 8;
-      pdf.triangle(iconX, iconY, iconX + 5, iconY + 8, iconX - 5, iconY + 8, 'F');
-
-      // Warning text
-      if (!isEnglish) {
-        pdf.setFont('IBMPlexSansArabic', 'normal');
-        pdf.setFontSize(11);
-        pdf.setTextColor(181, 71, 8);
-        pdf.text('تحذيرات عامة', pageWidth - 25, currentY + 8, { align: 'right' });
-
-        pdf.setFont('IBMPlexSansArabic', 'normal');
-        pdf.setFontSize(9);
-        pdf.setTextColor(56, 66, 80);
-        pdf.text('ممنوع التدخين', pageWidth - 25, currentY + 16, { align: 'right' });
-        pdf.text('ممنوع الوقوف', pageWidth - 25, currentY + 22, { align: 'right' });
-      } else {
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(11);
-        pdf.setTextColor(181, 71, 8);
-        pdf.text('General Warnings', 35, currentY + 8);
-
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(9);
-        pdf.setTextColor(56, 66, 80);
-        pdf.text('No Smoking', 35, currentY + 16);
-        pdf.text('No Parking', 35, currentY + 22);
-      }
-
-      // Footer
-      pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(8);
-      pdf.setTextColor(150, 150, 150);
-      pdf.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth / 2, pageHeight - 15, {
-        align: 'center',
-      });
-
-      // Save the PDF
-      const fileName = `visit-request-${this.model.nationalId || Date.now()}.pdf`;
-      pdf.save(fileName);
-
-      // Success message
+      img.src = 'assets/imgs/qr-code.png';
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
+  }
+
+  private generatePDFContent(
+    pdf: jsPDF,
+    isEnglish: boolean,
+    pageWidth: number,
+    pageHeight: number,
+    contentY: number,
+    boxHeight: number,
+    qrSize: number,
+    qrX: number
+  ): void {
+    // Visitor information section
+    const infoStartX = isEnglish ? 25 : pageWidth - 25; // Left for English, right edge for Arabic
+    let infoY = contentY + 20;
+
+    // Helper function to add info field
+    const addInfoField = (label: string, value: string, y: number) => {
+      if (!isEnglish) {
+        pdf.setFont('IBMPlexSansArabic', 'normal');
+        pdf.setFontSize(10);
+        pdf.setTextColor(108, 115, 127); // Secondary color
+        pdf.text(label, infoStartX, y, { align: 'right' });
+
+        pdf.setFont('IBMPlexSansArabic', 'normal');
+        pdf.setFontSize(12);
+        pdf.setTextColor(22, 22, 22);
+        pdf.text(value, infoStartX, y + 6, { align: 'right' });
+      } else {
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(10);
+        pdf.setTextColor(108, 115, 127);
+        pdf.text(label, infoStartX, y);
+
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(12);
+        pdf.setTextColor(22, 22, 22);
+        pdf.text(value, infoStartX, y + 6);
+      }
+    };
+
+    // Add visitor information
+    if (!isEnglish) {
+      addInfoField('اسم الزائر:', this.model.fullName || 'visi sd tor 2', infoY);
+      infoY += 20;
+      addInfoField('رقم الهوية:', this.model.nationalId || '1234567899', infoY);
+      infoY += 20;
+      addInfoField('رقم الجوال:', this.model.phoneNumber || '5467891235', infoY);
+      infoY += 20;
+      addInfoField('الإدارة المستهدفة:', this.getDepartmentName() || 'إدارة الدعم الفني', infoY);
+    } else {
+      addInfoField('Visitor Name:', this.model.fullName || 'visi sd tor 2', infoY);
+      infoY += 20;
+      addInfoField('National ID:', this.model.nationalId || '1234567899', infoY);
+      infoY += 20;
+      addInfoField('Mobile Number:', this.model.phoneNumber || '5467891235', infoY);
+      infoY += 20;
+      addInfoField(
+        'Target Department:',
+        this.getDepartmentName() || 'Technical Support Department',
+        infoY
+      );
+    }
+
+    // Visit details section (below the main box)
+    let currentY = contentY + boxHeight - 55;
+
+    // Two column layout for visit details
+    const col1X = 25;
+    const col2X = pageWidth / 2 + 10;
+
+    if (!isEnglish) {
+      // Visit Date (right column)
+      pdf.setFont('IBMPlexSansArabic', 'normal');
+      pdf.setFontSize(10);
+      pdf.setTextColor(108, 115, 127);
+      pdf.text('تاريخ الزيارة:', pageWidth - 25, currentY, { align: 'right' });
+
+      pdf.setFontSize(12);
+      pdf.setTextColor(22, 22, 22);
+      const visitDate = this.formatDate(this.model.visitDate) || '08/11/2025';
+      pdf.text(visitDate, pageWidth - 25, currentY + 8, { align: 'right' });
+
+      // Visit Time (left column)
+      pdf.setFontSize(10);
+      pdf.setTextColor(108, 115, 127);
+      pdf.text('وقت الزيارة (من-إلى):', col2X + 20, currentY, { align: 'right' });
+
+      pdf.setFontSize(12);
+      pdf.setTextColor(22, 22, 22);
+      const visitTimeFrom = this.formatTime(this.model.visitTimeFrom) || '11:01 ص';
+      const visitTimeTo = this.formatTime(this.model.visitTimeTo) || '3:48 م';
+      pdf.text(`${visitTimeFrom} - ${visitTimeTo}`, col2X + 20, currentY + 8, { align: 'right' });
+
+      currentY += 25;
+
+      // Visit Creator (right column)
+      pdf.setFontSize(10);
+      pdf.setTextColor(108, 115, 127);
+      pdf.text('منشئ الزيارة:', pageWidth - 25, currentY, { align: 'right' });
+
+      pdf.setFontSize(12);
+      pdf.setTextColor(22, 22, 22);
+      const creatorName = this.getCreatorName() || 'مدير النظام';
+      pdf.text(creatorName, pageWidth - 25, currentY + 8, { align: 'right' });
+
+      // Mobile (left column - duplicate)
+      pdf.setFontSize(10);
+      pdf.setTextColor(108, 115, 127);
+      pdf.text('رقم الجوال:', col2X + 20, currentY, { align: 'right' });
+
+      pdf.setFontSize(12);
+      pdf.setTextColor(22, 22, 22);
+      pdf.text(this.model.phoneNumber || '5467891235', col2X + 20, currentY + 8, {
+        align: 'right',
+      });
+    } else {
+      // English version
+      addInfoField('Visit Date:', this.formatDate(this.model.visitDate) || '08/11/2025', currentY);
+
+      const visitTimeFrom = this.formatTime(this.model.visitTimeFrom) || '11:01 AM';
+      const visitTimeTo = this.formatTime(this.model.visitTimeTo) || '3:48 PM';
+
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(10);
+      pdf.setTextColor(108, 115, 127);
+      pdf.text('Visit Time (From-To):', col2X + 20, currentY);
+
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(12);
+      pdf.setTextColor(22, 22, 22);
+      pdf.text(`${visitTimeFrom} - ${visitTimeTo}`, col2X + 20, currentY + 8);
+
+      currentY += 25;
+
+      addInfoField('Visit Creator:', this.getCreatorName() || 'System Admin', currentY);
+
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(10);
+      pdf.setTextColor(108, 115, 127);
+      pdf.text('Mobile Number:', col2X + 20, currentY);
+
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(12);
+      pdf.setTextColor(22, 22, 22);
+      pdf.text(this.model.phoneNumber || '5467891235', col2X + 20, currentY + 8);
+    }
+
+    // Warning section
+    currentY += 40;
+    const warningBoxHeight = 25;
+
+    // Warning background
+    pdf.setFillColor(254, 223, 137);
+    pdf.rect(15, currentY, pageWidth - 30, warningBoxHeight, 'F');
+
+    // Warning left border
+    pdf.setFillColor(220, 104, 3);
+    if (!isEnglish) {
+      pdf.rect(pageWidth - 15, currentY, 2, warningBoxHeight, 'F');
+    } else {
+      pdf.rect(15, currentY, 2, warningBoxHeight, 'F');
+    }
+
+    // Warning text
+    if (!isEnglish) {
+      pdf.setFont('IBMPlexSansArabic', 'normal');
+      pdf.setFontSize(11);
+      pdf.setTextColor(181, 71, 8);
+      pdf.text('تحذيرات عامة', pageWidth - 25, currentY + 8, { align: 'right' });
+
+      pdf.setFont('IBMPlexSansArabic', 'normal');
+      pdf.setFontSize(9);
+      pdf.setTextColor(56, 66, 80);
+      pdf.text('ممنوع التدخين', pageWidth - 25, currentY + 16, { align: 'right' });
+      pdf.text('ممنوع الوقوف', pageWidth - 25, currentY + 22, { align: 'right' });
+    } else {
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(11);
+      pdf.setTextColor(181, 71, 8);
+      pdf.text('General Warnings', 35, currentY + 8);
+
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(9);
+      pdf.setTextColor(56, 66, 80);
+      pdf.text('No Smoking', 35, currentY + 16);
+      pdf.text('No Parking', 35, currentY + 22);
+    }
+
+    // Footer
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(8);
+    pdf.setTextColor(150, 150, 150);
+    pdf.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth / 2, pageHeight - 15, {
+      align: 'center',
+    });
+
+    // Save the PDF
+    const fileName = `visit-request-${this.model.nationalId || Date.now()}.pdf`;
+    pdf.save(fileName);
   }
 }

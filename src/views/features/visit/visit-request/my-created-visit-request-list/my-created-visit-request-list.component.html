@@ -140,7 +140,10 @@
         {{ 'VISIT_REQUEST_PAGE.VISIT_REQUEST_LIST' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
-        <button class="table-head-action-btn" (click)="exportExcel()">
+        <button
+          class="table-head-action-btn"
+          (click)="exportExcel('my-created-visit-requests.xlsx')"
+        >
           <img src="assets/icons/excel.svg" alt="" />
         </button>
         <button (click)="openDialog()" class="btn green-btn">

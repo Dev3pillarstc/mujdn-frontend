@@ -31,6 +31,8 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
 import { AuthService } from '@/services/auth/auth.service';
 import { QrcodeVisitRequestPopupComponent } from '../qrcode-visit-request-popup/qrcode-visit-request-popup.component';
+import { CustomValidators } from '@/validators/custom-validators';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-my-created-visit-request-list',
@@ -121,7 +123,7 @@ export class MyCreatedVisitRequestListComponent
 
   override loadList() {
     return this.service.loadMyCreatedVisitsPaginated(this.paginationParams, {
-      ...this.filterModel!,
+      ...this.appliedFilterModel!,
     });
   }
 
@@ -299,6 +301,36 @@ export class MyCreatedVisitRequestListComponent
     this.openBaseDialog(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
       departments: this.departments,
       nationalities: this.nationalities,
+    });
+  }
+
+  override exportExcel(fileName: string = 'data.xlsx', isStoredProcedure: boolean = false): void {
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
+    };
+
+    const fetchAll = isStoredProcedure
+      ? this.service.loadPaginatedSP(allDataParams, { ...this.appliedFilterModel! })
+      : this.service.loadMyCreatedVisitsPaginated(allDataParams, { ...this.appliedFilterModel! });
+
+    fetchAll.subscribe({
+      next: (response) => {
+        const fullList = response.list || [];
+        if (fullList.length > 0) {
+          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+      error: (_) => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
     });
   }
 

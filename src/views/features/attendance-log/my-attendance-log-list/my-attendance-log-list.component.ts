@@ -194,7 +194,7 @@ export default class MyAttendanceLogListComponent
 
     const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
 
-    this.service.loadMyAttendanceLogPaginatedSP(allDataParams, this.filterModel!).subscribe({
+    this.service.loadMyAttendanceLogPaginatedSP(allDataParams, this.appliedFilterModel!).subscribe({
       next: (response) => {
         const allData = response?.list || [];
 
@@ -286,12 +286,11 @@ export default class MyAttendanceLogListComponent
     };
 
     const fetchAll = isStoredProcedure
-      ? this.service.loadMyAttendanceLogPaginatedSP(allDataParams, { ...this.filterModel! })
-      : this.service.loadPaginated(allDataParams, { ...this.filterModel! });
+      ? this.service.loadMyAttendanceLogPaginatedSP(allDataParams, { ...this.appliedFilterModel! })
+      : this.service.loadPaginated(allDataParams, { ...this.appliedFilterModel! });
 
     fetchAll.subscribe({
       next: (response) => {
-        ``;
         const fullList = response.list || [];
         if (fullList.length > 0) {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;

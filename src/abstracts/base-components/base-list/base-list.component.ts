@@ -59,6 +59,12 @@ export abstract class BaseListComponent<
 
   abstract initListComponent(): void;
 
+  private _appliedFilterModel: FilterModel = {} as FilterModel;
+
+  get appliedFilterModel(): FilterModel {
+    return this._appliedFilterModel;
+  }
+
   openBaseDialog(
     popupComponent: PopupComponent,
     model: Model,
@@ -145,14 +151,15 @@ export abstract class BaseListComponent<
   }
 
   loadList() {
-    return this.service.loadPaginated(this.paginationParams, { ...this.filterModel! });
+    return this.service.loadPaginated(this.paginationParams, { ...this._appliedFilterModel! });
   }
 
   loadListSP() {
-    return this.service.loadPaginatedSP(this.paginationParams, { ...this.filterModel! });
+    return this.service.loadPaginatedSP(this.paginationParams, { ...this._appliedFilterModel! });
   }
 
   search(isStoredProcedure: boolean = false) {
+    this._appliedFilterModel = { ...this.filterModel };
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     if (isStoredProcedure) {
@@ -161,7 +168,7 @@ export abstract class BaseListComponent<
         error: this.handleLoadListError,
       });
     } else {
-      console.log('searching with params', this.paginationParams, this.filterModel);
+      console.log('searching with params', this.paginationParams, this._appliedFilterModel);
       this.loadList().subscribe({
         next: (response) => this.handleLoadListSuccess(response),
         error: this.handleLoadListError,
@@ -171,6 +178,8 @@ export abstract class BaseListComponent<
 
   resetSearch(isStoredProcedure: boolean = false) {
     this.filterModel = {} as FilterModel;
+    this._appliedFilterModel = {} as FilterModel;
+
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
     this.first = 0;
@@ -213,8 +222,8 @@ export abstract class BaseListComponent<
     };
 
     const fetchAll = isStoredProcedure
-      ? this.service.loadPaginatedSP(allDataParams, { ...this.filterModel! })
-      : this.service.loadPaginated(allDataParams, { ...this.filterModel! });
+      ? this.service.loadPaginatedSP(allDataParams, { ...this._appliedFilterModel! })
+      : this.service.loadPaginated(allDataParams, { ...this._appliedFilterModel! });
 
     fetchAll.subscribe({
       next: (response) => {

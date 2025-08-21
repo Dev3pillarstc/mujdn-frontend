@@ -148,7 +148,7 @@ export class MyMissionsTabComponent extends BaseListComponent<
 
     fetchAll.subscribe({
       next: (response) => {
-        const fullList = response.data.list || [];
+        const fullList = (response.data?.list || []) as any[];
         if (fullList.length > 0) {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
           const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));

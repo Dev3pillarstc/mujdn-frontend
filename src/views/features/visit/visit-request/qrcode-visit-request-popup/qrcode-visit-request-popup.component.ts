@@ -124,7 +124,7 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
       // Main content box
       currentY += 15;
       const contentY = currentY;
-      const boxHeight = 140;
+      const boxHeight = 160;
 
       // Draw main content border
       pdf.setDrawColor(200, 200, 200);
@@ -211,7 +211,7 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
       }
 
       // Visit details section (below the main box)
-      currentY = contentY + boxHeight + 20;
+      currentY = contentY + boxHeight - 55;
 
       // Two column layout for visit details
       const col1X = 25;
@@ -232,13 +232,13 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
         // Visit Time (left column)
         pdf.setFontSize(10);
         pdf.setTextColor(108, 115, 127);
-        pdf.text('وقت الزيارة (من-إلى):', col2X + 40, currentY, { align: 'right' });
+        pdf.text('وقت الزيارة (من-إلى):', col2X + 20, currentY, { align: 'right' });
 
         pdf.setFontSize(12);
         pdf.setTextColor(22, 22, 22);
         const visitTimeFrom = this.formatTime(this.model.visitTimeFrom) || '11:01 ص';
         const visitTimeTo = this.formatTime(this.model.visitTimeTo) || '3:48 م';
-        pdf.text(`${visitTimeFrom} - ${visitTimeTo}`, col2X + 40, currentY + 8, { align: 'right' });
+        pdf.text(`${visitTimeFrom} - ${visitTimeTo}`, col2X + 20, currentY + 8, { align: 'right' });
 
         currentY += 25;
 
@@ -255,11 +255,11 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
         // Mobile (left column - duplicate)
         pdf.setFontSize(10);
         pdf.setTextColor(108, 115, 127);
-        pdf.text('رقم الجوال:', col2X + 40, currentY, { align: 'right' });
+        pdf.text('رقم الجوال:', col2X + 20, currentY, { align: 'right' });
 
         pdf.setFontSize(12);
         pdf.setTextColor(22, 22, 22);
-        pdf.text(this.model.phoneNumber || '5467891235', col2X + 40, currentY + 8, {
+        pdf.text(this.model.phoneNumber || '5467891235', col2X + 20, currentY + 8, {
           align: 'right',
         });
       } else {
@@ -276,12 +276,12 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
         pdf.setFont('helvetica', 'normal');
         pdf.setFontSize(10);
         pdf.setTextColor(108, 115, 127);
-        pdf.text('Visit Time (From-To):', col2X, currentY);
+        pdf.text('Visit Time (From-To):', col2X + 20, currentY);
 
         pdf.setFont('helvetica', 'bold');
         pdf.setFontSize(12);
         pdf.setTextColor(22, 22, 22);
-        pdf.text(`${visitTimeFrom} - ${visitTimeTo}`, col2X, currentY + 8);
+        pdf.text(`${visitTimeFrom} - ${visitTimeTo}`, col2X + 20, currentY + 8);
 
         currentY += 25;
 
@@ -290,16 +290,16 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
         pdf.setFont('helvetica', 'normal');
         pdf.setFontSize(10);
         pdf.setTextColor(108, 115, 127);
-        pdf.text('Mobile Number:', col2X, currentY);
+        pdf.text('Mobile Number:', col2X + 20, currentY);
 
         pdf.setFont('helvetica', 'bold');
         pdf.setFontSize(12);
         pdf.setTextColor(22, 22, 22);
-        pdf.text(this.model.phoneNumber || '5467891235', col2X, currentY + 8);
+        pdf.text(this.model.phoneNumber || '5467891235', col2X + 20, currentY + 8);
       }
 
       // Warning section
-      currentY += 35;
+      currentY += 40;
       const warningBoxHeight = 25;
 
       // Warning background
@@ -318,7 +318,7 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
 
       // Warning text
       if (!isEnglish) {
-        pdf.setFont('IBMPlexSansArabic', 'bold');
+        pdf.setFont('IBMPlexSansArabic', 'normal');
         pdf.setFontSize(11);
         pdf.setTextColor(181, 71, 8);
         pdf.text('تحذيرات عامة', pageWidth - 25, currentY + 8, { align: 'right' });
@@ -329,7 +329,7 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
         pdf.text('ممنوع التدخين', pageWidth - 25, currentY + 16, { align: 'right' });
         pdf.text('ممنوع الوقوف', pageWidth - 25, currentY + 22, { align: 'right' });
       } else {
-        pdf.setFont('helvetica', 'bold');
+        pdf.setFont('helvetica', 'normal');
         pdf.setFontSize(11);
         pdf.setTextColor(181, 71, 8);
         pdf.text('General Warnings', 35, currentY + 8);

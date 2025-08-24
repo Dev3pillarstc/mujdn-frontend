@@ -8,7 +8,7 @@ import { BaseLookupModel } from '../lookups/base-lookup-model';
 
 const { send, receive } = new WorkMissionInterceptor();
 
-@InterceptModel({ send, receive })
+@InterceptModel(new WorkMissionInterceptor())
 export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> {
   override $$__service_name__$$: string = 'WorkMissionService';
   declare nameEn: string;
@@ -16,9 +16,10 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
   declare startDate: Date | string;
   declare endDate: Date | string;
   declare description: string;
-  declare missionAssigner?: BaseLookupModel;
+  declare missionCreator?: BaseLookupModel;
   declare assignedEmployees?: BaseLookupModel[];
   declare concurrencyUpdateVersion?: Uint8Array;
+  declare isMissionCreator: boolean;
 
   buildForm() {
     const { nameAr, nameEn, startDate, endDate, description } = this;

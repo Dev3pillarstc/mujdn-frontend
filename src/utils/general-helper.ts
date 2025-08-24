@@ -156,8 +156,6 @@ export function markFormGroupTouched(form: FormGroup | FormArray) {
 export function buildTranslationParams(details: any, translateService: any): any {
   const translationParams: any = {};
   const currentLang = translateService.currentLang || 'en';
-  console.log('Details received:', details); // Debug log
-  console.log('Current language:', currentLang); // Debug log
 
   Object.keys(details).forEach((key) => {
     // Extract the first value from the array, as Details is IDictionary<string, string[]>

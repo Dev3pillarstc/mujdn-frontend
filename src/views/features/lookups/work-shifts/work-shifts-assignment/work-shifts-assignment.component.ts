@@ -5,7 +5,7 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { WorkShiftsListPopupComponent } from '../work-shifts-list-popup/work-shifts-list-popup.component';
 import { Select } from 'primeng/select';
@@ -25,6 +25,11 @@ import UserWorkShiftsFilter from '@/models/features/lookups/work-shifts/user-wor
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
+import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icons-enum';
+import { ConfirmationService } from '@/services/shared/confirmation.service';
+import { filter, switchMap } from 'rxjs';
+import { AlertService } from '@/services/shared/alert.service';
 
 @Component({
   selector: 'app-work-shifts-assignment',
@@ -53,9 +58,13 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   usersProfiles: UsersWithDepartmentLookup[] = [];
   userWorkShift: UserWorkShift[] = [];
   departments: BaseLookupModel[] = [];
+  defaultWorkDays: WorkDaysSetting = new WorkDaysSetting();
   filteredEmployees: UsersWithDepartmentLookup[] = [];
   filterOptions: UserWorkShiftsFilter = new UserWorkShiftsFilter();
   shifts: Shift[] = [];
+
+  confirmationService = inject(ConfirmationService);
+  alertService = inject(AlertService);
   userworkShiftService = inject(UserWorkShiftService);
   override get filterModel(): UserWorkShiftsFilter {
     return this.filterOptions;
@@ -73,10 +82,21 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     this.paginationInfo = userShifts.paginationInfo;
     this.usersProfiles = this.activatedRoute.snapshot.data['list'].users;
     this.departments = this.activatedRoute.snapshot.data['list'].departments;
+    this.defaultWorkDays = this.activatedRoute.snapshot.data['list'].defaultworkDays;
     this.filteredEmployees = this.usersProfiles;
+    this.departments = this.sortByName(this.departments, this.optionLabel);
+    this.filteredEmployees = this.sortByName(this.filteredEmployees, this.optionLabel);
+  }
+  private sortByName<T extends { [key: string]: any }>(arr: T[], key: string): T[] {
+    return [...arr].sort((a, b) => {
+      const nameA = (a[key] || '').toString().toLowerCase();
+      const nameB = (b[key] || '').toString().toLowerCase();
+      return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+    });
   }
   filterEmployeesByDepartment(departmentId: number) {
     this.filteredEmployees = this.usersProfiles.filter((emp) => emp.departmentId === departmentId);
+    this.filteredEmployees = this.sortByName(this.filteredEmployees, this.optionLabel);
   }
   protected override mapModelToExcelRow(model: UserWorkShift): { [key: string]: any } {
     return {
@@ -99,29 +119,31 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   date2: Date | undefined;
   attendance!: any[];
 
-  addOrEditModel(): void {
-    this.openDialog();
+  addOrEditModel(userWorkShift?: UserWorkShift): void {
+    this.openDialog(userWorkShift ?? new UserWorkShift());
   }
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' }];
   }
-  override openDialog() {
+  override openDialog(userWorkShift: UserWorkShift) {
+    const viewMode = userWorkShift.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const model = userWorkShift ?? new UserWorkShift();
     const lookups = {
       usersProfiles: this.usersProfiles,
       departments: this.departments,
       shifts: this.shifts,
+      defaultWorkDays: [this.defaultWorkDays],
     };
 
-    return this.openBaseDialog(
-      WorkShiftsAssignmentPopupComponent as any,
-      new UserWorkShift(),
-      ViewModeEnum.CREATE,
-      lookups
-    );
+    return this.openBaseDialog(WorkShiftsAssignmentPopupComponent as any, model, viewMode, lookups);
   }
   get optionLabel(): string {
     const lang = this.langService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  }
+
+  isCurrentLanguageEnglish() {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
   }
 
   get startDate() {
@@ -130,5 +152,55 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
 
   get endDate() {
     return this.filterOptions.endDate as Date;
+  }
+
+  override resetSearch(isStoredProcedure: boolean = false) {
+    this.filterModel = {} as UserWorkShiftsFilter;
+    this.filteredEmployees = this.usersProfiles;
+    this.paginationParams.pageNumber = 1;
+    this.paginationParams.pageSize = 10;
+    this.first = 0;
+    if (isStoredProcedure) {
+      this.loadListSP().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+    } else {
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+    }
+  }
+
+  deleteUserShiftAssignment(shiftLogId: number) {
+    const confirmMessage = this.translateService.instant('COMMON.CONFIRM_DELETE');
+    const confirmationData = {
+      icon: CONFIRMATION_DIALOG_ICONS_ENUM.WARNING.toString(),
+      messages: [confirmMessage],
+    };
+
+    this.confirmationService
+      .open(confirmationData)
+      .afterClosed()
+      .pipe(
+        filter((result) => result === DIALOG_ENUM.OK),
+        switchMap(() => this.userworkShiftService.deleteUserShiftAssignment(shiftLogId)),
+        switchMap(() => this.userworkShiftService.loadPaginated())
+      )
+      .subscribe({
+        next: (response: PaginatedList<UserWorkShift>) => {
+          this.list = response.list;
+          this.paginationInfo = response.paginationInfo;
+          this.alertService.showSuccessMessage({
+            messages: ['COMMON.DELETED_SUCCESSFULLY'],
+          });
+        },
+        error: () => {
+          this.alertService.showErrorMessage({
+            messages: ['COMMON.DELETION_FAILED'],
+          });
+        },
+      });
   }
 }

@@ -199,7 +199,6 @@ export class AssignAndViewMissionsTabComponent
     this.actionList = [
       {
         label: this.translateService.instant('COMMON.EDIT'),
-        icon: 'pi pi-refresh',
         command: () => {
           this.addOrEditModel(this.selectedModel);
         },
@@ -209,7 +208,6 @@ export class AssignAndViewMissionsTabComponent
       },
       {
         label: this.translateService.instant('COMMON.DELETE'),
-        icon: 'pi pi-refresh',
         command: () => {
           this.deleteMission(this.selectedModel!.id);
         },

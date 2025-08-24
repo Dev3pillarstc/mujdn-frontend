@@ -26,6 +26,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
 import { formatDateTo12Hour, formatTimeTo12Hour, toDateOnly } from '@/utils/general-helper';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 @Component({
   selector: 'app-my-shifts',
   imports: [
@@ -57,6 +58,7 @@ export default class MyShiftsComponent extends BaseListComponent<
   };
 
   filterOptions: EmployeeShiftsFilter = new EmployeeShiftsFilter();
+  defaultWorkDays: WorkDaysSetting = new WorkDaysSetting();
   employeeShifts: EmployeeShift[] = [];
   currentShift: EmployeeShift | null = null;
   service = inject(MyShiftsService);
@@ -84,7 +86,10 @@ export default class MyShiftsComponent extends BaseListComponent<
 
   openDialog(shift: EmployeeShift): void {
     const viewMode = ViewModeEnum.EDIT;
-    this.openBaseDialog(WorkDaysPopupComponent as any, shift, viewMode);
+    const lookups = {
+      defaultWorkDays: [this.defaultWorkDays],
+    };
+    this.openBaseDialog(WorkDaysPopupComponent as any, shift, viewMode, lookups);
   }
 
   private loadInitialData(): void {
@@ -97,6 +102,7 @@ export default class MyShiftsComponent extends BaseListComponent<
       ...resolverData.myShifts.paginationInfo,
       totalItems: resolverData.myShifts.paginationInfo.totalItems || 0,
     };
+    this.defaultWorkDays = resolverData.defaultworkDays;
     // Load current shift data
     this.currentShift = resolverData.currentShift || null;
     if (this.currentShift) {

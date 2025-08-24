@@ -255,7 +255,12 @@
               {{ 'WORK_SHIFTS_POPUP.ACTIVATE' | translate }}
             </button>
           }
-          <button (click)="save$.next()" class="btn green-btn">
+          @if (canSaveAndActivateShift) {
+            <button (click)="saveAndActivateShift()" class="btn black-btn">
+              {{ 'WORK_SHIFTS_POPUP.SAVE_AND_ACTIVATE' | translate }}
+            </button>
+          }
+          <button (click)="updateShiftMainData()" class="btn green-btn">
             {{ 'COMMON.SAVE' | translate }}
           </button>
         </div>

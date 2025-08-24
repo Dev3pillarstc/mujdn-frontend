@@ -69,6 +69,7 @@ export default class WorkShiftsListComponent
 
   addOrEditModel(shift?: Shift) {
     shift = shift || new Shift();
+    shift.isAvailableDefaultShift = this.list.some((s) => s.isAvailableDefaultShift) ? true : false;
     this.openDialog(shift);
   }
 

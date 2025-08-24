@@ -130,8 +130,8 @@
           <tr>
             <th>{{ 'WORK_MISSIONS.MISSION_NAME_AR' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</th>
-            <th>{{ 'WORK_MISSIONS.START_DATE' | translate }}</th>
-            <th>{{ 'WORK_MISSIONS.END_DATE' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
             <th>{{ 'COMMON.ACTION' | translate }}</th>
           </tr>
         </ng-template>
@@ -139,7 +139,7 @@
           <tr>
             <td>{{ mission.nameAr }}</td>
             <td>
-              <div class="text-left">
+              <div>
                 {{ mission.nameEn }}
               </div>
             </td>
@@ -162,14 +162,16 @@
                   <img class="invert brightness-0" src="/assets/icons/leading.svg" alt="اسناد" />
                   {{ 'WORK_MISSIONS.ASSIGN_EMPLOYEES' | translate }}
                 </button>
-                <p-splitbutton
-                  [appendTo]="missionContainer"
-                  (click)="setSelectedModel(mission)"
-                  dropdownIcon="pi pi-ellipsis-v"
-                  [model]="actionList"
-                  styleClass="p-button-text p-button-plain"
-                />
-                <!-- <p-splitbutton label="Save" icon="pi pi-check" dropdownIcon="pi pi-ellipsis-v" [model]="items" /> -->
+                @if (mission.isMissionCreator) {
+                  <p-splitbutton
+                    [appendTo]="missionContainer"
+                    (click)="setSelectedModel(mission)"
+                    dropdownIcon="pi pi-ellipsis-v"
+                    [model]="actionList"
+                    styleClass="p-button-text p-button-plain"
+                  />
+                  <!-- <p-splitbutton label="Save" icon="pi pi-check" dropdownIcon="pi pi-ellipsis-v" [model]="items" /> -->
+                }
               </div>
             </td>
           </tr>

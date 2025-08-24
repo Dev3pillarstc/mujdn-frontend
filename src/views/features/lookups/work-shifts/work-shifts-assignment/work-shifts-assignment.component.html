@@ -70,7 +70,7 @@
                 [maxDate]="endDate"
                 class="peer block w-full"
                 inputId="startDate"
-                [placeholder]="'USER_WORK_SHIFT_PAGE.DATE_RANGE_PLACEHOLDER' | translate"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.START_DATE' | translate"
               >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
@@ -92,7 +92,7 @@
                 class="peer block w-full"
                 inputId="endDate"
                 [minDate]="startDate"
-                [placeholder]="'USER_WORK_SHIFT_PAGE.DATE_RANGE_PLACEHOLDER' | translate"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.END_DATE' | translate"
               >
                 <ng-template pTemplate="inputicon">
                   <img alt="" src="assets/icons/calender-icon.svg" />
@@ -112,8 +112,9 @@
                 [options]="departments"
                 class="w-full peer"
                 [optionLabel]="optionLabel"
+                optionValue="id"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"
-                (onChange)="filterEmployeesByDepartment($event.value.id)"
+                (onChange)="filterEmployeesByDepartment($event.value)"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -129,6 +130,7 @@
                 [(ngModel)]="filterOptions.fkAssignedUserId"
                 class="w-full peer"
                 [optionLabel]="optionLabel"
+                optionValue="id"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate"
               ></p-select>
               <span
@@ -175,20 +177,36 @@
               <tr>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN' | translate }}</th>
-                <th>{{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_AR' | translate }}</th>
-                <th>{{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_EN' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.START_DATE' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.END_DATE' | translate }}</th>
+                <th>{{ 'COMMON.ACTIONS' | translate }}</th>
               </tr>
             </ng-template>
             <ng-template #body let-shiftData>
               <tr>
                 <td>{{ shiftData.shiftNameAr }}</td>
                 <td>{{ shiftData.shiftNameEn }}</td>
-                <td>{{ shiftData.employeeNameAr }}</td>
-                <td>{{ shiftData.employeeNameEn }}</td>
+                <td>
+                  {{
+                    isCurrentLanguageEnglish() ? shiftData.employeeNameEn : shiftData.employeeNameAr
+                  }}
+                </td>
                 <td>{{ shiftData.startDate }}</td>
                 <td>{{ shiftData.endDate ? shiftData.endDate : '---' }}</td>
+                <td>
+                  <div class="actions flex gap-2">
+                    <button (click)="addOrEditModel(shiftData)" class="table-action-gray-btn">
+                      <img src="assets/icons/edit-action.svg" alt="" />
+                    </button>
+                    <button
+                      (click)="deleteUserShiftAssignment(shiftData.id)"
+                      class="table-action-red-btn"
+                    >
+                      <img src="assets/icons/delete-action.svg" alt="" />
+                    </button>
+                  </div>
+                </td>
               </tr>
             </ng-template>
           </p-table>

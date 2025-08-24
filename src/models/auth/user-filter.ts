@@ -1,4 +1,5 @@
 export class UserFilter {
+  declare id?: number;
   declare fullNameEn?: string;
   declare fullNameAr?: string;
   declare jobTitleEn?: string;

@@ -164,9 +164,9 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'notification-channels',
+        path: 'general-settings',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NOTIFICATION_CHANNELS },
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
         resolve: { channel: notificationSettingResolver },
         loadComponent: () =>
           import('@/views/features/settings/notification-settings/notification-settings.component'),

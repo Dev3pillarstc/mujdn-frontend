@@ -37,7 +37,7 @@ export class UserProfile extends BaseCrudModel<UserProfile, UserProfileService, 
         email,
         [
           Validators.required,
-          Validators.email,
+          CustomValidators.pattern('EMAIL'),
           Validators.maxLength(CustomValidators.defaultLengths.EMAIL_MAX),
         ],
       ],

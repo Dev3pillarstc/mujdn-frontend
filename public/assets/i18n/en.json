@@ -103,8 +103,8 @@
     "PROFILE_LOAD_ERROR": "Error loading profile data",
     "RETRY": "Retry",
     "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect",
-    "MIN_VALUE": "Value must be at least {min} (got {actual})",
-    "MAX_VALUE": "Value must be at most {max} (got {actual})",
+    "MIN_VALUE": "The minimum allowed time is {min}",
+    "MAX_VALUE": "The maximum allowed time is {max}",
     "CONFLICTING_USER_DATES": "Conflicting shift dates for this user - overlapping with shift: {{shiftName}}"
   },
   "FOOTER": {
@@ -540,16 +540,17 @@
   "INQUIRIES_PAGE": {
     "INQUIRY_DATE": "Inquiry Date",
     "INQUIRY_TIME": "Inquiry Time",
-    "ALLOWED_ATTENDANCE_PERIOD": "Allowed Attendance Period",
+    "ALLOWED_ATTENDANCE_PERIOD": "Allowed Attendance Period (min)",
     "PROCESSING_STATUS": "Processing Status",
-    "PRESENCE_INQUIRIES": "Presence Inquiries List",
+    "PRESENCE_INQUIRIES": "Presence Proof Inquiries",
     "MY_INQUIRIES": "My Inquiries",
     "OTHERS_INQUIRIES": "Employees Inquiries",
     "ADD_NEW_INQUIRY": "Add New Inquiry",
     "EDIT_INQUIRY": "Edit Inquiry",
     "CONFIRMATION_STATUS": "Confirmation Status",
     "INQUIRY_STATUS": "Inquiry Status",
-    "BUFFER": "Presence Inquiry Buffer",
+    "INQUIRY_RESULT": "Inquiry Result",
+    "BUFFER": "Presence Inquiry Buffer (min)",
     "MESSAGE_AR": "Message (Arabic)",
     "MESSAGE_EN": "Message (English)",
     "UNDER_CONFIRMATION": "Under Confirmation",
@@ -557,7 +558,11 @@
     "NOT_CONFIRMED": "Not Confirmed",
     "UNDER_PROCESSING": "Under Processing",
     "TIME_EXPIRED": "Time Expired",
-    "NOT_ASSIGNED": "Not Assigned"
+    "NOT_ASSIGNED": "Not Assigned",
+    "DOCUMENTATION_INQUIRY": "Presence Inquiry",
+    "INQUIRY_TEXT": "Inquiry Text",
+    "ASSIGNED_USERS": "Assigned Users",
+    "ASSIGN_EMPLOYEES": "Assign Employees"
   },
   "BLACKLIST_PAGE": {
     "VISITOR_BLACKLIST_CRITERIA": "Visitor Blacklist Criteria",

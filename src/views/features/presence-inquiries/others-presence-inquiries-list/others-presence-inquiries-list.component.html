@@ -6,7 +6,7 @@
       </h5>
     </div>
     <div class="pt-6">
-      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
         <div class="relative">
           <label class="label" for="permission-date-picker">{{ 'COMMON.FROM' | translate }}</label>
           <p-datepicker
@@ -137,12 +137,10 @@
         {{ 'INQUIRIES_PAGE.PRESENCE_INQUIRIES' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
-        <button class="table-head-action-btn min-w-[40px]">
+        <button (click)="exportExcel()" class="table-head-action-btn min-w-[40px]">
           <img src="assets/icons/excel.svg" alt="" />
         </button>
-        <button class="cursor-pointer">
-          <img src="assets/icons/print.svg" alt="" />
-        </button>
+
         <button class="btn green-btn flex items-center" (click)="addOrEditModel()">
           <img src="assets/icons/plus.svg" alt="" />
           <span>{{ 'INQUIRIES_PAGE.ADD_NEW_INQUIRY' | translate }} </span>
@@ -213,7 +211,7 @@
                     class="table-action-gray-btn flex align-items gap-4 !min-w-[150px]"
                   >
                     <img src="/assets/icons/leading.svg" alt="اسناد" />
-                    اسناد موظفين
+                    {{ 'INQUIRIES_PAGE.ASSIGN_EMPLOYEES' | translate }}
                   </button>
                   <button (click)="deleteModel(inquiry.id)" class="table-action-red-btn">
                     <img src="assets/icons/delete-action.svg" alt="حذف" />

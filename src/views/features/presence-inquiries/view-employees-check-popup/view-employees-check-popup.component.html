@@ -3,36 +3,38 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">مسائلة توثيق التواجد</h3>
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'INQUIRIES_PAGE.DOCUMENTATION_INQUIRY' | translate }}
+    </h3>
 
     <!-- Header Info -->
     <div class="bg-[#074d31] rounded-2xl p-6 mb-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">تاريخ المسائلة</span>
+          <span class="text-[14px]">{{ 'INQUIRIES_PAGE.INQUIRY_DATE' | translate }}</span>
           <h4 class="font-semibold text-[16px]">{{ model.assignedDate | date: 'dd/MM/yyyy' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">وقت المسائلة</span>
+          <span class="text-[14px]">{{ 'INQUIRIES_PAGE.INQUIRY_TIME' | translate }}</span>
           <h4 class="font-semibold text-[16px]">{{ model.assignedDate | date: 'hh:mm:ss a' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">فترة السماح لتسجيل الحضور</span>
+          <span class="text-[14px]">{{ 'INQUIRIES_PAGE.BUFFER' | translate }}</span>
           <h4
             class="inline-flex items-center gap-3 text-[#000] text-base w-fit font-medium px-4 rounded-full bg-[#fff]"
           >
-            {{ model.buffer }} دق
+            {{ model.buffer }}
           </h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">نتيجة المسائلة</span>
+          <span class="text-[14px]">{{ 'INQUIRIES_PAGE.INQUIRY_RESULT' | translate }}</span>
           <h4 class="inline-flex items-center gap-3 w-fit text-base font-medium px-4 rounded-full">
             @if (model.statusId === inquiryStatusEnum.ACTIVE) {
               <span
                 class="text-[14px] text-[#067647] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
               >
                 <span class="w-[10px] h-[10px] bg-[#067647] rounded-full"></span>
-                جاري التوثيق
+                {{ 'INQUIRIES_PAGE.UNDER_PROCESSING' | translate }}
               </span>
             }
             @if (model.statusId === inquiryStatusEnum.INACTIVE) {
@@ -40,7 +42,7 @@
                 class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
               >
                 <span class="w-[10px] h-[10px] bg-[#912018] rounded-full"></span>
-                تم انتهاء وقت التوثيق
+                {{ 'INQUIRIES_PAGE.TIME_EXPIRED' | translate }}
               </span>
             }
             @if (model.statusId === inquiryStatusEnum.NOT_ASSIGNED) {
@@ -48,7 +50,7 @@
                 class="text-[14px] text-[#4d5761] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#f3f4f6] font-medium"
               >
                 <span class="w-[10px] h-[10px] bg-[#4d5761] rounded-full"></span>
-                لم يتم الإسناد
+                {{ 'INQUIRIES_PAGE.NOT_ASSIGNED' | translate }}
               </span>
             }
           </h4>
@@ -58,13 +60,17 @@
 
     <!-- Task Description -->
     <div class="bg-[#f3f4f6] rounded-2xl p-6">
-      <h4 class="text-[#6c737f] text-[14px] mb-2">نص المسائلة</h4>
+      <h4 class="text-[#6c737f] text-[14px] mb-2">
+        {{ 'INQUIRIES_PAGE.INQUIRY_TEXT' | translate }}
+      </h4>
       <p class="text-[#161616] text-[16px] font-semibold">
-        {{ model.messageAr }}
+        {{ model.getName() }}
       </p>
     </div>
 
-    <h4 class="text-[#1f2a37] text-[18px] font-semibold mt-8">الموظفون المعنيون بتنفيذ المهام</h4>
+    <h4 class="text-[#1f2a37] text-[18px] font-semibold mt-8">
+      {{ 'INQUIRIES_PAGE.ASSIGNED_USERS' | translate }}
+    </h4>
 
     <!-- Group by inquiryStatusId -->
     @for (statusGroup of statusGroups; track $index) {
@@ -76,7 +82,7 @@
                 class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#067647]"
               >
                 <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-                تم التوثيق
+                {{ 'INQUIRIES_PAGE.CONFIRMED' | translate }}
               </span>
             }
             @if (statusGroup.id === userInquiryStatusEnum.UNDER_CONFIRMATION) {
@@ -84,7 +90,7 @@
                 class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#4d5761]"
               >
                 <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-                قيد التوثيق
+                {{ 'INQUIRIES_PAGE.UNDER_CONFIRMATION' | translate }}
               </span>
             }
             @if (statusGroup.id === userInquiryStatusEnum.NOT_CONFIRMED) {
@@ -92,7 +98,7 @@
                 class="text-[14px] text-[#fff] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 p-1 rounded-full font-medium bg-[#d92d20]"
               >
                 <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-                لم يتم التوثيق
+                {{ 'INQUIRIES_PAGE.NOT_CONFIRMED' | translate }}
               </span>
             }
           </div>
@@ -100,7 +106,9 @@
           <div class="flex flex-wrap gap-4 mt-4">
             @for (user of statusGroup.users; track $index) {
               <div class="bg-[#f3f4f6] rounded-full px-3">
-                <span class="text-[#161616] font-medium">{{ user.fullNameAr }}</span>
+                <span class="text-[#161616] font-medium">
+                  {{ isArabicLang ? user.fullNameAr : user.fullNameEn }}
+                </span>
               </div>
             }
           </div>
@@ -109,7 +117,7 @@
     }
 
     <div class="actions mt-6 flex items-center justify-end gap-4">
-      <button class="btn gray-btn" (click)="close()">الغاء</button>
+      <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
     </div>
   </div>
 </div>

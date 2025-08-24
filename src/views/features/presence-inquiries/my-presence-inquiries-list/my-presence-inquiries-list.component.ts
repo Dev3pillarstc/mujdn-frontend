@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, input, SimpleChanges } from '@angular/core';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
@@ -15,11 +15,11 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { PresenceInquiryService } from '@/services/features/presence-inquiry.service';
 import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
 import { TranslatePipe } from '@ngx-translate/core';
-import { PresenceInquiryStatusService } from '@/services/features/presence-inquiry-status.service';
 import { USER_PRESENCE_INQUIRY_STATUS_ENUM } from '@/enums/user-presence-inquiry-status-enum';
-interface Adminstration {
-  type: string;
-}
+import { UserPresenceInquiryStatusService } from '@/services/features/user-presence-inquiry-status.service';
+import { LanguageService } from '@/services/shared/language.service';
+import { CustomValidators } from '@/validators/custom-validators';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-my-presence-inquiries-list',
@@ -34,6 +34,7 @@ interface Adminstration {
     FormsModule,
     TranslatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './my-presence-inquiries-list.component.html',
   styleUrl: './my-presence-inquiries-list.component.scss',
 })
@@ -50,10 +51,12 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
 
   presenceInquiryService = inject(PresenceInquiryService);
   filterModel: PresenceInquiryFilter = new PresenceInquiryFilter();
-  presenceInquiryStatusService = inject(PresenceInquiryStatusService);
-  presenceInquiryStatuses: BaseLookupModel[] = [];
-  inquiryStatusEnum = USER_PRESENCE_INQUIRY_STATUS_ENUM;
+  userPresenceInquiryStatusService = inject(UserPresenceInquiryStatusService);
+  userPresenceInquiryStatuses: BaseLookupModel[] = [];
+  userInquiryStatusEnum = USER_PRESENCE_INQUIRY_STATUS_ENUM;
   isActive = input.required<boolean>();
+  languageService = inject(LanguageService);
+  datePipe = inject(DatePipe);
   private hasInitialized: boolean = false;
 
   override get service() {
@@ -61,8 +64,8 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
   }
 
   override initListComponent(): void {
-    this.presenceInquiryStatusService.getLookup().subscribe((res: BaseLookupModel[]) => {
-      this.presenceInquiryStatuses = res;
+    this.userPresenceInquiryStatusService.getLookup().subscribe((res: BaseLookupModel[]) => {
+      this.userPresenceInquiryStatuses = res;
     });
   }
 
@@ -124,12 +127,22 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
   }
 
   protected override mapModelToExcelRow(model: PresenceInquiry): { [key: string]: any } {
+    console.log(model);
+
+    const date =
+      typeof model.assignedDate === 'string' ? new Date(model.assignedDate) : model.assignedDate;
     return {
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.EMPLOYEE_NAME_AR')]: model.fullNameAr,
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.EMPLOYEE_NAME_EN')]: model.fullNameEn,
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.NATIONAL_ID')]: model.nationalId,
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.DEPARTMENT')]: model.departmentName,
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.STATUS')]: model.statusName,
+      [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_DATE')]: this.formatDate(
+        model.assignedDate
+      ),
+
+      [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_TIME')]: this.formatTime(
+        model.assignedDate
+      ),
+      [this.translateService.instant('INQUIRIES_PAGE.ALLOWED_ATTENDANCE_PERIOD')]: model.buffer,
+      [this.translateService.instant('INQUIRIES_PAGE.PROCESSING_STATUS')]: this.getStatusName(
+        model.assignedUsers?.[0]?.inquiryStatusId ?? 0
+      ),
     };
   }
 
@@ -148,12 +161,62 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
   getPropertyName() {
     return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
-
-  override onPageChange(event: PaginatorState, isStoredProcedure: boolean = false) {
+  getStatusName(id: number): string {
+    const status = this.userPresenceInquiryStatuses.find((d) => d.id === id);
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (status?.nameEn ?? '')
+      : (status?.nameAr ?? '');
+  }
+  override onPageChange(event: PaginatorState) {
     this.first = event.first!;
     this.rows = event.rows!;
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     this.loadMyPresenceInquiriesList();
+  }
+  formatDate(date: string | Date | null | undefined): string {
+    if (!date) return '-'; // fallback when no date
+    const d = new Date(date);
+    return this.datePipe.transform(d, 'dd-MM-yyyy') ?? '-';
+  }
+
+  formatTime(date: string | Date | null | undefined): string {
+    if (!date) return '-';
+    const d = new Date(date);
+    return this.datePipe.transform(d, 'HH:mm:ss') ?? '-';
+  }
+  override exportExcel(
+    fileName: string = 'MyPresenceProofInquiry.xlsx',
+    isIncomingPermissions: boolean = false
+  ): void {
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
+    };
+
+    const fetchAll = this.service.loadMyPresenceInquiriesPaginated(allDataParams, {
+      ...this.filterModel!,
+    });
+
+    fetchAll.subscribe({
+      next: (response) => {
+        const fullList = response.list || [];
+        if (fullList.length > 0) {
+          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+          const transformedData = fullList.map((item) =>
+            isIncomingPermissions ? this.mapModelToExcelRow(item) : this.mapModelToExcelRow(item)
+          );
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+      error: (_) => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
   }
 }

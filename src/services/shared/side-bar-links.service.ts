@@ -142,9 +142,9 @@ export class SideBarLinksService {
           routeId: RouteIdsEnum.NOTIFICATIONS,
         },
         {
-          labelKey: 'MENU.NOTIFICATION_CHANNELS',
-          routerLink: ['/notification-channels'],
-          routeId: RouteIdsEnum.NOTIFICATION_CHANNELS,
+          labelKey: 'MENU.GENERAL_SETTINGS',
+          routerLink: ['/general-settings'],
+          routeId: RouteIdsEnum.GENERAL_SETTINGS,
         },
         {
           labelKey: 'MENU.NATIONALITIES',

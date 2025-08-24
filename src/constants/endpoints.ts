@@ -10,7 +10,7 @@ export const EndPoints = {
   ATTENDANCE: '/attendance',
   USERS: '/userprofiles',
   REGIONS: '/regions',
-  NOTIFICATION_SETTINGS: '/notificationsettings',
+  GENERAL_SETTINGS: '/notificationsettings',
   DEPARTMENTS: '/departments',
   HOLIDAYS: '/holidays',
   PERMISSION_TYPES: '/permissiontypes',

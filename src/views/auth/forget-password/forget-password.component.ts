@@ -62,7 +62,7 @@ export default class ForgetPasswordComponent implements OnInit, OnDestroy {
   private initializeForm(): void {
     this.forgetPasswordForm = this.fb.group({
       nationalId: ['', [Validators.required, CustomValidators.pattern('NATIONAL_ID')]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, CustomValidators.pattern('EMAIL')]],
     });
   }
 

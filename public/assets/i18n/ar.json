@@ -401,6 +401,7 @@
     "SETTINGS": "الإعدادات",
     "PERMISSION_REASONS": "اسباب الاستئذانات",
     "NOTIFICATION_CHANNELS": "إعدادات الإشعارات",
+    "GENERAL_SETTINGS": "الإعدادات العامة",
     "NATIONALITIES": "قائمة الجنسيات",
     "CITIES": "قائمة المدن",
     "REGIONS": "قائمة المناطق",
@@ -411,7 +412,7 @@
     "WORK_MISSIONS": "مهام الأعمال و الاسناد"
   },
   "NOTIFICATION": {
-    "NOTIFICATION_SETTINGS": "إعدادات الإشعارات",
+    "GENERAL_SETTINGS": "الإعدادات العامة",
     "NOTIFICATION_CHANNELS": "قنوات الإشعارات",
     "NOTIFICATION_TEMPLATES": "قوالب الإشعارات",
     "CHOOSE_SUPPORTED_PLATFORMS": "تحديد المنصات المدعومة",

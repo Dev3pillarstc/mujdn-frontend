@@ -404,6 +404,7 @@
     "SETTINGS": "Settings",
     "PERMISSION_REASONS": "Permission Reasons",
     "NOTIFICATION_CHANNELS": "Notification Settings",
+    "GENERAL_SETTINGS": "General Settings",
     "NATIONALITIES": "Nationalities",
     "CITIES": "Cities",
     "REGIONS": "Regions",
@@ -414,7 +415,7 @@
     "WORK_MISSIONS": "Work missions"
   },
   "NOTIFICATION": {
-    "NOTIFICATION_SETTINGS": "Notification Settings",
+    "GENERAL_SETTINGS": "General Settings",
     "NOTIFICATION_CHANNELS": "Notification Channels",
     "NOTIFICATION_TEMPLATES": "Notification Templates",
     "CHOOSE_SUPPORTED_PLATFORMS": "Choose Supported Platforms",

@@ -70,4 +70,28 @@ export class AlertService {
 
     return dialog;
   }
+
+  showErrorMessageWithRedirect(
+    params: { icon?: string; messages?: string[]; buttonLabel?: string },
+    dialogSize?: {
+      width: string;
+      maxWidth: string;
+    }
+  ) {
+    const dialog = this.matDialog.open(AlertDialogComponent, {
+      width: dialogSize?.width || '100%',
+      maxWidth: dialogSize?.maxWidth || '400px',
+      data: <AlertDialogData>{
+        icon: params.icon || 'error',
+        messages: params.messages || ['COMMON.ERROR_OCCURRED'],
+        buttonLabel: params.buttonLabel || 'COMMON.OK',
+      },
+    });
+
+    setTimeout(() => {
+      dialog.close();
+    }, 5000);
+
+    return dialog;
+  }
 }

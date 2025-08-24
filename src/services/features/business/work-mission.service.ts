@@ -76,7 +76,7 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
   getMyWorkMissionsAsync(
     paginationParams?: PaginationParams,
     filterOptions?: OptionsContract
-  ): Observable<any> {
+  ): Observable<PaginatedListResponseData<WorkMission>> {
     let httpParams = new HttpParams();
 
     // Handle pagination
@@ -109,6 +109,6 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
         params: httpParams,
         withCredentials: true,
       }
-    ) as unknown as Observable<any>;
+    ) as unknown as Observable<PaginatedListResponseData<WorkMission>>;
   }
 }

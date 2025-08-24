@@ -60,11 +60,8 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
         }
 
         if (backendError?.details) {
-          console.log('Details received:', backendError.details); // Debug log
           const translationParams = buildTranslationParams(backendError.details, translateService);
-          console.log('Translation params:', translationParams); // Debug log
           const message = translateService.instant(messageKey, translationParams);
-          console.log('Translated message:', message); // Debug log
           alertService.showErrorMessage({ messages: [message] });
           return throwError(() => error);
         }

@@ -4,13 +4,13 @@
       <i class="pi pi-times close-popup"></i>
     </button>
     @if (isCreateMode) {
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'WORK_MISSIONS.ADD_NEW_MISSION' | translate }}
-    </h3>
+      <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+        {{ 'WORK_MISSIONS.ADD_NEW_MISSION' | translate }}
+      </h3>
     } @else {
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'WORK_MISSIONS.EDIT_MISSION' | translate }}
-    </h3>
+      <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+        {{ 'WORK_MISSIONS.EDIT_MISSION' | translate }}
+      </h3>
     }
     <!-- MUJ-554 : the following section is hidden as per this card till we implement processing -->
     <!-- <div
@@ -38,24 +38,42 @@
         <div class="lg:col-span-2">
           <label class="label" for="missionAr">{{
             'WORK_MISSIONS.MISSION_NAME_AR' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <input class="peer" fluid="true" id="missionAr" name="missionAr" pInputText
-              [placeholder]="'WORK_MISSIONS.MISSION_NAME_AR' | translate" type="text" formControlName="nameAr" />
+            <input
+              class="peer"
+              fluid="true"
+              id="missionAr"
+              name="missionAr"
+              pInputText
+              [placeholder]="'WORK_MISSIONS.MISSION_NAME_AR' | translate"
+              type="text"
+              formControlName="nameAr"
+            />
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="nameArControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-2">
           <label class="label" for="missionEn">{{
             'WORK_MISSIONS.MISSION_NAME_EN' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <input class="peer" fluid="true" id="missionEn" name="missionEn" pInputText
-              [placeholder]="'WORK_MISSIONS.MISSION_NAME_EN' | translate" type="text" formControlName="nameEn" />
+            <input
+              class="peer"
+              fluid="true"
+              id="missionEn"
+              name="missionEn"
+              pInputText
+              [placeholder]="'WORK_MISSIONS.MISSION_NAME_EN' | translate"
+              type="text"
+              formControlName="nameEn"
+            />
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="nameEnControl"></app-validation-messages>
         </div>
@@ -63,15 +81,24 @@
         <div class="lg:col-span-2">
           <label class="label" for="startDate">{{ 'WORK_MISSIONS.START_DATE' | translate }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" id="startDate"
-              inputId="startDate" name="startDate" [placeholder]="'WORK_MISSIONS.START_DATE' | translate"
-              formControlName="startDate" [maxDate]="form.get('endDate')?.value">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              id="startDate"
+              inputId="startDate"
+              name="startDate"
+              [placeholder]="'WORK_MISSIONS.START_DATE' | translate"
+              formControlName="startDate"
+              [maxDate]="form.get('endDate')?.value"
+            >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="startDateControl"></app-validation-messages>
         </div>
@@ -80,15 +107,24 @@
         <div class="lg:col-span-2">
           <label class="label" for="endDate">{{ 'WORK_MISSIONS.END_DATE' | translate }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" id="endDate"
-              inputId="endDate" name="endDate" [placeholder]="'WORK_MISSIONS.END_DATE' | translate"
-              formControlName="endDate" [minDate]="form.get('startDate')?.value">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              id="endDate"
+              inputId="endDate"
+              name="endDate"
+              [placeholder]="'WORK_MISSIONS.END_DATE' | translate"
+              formControlName="endDate"
+              [minDate]="form.get('startDate')?.value"
+            >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/calender-icon.svg" />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="endDateControl"></app-validation-messages>
         </div>
@@ -96,15 +132,22 @@
         <div class="lg:col-span-4">
           <label class="label" for="description">{{
             'WORK_MISSIONS.DESCRIPTION' | translate
-            }}</label>
+          }}</label>
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-2 px-4 py-3 focus:outline-none resize-none peer"
-              cols="30" pTextarea [placeholder]="'WORK_MISSIONS.DESCRIPTION' | translate" rows="5" id="description"
-              name="description" formControlName="description"></textarea>
+              cols="30"
+              pTextarea
+              [placeholder]="'WORK_MISSIONS.DESCRIPTION' | translate"
+              rows="5"
+              id="description"
+              name="description"
+              formControlName="description"
+            ></textarea>
 
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="descriptionControl"></app-validation-messages>
         </div>

@@ -102,13 +102,16 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
       const currentLang = this.languageService.getCurrentLanguage();
       const prop = currentLang === LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
 
-      return (a[prop] || '').localeCompare(b[prop] || '', currentLang === LANGUAGE_ENUM.ENGLISH ? 'en' : 'ar');
+      return (a[prop] || '').localeCompare(
+        b[prop] || '',
+        currentLang === LANGUAGE_ENUM.ENGLISH ? 'en' : 'ar'
+      );
     });
   }
 
-  override buildForm(): void { }
-  override saveFail(error: Error): void { }
-  override afterSave(model: WorkMission, dialogRef: M<any, any>): void { }
+  override buildForm(): void {}
+  override saveFail(error: Error): void {}
+  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
   override beforeSave(model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
   }
@@ -138,7 +141,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
           this.employees = response.data.list;
           this.paginationInfo = response.data.paginationInfo;
         },
-        error: () => { },
+        error: () => {},
       });
   }
   // Add this method to check if all employees on current page are selected
@@ -241,7 +244,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
           this.employees = response.data.list;
           this.paginationInfo = response.data.paginationInfo;
         },
-        error: () => { },
+        error: () => {},
       });
   }
   resetSearch() {
@@ -261,7 +264,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
       next: (response) => {
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: () => { },
+      error: () => {},
     });
   }
   isCurrentLanguageEnglish() {

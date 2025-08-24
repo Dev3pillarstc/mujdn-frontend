@@ -60,7 +60,8 @@ export class AssignAndViewMissionsTabComponent
     WorkMissionService,
     WorkMissionFilter
   >
-  implements OnInit {
+  implements OnInit
+{
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',

@@ -93,7 +93,9 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
 
     // Convert dates if present
     if (processedFilterOptions['startDate']) {
-      processedFilterOptions['startDate'] = toDateOnly(processedFilterOptions['startDate'] as string);
+      processedFilterOptions['startDate'] = toDateOnly(
+        processedFilterOptions['startDate'] as string
+      );
     }
     if (processedFilterOptions['endDate']) {
       processedFilterOptions['endDate'] = toDateOnly(processedFilterOptions['endDate'] as string);
@@ -109,5 +111,4 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
       }
     ) as unknown as Observable<any>;
   }
-
 }

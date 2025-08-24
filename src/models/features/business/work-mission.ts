@@ -8,7 +8,7 @@ import { BaseLookupModel } from '../lookups/base-lookup-model';
 
 const { send, receive } = new WorkMissionInterceptor();
 
-@InterceptModel(new WorkMissionInterceptor)
+@InterceptModel(new WorkMissionInterceptor())
 export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> {
   override $$__service_name__$$: string = 'WorkMissionService';
   declare nameEn: string;

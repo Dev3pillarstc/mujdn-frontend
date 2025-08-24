@@ -83,6 +83,8 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
 
+    this.sortDepartments();
+
     // Pre-fill selected employees from already assigned employees
     if (this.model.assignedEmployees && this.model.assignedEmployees.length > 0) {
       // Copy into selectedEmployees
@@ -93,6 +95,18 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
         .filter((emp) => emp.id !== undefined)
         .map((emp) => emp.id as number);
     }
+  }
+
+  private sortDepartments() {
+    this.departments.sort((a, b) => {
+      const currentLang = this.languageService.getCurrentLanguage();
+      const prop = currentLang === LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+
+      return (a[prop] || '').localeCompare(
+        b[prop] || '',
+        currentLang === LANGUAGE_ENUM.ENGLISH ? 'en' : 'ar'
+      );
+    });
   }
 
   override buildForm(): void {}

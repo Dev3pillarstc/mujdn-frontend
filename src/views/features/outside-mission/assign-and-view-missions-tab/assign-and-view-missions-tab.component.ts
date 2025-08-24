@@ -60,8 +60,7 @@ export class AssignAndViewMissionsTabComponent
     WorkMissionService,
     WorkMissionFilter
   >
-  implements OnInit
-{
+  implements OnInit {
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -199,7 +198,6 @@ export class AssignAndViewMissionsTabComponent
     this.actionList = [
       {
         label: this.translateService.instant('COMMON.EDIT'),
-        icon: 'pi pi-refresh',
         command: () => {
           this.addOrEditModel(this.selectedModel);
         },
@@ -209,7 +207,6 @@ export class AssignAndViewMissionsTabComponent
       },
       {
         label: this.translateService.instant('COMMON.DELETE'),
-        icon: 'pi pi-refresh',
         command: () => {
           this.deleteMission(this.selectedModel!.id);
         },

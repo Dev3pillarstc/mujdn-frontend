@@ -111,7 +111,6 @@
           </td>
           <td>{{ mission.startDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ mission.endDate | date: 'dd/MM/yyyy' }}</td>
-          @if(mission.isMissionCreator){
           <td>
             <!-- Full Actions: View, Assign Employees, Split Button -->
             <div class="actions flex gap-2">
@@ -124,12 +123,13 @@
                 <img class="invert brightness-0" src="/assets/icons/leading.svg" alt="اسناد" />
                 {{ 'WORK_MISSIONS.ASSIGN_EMPLOYEES' | translate }}
               </button>
+              @if(mission.isMissionCreator){
               <p-splitbutton [appendTo]="missionContainer" (click)="setSelectedModel(mission)"
                 dropdownIcon="pi pi-ellipsis-v" [model]="actionList" styleClass="p-button-text p-button-plain" />
               <!-- <p-splitbutton label="Save" icon="pi pi-check" dropdownIcon="pi pi-ellipsis-v" [model]="items" /> -->
+              }
             </div>
           </td>
-          }
         </tr>
       </ng-template>
     </p-table>

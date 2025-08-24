@@ -102,9 +102,9 @@
     "NO_ROLES": "لا توجد صلاحيات",
     "PROFILE_LOAD_ERROR": "حدث خطأ في تحميل بيانات الملف الشخصي",
     "RETRY": "إعادة المحاولة",
+    "MIN_VALUE": "يجب أن يكون الحد الأدنى للوقت المدخل هو {min}",
+    "MAX_VALUE": "يجب أن يكون الحد الأقصى للوقت المدخل هو {max}",
     "CURRENT_PASSWORD_INCORRECT": "كلمة المرور القديمة غير صحيحة",
-    "MIN_VALUE": "يجب أن تكون القيمة على الأقل {min} (تم الحصول على {actual})",
-    "MAX_VALUE": "يجب أن تكون القيمة على الأكثر {max} (تم الحصول على {actual})",
     "CONFLICTING_USER_DATES": "تعارض في مواعيد الورديات الخاصه بالمستخدم - يتعارض مع وردية: {{shiftName}}",
     "CAN_NOT_TAKE_ACTION": "لا يمكن القيام بهذا الاجراء"
   },
@@ -402,6 +402,7 @@
     "SETTINGS": "الإعدادات",
     "PERMISSION_REASONS": "اسباب الاستئذانات",
     "NOTIFICATION_CHANNELS": "إعدادات الإشعارات",
+    "GENERAL_SETTINGS": "الإعدادات العامة",
     "NATIONALITIES": "قائمة الجنسيات",
     "CITIES": "قائمة المدن",
     "REGIONS": "قائمة المناطق",
@@ -412,7 +413,7 @@
     "WORK_MISSIONS": "مهام الأعمال و الاسناد"
   },
   "NOTIFICATION": {
-    "NOTIFICATION_SETTINGS": "إعدادات الإشعارات",
+    "GENERAL_SETTINGS": "الإعدادات العامة",
     "NOTIFICATION_CHANNELS": "قنوات الإشعارات",
     "NOTIFICATION_TEMPLATES": "قوالب الإشعارات",
     "CHOOSE_SUPPORTED_PLATFORMS": "تحديد المنصات المدعومة",
@@ -538,16 +539,17 @@
   "INQUIRIES_PAGE": {
     "INQUIRY_DATE": "تاريخ المسائلة",
     "INQUIRY_TIME": "وقت المسائلة",
-    "ALLOWED_ATTENDANCE_PERIOD": "فترة السماح للتسجيل الحضور",
+    "ALLOWED_ATTENDANCE_PERIOD": "(دق) فترة السماح لتسجيل الحضور",
     "PROCESSING_STATUS": "حالة المعالجة",
-    "PRESENCE_INQUIRIES": "قائمة مسائلات توثيق التواجد",
+    "PRESENCE_INQUIRIES": "مسائلات توثيق التواجد",
     "MY_INQUIRIES": "مسائلاتي",
     "OTHERS_INQUIRIES": "مسائلات الموظفين",
     "ADD_NEW_INQUIRY": "إضافة مسائلة جديدة",
     "EDIT_INQUIRY": "تعديل المسائلة",
     "CONFIRMATION_STATUS": "حالة التوثيق",
     "INQUIRY_STATUS": "حالة المسائلة",
-    "BUFFER": "فترة السماح لتسجيل الحضور",
+    "INQUIRY_RESULT": "نتيجة المسائلة",
+    "BUFFER": "فترة السماح لتسجيل الحضور (دق)",
     "MESSAGE_AR": "الرسالة (عربي)",
     "MESSAGE_EN": "الرسالة (إنجليزي)",
     "UNDER_CONFIRMATION": "تحت التوثيق",
@@ -555,7 +557,11 @@
     "NOT_CONFIRMED": "لم يتم التوثيق",
     "UNDER_PROCESSING": "جاري التوثيق",
     "TIME_EXPIRED": "تم انتهاء وقت التوثيق",
-    "NOT_ASSIGNED": " لم يتم الإسناد"
+    "NOT_ASSIGNED": "لم يتم الإسناد",
+    "DOCUMENTATION_INQUIRY": "مسائلة توثيق التواجد",
+    "INQUIRY_TEXT": "نص المسائلة",
+    "ASSIGNED_USERS": "الموظفون المعنيون بتنفيذ المهام",
+    "ASSIGN_EMPLOYEES": "اسناد الموظفين"
   },
   "BLACKLIST_PAGE": {
     "VISITOR_BLACKLIST_CRITERIA": "معايير حظر الزائرين",

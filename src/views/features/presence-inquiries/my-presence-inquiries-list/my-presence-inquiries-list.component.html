@@ -51,7 +51,7 @@
           <p-select
             [(ngModel)]="filterModel.statusId"
             [optionLabel]="getPropertyName()"
-            [options]="presenceInquiryStatuses"
+            [options]="userPresenceInquiryStatuses"
             [showClear]="true"
             class="w-full peer"
             id="request-status-select"
@@ -83,11 +83,8 @@
         {{ 'INQUIRIES_PAGE.PRESENCE_INQUIRIES' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
-        <button class="table-head-action-btn min-w-[40px]">
+        <button (click)="exportExcel()" class="table-head-action-btn min-w-[40px]">
           <img src="assets/icons/excel.svg" alt="" />
-        </button>
-        <button class="cursor-pointer">
-          <img src="assets/icons/print.svg" alt="" />
         </button>
       </div>
     </div>
@@ -103,8 +100,8 @@
         </ng-template>
         <ng-template pTemplate="body" let-inquiry>
           <tr>
-            <td>{{ inquiry.assignedDate | date: 'dd-MM-yyyy' }}</td>
-            <td>{{ inquiry.assignedDate | date: 'HH:mm:ss' }}</td>
+            <td>{{ formatDate(inquiry.assignedDate) }}</td>
+            <td>{{ formatTime(inquiry.assignedDate) }}</td>
             <td>
               <span
                 class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]"
@@ -114,7 +111,8 @@
 
             <td>
               @if (
-                inquiry.assignedUsers[0]?.inquiryStatusId === inquiryStatusEnum.UNDER_CONFIRMATION
+                inquiry.assignedUsers[0]?.inquiryStatusId ===
+                userInquiryStatusEnum.UNDER_CONFIRMATION
               ) {
                 <span
                   class="text-[14px] text-[#93370d] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fffaeb] font-medium"
@@ -123,7 +121,7 @@
                   {{ 'INQUIRIES_PAGE.UNDER_CONFIRMATION' | translate }}
                 </span>
               }
-              @if (inquiry.assignedUsers[0]?.inquiryStatusId === inquiryStatusEnum.CONFIRMED) {
+              @if (inquiry.assignedUsers[0]?.inquiryStatusId === userInquiryStatusEnum.CONFIRMED) {
                 <span
                   class="text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium"
                 >
@@ -131,7 +129,9 @@
                   {{ 'INQUIRIES_PAGE.CONFIRMED' | translate }}
                 </span>
               }
-              @if (inquiry.assignedUsers[0]?.inquiryStatusId === inquiryStatusEnum.NOT_CONFIRMED) {
+              @if (
+                inquiry.assignedUsers[0]?.inquiryStatusId === userInquiryStatusEnum.NOT_CONFIRMED
+              ) {
                 <span
                   class="text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium"
                 >

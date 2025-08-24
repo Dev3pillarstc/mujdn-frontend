@@ -14,6 +14,7 @@ export class PresenceInquiryInterceptor implements ModelInterceptorContract<Pres
   }
 
   send(model: Partial<PresenceInquiry>): Partial<PresenceInquiry> {
+    delete (model as any).languageService;
     return model;
   }
 }

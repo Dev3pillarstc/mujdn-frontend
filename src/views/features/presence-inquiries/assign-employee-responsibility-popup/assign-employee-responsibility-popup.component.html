@@ -22,7 +22,7 @@
               id="department"
               optionLabel="type"
               optionValue="id"
-              placeholder="الادارة"
+              placeholder="{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -30,30 +30,20 @@
           </div>
         </div>
         <div>
-          <label class="label"> {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}</label>
+          <label class="label"> {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME' | translate }}</label>
           <div class="relative">
-            <input
-              [(ngModel)]="filterModel.fullNameAr"
-              pInputText
-              type="text"
-              placeholder=" {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}"
-              class="peer w-full"
-            />
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-        </div>
-        <div>
-          <label class="label"> {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}</label>
-          <div class="relative">
-            <input
-              pInputText
-              type="text"
-              [(ngModel)]="filterModel.fullNameEn"
-              placeholder=" {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}"
-              class="peer w-full"
-            />
+            <p-select
+              [options]="users"
+              [(ngModel)]="filterModel.id"
+              [optionLabel]="getPropertyName()"
+              [showClear]="true"
+              [filter]="true"
+              class="w-full peer"
+              id="employee"
+              optionLabel="type"
+              optionValue="id"
+              placeholder="{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME' | translate }}"
+            ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>

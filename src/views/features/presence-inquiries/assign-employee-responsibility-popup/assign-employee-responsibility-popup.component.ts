@@ -56,6 +56,7 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
   departmentService = inject(DepartmentService);
   userProfileService = inject(UserProfileService);
   availableUsers: UserProfilePresenceInquiry[] = [];
+  users: BaseLookupModel[] = [];
   filterModel: UserFilter = new UserFilter();
   selectedUsers: UserProfilePresenceInquiry[] = [];
   presenceInquiryService = inject(PresenceInquiryService);
@@ -70,6 +71,10 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
       this.departments = res;
     });
     this.loadUsersAvailableForPresenceInquiriesPaginated();
+    this.userProfileService.getLookup().subscribe((res: BaseLookupModel[]) => {
+      this.users = res;
+    });
+
     this.model = new PresenceInquiry();
     this.model.id = this.data.id;
   }

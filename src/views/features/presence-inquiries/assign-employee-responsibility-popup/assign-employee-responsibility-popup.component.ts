@@ -110,6 +110,7 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
   }
 
   saveAssignments(): void {
+    const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     const inquiryId = this.model?.id;
 
     if (!inquiryId) return;
@@ -122,6 +123,7 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.dialogRef.close(DIALOG_ENUM.OK);
+          this.alertService.showSuccessMessage(successObject);
         },
       });
   }

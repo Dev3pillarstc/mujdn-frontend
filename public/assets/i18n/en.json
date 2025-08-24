@@ -102,12 +102,9 @@
     "NO_ROLES": "No Roles",
     "PROFILE_LOAD_ERROR": "Error loading profile data",
     "RETRY": "Retry",
-    "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect",
     "MIN_VALUE": "The minimum allowed time is {min}",
     "MAX_VALUE": "The maximum allowed time is {max}",
-    "CONFLICTING_USER_DATES": "Conflicting shift dates for this user - overlapping with shift: {{shiftName}}"
-    "MIN_VALUE": "Value must be at least {min} (got {actual})",
-    "MAX_VALUE": "Value must be at most {max} (got {actual})",
+    "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect",
     "CONFLICTING_USER_DATES": "Conflicting shift dates for this user - overlapping with shift: {{shiftName}}",
     "RESET_PASSWORD_INVALID_DATA": "Please check the entered data and try again."
   },

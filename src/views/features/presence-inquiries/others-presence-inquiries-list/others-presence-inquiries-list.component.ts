@@ -65,7 +65,6 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
   departments: BaseLookupModel[] = [];
   departmentService = inject(DepartmentService);
   userProfileService = inject(UserProfileService);
-  users: UserProfilePresenceInquiry[] = [];
   presenceInquiryStatusService = inject(PresenceInquiryStatusService);
   presenceInquiryStatuses: BaseLookupModel[] = [];
   inquiryStatusEnum = PRESENCE_INQUIRY_STATUS_ENUM;
@@ -84,11 +83,6 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
     this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.departments = res;
     });
-    this.userProfileService
-      .loadUsersAvailableForPresenceInquiriesPaginated()
-      .subscribe((res: PaginatedList<UserProfilePresenceInquiry>) => {
-        this.users = res.list; // or res depending on what you want
-      });
   }
   override openBaseDialog(
     popupComponent: PresenceInquiriesPopupComponent,

@@ -28,6 +28,42 @@
           </div>
           <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
         </div>
+        <div class="lg:col-span-2">
+          <label class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
+          <div class="relative">
+            <p-select
+              [options]="departments"
+              class="w-full peer"
+              [optionLabel]="optionLabel"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
+              (onChange)="filterEmployeesByDepartment($event.value.id)"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2">
+          <label class="label" for="employee-select">{{
+            'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate
+          }}</label>
+          <div class="relative">
+            <p-select
+              [options]="filteredUsersProfiles"
+              class="w-full peer"
+              id="employee-select"
+              [optionLabel]="optionLabel"
+              formControlName="fkAssignedUserId"
+              optionValue="id"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="fkAssignedUserIdControl"></app-validation-messages>
+        </div>
 
         <div class="lg:col-span-2">
           <label class="label" for="date-from">{{
@@ -82,43 +118,6 @@
           </div>
           <app-validation-messages [control]="endDateControl"></app-validation-messages>
         </div>
-
-        <div class="lg:col-span-2">
-          <label class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
-          <div class="relative">
-            <p-select
-              [options]="departments"
-              class="w-full peer"
-              [optionLabel]="optionLabel"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
-              (onChange)="filterEmployeesByDepartment($event.value.id)"
-            ></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-        </div>
-
-        <div class="lg:col-span-2">
-          <label class="label" for="employee-select">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate
-          }}</label>
-          <div class="relative">
-            <p-select
-              [options]="filteredUsersProfiles"
-              class="w-full peer"
-              id="employee-select"
-              [optionLabel]="optionLabel"
-              formControlName="fkAssignedUserId"
-              optionValue="id"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate"
-            ></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-          <app-validation-messages [control]="fkAssignedUserIdControl"></app-validation-messages>
-        </div>
       </div>
 
       <div
@@ -132,12 +131,17 @@
 
       <div class="flex flex-wrap gap-8 mt-8">
         @for (day of weekDays; track day.value) {
-          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+          <label
+            class="flex items-center space-x-2 mb-4 cursor-pointer relative"
+            [class.opacity-50]="isWeekDayDisabled(day.value)"
+            [class.cursor-not-allowed]="isWeekDayDisabled(day.value)"
+          >
             <input
               type="checkbox"
               [checked]="isWorkingDaySelected(day.value)"
+              [disabled]="isWeekDayDisabled(day.value)"
               (change)="onWorkingDayChange(day.value, $event)"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed"
             />
             <svg
               class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
@@ -150,7 +154,10 @@
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            <span class="text-base font-medium text-[#1f2a37]">
+            <span
+              class="text-base font-medium text-[#1f2a37]"
+              [class.text-gray-400]="isWeekDayDisabled(day.value)"
+            >
               {{ day.labelKey | translate }}
             </span>
           </label>

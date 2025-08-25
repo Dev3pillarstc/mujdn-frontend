@@ -9,6 +9,7 @@ import { PaginationParams } from '@/models/shared/pagination-params';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
+import { toDateOnly } from '@/utils/general-helper';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
@@ -77,6 +78,8 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
     filterOptions?: OptionsContract
   ): Observable<PaginatedListResponseData<WorkMission>> {
     let httpParams = new HttpParams();
+
+    // Handle pagination
     if (paginationParams) {
       Object.entries(paginationParams).forEach(([key, value]) => {
         if (value !== null && value !== undefined) {
@@ -84,9 +87,24 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
         }
       });
     }
+
+    // Clone filterOptions so we don't mutate the original object
+    const processedFilterOptions: OptionsContract = { ...(filterOptions || {}) };
+
+    // Convert dates if present
+    if (processedFilterOptions['startDate']) {
+      processedFilterOptions['startDate'] = toDateOnly(
+        processedFilterOptions['startDate'] as string
+      );
+    }
+    if (processedFilterOptions['endDate']) {
+      processedFilterOptions['endDate'] = toDateOnly(processedFilterOptions['endDate'] as string);
+    }
+
+    // Call API
     return this.http.post(
-      this.getUrlSegment() + '/' + 'GetMyWorkMissionsAsync',
-      filterOptions || {},
+      this.getUrlSegment() + '/GetMyWorkMissionsAsync',
+      processedFilterOptions,
       {
         params: httpParams,
         withCredentials: true,

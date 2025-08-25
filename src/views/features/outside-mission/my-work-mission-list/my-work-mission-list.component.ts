@@ -128,10 +128,10 @@ export class MyWorkMissionListComponent extends BaseListComponent<
       [this.translateService.instant('WORK_MISSIONS.MISSION_NAME_EN')]: model.nameEn,
       [this.translateService.instant('WORK_MISSIONS.START_DATE')]: model.startDate,
       [this.translateService.instant('WORK_MISSIONS.END_DATE')]: model.endDate,
-      [this.translateService.instant('WORK_MISSIONS.MISSION_ASSIGNER_AR')]:
-        model.missionAssigner?.nameAr || '',
-      [this.translateService.instant('WORK_MISSIONS.MISSION_ASSIGNER_EN')]:
-        model.missionAssigner?.nameEn || '',
+      [this.translateService.instant('WORK_MISSIONS.MISSION_CREATOR_AR')]:
+        model.missionCreator?.nameAr || '',
+      [this.translateService.instant('WORK_MISSIONS.MISSION_CREATOR_EN')]:
+        model.missionCreator?.nameEn || '',
     };
   }
   override exportExcel(
@@ -148,7 +148,7 @@ export class MyWorkMissionListComponent extends BaseListComponent<
 
     fetchAll.subscribe({
       next: (response) => {
-        const fullList = response.data.list || [];
+        const fullList = (response.data?.list || []) as any[];
         if (fullList.length > 0) {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
           const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));

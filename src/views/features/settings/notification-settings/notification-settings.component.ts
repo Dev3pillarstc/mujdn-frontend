@@ -66,13 +66,11 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
     this.translateService.onLangChange.pipe(takeUntil(this.$destroy)).subscribe(() => {
       this.home = this.setHomeItem();
       this.breadcrumbs = [
-        { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
+        { label: this.translateService.instant('NOTIFICATION.GENERAL_SETTINGS') },
       ];
     });
 
-    this.breadcrumbs = [
-      { label: this.translateService.instant('NOTIFICATION.NOTIFICATION_SETTINGS') },
-    ];
+    this.breadcrumbs = [{ label: this.translateService.instant('NOTIFICATION.GENERAL_SETTINGS') }];
   }
 
   setHomeItem(): MenuItem {
@@ -134,7 +132,7 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
     this.notificationForm.reset();
     this.notificationForm.patchValue({
       isSms: this.notificationSettingModel.isSms,
-      isMobile: this.notificationSettingModel.isMobile,
+      isEmail: this.notificationSettingModel.isEmail,
       isWeb: this.notificationSettingModel.isWeb,
     });
   }
@@ -153,7 +151,7 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
   }
   notificationChannels = [
     { key: 'isSms', labelKey: 'NOTIFICATION.SMS' },
-    { key: 'isMobile', labelKey: 'NOTIFICATION.MOBILE' },
+    { key: 'isEmail', labelKey: 'NOTIFICATION.EMAIL' },
     { key: 'isWeb', labelKey: 'NOTIFICATION.WEB' },
   ];
   ngOnDestroy() {

@@ -21,20 +21,20 @@
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">{{ 'WORK_MISSIONS.START_DATE' | translate }}</span>
+          <span class="text-[14px]">{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</span>
           <h4 class="font-semibold text-[16px]">{{ model.startDate | date: 'dd/MM/yyyy' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">{{ 'WORK_MISSIONS.END_DATE' | translate }}</span>
+          <span class="text-[14px]">{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</span>
           <h4 class="font-semibold text-[16px]">{{ model.endDate | date: 'dd/MM/yyyy' }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">{{ 'WORK_MISSIONS.MISSION_ASSIGNER' | translate }}</span>
+          <span class="text-[14px]">{{ 'WORK_MISSIONS.MISSION_CREATOR' | translate }}</span>
           <h4 class="font-semibold text-[16px]">
             {{
               isCurrentLanguageEnglish()
-                ? model.missionAssigner?.nameEn
-                : model.missionAssigner?.nameAr
+                ? model.missionCreator?.nameEn
+                : model.missionCreator?.nameAr
             }}
           </h4>
         </div>
@@ -46,12 +46,12 @@
         {{ model.description }}
       </p>
     </div>
-    <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-      <h4 class="text-[#6c737f] text-[14px]">
-        {{ 'WORK_MISSIONS.ASSIGNED_EMPLOYEES' | translate }}
-      </h4>
-      <div class="flex flex-wrap gap-4 mt-4">
-        @if (model.assignedEmployees && model.assignedEmployees.length > 0) {
+    @if (model.assignedEmployees && model.assignedEmployees.length > 0) {
+      <div class="mt-6 pt-6 border-t border-[#d2d6db]">
+        <h4 class="text-[#6c737f] text-[14px]">
+          {{ 'WORK_MISSIONS.ASSIGNED_EMPLOYEES' | translate }}
+        </h4>
+        <div class="flex flex-wrap gap-4 mt-4">
           @for (item of model.assignedEmployees; track $index) {
             <div class="bg-[#f3f4f6] rounded-full px-3">
               <span class="text-[#161616] font-medium"
@@ -59,15 +59,16 @@
               </span>
             </div>
           }
-        } @else {
+          <!-- @else {
           <div class="bg-[#f3f4f6] rounded-full px-3">
             <span class="text-[#161616] font-medium">{{
               'WORK_MISSIONS.NO_EMPLOYEES_SELECTED' | translate
             }}</span>
           </div>
-        }
+          } -->
+        </div>
       </div>
-    </div>
+    }
     <div class="actions mt-6 flex items-center justify-between gap-4">
       <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
     </div>

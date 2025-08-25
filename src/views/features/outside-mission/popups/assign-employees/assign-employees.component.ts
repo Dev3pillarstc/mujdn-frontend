@@ -25,6 +25,12 @@ import { WorkMissionService } from '@/services/features/business/work-mission.se
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { OptionsContract } from '@/contracts/options-contract';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MissionEmployeesAssignement } from '@/models/features/business/mission-employees-assignment';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
+interface Adminstration {
+  type: string;
+}
+
 @Component({
   selector: 'app-assign-employees',
   imports: [
@@ -47,6 +53,8 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   declare viewMode: ViewModeEnum;
   isCreateMode = false;
   employees: UserProfileDataWithNationalId[] = [];
+  selectedUsers: MissionEmployeesAssignement = new MissionEmployeesAssignement();
+  selectedEmployees: UserProfileDataWithNationalId[] = [];
   paginationInfo: PaginationInfo = new PaginationInfo();
   departments: BaseLookupModel[] = [];
   workMissionService = inject(WorkMissionService);
@@ -56,12 +64,39 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     super();
   }
   override initPopup(): void {
+    // Load available employees for the table
     this.loadEmployees();
     this.model = this.data.model;
     this.departments = this.data.lookups.departments;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
+
+    this.sortDepartments();
+
+    // Pre-fill selected employees from already assigned employees
+    if (this.model.assignedEmployees && this.model.assignedEmployees.length > 0) {
+      // Copy into selectedEmployees
+      this.selectedEmployees = [...this.model.assignedEmployees] as UserProfileDataWithNationalId[];
+
+      // Fill employee IDs for checkbox checking
+      this.selectedUsers.employeesIds = this.model.assignedEmployees
+        .filter((emp) => emp.id !== undefined)
+        .map((emp) => emp.id as number);
+    }
   }
+
+  private sortDepartments() {
+    this.departments.sort((a, b) => {
+      const currentLang = this.languageService.getCurrentLanguage();
+      const prop = currentLang === LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+
+      return (a[prop] || '').localeCompare(
+        b[prop] || '',
+        currentLang === LANGUAGE_ENUM.ENGLISH ? 'en' : 'ar'
+      );
+    });
+  }
+
   override buildForm(): void {}
   override saveFail(error: Error): void {}
   override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
@@ -93,7 +128,91 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
         error: () => {},
       });
   }
+  // Add this method to check if all employees on current page are selected
+  areAllCurrentPageSelected(): boolean {
+    if (!this.employees || this.employees.length === 0) {
+      return false;
+    }
 
+    return this.employees.every(
+      (employee) => employee.id && this.selectedUsers.employeesIds.includes(employee.id)
+    );
+  }
+
+  // Update the existing toggleAll method to work better with the checkbox state
+  toggleAll(checked: boolean): void {
+    if (checked) {
+      // Add all employees from current page that aren't already selected
+      const newEmployees = this.employees.filter(
+        (u) => u.id !== undefined && !this.selectedUsers.employeesIds.includes(u.id)
+      );
+      const newEmployeeIds = newEmployees.map((u) => u.id as number);
+
+      // Add to selected arrays
+      this.selectedUsers.employeesIds = [...this.selectedUsers.employeesIds, ...newEmployeeIds];
+
+      // If you're using the selectedEmployees array from the previous solution
+      if (this.selectedEmployees) {
+        this.selectedEmployees = [...this.selectedEmployees, ...newEmployees];
+      }
+    } else {
+      // Remove all employees from current page
+      const currentPageEmployeeIds = this.employees
+        .filter((u) => u.id !== undefined)
+        .map((u) => u.id as number);
+
+      this.selectedUsers.employeesIds = this.selectedUsers.employeesIds.filter(
+        (userId) => !currentPageEmployeeIds.includes(userId)
+      );
+
+      // If you're using the selectedEmployees array from the previous solution
+      if (this.selectedEmployees) {
+        this.selectedEmployees = this.selectedEmployees.filter(
+          (emp) => !currentPageEmployeeIds.includes(emp.id!)
+        );
+      }
+    }
+  }
+  toggleUserSelection(userId: number, event?: Event) {
+    if ((event?.target as HTMLInputElement)?.checked) {
+      // Add if not already in the list
+      if (!this.selectedUsers.employeesIds.some((id) => id === userId)) {
+        const user = this.employees.find((u) => u.id === userId);
+        if (user && !this.selectedUsers.employeesIds.some((id) => id === userId)) {
+          this.selectedUsers.employeesIds.push(user.id as number);
+          // Store the complete employee object
+          this.selectedEmployees.push(user);
+        }
+      }
+    } else {
+      // Remove if unchecked
+      this.selectedUsers.employeesIds = this.selectedUsers.employeesIds.filter(
+        (id) => id !== userId
+      );
+      this.selectedEmployees = this.selectedEmployees.filter((emp) => emp.id !== userId);
+    }
+  }
+  isUserSelected(userId: number): boolean {
+    return this.selectedUsers.employeesIds.some((id) => id === userId);
+  }
+  returnCheckAllStatus() {
+    return this.employees.every((emp) =>
+      this.selectedEmployees.map((selectedUser) => selectedUser.id).includes(emp.id)
+    );
+  }
+  getSelectedEmployeeName(employeeId: number): string {
+    const employee = this.selectedEmployees.find((emp) => emp.id === employeeId);
+
+    if (!employee) {
+      return 'Employee ID: ' + employeeId; // Fallback
+    }
+
+    // Return name based on current language
+    const currentLang = this.languageService.getCurrentLanguage();
+    return currentLang === LANGUAGE_ENUM.ENGLISH
+      ? employee.nameEn || employee.nameAr || 'N/A'
+      : employee.nameAr || employee.nameEn || 'N/A';
+  }
   search() {
     this.first = 0;
     this.paginationParams.pageNumber = 1;
@@ -121,8 +240,18 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   }
 
   getPropertyName(): string {
-    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-      ? 'nameEn'
-      : 'nameAr';
+    return this.isCurrentLanguageEnglish() ? 'nameEn' : 'nameAr';
+  }
+  saveAssignments() {
+    this.selectedUsers.missionId = this.model?.id;
+    this.workMissionService.addUsersToMission(this.selectedUsers).subscribe({
+      next: (response) => {
+        this.dialogRef.close(DIALOG_ENUM.OK);
+      },
+      error: () => {},
+    });
+  }
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
   }
 }

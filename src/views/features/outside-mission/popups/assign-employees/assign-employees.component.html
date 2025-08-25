@@ -82,6 +82,8 @@
                 <input
                   class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
                   type="checkbox"
+                  [checked]="returnCheckAllStatus()"
+                  (change)="toggleAll($any($event.target).checked)"
                 />
                 <svg
                   class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
@@ -110,6 +112,8 @@
                 <input
                   class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
                   type="checkbox"
+                  [checked]="isUserSelected(employee.id)"
+                  (change)="toggleUserSelection(employee.id, $event)"
                 />
                 <svg
                   class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
@@ -151,38 +155,44 @@
         [rowsPerPageOptions]="[10, 20, 30]"
       />
     }
-    <section class="border-t border-[#d2d6db] pt-8 mt-8">
-      <h3 class="text-[14px] font-normal text-[#6c737f] mb-6">
-        {{ 'WORK_MISSIONS.ASSIGNED_EMPLOYEES' | translate }}
-      </h3>
-      <ul class="flex flex-wrap gap-4">
-        <li
-          class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium"
-        >
-          <span> معتصم ماجد احمد </span>
-          <button>
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+    @if (selectedEmployees && selectedEmployees.length > 0) {
+      <section class="border-t border-[#d2d6db] pt-8 mt-8">
+        <h3 class="text-[14px] font-normal text-[#6c737f] mb-6">
+          {{ 'WORK_MISSIONS.ASSIGNED_EMPLOYEES' | translate }}
+        </h3>
+        <ul class="flex flex-wrap gap-4">
+          @for (employee of selectedEmployees; track employee.id) {
+            <li
+              class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium"
             >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                fill="#161616"
-              />
-            </svg>
-          </button>
-        </li>
-      </ul>
-    </section>
+              <span>{{ isCurrentLanguageEnglish() ? employee.nameEn : employee.nameAr }}</span>
+              <button (click)="toggleUserSelection(employee.id!)">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                    fill="#161616"
+                  />
+                </svg>
+              </button>
+            </li>
+          }
+        </ul>
+      </section>
+    }
 
     <div class="actions mt-6 flex items-center justify-end gap-4">
       <button class="btn gray-btn" (click)="close()">{{ 'COMMON.CANCEL' | translate }}</button>
-      <button class="btn green-btn">{{ 'COMMON.SAVE' | translate }}</button>
+      <button class="btn green-btn" (click)="saveAssignments()">
+        {{ 'COMMON.SAVE' | translate }}
+      </button>
     </div>
   </div>
 </div>

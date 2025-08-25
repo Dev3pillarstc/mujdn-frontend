@@ -22,13 +22,13 @@
         <header
           class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 border-b border-white"
         >
-          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#fff]">
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#fff] truncate">
             {{ fullName }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto pb-4">
             <button
               (click)="openEditInfoDialog()"
-              class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-white/40"
+              class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-white/40 whitespace-nowrap"
             >
               <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/edit.png" />
               <span class="text-base font-medium text-white">{{
@@ -37,7 +37,7 @@
             </button>
             <button
               (click)="openChangePasswordDialog()"
-              class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-[#fecdca]"
+              class="flex items-center justify-center gap-4 px-4 p-2 rounded border border-[#fecdca] whitespace-nowrap"
             >
               <img alt="" class="w-[21.5px] h-[21.5px]" src="assets/icons/password.svg" />
               <span class="text-base font-medium text-[#fecdca]">{{

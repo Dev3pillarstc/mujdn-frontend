@@ -48,10 +48,7 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
   fb = inject(FormBuilder);
   permissionTypes: BaseLookupModel[] | undefined = [];
   prmissionReasons: BaseLookupModel[] | undefined = [];
-
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    super();
-  }
+  data = inject(MAT_DIALOG_DATA);
 
   override saveFail(error: Error): void {
     // logic after error if there

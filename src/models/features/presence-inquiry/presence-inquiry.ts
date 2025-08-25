@@ -7,6 +7,7 @@ import { FactoryService } from '@/services/factory-service';
 import { PresenceInquiryService } from '@/services/features/presence-inquiry.service';
 import { UserProfilePresenceInquiry } from './user-profile-presence-inquiry';
 import { PresenceInquiryInterceptor } from '@/model-interceptors/features/presence-inquiry.interceptor';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 const { send, receive } = new PresenceInquiryInterceptor();
 
@@ -18,7 +19,7 @@ export class PresenceInquiry extends BaseCrudModel<PresenceInquiry, PresenceInqu
   declare messageEn: string;
   declare buffer: number;
   declare assignedUsers?: UserProfilePresenceInquiry[];
-  declare assignedDate?: Date | string;
+  declare assignedDate?: Date | null | string;
   declare statusId?: number;
   declare departmentId?: number;
   private languageService?: LanguageService;
@@ -27,30 +28,25 @@ export class PresenceInquiry extends BaseCrudModel<PresenceInquiry, PresenceInqu
     super();
     this.languageService = FactoryService.getService('LanguageService');
   }
-
+  getName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? this.messageEn
+      : this.messageAr;
+  }
   buildForm() {
-    const { messageAr, messageEn, buffer, departmentId, assignedDate } = this;
+    const { messageAr, messageEn, buffer } = this;
 
     return {
-      messageAr: [
-        messageAr,
+      messageAr: [messageAr, [Validators.required, CustomValidators.pattern('AR_NUM')]],
+      messageEn: [messageEn, [Validators.required, CustomValidators.pattern('ENG_NUM')]],
+      buffer: [
+        buffer,
         [
           Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ARABIC_NAME_MAX),
-          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
+          Validators.min(CustomValidators.defaultLengths.INQUIRY_MIN_BUFFER),
+          Validators.max(CustomValidators.defaultLengths.INQUIRY_MAX_BUFFER),
         ],
       ],
-      messageEn: [
-        messageEn,
-        [
-          Validators.required,
-          Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
-          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
-        ],
-      ],
-      buffer: [buffer, [Validators.required, Validators.min(0)]],
-      departmentId: [departmentId],
-      assignedDate: [assignedDate],
     };
   }
 }

@@ -19,6 +19,8 @@ import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resol
 import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
 import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
+import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blacklisted-national-id.resolver';
+import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
 import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
 
 export const routes: Routes = [
@@ -92,6 +94,26 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.EMPLOYEES },
       },
       {
+        path: 'blacklist',
+        canActivate: [authGuard],
+        resolve: { list: blacklistResolver },
+        data: {
+          roles: [ROLES_ENUM.SECURITY_LEADER], // all roles can view the page
+          routeId: RouteIdsEnum.BLACKLIST,
+        },
+        loadComponent: () =>
+          import(
+            '@/views/features/visit/blacklist/blacklisted-container/blacklisted-container.component'
+          ),
+      },
+      {
+        path: 'visit-request',
+        loadComponent: () =>
+          import(
+            '@/views/features/visit/visit-request/visit-request-container/visit-request-container.component'
+          ),
+      },
+      {
         path: 'attendance-logs',
         canActivate: [authGuard],
         resolve: { list: attendanceResolver },
@@ -142,9 +164,9 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'notification-channels',
+        path: 'general-settings',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NOTIFICATION_CHANNELS },
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
         resolve: { channel: notificationSettingResolver },
         loadComponent: () =>
           import('@/views/features/settings/notification-settings/notification-settings.component'),
@@ -216,7 +238,7 @@ export const routes: Routes = [
         path: 'work-missions',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.DEPARTMENT_MANAGER, ROLES_ENUM.HR_OFFICER],
+          roles: [ROLES_ENUM.EMPLOYEE],
           routeId: RouteIdsEnum.WORK_MISSION,
         },
         resolve: { list: WorkMissionResolver },
@@ -234,6 +256,7 @@ export const routes: Routes = [
       },
       {
         path: 'presence-inquiries',
+        data: { routeId: RouteIdsEnum.PRESENCE_INQUIRIES },
         resolve: { list: presenceInquiryResolver },
         loadComponent: () =>
           import(

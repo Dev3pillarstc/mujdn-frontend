@@ -60,6 +60,12 @@ export class SideBarLinksService {
       routerLink: ['/permissions'],
       routeId: RouteIdsEnum.PERMISSIONS,
     },
+    {
+      labelKey: 'MENU.PRESENCE_INQUIRIES',
+      iconUrl: 'assets/icons/menu-icons/tools.svg',
+      routerLink: ['/presence-inquiries'],
+      routeId: RouteIdsEnum.PRESENCE_INQUIRIES,
+    },
     // {
     //   labelKey: 'MENU.ASSIGNED_EMPLOYEES',
     //   iconUrl: 'assets/icons/menu-icons/icon3.svg',
@@ -84,7 +90,18 @@ export class SideBarLinksService {
       routeId: RouteIdsEnum.HOLIDAYS,
     },
     {
-      labelKey: 'Work missions',
+      labelKey: 'MENU.VISITS',
+      iconUrl: 'assets/icons/menu-icons/visits.svg',
+      children: [
+        {
+          labelKey: 'MENU.BLACKLIST',
+          routerLink: ['/blacklist'],
+          routeId: RouteIdsEnum.BLACKLIST,
+        },
+      ],
+    },
+    {
+      labelKey: 'MENU.WORK_MISSIONS',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',
       routerLink: ['/work-missions'],
       routeId: RouteIdsEnum.WORK_MISSION,
@@ -125,9 +142,9 @@ export class SideBarLinksService {
           routeId: RouteIdsEnum.NOTIFICATIONS,
         },
         {
-          labelKey: 'MENU.NOTIFICATION_CHANNELS',
-          routerLink: ['/notification-channels'],
-          routeId: RouteIdsEnum.NOTIFICATION_CHANNELS,
+          labelKey: 'MENU.GENERAL_SETTINGS',
+          routerLink: ['/general-settings'],
+          routeId: RouteIdsEnum.GENERAL_SETTINGS,
         },
         {
           labelKey: 'MENU.NATIONALITIES',

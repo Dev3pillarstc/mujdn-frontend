@@ -42,4 +42,11 @@ export class UserWorkShiftService extends LookupBaseService<UserWorkShift, numbe
       { withCredentials: true }
     );
   }
+
+  deleteUserShiftAssignment(shiftLogId: number): Observable<SingleResponseData<string>> {
+    return this.http.get<SingleResponseData<string>>(
+      `${this.getUrlSegment()}/DeleteUserShiftAssignment/${shiftLogId}`,
+      { withCredentials: true }
+    );
+  }
 }

@@ -152,6 +152,31 @@ export function markFormGroupTouched(form: FormGroup | FormArray) {
   });
 }
 
+// Helper function to build translation parameters dynamically
+export function buildTranslationParams(details: any, translateService: any): any {
+  const translationParams: any = {};
+  const currentLang = translateService.currentLang || 'en';
+
+  Object.keys(details).forEach((key) => {
+    // Extract the first value from the array, as Details is IDictionary<string, string[]>
+    const value =
+      Array.isArray(details[key]) && details[key].length > 0 ? details[key][0] : details[key];
+    if (key.endsWith('En') && currentLang === 'en') {
+      const baseKey = key.replace('En', '');
+      translationParams[baseKey] = value;
+    } else if (key.endsWith('Ar') && currentLang === 'ar') {
+      const baseKey = key.replace('Ar', '');
+      translationParams[baseKey] = value;
+    } else if (!key.endsWith('En') && !key.endsWith('Ar')) {
+      // For non-language-specific parameters
+      translationParams[key] = value;
+    }
+  });
+
+  console.log('Translation params:', translationParams); // Debug log
+  return translationParams;
+}
+
 export const weekDays = [
   { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SATURDAY', value: WeekDaysEnum.SATURDAY },
   { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SUNDAY', value: WeekDaysEnum.SUNDAY },

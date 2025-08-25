@@ -49,14 +49,14 @@
         <!-- Task Assignee Dropdown -->
         <div class="relative">
           <label class="label" for="nationalityAr">{{
-            'WORK_MISSIONS.MISSION_ASSIGNER' | translate
+            'WORK_MISSIONS.MISSION_CREATOR' | translate
           }}</label>
           <p-select
             [options]="creators"
-            [(ngModel)]="filterModel.missionAssignerId"
+            [(ngModel)]="filterModel.missionCreatorId"
             optionValue="id"
             [optionLabel]="getPropertyName()"
-            [placeholder]="'WORK_MISSIONS.MISSION_ASSIGNER' | translate"
+            [placeholder]="'WORK_MISSIONS.MISSION_CREATOR' | translate"
             class="w-full peer"
           ></p-select>
           <span
@@ -143,23 +143,23 @@
             <th>{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
-            <th>{{ 'WORK_MISSIONS.MISSION_ASSIGNER_AR' | translate }}</th>
-            <th>{{ 'WORK_MISSIONS.MISSION_ASSIGNER_EN' | translate }}</th>
-            <th>{{ 'COMMON.RESET_SEARCH' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_CREATOR_AR' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_CREATOR_EN' | translate }}</th>
+            <th>{{ 'COMMON.ACTION' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template #body let-mission>
           <tr>
             <td>{{ mission.nameAr }}</td>
             <td>
-              <div class="text-left">
+              <div>
                 {{ mission.nameEn }}
               </div>
             </td>
             <td>{{ mission.startDate }}</td>
             <td>{{ mission.endDate }}</td>
-            <td>{{ mission.missionAssigner.nameAr }}</td>
-            <td>{{ mission.missionAssigner.nameEn }}</td>
+            <td>{{ mission.missionCreator.nameAr }}</td>
+            <td>{{ mission.missionCreator.nameEn }}</td>
             <td>
               <!-- Only View Action -->
               <div class="actions flex gap-2">

@@ -52,8 +52,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   override form: FormGroup<any> = new FormGroup({});
   declare viewMode: ViewModeEnum;
   isCreateMode = false;
-  employeesData: PaginatedList<UserProfileDataWithNationalId> =
-    new PaginatedList<UserProfileDataWithNationalId>();
   employees: UserProfileDataWithNationalId[] = [];
   selectedUsers: MissionEmployeesAssignement = new MissionEmployeesAssignement();
   selectedEmployees: UserProfileDataWithNationalId[] = [];
@@ -64,14 +62,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   filterModel: OptionsContract = {};
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA)
-    public data: {
-      model: WorkMission;
-      viewMode: ViewModeEnum;
-      lookups: {
-        departments: BaseLookupModel[];
-      };
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     super();
   }
@@ -124,10 +115,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   first: number = 0;
   rows: number = 10;
   date2: Date | undefined;
-
-  selectedAdminstration: Adminstration | undefined;
-  declare direction: LAYOUT_DIRECTION_ENUM;
-  adminstrations: Adminstration[] | undefined;
 
   onPageChange(event: PaginatorState) {
     this.first = event.first!;

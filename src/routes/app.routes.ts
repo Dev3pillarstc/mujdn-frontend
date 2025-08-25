@@ -244,7 +244,7 @@ export const routes: Routes = [
         resolve: { list: WorkMissionResolver },
         loadComponent: () =>
           import(
-            '@/views/features/outside-mission/outside-mission-list/outside-mission-list.component'
+            '@/views/features/outside-mission/work-mission-container/work-mission-container.component'
           ),
       },
       {

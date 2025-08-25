@@ -60,7 +60,10 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   workMissionService = inject(WorkMissionService);
   paginationParams: PaginationParams = new PaginationParams();
   filterModel: OptionsContract = {};
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     super();
   }
   override initPopup(): void {

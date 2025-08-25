@@ -25,7 +25,8 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
-import { toDateOnly } from '@/utils/general-helper';
+import { formatDateTo12Hour, formatTimeTo12Hour, toDateOnly } from '@/utils/general-helper';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 @Component({
   selector: 'app-my-shifts',
   imports: [
@@ -57,6 +58,7 @@ export default class MyShiftsComponent extends BaseListComponent<
   };
 
   filterOptions: EmployeeShiftsFilter = new EmployeeShiftsFilter();
+  defaultWorkDays: WorkDaysSetting = new WorkDaysSetting();
   employeeShifts: EmployeeShift[] = [];
   currentShift: EmployeeShift | null = null;
   service = inject(MyShiftsService);
@@ -84,7 +86,10 @@ export default class MyShiftsComponent extends BaseListComponent<
 
   openDialog(shift: EmployeeShift): void {
     const viewMode = ViewModeEnum.EDIT;
-    this.openBaseDialog(WorkDaysPopupComponent as any, shift, viewMode);
+    const lookups = {
+      defaultWorkDays: [this.defaultWorkDays],
+    };
+    this.openBaseDialog(WorkDaysPopupComponent as any, shift, viewMode, lookups);
   }
 
   private loadInitialData(): void {
@@ -97,8 +102,13 @@ export default class MyShiftsComponent extends BaseListComponent<
       ...resolverData.myShifts.paginationInfo,
       totalItems: resolverData.myShifts.paginationInfo.totalItems || 0,
     };
+    this.defaultWorkDays = resolverData.defaultworkDays;
     // Load current shift data
     this.currentShift = resolverData.currentShift || null;
+    if (this.currentShift) {
+      this.currentShift.timeFrom = formatTimeTo12Hour(this.currentShift.timeFrom as string);
+      this.currentShift.timeTo = formatTimeTo12Hour(this.currentShift.timeTo as string);
+    }
   }
 
   getCurrentShiftName(): string {
@@ -257,5 +267,12 @@ export default class MyShiftsComponent extends BaseListComponent<
         this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
       },
     });
+  }
+  get startDate() {
+    return this.filterOptions.startDate as Date;
+  }
+
+  get endDate() {
+    return this.filterOptions.endDate as Date;
   }
 }

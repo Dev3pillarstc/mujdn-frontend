@@ -43,8 +43,13 @@ import { of, switchMap, Observable, catchError, map } from 'rxjs';
     unwrap: 'data',
     shape: { 'list.*': () => UserProfilePresenceInquiry },
   },
+  $lookup: {
+    model: () => ListResponseData<BaseLookupModel>,
+    unwrap: 'data',
+    shape: { 'data.*': () => BaseLookupModel },
+  },
 })
-export class UserProfileService extends BaseCrudService<UserProfile, string> {
+export class UserProfileService extends LookupBaseService<UserProfile, string> {
   override serviceName: string = 'UserProfileService';
 
   override getUrlSegment(): string {
@@ -88,6 +93,7 @@ export class UserProfileService extends BaseCrudService<UserProfile, string> {
       })
       .pipe(
         switchMap((response: ResponseData<UserProfile>) => {
+          console.log('UserProfileService getMyProfile response:', response);
           return of(response.data);
         })
       );

@@ -3,12 +3,14 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">اسناد الموظفين للمسائلة</h3>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'INQUIRIES_PAGE.ASSIGN_EMPLOYEES' | translate }}
+    </h3>
 
     <div class="pt-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-end">
         <div>
-          <label class="label">الإدارة</label>
+          <label class="label">{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}</label>
           <div class="relative">
             <p-select
               [options]="departments"
@@ -20,7 +22,7 @@
               id="department"
               optionLabel="type"
               optionValue="id"
-              placeholder="الادارة"
+              placeholder="{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -28,30 +30,20 @@
           </div>
         </div>
         <div>
-          <label class="label"> {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}</label>
+          <label class="label"> {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME' | translate }}</label>
           <div class="relative">
-            <input
-              [(ngModel)]="filterModel.fullNameAr"
-              pInputText
-              type="text"
-              placeholder=" {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}"
-              class="peer w-full"
-            />
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
-          </div>
-        </div>
-        <div>
-          <label class="label"> {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}</label>
-          <div class="relative">
-            <input
-              pInputText
-              type="text"
-              [(ngModel)]="filterModel.fullNameEn"
-              placeholder=" {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}"
-              class="peer w-full"
-            />
+            <p-select
+              [options]="users"
+              [(ngModel)]="filterModel.id"
+              [optionLabel]="getPropertyName()"
+              [showClear]="true"
+              [filter]="true"
+              class="w-full peer"
+              id="employee"
+              optionLabel="type"
+              optionValue="id"
+              placeholder="{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME' | translate }}"
+            ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
@@ -93,10 +85,10 @@
                   </svg>
                 </label>
               </th>
-              <th>معرف الموظف</th>
-              <th>اسم الموظف بالعربية</th>
-              <th>اسم الموظف بالانجليزية</th>
-              <th>الادارة</th>
+              <th>{{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}</th>
+              <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}</th>
+              <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}</th>
+              <th>{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}</th>
             </tr>
           </ng-template>
           <ng-template #body let-user>
@@ -123,11 +115,11 @@
                 </label>
               </td>
               <td>
-                <span class="font-medium text-[#1b8354]"> {{ user.id }} </span>
+                <span class="font-medium text-[#1b8354]"> {{ user.nationalId }} </span>
               </td>
               <td>{{ user.fullNameAr }}</td>
               <td>
-                <div >{{ user.fullNameEn }}</div>
+                <div>{{ user.fullNameEn }}</div>
               </td>
               <td>{{ getDepartmentName(user.fkDepartmentId) }}</td>
             </tr>
@@ -152,7 +144,9 @@
         />
       }
       <section class="border-t border-[#d2d6db] pt-8 mt-8">
-        <h3 class="text-[14px] font-normal text-[#6c737f] mb-6">الموظفون المعنيون بتنفيذ المهام</h3>
+        <h3 class="text-[14px] font-normal text-[#6c737f] mb-6">
+          {{ 'INQUIRIES_PAGE.ASSIGNED_USERS' | translate }}
+        </h3>
         <ul class="flex flex-wrap gap-4">
           <li
             *ngFor="let user of selectedUsers"

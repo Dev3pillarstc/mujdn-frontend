@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, input, model, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -28,6 +28,9 @@ import { ViewEmployeesCheckPopupComponent } from '../view-employees-check-popup/
 import { UserProfileService } from '@/services/features/user-profile.service';
 import { UserProfilePresenceInquiry } from '@/models/features/presence-inquiry/user-profile-presence-inquiry';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
+import * as XLSX from 'xlsx';
+import { CustomValidators } from '@/validators/custom-validators';
+import { LanguageService } from '@/services/shared/language.service';
 
 @Component({
   selector: 'app-others-presence-inquiries-list',
@@ -42,6 +45,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
     FormsModule,
     TranslatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './others-presence-inquiries-list.component.html',
   styleUrl: './others-presence-inquiries-list.component.scss',
 })
@@ -61,11 +65,12 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
   departments: BaseLookupModel[] = [];
   departmentService = inject(DepartmentService);
   userProfileService = inject(UserProfileService);
-  users: UserProfilePresenceInquiry[] = [];
   presenceInquiryStatusService = inject(PresenceInquiryStatusService);
   presenceInquiryStatuses: BaseLookupModel[] = [];
   inquiryStatusEnum = PRESENCE_INQUIRY_STATUS_ENUM;
   isActive = input.required<boolean>();
+  datePipe = inject(DatePipe);
+  languageService = inject(LanguageService);
 
   override get service() {
     return this.presenceInquiryService;
@@ -78,11 +83,6 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
     this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.departments = res;
     });
-    this.userProfileService
-      .loadUsersAvailableForPresenceInquiriesPaginated()
-      .subscribe((res: PaginatedList<UserProfilePresenceInquiry>) => {
-        this.users = res.list; // or res depending on what you want
-      });
   }
   override openBaseDialog(
     popupComponent: PresenceInquiriesPopupComponent,
@@ -171,12 +171,22 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
     this.openDialog(presenceInquiry ?? new PresenceInquiry());
   }
   protected override mapModelToExcelRow(model: PresenceInquiry): { [key: string]: any } {
+    console.log(model);
+
+    const date =
+      typeof model.assignedDate === 'string' ? new Date(model.assignedDate) : model.assignedDate;
     return {
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.EMPLOYEE_NAME_AR')]: model.fullNameAr,
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.EMPLOYEE_NAME_EN')]: model.fullNameEn,
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.NATIONAL_ID')]: model.nationalId,
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.DEPARTMENT')]: model.departmentName,
-      // [this.translateService.instant('PRESENCE_INQUIRIES_PAGE.STATUS')]: model.statusName,
+      [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_DATE')]: this.formatDate(
+        model.assignedDate
+      ),
+
+      [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_TIME')]: this.formatTime(
+        model.assignedDate
+      ),
+      [this.translateService.instant('INQUIRIES_PAGE.ALLOWED_ATTENDANCE_PERIOD')]: model.buffer,
+      [this.translateService.instant('INQUIRIES_PAGE.PROCESSING_STATUS')]: this.getStatusName(
+        model.statusId ?? 0
+      ),
     };
   }
 
@@ -243,5 +253,56 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
         next: () => {}, // No response expected since loadPresenceInquiriesList() handles updates
         error: this.handleLoadListError,
       });
+  }
+  formatDate(date: string | Date | null | undefined): string {
+    if (!date) return '-'; // fallback when no date
+    const d = new Date(date);
+    return this.datePipe.transform(d, 'dd-MM-yyyy') ?? '-';
+  }
+
+  formatTime(date: string | Date | null | undefined): string {
+    if (!date) return '-';
+    const d = new Date(date);
+    return this.datePipe.transform(d, 'HH:mm:ss') ?? '-';
+  }
+  getStatusName(id: number): string {
+    const status = this.presenceInquiryStatuses.find((d) => d.id === id);
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? (status?.nameEn ?? '')
+      : (status?.nameAr ?? '');
+  }
+  override exportExcel(
+    fileName: string = 'PresenceProofInquiry.xlsx',
+    isIncomingPermissions: boolean = false
+  ): void {
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
+    };
+
+    const fetchAll = this.service.loadPresenceInquiriesPaginated(allDataParams, {
+      ...this.filterModel!,
+    });
+
+    fetchAll.subscribe({
+      next: (response) => {
+        const fullList = response.list || [];
+        if (fullList.length > 0) {
+          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+          const transformedData = fullList.map((item) =>
+            isIncomingPermissions ? this.mapModelToExcelRow(item) : this.mapModelToExcelRow(item)
+          );
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        }
+      },
+      error: (_) => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
   }
 }

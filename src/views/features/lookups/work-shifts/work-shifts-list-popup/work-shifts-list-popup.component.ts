@@ -86,14 +86,68 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   }
 
   get canActivateShift(): boolean {
-    const today = toDateOnly(new Date());
-    const shiftDate = this.model.shiftLogStartDate
-      ? toDateOnly(this.model.shiftLogStartDate)
+    const rawShiftDate = this.form.get('shiftLogStartDate')?.value;
+    const rawActiveShiftDate = this.model.activeShiftStartDate;
+
+    if (!rawShiftDate) {
+      return false;
+    }
+
+    const shiftDate = new Date(toDateOnly(rawShiftDate));
+    const today = new Date(toDateOnly(new Date()));
+
+    // Check if user changed the date compared to the original value from backend
+    const originalShiftDate = this.model.shiftLogStartDate
+      ? new Date(toDateOnly(this.model.shiftLogStartDate))
       : null;
 
-    return !this.model.isActive && shiftDate !== null && shiftDate <= today;
+    const isDateChanged =
+      originalShiftDate !== null && shiftDate.getTime() !== originalShiftDate.getTime();
+
+    const result =
+      !this.model.isActive &&
+      this.model.id != null &&
+      this.model.shiftLogId != null &&
+      shiftDate <= today &&
+      (!rawActiveShiftDate || shiftDate > new Date(toDateOnly(rawActiveShiftDate))) &&
+      // NEW: only allow if date wasn't changed in update mode
+      (!isDateChanged || this.isCreateMode);
+
+    return result;
   }
 
+  get canSaveAndActivateShift(): boolean {
+    const rawShiftDate = this.form.get('shiftLogStartDate')?.value;
+    const today = new Date(toDateOnly(new Date()));
+
+    // Basic requirements for both modes
+    const basicRequirements =
+      this.form.valid &&
+      this.form.get('isDefaultShiftForm')?.value === true &&
+      rawShiftDate &&
+      this.form.get('shiftLogStartDate')?.valid;
+
+    if (!basicRequirements) {
+      return false;
+    }
+
+    const shiftDate = new Date(toDateOnly(rawShiftDate));
+
+    // Show button only if shift date is today or before today (hide if future date)
+    const isDateTodayOrBefore = shiftDate <= today;
+
+    if (this.isCreateMode) {
+      return isDateTodayOrBefore;
+    }
+
+    // For update mode, same date logic + model must not be active
+    return !this.model.isActive && isDateTodayOrBefore;
+  }
+
+  saveAndActivateShift() {
+    this.form.get('isActive')?.setValue(true);
+    this.save$.next();
+  }
   override initPopup(): void {
     this.model = this.data.model;
     this.isCreateMode = this.data.viewMode == ViewModeEnum.CREATE;
@@ -218,14 +272,53 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   }
 
   private performShiftActivation(): Observable<any> {
-    const shift = new Shift();
-    shift.isActive = true;
-    return this.service.activateShift(shift, this.model.id!);
+    const preparedModel = this.prepareModel(this.model, this.form) as Shift;
+    preparedModel.isActive = true;
+
+    // Add null check for safety
+    if (!this.model.id) {
+      console.log('ID is missing');
+    }
+
+    return this.service.activateShift(preparedModel, this.model.id);
   }
 
   private handleActivationError(error: any): void {
     this.alertService.showErrorMessage({
       messages: ['WORK_SHIFTS_POPUP.ACTIVATION_FAILED'],
     });
+  }
+
+  updateShiftMainData() {
+    this.form.get('isUpdateOnly')?.setValue(true);
+
+    if (this.model.isAvailableDefaultShift && this.form.get('isDefaultShiftForm')?.value) {
+      const confirmMessage = this.translateService.instant(
+        'WORK_SHIFTS_POPUP.NEW_DEFAULT_SHIFT_TO_BE_ADDED'
+      );
+      const confirmationData = {
+        icon: CONFIRMATION_DIALOG_ICONS_ENUM.WARNING.toString(),
+        messages: [confirmMessage],
+      };
+
+      this.confirmationService
+        .open(confirmationData)
+        .afterClosed()
+        .pipe(
+          filter((result) => result === DIALOG_ENUM.OK),
+          switchMap(() => {
+            this.save$.next();
+            return this.save$;
+          })
+        )
+        .subscribe({
+          next: () => {
+            this.dialogRef.close(DIALOG_ENUM.OK);
+          },
+          error: (error) => {},
+        });
+    } else {
+      this.save$.next();
+    }
   }
 }

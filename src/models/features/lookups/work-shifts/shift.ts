@@ -25,6 +25,8 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
   declare shiftActivationDate?: Date | string;
   declare activeShiftStartDate?: Date | string;
   isDefaultShiftForm?: boolean = false;
+  isUpdateOnly: boolean = false;
+  isAvailableDefaultShift?: boolean = false;
 
   buildForm() {
     const {
@@ -38,6 +40,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       isDefaultShiftForm,
       isActive,
       shiftLogStartDate,
+      isUpdateOnly,
     } = this;
 
     return {
@@ -79,6 +82,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       isDefaultShiftForm: [isDefaultShiftForm],
       shiftLogStartDate: [shiftLogStartDate],
       isActive: [isActive],
+      isUpdateOnly: [isUpdateOnly],
     };
   }
 }

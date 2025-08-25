@@ -9,6 +9,8 @@ export class UserWorkShiftInterceptor implements ModelInterceptorContract<UserWo
   send(model: Partial<UserWorkShift>): Partial<UserWorkShift> {
     delete model.employeeNameAr;
     delete model.employeeNameEn;
+    delete model.shiftNameAr;
+    delete model.shiftNameEn;
     model.startDate = toDateOnly(model.startDate);
     if (model.endDate) model.endDate = toDateOnly(model.endDate);
     return model;

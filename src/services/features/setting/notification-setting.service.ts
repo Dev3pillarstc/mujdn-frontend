@@ -27,7 +27,7 @@ export class NotificationSettingService extends BaseCrudService<NotificationSett
   serviceName = 'NotificationSettingService';
 
   override getUrlSegment(): string {
-    return this.urlService.URLS.NOTIFICATION_SETTINGS;
+    return this.urlService.URLS.GENERAL_SETTINGS;
   }
 
   @CastResponse(undefined, { fallback: '$get' })

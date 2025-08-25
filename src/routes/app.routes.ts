@@ -21,6 +21,7 @@ import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
 import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
 import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blacklisted-national-id.resolver';
 import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
+import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
 import { visitResolver } from '@/resolvers/features/visit/visit.resolver';
 
 export const routes: Routes = [
@@ -174,9 +175,9 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'notification-channels',
+        path: 'general-settings',
         canActivate: [authGuard],
-        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NOTIFICATION_CHANNELS },
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
         resolve: { channel: notificationSettingResolver },
         loadComponent: () =>
           import('@/views/features/settings/notification-settings/notification-settings.component'),
@@ -245,7 +246,13 @@ export const routes: Routes = [
           import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
       },
       {
-        path: 'outside-mission',
+        path: 'work-missions',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.EMPLOYEE],
+          routeId: RouteIdsEnum.WORK_MISSION,
+        },
+        resolve: { list: WorkMissionResolver },
         loadComponent: () =>
           import(
             '@/views/features/outside-mission/outside-mission-list/outside-mission-list.component'
@@ -260,6 +267,7 @@ export const routes: Routes = [
       },
       {
         path: 'presence-inquiries',
+        data: { routeId: RouteIdsEnum.PRESENCE_INQUIRIES },
         resolve: { list: presenceInquiryResolver },
         loadComponent: () =>
           import(

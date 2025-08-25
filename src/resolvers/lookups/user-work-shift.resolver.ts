@@ -4,6 +4,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { ShiftService } from '@/services/features/lookups/shift.service';
 import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
+import { WorkDaysSettingService } from '@/services/features/setting/work-days-setting.service';
 import { UserService } from '@/services/features/user.service';
 import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
@@ -15,18 +16,21 @@ export const userWorkShiftResolver: ResolveFn<
     users: any;
     departments: any;
     shifts: any;
+    defaultworkDays: any;
   } | null
 > = () => {
   const userWorkShiftService = inject(UserWorkShiftService);
   const userService = inject(UserService);
   const departmentService = inject(DepartmentService);
   const shiftService = inject(ShiftService);
+  const workDaysSettingService = inject(WorkDaysSettingService);
 
   return forkJoin({
     userShifts: userWorkShiftService.loadPaginated(new PaginationParams()),
     users: userService.getUsersWithDepartment(),
     shifts: shiftService.getLookup(),
     departments: departmentService.getLookup(),
+    defaultworkDays: workDaysSettingService.getWorkDays(),
   }).pipe(
     catchError((error) => {
       return of(null); // In case of error, return null to prevent navigation failure

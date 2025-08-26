@@ -3,90 +3,92 @@
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <div class="pb-2 mb-4 border-b border-[#d2d6db]">
-      <img src="assets/imgs/qr-code-logo.png" alt="" />
-    </div>
-    <div>
-      <div class="flex flex-col sm:flex-row gap-6 justify-between items-start">
-        <div class="flex flex-col gap-6 order-2 sm:order-1">
-          <h3 class="text-[#1f2a37] font-[600] mb-4 text-3xl">{{ model.fullName }}</h3>
+    <div #popupContent>
+      <div class="pb-2 mb-4 border-b border-[#d2d6db]">
+        <img src="assets/imgs/qr-code-logo.png" alt="" />
+      </div>
+      <div>
+        <div class="flex flex-col sm:flex-row gap-6 justify-between items-start">
+          <div class="flex flex-col gap-6 order-2 sm:order-1">
+            <h3 class="text-[#1f2a37] font-[600] mb-4 text-3xl">{{ model.fullName }}</h3>
+            <div>
+              <span class="text-[14px] text-[#6c737f]"
+                >{{ 'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate }}:</span
+              >
+              <h4 class="font-semibold text-[#161616]">{{ model.nationalId }}</h4>
+            </div>
+            <div>
+              <span class="text-[14px] text-[#6c737f]"
+                >{{ 'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate }}:</span
+              >
+              <h4 class="font-semibold text-[#161616]">{{ model.phoneNumber }}</h4>
+            </div>
+            <div>
+              <span class="text-[14px] text-[#6c737f]"
+                >{{ 'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate }}:</span
+              >
+              <h4 class="font-semibold text-[#161616]">{{ getDepartmentName() }}</h4>
+            </div>
+          </div>
+          <div class="order-1 sm:order-2">
+            <qrcode
+              id="visit-qr-code"
+              [qrdata]="model.qRcode"
+              [width]="180"
+              [errorCorrectionLevel]="'M'"
+            ></qrcode>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div>
             <span class="text-[14px] text-[#6c737f]"
-              >{{ 'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate }}:</span
+              >{{ 'VISIT_REQUEST_PAGE.VISIT_DATE' | translate }}:</span
             >
-            <h4 class="font-semibold text-[#161616]">{{ model.nationalId }}</h4>
+            <h4 class="font-semibold text-[#161616]">{{ formatDate(model.visitDate) }}</h4>
+          </div>
+          <div>
+            <span class="text-[14px] text-[#6c737f]"
+              >{{ 'VISIT_REQUEST_PAGE.VISIT_TIME_FROM_TO' | translate }}:</span
+            >
+            <h4 class="font-semibold text-[#161616]">
+              {{ formatTime(model.visitTimeFrom) }} - {{ formatTime(model.visitTimeTo) }}
+            </h4>
+          </div>
+          <div>
+            <span class="text-[14px] text-[#6c737f]"
+              >{{ 'VISIT_REQUEST_PAGE.VISIT_CREATOR' | translate }}:</span
+            >
+            <h4 class="font-semibold text-[#161616]">{{ getCreatorName() }}</h4>
           </div>
           <div>
             <span class="text-[14px] text-[#6c737f]"
               >{{ 'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate }}:</span
             >
-            <h4 class="font-semibold text-[#161616]">{{ model.phoneNumber }}</h4>
+            <h4 class="font-semibold text-[#161616]">{{ model.creationUser.phoneNumber }}</h4>
           </div>
+        </div>
+        <div
+          class="relative flex items-start gap-4 px-6 py-4 rounded-lg bg-white mb-6 border border-[#fedf89] border-s-[6px] border-s-[#dc6803] mt-6"
+        >
+          <img src="assets/icons/warning-qr.svg" alt="" />
           <div>
-            <span class="text-[14px] text-[#6c737f]"
-              >{{ 'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate }}:</span
-            >
-            <h4 class="font-semibold text-[#161616]">{{ getDepartmentName() }}</h4>
+            <h4 class="text-[16px] font-semibold text-[#b54708] mb-2">
+              {{ 'QR_CODE_POPUP.GENERAL_WARNINGS' | translate }}
+            </h4>
+            <p class="text-sm text-[#384250]">{{ 'QR_CODE_POPUP.NO_SMOKING' | translate }}</p>
+            <p class="text-sm text-[#384250]">{{ 'QR_CODE_POPUP.NO_PARKING' | translate }}</p>
           </div>
         </div>
-        <div class="order-1 sm:order-2">
-          <qrcode
-            id="visit-qr-code"
-            [qrdata]="model.qRcode"
-            [width]="180"
-            [errorCorrectionLevel]="'M'"
-          ></qrcode>
-        </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div>
-          <span class="text-[14px] text-[#6c737f]"
-            >{{ 'VISIT_REQUEST_PAGE.VISIT_DATE' | translate }}:</span
-          >
-          <h4 class="font-semibold text-[#161616]">{{ formatDate(model.visitDate) }}</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]"
-            >{{ 'VISIT_REQUEST_PAGE.VISIT_TIME_FROM_TO' | translate }}:</span
-          >
-          <h4 class="font-semibold text-[#161616]">
-            {{ formatTime(model.visitTimeFrom) }} - {{ formatTime(model.visitTimeTo) }}
-          </h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]"
-            >{{ 'VISIT_REQUEST_PAGE.VISIT_CREATOR' | translate }}:</span
-          >
-          <h4 class="font-semibold text-[#161616]">{{ getCreatorName() }}</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]"
-            >{{ 'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate }}:</span
-          >
-          <h4 class="font-semibold text-[#161616]">{{ model.creationUser.phoneNumber }}</h4>
-        </div>
-      </div>
-      <div
-        class="relative flex items-start gap-4 px-6 py-4 rounded-lg bg-white mb-6 border border-[#fedf89] border-s-[6px] border-s-[#dc6803] mt-6"
-      >
-        <img src="assets/icons/warning-qr.svg" alt="" />
-        <div>
-          <h4 class="text-[16px] font-semibold text-[#b54708] mb-2">
-            {{ 'QR_CODE_POPUP.GENERAL_WARNINGS' | translate }}
-          </h4>
-          <p class="text-sm text-[#384250]">{{ 'QR_CODE_POPUP.NO_SMOKING' | translate }}</p>
-          <p class="text-sm text-[#384250]">{{ 'QR_CODE_POPUP.NO_PARKING' | translate }}</p>
-        </div>
-      </div>
-      <div class="actions mt-6 flex gap-4 items-center justify-between">
-        <button class="btn gray-btn" (click)="close()">
-          {{ 'COMMON.CANCEL' | translate }}
-        </button>
-        <button class="btn green-btn" (click)="downloadAsPDF()">
-          <img src="assets/icons/download-qr.svg" alt="" />
-          {{ 'QR_CODE_POPUP.DOWNLOAD_AS_FILE' | translate }}
-        </button>
-      </div>
+    </div>
+    <div class="actions mt-6 flex gap-4 items-center justify-between">
+      <button class="btn gray-btn" (click)="close()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+      <button class="btn green-btn" (click)="downloadAsPDF()">
+        <img src="assets/icons/download-qr.svg" alt="" />
+        {{ 'QR_CODE_POPUP.DOWNLOAD_AS_FILE' | translate }}
+      </button>
     </div>
   </div>
 </div>

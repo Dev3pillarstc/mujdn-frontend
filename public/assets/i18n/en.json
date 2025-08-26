@@ -96,7 +96,7 @@
     "ACTIVATION_BLOCKED": "Cannot activate a shift with a future start date.",
     "NO_SHIFT_TO_ACTIVATE": "No scheduled shift found to activate.",
     "CHOOSE_DAYS_FOR_USER": "Please choose the working day(s) for the user",
-    "SHIFT_START_DATE_ERROR": "The shift start date must be at least the following day of the current active shift start date",
+    "SHIFT_START_DATE_ERROR": "The start date of the new shift must be at least the next day after the current active shift date.",
     "INACTIVE": "Inactive",
     "NOT_SPECIFIED": "Not Specified",
     "NO_ROLES": "No Roles",

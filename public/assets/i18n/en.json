@@ -422,7 +422,7 @@
     "VISITS": "Visits",
     "BLACKLIST": "Visitor blacklist criteria",
     "WORK_MISSIONS": "Work missions and assignments",
-    "VISIT_REQUEST": "Visit Request"
+    "VISIT_REQUEST": "Visit Requests"
   },
   "NOTIFICATION": {
     "GENERAL_SETTINGS": "General Settings",
@@ -627,7 +627,7 @@
     "VISITOR_REQUESTS_LIST": "Visitor Requests List",
     "MY_VISITS": "My Visits",
     "ALL_VISITS": "All Visits",
-    "VISIT_REQUEST_LIST": "Visit Request List",
+    "VISIT_REQUEST_LIST": "Visit Requests List",
     "SEARCH_FILTERS": "Search Filters",
     "NATIONAL_ID": "National ID",
     "NATIONAL_ID_EXPIRY_DATE": "National ID Expiry Date",

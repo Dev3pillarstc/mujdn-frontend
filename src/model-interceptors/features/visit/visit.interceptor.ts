@@ -1,11 +1,23 @@
 import { Visit } from '@/models/features/visit/visit';
-import { dateToTimeString, timeStringToDate, toDateOnly, toDateTime } from '@/utils/general-helper';
+import {
+  convertUtcToSystemTimeZone,
+  dateToTimeString,
+  timeStringToDate,
+  toDateOnly,
+  toDateTime,
+} from '@/utils/general-helper';
 import { ModelInterceptorContract } from 'cast-response';
 
 export class VisitInterceptor implements ModelInterceptorContract<Visit> {
   receive(model: Visit): Visit {
     model.visitDate = toDateTime(model.visitDate);
     model.nationalIdExpiryDate = toDateTime(model.nationalIdExpiryDate);
+    model.arrivalTime = model.arrivalTime
+      ? dateToTimeString(convertUtcToSystemTimeZone(timeStringToDate(model.arrivalTime || '')))
+      : null;
+    model.leaveTime = model.leaveTime
+      ? dateToTimeString(convertUtcToSystemTimeZone(timeStringToDate(model.leaveTime || '')))
+      : null;
     return model;
   }
 

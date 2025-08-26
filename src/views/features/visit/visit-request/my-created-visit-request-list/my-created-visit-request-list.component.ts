@@ -347,10 +347,10 @@ export class MyCreatedVisitRequestListComponent
         model.visitStatus
       ),
       [this.translateService.instant('VISIT_REQUEST_PAGE.ENTRY')]: this.formatTime(
-        model.visitTimeFrom?.toString() || ''
+        model.arrivalTime?.toString() || ''
       ),
       [this.translateService.instant('VISIT_REQUEST_PAGE.EXIT')]: this.formatTime(
-        model.visitTimeTo?.toString() || ''
+        model.leaveTime?.toString() || ''
       ),
     };
   }

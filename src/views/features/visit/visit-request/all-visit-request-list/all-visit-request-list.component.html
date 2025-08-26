@@ -196,8 +196,8 @@
               </span>
             </td>
             <td>{{ getVisitCreatorName(visit) }}</td>
-            <td>{{ formatTime(visit.visitTimeFrom) }}</td>
-            <td>{{ formatTime(visit.visitTimeTo) }}</td>
+            <td>{{ formatTime(visit.arrivalTime) }}</td>
+            <td>{{ formatTime(visit.leaveTime) }}</td>
             <td>
               <div class="actions flex gap-2">
                 <button class="table-action-gray-btn" (click)="openViewDialog(visit)">

@@ -6,6 +6,7 @@ import { VisitService } from '@/services/features/visit/visit.service';
 import { BaseLookupModel } from '../lookups/base-lookup-model';
 import { CustomValidators } from '@/validators/custom-validators';
 import { timeStringToDate } from '@/utils/general-helper';
+import { VisitCreatorModel } from './visit-creator';
 
 const { send, receive } = new VisitInterceptor();
 
@@ -29,7 +30,10 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   declare visitPurpose: string;
   declare visitStatus: number;
   declare isEditable: boolean;
-  declare creationUser: BaseLookupModel;
+  declare creationUser: VisitCreatorModel;
+  declare qRcode: string;
+  declare arrivalTime: string | null;
+  declare leaveTime: string | null;
 
   constructor() {
     super();

@@ -10,10 +10,11 @@ import { AlertService } from '@/services/shared/alert.service';
 import { formatDateOnly, formatTimeTo12Hour } from '@/utils/general-helper';
 import jsPDF from 'jspdf';
 import { registerIBMPlexArabicFont } from '../../../../../../public/assets/fonts/ibm-plex-font';
+import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-qrcode-visit-request-popup',
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, QRCodeComponent],
   templateUrl: './qrcode-visit-request-popup.component.html',
   styleUrl: './qrcode-visit-request-popup.component.scss',
 })

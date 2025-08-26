@@ -1,65 +1,94 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
-    <button class="block ms-auto">
+    <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <div class="pb-2 mb-4 border-b border-[#d2d6db]">
-      <img src="assets/imgs/qr-code-logo.png" alt="" />
+    <div #popupContent>
+      <div class="pb-2 mb-4 border-b border-[#d2d6db]">
+        <img src="assets/imgs/qr-code-logo.png" alt="" />
+      </div>
+      <div>
+        <div class="flex flex-col sm:flex-row gap-6 justify-between items-start">
+          <div class="flex flex-col gap-6 order-2 sm:order-1">
+            <h3 class="text-[#1f2a37] font-[600] mb-4 text-3xl">{{ model.fullName }}</h3>
+            <div>
+              <span class="text-[14px] text-[#6c737f]"
+                >{{ 'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate }}:</span
+              >
+              <h4 class="font-semibold text-[#161616]">{{ model.nationalId }}</h4>
+            </div>
+            <div>
+              <span class="text-[14px] text-[#6c737f]"
+                >{{ 'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate }}:</span
+              >
+              <h4 class="font-semibold text-[#161616]">{{ model.phoneNumber }}</h4>
+            </div>
+            <div>
+              <span class="text-[14px] text-[#6c737f]"
+                >{{ 'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate }}:</span
+              >
+              <h4 class="font-semibold text-[#161616]">{{ getDepartmentName() }}</h4>
+            </div>
+          </div>
+          <div class="order-1 sm:order-2">
+            <qrcode
+              id="visit-qr-code"
+              [qrdata]="model.qRcode"
+              [width]="180"
+              [errorCorrectionLevel]="'M'"
+            ></qrcode>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div>
+            <span class="text-[14px] text-[#6c737f]"
+              >{{ 'VISIT_REQUEST_PAGE.VISIT_DATE' | translate }}:</span
+            >
+            <h4 class="font-semibold text-[#161616]">{{ formatDate(model.visitDate) }}</h4>
+          </div>
+          <div>
+            <span class="text-[14px] text-[#6c737f]"
+              >{{ 'VISIT_REQUEST_PAGE.VISIT_TIME_FROM_TO' | translate }}:</span
+            >
+            <h4 class="font-semibold text-[#161616]">
+              {{ formatTime(model.visitTimeFrom) }} - {{ formatTime(model.visitTimeTo) }}
+            </h4>
+          </div>
+          <div>
+            <span class="text-[14px] text-[#6c737f]"
+              >{{ 'VISIT_REQUEST_PAGE.VISIT_CREATOR' | translate }}:</span
+            >
+            <h4 class="font-semibold text-[#161616]">{{ getCreatorName() }}</h4>
+          </div>
+          <div>
+            <span class="text-[14px] text-[#6c737f]"
+              >{{ 'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate }}:</span
+            >
+            <h4 class="font-semibold text-[#161616]">{{ model.creationUser.phoneNumber }}</h4>
+          </div>
+        </div>
+        <div
+          class="relative flex items-start gap-4 px-6 py-4 rounded-lg bg-white mb-6 border border-[#fedf89] border-s-[6px] border-s-[#dc6803] mt-6"
+        >
+          <img src="assets/icons/warning-qr.svg" alt="" />
+          <div>
+            <h4 class="text-[16px] font-semibold text-[#b54708] mb-2">
+              {{ 'QR_CODE_POPUP.GENERAL_WARNINGS' | translate }}
+            </h4>
+            <p class="text-sm text-[#384250]">{{ 'QR_CODE_POPUP.NO_SMOKING' | translate }}</p>
+            <p class="text-sm text-[#384250]">{{ 'QR_CODE_POPUP.NO_PARKING' | translate }}</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-      <div class="flex flex-col sm:flex-row gap-6 justify-between items-start">
-        <div class="flex flex-col gap-6 order-2 sm:order-1">
-          <h3 class="text-[#1f2a37 font-[600] mb-4 text-3xl">محمد أحمد طه</h3>
-          <div>
-            <span class="text-[14px] text-[#6c737f]">رقم الهوية:</span>
-            <h4 class="font-semibold text-[#161616]">123456</h4>
-          </div>
-          <div>
-            <span class="text-[14px] text-[#6c737f]">رقم الجوال</span>
-            <h4 class="font-semibold text-[#161616]">1234567890</h4>
-          </div>
-          <div>
-            <span class="text-[14px] text-[#6c737f]">الادارة المستهدفة</span>
-            <h4 class="font-semibold text-[#161616]">ادارة الموارد البشرية</h4>
-          </div>
-        </div>
-        <img class="order-1 sm:order-2" src="assets/imgs/qr-code.png" alt="" />
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div>
-          <span class="text-[14px] text-[#6c737f]">تاريخ الزيارة</span>
-          <h4 class="font-semibold text-[#161616]">12/12/2024</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">وقت الزيارة (من-الى)</span>
-          <h4 class="font-semibold text-[#161616]">12:00 - 18:00</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">منشئ الزيارة</span>
-          <h4 class="font-semibold text-[#161616]">أحمد طه على</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">رقم الجوال</span>
-          <h4 class="font-semibold text-[#161616]">1234567890</h4>
-        </div>
-      </div>
-      <div
-        class="relative flex items-start gap-4 px-6 py-4 rounded-lg bg-white mb-6 border border-[#fedf89] border-s-[6px] border-s-[#dc6803] mt-6"
-      >
-        <img src="assets/icons/warning-qr.svg" alt="" />
-        <div>
-          <h4 class="text-[16px] font-semibold text-[#b54708] mb-2">تحذيرات عامة</h4>
-          <p class="text-sm text-[#384250]">ممنوع التدخين</p>
-          <p class="text-sm text-[#384250]">ممنوع الوقوف</p>
-        </div>
-      </div>
-      <div class="actions mt-6 flex gap-4 items-center justify-between">
-        <button class="btn gray-btn">الغاء</button>
-        <button class="btn green-btn">
-          <img src="assets/icons/download-qr.svg" alt="" />
-          تحميل كملف
-        </button>
-      </div>
+    <div class="actions mt-6 flex gap-4 items-center justify-between">
+      <button class="btn gray-btn" (click)="close()">
+        {{ 'COMMON.CANCEL' | translate }}
+      </button>
+      <button class="btn green-btn" (click)="downloadAsPDF()">
+        <img src="assets/icons/download-qr.svg" alt="" />
+        {{ 'QR_CODE_POPUP.DOWNLOAD_AS_FILE' | translate }}
+      </button>
     </div>
   </div>
 </div>

@@ -26,6 +26,7 @@ export const EndPoints = {
   USER_PRESENCE_INQUIRY_STATUS: '/userPresenceInquiryStatuses',
   BLACKLISTED_NATIONAL_IDS: '/blacklisted-national-ids',
   BLACKLISTED_NATIONALITIES: '/blacklisted-nationalities',
+  VISITS: '/visits',
 };
 
 export type EndpointsType = typeof EndPoints;

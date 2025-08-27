@@ -39,11 +39,10 @@ export const WorkMissionResolver: ResolveFn<
 
     departments: canLoadMissionsAndDepartments
       ? departmentService.getBaseLookupsForMissionsAsync().pipe(
-        map((resp: ListResponseData<BaseLookupModel>) => resp?.data ?? null),
-        catchError(() => of(null))
-      )
+          map((resp: ListResponseData<BaseLookupModel>) => resp?.data ?? null),
+          catchError(() => of(null))
+        )
       : of(null),
-
 
     myMissions: workMissionService.getMyWorkMissionsAsync(new PaginationParams(), {}).pipe(
       map((response: PaginatedListResponseData<WorkMission>) => response?.data || null),

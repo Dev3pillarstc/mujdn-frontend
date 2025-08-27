@@ -469,7 +469,9 @@
     "EMPLOYEE_NAME": "اسم الموظف",
     "SHIFT_LIST": "قائمة ورديات العمل",
     "ASSIGN_SHIFT_TO_EMPLOYEE": "اسناد وردية لموظف",
-    "EMPLOYEE_NAME_AR": "اسم الموظف (عربي)",
+    "EMPLOYEE_NAME_AR": "اسم الموظف (عربي)",    
+    "STARTING_DATE": "تاريخ البداية",
+    "ENDING_DATE": "تاريخ النهاية",
     "EMPLOYEE_NAME_EN": "اسم الموظف (إنجليزي)"
   },
   "PROFILE_PAGE": {
@@ -589,7 +591,8 @@
     "MISSION_NAME_EN": "اسم المهمة بالإنجليزية",
     "MY_MISSION_DATA": "بيانات المهمة المسندة",
     "MISSION_DATA": "بيانات المهمة و الإسناد",
-    "WORK_MISSIONS_LIST": "قائمة المهام المسندة",
+    "MY_WORK_MISSIONS_LIST": "قائمة المهام المسندة",
+    "WORK_MISSIONS_LIST": "قائمة المهام و الإسناد",
     "ADD_NEW_WORK_MISSION": "إضافة مهمة عمل جديدة",
     "ADD_NEW_MISSION": "إضافة مهمة جديدة",
     "EDIT_MISSION": "تعديل المهمة",

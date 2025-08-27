@@ -471,6 +471,8 @@
     "EMPLOYEE_NAME": "Employee Name",
     "SHIFT_LIST": "Work Shifts List",
     "ASSIGN_SHIFT_TO_EMPLOYEE": "Assign Shift to Employee",
+    "STARTING_DATE": "Start date",
+    "ENDING_DATE": "End date",
     "EMPLOYEE_NAME_AR": "Employee Name (Arabic)",
     "EMPLOYEE_NAME_EN": "Employee Name (English)"
   },
@@ -591,7 +593,8 @@
     "MISSION_NAME_EN": "Mission name in English",
     "MY_MISSION_DATA": " Assigned mission data",
     "MISSION_DATA": "Mission data and assignment",
-    "WORK_MISSIONS_LIST": "Assigned Missions List",
+    "MY_WORK_MISSIONS_LIST": "Assigned Missions List",
+    "WORK_MISSIONS_LIST": "Missions and Assignment List",
     "ADD_NEW_WORK_MISSION": "Add new work mission",
     "ADD_NEW_MISSION": "Add new mission",
     "EDIT_MISSION": "Edit mission",

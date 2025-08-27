@@ -346,7 +346,7 @@
     "NOT_ACTIVE": "غير مفعلة",
     "ACTIVATE": "تفعيل",
     "SAVE_AND_ACTIVATE": "حفظ وتفعيل",
-    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "سيتم إضافة وردية افتراضية جديدة، لن تكون الوردية الافتراضية السابقة افتراضية بعد الآن"
+    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "عند إضافة وردية افتراضية جديدة، يتم إلغاء تعيين الوردية السابقة كافتراضية تلقائياً"
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "سجل حضوري",

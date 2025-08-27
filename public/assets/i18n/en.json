@@ -348,7 +348,7 @@
     "NOT_ACTIVE": "Not active",
     "ACTIVATE": "Activate",
     "SAVE_AND_ACTIVATE": "Save and Activate",
-    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "New default shift to will be added, The other default shift will not be default anymore"
+    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "When a new default shift is added, the previous default shift is automatically unset."
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "My Attendance Logs",

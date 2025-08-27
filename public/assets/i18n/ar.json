@@ -587,7 +587,8 @@
     "ASSIGN_WORK_MISSIONS": "كل المهام ",
     "MISSION_NAME_AR": "اسم المهمة بالعربية",
     "MISSION_NAME_EN": "اسم المهمة بالإنجليزية",
-    "MISSION_DATA": "بيانات المهمة المسندة",
+    "MY_MISSION_DATA": "بيانات المهمة المسندة",
+    "MISSION_DATA": "بيانات المهمة و الإسناد",
     "WORK_MISSIONS_LIST": "قائمة المهام المسندة",
     "ADD_NEW_WORK_MISSION": "إضافة مهمة عمل جديدة",
     "ADD_NEW_MISSION": "إضافة مهمة جديدة",
@@ -611,7 +612,9 @@
     "END_DATE": "تاريخ النهايه",
     "DEPARTMENT_NAME_ARABIC": "الادارة بالعربية",
     "DEPARTMENT_NAME_ENGLISH": "الادارة بالانجليزية",
-    "STARTING_DATE": "تاريخ البدايه",
-    "ENDING_DATE": "تاريخ النهايه"
+    "STARTING_DATE": "تاريخ البداية",
+    "ENDING_DATE": "تاريخ النهاية",
+    "FROM": "التاريخ (من)",
+    "TO": "التاريخ (إلى)"
   }
 }

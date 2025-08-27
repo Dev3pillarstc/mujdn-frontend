@@ -12,96 +12,60 @@
         <div class="relative">
           <label class="label" for="nationalityAr">{{
             'WORK_MISSIONS.MISSION_NAME_AR' | translate
-          }}</label>
-          <input
-            class="peer"
-            fluid="true"
-            id="nationalityAr"
-            pInputText
-            [placeholder]="'WORK_MISSIONS.MISSION_NAME_AR' | translate"
-            type="text"
-            [(ngModel)]="filterModel.nameAr"
-          />
+            }}</label>
+          <input class="peer" fluid="true" id="nationalityAr" pInputText
+            [placeholder]="'WORK_MISSIONS.MISSION_NAME_AR' | translate" type="text" [(ngModel)]="filterModel.nameAr" />
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
 
         <!-- English Task Name -->
         <div class="relative">
           <label class="label" for="nationalityAr">{{
             'WORK_MISSIONS.MISSION_NAME_EN' | translate
-          }}</label>
-          <input
-            class="peer"
-            fluid="true"
-            id="nationalityAr"
-            pInputText
-            [placeholder]="'WORK_MISSIONS.MISSION_NAME_EN' | translate"
-            type="text"
-            [(ngModel)]="filterModel.nameEn"
-          />
+            }}</label>
+          <input class="peer" fluid="true" id="nationalityAr" pInputText
+            [placeholder]="'WORK_MISSIONS.MISSION_NAME_EN' | translate" type="text" [(ngModel)]="filterModel.nameEn" />
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
 
         <!-- Task Assignee Dropdown -->
         <div class="relative">
           <label class="label" for="nationalityAr">{{
             'WORK_MISSIONS.MISSION_CREATOR' | translate
-          }}</label>
-          <p-select
-            [options]="creators"
-            [(ngModel)]="filterModel.missionCreatorId"
-            optionValue="id"
-            [optionLabel]="getPropertyName()"
-            [placeholder]="'WORK_MISSIONS.MISSION_CREATOR' | translate"
-            class="w-full peer"
-          ></p-select>
+            }}</label>
+          <p-select [options]="creators" [(ngModel)]="filterModel.missionCreatorId" optionValue="id"
+            [optionLabel]="getPropertyName()" [placeholder]="'WORK_MISSIONS.MISSION_CREATOR' | translate"
+            class="w-full peer"></p-select>
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
 
         <!-- Date From -->
         <div class="relative">
-          <label class="label" for="">{{ 'WORK_MISSIONS.START_DATE' | translate }}</label>
-          <p-datepicker
-            [iconDisplay]="'input'"
-            [showIcon]="true"
-            class="peer block w-full"
-            inputId="icondisplay"
-            [placeholder]="'WORK_MISSIONS.START_DATE' | translate"
-            [(ngModel)]="filterModel.startDate"
-          >
+          <label class="label" for="">{{ 'WORK_MISSIONS.FROM' | translate }}</label>
+          <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="icondisplay"
+            [placeholder]="'WORK_MISSIONS.FROM' | translate" [(ngModel)]="filterModel.startDate">
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
             </ng-template>
           </p-datepicker>
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
 
         <!-- Date To -->
         <div class="relative">
-          <label class="label" for="">{{ 'WORK_MISSIONS.END_DATE' | translate }}</label>
-          <p-datepicker
-            [iconDisplay]="'input'"
-            [showIcon]="true"
-            class="peer block w-full"
-            inputId="icondisplay"
-            [placeholder]="'WORK_MISSIONS.END_DATE' | translate"
-            [(ngModel)]="filterModel.endDate"
-          >
+          <label class="label" for="">{{ 'WORK_MISSIONS.TO' | translate }}</label>
+          <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="icondisplay"
+            [placeholder]="'WORK_MISSIONS.TO' | translate" [(ngModel)]="filterModel.endDate">
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
             </ng-template>
           </p-datepicker>
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
       </div>
 
@@ -119,77 +83,63 @@
   <div class="mt-6">
     <!-- Table Header -->
     <div
-      class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
-    >
+      class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
         {{ 'WORK_MISSIONS.WORK_MISSIONS_LIST' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <!-- Only Excel Export Button -->
-        <button
-          class="table-head-action-btn min-w-[40px]"
-          (click)="exportExcel('my-work-missions.xlsx')"
-        >
+        <button class="table-head-action-btn min-w-[40px]" (click)="exportExcel('my-work-missions.xlsx')">
           <img alt="" src="assets/icons/excel.svg" />
         </button>
       </div>
     </div>
     @if (list && list.length > 0) {
-      <!-- Table with Task Assignee Column -->
-      <p-table [value]="list">
-        <ng-template #header>
-          <tr>
-            <th>{{ 'WORK_MISSIONS.MISSION_NAME_AR' | translate }}</th>
-            <th>{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</th>
-            <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
-            <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
-            <th>{{ 'WORK_MISSIONS.MISSION_CREATOR_AR' | translate }}</th>
-            <th>{{ 'WORK_MISSIONS.MISSION_CREATOR_EN' | translate }}</th>
-            <th>{{ 'COMMON.ACTION' | translate }}</th>
-          </tr>
-        </ng-template>
-        <ng-template #body let-mission>
-          <tr>
-            <td>{{ mission.nameAr }}</td>
-            <td>
-              <div>
-                {{ mission.nameEn }}
-              </div>
-            </td>
-            <td>{{ mission.startDate }}</td>
-            <td>{{ mission.endDate }}</td>
-            <td>{{ mission.missionCreator.nameAr }}</td>
-            <td>{{ mission.missionCreator.nameEn }}</td>
-            <td>
-              <!-- Only View Action -->
-              <div class="actions flex gap-2">
-                <button
-                  (click)="addOrEditModel(mission)"
-                  ngClass=""
-                  class="table-action-gray-btn flex gap-2 font-medium"
-                >
-                  <img alt="" src="assets/icons/view-action.svg" />
-                </button>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+    <!-- Table with Task Assignee Column -->
+    <p-table [value]="list">
+      <ng-template #header>
+        <tr>
+          <th>{{ 'WORK_MISSIONS.MISSION_NAME_AR' | translate }}</th>
+          <th>{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</th>
+          <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
+          <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
+          <th>{{ 'WORK_MISSIONS.MISSION_CREATOR_AR' | translate }}</th>
+          <th>{{ 'WORK_MISSIONS.MISSION_CREATOR_EN' | translate }}</th>
+          <th>{{ 'COMMON.ACTION' | translate }}</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-mission>
+        <tr>
+          <td>{{ mission.nameAr }}</td>
+          <td>
+            <div>
+              {{ mission.nameEn }}
+            </div>
+          </td>
+          <td>{{ mission.startDate }}</td>
+          <td>{{ mission.endDate }}</td>
+          <td>{{ mission.missionCreator.nameAr }}</td>
+          <td>{{ mission.missionCreator.nameEn }}</td>
+          <td>
+            <!-- Only View Action -->
+            <div class="actions flex gap-2">
+              <button (click)="addOrEditModel(mission)" ngClass="" class="table-action-gray-btn flex gap-2 font-medium">
+                <img alt="" src="assets/icons/view-action.svg" />
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
     } @else {
-      <div class="flex items-center justify-center h-64">
-        <p class="text-gray-500">{{ 'CITIES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
-      </div>
+    <div class="flex items-center justify-center h-64">
+      <p class="text-gray-500">{{ 'CITIES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+    </div>
     }
     <!-- Pagination -->
     @if (paginationInfo) {
-      <p-paginator
-        (onPageChange)="onPageChange($event)"
-        [first]="first"
-        [rowsPerPageOptions]="[10, 20, 30]"
-        [rows]="paginationInfo.pageSize"
-        [totalRecords]="paginationInfo.totalItems"
-        class="mt-6"
-      />
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]"
+      [rows]="paginationInfo.pageSize" [totalRecords]="paginationInfo.totalItems" class="mt-6" />
     }
   </div>
 </div>

@@ -20,6 +20,7 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
   declare assignedEmployees?: BaseLookupModel[];
   declare concurrencyUpdateVersion?: Uint8Array;
   declare isMissionCreator: boolean;
+  declare isMyMission: boolean;
 
   buildForm() {
     const { nameAr, nameEn, startDate, endDate, description } = this;

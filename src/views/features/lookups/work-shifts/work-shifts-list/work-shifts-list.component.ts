@@ -37,8 +37,7 @@ import { formatTimeTo12Hour } from '@/utils/general-helper';
 })
 export default class WorkShiftsListComponent
   extends BaseListComponent<Shift, WorkShiftsListPopupComponent, ShiftService, ShiftsFilter>
-  implements OnInit
-{
+  implements OnInit {
   filterModel: ShiftsFilter = new ShiftsFilter();
 
   shiftService = inject(ShiftService);
@@ -56,14 +55,21 @@ export default class WorkShiftsListComponent
     return this.shiftService;
   }
 
-  override initListComponent(): void {}
+  override initListComponent(): void { }
 
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'WORK_SHIFTS.WORK_SHIFTS' }];
   }
 
   openDialog(model: Shift): void {
-    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    let viewMode;
+    if (model.id) {
+      viewMode = ViewModeEnum.EDIT
+    }
+    else {
+      viewMode = ViewModeEnum.CREATE
+      model.defaultShiftId = this.list.find((s) => s.defaultShiftId != null)?.defaultShiftId;
+    }
     this.openBaseDialog(WorkShiftsListPopupComponent as any, model, viewMode);
   }
 

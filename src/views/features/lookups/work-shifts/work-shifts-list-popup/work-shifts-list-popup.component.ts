@@ -195,7 +195,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     });
   }
 
-  override saveFail(error: Error): void {}
+  override saveFail(error: Error): void { }
 
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
@@ -292,7 +292,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   updateShiftMainData() {
     this.form.get('isUpdateOnly')?.setValue(true);
 
-    if (this.model.isAvailableDefaultShift && this.form.get('isDefaultShiftForm')?.value) {
+    if (this.model.isAvailableDefaultShift && this.form.get('isDefaultShiftForm')?.value && this.model.id != this.model.defaultShiftId) {
       const confirmMessage = this.translateService.instant(
         'WORK_SHIFTS_POPUP.NEW_DEFAULT_SHIFT_TO_BE_ADDED'
       );
@@ -315,7 +315,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
           next: () => {
             this.dialogRef.close(DIALOG_ENUM.OK);
           },
-          error: (error) => {},
+          error: (error) => { },
         });
     } else {
       this.save$.next();

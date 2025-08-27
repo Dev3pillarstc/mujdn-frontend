@@ -507,6 +507,8 @@
     "NAME_ENGLISH": "Shift name (English)",
     "START_DATE": "Date from",
     "END_DATE": "Date to",
+    "STARTING_DATE": "Start date",
+    "ENDING_DATE": "End date",
     "TIME_FROM_TO": "Time (From - To)",
     "ATTENDANCE_BUFFER": "Attendance grace period (min)",
     "LEAVE_BUFFER": "Leave grace period (min)",

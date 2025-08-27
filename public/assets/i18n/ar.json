@@ -505,6 +505,8 @@
     "NAME_ENGLISH": "اسم الوردية (إنجليزي)",
     "START_DATE": "التاريخ (من)",
     "END_DATE": "التاريخ (إلى)",
+    "STARTING_DATE": "تاريخ البداية",
+    "ENDING_DATE": "تاريخ النهاية",
     "TIME_FROM_TO": "الوقت (من - الى)",
     "ATTENDANCE_BUFFER": "مدة السماح للحضور(دق)",
     "LEAVE_BUFFER": "مدة السماح للانصراف(دق)",

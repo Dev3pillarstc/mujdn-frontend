@@ -4,10 +4,10 @@
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      @if(model.isMyMission) {
-      {{ 'WORK_MISSIONS.MY_MISSION_DATA' | translate }}
-      }@else {
-      {{ 'WORK_MISSIONS.MISSION_DATA' | translate }}
+      @if (model.isMyMission) {
+        {{ 'WORK_MISSIONS.MY_MISSION_DATA' | translate }}
+      } @else {
+        {{ 'WORK_MISSIONS.MISSION_DATA' | translate }}
       }
     </h3>
     <div class="bg-[#074d31] rounded-2xl p-6 mb-6">
@@ -36,9 +36,9 @@
           <span class="text-[14px]">{{ 'WORK_MISSIONS.MISSION_CREATOR' | translate }}</span>
           <h4 class="font-semibold text-[16px]">
             {{
-            isCurrentLanguageEnglish()
-            ? model.missionCreator?.nameEn
-            : model.missionCreator?.nameAr
+              isCurrentLanguageEnglish()
+                ? model.missionCreator?.nameEn
+                : model.missionCreator?.nameAr
             }}
           </h4>
         </div>
@@ -51,26 +51,27 @@
       </p>
     </div>
     @if (model.assignedEmployees && model.assignedEmployees.length > 0) {
-    <div class="mt-6 pt-6 border-t border-[#d2d6db]">
-      <h4 class="text-[#6c737f] text-[14px]">
-        {{ 'WORK_MISSIONS.ASSIGNED_EMPLOYEES' | translate }}
-      </h4>
-      <div class="flex flex-wrap gap-4 mt-4">
-        @for (item of model.assignedEmployees; track $index) {
-        <div class="bg-[#f3f4f6] rounded-full px-3">
-          <span class="text-[#161616] font-medium">{{ isCurrentLanguageEnglish() ? item.nameEn : item.nameAr }}
-          </span>
-        </div>
-        }
-        <!-- @else {
+      <div class="mt-6 pt-6 border-t border-[#d2d6db]">
+        <h4 class="text-[#6c737f] text-[14px]">
+          {{ 'WORK_MISSIONS.ASSIGNED_EMPLOYEES' | translate }}
+        </h4>
+        <div class="flex flex-wrap gap-4 mt-4">
+          @for (item of model.assignedEmployees; track $index) {
+            <div class="bg-[#f3f4f6] rounded-full px-3">
+              <span class="text-[#161616] font-medium"
+                >{{ isCurrentLanguageEnglish() ? item.nameEn : item.nameAr }}
+              </span>
+            </div>
+          }
+          <!-- @else {
           <div class="bg-[#f3f4f6] rounded-full px-3">
             <span class="text-[#161616] font-medium">{{
               'WORK_MISSIONS.NO_EMPLOYEES_SELECTED' | translate
             }}</span>
           </div>
           } -->
+        </div>
       </div>
-    </div>
     }
     <div class="actions mt-6 flex items-center justify-between gap-4">
       <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>

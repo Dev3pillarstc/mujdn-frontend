@@ -69,7 +69,50 @@ export function convertUtcToSystemTimeZone(utcDateTime: Date | string): Date {
 
   return ksaTime;
 }
+export function convertUtcTimeToSystemTimeZone(
+  utcTimeString: string,
+  anchorDate?: Date | string
+): string {
+  if (!utcTimeString) return '';
 
+  // ---- parse "time of day" (supports 24h or 12h with AM/PM) ----
+  const trimmed = utcTimeString.trim();
+  const ampmMatch = trimmed.match(/^\s*(\d{1,2}):(\d{2})(?::(\d{2}))?\s*([AaPp][Mm])\s*$/);
+  const hhmmssMatch = trimmed.match(/^\s*(\d{1,2}):(\d{2})(?::(\d{2}))?\s*$/);
+
+  let h = 0, m = 0, s = 0;
+  if (ampmMatch) {
+    h = Number(ampmMatch[1]);
+    m = Number(ampmMatch[2]);
+    s = ampmMatch[3] ? Number(ampmMatch[3]) : 0;
+    const isPM = /pm/i.test(ampmMatch[4]);
+    if (h === 12) h = 0;         // 12AM -> 0, 12PM handled below
+    if (isPM) h += 12;           // PM -> add 12
+  } else if (hhmmssMatch) {
+    h = Number(hhmmssMatch[1]);
+    m = Number(hhmmssMatch[2]);
+    s = hhmmssMatch[3] ? Number(hhmmssMatch[3]) : 0;
+  } else {
+    return ''; // unrecognized format
+  }
+
+  // ---- choose anchor date (today by default) ----
+  const anchor = anchorDate ? new Date(anchorDate) : new Date();
+
+  // Build a UTC timestamp for that anchor calendar date + time-of-day in UTC
+  const utcMillis = Date.UTC(
+    anchor.getUTCFullYear(),
+    anchor.getUTCMonth(),
+    anchor.getUTCDate(),
+    h, m, s, 0
+  );
+
+  // Interpret that instant in local time (no manual offset math; Date does it)
+  const local = new Date(utcMillis);
+
+  const pad = (n: number) => n.toString().padStart(2, '0');
+  return `${pad(local.getHours())}:${pad(local.getMinutes())}:${pad(local.getSeconds())}`;
+}
 // --Formating date for view only--
 // Format time string (HH:MM:SS) to 12-hour format (No time zone conversion)
 export function formatTimeTo12Hour(

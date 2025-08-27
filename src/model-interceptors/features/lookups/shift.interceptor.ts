@@ -1,5 +1,5 @@
 import Shift from '@/models/features/lookups/work-shifts/shift';
-import { toDateOnly, toDateTime } from '@/utils/general-helper';
+import { convertUtcTimeToSystemTimeZone, toDateOnly, toDateTime } from '@/utils/general-helper';
 import { ModelInterceptorContract } from 'cast-response';
 
 export class ShiftInterceptor implements ModelInterceptorContract<Shift> {
@@ -7,6 +7,8 @@ export class ShiftInterceptor implements ModelInterceptorContract<Shift> {
     model.shiftLogStartDate = toDateTime(model.shiftLogStartDate);
     model.activeShiftStartDate = toDateTime(model.activeShiftStartDate);
     model.isDefaultShiftForm = model.isDefaultShift;
+    model.timeFrom = convertUtcTimeToSystemTimeZone(model.timeFrom as string);
+    model.timeTo = convertUtcTimeToSystemTimeZone(model.timeTo as string);
     return model;
   }
 

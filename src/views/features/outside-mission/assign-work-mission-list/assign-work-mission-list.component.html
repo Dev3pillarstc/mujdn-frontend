@@ -49,14 +49,14 @@
 
         <!-- Date From -->
         <div class="relative">
-          <label class="label" for="dateFrom">{{ 'WORK_MISSIONS.START_DATE' | translate }}</label>
+          <label class="label" for="dateFrom">{{ 'WORK_MISSIONS.FROM' | translate }}</label>
           <p-datepicker
             [(ngModel)]="filterModel.startDate"
             [iconDisplay]="'input'"
             [showIcon]="true"
             class="peer block w-full"
             inputId="dateFrom"
-            [placeholder]="'WORK_MISSIONS.START_DATE' | translate"
+            [placeholder]="'WORK_MISSIONS.FROM' | translate"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
@@ -69,14 +69,14 @@
 
         <!-- Date To -->
         <div class="relative">
-          <label class="label" for="dateTo">{{ 'WORK_MISSIONS.END_DATE' | translate }}</label>
+          <label class="label" for="dateTo">{{ 'WORK_MISSIONS.TO' | translate }}</label>
           <p-datepicker
             [(ngModel)]="filterModel.endDate"
             [iconDisplay]="'input'"
             [showIcon]="true"
             class="peer block w-full"
             inputId="dateTo"
-            [placeholder]="'WORK_MISSIONS.END_DATE' | translate"
+            [placeholder]="'WORK_MISSIONS.TO' | translate"
           >
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />

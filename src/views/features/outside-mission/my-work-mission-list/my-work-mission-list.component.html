@@ -103,8 +103,7 @@
           <th>{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</th>
           <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
           <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
-          <th>{{ 'WORK_MISSIONS.MISSION_CREATOR_AR' | translate }}</th>
-          <th>{{ 'WORK_MISSIONS.MISSION_CREATOR_EN' | translate }}</th>
+          <th>{{ 'WORK_MISSIONS.MISSION_CREATOR' | translate }}</th>
           <th>{{ 'COMMON.ACTION' | translate }}</th>
         </tr>
       </ng-template>
@@ -118,8 +117,7 @@
           </td>
           <td>{{ mission.startDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ mission.endDate | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ mission.missionCreator?.nameAr }}</td>
-          <td>{{ mission.missionCreator?.nameEn }}</td>
+          <td>{{ isCurrentLanguageEnglish() ? mission.missionCreator?.nameEn : mission.missionCreator?.nameAr }}</td>
           <td>
             <!-- Only View Action -->
             <div class="actions flex gap-2">

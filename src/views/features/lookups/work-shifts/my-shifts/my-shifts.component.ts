@@ -68,12 +68,10 @@ export default class MyShiftsComponent extends BaseListComponent<
     this.loadInitialData();
     this.languageService.languageChanged$.subscribe(() => {
       this.changeTimeSuffex();
-    })
+    });
   }
   changeTimeSuffex() {
-    const locale: 'en-US' | 'ar-EG' = this.isCurrentLanguageEnglish()
-      ? 'en-US'
-      : 'ar-EG';
+    const locale: 'en-US' | 'ar-EG' = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
 
     this.employeeShifts.forEach((shift) => {
       shift.formattedTimeFrom = formatTimeTo12Hour(shift.timeFrom as string, locale);
@@ -81,8 +79,14 @@ export default class MyShiftsComponent extends BaseListComponent<
     });
 
     if (this.currentShift) {
-      this.currentShift.formattedTimeFrom = formatTimeTo12Hour(this.currentShift.timeFrom as string, locale);
-      this.currentShift.formattedTimeTo = formatTimeTo12Hour(this.currentShift.timeTo as string, locale);
+      this.currentShift.formattedTimeFrom = formatTimeTo12Hour(
+        this.currentShift.timeFrom as string,
+        locale
+      );
+      this.currentShift.formattedTimeTo = formatTimeTo12Hour(
+        this.currentShift.timeTo as string,
+        locale
+      );
     }
   }
 
@@ -101,7 +105,6 @@ export default class MyShiftsComponent extends BaseListComponent<
       [this.translateService.instant('MY_SHIFTS.LEAVE_BUFFER')]: model.leaveBuffer ?? '',
     };
   }
-
 
   openDialog(shift: EmployeeShift): void {
     const viewMode = ViewModeEnum.EDIT;

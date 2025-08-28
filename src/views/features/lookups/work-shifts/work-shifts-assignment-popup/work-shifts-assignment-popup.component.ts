@@ -32,6 +32,9 @@ import Shift from '@/models/features/lookups/work-shifts/shift';
 import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { weekDays } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
+import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
+import { PaginationParams } from '@/models/shared/pagination-params';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -49,8 +52,7 @@ import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit
-{
+  implements OnInit {
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
@@ -64,7 +66,7 @@ export class WorkShiftsAssignmentPopupComponent
   langService = inject(LanguageService);
   isCreateMode = false;
   selectedWorkingDays: number[] = [];
-
+  userWorkShiftService = inject(UserWorkShiftService);
   // Date constraints
   minEndDate: Date | null = null;
   maxStartDate: Date | null = null;
@@ -230,7 +232,6 @@ export class WorkShiftsAssignmentPopupComponent
     this.form.get('employeeWorkingDays')?.setValue(workingDaysString);
     this.form.get('employeeWorkingDays')?.updateValueAndValidity();
   }
-
   onSaveClick(): void {
     // Mark all fields as touched to show validation errors
     Object.keys(this.form.controls).forEach((key) => {
@@ -242,7 +243,29 @@ export class WorkShiftsAssignmentPopupComponent
     });
 
     if (this.form.valid) {
-      this.save$.next();
+      this.prepareModel(this.model, this.form);
+
+      if (this.model.id) {
+        // Update existing shift
+        this.userWorkShiftService.update(this.model).subscribe({
+          next: () => {
+            this.dialogRef.close(DIALOG_ENUM.OK);
+          },
+          error: (err) => {
+            this.save$.error(err);
+          },
+        });
+      } else {
+        // Assign new shift
+        this.userWorkShiftService.assignUserShift(this.model).subscribe({
+          next: () => {
+            this.dialogRef.close(DIALOG_ENUM.OK);
+          },
+          error: (err) => {
+            this.save$.error(err);
+          },
+        });
+      }
     }
   }
 
@@ -289,7 +312,7 @@ export class WorkShiftsAssignmentPopupComponent
     return Array.from(allowedDays);
   }
 
-  override saveFail(error: Error): void {}
+  override saveFail(error: Error): void { }
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };

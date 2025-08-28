@@ -172,6 +172,22 @@ export const routes: Routes = [
           import('@/views/features/settings/notification-settings/notification-settings.component'),
       },
       {
+        path: 'devices-configuration',
+        // canActivate: [authGuard],
+        // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
+        // resolve: { channel: notificationSettingResolver },
+        loadComponent: () =>
+          import('@/views/features/settings/devices-configuration/devices-configuration.component'),
+      },
+      {
+        path: 'devices-location',
+        // canActivate: [authGuard],
+        // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
+        // resolve: { channel: notificationSettingResolver },
+        loadComponent: () =>
+          import('@/views/features/settings/devices-location/devices-location.component'),
+      },
+      {
         path: 'permissions',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.PERMISSIONS },

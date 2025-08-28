@@ -6,8 +6,6 @@ export class MyShiftsInterceptor implements ModelInterceptorContract<EmployeeShi
   receive(model: EmployeeShift): EmployeeShift {
     model.startDate = toDateOnly(model.startDate);
     model.endDate = toDateOnly(model.endDate);
-    model.timeFrom = formatTimeTo12Hour(model.timeFrom as string);
-    model.timeTo = formatTimeTo12Hour(model.timeTo as string);
     return model;
   }
 

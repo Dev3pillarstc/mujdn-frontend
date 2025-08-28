@@ -32,6 +32,9 @@ import Shift from '@/models/features/lookups/work-shifts/shift';
 import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { weekDays } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
+import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
+import { PaginationParams } from '@/models/shared/pagination-params';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -49,8 +52,7 @@ import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit
-{
+  implements OnInit {
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
@@ -64,7 +66,7 @@ export class WorkShiftsAssignmentPopupComponent
   langService = inject(LanguageService);
   isCreateMode = false;
   selectedWorkingDays: number[] = [];
-
+  userWorkShiftService = inject(UserWorkShiftService);
   // Date constraints
   minEndDate: Date | null = null;
   maxStartDate: Date | null = null;
@@ -99,17 +101,6 @@ export class WorkShiftsAssignmentPopupComponent
     }
   }
 
-  private preFilterEmployeesForEditMode(): void {
-    if (!this.isCreateMode && this.model.fkAssignedUserId) {
-      // Find the selected employee to get their department
-      const selectedEmployee = this.usersProfiles.find(
-        (emp) => emp.id === this.model.fkAssignedUserId
-      );
-      if (selectedEmployee && selectedEmployee.departmentId) {
-        this.filterEmployeesByDepartment(selectedEmployee.departmentId);
-      }
-    }
-  }
 
   private initializeSelectedWorkingDays(): void {
     // Reset
@@ -148,6 +139,7 @@ export class WorkShiftsAssignmentPopupComponent
         this.selectedWorkingDays.join(','),
         [this.validateWorkingDays()], // Use array syntax for validators
       ],
+      departmentId: [null],
     });
 
     // Set the correct values for dropdowns after form is built
@@ -155,27 +147,47 @@ export class WorkShiftsAssignmentPopupComponent
     this.updateDateConstraints();
   }
 
+  // Update this method in initPopup()
+  private preFilterEmployeesForEditMode(): void {
+    if (!this.isCreateMode && this.model.fkAssignedUserId) {
+      // Find the selected employee to get their department
+      const selectedEmployee = this.usersProfiles.find(
+        (emp) => emp.id === this.model.fkAssignedUserId
+      );
+      if (selectedEmployee && selectedEmployee.departmentId) {
+        // Just filter the employees, don't do form operations here
+        this.filteredUsersProfiles = this.usersProfiles.filter(
+          (emp) => emp.departmentId === selectedEmployee.departmentId
+        );
+      }
+    }
+  }
+
+  // Update setDropdownValues to handle the department filtering after form is built
   private setDropdownValues(): void {
     if (!this.isCreateMode) {
-      // Set shift dropdown value
+      // Set shift
       if (this.model.fkShiftId) {
-        const selectedShift = this.shifts.find((shift) => shift.id === this.model.fkShiftId);
-        if (selectedShift) {
-          this.form.get('fkShiftId')?.setValue(selectedShift.id);
-        }
+        this.form.get('fkShiftId')?.setValue(this.model.fkShiftId);
       }
 
-      // Set employee dropdown value
+      // Set employee
       if (this.model.fkAssignedUserId) {
         const selectedEmployee = this.usersProfiles.find(
           (emp) => emp.id === this.model.fkAssignedUserId
         );
         if (selectedEmployee) {
           this.form.get('fkAssignedUserId')?.setValue(selectedEmployee.id);
+          // 👇 auto-set department if found
+          if (selectedEmployee.departmentId) {
+            this.form.get('departmentId')?.setValue(selectedEmployee.departmentId);
+            // 👇 Now it's safe to call filterEmployeesByDepartment since form is built
+            this.filterEmployeesByDepartment(selectedEmployee.departmentId);
+          }
         }
       }
 
-      // Set date picker values - convert strings to Date objects if needed
+      // Set dates
       if (this.model.startDate) {
         const startDate =
           typeof this.model.startDate === 'string'
@@ -183,7 +195,6 @@ export class WorkShiftsAssignmentPopupComponent
             : this.model.startDate;
         this.form.get('startDate')?.setValue(startDate);
       }
-
       if (this.model.endDate) {
         const endDate =
           typeof this.model.endDate === 'string'
@@ -193,6 +204,7 @@ export class WorkShiftsAssignmentPopupComponent
       }
     }
   }
+
 
   onWorkingDayChange(dayValue: number, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
@@ -230,7 +242,6 @@ export class WorkShiftsAssignmentPopupComponent
     this.form.get('employeeWorkingDays')?.setValue(workingDaysString);
     this.form.get('employeeWorkingDays')?.updateValueAndValidity();
   }
-
   onSaveClick(): void {
     // Mark all fields as touched to show validation errors
     Object.keys(this.form.controls).forEach((key) => {
@@ -242,7 +253,29 @@ export class WorkShiftsAssignmentPopupComponent
     });
 
     if (this.form.valid) {
-      this.save$.next();
+      this.prepareModel(this.model, this.form);
+
+      if (this.model.id) {
+        // Update existing shift
+        this.userWorkShiftService.update(this.model).subscribe({
+          next: () => {
+            this.dialogRef.close(DIALOG_ENUM.OK);
+          },
+          error: (err) => {
+            this.save$.error(err);
+          },
+        });
+      } else {
+        // Assign new shift
+        this.userWorkShiftService.assignUserShift(this.model).subscribe({
+          next: () => {
+            this.dialogRef.close(DIALOG_ENUM.OK);
+          },
+          error: (err) => {
+            this.save$.error(err);
+          },
+        });
+      }
     }
   }
 
@@ -289,7 +322,7 @@ export class WorkShiftsAssignmentPopupComponent
     return Array.from(allowedDays);
   }
 
-  override saveFail(error: Error): void {}
+  override saveFail(error: Error): void { }
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -333,26 +366,52 @@ export class WorkShiftsAssignmentPopupComponent
     return this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
-  filterEmployeesByDepartment(departmentId: number) {
+  onDepartmentChange(event: any) {
+    console.log('Department change event:', event);
+    const departmentId = event.value;
+    console.log('Selected department ID:', departmentId);
+
+    if (departmentId) {
+      this.filterEmployeesByDepartment(departmentId);
+    } else {
+      // If no department selected, show all employees
+      this.filteredUsersProfiles = [...this.usersProfiles];
+    }
+  }
+  filterEmployeesByDepartment(departmentId: number | any) {
+    // Handle the case where departmentId might be an event object or the ID directly
+    const actualDepartmentId = typeof departmentId === 'object' && departmentId?.id
+      ? departmentId.id
+      : departmentId;
+
+    console.log('Filtering by department ID:', actualDepartmentId);
+    console.log('Available users:', this.usersProfiles);
+
+    // Filter employees by the selected department
     this.filteredUsersProfiles = this.usersProfiles.filter(
-      (emp) => emp.departmentId === departmentId
+      (emp) => emp.departmentId === actualDepartmentId
     );
 
-    // If we're in edit mode and the currently selected employee is not in the filtered list,
-    // we need to add them to maintain the selection
-    if (!this.isCreateMode && this.model.fkAssignedUserId) {
-      const selectedEmployee = this.usersProfiles.find(
-        (emp) => emp.id === this.model.fkAssignedUserId
-      );
-      if (
-        selectedEmployee &&
-        !this.filteredUsersProfiles.find((emp) => emp.id === this.model.fkAssignedUserId)
-      ) {
-        this.filteredUsersProfiles.unshift(selectedEmployee);
+    console.log('Filtered users:', this.filteredUsersProfiles);
+
+    // Only check form if it's initialized
+    if (this.form) {
+      // Check if the currently selected employee belongs to the new department
+      const selectedEmployeeId = this.form.get('fkAssignedUserId')?.value;
+
+      if (selectedEmployeeId) {
+        const selectedEmployee = this.usersProfiles.find(
+          (emp) => emp.id === selectedEmployeeId
+        );
+
+        // If the selected employee doesn't belong to the new department, clear the selection
+        if (selectedEmployee && selectedEmployee.departmentId !== actualDepartmentId) {
+          this.form.get('fkAssignedUserId')?.setValue(null);
+          this.form.get('fkAssignedUserId')?.markAsTouched();
+        }
       }
     }
   }
-
   onStartDateSelect(selectedDate: Date): void {
     if (selectedDate) {
       this.minEndDate = new Date(selectedDate);

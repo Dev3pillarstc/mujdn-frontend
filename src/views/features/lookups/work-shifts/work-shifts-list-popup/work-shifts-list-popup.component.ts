@@ -292,7 +292,11 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   updateShiftMainData() {
     this.form.get('isUpdateOnly')?.setValue(true);
 
-    if (this.model.isAvailableDefaultShift && this.form.get('isDefaultShiftForm')?.value) {
+    if (
+      this.model.isAvailableDefaultShift &&
+      this.form.get('isDefaultShiftForm')?.value &&
+      this.model.id != this.model.defaultShiftId
+    ) {
       const confirmMessage = this.translateService.instant(
         'WORK_SHIFTS_POPUP.NEW_DEFAULT_SHIFT_TO_BE_ADDED'
       );

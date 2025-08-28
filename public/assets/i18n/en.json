@@ -58,7 +58,7 @@
     "INVALID_SORT_FIELD": "The specified sort field is invalid",
     "SERIALIZATION_ERROR": "An error occurred while processing the data",
     "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is related to another data",
-    "CANNOT_BE_DELETE": "The record can't be deleted",
+    "CANNOT_BE_DELETE": "The record can't be deleted, because it is related to another data",
     "EXISTING_RECORD_ERROR": "This record already exists",
     "AUTH_INVALID_CREDENTIALS": "National id or password is incorrect",
     "AUTH_USER_NOT_ACTIVE": "User is not active",
@@ -96,7 +96,7 @@
     "ACTIVATION_BLOCKED": "Cannot activate a shift with a future start date.",
     "NO_SHIFT_TO_ACTIVATE": "No scheduled shift found to activate.",
     "CHOOSE_DAYS_FOR_USER": "Please choose the working day(s) for the user",
-    "SHIFT_START_DATE_ERROR": "The shift start date must be at least the following day of the current active shift start date",
+    "SHIFT_START_DATE_ERROR": "The start date of the new shift must be at least the next day after the current active shift date.",
     "INACTIVE": "Inactive",
     "NOT_SPECIFIED": "Not Specified",
     "NO_ROLES": "No Roles",
@@ -348,7 +348,7 @@
     "NOT_ACTIVE": "Not active",
     "ACTIVATE": "Activate",
     "SAVE_AND_ACTIVATE": "Save and Activate",
-    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "New default shift to will be added, The other default shift will not be default anymore"
+    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "When a new default shift is added, the previous default shift is automatically unset."
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "My Attendance Logs",
@@ -507,10 +507,13 @@
     "NAME_ENGLISH": "Shift name (English)",
     "START_DATE": "Date from",
     "END_DATE": "Date to",
+    "STARTING_DATE": "Start date",
+    "ENDING_DATE": "End date",
     "TIME_FROM_TO": "Time (From - To)",
     "ATTENDANCE_BUFFER": "Attendance grace period (min)",
     "LEAVE_BUFFER": "Leave grace period (min)",
-    "NO_DAYS_SELECTED": "No working days selected"
+    "NO_DAYS_SELECTED": "No working days selected",
+    "DATE_RANGE_PLACEHOLDER": "Date (From - To)"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "Forgot Password",

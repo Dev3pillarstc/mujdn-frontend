@@ -58,7 +58,7 @@
     "INVALID_SORT_FIELD": "حقل الترتيب المحدد غير صحيح",
     "SERIALIZATION_ERROR": "حدث خطأ أثناء معالجة البيانات",
     "INVALID_DELETE_REQUEST": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
-    "CANNOT_BE_DELETE": "لا يمكن حذف السجل",
+    "CANNOT_BE_DELETE": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
     "EXISTING_RECORD_ERROR": "هذا السجل موجود بالفعل",
     "AUTH_INVALID_CREDENTIALS": "رقم الهوية أو كلمة المرور غير صحيحة",
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",
@@ -346,7 +346,7 @@
     "NOT_ACTIVE": "غير مفعلة",
     "ACTIVATE": "تفعيل",
     "SAVE_AND_ACTIVATE": "حفظ وتفعيل",
-    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "سيتم إضافة وردية افتراضية جديدة، لن تكون الوردية الافتراضية السابقة افتراضية بعد الآن"
+    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "عند إضافة وردية افتراضية جديدة، يتم إلغاء تعيين الوردية السابقة كافتراضية تلقائياً"
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "سجل حضوري",
@@ -505,10 +505,13 @@
     "NAME_ENGLISH": "اسم الوردية (إنجليزي)",
     "START_DATE": "التاريخ (من)",
     "END_DATE": "التاريخ (إلى)",
+    "STARTING_DATE": "تاريخ البداية",
+    "ENDING_DATE": "تاريخ النهاية",
     "TIME_FROM_TO": "الوقت (من - الى)",
     "ATTENDANCE_BUFFER": "مدة السماح للحضور(دق)",
     "LEAVE_BUFFER": "مدة السماح للانصراف(دق)",
-    "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل"
+    "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل",
+    "DATE_RANGE_PLACEHOLDER": "التاريخ (من - الى)"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",

@@ -63,7 +63,13 @@ export default class WorkShiftsListComponent
   }
 
   openDialog(model: Shift): void {
-    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    let viewMode;
+    if (model.id) {
+      viewMode = ViewModeEnum.EDIT;
+    } else {
+      viewMode = ViewModeEnum.CREATE;
+      model.defaultShiftId = this.list.find((s) => s.defaultShiftId != null)?.defaultShiftId;
+    }
     this.openBaseDialog(WorkShiftsListPopupComponent as any, model, viewMode);
   }
 

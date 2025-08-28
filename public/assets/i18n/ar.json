@@ -58,7 +58,7 @@
     "INVALID_SORT_FIELD": "حقل الترتيب المحدد غير صحيح",
     "SERIALIZATION_ERROR": "حدث خطأ أثناء معالجة البيانات",
     "INVALID_DELETE_REQUEST": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
-    "CANNOT_BE_DELETE": "لا يمكن حذف السجل",
+    "CANNOT_BE_DELETE": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
     "EXISTING_RECORD_ERROR": "هذا السجل موجود بالفعل",
     "AUTH_INVALID_CREDENTIALS": "رقم الهوية أو كلمة المرور غير صحيحة",
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",

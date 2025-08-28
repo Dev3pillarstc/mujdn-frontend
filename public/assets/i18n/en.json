@@ -58,7 +58,7 @@
     "INVALID_SORT_FIELD": "The specified sort field is invalid",
     "SERIALIZATION_ERROR": "An error occurred while processing the data",
     "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is related to another data",
-    "CANNOT_BE_DELETE": "The record can't be deleted",
+    "CANNOT_BE_DELETE": "The record can't be deleted, because it is related to another data",
     "EXISTING_RECORD_ERROR": "This record already exists",
     "AUTH_INVALID_CREDENTIALS": "National id or password is incorrect",
     "AUTH_USER_NOT_ACTIVE": "User is not active",

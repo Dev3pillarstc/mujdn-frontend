@@ -66,6 +66,24 @@ export default class MyShiftsComponent extends BaseListComponent<
 
   override initListComponent(): void {
     this.loadInitialData();
+    this.languageService.languageChanged$.subscribe(() => {
+      this.changeTimeSuffex();
+    })
+  }
+  changeTimeSuffex() {
+    const locale: 'en-US' | 'ar-EG' = this.isCurrentLanguageEnglish()
+      ? 'en-US'
+      : 'ar-EG';
+
+    this.employeeShifts.forEach((shift) => {
+      shift.formattedTimeFrom = formatTimeTo12Hour(shift.timeFrom as string, locale);
+      shift.formattedTimeTo = formatTimeTo12Hour(shift.timeTo as string, locale);
+    });
+
+    if (this.currentShift) {
+      this.currentShift.formattedTimeFrom = formatTimeTo12Hour(this.currentShift.timeFrom as string, locale);
+      this.currentShift.formattedTimeTo = formatTimeTo12Hour(this.currentShift.timeTo as string, locale);
+    }
   }
 
   protected override getBreadcrumbKeys() {
@@ -78,11 +96,12 @@ export default class MyShiftsComponent extends BaseListComponent<
       [this.translateService.instant('MY_SHIFTS.START_DATE')]: model.startDate,
       [this.translateService.instant('MY_SHIFTS.END_DATE')]: model.endDate,
       [this.translateService.instant('MY_SHIFTS.TIME_FROM_TO')]:
-        `${model.timeFrom} - ${model.timeTo}`,
+        `${model.formattedTimeFrom} - ${model.formattedTimeTo}`,
       [this.translateService.instant('MY_SHIFTS.ATTENDANCE_BUFFER')]: model.attendanceBuffer ?? '',
       [this.translateService.instant('MY_SHIFTS.LEAVE_BUFFER')]: model.leaveBuffer ?? '',
     };
   }
+
 
   openDialog(shift: EmployeeShift): void {
     const viewMode = ViewModeEnum.EDIT;
@@ -105,10 +124,6 @@ export default class MyShiftsComponent extends BaseListComponent<
     this.defaultWorkDays = resolverData.defaultworkDays;
     // Load current shift data
     this.currentShift = resolverData.currentShift || null;
-    if (this.currentShift) {
-      this.currentShift.timeFrom = formatTimeTo12Hour(this.currentShift.timeFrom as string);
-      this.currentShift.timeTo = formatTimeTo12Hour(this.currentShift.timeTo as string);
-    }
   }
 
   getCurrentShiftName(): string {

@@ -510,7 +510,8 @@
     "TIME_FROM_TO": "الوقت (من - الى)",
     "ATTENDANCE_BUFFER": "مدة السماح للحضور(دق)",
     "LEAVE_BUFFER": "مدة السماح للانصراف(دق)",
-    "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل"
+    "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل",
+    "DATE_RANGE_PLACEHOLDER": "التاريخ (من - الى)"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",

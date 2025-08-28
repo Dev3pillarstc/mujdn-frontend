@@ -512,7 +512,8 @@
     "TIME_FROM_TO": "Time (From - To)",
     "ATTENDANCE_BUFFER": "Attendance grace period (min)",
     "LEAVE_BUFFER": "Leave grace period (min)",
-    "NO_DAYS_SELECTED": "No working days selected"
+    "NO_DAYS_SELECTED": "No working days selected",
+    "DATE_RANGE_PLACEHOLDER": "Date (From - To)"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "Forgot Password",

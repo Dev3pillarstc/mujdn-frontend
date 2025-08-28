@@ -114,7 +114,6 @@
                 [optionLabel]="optionLabel"
                 optionValue="id"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"
-                (onChange)="filterEmployeesByDepartment($event.value)"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -126,7 +125,7 @@
                 {{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}
               </label>
               <p-select
-                [options]="filteredEmployees"
+                [options]="usersProfiles"
                 [(ngModel)]="filterOptions.fkAssignedUserId"
                 class="w-full peer"
                 [optionLabel]="optionLabel"

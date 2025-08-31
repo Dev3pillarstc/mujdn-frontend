@@ -16,7 +16,7 @@
         <!-- Buffer -->
         <div>
           <div class="lg:col-span-2">
-            <label class="label" for="buffer">
+            <label class="label whitespace-nowrap" for="buffer">
               {{ 'INQUIRIES_PAGE.BUFFER' | translate }}
             </label>
             <p-inputnumber
@@ -35,7 +35,10 @@
                 <span class="pi pi-minus"></span>
               </ng-template>
             </p-inputnumber>
-            <app-validation-messages [control]="bufferControl"></app-validation-messages>
+            <app-validation-messages
+              class="whitespace-nowrap"
+              [control]="bufferControl"
+            ></app-validation-messages>
           </div>
         </div>
 

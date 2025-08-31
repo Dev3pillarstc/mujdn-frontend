@@ -37,24 +37,27 @@
           <app-validation-messages [control]="bufferControl"></app-validation-messages>
         </div>
 
-        <!-- Message Text -->
-        <div class="md:col-span-2 lg:col-span-3">
-          <label class="label" for="messageAr">
-            {{ 'INQUIRIES_PAGE.MESSAGE_AR' | translate }}
-          </label>
-          <p>{{ presenceProofNotificationType?.arabicContentTemplate }}</p>
+        @if (presenceProofNotificationType) {
+          <!-- Message Text -->
+          <div class="md:col-span-2 lg:col-span-3">
+            <label class="label" for="messageAr">
+              {{ 'INQUIRIES_PAGE.MESSAGE_AR' | translate }}
+            </label>
+            <p>{{ presenceProofNotificationType.arabicContentTemplate || '' }}</p>
+          </div>
+          <!-- Message Text -->
+          <div class="md:col-span-2 lg:col-span-3">
+            <label class="label" for="messageEn">
+              {{ 'INQUIRIES_PAGE.MESSAGE_EN' | translate }}
+            </label>
+
+            <p>
+              {{ presenceProofNotificationType.englishContentTemplate || '' }}
+            </p>
+          </div>
+        }
+
         </div>
-        <!-- Message Text -->
-        <div class="md:col-span-2 lg:col-span-3">
-          <label class="label" for="messageEn">
-            {{ 'INQUIRIES_PAGE.MESSAGE_EN' | translate }}
-          </label>
-          
-          <p>
-            {{ presenceProofNotificationType?.englishContentTemplate }}
-          </p>
-        </div>
-      </div>
 
       <!-- Actions -->
       <div class="actions mt-6 flex items-center justify-end gap-4">

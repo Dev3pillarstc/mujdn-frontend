@@ -60,7 +60,7 @@ export class PresenceInquiriesPopupComponent
     this.notificationTypeService.getById(NotificationTypeEnum.PRESENCE_INQUIRY).subscribe({
       next: (type) => {
         this.presenceProofNotificationType = type;
-        console.log(this.presenceProofNotificationType);  
+        console.log(this.presenceProofNotificationType);
       }
     });
   }

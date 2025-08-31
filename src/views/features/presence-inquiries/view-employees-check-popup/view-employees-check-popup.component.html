@@ -60,16 +60,27 @@
       </div>
     </div>
 
-    <!-- Task Description -->
-    <!-- <div class="bg-[#f3f4f6] rounded-2xl p-6">
-      <h4 class="text-[#6c737f] text-[14px] mb-2">
-        {{ 'INQUIRIES_PAGE.INQUIRY_TEXT' | translate }}
-      </h4>
-      <p class="text-[#161616] text-[16px] font-semibold">
-        {{ model.getName() }}
-      </p>
-    </div> -->
+    @if(presenceProofNotificationType) {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Task Description -->
+        <div class="md:col-span-2 lg:col-span-3">
+          <label class="label" for="messageAr">
+            {{ 'INQUIRIES_PAGE.MESSAGE_AR' | translate }}
+          </label>
+          <p>{{ presenceProofNotificationType.arabicContentTemplate || '' }}</p>
+        </div>
+        <!-- Message Text -->
+        <div class="md:col-span-2 lg:col-span-3">
+          <label class="label" for="messageEn">
+            {{ 'INQUIRIES_PAGE.MESSAGE_EN' | translate }}
+          </label>
 
+          <p>
+            {{ presenceProofNotificationType.englishContentTemplate || '' }}
+          </p>
+        </div>
+      </div>
+    }
     <h4 class="text-[#1f2a37] text-[18px] font-semibold mt-8">
       {{ 'INQUIRIES_PAGE.ASSIGNED_USERS' | translate }}
     </h4>

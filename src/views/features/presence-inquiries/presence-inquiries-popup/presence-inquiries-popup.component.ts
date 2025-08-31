@@ -19,6 +19,9 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { RequiredMarkerDirective } from '../../../../directives/required-marker.directive';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { NotificationTypeService } from '@/services/features/setting/notification-type.service';
+import { NotificationTypeBaseLookupModel } from '@/models/features/lookups/notification-type-base-lookup-model';
+import { NotificationTypeEnum } from '@/enums/notification-type-enum';
 
 @Component({
   selector: 'app-presence-inquiries-popup',
@@ -47,11 +50,19 @@ export class PresenceInquiriesPopupComponent
   alertService = inject(AlertService);
   fb = inject(FormBuilder);
   data = inject(MAT_DIALOG_DATA);
+  notificationTypeService = inject(NotificationTypeService);
+  declare presenceProofNotificationType: NotificationTypeBaseLookupModel;
 
   override initPopup() {
     this.model = this.data.model ?? new PresenceInquiry();
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
+    this.notificationTypeService.getById(NotificationTypeEnum.PRESENCE_INQUIRY).subscribe({
+      next: (type) => {
+        this.presenceProofNotificationType = type;
+        console.log(this.presenceProofNotificationType);
+      }
+    });
   }
 
   override buildForm() {
@@ -82,11 +93,5 @@ export class PresenceInquiriesPopupComponent
     return this.form.get('buffer') as FormControl;
   }
 
-  get messageArControl() {
-    return this.form.get('messageAr') as FormControl;
-  }
 
-  get messageEnControl() {
-    return this.form.get('messageEn') as FormControl;
-  }
 }

@@ -114,7 +114,6 @@
                 [optionLabel]="optionLabel"
                 optionValue="id"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"
-                (onChange)="filterEmployeesByDepartment($event.value)"
               ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -126,7 +125,7 @@
                 {{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}
               </label>
               <p-select
-                [options]="filteredEmployees"
+                [options]="usersProfiles"
                 [(ngModel)]="filterOptions.fkAssignedUserId"
                 class="w-full peer"
                 [optionLabel]="optionLabel"
@@ -178,9 +177,9 @@
                 <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}</th>
-                <th>{{ 'USER_WORK_SHIFT_PAGE.START_DATE' | translate }}</th>
-                <th>{{ 'USER_WORK_SHIFT_PAGE.END_DATE' | translate }}</th>
-                <th>{{ 'COMMON.ACTIONS' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.STARTING_DATE' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.ENDING_DATE' | translate }}</th>
+                <th>{{ 'COMMON.ACTION' | translate }}</th>
               </tr>
             </ng-template>
             <ng-template #body let-shiftData>
@@ -192,8 +191,12 @@
                     isCurrentLanguageEnglish() ? shiftData.employeeNameEn : shiftData.employeeNameAr
                   }}
                 </td>
-                <td>{{ shiftData.startDate }}</td>
-                <td>{{ shiftData.endDate ? shiftData.endDate : '---' }}</td>
+                <td>{{ shiftData.startDate | date: 'dd/MM/yyyy' }}</td>
+                @if (shiftData.endDate) {
+                  <td>{{ shiftData.endDate | date: 'dd/MM/yyyy' }}</td>
+                } @else {
+                  <td>---</td>
+                }
                 <td>
                   <div class="actions flex gap-2">
                     <button (click)="addOrEditModel(shiftData)" class="table-action-gray-btn">

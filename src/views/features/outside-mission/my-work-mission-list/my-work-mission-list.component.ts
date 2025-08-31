@@ -168,4 +168,8 @@ export class MyWorkMissionListComponent extends BaseListComponent<
   getPropertyName(): string {
     return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
+
+  isCurrentLanguageEnglish(): boolean {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
+  }
 }

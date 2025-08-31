@@ -95,6 +95,21 @@ export function formatTimeTo12Hour(
 
   return formatted;
 }
+export function changeTimeSuffix<T>(
+  isCurrentLanguageEnglish: () => boolean,
+  item: T,
+  timeKey: keyof T,
+  formattedKey: keyof T
+): void {
+  if (!item) return;
+
+  const locale: 'en-US' | 'ar-EG' = isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+  const timeValue = item[timeKey] as unknown as string | null | undefined;
+
+  if (timeValue) {
+    (item as any)[formattedKey] = formatTimeTo12Hour(timeValue, locale);
+  }
+}
 
 // Format Date object to 12-hour format (No time zone conversion)
 export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-US'): string {

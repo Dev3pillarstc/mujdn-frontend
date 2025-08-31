@@ -25,7 +25,12 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
-import { formatDateTo12Hour, formatTimeTo12Hour, toDateOnly } from '@/utils/general-helper';
+import {
+  changeTimeSuffix,
+  formatDateTo12Hour,
+  formatTimeTo12Hour,
+  toDateOnly,
+} from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 @Component({
   selector: 'app-my-shifts',
@@ -66,6 +71,39 @@ export default class MyShiftsComponent extends BaseListComponent<
 
   override initListComponent(): void {
     this.loadInitialData();
+    this.languageService.languageChanged$.subscribe(() => {
+      // Format multiple shifts
+      this.employeeShifts?.forEach((shift) => {
+        changeTimeSuffix(
+          this.isCurrentLanguageEnglish.bind(this),
+          shift,
+          'timeFrom',
+          'formattedTimeFrom'
+        );
+        changeTimeSuffix(
+          this.isCurrentLanguageEnglish.bind(this),
+          shift,
+          'timeTo',
+          'formattedTimeTo'
+        );
+      });
+
+      // Format current shift
+      if (this.currentShift) {
+        changeTimeSuffix(
+          this.isCurrentLanguageEnglish.bind(this),
+          this.currentShift,
+          'timeFrom',
+          'formattedTimeFrom'
+        );
+        changeTimeSuffix(
+          this.isCurrentLanguageEnglish.bind(this),
+          this.currentShift,
+          'timeTo',
+          'formattedTimeTo'
+        );
+      }
+    });
   }
 
   protected override getBreadcrumbKeys() {
@@ -78,7 +116,7 @@ export default class MyShiftsComponent extends BaseListComponent<
       [this.translateService.instant('MY_SHIFTS.START_DATE')]: model.startDate,
       [this.translateService.instant('MY_SHIFTS.END_DATE')]: model.endDate,
       [this.translateService.instant('MY_SHIFTS.TIME_FROM_TO')]:
-        `${model.timeFrom} - ${model.timeTo}`,
+        `${model.formattedTimeFrom} - ${model.formattedTimeTo}`,
       [this.translateService.instant('MY_SHIFTS.ATTENDANCE_BUFFER')]: model.attendanceBuffer ?? '',
       [this.translateService.instant('MY_SHIFTS.LEAVE_BUFFER')]: model.leaveBuffer ?? '',
     };
@@ -105,10 +143,6 @@ export default class MyShiftsComponent extends BaseListComponent<
     this.defaultWorkDays = resolverData.defaultworkDays;
     // Load current shift data
     this.currentShift = resolverData.currentShift || null;
-    if (this.currentShift) {
-      this.currentShift.timeFrom = formatTimeTo12Hour(this.currentShift.timeFrom as string);
-      this.currentShift.timeTo = formatTimeTo12Hour(this.currentShift.timeTo as string);
-    }
   }
 
   getCurrentShiftName(): string {

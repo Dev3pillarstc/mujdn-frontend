@@ -6,8 +6,8 @@
 
     <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
       {{
-        (isCreateMode ? 'INQUIRIES_PAGE.ADD_NEW_INQUIRY' : 'INQUIRIES_PAGE.EDIT_INQUIRY')
-          | translate
+      (isCreateMode ? 'INQUIRIES_PAGE.ADD_NEW_INQUIRY' : 'INQUIRIES_PAGE.EDIT_INQUIRY')
+      | translate
       }}
     </h3>
 
@@ -19,15 +19,8 @@
             <label class="label whitespace-nowrap" for="buffer">
               {{ 'INQUIRIES_PAGE.BUFFER' | translate }}
             </label>
-            <p-inputnumber
-              [inputStyle]="{ width: '3rem' }"
-              [showButtons]="true"
-              buttonLayout="horizontal"
-              formControlName="buffer"
-              id="max-attendance-time"
-              spinnerMode="horizontal"
-              [min]="0"
-            >
+            <p-inputnumber [inputStyle]="{ width: '3rem' }" [showButtons]="true" buttonLayout="horizontal"
+              formControlName="buffer" id="max-attendance-time" spinnerMode="horizontal" [min]="0">
               <ng-template #incrementbuttonicon>
                 <span class="pi pi-plus"></span>
               </ng-template>
@@ -35,10 +28,7 @@
                 <span class="pi pi-minus"></span>
               </ng-template>
             </p-inputnumber>
-            <app-validation-messages
-              class="whitespace-nowrap"
-              [control]="bufferControl"
-            ></app-validation-messages>
+            <app-validation-messages class="whitespace-nowrap" [control]="bufferControl"></app-validation-messages>
           </div>
         </div>
 
@@ -50,16 +40,13 @@
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-3 focus:outline-none resize-none peer"
-              formControlName="messageAr"
-              pTextarea
-              id="messageAr"
-              placeholder="{{ 'INQUIRIES_PAGE.MESSAGE_AR' | translate }}"
-            ></textarea>
+              formControlName="messageAr" pTextarea id="messageAr"
+              placeholder="{{ 'INQUIRIES_PAGE.MESSAGE_AR' | translate }}"></textarea>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
-            ></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
           </div>
           <app-validation-messages [control]="messageArControl"></app-validation-messages>
+          <p>لوريم ايبسوم</p>
         </div>
         <!-- Message Text -->
         <div class="md:col-span-2 lg:col-span-3">
@@ -69,16 +56,15 @@
           <div class="relative w-full">
             <textarea
               class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-3 focus:outline-none resize-none peer"
-              formControlName="messageEn"
-              pTextarea
-              id="messageEn"
-              placeholder="{{ 'INQUIRIES_PAGE.MESSAGE_EN' | translate }}"
-            ></textarea>
+              formControlName="messageEn" pTextarea id="messageEn"
+              placeholder="{{ 'INQUIRIES_PAGE.MESSAGE_EN' | translate }}"></textarea>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
-            ></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
           </div>
           <app-validation-messages [control]="messageEnControl"></app-validation-messages>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </p>
         </div>
       </div>
 

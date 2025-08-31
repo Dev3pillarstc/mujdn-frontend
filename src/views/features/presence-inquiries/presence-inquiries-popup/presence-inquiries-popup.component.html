@@ -6,8 +6,8 @@
 
     <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
       {{
-      (isCreateMode ? 'INQUIRIES_PAGE.ADD_NEW_INQUIRY' : 'INQUIRIES_PAGE.EDIT_INQUIRY')
-      | translate
+        (isCreateMode ? 'INQUIRIES_PAGE.ADD_NEW_INQUIRY' : 'INQUIRIES_PAGE.EDIT_INQUIRY')
+          | translate
       }}
     </h3>
 
@@ -42,33 +42,16 @@
           <label class="label" for="messageAr">
             {{ 'INQUIRIES_PAGE.MESSAGE_AR' | translate }}
           </label>
-          <div class="relative w-full">
-            <textarea
-              class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-3 focus:outline-none resize-none peer"
-              formControlName="messageAr" pTextarea id="messageAr"
-              placeholder="{{ 'INQUIRIES_PAGE.MESSAGE_AR' | translate }}"></textarea>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
-          </div>
-          <app-validation-messages [control]="messageArControl"></app-validation-messages>
-          <p>لوريم ايبسوم</p>
+          <p>{{ presenceProofNotificationType?.arabicContentTemplate }}</p>
         </div>
         <!-- Message Text -->
         <div class="md:col-span-2 lg:col-span-3">
           <label class="label" for="messageEn">
             {{ 'INQUIRIES_PAGE.MESSAGE_EN' | translate }}
           </label>
-          <div class="relative w-full">
-            <textarea
-              class="h-24 block overflow-auto mt-4 w-full rounded border border-[#9da4ae] px-4 py-3 focus:outline-none resize-none peer"
-              formControlName="messageEn" pTextarea id="messageEn"
-              placeholder="{{ 'INQUIRIES_PAGE.MESSAGE_EN' | translate }}"></textarea>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"></span>
-          </div>
-          <app-validation-messages [control]="messageEnControl"></app-validation-messages>
+          
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            {{ presenceProofNotificationType?.englishContentTemplate }}
           </p>
         </div>
       </div>

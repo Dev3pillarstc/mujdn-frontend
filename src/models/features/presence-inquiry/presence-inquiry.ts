@@ -15,8 +15,6 @@ const { send, receive } = new PresenceInquiryInterceptor();
 export class PresenceInquiry extends BaseCrudModel<PresenceInquiry, PresenceInquiryService> {
   override $$__service_name__$$: string = 'PresenceInquiryService';
 
-  declare messageAr: string;
-  declare messageEn: string;
   declare buffer: number;
   declare assignedUsers?: UserProfilePresenceInquiry[];
   declare assignedDate?: Date | null | string;
@@ -28,17 +26,11 @@ export class PresenceInquiry extends BaseCrudModel<PresenceInquiry, PresenceInqu
     super();
     this.languageService = FactoryService.getService('LanguageService');
   }
-  getName(): string {
-    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? this.messageEn
-      : this.messageAr;
-  }
+
   buildForm() {
-    const { messageAr, messageEn, buffer } = this;
+    const { buffer } = this;
 
     return {
-      messageAr: [messageAr, [Validators.required, CustomValidators.pattern('AR_NUM')]],
-      messageEn: [messageEn, [Validators.required, CustomValidators.pattern('ENG_NUM')]],
       buffer: [
         buffer,
         [

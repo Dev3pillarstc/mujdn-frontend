@@ -5,7 +5,6 @@ import { FactoryService } from '@/services/factory-service';
 import { NotificationService } from '@/services/features/setting/notification.service';
 import { LanguageService } from '@/services/shared/language.service';
 import { CustomValidators } from '@/validators/custom-validators';
-import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 import { NotificationType } from './notificatonType';
 

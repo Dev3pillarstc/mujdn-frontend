@@ -544,7 +544,6 @@
   "INQUIRIES_PAGE": {
     "INQUIRY_DATE": "Inquiry Date",
     "INQUIRY_TIME": "Inquiry Time",
-    "ALLOWED_ATTENDANCE_PERIOD": "Allowed Attendance Period (min)",
     "PROCESSING_STATUS": "Processing Status",
     "PRESENCE_INQUIRIES": "Presence Proof Inquiries",
     "MY_INQUIRIES": "My Inquiries",
@@ -554,7 +553,7 @@
     "CONFIRMATION_STATUS": "Confirmation Status",
     "INQUIRY_STATUS": "Inquiry Status",
     "INQUIRY_RESULT": "Inquiry Result",
-    "BUFFER": "Presence Inquiry Buffer (min)",
+    "ALLOWED_ATTENDANCE_PERIOD": "Presence Inquiry Buffer (min)",
     "MESSAGE_AR": "Message (Arabic)",
     "MESSAGE_EN": "Message (English)",
     "UNDER_CONFIRMATION": "Under Confirmation",

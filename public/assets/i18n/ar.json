@@ -542,7 +542,6 @@
   "INQUIRIES_PAGE": {
     "INQUIRY_DATE": "تاريخ المسائلة",
     "INQUIRY_TIME": "وقت المسائلة",
-    "ALLOWED_ATTENDANCE_PERIOD": "(دق) فترة السماح لتسجيل الحضور",
     "PROCESSING_STATUS": "حالة المعالجة",
     "PRESENCE_INQUIRIES": "مسائلات توثيق التواجد",
     "MY_INQUIRIES": "مسائلاتي",
@@ -552,7 +551,7 @@
     "CONFIRMATION_STATUS": "حالة التوثيق",
     "INQUIRY_STATUS": "حالة المسائلة",
     "INQUIRY_RESULT": "نتيجة المسائلة",
-    "BUFFER": "فترة السماح لتسجيل الحضور (دق)",
+    "ALLOWED_ATTENDANCE_PERIOD": "فترة السماح لتسجيل الحضور (دق)",
     "MESSAGE_AR": "الرسالة (عربي)",
     "MESSAGE_EN": "الرسالة (إنجليزي)",
     "UNDER_CONFIRMATION": "تحت التوثيق",

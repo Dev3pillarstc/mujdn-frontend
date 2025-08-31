@@ -14,29 +14,27 @@
     <form [formGroup]="form">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Buffer -->
-        <div>
-          <div class="lg:col-span-2">
-            <label class="label" for="buffer">
-              {{ 'INQUIRIES_PAGE.BUFFER' | translate }}
-            </label>
-            <p-inputnumber
-              [inputStyle]="{ width: '3rem' }"
-              [showButtons]="true"
-              buttonLayout="horizontal"
-              formControlName="buffer"
-              id="max-attendance-time"
-              spinnerMode="horizontal"
-              [min]="0"
-            >
-              <ng-template #incrementbuttonicon>
-                <span class="pi pi-plus"></span>
-              </ng-template>
-              <ng-template #decrementbuttonicon>
-                <span class="pi pi-minus"></span>
-              </ng-template>
-            </p-inputnumber>
-            <app-validation-messages [control]="bufferControl"></app-validation-messages>
-          </div>
+        <div class="lg:col-span-2">
+          <label class="label" for="buffer">
+            {{ 'INQUIRIES_PAGE.ALLOWED_ATTENDANCE_PERIOD' | translate }}
+          </label>
+          <p-inputnumber
+            [inputStyle]="{ width: '3rem' }"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            formControlName="buffer"
+            id="max-attendance-time"
+            spinnerMode="horizontal"
+            [min]="0"
+          >
+            <ng-template #incrementbuttonicon>
+              <span class="pi pi-plus"></span>
+            </ng-template>
+            <ng-template #decrementbuttonicon>
+              <span class="pi pi-minus"></span>
+            </ng-template>
+          </p-inputnumber>
+          <app-validation-messages [control]="bufferControl"></app-validation-messages>
         </div>
 
         <!-- Message Text -->

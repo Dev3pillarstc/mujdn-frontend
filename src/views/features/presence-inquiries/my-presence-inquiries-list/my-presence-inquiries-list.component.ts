@@ -77,7 +77,7 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
 
   loadMyPresenceInquiriesList() {
     this.service
-      .loadMyPresenceInquiriesPaginated(this.paginationParams, { ...this.filterModel! })
+      .loadMyPresenceInquiriesPaginated(this.paginationParams, { ...this.appliedFilterModel! })
       .subscribe({
         next: (response) => {
           this.list = response.list || [];
@@ -196,13 +196,16 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
     };
 
     const fetchAll = this.service.loadMyPresenceInquiriesPaginated(allDataParams, {
-      ...this.filterModel!,
+      ...this.appliedFilterModel!,
     });
 
     fetchAll.subscribe({
       next: (response) => {
         const fullList = response.list || [];
-        if (fullList.length > 0) {
+        if (fullList.length === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
+        } else {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
           const transformedData = fullList.map((item) =>
             isIncomingPermissions ? this.mapModelToExcelRow(item) : this.mapModelToExcelRow(item)

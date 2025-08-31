@@ -93,7 +93,7 @@ export class MyWorkMissionListComponent extends BaseListComponent<
   }
   loadMyPresenceInquiriesList() {
     this.service
-      .getMyWorkMissionsAsync(this.paginationParams, { ...this.filterModel! })
+      .getMyWorkMissionsAsync(this.paginationParams, { ...this.appliedFilterModel! })
       .subscribe((res: PaginatedListResponseData<WorkMission>) => {
         this.list = res.data.list;
         this.paginationInfo = res.data.paginationInfo;

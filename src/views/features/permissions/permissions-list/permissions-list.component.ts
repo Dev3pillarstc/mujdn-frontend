@@ -142,7 +142,7 @@ export default class PermissionsListComponent
 
   loadIncomingPermissions() {
     this.service
-      .loadDepartmentPermissionPaginated(this.paginationParams, { ...this.filterModel! })
+      .loadDepartmentPermissionPaginated(this.paginationParams, { ...this.appliedFilterModel! })
       .subscribe({
         next: (response) => {
           this.list = response.list || [];

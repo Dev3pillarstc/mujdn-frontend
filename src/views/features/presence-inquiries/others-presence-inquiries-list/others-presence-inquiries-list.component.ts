@@ -129,7 +129,7 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
 
   loadPresenceInquiriesList() {
     this.service
-      .loadPresenceInquiriesPaginated(this.paginationParams, { ...this.filterModel! })
+      .loadPresenceInquiriesPaginated(this.paginationParams, { ...this.appliedFilterModel! })
       .subscribe({
         next: (response) => {
           this.list = response.list || [];

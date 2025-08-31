@@ -77,7 +77,7 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
 
   loadMyPresenceInquiriesList() {
     this.service
-      .loadMyPresenceInquiriesPaginated(this.paginationParams, { ...this.filterModel! })
+      .loadMyPresenceInquiriesPaginated(this.paginationParams, { ...this.appliedFilterModel! })
       .subscribe({
         next: (response) => {
           this.list = response.list || [];

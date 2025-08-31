@@ -100,7 +100,7 @@ export default class MyAttendanceLogListComponent
 
   override loadListSP() {
     return this.service.loadMyAttendanceLogPaginatedSP(this.paginationParams, {
-      ...this.filterModel!,
+      ...this.appliedFilterModel!,
     });
   }
 

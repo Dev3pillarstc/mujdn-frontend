@@ -225,7 +225,7 @@ export default class DepartmentListComponent extends BaseListComponent<
   }
 
   loadChildDepartmentsAfterSelect() {
-    this.service.loadPaginated(this.paginationParams, { ...this.filterModel! }).subscribe({
+    this.service.loadPaginated(this.paginationParams, { ...this.appliedFilterModel! }).subscribe({
       next: (response) => {
         this.childDepartments = response;
         this.paginationInfo = this.childDepartments.paginationInfo;

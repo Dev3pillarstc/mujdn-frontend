@@ -11,15 +11,15 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TabsModule } from 'primeng/tabs';
-import { MyMissionsTabComponent } from '../my-missions-tab/my-missions-tab.component';
-import { AssignAndViewMissionsTabComponent } from '../assign-and-view-missions-tab/assign-and-view-missions-tab.component';
+import { MyWorkMissionListComponent } from '@/views/features/outside-mission/my-work-mission-list/my-work-mission-list.component';
+import { AssignWorkMissionListComponent } from '@/views/features/outside-mission/assign-work-mission-list/assign-work-mission-list.component';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
-  selector: 'app-outside-mission-list',
+  selector: 'app-work-mission-container',
   imports: [
     Breadcrumb,
     InputTextModule,
@@ -31,13 +31,13 @@ import { AuthService } from '@/services/auth/auth.service';
     TabsModule,
     FormsModule,
     TranslatePipe,
-    MyMissionsTabComponent,
-    AssignAndViewMissionsTabComponent,
+    MyWorkMissionListComponent,
+    AssignWorkMissionListComponent,
   ],
-  templateUrl: './outside-mission-list.component.html',
-  styleUrl: './outside-mission-list.component.scss',
+  templateUrl: './work-mission-container.component.html',
+  styleUrl: './work-mission-container.component.scss',
 })
-export default class OutsideMissionListComponent implements OnInit {
+export default class WorkMissionContainerComponent implements OnInit {
   breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
   missions = signal<PaginatedList<WorkMission>>(new PaginatedList<WorkMission>());

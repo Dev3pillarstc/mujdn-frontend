@@ -23,14 +23,14 @@
       </p-tablist>
       <p-tabpanels>
         <p-tabpanel value="0">
-          <app-my-missions-tab></app-my-missions-tab>
+          <app-my-work-mission-list></app-my-work-mission-list>
         </p-tabpanel>
         <p-tabpanel value="1">
-          <app-assign-and-view-missions-tab
+          <app-assign-work-mission-list
             [missionsSignal]="missions"
             [departmentsSignal]="departments"
           >
-          </app-assign-and-view-missions-tab>
+          </app-assign-work-mission-list>
         </p-tabpanel>
       </p-tabpanels>
     </p-tabs>

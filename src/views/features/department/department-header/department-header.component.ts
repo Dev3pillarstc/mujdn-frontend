@@ -7,7 +7,7 @@ import { City } from '@/models/features/lookups/city/city';
 import { Department } from '@/models/features/lookups/department/department';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { LanguageService } from '@/services/shared/language.service';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, Output, Signal } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DepartmentPopupComponent } from '../department-popup/department-popup.component';
@@ -25,6 +25,7 @@ export class DepartmentHeaderComponent {
   @Input() regions: BaseLookupModel[] = [];
   @Input() usersProfiles: BaseLookupModel[] = [];
   @Output() dialogClosed = new EventEmitter<void>();
+  @Input() selectedDepartmentSignal!: Signal<Department | null>;
   PERMISSION_APPROVAL_LEVELS = PERMISSION_APPROVAL_LEVELS;
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
@@ -44,7 +45,12 @@ export class DepartmentHeaderComponent {
   delete(departmentId: number | undefined): void {
     this.departmentDeleted.emit(departmentId);
   }
-
+  private readonly selectedDepartmentEffect = effect(() => {
+    const selectedDepartment = this.selectedDepartmentSignal();
+    if (selectedDepartment) {
+      this.departmentData = selectedDepartment;
+    }
+  });
   openDialog() {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     let lookups = {
@@ -66,6 +72,7 @@ export class DepartmentHeaderComponent {
     return dialogRef.afterClosed().subscribe((result: any) => {
       if (result && result == DIALOG_ENUM.OK) {
         this.dialogClosed.emit();
+        dialogRef.close(DIALOG_ENUM.OK);
       }
     });
   }

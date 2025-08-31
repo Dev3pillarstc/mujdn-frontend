@@ -248,12 +248,15 @@ export default class MyShiftsComponent extends BaseListComponent<
       pageSize: CustomValidators.defaultLengths.INT_MAX,
     };
 
-    const fetchAll = this.service.getMyShifts(allDataParams, { ...this.filterModel! });
+    const fetchAll = this.service.getMyShifts(allDataParams, { ...this.appliedFilterModel! });
 
     fetchAll.subscribe({
       next: (response) => {
         const fullList = response.list || [];
-        if (fullList.length > 0) {
+        if (fullList.length === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
+        } else {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
           const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
           const ws = XLSX.utils.json_to_sheet(transformedData);

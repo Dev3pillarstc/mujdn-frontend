@@ -236,13 +236,18 @@ export default class PermissionsListComponent
     };
 
     const fetchAll = isIncomingPermissions
-      ? this.service.loadDepartmentPermissionPaginated(allDataParams, { ...this.filterModel! })
-      : this.service.loadPaginated(allDataParams, { ...this.filterModel! });
+      ? this.service.loadDepartmentPermissionPaginated(allDataParams, {
+          ...this.appliedFilterModel!,
+        })
+      : this.service.loadPaginated(allDataParams, { ...this.appliedFilterModel! });
 
     fetchAll.subscribe({
       next: (response) => {
         const fullList = response.list || [];
-        if (fullList.length > 0) {
+        if (fullList.length === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
+        } else {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
           const transformedData = fullList.map((item) =>
             isIncomingPermissions

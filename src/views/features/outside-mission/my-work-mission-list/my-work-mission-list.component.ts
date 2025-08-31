@@ -144,12 +144,17 @@ export class MyWorkMissionListComponent extends BaseListComponent<
       pageSize: CustomValidators.defaultLengths.INT_MAX,
     };
 
-    const fetchAll = this.service.getMyWorkMissionsAsync(allDataParams, { ...this.filterModel! });
+    const fetchAll = this.service.getMyWorkMissionsAsync(allDataParams, {
+      ...this.appliedFilterModel!,
+    });
 
     fetchAll.subscribe({
       next: (response) => {
         const fullList = (response.data?.list || []) as any[];
-        if (fullList.length > 0) {
+        if (fullList.length === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
+        } else {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
           const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
           const ws = XLSX.utils.json_to_sheet(transformedData);

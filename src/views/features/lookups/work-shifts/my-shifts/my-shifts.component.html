@@ -54,7 +54,7 @@
         <div>
           <p class="text-sm text-white mb-2">{{ 'MY_SHIFTS.TIME_FROM_TO' | translate }}</p>
           <h5 class="text-base font-semibold text-white">
-            {{ currentShift?.timeFrom }} - {{ currentShift?.timeTo }}
+            {{ currentShift?.formattedTimeFrom }} - {{ currentShift?.formattedTimeTo }}
           </h5>
         </div>
         <div>
@@ -191,8 +191,7 @@
               <tr>
                 <th>{{ 'MY_SHIFTS.NAME_ARABIC' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.NAME_ENGLISH' | translate }}</th>
-                <th>{{ 'MY_SHIFTS.START_DATE' | translate }}</th>
-                <th>{{ 'MY_SHIFTS.END_DATE' | translate }}</th>
+                <th>{{ 'MY_SHIFTS.DATE_RANGE_PLACEHOLDER' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.TIME_FROM_TO' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.ATTENDANCE_BUFFER' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.LEAVE_BUFFER' | translate }}</th>
@@ -203,9 +202,11 @@
               <tr>
                 <td>{{ shift.nameAr }}</td>
                 <td>{{ shift.nameEn }}</td>
-                <td>{{ shift.startDate }}</td>
-                <td>{{ shift.endDate }}</td>
-                <td>{{ shift.timeFrom }} - {{ shift.timeTo }}</td>
+                <td>
+                  {{ shift.startDate | date: 'dd/MM/yyyy' }} -
+                  {{ shift.endDate | date: 'dd/MM/yyyy' }}
+                </td>
+                <td>{{ shift.formattedTimeFrom }} - {{ shift.formattedTimeTo }}</td>
                 <td>{{ shift.attendanceBuffer || '0' }}</td>
                 <td>{{ shift.leaveBuffer || '0' }}</td>
                 <td>

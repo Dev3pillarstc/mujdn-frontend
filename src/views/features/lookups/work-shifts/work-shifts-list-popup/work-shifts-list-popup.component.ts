@@ -214,12 +214,11 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       formValue.shiftLogStartDate = null;
     }
 
-    this.model = Object.assign(model, {
+    return Object.assign(model, {
       ...formValue,
       timeFrom: dateToTimeString(formValue.timeFrom),
       timeTo: dateToTimeString(formValue.timeTo),
     });
-    return this.model;
   }
 
   activateShift(): void {
@@ -276,11 +275,6 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     const preparedModel = this.prepareModel(this.model, this.form) as Shift;
     preparedModel.isActive = true;
 
-    // Add null check for safety
-    if (!this.model.id) {
-      console.log('ID is missing');
-    }
-
     return this.service.activateShift(preparedModel, this.model.id);
   }
 
@@ -296,8 +290,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     if (
       this.model.isAvailableDefaultShift &&
       this.form.get('isDefaultShiftForm')?.value &&
-      !this.model.isActive &&
-      !this.model.isDefaultShift
+      this.model.id != this.model.defaultShiftId
     ) {
       const confirmMessage = this.translateService.instant(
         'WORK_SHIFTS_POPUP.NEW_DEFAULT_SHIFT_TO_BE_ADDED'

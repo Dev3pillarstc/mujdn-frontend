@@ -52,7 +52,8 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit {
+  implements OnInit
+{
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
@@ -100,7 +101,6 @@ export class WorkShiftsAssignmentPopupComponent
       this.preFilterEmployeesForEditMode();
     }
   }
-
 
   private initializeSelectedWorkingDays(): void {
     // Reset
@@ -204,7 +204,6 @@ export class WorkShiftsAssignmentPopupComponent
       }
     }
   }
-
 
   onWorkingDayChange(dayValue: number, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
@@ -322,7 +321,7 @@ export class WorkShiftsAssignmentPopupComponent
     return Array.from(allowedDays);
   }
 
-  override saveFail(error: Error): void { }
+  override saveFail(error: Error): void {}
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -367,9 +366,7 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   onDepartmentChange(event: any) {
-    console.log('Department change event:', event);
     const departmentId = event.value;
-    console.log('Selected department ID:', departmentId);
 
     if (departmentId) {
       this.filterEmployeesByDepartment(departmentId);
@@ -380,19 +377,13 @@ export class WorkShiftsAssignmentPopupComponent
   }
   filterEmployeesByDepartment(departmentId: number | any) {
     // Handle the case where departmentId might be an event object or the ID directly
-    const actualDepartmentId = typeof departmentId === 'object' && departmentId?.id
-      ? departmentId.id
-      : departmentId;
-
-    console.log('Filtering by department ID:', actualDepartmentId);
-    console.log('Available users:', this.usersProfiles);
+    const actualDepartmentId =
+      typeof departmentId === 'object' && departmentId?.id ? departmentId.id : departmentId;
 
     // Filter employees by the selected department
     this.filteredUsersProfiles = this.usersProfiles.filter(
       (emp) => emp.departmentId === actualDepartmentId
     );
-
-    console.log('Filtered users:', this.filteredUsersProfiles);
 
     // Only check form if it's initialized
     if (this.form) {
@@ -400,9 +391,7 @@ export class WorkShiftsAssignmentPopupComponent
       const selectedEmployeeId = this.form.get('fkAssignedUserId')?.value;
 
       if (selectedEmployeeId) {
-        const selectedEmployee = this.usersProfiles.find(
-          (emp) => emp.id === selectedEmployeeId
-        );
+        const selectedEmployee = this.usersProfiles.find((emp) => emp.id === selectedEmployeeId);
 
         // If the selected employee doesn't belong to the new department, clear the selection
         if (selectedEmployee && selectedEmployee.departmentId !== actualDepartmentId) {

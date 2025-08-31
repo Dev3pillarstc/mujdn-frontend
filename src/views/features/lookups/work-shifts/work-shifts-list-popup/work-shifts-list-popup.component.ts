@@ -275,11 +275,6 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     const preparedModel = this.prepareModel(this.model, this.form) as Shift;
     preparedModel.isActive = true;
 
-    // Add null check for safety
-    if (!this.model.id) {
-      console.log('ID is missing');
-    }
-
     return this.service.activateShift(preparedModel, this.model.id);
   }
 

@@ -25,7 +25,12 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
-import { formatDateTo12Hour, formatTimeTo12Hour, toDateOnly } from '@/utils/general-helper';
+import {
+  changeTimeSuffix,
+  formatDateTo12Hour,
+  formatTimeTo12Hour,
+  toDateOnly,
+} from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 @Component({
   selector: 'app-my-shifts',
@@ -67,28 +72,40 @@ export default class MyShiftsComponent extends BaseListComponent<
   override initListComponent(): void {
     this.loadInitialData();
     this.languageService.languageChanged$.subscribe(() => {
-      this.changeTimeSuffex();
+      changeTimeSuffix(this.isCurrentLanguageEnglish.bind(this), this.employeeShifts, {
+        from: 'timeFrom',
+        to: 'timeTo',
+        formattedFrom: 'formattedTimeFrom',
+        formattedTo: 'formattedTimeTo',
+      });
+
+      changeTimeSuffix(this.isCurrentLanguageEnglish.bind(this), this.currentShift, {
+        from: 'timeFrom',
+        to: 'timeTo',
+        formattedFrom: 'formattedTimeFrom',
+        formattedTo: 'formattedTimeTo',
+      });
     });
   }
-  changeTimeSuffex() {
-    const locale: 'en-US' | 'ar-EG' = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+  // changeTimeSuffex() {
+  //   const locale: 'en-US' | 'ar-EG' = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
 
-    this.employeeShifts.forEach((shift) => {
-      shift.formattedTimeFrom = formatTimeTo12Hour(shift.timeFrom as string, locale);
-      shift.formattedTimeTo = formatTimeTo12Hour(shift.timeTo as string, locale);
-    });
+  //   this.employeeShifts.forEach((shift) => {
+  //     shift.formattedTimeFrom = formatTimeTo12Hour(shift.timeFrom as string, locale);
+  //     shift.formattedTimeTo = formatTimeTo12Hour(shift.timeTo as string, locale);
+  //   });
 
-    if (this.currentShift) {
-      this.currentShift.formattedTimeFrom = formatTimeTo12Hour(
-        this.currentShift.timeFrom as string,
-        locale
-      );
-      this.currentShift.formattedTimeTo = formatTimeTo12Hour(
-        this.currentShift.timeTo as string,
-        locale
-      );
-    }
-  }
+  //   if (this.currentShift) {
+  //     this.currentShift.formattedTimeFrom = formatTimeTo12Hour(
+  //       this.currentShift.timeFrom as string,
+  //       locale
+  //     );
+  //     this.currentShift.formattedTimeTo = formatTimeTo12Hour(
+  //       this.currentShift.timeTo as string,
+  //       locale
+  //     );
+  //   }
+  // }
 
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'MY_SHIFTS.MY_SHIFTS' }];

@@ -40,6 +40,4 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
       employeeWorkingDays: [employeeWorkingDays || ''],
     };
   }
-
-
 }

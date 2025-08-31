@@ -184,7 +184,7 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
         model.assignedDate
       ),
       [this.translateService.instant('INQUIRIES_PAGE.ALLOWED_ATTENDANCE_PERIOD')]: model.buffer,
-      [this.translateService.instant('INQUIRIES_PAGE.PROCESSING_STATUS')]: this.getStatusName(
+      [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_STATUS')]: this.getStatusName(
         model.statusId ?? 0
       ),
     };

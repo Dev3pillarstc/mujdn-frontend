@@ -49,6 +49,24 @@
             ></span>
           </div>
         </div>
+                  <div class="relative w-full">
+            <label class="text-sm font-normal text-[#161616] block mb-2">
+              {{ 'RESET_PASSWORD.NATIONAL_ID_LABEL' | translate }}
+            </label>
+            <input
+              class="peer"
+              type="text"
+              [(ngModel)]="filterModel.nationalId"
+              pInputText
+              [placeholder]="'RESET_PASSWORD.NATIONAL_ID_LABEL' | translate"
+              fluid="true"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+            ></span>
+
+            <!-- Validation Messages for National ID -->
+          </div>
         <div class="lg:col-span-3 md:col-span-2">
           <div class="actions flex items-center gap-4 pt-6">
             <button (click)="search()" class="btn black-btn">

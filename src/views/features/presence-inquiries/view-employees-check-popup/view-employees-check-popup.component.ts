@@ -13,6 +13,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { M } from '@angular/material/dialog.d-B5HZULyo';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { NotificationTypeEnum } from '@/enums/notification-type-enum';
+import { NotificationTypeService } from '@/services/features/setting/notification-type.service';
+import { NotificationTypeBaseLookupModel } from '@/models/features/lookups/notification-type-base-lookup-model';
 
 @Component({
   selector: 'app-view-employees-check-popup',
@@ -39,6 +42,8 @@ export class ViewEmployeesCheckPopupComponent
   userInquiryStatusEnum = USER_PRESENCE_INQUIRY_STATUS_ENUM;
   statusGroups: any[] = [];
   isArabicLang = this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+  notificationTypeService = inject(NotificationTypeService);
+  declare presenceProofNotificationType: NotificationTypeBaseLookupModel;
 
   override initPopup() {
     this.model = this.data.model ?? new PresenceInquiry();
@@ -56,6 +61,12 @@ export class ViewEmployeesCheckPopupComponent
       id: +id,
       users: grouped[+id],
     }));
+
+    this.notificationTypeService.getById(NotificationTypeEnum.PRESENCE_INQUIRY).subscribe({
+      next: (type) => {
+        this.presenceProofNotificationType = type;
+      }
+    });
   }
 
   override buildForm() {

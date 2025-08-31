@@ -72,40 +72,39 @@ export default class MyShiftsComponent extends BaseListComponent<
   override initListComponent(): void {
     this.loadInitialData();
     this.languageService.languageChanged$.subscribe(() => {
-      changeTimeSuffix(this.isCurrentLanguageEnglish.bind(this), this.employeeShifts, {
-        from: 'timeFrom',
-        to: 'timeTo',
-        formattedFrom: 'formattedTimeFrom',
-        formattedTo: 'formattedTimeTo',
+      // Format multiple shifts
+      this.employeeShifts?.forEach((shift) => {
+        changeTimeSuffix(
+          this.isCurrentLanguageEnglish.bind(this),
+          shift,
+          'timeFrom',
+          'formattedTimeFrom'
+        );
+        changeTimeSuffix(
+          this.isCurrentLanguageEnglish.bind(this),
+          shift,
+          'timeTo',
+          'formattedTimeTo'
+        );
       });
 
-      changeTimeSuffix(this.isCurrentLanguageEnglish.bind(this), this.currentShift, {
-        from: 'timeFrom',
-        to: 'timeTo',
-        formattedFrom: 'formattedTimeFrom',
-        formattedTo: 'formattedTimeTo',
-      });
+      // Format current shift
+      if (this.currentShift) {
+        changeTimeSuffix(
+          this.isCurrentLanguageEnglish.bind(this),
+          this.currentShift,
+          'timeFrom',
+          'formattedTimeFrom'
+        );
+        changeTimeSuffix(
+          this.isCurrentLanguageEnglish.bind(this),
+          this.currentShift,
+          'timeTo',
+          'formattedTimeTo'
+        );
+      }
     });
   }
-  // changeTimeSuffex() {
-  //   const locale: 'en-US' | 'ar-EG' = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
-
-  //   this.employeeShifts.forEach((shift) => {
-  //     shift.formattedTimeFrom = formatTimeTo12Hour(shift.timeFrom as string, locale);
-  //     shift.formattedTimeTo = formatTimeTo12Hour(shift.timeTo as string, locale);
-  //   });
-
-  //   if (this.currentShift) {
-  //     this.currentShift.formattedTimeFrom = formatTimeTo12Hour(
-  //       this.currentShift.timeFrom as string,
-  //       locale
-  //     );
-  //     this.currentShift.formattedTimeTo = formatTimeTo12Hour(
-  //       this.currentShift.timeTo as string,
-  //       locale
-  //     );
-  //   }
-  // }
 
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'MY_SHIFTS.MY_SHIFTS' }];

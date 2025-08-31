@@ -97,43 +97,17 @@ export function formatTimeTo12Hour(
 }
 export function changeTimeSuffix<T>(
   isCurrentLanguageEnglish: () => boolean,
-  items: T[] | T | null | undefined,
-  keys: {
-    from?: keyof T;
-    to?: keyof T;
-    formattedFrom?: keyof T;
-    formattedTo?: keyof T;
-  } = {
-    from: 'timeFrom' as keyof T,
-    to: 'timeTo' as keyof T,
-    formattedFrom: 'formattedTimeFrom' as keyof T,
-    formattedTo: 'formattedTimeTo' as keyof T,
-  }
+  item: T,
+  timeKey: keyof T,
+  formattedKey: keyof T
 ): void {
-  if (!items) return;
+  if (!item) return;
 
   const locale: 'en-US' | 'ar-EG' = isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+  const timeValue = item[timeKey] as unknown as string | null | undefined;
 
-  const formatItem = (item: T) => {
-    if (keys.from) {
-      const fromValue = item[keys.from] as unknown as string | null | undefined;
-      if (fromValue) {
-        (item as any)[keys.formattedFrom!] = formatTimeTo12Hour(fromValue, locale);
-      }
-    }
-
-    if (keys.to) {
-      const toValue = item[keys.to] as unknown as string | null | undefined;
-      if (toValue) {
-        (item as any)[keys.formattedTo!] = formatTimeTo12Hour(toValue, locale);
-      }
-    }
-  };
-
-  if (Array.isArray(items)) {
-    items.forEach((item) => formatItem(item));
-  } else {
-    formatItem(items);
+  if (timeValue) {
+    (item as any)[formattedKey] = formatTimeTo12Hour(timeValue, locale);
   }
 }
 

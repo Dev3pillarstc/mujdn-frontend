@@ -84,34 +84,7 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
       this.departments = res;
     });
   }
-  override openBaseDialog(
-    popupComponent: PresenceInquiriesPopupComponent,
-    model: PresenceInquiry,
-    viewMode: ViewModeEnum,
-    lookups?: {
-      [key: string]: any[];
-    }
-  ) {
-    const clonedModel = Object.assign(Object.create(Object.getPrototypeOf(model)), model);
-    let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      model: clonedModel,
-      lookups: lookups,
-      viewMode: viewMode,
-    };
-    dialogConfig.width = this.dialogSize.width;
-    dialogConfig.maxWidth = this.dialogSize.maxWidth;
-    const dialogRef = this.matDialog.open(popupComponent as any, dialogConfig);
 
-    return dialogRef
-      .afterClosed()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((result: DIALOG_ENUM) => {
-        if (result && result == DIALOG_ENUM.OK) {
-          this.loadPresenceInquiriesList();
-        }
-      });
-  }
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'PRESENCE_INQUIRIES_PAGE.PRESENCE_INQUIRIES' }];
   }
@@ -123,48 +96,14 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
   ngOnChanges(changes: SimpleChanges): void {
     // Watch for changes in isActive input
     if (changes['isActive'] && changes['isActive'].currentValue === true) {
-      this.loadPresenceInquiriesList();
+      this.loadList();
     }
   }
 
-  loadPresenceInquiriesList() {
-    this.service
-      .loadPresenceInquiriesPaginated(this.paginationParams, { ...this.appliedFilterModel! })
-      .subscribe({
-        next: (response) => {
-          this.list = response.list || [];
-
-          if (response.paginationInfo) {
-            this.paginationInfoMap(response);
-          } else {
-            this.paginationInfo.totalItems = this.list.length;
-          }
-        },
-        error: (_) => {
-          this.list = [];
-          this.paginationInfo.totalItems = 0;
-        },
-      });
-  }
-  override onPageChange(event: PaginatorState) {
-    this.first = event.first!;
-    this.rows = event.rows!;
-    this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
-    this.paginationParams.pageSize = this.rows;
-    this.loadPresenceInquiriesList();
-  }
-  override search() {
-    this.paginationParams.pageNumber = 1;
-    this.first = 0;
-    this.loadPresenceInquiriesList();
-  }
-
-  override resetSearch() {
-    this.filterModel = new PresenceInquiryFilter();
-    this.paginationParams.pageNumber = 1;
-    this.paginationParams.pageSize = 10;
-    this.first = 0;
-    this.loadPresenceInquiriesList();
+  override loadList() {
+    return this.service.loadPresenceInquiriesPaginated(this.paginationParams, {
+      ...this.appliedFilterModel!,
+    });
   }
 
   addOrEditModel(presenceInquiry?: PresenceInquiry): void {
@@ -214,7 +153,7 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       if (result && result == DIALOG_ENUM.OK) {
-        this.loadPresenceInquiriesList();
+        this.loadList();
       }
     });
   }
@@ -227,33 +166,11 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       if (result && result == DIALOG_ENUM.OK) {
-        this.loadPresenceInquiriesList();
+        this.loadList();
       }
     });
   }
-  override deleteModel(id: number) {
-    const dialogRef = this.confirmService.open({
-      icon: 'warning',
-      messages: ['COMMON.CONFIRM_DELETE'],
-      confirmText: 'COMMON.OK',
-      cancelText: 'COMMON.CANCEL',
-    });
 
-    dialogRef
-      .afterClosed()
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((result) => result === DIALOG_ENUM.OK),
-        switchMap(() => this.service.delete(id)),
-        tap(() => {
-          this.loadPresenceInquiriesList(); // Just trigger the side effect
-        })
-      )
-      .subscribe({
-        next: () => {}, // No response expected since loadPresenceInquiriesList() handles updates
-        error: this.handleLoadListError,
-      });
-  }
   formatDate(date: string | Date | null | undefined): string {
     if (!date) return '-'; // fallback when no date
     const d = new Date(date);

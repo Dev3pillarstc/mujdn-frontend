@@ -70,6 +70,15 @@ export function convertUtcToSystemTimeZone(utcDateTime: Date | string): Date {
   return ksaTime;
 }
 
+export function convertKsaToUtc(ksaDateTime: Date | string): Date {
+  // Convert the input (string or Date) into a Date object
+  const ksaDate = new Date(ksaDateTime);
+
+  // Subtract 3 hours to convert KSA → UTC
+  const utcDate = new Date(ksaDate.getTime() - 3 * 60 * 60 * 1000);
+
+  return utcDate;
+}
 // --Formating date for view only--
 // Format time string (HH:MM:SS) to 12-hour format (No time zone conversion)
 export function formatTimeTo12Hour(

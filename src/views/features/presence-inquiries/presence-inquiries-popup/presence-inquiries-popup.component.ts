@@ -61,7 +61,7 @@ export class PresenceInquiriesPopupComponent
       next: (type) => {
         this.presenceProofNotificationType = type;
         console.log(this.presenceProofNotificationType);
-      }
+      },
     });
   }
 
@@ -92,6 +92,4 @@ export class PresenceInquiriesPopupComponent
   get bufferControl() {
     return this.form.get('buffer') as FormControl;
   }
-
-
 }

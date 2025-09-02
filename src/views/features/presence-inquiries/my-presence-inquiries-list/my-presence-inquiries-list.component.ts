@@ -75,24 +75,10 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
 
   override openDialog(model: PresenceInquiry): void {}
 
-  loadMyPresenceInquiriesList() {
-    this.service
-      .loadMyPresenceInquiriesPaginated(this.paginationParams, { ...this.appliedFilterModel! })
-      .subscribe({
-        next: (response) => {
-          this.list = response.list || [];
-
-          if (response.paginationInfo) {
-            this.paginationInfoMap(response);
-          } else {
-            this.paginationInfo.totalItems = this.list.length;
-          }
-        },
-        error: (_) => {
-          this.list = [];
-          this.paginationInfo.totalItems = 0;
-        },
-      });
+  override loadList() {
+    return this.service.loadMyPresenceInquiriesPaginated(this.paginationParams, {
+      ...this.appliedFilterModel!,
+    });
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isActive']) {
@@ -107,23 +93,9 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
 
       // Only load data if tab is active and this is not the initial change
       if (current === true && previous === false) {
-        this.loadMyPresenceInquiriesList();
+        this.loadList();
       }
     }
-  }
-
-  override search() {
-    this.paginationParams.pageNumber = 1;
-    this.first = 0;
-    this.loadMyPresenceInquiriesList();
-  }
-
-  override resetSearch() {
-    this.filterModel = new PresenceInquiryFilter();
-    this.paginationParams.pageNumber = 1;
-    this.paginationParams.pageSize = 10;
-    this.first = 0;
-    this.loadMyPresenceInquiriesList();
   }
 
   protected override mapModelToExcelRow(model: PresenceInquiry): { [key: string]: any } {
@@ -167,13 +139,7 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
       ? (status?.nameEn ?? '')
       : (status?.nameAr ?? '');
   }
-  override onPageChange(event: PaginatorState) {
-    this.first = event.first!;
-    this.rows = event.rows!;
-    this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
-    this.paginationParams.pageSize = this.rows;
-    this.loadMyPresenceInquiriesList();
-  }
+
   formatDate(date: string | Date | null | undefined): string {
     if (!date) return '-'; // fallback when no date
     const d = new Date(date);

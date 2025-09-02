@@ -303,10 +303,8 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       this.confirmationService
         .open(confirmationData)
         .afterClosed()
-        .pipe(
-          filter((result) => result === DIALOG_ENUM.OK)
-        )
-        .subscribe(_ => this.save$.next());
+        .pipe(filter((result) => result === DIALOG_ENUM.OK))
+        .subscribe((_) => this.save$.next());
     } else {
       this.save$.next();
     }

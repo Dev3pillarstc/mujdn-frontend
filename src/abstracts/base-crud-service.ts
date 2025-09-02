@@ -113,8 +113,9 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   @CastResponse()
   @HasInterception
   create(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.post<ResponseData<Model>>(this.getUrlSegment(), model, { withCredentials: true })
-      .pipe(map( response => response.data))
+    return this.http
+      .post<ResponseData<Model>>(this.getUrlSegment(), model, { withCredentials: true })
+      .pipe(map((response) => response.data));
   }
 
   @CastResponse()

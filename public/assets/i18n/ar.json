@@ -521,7 +521,7 @@
     "ATTENDANCE_BUFFER": "مدة السماح للحضور(دق)",
     "LEAVE_BUFFER": "مدة السماح للانصراف(دق)",
     "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل",
-    "DATE_RANGE_PLACEHOLDER": "التاريخ (من - الى)"
+    "DATE_RANGE_PLACEHOLDER": "تاريخ البداية - تاريخ النهاية"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",

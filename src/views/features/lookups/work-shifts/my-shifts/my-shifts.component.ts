@@ -152,6 +152,7 @@ export default class MyShiftsComponent extends BaseListComponent<
   }
 
   override search(isStoredProcedure: boolean = false): void {
+    this.appliedFilterModel = { ...this.filterModel };
     this.first = 0;
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = this.rows;
@@ -172,6 +173,7 @@ export default class MyShiftsComponent extends BaseListComponent<
   }
   override resetSearch(isStoredProcedure: boolean = false): void {
     this.filterModel = new EmployeeShiftsFilter();
+    this.appliedFilterModel = new EmployeeShiftsFilter();
     this.filterOptions = new EmployeeShiftsFilter();
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;

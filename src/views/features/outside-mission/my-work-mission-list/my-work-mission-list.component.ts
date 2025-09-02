@@ -80,12 +80,14 @@ export class MyWorkMissionListComponent extends BaseListComponent<
     this.openBaseDialog(ViewMissionDataPopupComponent as any, mission, viewMode);
   }
   override search() {
+    this.appliedFilterModel = { ...this.filterModel };
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadMyPresenceInquiriesList();
   }
   override resetSearch() {
     this.filterModel = new MyWorkMissionFilter();
+    this.appliedFilterModel = new MyWorkMissionFilter();
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
     this.first = 0;

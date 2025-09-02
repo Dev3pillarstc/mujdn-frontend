@@ -40,14 +40,4 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
       employeeWorkingDays: [employeeWorkingDays || ''],
     };
   }
-
-  // override save(): Observable<UserWorkShift> {
-  //   const service = this.$$getService$$<UserWorkShiftService>();
-  //   return service.assignUserShift(this).pipe(
-  //     map((res: SingleResponseData<UserWorkShift>) => {
-  //       Object.assign(this, res.data);
-  //       return this;
-  //     })
-  //   );
-  // }
 }

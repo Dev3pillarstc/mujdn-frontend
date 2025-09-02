@@ -113,7 +113,8 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
   @CastResponse()
   @HasInterception
   create(@InterceptParam() model: Model): Observable<Model> {
-    return this.http.post<Model>(this.getUrlSegment(), model, { withCredentials: true });
+    return this.http.post<ResponseData<Model>>(this.getUrlSegment(), model, { withCredentials: true })
+      .pipe(map( response => response.data))
   }
 
   @CastResponse()
@@ -141,11 +142,11 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
 
   @CastResponse()
   getById(id: PrimaryKey): Observable<Model> {
-    return this.http.get<Model>(this.getUrlSegment() + '/' + id, { withCredentials: true }).pipe(
-      catchError((err) => {
-        // Let the global ErrorHandler handle it
-        throw err;
-      })
+    return this.http.get<ResponseData<Model>>(this.getUrlSegment() + '/' + id, { withCredentials: true }).pipe(
+        map((response) => response.data),
+        catchError((err) => {
+          throw err;
+        })
     );
   }
 }

@@ -93,7 +93,7 @@ export class MyWorkMissionListComponent extends BaseListComponent<
   }
   loadMyPresenceInquiriesList() {
     this.service
-      .getMyWorkMissionsAsync(this.paginationParams, { ...this.filterModel! })
+      .getMyWorkMissionsAsync(this.paginationParams, { ...this.appliedFilterModel! })
       .subscribe((res: PaginatedListResponseData<WorkMission>) => {
         this.list = res.data.list;
         this.paginationInfo = res.data.paginationInfo;
@@ -144,12 +144,17 @@ export class MyWorkMissionListComponent extends BaseListComponent<
       pageSize: CustomValidators.defaultLengths.INT_MAX,
     };
 
-    const fetchAll = this.service.getMyWorkMissionsAsync(allDataParams, { ...this.filterModel! });
+    const fetchAll = this.service.getMyWorkMissionsAsync(allDataParams, {
+      ...this.appliedFilterModel!,
+    });
 
     fetchAll.subscribe({
       next: (response) => {
         const fullList = (response.data?.list || []) as any[];
-        if (fullList.length > 0) {
+        if (fullList.length === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
+        } else {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
           const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
           const ws = XLSX.utils.json_to_sheet(transformedData);
@@ -167,5 +172,9 @@ export class MyWorkMissionListComponent extends BaseListComponent<
 
   getPropertyName(): string {
     return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+  }
+
+  isCurrentLanguageEnglish(): boolean {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
   }
 }

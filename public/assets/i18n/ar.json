@@ -41,6 +41,7 @@
     "DELETE": "حذف",
     "DASHBOARD": "لوحة المعلومات",
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
+    "NO_DATA_TO_EXPORT": "لا توجد بيانات بالجدول",
     "NATIONAL_ID_VALIDATION": "رقم الهوية يجب أن يبدأ ب 1 أو 2 أو 3 أو 4 ويحتوي على 10 أرقام",
     "POSITIVE_NUMBER_ONLY": "يجب أن يكون الرقم إيجابي",
     "INVALID_NUMBER": "الرقم غير صحيح",
@@ -59,7 +60,7 @@
     "INVALID_SORT_FIELD": "حقل الترتيب المحدد غير صحيح",
     "SERIALIZATION_ERROR": "حدث خطأ أثناء معالجة البيانات",
     "INVALID_DELETE_REQUEST": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
-    "CANNOT_BE_DELETE": "لا يمكن حذف السجل",
+    "CANNOT_BE_DELETE": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
     "EXISTING_RECORD_ERROR": "هذا السجل موجود بالفعل",
     "AUTH_INVALID_CREDENTIALS": "رقم الهوية أو كلمة المرور غير صحيحة",
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",
@@ -352,7 +353,7 @@
     "NOT_ACTIVE": "غير مفعلة",
     "ACTIVATE": "تفعيل",
     "SAVE_AND_ACTIVATE": "حفظ وتفعيل",
-    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "سيتم إضافة وردية افتراضية جديدة، لن تكون الوردية الافتراضية السابقة افتراضية بعد الآن"
+    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "عند إضافة وردية افتراضية جديدة، يتم إلغاء تعيين الوردية السابقة كافتراضية تلقائياً"
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "سجل حضوري",
@@ -477,6 +478,8 @@
     "SHIFT_LIST": "قائمة ورديات العمل",
     "ASSIGN_SHIFT_TO_EMPLOYEE": "اسناد وردية لموظف",
     "EMPLOYEE_NAME_AR": "اسم الموظف (عربي)",
+    "STARTING_DATE": "تاريخ البداية",
+    "ENDING_DATE": "تاريخ النهاية",
     "EMPLOYEE_NAME_EN": "اسم الموظف (إنجليزي)"
   },
   "PROFILE_PAGE": {
@@ -512,10 +515,13 @@
     "NAME_ENGLISH": "اسم الوردية (إنجليزي)",
     "START_DATE": "التاريخ (من)",
     "END_DATE": "التاريخ (إلى)",
+    "STARTING_DATE": "تاريخ البداية",
+    "ENDING_DATE": "تاريخ النهاية",
     "TIME_FROM_TO": "الوقت (من - الى)",
     "ATTENDANCE_BUFFER": "مدة السماح للحضور(دق)",
     "LEAVE_BUFFER": "مدة السماح للانصراف(دق)",
-    "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل"
+    "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل",
+    "DATE_RANGE_PLACEHOLDER": "التاريخ (من - الى)"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",
@@ -549,7 +555,6 @@
   "INQUIRIES_PAGE": {
     "INQUIRY_DATE": "تاريخ المسائلة",
     "INQUIRY_TIME": "وقت المسائلة",
-    "ALLOWED_ATTENDANCE_PERIOD": "(دق) فترة السماح لتسجيل الحضور",
     "PROCESSING_STATUS": "حالة المعالجة",
     "PRESENCE_INQUIRIES": "مسائلات توثيق التواجد",
     "MY_INQUIRIES": "مسائلاتي",
@@ -559,7 +564,7 @@
     "CONFIRMATION_STATUS": "حالة التوثيق",
     "INQUIRY_STATUS": "حالة المسائلة",
     "INQUIRY_RESULT": "نتيجة المسائلة",
-    "BUFFER": "فترة السماح لتسجيل الحضور (دق)",
+    "ALLOWED_ATTENDANCE_PERIOD": "فترة السماح لتسجيل الحضور (دق)",
     "MESSAGE_AR": "الرسالة (عربي)",
     "MESSAGE_EN": "الرسالة (إنجليزي)",
     "UNDER_CONFIRMATION": "تحت التوثيق",
@@ -594,8 +599,10 @@
     "ASSIGN_WORK_MISSIONS": "كل المهام ",
     "MISSION_NAME_AR": "اسم المهمة بالعربية",
     "MISSION_NAME_EN": "اسم المهمة بالإنجليزية",
-    "MISSION_DATA": "بيانات المهمة المسندة",
-    "WORK_MISSIONS_LIST": "قائمة المهام المسندة",
+    "MY_MISSION_DATA": "بيانات المهمة المسندة",
+    "MISSION_DATA": "بيانات المهمة و الإسناد",
+    "MY_WORK_MISSIONS_LIST": "قائمة المهام المسندة",
+    "WORK_MISSIONS_LIST": "قائمة المهام و الإسناد",
     "ADD_NEW_WORK_MISSION": "إضافة مهمة عمل جديدة",
     "ADD_NEW_MISSION": "إضافة مهمة جديدة",
     "EDIT_MISSION": "تعديل المهمة",
@@ -618,8 +625,10 @@
     "END_DATE": "تاريخ النهايه",
     "DEPARTMENT_NAME_ARABIC": "الادارة بالعربية",
     "DEPARTMENT_NAME_ENGLISH": "الادارة بالانجليزية",
-    "STARTING_DATE": "تاريخ البدايه",
-    "ENDING_DATE": "تاريخ النهايه"
+    "STARTING_DATE": "تاريخ البداية",
+    "ENDING_DATE": "تاريخ النهاية",
+    "FROM": "التاريخ (من)",
+    "TO": "التاريخ (إلى)"
   },
   "VISIT_REQUEST_PAGE": {
     "VISITOR_REQUESTS_LIST": "قائمة طلبات الزيارات",

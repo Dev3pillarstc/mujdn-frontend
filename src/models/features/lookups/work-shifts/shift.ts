@@ -27,6 +27,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
   isDefaultShiftForm?: boolean = false;
   isUpdateOnly: boolean = false;
   isAvailableDefaultShift?: boolean = false;
+  declare defaultShiftId?: number;
 
   buildForm() {
     const {

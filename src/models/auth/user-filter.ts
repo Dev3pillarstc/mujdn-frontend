@@ -4,6 +4,7 @@ export class UserFilter {
   declare fullNameAr?: string;
   declare jobTitleEn?: string;
   declare jobTitleAr?: string;
+  declare nationalId?: string;
   declare joinDateFrom?: Date;
   declare joinDateTo?: Date;
   declare fkDepartmentId?: number;

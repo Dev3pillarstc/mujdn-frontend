@@ -275,11 +275,6 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     const preparedModel = this.prepareModel(this.model, this.form) as Shift;
     preparedModel.isActive = true;
 
-    // Add null check for safety
-    if (!this.model.id) {
-      console.log('ID is missing');
-    }
-
     return this.service.activateShift(preparedModel, this.model.id);
   }
 
@@ -292,7 +287,11 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   updateShiftMainData() {
     this.form.get('isUpdateOnly')?.setValue(true);
 
-    if (this.model.isAvailableDefaultShift && this.form.get('isDefaultShiftForm')?.value) {
+    if (
+      this.model.isAvailableDefaultShift &&
+      this.form.get('isDefaultShiftForm')?.value &&
+      this.model.id != this.model.defaultShiftId
+    ) {
       const confirmMessage = this.translateService.instant(
         'WORK_SHIFTS_POPUP.NEW_DEFAULT_SHIFT_TO_BE_ADDED'
       );
@@ -305,18 +304,9 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
         .open(confirmationData)
         .afterClosed()
         .pipe(
-          filter((result) => result === DIALOG_ENUM.OK),
-          switchMap(() => {
-            this.save$.next();
-            return this.save$;
-          })
+          filter((result) => result === DIALOG_ENUM.OK)
         )
-        .subscribe({
-          next: () => {
-            this.dialogRef.close(DIALOG_ENUM.OK);
-          },
-          error: (error) => {},
-        });
+        .subscribe(_ => this.save$.next());
     } else {
       this.save$.next();
     }

@@ -12,7 +12,7 @@ import { Select } from 'primeng/select';
 import { CommonModule } from '@angular/common';
 import { Department } from '@/models/features/lookups/department/department';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { Observable } from 'rxjs';
+import { catchError, exhaustMap, filter, isObservable, Observable, of, switchMap } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AlertService } from '@/services/shared/alert.service';
 import { City } from '@/models/features/lookups/city/city';
@@ -23,6 +23,9 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ValidationMessagesComponent } from '../../../shared/validation-messages/validation-messages.component';
 import { RequiredMarkerDirective } from '../../../../directives/required-marker.directive';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
+import { markFormGroupTouched } from '@/utils/general-helper';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { BaseCrudModel } from '@/abstracts/base-crud-model';
 
 @Component({
   selector: 'app-department-popup',
@@ -180,5 +183,50 @@ export class DepartmentPopupComponent extends BasePopupComponent<Department> imp
       }
     });
     return errors;
+  }
+
+  override listenToSave() {
+    this.save$
+      // call before Save callback
+      .pipe(
+        switchMap(() => {
+          const result = this.beforeSave(this.model, this.form);
+          !result && markFormGroupTouched(this.form);
+          return isObservable(result) ? result : of(result);
+        })
+      )
+      // filter the return value from saveBeforeCallback and allow only the true
+      .pipe(filter((value) => value))
+      .pipe(
+        switchMap((_) => {
+          const result = this.prepareModel(this.model, this.form);
+          return isObservable(result) ? result : of(result);
+        })
+      )
+      .pipe(
+        exhaustMap((model: Department) => {
+          const save$ = (model as BaseCrudModel<any, any>).save();
+          return save$.pipe(
+            catchError((error) => {
+              this.saveFail(error);
+              return of({
+                error: error,
+                model,
+              });
+            })
+          );
+        })
+      )
+      .pipe(
+        filter((value) => {
+          return (
+            !value.hasOwnProperty('error') || (value.hasOwnProperty('error') && value.error == null)
+          );
+        })
+      )
+      .subscribe((model: Department) => {
+        this.afterSave(model, this.dialogRef);
+        this.dialogRef.close({ action: DIALOG_ENUM.OK, data: model });
+      });
   }
 }

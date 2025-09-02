@@ -217,6 +217,9 @@ export default class DepartmentListComponent extends BaseListComponent<
   }
   onSelectedDepartmentChange(event: Department) {
     this.filterModel = new DepartmentFilter();
+    this.appliedFilterModel = new DepartmentFilter();
+    this.filterModel.fkParentDepartmentId = event.id;
+    this.appliedFilterModel.fkParentDepartmentId = event.id;
     this.selectedDepartmentSignal.set(event);
     this.selectedDepartment = event;
 
@@ -279,6 +282,8 @@ export default class DepartmentListComponent extends BaseListComponent<
   }
   onDepartmentChange() {
     this.filterModel.fkParentDepartmentId = this.selectedDepartment?.id ?? this.rootDepartment?.id;
+    this.appliedFilterModel.fkParentDepartmentId =
+      this.selectedDepartment?.id ?? this.rootDepartment?.id;
     this.loadChildDepartmentsAfterSelect();
     this.loadDepartmentsTree(() => {
       if (this.selectedDepartment?.id == this.rootDepartment?.id) {
@@ -302,10 +307,14 @@ export default class DepartmentListComponent extends BaseListComponent<
   }
 
   override search() {
+    this.appliedFilterModel = { ...this.filterModel };
+    this.paginationParams.pageNumber = 1;
+    this.first = 0;
     this.loadChildDepartmentsAfterSelect();
   }
   override resetSearch() {
     this.filterModel = new DepartmentFilter();
+    this.appliedFilterModel = {} as DepartmentFilter;
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
     this.first = 0;

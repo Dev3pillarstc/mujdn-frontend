@@ -168,18 +168,14 @@ export default class PermissionsListComponent
   }
 
   clickMyPermissionTab() {
-    this.isIncomingPermissions = false;
-    this.filterModel = new PermissionFilter();
     if (this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS) {
-      this.loadList().subscribe({
-        next: (response) => this.handleLoadListSuccess(response),
-        error: this.handleLoadListError,
-      });
+      this.resetSearch();
     }
     this.activeTabIndex = PERMISSION_TABS_ENUM.MY_PERMISSIONS;
   }
 
   departmentPermissionSearch() {
+    this.appliedFilterModel = { ...this.filterModel };
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadIncomingPermissions();
@@ -187,6 +183,7 @@ export default class PermissionsListComponent
 
   departmentPermissionResetSearch() {
     this.filterModel = new PermissionFilter();
+    this.appliedFilterModel = new PermissionFilter();
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
     this.first = 0;

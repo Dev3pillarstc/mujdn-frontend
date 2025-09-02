@@ -65,6 +65,10 @@ export abstract class BaseListComponent<
     return this._appliedFilterModel;
   }
 
+  set appliedFilterModel(val: FilterModel) {
+    this._appliedFilterModel = val;
+  }
+
   openBaseDialog(
     popupComponent: PopupComponent,
     model: Model,

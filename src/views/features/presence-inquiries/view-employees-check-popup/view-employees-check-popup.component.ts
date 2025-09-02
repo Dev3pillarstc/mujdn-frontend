@@ -65,7 +65,7 @@ export class ViewEmployeesCheckPopupComponent
     this.notificationTypeService.getById(NotificationTypeEnum.PRESENCE_INQUIRY).subscribe({
       next: (type) => {
         this.presenceProofNotificationType = type;
-      }
+      },
     });
   }
 

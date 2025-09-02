@@ -94,6 +94,11 @@ export class SideBarLinksService {
       iconUrl: 'assets/icons/menu-icons/visits.svg',
       children: [
         {
+          labelKey: 'MENU.VISIT_REQUEST',
+          routerLink: ['/visit-request'],
+          routeId: RouteIdsEnum.VISIT_REQUEST,
+        },
+        {
           labelKey: 'MENU.BLACKLIST',
           routerLink: ['/blacklist'],
           routeId: RouteIdsEnum.BLACKLIST,

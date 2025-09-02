@@ -1,96 +1,160 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
-    <button class="block ms-auto">
+    <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">بيانات الزيارة</h3>
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'VISIT_REQUEST_PAGE.VISIT_DATA' | translate }}
+    </h3>
+
     <div class="bg-[#f3f4f6] p-6 rounded-4xl">
       <div
         class="bg-white py-3 px-6 rounded-2xl flex justify-between items-start sm:items-center mb-8 flex-col sm:flex-row gap-4"
       >
         <div class="flex items-center gap-2">
-          <span class="text-[14px] text-[#6c737f]">اسم الزائر:</span>
-          <h4 class="font-semibold text-[#161616]">محمد أحمد محمود</h4>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.VISITOR_NAME' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ model.fullName }}</h4>
         </div>
         <div class="flex items-center gap-2">
-          <span class="text-[14px] text-[#6c737f]">حالة الزيارة:</span>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.VISIT_STATUS' | translate }}:
+          </span>
           <div>
-            <span
-              class="text-[14px] text-[#fff] min-h-[20px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#d92d20] font-medium"
-            >
+            <span [class]="getStatusBadgeClass()">
               <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-              مرفوض
-            </span>
-            <span
-              class="text-[14px] text-[#fff] min-h-[20px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#1570ef] font-medium"
-            >
-              <span class="w-[10px] h-[10px] bg-[#ffffff99] rounded-full"></span>
-              جديد
+              {{ getStatusText() }}
             </span>
           </div>
         </div>
       </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- National ID -->
         <div>
-          <span class="text-[14px] text-[#6c737f]">رقم الهوية:</span>
-          <h4 class="font-semibold text-[#161616]">123456</h4>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ model.nationalId }}</h4>
         </div>
+
+        <!-- National ID Expiry Date -->
         <div>
-          <span class="text-[14px] text-[#6c737f]">تاريخ انتهاء الهوية</span>
-          <h4 class="font-semibold text-[#161616]">12/12/2024</h4>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.NATIONAL_ID_EXPIRY_DATE' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ formatDate(model.nationalIdExpiryDate) }}</h4>
         </div>
+
+        <!-- Nationality -->
         <div>
-          <span class="text-[14px] text-[#6c737f]">الجنسية</span>
-          <h4 class="font-semibold text-[#161616]">سعودي</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">رقم الجوال</span>
-          <h4 class="font-semibold text-[#161616]">1234567890</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">العنوان</span>
-          <h4 class="font-semibold text-[#161616]">محتوى العنوان هنا</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">البريد الالكتروني</span>
-          <h4 class="font-semibold text-[#161616]">mohamedgmail.com</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">الجهة التابع لها الزائر</span>
-          <h4 class="font-semibold text-[#161616]">اسم الجهة</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">الادارة المستهدفة</span>
-          <h4 class="font-semibold text-[#161616]">ادارة الموارد البشرية</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">تاريخ الزيارة</span>
-          <h4 class="font-semibold text-[#161616]">12/12/2024</h4>
-        </div>
-        <div>
-          <span class="text-[14px] text-[#6c737f]">وقت الزيارة (من-الى)</span>
-          <h4 class="font-semibold text-[#161616]">12:00 - 18:00</h4>
-        </div>
-        <div class="xl:col-span-4 lg:col-span-3 md:col-span-2 col-span-1">
-          <span class="text-[14px] text-[#6c737f]">سبب الزيارة</span>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.NATIONALITY' | translate }}:
+          </span>
           <h4 class="font-semibold text-[#161616]">
-            محتوى السبب يكتب هنا محتوى السبب يكتب هنا محتوى السبب يكتب هنا
+            {{ isCurrentLanguageEnglish() ? 'Saudi' : 'سعودي' }}
           </h4>
+        </div>
+
+        <!-- Mobile Number -->
+        <div>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.MOBILE_NUMBER' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ model.phoneNumber }}</h4>
+        </div>
+
+        <!-- Address -->
+        <div>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.ADDRESS' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ model.address }}</h4>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.EMAIL' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ model.email }}</h4>
+        </div>
+
+        <!-- Visitor Organization -->
+        <div>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.VISITOR_ORGANIZATION' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ model.visitorOrganization }}</h4>
+        </div>
+
+        <!-- Target Department -->
+        <div>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ getDepartmentName() }}</h4>
+        </div>
+
+        <!-- Visit Date -->
+        <div>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.VISIT_DATE' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ formatDate(model.visitDate) }}</h4>
+        </div>
+
+        <!-- Visit Time -->
+        <div>
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.VISIT_TIME_FROM_TO' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">
+            {{ formatTime(model.visitTimeFrom) }} - {{ formatTime(model.visitTimeTo) }}
+          </h4>
+        </div>
+
+        <!-- Visit Purpose -->
+        <div class="xl:col-span-4 lg:col-span-3 md:col-span-2 col-span-1">
+          <span class="text-[14px] text-[#6c737f]">
+            {{ 'VISIT_REQUEST_PAGE.VISIT_PURPOSE' | translate }}:
+          </span>
+          <h4 class="font-semibold text-[#161616]">{{ model.visitPurpose }}</h4>
         </div>
       </div>
     </div>
+
+    <!-- Action Buttons - Only show for TAKE_ACTION mode -->
     <div class="actions flex items-center justify-between mt-6">
       <div class="flex gap-2">
-        <button class="btn gray-btn">الغاء</button>
-        <button class="btn border border-[#fecdca] !text-[#b42318] hover:!bg-[#fee4e2]">
-          <img src="assets/icons/disable.svg" alt="" />
-          حظر الزائر
-        </button>
+        @if (canViewCancel()) {
+          <button class="btn gray-btn" (click)="close()">
+            {{ 'COMMON.CANCEL' | translate }}
+          </button>
+        }
+
+        @if (canBlockVisitor()) {
+          <button
+            class="btn border border-[#fecdca] !text-[#b42318] hover:!bg-[#fee4e2]"
+            (click)="onBlockVisitor()"
+          >
+            <img src="assets/icons/disable.svg" alt="" />
+            {{ 'VISIT_REQUEST_PAGE.BLOCK_VISITOR' | translate }}
+          </button>
+        }
       </div>
-      <div class="flex gap-2">
-        <button class="btn bg-[#fef3f2] !text-[#b42318] hover:!bg-[#fee4e2]">رفض</button>
-        <button class="btn green-btn">قبول</button>
-      </div>
+
+      @if (canTakeAction()) {
+        <div class="flex gap-2">
+          <button class="btn bg-[#fef3f2] !text-[#b42318] hover:!bg-[#fee4e2]" (click)="onReject()">
+            {{ 'VISIT_REQUEST_PAGE.REJECT' | translate }}
+          </button>
+          <button class="btn green-btn" (click)="onApprove()">
+            {{ 'VISIT_REQUEST_PAGE.ACCEPT' | translate }}
+          </button>
+        </div>
+      }
     </div>
   </div>
 </div>

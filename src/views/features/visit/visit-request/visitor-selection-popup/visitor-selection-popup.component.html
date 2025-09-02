@@ -1,64 +1,89 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
-    <button class="block ms-auto">
+    <button class="block ms-auto" (click)="onCancel()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">استدعاء بيانات زائر سابق</h3>
-    <form class="mt-6">
-      <div class="flex flex-wrap gap-8">
-        <label
-          class="relative flex flex-row-reverse items-center cursor-pointer gap-4 justify-between"
-          for="static-radio-1"
-        >
-          استدعاء بيانات زائر سابق
-          <input
-            type="radio"
-            id="static-radio-1"
-            name="status"
-            class="peer appearance-none h-6 w-6 cursor-pointer rounded-full border border-[#22a06b] checked:border-[#64748b] transition-all"
-          />
-          <span
-            class="absolute bg-[#1b8354] w-4 h-4 rounded-full opacity-0 peer-checked:opacity-100 transform top-[50%] start-1 -translate-y-1/2"
-          >
-          </span>
-        </label>
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'VISIT_REQUEST_PAGE.VISITOR_SELECTION' | translate }}
+    </h3>
 
-        <label
-          class="relative flex flex-row-reverse items-center cursor-pointer gap-4 justify-between"
-          for="static-radio-3"
-        >
-          اضافة زائر جديد
-          <input
-            type="radio"
-            id="static-radio-3"
-            name="status"
-            class="peer appearance-none h-6 w-6 cursor-pointer rounded-full border border-[#22a06b] checked:border-[#64748b] transition-all"
-          />
-          <span
-            class="absolute bg-[#1b8354] w-4 h-4 rounded-full opacity-0 peer-checked:opacity-100 transform top-[50%] start-1 -translate-y-1/2"
-          >
-          </span>
-        </label>
-      </div>
-      <div class="relative mt-8">
-        <label class="label" for="nationalityAr">رقم الهوية</label>
+    <div class="flex flex-wrap gap-8">
+      <label
+        class="relative flex flex-row-reverse items-center cursor-pointer gap-4 justify-between"
+        for="existing-visitor-radio"
+      >
+        {{ 'VISIT_REQUEST_PAGE.LOAD_EXISTING_VISITOR' | translate }}
         <input
-          placeholder="رقم الهوية"
-          class="peer w-full"
-          fluid="true"
-          id="nationalityAr"
-          pInputText
-          type="text"
+          type="radio"
+          id="existing-visitor-radio"
+          name="visitorOption"
+          value="existing"
+          [checked]="selectedOption === 'existing'"
+          (change)="onOptionChange('existing')"
+          class="peer appearance-none h-6 w-6 cursor-pointer rounded-full border border-[#22a06b] checked:border-[#64748b] transition-all"
         />
         <span
-          class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-        ></span>
+          class="absolute bg-[#1b8354] w-4 h-4 rounded-full opacity-0 peer-checked:opacity-100 transform top-[50%] start-1 -translate-y-1/2"
+        >
+        </span>
+      </label>
+
+      <label
+        class="relative flex flex-row-reverse items-center cursor-pointer gap-4 justify-between"
+        for="new-visitor-radio"
+      >
+        {{ 'VISIT_REQUEST_PAGE.ADD_NEW_VISITOR' | translate }}
+        <input
+          type="radio"
+          id="new-visitor-radio"
+          name="visitorOption"
+          value="new"
+          [checked]="selectedOption === 'new'"
+          (change)="onOptionChange('new')"
+          class="peer appearance-none h-6 w-6 cursor-pointer rounded-full border border-[#22a06b] checked:border-[#64748b] transition-all"
+        />
+        <span
+          class="absolute bg-[#1b8354] w-4 h-4 rounded-full opacity-0 peer-checked:opacity-100 transform top-[50%] start-1 -translate-y-1/2"
+        >
+        </span>
+      </label>
+    </div>
+
+    <!-- National ID input - only show when "existing visitor" is selected -->
+    <form [formGroup]="form" class="mt-6" (ngSubmit)="onNext()">
+      <div class="relative mt-8" *ngIf="selectedOption === 'existing'">
+        <label class="label" for="nationalId">
+          {{ 'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate }}
+        </label>
+        <div class="relative">
+          <input
+            [placeholder]="'VISIT_REQUEST_PAGE.NATIONAL_ID' | translate"
+            class="peer w-full"
+            fluid="true"
+            id="nationalId"
+            formControlName="nationalId"
+            pInputText
+            type="text"
+          />
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+        <app-validation-messages [control]="nationalIdControl"></app-validation-messages>
+
+        <!-- Error message -->
+        <div *ngIf="errorMessage" class="text-red-500 text-sm mt-2">
+          {{ errorMessage | translate }}
+        </div>
       </div>
+
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button class="btn gray-btn">إلغاء</button>
-        <button class="btn green-btn flex items-center">
-          <span>التالي</span>
-          <img alt="" class="ltr:rotate-180" src="assets/icons/left-arrow.svg" />
+        <button type="button" class="btn gray-btn" (click)="onCancel()">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+        <button type="submit" class="btn green-btn flex items-center">
+          <span>{{ 'COMMON.NEXT' | translate }}</span>
+          <img alt="" [class]="rotateArrow" src="assets/icons/left-arrow.svg" />
         </button>
       </div>
     </form>

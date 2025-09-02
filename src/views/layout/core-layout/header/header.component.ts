@@ -7,10 +7,16 @@ import { LanguageService } from '@/services/shared/language.service';
 import { AuthService } from '@/services/auth/auth.service';
 import { LoggedInUser } from '@/models/auth/logged-in-user';
 import { SharedService } from '@/services/shared/shared.service';
+import { MenuModule } from 'primeng/menu';
+import { ButtonModule } from 'primeng/button';
+import { MenuItem } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [MenuModule, ButtonModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -22,10 +28,32 @@ export class HeaderComponent implements OnInit {
   declare currentLanguage: string;
   languageEnum = LANGUAGE_ENUM;
   declare loggedInUser?: LoggedInUser;
+  menuItems: MenuItem[] = [];
   sharedService = inject(SharedService);
+  router = inject(Router);
+  destroy$: Subject<void> = new Subject<void>();
 
   ngOnInit() {
     this.loggedInUser = this.authService.getUser().value;
+    this.initializeProfileMenu();
+    // Re-initialize action list when language changes
+    this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.initializeProfileMenu();
+    });
+  }
+  private initializeProfileMenu(): void {
+    this.menuItems = [
+      {
+        label: this.translateService.instant('PROFILE_PAGE.PROFILE'),
+        icon: '/assets/icons/profile.svg',
+        command: () => this.openProfile(),
+      },
+      {
+        label: this.translateService.instant('COMMON.LOG_OUT'),
+        icon: '/assets/icons/logout.svg',
+        command: () => this.logout(),
+      },
+    ];
   }
 
   getLanguageButtonText() {
@@ -56,5 +84,18 @@ export class HeaderComponent implements OnInit {
 
   toggleSideMenu() {
     this.sharedService.toggleSideMenu();
+  }
+
+  logout() {
+    this.authService.logout().subscribe();
+  }
+
+  openProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,5 +1,5 @@
 import { ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 import { routes } from '@/routes/app.routes';
 import { GeneralInterceptor } from '@/model-interceptors/general-interceptor';
 import configInit from '../inits/config.init';
@@ -26,7 +26,13 @@ export const appConfig: ApplicationConfig = {
       withFetch(),
       withInterceptors([loadingInterceptor, AuthInterceptor, httpErrorInterceptor]) // Functional interceptor
     ),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top', // always scrolls to top on navigation
+        anchorScrolling: 'enabled', // optional, enables anchor (#fragment) jumps
+      })
+    ),
     // provideClientHydration(),
     provideInterceptors([GeneralInterceptor]),
     provideAnimationsAsync(),

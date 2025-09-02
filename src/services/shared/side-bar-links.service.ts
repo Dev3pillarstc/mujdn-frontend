@@ -60,6 +60,12 @@ export class SideBarLinksService {
       routerLink: ['/permissions'],
       routeId: RouteIdsEnum.PERMISSIONS,
     },
+    {
+      labelKey: 'MENU.PRESENCE_INQUIRIES',
+      iconUrl: 'assets/icons/menu-icons/tools.svg',
+      routerLink: ['/presence-inquiries'],
+      routeId: RouteIdsEnum.PRESENCE_INQUIRIES,
+    },
     // {
     //   labelKey: 'MENU.ASSIGNED_EMPLOYEES',
     //   iconUrl: 'assets/icons/menu-icons/icon3.svg',
@@ -84,6 +90,28 @@ export class SideBarLinksService {
       routeId: RouteIdsEnum.HOLIDAYS,
     },
     {
+      labelKey: 'MENU.VISITS',
+      iconUrl: 'assets/icons/menu-icons/visits.svg',
+      children: [
+        {
+          labelKey: 'MENU.VISIT_REQUEST',
+          routerLink: ['/visit-request'],
+          routeId: RouteIdsEnum.VISIT_REQUEST,
+        },
+        {
+          labelKey: 'MENU.BLACKLIST',
+          routerLink: ['/blacklist'],
+          routeId: RouteIdsEnum.BLACKLIST,
+        },
+      ],
+    },
+    {
+      labelKey: 'MENU.WORK_MISSIONS',
+      iconUrl: 'assets/icons/menu-icons/permissions.svg',
+      routerLink: ['/work-missions'],
+      routeId: RouteIdsEnum.WORK_MISSION,
+    },
+    {
       labelKey: 'MENU.WORK_SHIFT',
       iconUrl: 'assets/icons/time-icon.svg',
       children: [
@@ -91,6 +119,16 @@ export class SideBarLinksService {
           labelKey: 'MENU.WORK_SHIFT_SETTINGS',
           routerLink: ['/work-shifts'],
           routeId: RouteIdsEnum.WORK_SHIFTS,
+        },
+        {
+          labelKey: 'MENU.WORK_SHIFT_ASSIGNMENT',
+          routerLink: ['/work-shifts-assignment'],
+          routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
+        },
+        {
+          labelKey: 'MY_SHIFTS.MY_SHIFTS',
+          routerLink: ['/my-shifts'],
+          routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
         },
       ],
     },
@@ -104,9 +142,14 @@ export class SideBarLinksService {
           routeId: RouteIdsEnum.PERMISSION_REASONS,
         },
         {
-          labelKey: 'MENU.NOTIFICATION_CHANNELS',
-          routerLink: ['/notification-channels'],
-          routeId: RouteIdsEnum.NOTIFICATION_CHANNELS,
+          labelKey: 'MENU.NOTIFICATIONS',
+          routerLink: ['/notifications'],
+          routeId: RouteIdsEnum.NOTIFICATIONS,
+        },
+        {
+          labelKey: 'MENU.GENERAL_SETTINGS',
+          routerLink: ['/general-settings'],
+          routeId: RouteIdsEnum.GENERAL_SETTINGS,
         },
         {
           labelKey: 'MENU.NATIONALITIES',

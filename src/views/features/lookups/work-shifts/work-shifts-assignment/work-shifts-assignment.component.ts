@@ -5,7 +5,7 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { WorkShiftsListPopupComponent } from '../work-shifts-list-popup/work-shifts-list-popup.component';
 import { Select } from 'primeng/select';
@@ -13,9 +13,24 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { WorkShiftsAssignmentPopupComponent } from '../work-shifts-assignment-popup/work-shifts-assignment-popup.component';
 import { TranslatePipe } from '@ngx-translate/core';
-interface Adminstration {
-  type: string;
-}
+import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
+import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
+import ShiftsFilter from '@/models/features/lookups/work-shifts/shifts-filter';
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import UserWorkShiftsFilter from '@/models/features/lookups/work-shifts/user-work-shifts-filter';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import Shift from '@/models/features/lookups/work-shifts/shift';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
+import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icons-enum';
+import { ConfirmationService } from '@/services/shared/confirmation.service';
+import { filter, switchMap } from 'rxjs';
+import { AlertService } from '@/services/shared/alert.service';
+
 @Component({
   selector: 'app-work-shifts-assignment',
   imports: [
@@ -34,48 +49,155 @@ interface Adminstration {
   templateUrl: './work-shifts-assignment.component.html',
   styleUrl: './work-shifts-assignment.component.scss',
 })
-export default class WorkShiftsAssignmentComponent {
-  breadcrumbs: MenuItem[] | undefined;
+export default class WorkShiftsAssignmentComponent extends BaseListComponent<
+  UserWorkShift,
+  WorkShiftsAssignmentPopupComponent,
+  UserWorkShiftService,
+  ShiftsFilter
+> {
+  usersProfiles: UsersWithDepartmentLookup[] = [];
+  userWorkShift: UserWorkShift[] = [];
+  departments: BaseLookupModel[] = [];
+  defaultWorkDays: WorkDaysSetting = new WorkDaysSetting();
+  filteredEmployees: UsersWithDepartmentLookup[] = [];
+  filterOptions: UserWorkShiftsFilter = new UserWorkShiftsFilter();
+  shifts: Shift[] = [];
+
+  confirmationService = inject(ConfirmationService);
+  alertService = inject(AlertService);
+  userworkShiftService = inject(UserWorkShiftService);
+  override get filterModel(): UserWorkShiftsFilter {
+    return this.filterOptions;
+  }
+  override set filterModel(val: UserWorkShiftsFilter) {
+    this.filterOptions = val as UserWorkShiftsFilter;
+  }
+  override get service(): UserWorkShiftService {
+    return this.userWorkShiftService;
+  }
+  override initListComponent(): void {
+    var userShifts = this.activatedRoute.snapshot.data['list'].userShifts;
+    this.shifts = this.activatedRoute.snapshot.data['list'].shifts;
+    this.list = userShifts.list;
+    this.paginationInfo = userShifts.paginationInfo;
+    this.usersProfiles = this.activatedRoute.snapshot.data['list'].users;
+    this.departments = this.activatedRoute.snapshot.data['list'].departments;
+    this.defaultWorkDays = this.activatedRoute.snapshot.data['list'].defaultworkDays;
+    this.filteredEmployees = this.usersProfiles;
+    this.departments = this.sortByName(this.departments, this.optionLabel);
+    this.filteredEmployees = this.sortByName(this.filteredEmployees, this.optionLabel);
+  }
+  private sortByName<T extends { [key: string]: any }>(arr: T[], key: string): T[] {
+    return [...arr].sort((a, b) => {
+      const nameA = (a[key] || '').toString().toLowerCase();
+      const nameB = (b[key] || '').toString().toLowerCase();
+      return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+    });
+  }
+
+  protected override mapModelToExcelRow(model: UserWorkShift): { [key: string]: any } {
+    return {
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR')]: model.shiftNameAr,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN')]: model.shiftNameEn,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_AR')]:
+        model.employeeNameAr,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_EN')]:
+        model.employeeNameEn,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.START_DATE')]: model.startDate,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.END_DATE')]: model.endDate,
+    };
+  }
   dialogSize = {
     width: '100%',
     maxWidth: '1024px',
   };
+  userWorkShiftService = inject(UserWorkShiftService);
   dialog = inject(MatDialog);
-  home: MenuItem | undefined;
   date2: Date | undefined;
-  adminstrations: Adminstration[] | undefined;
-  selectedAdminstration: Adminstration | undefined;
   attendance!: any[];
-  first: number = 0;
-  rows: number = 10;
-  matDialog = inject(MatDialog);
 
-  constructor() {}
+  addOrEditModel(userWorkShift?: UserWorkShift): void {
+    this.openDialog(userWorkShift ?? new UserWorkShift());
+  }
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' }];
+  }
+  override openDialog(userWorkShift: UserWorkShift) {
+    const viewMode = userWorkShift.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    const model = userWorkShift ?? new UserWorkShift();
+    const lookups = {
+      usersProfiles: this.usersProfiles,
+      departments: this.departments,
+      shifts: this.shifts,
+      defaultWorkDays: [this.defaultWorkDays],
+    };
 
-  ngOnInit() {
-    this.breadcrumbs = [{ label: 'لوحة المعلومات' }, { label: 'اسناد ورديات عمل' }];
-    this.adminstrations = [{ type: 'عام' }, { type: 'خاص' }];
-    // Updated dummy data to match your Arabic table structure
-    this.attendance = [
-      {
-        serialNumber: 1,
-        employeeNameAr: 'محمد أحمد طه',
-        employeeNameEn: 'mohamed taha',
-        adminstration: 'إدارة الموارد',
-        jop: 'موظف',
-        PermanentType: 'دوام كلي',
-        date: '12/12/2024',
-      },
-    ];
+    return this.openBaseDialog(WorkShiftsAssignmentPopupComponent as any, model, viewMode, lookups);
+  }
+  get optionLabel(): string {
+    const lang = this.langService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
+  isCurrentLanguageEnglish() {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
   }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(WorkShiftsAssignmentPopupComponent as any, this.dialogSize);
 
-    dialogRef.afterClosed().subscribe();
+  get startDate() {
+    return this.filterOptions.startDate as Date;
+  }
+
+  get endDate() {
+    return this.filterOptions.endDate as Date;
+  }
+
+  override resetSearch(isStoredProcedure: boolean = false) {
+    this.filterModel = {} as UserWorkShiftsFilter;
+    this.filteredEmployees = this.usersProfiles;
+    this.paginationParams.pageNumber = 1;
+    this.paginationParams.pageSize = 10;
+    this.first = 0;
+    if (isStoredProcedure) {
+      this.loadListSP().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+    } else {
+      this.loadList().subscribe({
+        next: (response) => this.handleLoadListSuccess(response),
+        error: this.handleLoadListError,
+      });
+    }
+  }
+
+  deleteUserShiftAssignment(shiftLogId: number) {
+    const confirmMessage = this.translateService.instant('COMMON.CONFIRM_DELETE');
+    const confirmationData = {
+      icon: CONFIRMATION_DIALOG_ICONS_ENUM.WARNING.toString(),
+      messages: [confirmMessage],
+    };
+
+    this.confirmationService
+      .open(confirmationData)
+      .afterClosed()
+      .pipe(
+        filter((result) => result === DIALOG_ENUM.OK),
+        switchMap(() => this.userworkShiftService.deleteUserShiftAssignment(shiftLogId)),
+        switchMap(() => this.userworkShiftService.loadPaginated())
+      )
+      .subscribe({
+        next: (response: PaginatedList<UserWorkShift>) => {
+          this.list = response.list;
+          this.paginationInfo = response.paginationInfo;
+          this.alertService.showSuccessMessage({
+            messages: ['COMMON.DELETED_SUCCESSFULLY'],
+          });
+        },
+        error: () => {
+          this.alertService.showErrorMessage({
+            messages: ['COMMON.DELETION_FAILED'],
+          });
+        },
+      });
   }
 }

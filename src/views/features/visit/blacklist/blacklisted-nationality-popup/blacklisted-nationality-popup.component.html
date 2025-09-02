@@ -1,0 +1,44 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{
+        (isCreateMode
+          ? 'BLACKLIST_PAGE.ADD_NEW_BLACKLISTED_NATIONALITY'
+          : 'BLACKLIST_PAGE.EDIT_BLACKLISTED_NATIONALITY'
+        ) | translate
+      }}
+    </h3>
+    <form [formGroup]="form" class="mt-6">
+      <div>
+        <label class="label" for="nationality-popup">{{
+          'BLACKLIST_PAGE.NATIONALITY' | translate
+        }}</label>
+        <div class="relative">
+          <p-select
+            [placeholder]="'BLACKLIST_PAGE.NATIONALITY' | translate"
+            class="w-full peer"
+            id="nationality-popup"
+            formControlName="fkNationalityId"
+            [options]="nationalityOptions"
+            optionLabel="label"
+            optionValue="value"
+          >
+          </p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+        <app-validation-messages [control]="fkNationalityIdControl"></app-validation-messages>
+      </div>
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="save$.next()" class="btn green-btn">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

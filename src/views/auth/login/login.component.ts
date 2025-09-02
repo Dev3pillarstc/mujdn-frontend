@@ -60,4 +60,7 @@ export default class LoginComponent implements OnInit {
       }
     });
   }
+  onForgotPassword() {
+    this.router.navigate(['auth/forget-password']);
+  }
 }

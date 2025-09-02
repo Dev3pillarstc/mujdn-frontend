@@ -12,18 +12,30 @@ import { Router } from '@angular/router';
 import { AuthService } from '@/services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BACKEND_ERROR_ENUM } from '@/enums/backend-error-enum';
+import { buildTranslationParams } from '@/utils/general-helper';
+
+// const excludedErrorPaths = [
+//   '/PasswordReset/request',
+//   '/PasswordReset/verify',
+//   '/PasswordReset/reset',
+// ];
+
+// function isExcludedErrorUrl(url: string): boolean {
+//   const cleanUrl = url.split('?')[0];
+//   return excludedErrorPaths.some((path) => cleanUrl.includes(path));
+// }
 
 export const httpErrorInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
   next: HttpHandlerFn
 ) => {
   const injector = inject(Injector);
-
   return next(req).pipe(
     catchError((error: any) => {
       const notAuthorizedErrorKey = BACKEND_ERROR_ENUM.NOT_AUTHORIZED;
       const validationFailedErrorKey = BACKEND_ERROR_ENUM.VALIDATION_FAILED;
       const skipKeys = [validationFailedErrorKey, notAuthorizedErrorKey];
+
       const alertService = injector.get(AlertService);
       const translateService = injector.get(TranslateService);
       const router = injector.get(Router);
@@ -32,22 +44,31 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
 
       let messageKey = 'COMMON.UNKNOWN_ERROR';
       let backendError = error?.error?.error;
+      console.log('Backend error response:', backendError); // Debug log
 
-      if (backendError?.messageKey == notAuthorizedErrorKey && authService.isAuthenticated) {
+      if (backendError?.messageKey === notAuthorizedErrorKey && authService.isAuthenticated) {
         matDialog.closeAll();
         router.navigate(['/403']);
       }
 
       if (backendError?.messageKey) {
         messageKey = 'COMMON.' + backendError?.messageKey;
+        console.log('Message key:', messageKey); // Debug log
 
         if (skipKeys.includes(backendError?.messageKey)) {
+          return throwError(() => error);
+        }
+
+        if (backendError?.details) {
+          const translationParams = buildTranslationParams(backendError.details, translateService);
+          const message = translateService.instant(messageKey, translationParams);
+          alertService.showErrorMessage({ messages: [message] });
           return throwError(() => error);
         }
       }
 
       const message = translateService.instant(messageKey);
-
+      console.log('Default message:', message); // Debug log
       alertService.showErrorMessage({ messages: [message] });
       return throwError(() => error);
     })

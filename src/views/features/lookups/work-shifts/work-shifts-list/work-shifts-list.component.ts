@@ -63,12 +63,19 @@ export default class WorkShiftsListComponent
   }
 
   openDialog(model: Shift): void {
-    const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    let viewMode;
+    if (model.id) {
+      viewMode = ViewModeEnum.EDIT;
+    } else {
+      viewMode = ViewModeEnum.CREATE;
+      model.defaultShiftId = this.list.find((s) => s.defaultShiftId != null)?.defaultShiftId;
+    }
     this.openBaseDialog(WorkShiftsListPopupComponent as any, model, viewMode);
   }
 
   addOrEditModel(shift?: Shift) {
     shift = shift || new Shift();
+    shift.isAvailableDefaultShift = this.list.some((s) => s.isAvailableDefaultShift) ? true : false;
     this.openDialog(shift);
   }
 
@@ -101,6 +108,16 @@ export default class WorkShiftsListComponent
         model.timeFrom || '',
         model.timeTo || ''
       ),
+      [translate.instant('WORK_SHIFTS.DEFAULT_SHIFT')]: this.excelShiftStatus(model),
     };
+  }
+
+  private excelShiftStatus(model: Shift): any {
+    if (model.isActive) {
+      return this.translateService.instant('WORK_SHIFTS.ACTIVE');
+    } else {
+      if (model.isActive === false) return this.translateService.instant('WORK_SHIFTS.NOT_ACTIVE');
+      else return '---';
+    }
   }
 }

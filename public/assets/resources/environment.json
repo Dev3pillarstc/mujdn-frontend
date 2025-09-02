@@ -7,7 +7,7 @@
     "PRODUCTION": ""
   },
   "API_VERSION": "",
-  "DEPLOY_VERSION": "1.0.5",
+  "DEPLOY_VERSION": "2.0.0",
   "BASE_ENVIRONMENT": "DEV",
   "DEV_VARIABLES": {
     "INTEGRATION1": "http//dev/integration1",

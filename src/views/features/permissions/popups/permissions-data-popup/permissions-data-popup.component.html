@@ -11,8 +11,8 @@
       <div class="flex flex-col sm:flex-row justify-between bg-white rounded-2xl py-4 px-6 gap-4">
         <div class="flex gap-2 items-center">
           <span class="text-[#6c737f] text-sm">{{
-              'PERMISSION_PAGE.PERMISSION_STATUS' | translate
-            }}</span>
+            'PERMISSION_PAGE.PERMISSION_STATUS' | translate
+          }}</span>
           <div
             [ngClass]="[
               'px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2',
@@ -42,18 +42,20 @@
           </div>
         </div>
         <div class="flex gap-2 items-center">
-          @if (model.fkStatusId == statusEnum.Accepted || model.fkStatusId == statusEnum.FirstAccepted) {
+          @if (
+            model.fkStatusId == statusEnum.Accepted || model.fkStatusId == statusEnum.FirstAccepted
+          ) {
             <span class="text-[#6c737f] text-sm">{{
-                'PERMISSION_PAGE.APPROVAL_DATE' | translate
-              }}</span>
+              'PERMISSION_PAGE.APPROVAL_DATE' | translate
+            }}</span>
             <span class="text-[#161616] font-semibold">
               <span>{{ model.actionDate ? (model.actionDate | date: 'dd/MM/yyyy') : '' }}</span>
             </span>
           }
           @if (model.fkStatusId == statusEnum.Rejected) {
             <span class="text-[#6c737f] text-sm">{{
-                'PERMISSION_PAGE.REJECTION_DATE' | translate
-              }}</span>
+              'PERMISSION_PAGE.REJECTION_DATE' | translate
+            }}</span>
             <span class="text-[#161616] font-semibold">
               <span>{{ model.actionDate ? (model.actionDate | date: 'dd/MM/yyyy') : '' }}</span>
             </span>
@@ -63,8 +65,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]">{{
-              'PERMISSION_PAGE.PERMISSION_TYPE' | translate
-            }}</span>
+            'PERMISSION_PAGE.PERMISSION_TYPE' | translate
+          }}</span>
           <span class="font-semibold text-[#161616]">
             <span>{{ model.getPermissionTypeName() }}</span>
           </span>
@@ -79,15 +81,15 @@
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]"
-          >{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}
+            >{{ 'PERMISSION_PAGE.PERMISSION_DATE' | translate }}
           </span>
           <span class="font-semibold text-[#161616]">{{
-              model.permissionDate | date: 'dd/MM/yyyy'
-            }}</span>
+            model.permissionDate | date: 'dd/MM/yyyy'
+          }}</span>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]"
-          >{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}
+            >{{ 'PERMISSION_PAGE.PERMISSION_REASON' | translate }}
           </span>
           <span class="font-semibold text-[#161616]">
             <span>{{ model.getPermissionReasonName() }}</span>
@@ -95,7 +97,7 @@
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-sm text-[#6c737f]"
-          >{{ 'DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME' | translate }}
+            >{{ 'DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME' | translate }}
           </span>
           <span class="font-semibold text-[#161616]">
             <span>{{ model.getPermissionDepartmentName() }}</span>
@@ -104,8 +106,8 @@
         <div class="flex flex-col gap-2 lg:col-span-3">
           <span class="text-sm text-[#6c737f]">{{ 'PERMISSION_PAGE.NOTES' | translate }} </span>
           <span class="font-semibold text-[#161616]">
-          <span>{{ model.description }}</span>
-        </span>
+            <span>{{ model.description }}</span>
+          </span>
         </div>
       </div>
     </div>

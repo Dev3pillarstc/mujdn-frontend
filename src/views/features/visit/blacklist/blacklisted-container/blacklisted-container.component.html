@@ -1,0 +1,41 @@
+<!-- blacklisted-container.component.html -->
+<div class="bg-white">
+  <div class="bg-[#f9fafb] p-3 sm:p-6">
+    <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <span>{{ item.label | translate }}</span>
+        </ng-template>
+      </p-breadcrumb>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'BLACKLIST_PAGE.VISITOR_BLACKLIST_CRITERIA' | translate }}
+      </h3>
+    </div>
+
+    <p-tabs value="0">
+      <p-tablist class="my-6">
+        <p-tab (click)="clickNationalitiesTab()" value="0">
+          {{ 'BLACKLIST_PAGE.NATIONALITY_TAB' | translate }}
+        </p-tab>
+        <p-tab (click)="clickNationalIdsTab()" value="1">
+          {{ 'BLACKLIST_PAGE.NATIONAL_ID_TAB' | translate }}
+        </p-tab>
+      </p-tablist>
+
+      <p-tabpanels>
+        <!-- Nationality Tab Panel -->
+        <p-tabpanel value="0">
+          <app-blacklisted-nationality-list
+            [isActive]="isNationalitiesTabActive()"
+            [nationalities]="nationalities"
+          />
+        </p-tabpanel>
+
+        <!-- National ID Tab Panel -->
+        <p-tabpanel value="1">
+          <app-blacklisted-national-id-list [isActive]="isNationalIdsTabActive()" />
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+</div>

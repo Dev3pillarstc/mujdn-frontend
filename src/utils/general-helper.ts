@@ -1,3 +1,4 @@
+import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { FormArray, FormGroup } from '@angular/forms';
 
 // used in base-crud service for date filtering
@@ -29,7 +30,8 @@ export const toDateOnly = function (date: any) {
 };
 
 export const toDateTime = function (date: any) {
-  date = date?.toString() ?? '';
+  if (date == null) return null;
+  date = date.toString();
   date = new Date(date);
   return date;
 };
@@ -68,6 +70,15 @@ export function convertUtcToSystemTimeZone(utcDateTime: Date | string): Date {
   return ksaTime;
 }
 
+export function convertKsaToUtc(ksaDateTime: Date | string): Date {
+  // Convert the input (string or Date) into a Date object
+  const ksaDate = new Date(ksaDateTime);
+
+  // Subtract 3 hours to convert KSA → UTC
+  const utcDate = new Date(ksaDate.getTime() - 3 * 60 * 60 * 1000);
+
+  return utcDate;
+}
 // --Formating date for view only--
 // Format time string (HH:MM:SS) to 12-hour format (No time zone conversion)
 export function formatTimeTo12Hour(
@@ -93,6 +104,21 @@ export function formatTimeTo12Hour(
 
   return formatted;
 }
+export function changeTimeSuffix<T>(
+  isCurrentLanguageEnglish: () => boolean,
+  item: T,
+  timeKey: keyof T,
+  formattedKey: keyof T
+): void {
+  if (!item) return;
+
+  const locale: 'en-US' | 'ar-EG' = isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+  const timeValue = item[timeKey] as unknown as string | null | undefined;
+
+  if (timeValue) {
+    (item as any)[formattedKey] = formatTimeTo12Hour(timeValue, locale);
+  }
+}
 
 // Format Date object to 12-hour format (No time zone conversion)
 export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-US'): string {
@@ -108,6 +134,20 @@ export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-U
   if (locale === 'ar-EG') {
     return formatted.replace('AM', 'ص').replace('PM', 'م');
   }
+
+  return formatted;
+}
+
+export function formatDateOnly(date: any): string {
+  if (!date) return '';
+
+  date = new Date(date);
+  // Always use 'en-US' to ensure numbers are Latin digits
+  const formatted = date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
 
   return formatted;
 }
@@ -149,3 +189,38 @@ export function markFormGroupTouched(form: FormGroup | FormArray) {
     }
   });
 }
+
+// Helper function to build translation parameters dynamically
+export function buildTranslationParams(details: any, translateService: any): any {
+  const translationParams: any = {};
+  const currentLang = translateService.currentLang || 'en';
+
+  Object.keys(details).forEach((key) => {
+    // Extract the first value from the array, as Details is IDictionary<string, string[]>
+    const value =
+      Array.isArray(details[key]) && details[key].length > 0 ? details[key][0] : details[key];
+    if (key.endsWith('En') && currentLang === 'en') {
+      const baseKey = key.replace('En', '');
+      translationParams[baseKey] = value;
+    } else if (key.endsWith('Ar') && currentLang === 'ar') {
+      const baseKey = key.replace('Ar', '');
+      translationParams[baseKey] = value;
+    } else if (!key.endsWith('En') && !key.endsWith('Ar')) {
+      // For non-language-specific parameters
+      translationParams[key] = value;
+    }
+  });
+
+  console.log('Translation params:', translationParams); // Debug log
+  return translationParams;
+}
+
+export const weekDays = [
+  { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SATURDAY', value: WeekDaysEnum.SATURDAY },
+  { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.SUNDAY', value: WeekDaysEnum.SUNDAY },
+  { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.MONDAY', value: WeekDaysEnum.MONDAY },
+  { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.TUESDAY', value: WeekDaysEnum.TUESDAY },
+  { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.WEDNESDAY', value: WeekDaysEnum.WEDNESDAY },
+  { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.THURSDAY', value: WeekDaysEnum.THURSDAY },
+  { labelKey: 'USER_WORK_SHIFT_ASSIGNMENT.FRIDAY', value: WeekDaysEnum.FRIDAY },
+];

@@ -3,7 +3,6 @@ import { AlertDialogData } from '@/models/shared/alert-dialog-data';
 import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { COOKIE_ENUM } from '@/enums/cookie-enum';
-import { of } from 'rxjs';
 import { CookieService } from '@/services/shared/cookie.service';
 import { AuthService } from '@/services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -66,6 +65,30 @@ export class AlertService {
         this.router.navigate(['/auth/login']);
         this.matDialog.closeAll();
       }
+      dialog.close();
+    }, 5000);
+
+    return dialog;
+  }
+
+  showErrorMessageWithRedirect(
+    params: { icon?: string; messages?: string[]; buttonLabel?: string },
+    dialogSize?: {
+      width: string;
+      maxWidth: string;
+    }
+  ) {
+    const dialog = this.matDialog.open(AlertDialogComponent, {
+      width: dialogSize?.width || '100%',
+      maxWidth: dialogSize?.maxWidth || '400px',
+      data: <AlertDialogData>{
+        icon: params.icon || 'error',
+        messages: params.messages || ['COMMON.ERROR_OCCURRED'],
+        buttonLabel: params.buttonLabel || 'COMMON.OK',
+      },
+    });
+
+    setTimeout(() => {
       dialog.close();
     }, 5000);
 

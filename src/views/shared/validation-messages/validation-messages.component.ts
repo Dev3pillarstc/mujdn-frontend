@@ -33,11 +33,12 @@ export class ValidationMessagesComponent implements OnInit {
     const message = this.validationMessages[key as ValidationErrorKeyEnum];
 
     if (!message) return null;
-
+    const translatedMessage = this.translateService.instant(message);
     // Handle dynamic messages with parameters
     const error = this.control().errors?.[key];
+
     if (error && typeof error === 'object') {
-      return this.formatMessage(this.translateService.instant(message), error);
+      return this.formatMessage(translatedMessage, error);
     }
 
     return message;
@@ -49,22 +50,36 @@ export class ValidationMessagesComponent implements OnInit {
       return message.replace('{length}', errorData.requiredLength.toString());
     }
 
-    // Handle number range validation
-    if (errorData.min !== undefined && errorData.max !== undefined) {
+    // min only
+    if (errorData.min !== undefined && errorData.actual !== undefined) {
       return message
-        .replace('{min}', errorData.min.toString())
-        .replace('{max}', errorData.max.toString());
+        .replace('{min}', this.unwrap(errorData.min, 'min').toString())
+        .replace('{actual}', errorData.actual.toString());
     }
 
+    // max only
+    if (errorData.max !== undefined && errorData.actual !== undefined) {
+      return message
+        .replace('{max}', this.unwrap(errorData.max, 'max').toString())
+        .replace('{actual}', errorData.actual.toString());
+    }
     return message;
   }
+  unwrap = (val: any, key: string) => {
+    if (typeof val === 'object' && val !== null && key in val) {
+      return val[key]; // return the nested numeric value
+    }
+    return val; // already a number
+  };
 
   validationMessages: Record<ValidationErrorKeyEnum, string> = {
     [ValidationErrorKeyEnum.REQUIRED]: 'COMMON.REQUIRED_FIELD',
     [ValidationErrorKeyEnum.AR_NUM]: 'COMMON.ARABIC_ONLY',
     [ValidationErrorKeyEnum.ENG_NUM]: 'COMMON.ENGLISH_ONLY',
     [ValidationErrorKeyEnum.MIN_LENGTH]: 'COMMON.MIN_LENGTH',
-    [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH',
+    [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH_DYNAMIC',
+    [ValidationErrorKeyEnum.MIN]: 'COMMON.MIN_VALUE', // 👈 add this
+    [ValidationErrorKeyEnum.MAX]: 'COMMON.MAX_VALUE', // 👈 add this
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
     [ValidationErrorKeyEnum.TIME_FROM_AFTER_TIME_TO]: 'COMMON.TIME_FROM_BEFORE_TIME_TO',
     [ValidationErrorKeyEnum.EMAIL]: 'COMMON.EMAIL_VALIDATION',
@@ -75,5 +90,6 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.POSITIVE_NUMBER]: 'COMMON.POSITIVE_NUMBER_ONLY',
     [ValidationErrorKeyEnum.INVALID_NUMBER]: 'COMMON.INVALID_NUMBER',
     [ValidationErrorKeyEnum.NUMBER_RANGE]: 'COMMON.NUMBER_RANGE',
+    [ValidationErrorKeyEnum.PASSWORD_MISMATCH]: 'USER_PROFILE.PASSWORD_MISMATCH',
   };
 }

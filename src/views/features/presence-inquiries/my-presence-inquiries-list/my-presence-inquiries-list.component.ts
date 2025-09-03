@@ -54,17 +54,16 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
   userPresenceInquiryStatusService = inject(UserPresenceInquiryStatusService);
   userPresenceInquiryStatuses: BaseLookupModel[] = [];
   userInquiryStatusEnum = USER_PRESENCE_INQUIRY_STATUS_ENUM;
-  isActive = input.required<boolean>();
   languageService = inject(LanguageService);
   datePipe = inject(DatePipe);
-  private hasInitialized: boolean = false;
 
   override get service() {
     return this.presenceInquiryService;
   }
 
   override initListComponent(): void {
-    this.userPresenceInquiryStatusService.getLookup().subscribe((res: BaseLookupModel[]) => {
+    // Preload lookup data
+    this.userPresenceInquiryStatusService.getLookup().subscribe((res) => {
       this.userPresenceInquiryStatuses = res;
     });
   }
@@ -73,41 +72,21 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
     return [{ labelKey: 'PRESENCE_INQUIRIES_PAGE.PRESENCE_INQUIRIES' }];
   }
 
-  override openDialog(model: PresenceInquiry): void {}
+  override openDialog(model: PresenceInquiry): void {
+    // No dialog currently needed for My Presence Inquiries
+  }
 
   override loadList() {
     return this.service.loadMyPresenceInquiriesPaginated(this.paginationParams, {
       ...this.appliedFilterModel!,
     });
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isActive']) {
-      const current = changes['isActive'].currentValue;
-      const previous = changes['isActive'].previousValue;
-
-      // Skip first trigger after component init
-      if (!this.hasInitialized) {
-        this.hasInitialized = true;
-        return;
-      }
-
-      // Only load data if tab is active and this is not the initial change
-      if (current === true && previous === false) {
-        this.loadList();
-      }
-    }
-  }
 
   protected override mapModelToExcelRow(model: PresenceInquiry): { [key: string]: any } {
-    console.log(model);
-
-    const date =
-      typeof model.assignedDate === 'string' ? new Date(model.assignedDate) : model.assignedDate;
     return {
       [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_DATE')]: this.formatDate(
         model.assignedDate
       ),
-
       [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_TIME')]: this.formatTime(
         model.assignedDate
       ),
@@ -120,7 +99,6 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
 
   set dateFrom(value: Date | null) {
     this.filterModel.dateFrom = value;
-
     if (this.filterModel.dateTo && value && this.filterModel.dateTo < value) {
       this.filterModel.dateTo = null;
     }
@@ -131,26 +109,26 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
   }
 
   getPropertyName() {
-    return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
+
   getStatusName(id: number): string {
     const status = this.userPresenceInquiryStatuses.find((d) => d.id === id);
-    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
       ? (status?.nameEn ?? '')
       : (status?.nameAr ?? '');
   }
 
   formatDate(date: string | Date | null | undefined): string {
-    if (!date) return '-'; // fallback when no date
-    const d = new Date(date);
-    return this.datePipe.transform(d, 'dd-MM-yyyy') ?? '-';
+    if (!date) return '-';
+    return this.datePipe.transform(new Date(date), 'dd-MM-yyyy') ?? '-';
   }
 
   formatTime(date: string | Date | null | undefined): string {
     if (!date) return '-';
-    const d = new Date(date);
-    return this.datePipe.transform(d, 'HH:mm:ss') ?? '-';
+    return this.datePipe.transform(new Date(date), 'HH:mm:ss') ?? '-';
   }
+
   override exportExcel(
     fileName: string = 'MyPresenceProofInquiry.xlsx',
     isIncomingPermissions: boolean = false
@@ -161,31 +139,29 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
       pageSize: CustomValidators.defaultLengths.INT_MAX,
     };
 
-    const fetchAll = this.service.loadMyPresenceInquiriesPaginated(allDataParams, {
-      ...this.appliedFilterModel!,
-    });
+    this.service
+      .loadMyPresenceInquiriesPaginated(allDataParams, {
+        ...this.appliedFilterModel!,
+      })
+      .subscribe({
+        next: (response) => {
+          const fullList = response.list || [];
+          if (fullList.length === 0) {
+            this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+            return;
+          }
 
-    fetchAll.subscribe({
-      next: (response) => {
-        const fullList = response.list || [];
-        if (fullList.length === 0) {
-          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
-          return;
-        } else {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) =>
-            isIncomingPermissions ? this.mapModelToExcelRow(item) : this.mapModelToExcelRow(item)
-          );
+          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
           const ws = XLSX.utils.json_to_sheet(transformedData);
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
           wb.Workbook = { Views: [{ RTL: isRTL }] };
           XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
           XLSX.writeFile(wb, fileName);
-        }
-      },
-      error: (_) => {
-        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
-      },
-    });
+        },
+        error: (_) => {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+        },
+      });
   }
 }

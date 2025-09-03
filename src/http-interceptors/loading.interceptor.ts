@@ -27,7 +27,7 @@ export const loadingInterceptor = (
     finalize(() => {
       setTimeout(() => {
         spinnerService.hide();
-      }, 123)
+      }, 123);
     })
   );
 };

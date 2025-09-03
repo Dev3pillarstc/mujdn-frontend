@@ -27,6 +27,7 @@ export const EndPoints = {
   BLACKLISTED_NATIONAL_IDS: '/blacklisted-national-ids',
   BLACKLISTED_NATIONALITIES: '/blacklisted-nationalities',
   VISITS: '/visits',
+  ACCESS_LOCATIONS: '/accesslocations',
 };
 
 export type EndpointsType = typeof EndPoints;

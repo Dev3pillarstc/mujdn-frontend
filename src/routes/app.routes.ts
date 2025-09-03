@@ -23,6 +23,7 @@ import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blackl
 import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
 import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
 import { visitResolver } from '@/resolvers/features/visit/visit.resolver';
+import { accessLocationResolver } from '@/resolvers/business/access-location.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -192,9 +193,9 @@ export const routes: Routes = [
       },
       {
         path: 'devices-location',
-        // canActivate: [authGuard],
+        canActivate: [authGuard],
         // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
-        // resolve: { channel: notificationSettingResolver },
+        resolve: { channel: accessLocationResolver },
         loadComponent: () =>
           import('@/views/features/settings/devices-location/devices-location.component'),
       },

@@ -139,7 +139,9 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
       if (result === DIALOG_ENUM.OK) {
-        this.loadList();
+        this.loadList().subscribe({
+          next: (response) => this.handleLoadListSuccess(response),
+        });
       }
     });
   }
@@ -149,12 +151,6 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
       data: { model },
       width: '100%',
       maxWidth: '1024px',
-    });
-
-    dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result === DIALOG_ENUM.OK) {
-        this.loadList();
-      }
     });
   }
 

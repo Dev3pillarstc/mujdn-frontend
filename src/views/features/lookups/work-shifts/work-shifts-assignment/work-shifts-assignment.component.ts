@@ -153,6 +153,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
 
   override resetSearch(isStoredProcedure: boolean = false) {
     this.filterModel = {} as UserWorkShiftsFilter;
+    this.appliedFilterModel = {} as UserWorkShiftsFilter;
     this.filteredEmployees = this.usersProfiles;
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;

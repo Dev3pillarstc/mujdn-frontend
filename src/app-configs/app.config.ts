@@ -60,6 +60,6 @@ export const appConfig: ApplicationConfig = {
     ),
     provideEnvironmentInitializer(() => {
       inject(ScrollToTopPaginationService);
-    })
+    }),
   ],
 };

@@ -1,50 +1,82 @@
-import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { TextareaModule } from 'primeng/textarea';
-import { DialogRef } from '@angular/cdk/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabsModule } from 'primeng/tabs';
 import { TableModule } from 'primeng/table';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
+import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
+import { AlertService } from '@/services/shared/alert.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { AccessLocation } from '@/models/features/business/access-location';
+import { TranslatePipe } from '@ngx-translate/core';
+import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
+import { RequiredMarkerDirective } from '../../../../directives/required-marker.directive';
 
 @Component({
   selector: 'app-devices-location-modal',
   imports: [
-    DatePickerModule,
-    FormsModule,
-    TextareaModule,
     InputTextModule,
-    TabsModule,
-    TableModule,
-    PaginatorModule,
+    ReactiveFormsModule,
+    RequiredMarkerDirective,
+    TranslatePipe,
+    ValidationMessagesComponent,
   ],
   templateUrl: './devices-location-modal.component.html',
   styleUrl: './devices-location-modal.component.scss',
 })
-export class DevicesLocationModalComponent {
-  date2: Date | undefined;
-  dialogRef = inject(DialogRef);
-  employees!: any[];
-  first: number = 0;
-  rows: number = 10;
+export class DevicesLocationModalComponent
+  extends BasePopupComponent<AccessLocation>
+  implements OnInit
+{
+  declare model: AccessLocation;
+  declare form: FormGroup;
+  isCreateMode = false;
+  declare viewMode: ViewModeEnum;
+  alertService = inject(AlertService);
+  fb = inject(FormBuilder);
+  data = inject(MAT_DIALOG_DATA);
 
-  ngOnInit() {
-    // Updated dummy data to match your Arabic table structure
-    this.employees = [
-      {
-        employeeId: 1234,
-        employeeNameAr: 'محمد أحمد طه',
-        employeeNameEn: 'mohamed taha',
-        adminstration: 'إدارة الموارد',
-      },
-    ];
+  override initPopup() {
+    this.model = this.data.model ?? new AccessLocation();
+    this.viewMode = this.data.viewMode;
+    this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
   }
-  close() {
-    this.dialogRef.close();
+
+  override buildForm() {
+    this.form = this.fb.group(this.model.buildForm());
   }
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
+
+  override prepareModel(
+    model: AccessLocation,
+    form: FormGroup
+  ): AccessLocation | Observable<AccessLocation> {
+    this.model = Object.assign(model, { ...form.value });
+    return this.model;
+  }
+
+  override saveFail(error: Error): void {
+    // optional error handling
+  }
+
+  beforeSave(model: AccessLocation, form: FormGroup) {
+    return form.valid;
+  }
+
+  afterSave() {
+    this.alertService.showSuccessMessage({ messages: ['COMMON.SAVED_SUCCESSFULLY'] });
+  }
+
+  get nameArControl() {
+    return this.form.get('nameAr') as FormControl;
+  }
+
+  get nameEnControl() {
+    return this.form.get('nameEn') as FormControl;
   }
 }

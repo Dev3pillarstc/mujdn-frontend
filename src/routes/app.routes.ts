@@ -195,7 +195,7 @@ export const routes: Routes = [
         path: 'devices-location',
         canActivate: [authGuard],
         // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
-        resolve: { channel: accessLocationResolver },
+        resolve: { list: accessLocationResolver },
         loadComponent: () =>
           import('@/views/features/settings/devices-location/devices-location.component'),
       },

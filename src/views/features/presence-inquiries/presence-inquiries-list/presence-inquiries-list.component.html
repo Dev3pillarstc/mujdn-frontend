@@ -6,28 +6,25 @@
         {{ 'INQUIRIES_PAGE.PRESENCE_INQUIRIES' | translate }}
       </h3>
     </div>
-    <p-tabs value="0">
-      <p-tablist class="my-6">
-        <p-tab (click)="clickMyTab()" value="0"
-          >{{ 'INQUIRIES_PAGE.MY_INQUIRIES' | translate }}
-        </p-tab>
 
+    <p-tabs [(value)]="activeTabIndex" (valueChange)="onTabChange($event)">
+      <p-tablist class="my-6">
+        <p-tab [value]="0">
+          {{ 'INQUIRIES_PAGE.MY_INQUIRIES' | translate }}
+        </p-tab>
         @if (showOthersInquiries()) {
-          <p-tab (click)="clickOthersTab()" value="1"
-            >{{ 'INQUIRIES_PAGE.OTHERS_INQUIRIES' | translate }}
+          <p-tab [value]="1">
+            {{ 'INQUIRIES_PAGE.OTHERS_INQUIRIES' | translate }}
           </p-tab>
         }
       </p-tablist>
+
       <p-tabpanels>
-        <p-tabpanel value="0">
-          <app-my-presence-inquiries-list
-            [isActive]="activeTabIndex === 0"
-          ></app-my-presence-inquiries-list>
+        <p-tabpanel [value]="0">
+          <app-my-presence-inquiries-list #myList></app-my-presence-inquiries-list>
         </p-tabpanel>
-        <p-tabpanel value="1">
-          <app-others-presence-inquiries-list
-            [isActive]="activeTabIndex === 1"
-          ></app-others-presence-inquiries-list>
+        <p-tabpanel [value]="1">
+          <app-others-presence-inquiries-list #othersList></app-others-presence-inquiries-list>
         </p-tabpanel>
       </p-tabpanels>
     </p-tabs>

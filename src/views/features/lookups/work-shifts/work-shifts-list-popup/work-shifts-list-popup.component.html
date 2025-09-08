@@ -220,7 +220,11 @@
               'WORK_SHIFTS_POPUP.SHIFT_ACTIVATION_DATE' | translate
             }}</span>
             <p class="text-[16px] font-semibold text-[#161616]">
-              {{ model.isActive ? model.shiftActivationDate : 'Not active' }}
+              {{
+                model.isActive
+                  ? model.shiftActivationDate
+                  : ('WORK_SHIFTS_POPUP.NOT_ACTIVE' | translate)
+              }}
             </p>
           </div>
           <div class="lg:col-span-2">

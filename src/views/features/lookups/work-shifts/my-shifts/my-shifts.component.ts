@@ -27,8 +27,11 @@ import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
 import {
   changeTimeSuffix,
+  convertUtcToSystemTimeZone,
+  dateToTimeString,
   formatDateTo12Hour,
   formatTimeTo12Hour,
+  timeStringToDate,
   toDateOnly,
 } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
@@ -71,6 +74,18 @@ export default class MyShiftsComponent extends BaseListComponent<
 
   override initListComponent(): void {
     this.loadInitialData();
+
+    if (this.currentShift?.timeTo) {
+      this.currentShift.timeTo = dateToTimeString(
+        convertUtcToSystemTimeZone(timeStringToDate(this.currentShift.timeTo))
+      ) as string;
+    }
+    if (this.currentShift?.timeFrom) {
+      this.currentShift.timeFrom = dateToTimeString(
+        convertUtcToSystemTimeZone(timeStringToDate(this.currentShift.timeFrom))
+      ) as string;
+    }
+
     this.languageService.languageChanged$.subscribe(() => {
       // Format multiple shifts
       this.employeeShifts?.forEach((shift) => {

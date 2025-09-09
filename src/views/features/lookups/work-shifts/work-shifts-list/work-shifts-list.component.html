@@ -102,8 +102,8 @@
             <tr>
               <td>{{ shift.nameAr }}</td>
               <td>{{ shift.nameEn }}</td>
-              <td>{{ shift.attendanceBuffer }}</td>
-              <td>{{ shift.leaveBuffer }}</td>
+              <td>{{ shift.attendanceBuffer || '0' }}</td>
+              <td>{{ shift.leaveBuffer || '0' }}</td>
               <td>{{ getFormattedTimeRange(shift.timeFrom, shift.timeTo) }}</td>
               <!-- hidden for release 1 -->
               <td>

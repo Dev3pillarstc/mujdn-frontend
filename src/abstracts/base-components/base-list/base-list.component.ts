@@ -15,7 +15,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { filter, mapTo, of, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { CustomValidators } from '@/validators/custom-validators';
 
 @Directive()
@@ -42,6 +42,7 @@ export abstract class BaseListComponent<
   confirmService = inject(ConfirmationService);
   alertsService = inject(AlertService);
   translateService = inject(TranslateService);
+  alertService = inject(AlertService);
   declare selectedModel?: Model;
   home = {
     label: this.translateService.instant('COMMON.HOME'),
@@ -58,6 +59,11 @@ export abstract class BaseListComponent<
   abstract openDialog(nationality: Model): void;
 
   abstract initListComponent(): void;
+
+  afterDeleteModel() {
+    const successObject = { messages: ['COMMON.DELETED_SUCCESSFULLY'] };
+    this.alertService.showSuccessMessage(successObject);
+  }
 
   private _appliedFilterModel: FilterModel = {} as FilterModel;
 
@@ -261,33 +267,38 @@ export abstract class BaseListComponent<
 
     dialogRef
       .afterClosed()
-      .pipe(takeUntil(this.destroy$))
       .pipe(
-        filter((result) => {
-          return result == DIALOG_ENUM.OK;
-        })
-      )
-      .pipe(
-        switchMap((_) => {
-          return this.service.delete(id);
-        })
-      )
-      .pipe(
-        switchMap((_) => {
-          return isStoredProcedure ? this.loadListSP() : this.loadList();
-        })
-      )
-      .pipe(
-        switchMap((response) => {
-          if (response.list.length === 0) {
+        takeUntil(this.destroy$),
+        filter(result => result === DIALOG_ENUM.OK),
+
+        // delete
+        switchMap(() => this.service.delete(id)),
+
+        // if success -> show toast (afterDeleteModel) and PAUSE a bit
+        switchMap((response: any) => {
+          if (response?.error == null) {
+            this.afterDeleteModel();                 // shows "deleted successfully"
+            // return timer(700).pipe(mapTo(response)); // <-- delay before spinner/reload
+          }
+          return of(response); // keep flowing even if backend returns an error object
+        }),
+
+        // reload (this is where your spinner likely starts)
+        switchMap(() => isStoredProcedure ? this.loadListSP() : this.loadList()),
+
+        // if page becomes empty, go back to page 1 and reload
+        switchMap((response: any) => {
+          if (response?.list?.length === 0) {
             this.paginationParams.pageNumber = 1;
             return isStoredProcedure ? this.loadListSP() : this.loadList();
           }
           return of(response);
-        })
+        }),
       )
       .subscribe({
-        next: (response) => this.handleLoadListSuccess(response),
+        next: (response) => {
+          this.handleLoadListSuccess(response);
+        },
         error: this.handleLoadListError,
       });
   }

@@ -64,7 +64,6 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   shifts: Shift[] = [];
 
   confirmationService = inject(ConfirmationService);
-  alertService = inject(AlertService);
   userworkShiftService = inject(UserWorkShiftService);
   override get filterModel(): UserWorkShiftsFilter {
     return this.filterOptions;

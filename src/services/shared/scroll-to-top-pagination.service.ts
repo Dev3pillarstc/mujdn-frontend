@@ -2,12 +2,15 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ScrollToTopPaginationService {
   private readonly PAGINATOR_SELECTOR = 'p-paginator';
 
-  constructor(@Inject(DOCUMENT) private document: Document, private zone: NgZone) {
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private zone: NgZone
+  ) {
     this.initialize();
   }
 

@@ -81,7 +81,6 @@ export default class DepartmentListComponent extends BaseListComponent<
   languageService = inject(LanguageService);
   departmentService = inject(DepartmentService);
   confirmationService = inject(ConfirmationService);
-  alertService = inject(AlertService);
   selectedDepartmentSignal = signal<Department | null>(null);
   rootDepartment: Department | null = null;
   showTree = true;

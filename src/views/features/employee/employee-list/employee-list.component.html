@@ -244,114 +244,115 @@
           </div>
         </div>
         <div class="rrrrrrr">
-        @if (list && list.length > 0) {
-          <p-table [value]="list">
-            <ng-template pTemplate="header">
-              <tr>
-                <th>{{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate }}</th>
-                <th>{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}</th>
-                <th class="w-[36px] whitespace-nowrap">
-                  {{ 'EMPLOYEES_PAGE.ACTIONS' | translate }}
-                </th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-user>
-              <tr>
-                <td>{{ user.nationalId }}</td>
-                <td
-                  [title]="user.fullNameAr"
-                  class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
-                >
-                  {{ user.fullNameAr }}
-                </td>
-                <td
-                  [title]="user.fullNameEn"
-                  class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
-                >
-                  {{ user.fullNameEn }}
-                </td>
-                <td>{{ getDepartmentName(user.department) }}</td>
-                <td>
-                  <div class="flex justify-center gap-2">
-                    @if (user.canLeaveWithoutFingerPrint) {
-                      <img src="assets/icons/right-icon.svg" alt="" />
-                    } @else {
-                      <img src="assets/icons/wrong-icon.svg" alt="" />
-                    }
-                  </div>
-                </td>
-                <td
-                  [title]="user.jobTitleAr"
-                  class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
-                >
-                  {{ user.jobTitleAr }}
-                </td>
-                <td
-                  [title]="user.jobTitleEn"
-                  class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
-                >
-                  {{ user.jobTitleEn }}
-                </td>
-                <td>
-                  <div class="flex justify-center gap-2">
-                    @if (user.isActive) {
-                      <img src="assets/icons/right-icon.svg" alt="" />
-                    } @else {
-                      <img src="assets/icons/wrong-icon.svg" alt="" />
-                    }
-                  </div>
-                </td>
-                <td>{{ user.joinDate | date }}</td>
-                <td>
-                  <div class="flex gap-4">
-                    @if (authService.isAdmin) {
-                      <button
-                        class="table-action-gray-btn flex align-items gap-4 !min-w-[160px]"
-                        (click)="openEmployeePermissionModal(user)"
-                      >
-                        <img src="assets/icons/edit-action.svg" alt="" />
-                        <span class="text-sm">{{
-                          'EMPLOYEES_PAGE.EDIT_PERMISSIONS' | translate
-                        }}</span>
-                      </button>
-                    }
-                    @if (authService.isHROfficer) {
-                      <p-splitbutton
-                        [appendTo]="employeeContainer"
-                        (click)="setSelectedModel(user)"
-                        dropdownIcon="pi pi-ellipsis-v"
-                        [model]="actionList"
-                      />
-                    }
-                  </div>
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
-        } @else {
-          <div class="flex items-center justify-center h-64">
-            <p class="text-gray-500">{{ 'EMPLOYEES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
-          </div>
-        }
-        @if (paginationInfo) {
-          <p-paginator
-            (onPageChange)="onPageChange($event)"
-            [first]="first"
-            [rowsPerPageOptions]="[10, 20, 30]"
-            [rows]="rows"
-            [showCurrentPageReport]="false"
-            [totalRecords]="paginationInfo.totalItems"
-            class="mt-6"
-          />
-        }
-        <div></div>
+          @if (list && list.length > 0) {
+            <p-table [value]="list">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>{{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}</th>
+                  <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}</th>
+                  <th>{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}</th>
+                  <th>{{ 'EMPLOYEES_PAGE.DEPARTMENT' | translate }}</th>
+                  <th>{{ 'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION' | translate }}</th>
+                  <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ARABIC' | translate }}</th>
+                  <th>{{ 'EMPLOYEES_PAGE.JOB_TITLE_ENGLISH' | translate }}</th>
+                  <th>{{ 'EMPLOYEES_PAGE.ACCOUNT_STATUS' | translate }}</th>
+                  <th>{{ 'EMPLOYEES_PAGE.JOIN_DATE' | translate }}</th>
+                  <th class="w-[36px] whitespace-nowrap">
+                    {{ 'EMPLOYEES_PAGE.ACTIONS' | translate }}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-user>
+                <tr>
+                  <td>{{ user.nationalId }}</td>
+                  <td
+                    [title]="user.fullNameAr"
+                    class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
+                  >
+                    {{ user.fullNameAr }}
+                  </td>
+                  <td
+                    [title]="user.fullNameEn"
+                    class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
+                  >
+                    {{ user.fullNameEn }}
+                  </td>
+                  <td>{{ getDepartmentName(user.department) }}</td>
+                  <td>
+                    <div class="flex justify-center gap-2">
+                      @if (user.canLeaveWithoutFingerPrint) {
+                        <img src="assets/icons/right-icon.svg" alt="" />
+                      } @else {
+                        <img src="assets/icons/wrong-icon.svg" alt="" />
+                      }
+                    </div>
+                  </td>
+                  <td
+                    [title]="user.jobTitleAr"
+                    class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
+                  >
+                    {{ user.jobTitleAr }}
+                  </td>
+                  <td
+                    [title]="user.jobTitleEn"
+                    class="max-w-[400px] whitespace-nowrap overflow-hidden text-ellipsis"
+                  >
+                    {{ user.jobTitleEn }}
+                  </td>
+                  <td>
+                    <div class="flex justify-center gap-2">
+                      @if (user.isActive) {
+                        <img src="assets/icons/right-icon.svg" alt="" />
+                      } @else {
+                        <img src="assets/icons/wrong-icon.svg" alt="" />
+                      }
+                    </div>
+                  </td>
+                  <td>{{ user.joinDate | date }}</td>
+                  <td>
+                    <div class="flex gap-4">
+                      @if (authService.isAdmin) {
+                        <button
+                          class="table-action-gray-btn flex align-items gap-4 !min-w-[160px]"
+                          (click)="openEmployeePermissionModal(user)"
+                        >
+                          <img src="assets/icons/edit-action.svg" alt="" />
+                          <span class="text-sm">{{
+                            'EMPLOYEES_PAGE.EDIT_PERMISSIONS' | translate
+                          }}</span>
+                        </button>
+                      }
+                      @if (authService.isHROfficer) {
+                        <p-splitbutton
+                          [appendTo]="employeeContainer"
+                          (click)="setSelectedModel(user)"
+                          dropdownIcon="pi pi-ellipsis-v"
+                          [model]="actionList"
+                        />
+                      }
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          } @else {
+            <div class="flex items-center justify-center h-64">
+              <p class="text-gray-500">{{ 'EMPLOYEES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+            </div>
+          }
+          @if (paginationInfo) {
+            <p-paginator
+              (onPageChange)="onPageChange($event)"
+              [first]="first"
+              [rowsPerPageOptions]="[10, 20, 30]"
+              [rows]="rows"
+              [showCurrentPageReport]="false"
+              [totalRecords]="paginationInfo.totalItems"
+              class="mt-6"
+            />
+          }
+          <div></div>
+        </div>
       </div>
     </div>
   </div>

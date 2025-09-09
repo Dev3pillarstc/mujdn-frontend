@@ -87,7 +87,6 @@ export default class EmployeeListComponent
   selectedDepartment: BaseLookupModel | undefined;
   joinDate: Date | undefined;
   confirmationService = inject(ConfirmationService);
-  alertService = inject(AlertService);
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',

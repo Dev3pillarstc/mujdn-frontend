@@ -84,7 +84,6 @@ export default class OthersAttendanceLogListComponent
   processingStatusOptions: BooleanOptionModel[] = PROCESSING_STATUS_OPTIONS;
 
   confirmationService = inject(ConfirmationService);
-  alertService = inject(AlertService);
 
   override dialogSize = {
     width: '100%',

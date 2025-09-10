@@ -87,7 +87,6 @@ export default class EmployeeListComponent
   selectedDepartment: BaseLookupModel | undefined;
   joinDate: Date | undefined;
   confirmationService = inject(ConfirmationService);
-  alertService = inject(AlertService);
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -303,34 +302,39 @@ export default class EmployeeListComponent
         label: this.translateService.instant('EMPLOYEES_PAGE.EDIT_EMPLOYEE_DATA'),
         command: () => this.openDialog(),
       },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.VIEW_ATTENDANCE_REPORT'),
-        command: () => this.attendanceReportPopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.ASSIGN_TASK'),
-        command: () => this.assignTaskPopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.ASSIGN_SHIFT'),
-        command: () => this.assignShiftPopup(),
-      },
-      {
-        separator: true,
-      },
-      {
-        label: this.translateService.instant('EMPLOYEES_PAGE.TASKS_ASSIGNED_TO_EMPLOYEE'),
-        command: () => this.tasksAssignedToEmployee(),
-      },
+      // **** hidden for now ****
+      // ,
+      // {
+      //   separator: true,
+      // },
+      // {
+      //   label: this.translateService.instant('EMPLOYEES_PAGE.VIEW_ATTENDANCE_REPORT'),
+      //   command: () => this.attendanceReportPopup(),
+      // },
+      // {
+      //   separator: true,
+      // },
+      // {
+      //   label: this.translateService.instant('EMPLOYEES_PAGE.ASSIGN_TASK'),
+      //   command: () => this.assignTaskPopup(),
+      // },
+      // {
+      //   separator: true,
+      // },
+      // {
+      //   label: this.translateService.instant('EMPLOYEES_PAGE.ASSIGN_SHIFT'),
+      //   command: () => this.assignShiftPopup(),
+      // },
+      // {
+      //   separator: true,
+      // },
+      // {
+      //   label: this.translateService.instant('EMPLOYEES_PAGE.TASKS_ASSIGNED_TO_EMPLOYEE'),
+      //   command: () => this.tasksAssignedToEmployee(),
+      // },
+
+      // **** hidden for now ****
+
       // {
       //   separator: true,
       // },

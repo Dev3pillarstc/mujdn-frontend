@@ -62,6 +62,7 @@
     "INVALID_DELETE_REQUEST": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
     "CANNOT_BE_DELETE": "لا يمكن حذف العنصر لأنه مرتبط ببيانات أخرى",
     "EXISTING_RECORD_ERROR": "هذا السجل موجود بالفعل",
+    "DUPLICATE_RECORD": "هذا الموقع مرتبط بالفعل ببيانات أخرى",
     "AUTH_INVALID_CREDENTIALS": "رقم الهوية أو كلمة المرور غير صحيحة",
     "AUTH_USER_NOT_ACTIVE": "المستخدم غير نشط",
     "AUTH_INVALID_OTP": "رمز OTP غير صحيح",
@@ -687,5 +688,31 @@
     "DOWNLOAD_AS_FILE": "تحميل كملف",
     "DOWNLOAD_SUCCESS": "تم تحميل رمز الاستجابة السريعة بنجاح",
     "DOWNLOAD_ERROR": "خطأ في تحميل رمز الاستجابة السريعة. يرجى المحاولة مرة أخرى."
+  },
+  "DEVICE_STATUS": {
+    "NOT_CONNECTED": "غير متصل",
+    "CONNECTED": "متصل",
+    "NOT_ASSIGNED": "غير معين"
+  },
+  "DEVICE_CONFIGURATION": {
+    "DEVICE_CONFIGURATION": "تعريف و ربط أجهزة البصمة",
+    "DEVICE_STATUS": "حالة الجهاز",
+    "IP_ADDRESS": "عنوان الجهاز (IP)",
+    "ADD_NEW_DEVICE": "إضافة جهاز جديد",
+    "EDIT_DEVICE": "تعديل جهاز",
+    "DEVICE_CODE": "كود الجهاز",
+    "DEVICE_NAME": "اسم الجهاز",
+    "ACCESS_LOCATION": "موقع الجهاز",
+    "DEVICES": "أجهزة البصمة",
+    "CONNECT_DEVICE": "ربط الجهاز",
+    "CONNECT_DEVICE_TO_LOCATION": "ربط الجهاز بالموقع"
+  },
+  "DEVICES_LOCATION_PAGE": {
+    "DEVICES_LOCATION": "مواقع أجهزة البصمة",
+    "LOCATION_NAME": "اسم الموقع",
+    "LOCATION_NAME_AR": "اسم الموقع بالعربية",
+    "LOCATION_NAME_EN": "اسم الموقع بالإنجليزية",
+    "ADD_NEW_LOCATION": "إضافة موقع جديد",
+    "EDIT_LOCATION": "تعديل الموقع"
   }
 }

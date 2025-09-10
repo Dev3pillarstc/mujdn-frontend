@@ -1,21 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { DatePickerModule } from 'primeng/datepicker';
-import { TextareaModule } from 'primeng/textarea';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { TabsModule } from 'primeng/tabs';
-import { TableModule } from 'primeng/table';
-import { PaginatorModule } from 'primeng/paginator';
-import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
 import { AlertService } from '@/services/shared/alert.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -49,7 +36,7 @@ export class DevicesLocationModalComponent
   data = inject(MAT_DIALOG_DATA);
 
   override initPopup() {
-    this.model = this.data.model ?? new AccessLocation();
+    this.model = this.data.model;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
   }

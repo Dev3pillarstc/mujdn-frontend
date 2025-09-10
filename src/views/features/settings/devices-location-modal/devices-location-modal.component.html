@@ -1,23 +1,30 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
     <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'LOCATION.ADD_NEW' | translate }}
+      {{
+        (isCreateMode
+          ? 'DEVICES_LOCATION_PAGE.ADD_NEW_LOCATION'
+          : 'DEVICES_LOCATION_PAGE.EDIT_LOCATION'
+        ) | translate
+      }}
     </h3>
     <form [formGroup]="form" class="mt-6">
-      <div class="grid grid-cols-1">
-        <div class="xl:col-span-1">
-          <label class="label" for="locationAr">{{ 'LOCATION.AR' | translate }}</label>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="label" for="locationAr-popup">{{
+            'DEVICES_LOCATION_PAGE.LOCATION_NAME_AR' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="locationAr"
               formControlName="nameAr"
+              id="locationAr-popup"
               pInputText
-              placeholder="اسم الموقع بالعربية"
+              placeholder="{{ 'DEVICES_LOCATION_PAGE.LOCATION_NAME_AR' | translate }}"
               type="text"
             />
             <span
@@ -26,16 +33,18 @@
           </div>
           <app-validation-messages [control]="nameArControl"></app-validation-messages>
         </div>
-        <div class="xl:col-span-1">
-          <label class="label" for="locationEn">{{ 'LOCATION.EN' | translate }}</label>
+        <div>
+          <label class="label" for="locationEn-popup">{{
+            'DEVICES_LOCATION_PAGE.LOCATION_NAME_EN' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="locationEn"
               formControlName="nameEn"
+              id="locationEn-popup"
               pInputText
-              placeholder="اسم الموقع بالانجليزية"
+              placeholder="{{ 'DEVICES_LOCATION_PAGE.LOCATION_NAME_EN' | translate }}"
               type="text"
             />
             <span
@@ -46,10 +55,8 @@
         </div>
       </div>
       <div class="actions mt-6 flex items-center justify-end gap-4">
-        <button type="button" (click)="close()" class="btn gray-btn">
-          {{ 'COMMON.CANCEL' | translate }}
-        </button>
-        <button type="button" (click)="save$.next()" class="btn green-btn">
+        <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="save$.next()" class="btn green-btn">
           {{ 'COMMON.SAVE' | translate }}
         </button>
       </div>

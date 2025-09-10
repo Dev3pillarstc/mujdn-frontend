@@ -171,10 +171,7 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
       : (status?.nameAr ?? '');
   }
 
-  override exportExcel(
-    fileName: string = 'PresenceProofInquiry.xlsx',
-    isIncomingPermissions: boolean = false
-  ): void {
+  override exportExcel(fileName: string = 'PresenceProofInquiry.xlsx'): void {
     const allDataParams = {
       ...this.paginationParams,
       pageNumber: 1,

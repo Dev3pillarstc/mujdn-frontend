@@ -1,11 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
-import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DevicesLocationModalComponent } from '../devices-location-modal/devices-location-modal.component';
@@ -53,15 +50,13 @@ export default class DevicesLocationComponent
   }
 
   protected override getBreadcrumbKeys() {
-    return [{ labelKey: 'DEVICES_LOCATION_PAGE.DEVICES_LOCATION_LIST' }];
+    return [{ labelKey: 'DEVICES_LOCATION_PAGE.DEVICES_LOCATION' }];
   }
 
   protected override mapModelToExcelRow(model: AccessLocation): { [key: string]: any } {
     return {
-      [this.translateService.instant('DEVICES_LOCATION_PAGE.DEVICE_LOCATION_IN_ARABIC')]:
-        model.nameAr,
-      [this.translateService.instant('DEVICES_LOCATION_PAGE.DEVICE_LOCATION_IN_ENGLISH')]:
-        model.nameEn,
+      [this.translateService.instant('DEVICES_LOCATION_PAGE.LOCATION_NAME_AR')]: model.nameAr,
+      [this.translateService.instant('DEVICES_LOCATION_PAGE.LOCATION_NAME_EN')]: model.nameEn,
     };
   }
 }

@@ -1,59 +1,75 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
     <button class="block ms-auto" (click)="close()">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">ربط الجهاز بالموقع</h3>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{ 'DEVICE_CONFIGURATION.CONNECT_DEVICE_TO_LOCATION' | translate }}
+    </h3>
     <div class="bg-[#074d31] rounded-2xl p-6 mb-6">
       <div class="border-b border-b-white pb-4">
         <div class="flex justify-between gap-6 items-center">
           <div class="flex gap-2 items-center">
-            <span class="text-[14px] text-[#fae996]">كود الجهاز:</span>
-            <h4 class="font-semibold text-[16px] text-[#fae996]">1000017</h4>
+            <span class="text-[14px] text-[#fae996]">
+              {{ 'DEVICE_CONFIGURATION.DEVICE_CODE' | translate }}:</span
+            >
+            <h4 class="font-semibold text-[16px] text-[#fae996]">{{ model.deviceCode }}</h4>
           </div>
           <div class="flex items-center gap-1 text-white">
-            <span class="text-[14px]">حالة الاتصال:</span>
+            <span class="text-[14px]">{{ 'DEVICE_CONFIGURATION.DEVICE_STATUS' | translate }}:</span>
             <div
-              class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#ecfdf3] text-[#085d3a]"
+              class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2"
+              [style.background-color]="statusConfig.bgColor"
+              [style.color]="statusConfig.textColor"
             >
-              <span class="block w-[10px] h-[10px] rounded-full bg-[#085d3a]"></span>
-              <span class="font-medium"> متصل</span>
+              <span
+                class="block w-[10px] h-[10px] rounded-full"
+                [style.background-color]="statusConfig.dotColor"
+              ></span>
+              <span class="font-medium">{{ statusConfig.labelKey | translate }}</span>
             </div>
           </div>
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-10">
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">اسم الجهاز</span>
-          <h4 class="font-semibold text-[16px]">دور أول</h4>
+          <span class="text-[14px]">
+            <span class="text-[14px]"> {{ 'DEVICE_CONFIGURATION.DEVICE_NAME' | translate }}</span>
+          </span>
+          <h4 class="font-semibold text-[16px]">{{ model.deviceName }}</h4>
         </div>
         <div class="flex flex-col gap-1 text-white">
-          <span class="text-[14px]">عنوان الجهاز (IP)</span>
-          <h4 class="font-semibold text-[16px]">192.168.0.23</h4>
+          <span class="text-[14px]">{{ 'DEVICE_CONFIGURATION.IP_ADDRESS' | translate }}</span>
+          <h4 class="font-semibold text-[16px]">{{ model.deviceIp }}</h4>
         </div>
       </div>
     </div>
-
-    <div>
-      <label class="label">موقع الجهاز</label>
-      <div class="relative">
-        <p-select
-          [options]="adminstrations"
-          placeholder="موقع الجهاز"
-          class="w-full peer"
-          id="employeeName"
-        ></p-select>
-        <span
-          class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-        ></span>
+    <form [formGroup]="form" class="mt-6">
+      <div>
+        <label class="label">{{ 'DEVICE_CONFIGURATION.ACCESS_LOCATION' | translate }}</label>
+        <div class="relative">
+          <p-select
+            [optionLabel]="getPropertyName()"
+            [options]="accessLocations"
+            placeholder="{{ 'DEVICE_CONFIGURATION.ACCESS_LOCATION' | translate }}"
+            [showClear]="true"
+            class="w-full peer"
+            id="accessLocationId"
+            optionValue="id"
+            formControlName="accessLocationId"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
       </div>
-    </div>
 
-    <div class="actions mt-6 flex items-center justify-between gap-4">
-      <button (click)="close()" class="btn gray-btn">الغاء</button>
-      <button class="btn green-btn flex items-center">
-        <span>حفظ</span>
-      </button>
-    </div>
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="save$.next()" class="btn green-btn">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
+      </div>
+    </form>
   </div>
 </div>

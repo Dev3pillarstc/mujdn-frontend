@@ -78,8 +78,8 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.ENG_NUM]: 'COMMON.ENGLISH_ONLY',
     [ValidationErrorKeyEnum.MIN_LENGTH]: 'COMMON.MIN_LENGTH',
     [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH_DYNAMIC',
-    [ValidationErrorKeyEnum.MIN]: 'COMMON.MIN_VALUE', // 👈 add this
-    [ValidationErrorKeyEnum.MAX]: 'COMMON.MAX_VALUE', // 👈 add this
+    [ValidationErrorKeyEnum.MIN]: 'COMMON.MIN_VALUE',
+    [ValidationErrorKeyEnum.MAX]: 'COMMON.MAX_VALUE',
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
     [ValidationErrorKeyEnum.TIME_FROM_AFTER_TIME_TO]: 'COMMON.TIME_FROM_BEFORE_TIME_TO',
     [ValidationErrorKeyEnum.EMAIL]: 'COMMON.EMAIL_VALIDATION',

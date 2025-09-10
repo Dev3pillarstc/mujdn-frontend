@@ -219,6 +219,57 @@
           <app-validation-messages [control]="emailControl"></app-validation-messages>
         </div>
 
+        <!-- location  -->
+        <div>
+          <label class="label" for="targetDepartment">موقع جهاز البصمة</label>
+          <div class="relative">
+            <p-multiselect
+              [options]="cities"
+              [(ngModel)]="selectedCities"
+              optionLabel="name"
+              placeholder="Select Cities"
+              [maxSelectedLabels]="3"
+              class="w-full"
+              placeholder="موقع جهاز البصمة"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="targetDepartmentControl"></app-validation-messages>
+        </div>
+      </div>
+      <div class="mt-6 pt-6 mb-6 border-t border-[#d2d6db]">
+        <h4 class="text-[14px] text-[#6c737f]">مواقع أجهزة البصمة المختارة</h4>
+        <div class="flex gap-4 flex-wrap mt-6">
+          <div
+            class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
+          >
+            <span> بوابة 1 </span>
+            <i class="pi pi-times"></i>
+          </div>
+          <div
+            class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
+          >
+            <span> بوابة 1 </span>
+            <i class="pi pi-times"></i>
+          </div>
+          <div
+            class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
+          >
+            <span> بوابة 1 </span>
+            <i class="pi pi-times"></i>
+          </div>
+          <div
+            class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
+          >
+            <span> بوابة 1 </span>
+            <i class="pi pi-times"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Visit Date -->
         <div>
           <label class="label" for="visitDate">{{

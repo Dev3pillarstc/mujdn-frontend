@@ -31,7 +31,11 @@ import { ValidationMessagesComponent } from '@/views/shared/validation-messages/
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
-
+import { MultiSelectModule } from 'primeng/multiselect';
+interface City {
+  name: string;
+  code: string;
+}
 @Component({
   selector: 'app-add-edit-visit-request-popup',
   imports: [
@@ -47,12 +51,17 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
     CommonModule,
     RequiredMarkerDirective,
     TranslatePipe,
+    MultiSelectModule,
     ValidationMessagesComponent,
   ],
   templateUrl: './add-edit-visit-request-popup.component.html',
   styleUrl: './add-edit-visit-request-popup.component.scss',
 })
 export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit> implements OnInit {
+  cities!: City[];
+
+  selectedCities!: City[];
+
   declare model: Visit;
   declare form: FormGroup;
   declare viewMode: ViewModeEnum;
@@ -89,6 +98,13 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
     this.isCreateFromExistingMode = this.viewMode == ViewModeEnum.CREATE_FROM_EXISTING;
+    this.cities = [
+      { name: 'New York', code: 'NY' },
+      { name: 'Rome', code: 'RM' },
+      { name: 'London', code: 'LDN' },
+      { name: 'Istanbul', code: 'IST' },
+      { name: 'Paris', code: 'PRS' },
+    ];
   }
 
   override prepareModel(model: Visit, form: FormGroup): Visit | Observable<Visit> {

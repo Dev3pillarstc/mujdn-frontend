@@ -269,7 +269,7 @@ export abstract class BaseListComponent<
       .afterClosed()
       .pipe(
         takeUntil(this.destroy$),
-        filter(result => result === DIALOG_ENUM.OK),
+        filter((result) => result === DIALOG_ENUM.OK),
 
         // delete
         switchMap(() => this.service.delete(id)),
@@ -277,14 +277,14 @@ export abstract class BaseListComponent<
         // if success -> show toast (afterDeleteModel) and PAUSE a bit
         switchMap((response: any) => {
           if (response?.error == null) {
-            this.afterDeleteModel();                 // shows "deleted successfully"
+            this.afterDeleteModel(); // shows "deleted successfully"
             // return timer(700).pipe(mapTo(response)); // <-- delay before spinner/reload
           }
           return of(response); // keep flowing even if backend returns an error object
         }),
 
         // reload (this is where your spinner likely starts)
-        switchMap(() => isStoredProcedure ? this.loadListSP() : this.loadList()),
+        switchMap(() => (isStoredProcedure ? this.loadListSP() : this.loadList())),
 
         // if page becomes empty, go back to page 1 and reload
         switchMap((response: any) => {
@@ -293,7 +293,7 @@ export abstract class BaseListComponent<
             return isStoredProcedure ? this.loadListSP() : this.loadList();
           }
           return of(response);
-        }),
+        })
       )
       .subscribe({
         next: (response) => {

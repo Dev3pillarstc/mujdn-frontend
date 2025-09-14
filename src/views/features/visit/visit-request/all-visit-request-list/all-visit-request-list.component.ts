@@ -1,14 +1,13 @@
-import { MenuItem } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker, DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { Component, inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { QrcodeVisitRequestPopupComponent } from '../qrcode-visit-request-popup/qrcode-visit-request-popup.component';
 import { Select } from 'primeng/select';
@@ -19,9 +18,7 @@ import { Visit } from '@/models/features/visit/visit';
 import { VisitService } from '@/services/features/visit/visit.service';
 import { VisitFilter } from '@/models/features/visit/visit-filter';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
-import { takeUntil } from 'rxjs';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
-import { DepartmentService } from '@/services/features/lookups/department.service';
 import { VisitStatusEnum } from '@/enums/visit-status-enum';
 import { formatTimeTo12Hour } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
@@ -30,6 +27,7 @@ import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { UserService } from '@/services/features/user.service';
 import { AuthService } from '@/services/auth/auth.service';
+import { AccessLocationService } from '@/services/features/business/access-location.service';
 
 @Component({
   selector: 'app-all-visit-request-list',
@@ -63,8 +61,9 @@ export class AllVisitRequestListComponent
   languageService = inject(LanguageService);
   userService = inject(UserService);
   authService = inject(AuthService);
-
+  accessLocationService = inject(AccessLocationService);
   visitCreators: BaseLookupModel[] = [];
+  accessLocations: BaseLookupModel[] = [];
 
   private hasInitialized = false;
 
@@ -206,6 +205,10 @@ export class AllVisitRequestListComponent
     this.userService.getLookup().subscribe((response) => {
       this.visitCreators = response;
     });
+    this.accessLocationService.getLocationsConnectedToDevice().subscribe((response) => {
+      this.accessLocations = response;
+      console.log('Access Locations:', this.accessLocations);
+    });
   }
 
   protected override getBreadcrumbKeys(): {
@@ -243,6 +246,7 @@ export class AllVisitRequestListComponent
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
+      accessLocations: this.accessLocations,
     };
     dialogConfig.width = this.visitorSelectionDialogSize.width;
     dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;
@@ -282,6 +286,7 @@ export class AllVisitRequestListComponent
     dialogConfig.data = {
       model: model,
       viewMode: ViewModeEnum.TAKE_ACTION,
+      accessLocations: this.accessLocations,
     };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
@@ -320,6 +325,7 @@ export class AllVisitRequestListComponent
     this.openBaseDialog(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
       departments: this.departments,
       nationalities: this.nationalities,
+      accessLocations: this.accessLocations,
     });
   }
 }

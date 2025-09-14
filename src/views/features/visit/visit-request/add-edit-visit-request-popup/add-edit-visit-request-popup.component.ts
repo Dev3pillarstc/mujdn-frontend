@@ -58,8 +58,6 @@ interface City {
   styleUrl: './add-edit-visit-request-popup.component.scss',
 })
 export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit> implements OnInit {
-  cities!: City[];
-
   selectedCities!: City[];
 
   declare model: Visit;
@@ -75,6 +73,7 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   // Lookup data
   nationalities: BaseLookupModel[] = [];
   departments: BaseLookupModel[] = [];
+  accessLocations: BaseLookupModel[] = [];
 
   // For employee selection table
   employees!: any[];
@@ -92,19 +91,15 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   }
 
   override initPopup() {
+    console.log(this.data);
+
     this.model = this.data.model;
     this.nationalities = this.data.lookups.nationalities || [];
     this.departments = this.data.lookups.departments || [];
+    this.accessLocations = this.data.lookups.accessLocations || [];
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
     this.isCreateFromExistingMode = this.viewMode == ViewModeEnum.CREATE_FROM_EXISTING;
-    this.cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' },
-    ];
   }
 
   override prepareModel(model: Visit, form: FormGroup): Visit | Observable<Visit> {
@@ -229,5 +224,23 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
 
   get visitPurposeControl() {
     return this.form.get('visitPurpose') as FormControl;
+  }
+  get accessLocationIdsControl() {
+    return this.form.get('accessLocationIds') as FormControl;
+  }
+
+  getPropertyName(): string {
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+      ? 'nameEn'
+      : 'nameAr';
+  }
+  get selectedAccessLocations() {
+    const ids = this.accessLocationIdsControl.value || [];
+    return this.accessLocations.filter((loc) => ids.includes(loc.id));
+  }
+
+  removeAccessLocation(id: number | undefined) {
+    const currentIds: number[] = this.accessLocationIdsControl.value || [];
+    this.accessLocationIdsControl.setValue(currentIds.filter((x) => x !== id));
   }
 }

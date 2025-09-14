@@ -1,14 +1,13 @@
-import { MenuItem } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePicker, DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { Component, inject, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialogConfig } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { VisitorSelectionPopupComponent } from '../visitor-selection-popup/visitor-selection-popup.component';
 import { Select } from 'primeng/select';
@@ -19,10 +18,7 @@ import { BaseListComponent } from '@/abstracts/base-components/base-list/base-li
 import { Visit } from '@/models/features/visit/visit';
 import { VisitService } from '@/services/features/visit/visit.service';
 import { MyCreatedVisitFilter } from '@/models/features/visit/my-created-visit-filter';
-import { PaginationParams } from '@/models/shared/pagination-params';
-import { takeUntil } from 'rxjs';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
-import { DepartmentService } from '@/services/features/lookups/department.service';
 import { VisitStatusEnum } from '@/enums/visit-status-enum';
 import { formatTimeTo12Hour } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
@@ -33,6 +29,7 @@ import { AuthService } from '@/services/auth/auth.service';
 import { QrcodeVisitRequestPopupComponent } from '../qrcode-visit-request-popup/qrcode-visit-request-popup.component';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
+import { AccessLocationService } from '@/services/features/business/access-location.service';
 
 @Component({
   selector: 'app-my-created-visit-request-list',
@@ -65,7 +62,8 @@ export class MyCreatedVisitRequestListComponent
   @Input() departments: BaseLookupModel[] = [];
   @Input() nationalities: BaseLookupModel[] = [];
   @Input() visitStatusOptions: VisitStatusOption[] = [];
-
+  accessLocations: BaseLookupModel[] = [];
+  accessLocationService = inject(AccessLocationService);
   override filterModel: MyCreatedVisitFilter = new MyCreatedVisitFilter();
   visitService = inject(VisitService);
   languageService = inject(LanguageService);
@@ -184,6 +182,10 @@ export class MyCreatedVisitRequestListComponent
   }
 
   override initListComponent(): void {
+    this.accessLocationService.getLocationsConnectedToDevice().subscribe((response) => {
+      this.accessLocations = response;
+      console.log('Access Locations:', this.accessLocations);
+    });
     // this.initializeVisitStatusOptions();
   }
 
@@ -220,6 +222,7 @@ export class MyCreatedVisitRequestListComponent
       model: model,
       departments: this.departments,
       nationalities: this.nationalities,
+      accessLocations: this.accessLocations,
     };
     dialogConfig.width = this.visitorSelectionDialogSize.width;
     dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;
@@ -259,6 +262,7 @@ export class MyCreatedVisitRequestListComponent
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
+      accessLocations: this.accessLocations,
     };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
@@ -279,6 +283,7 @@ export class MyCreatedVisitRequestListComponent
     dialogConfig.data = {
       model: model,
       viewMode: ViewModeEnum.TAKE_ACTION,
+      accessLocations: this.accessLocations,
     };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
@@ -301,6 +306,7 @@ export class MyCreatedVisitRequestListComponent
     this.openBaseDialog(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
       departments: this.departments,
       nationalities: this.nationalities,
+      accessLocations: this.accessLocations,
     });
   }
 

@@ -184,7 +184,6 @@ export class MyCreatedVisitRequestListComponent
   override initListComponent(): void {
     this.accessLocationService.getLocationsConnectedToDevice().subscribe((response) => {
       this.accessLocations = response;
-      console.log('Access Locations:', this.accessLocations);
     });
     // this.initializeVisitStatusOptions();
   }
@@ -243,6 +242,7 @@ export class MyCreatedVisitRequestListComponent
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
+      accessLocations: this.accessLocations,
     };
     dialogConfig.width = this.visitorSelectionDialogSize.width;
     dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;

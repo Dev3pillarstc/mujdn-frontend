@@ -207,7 +207,6 @@ export class AllVisitRequestListComponent
     });
     this.accessLocationService.getLocationsConnectedToDevice().subscribe((response) => {
       this.accessLocations = response;
-      console.log('Access Locations:', this.accessLocations);
     });
   }
 
@@ -266,6 +265,7 @@ export class AllVisitRequestListComponent
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
+      accessLocations: this.accessLocations,
     };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
@@ -307,6 +307,7 @@ export class AllVisitRequestListComponent
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
+      accessLocations: this.accessLocations,
     };
     dialogConfig.width = this.visitorSelectionDialogSize.width;
     dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;

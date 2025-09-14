@@ -49,7 +49,6 @@ export class DevicesConfigurationModalComponent
   accessLocations: BaseLookupModel[] | undefined = [];
 
   override initPopup() {
-    console.log(this.data);
     this.model = this.data.model;
     this.accessLocations = this.data.lookups.accessLocations;
     this.viewMode = this.data.viewMode;

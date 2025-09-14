@@ -69,49 +69,12 @@
         </div>
         <div class="mt-6 pt-6 border-t border-[#d2d6db]">
           <h4 class="text-[14px] text-[#6c737f]">مواقع أجهزة البصمة المختارة</h4>
-          <div class="flex gap-4 flex-wrap mt-6">
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
-            <div class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              بوابة 1
-            </div>
+          <div class="mt-2 flex flex-wrap gap-2">
+            @for (loc of selectedAccessLocations; track $index) {
+              <div class="bg-[#ffffff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
+                <span>{{ loc.nameAr }}</span>
+              </div>
+            }
           </div>
         </div>
         <div

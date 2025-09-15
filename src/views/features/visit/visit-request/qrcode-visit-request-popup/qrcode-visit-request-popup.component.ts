@@ -11,6 +11,7 @@ import { formatDateOnly, formatTimeTo12Hour } from '@/utils/general-helper';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { QRCodeComponent } from 'angularx-qrcode';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 
 @Component({
   selector: 'app-qrcode-visit-request-popup',
@@ -26,6 +27,7 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
   translateService = inject(TranslateService);
   languageService = inject(LanguageService);
   dialogRef = inject(MatDialogRef);
+  accessLocations: BaseLookupModel[] = [];
 
   // 🔹 Reference to the popup container
   @ViewChild('popupContent', { static: false }) popupContent!: ElementRef;
@@ -43,6 +45,7 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
 
   initPopup() {
     this.model = this.data.model || new Visit();
+    this.accessLocations = this.data.accessLocations || [];
   }
 
   // Helper methods for template
@@ -114,5 +117,9 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
     }
 
     pdf.save('visit-request.pdf');
+  }
+  get selectedAccessLocations() {
+    const ids = this.model.accessLocationIds || [];
+    return this.accessLocations.filter((loc) => ids.includes(loc.id!));
   }
 }

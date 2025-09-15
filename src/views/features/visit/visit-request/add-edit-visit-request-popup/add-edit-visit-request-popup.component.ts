@@ -31,6 +31,7 @@ import { ValidationMessagesComponent } from '@/views/shared/validation-messages/
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
   selector: 'app-add-edit-visit-request-popup',
@@ -47,6 +48,7 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
     CommonModule,
     RequiredMarkerDirective,
     TranslatePipe,
+    MultiSelectModule,
     ValidationMessagesComponent,
   ],
   templateUrl: './add-edit-visit-request-popup.component.html',
@@ -66,6 +68,7 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   // Lookup data
   nationalities: BaseLookupModel[] = [];
   departments: BaseLookupModel[] = [];
+  accessLocations: BaseLookupModel[] = [];
 
   // For employee selection table
   employees!: any[];
@@ -83,9 +86,12 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   }
 
   override initPopup() {
+    console.log(this.data);
+
     this.model = this.data.model;
     this.nationalities = this.data.lookups.nationalities || [];
     this.departments = this.data.lookups.departments || [];
+    this.accessLocations = this.data.lookups.accessLocations || [];
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
     this.isCreateFromExistingMode = this.viewMode == ViewModeEnum.CREATE_FROM_EXISTING;
@@ -213,5 +219,23 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
 
   get visitPurposeControl() {
     return this.form.get('visitPurpose') as FormControl;
+  }
+  get accessLocationIdsControl() {
+    return this.form.get('accessLocationIds') as FormControl;
+  }
+
+  getPropertyName(): string {
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+      ? 'nameEn'
+      : 'nameAr';
+  }
+  get selectedAccessLocations() {
+    const ids = this.accessLocationIdsControl.value || [];
+    return this.accessLocations.filter((loc) => ids.includes(loc.id));
+  }
+
+  removeAccessLocation(id: number | undefined) {
+    const currentIds: number[] = this.accessLocationIdsControl.value || [];
+    this.accessLocationIdsControl.setValue(currentIds.filter((x) => x !== id));
   }
 }

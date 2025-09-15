@@ -36,9 +36,7 @@ export class PermissionReasonPopupComponent
   fb = inject(FormBuilder);
   isCreateMode = false;
   declare viewMode: ViewModeEnum;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    super();
-  }
+  data = inject(MAT_DIALOG_DATA);
 
   override saveFail(error: Error): void {
     // logic after error if there

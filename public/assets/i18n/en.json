@@ -62,6 +62,7 @@
     "INVALID_DELETE_REQUEST": "The record can't be deleted, because it is related to another data",
     "CANNOT_BE_DELETE": "The record can't be deleted, because it is related to another data",
     "EXISTING_RECORD_ERROR": "This record already exists",
+    "DUPLICATE_RECORD": "This Location already related to another data",
     "AUTH_INVALID_CREDENTIALS": "National id or password is incorrect",
     "AUTH_USER_NOT_ACTIVE": "User is not active",
     "AUTH_INVALID_OTP": "Invalid OTP code",
@@ -680,7 +681,9 @@
     "ACCEPT": "Accept",
     "REJECT": "Reject",
     "VISITOR_EXISTS_CONFIRMATION": "Visitor exists confirmation",
-    "DO_YOU_WANT_TO_CONTINUE": "Visitor with this National ID already exists, Do you want to continue to update the visitor data?"
+    "DO_YOU_WANT_TO_CONTINUE": "Visitor with this National ID already exists, Do you want to continue to update the visitor data?",
+    "DEVICES_LOCATIONS": "Devices Locations",
+    "SELECTED_DEVICES_LOCATIONS": "Selected Devices Locations"
   },
   "QR_CODE_POPUP": {
     "GENERAL_WARNINGS": "General Warnings",
@@ -688,6 +691,33 @@
     "NO_PARKING": "No Parking",
     "DOWNLOAD_AS_FILE": "Download as File",
     "DOWNLOAD_SUCCESS": "QR Code downloaded successfully",
-    "DOWNLOAD_ERROR": "Error downloading QR Code. Please try again."
+    "DOWNLOAD_ERROR": "Error downloading QR Code. Please try again.",
+    "SELECTED_DEVICES_LOCATIONS": "Selected Devices Locations"
+  },
+  "DEVICE_STATUS": {
+    "NOT_CONNECTED": "Not Connected",
+    "CONNECTED": "Connected",
+    "NOT_ASSIGNED": "Not Assigned"
+  },
+  "DEVICE_CONFIGURATION": {
+    "DEVICE_CONFIGURATION": "Device Configuration",
+    "DEVICE_STATUS": "Device Status",
+    "IP_ADDRESS": "IP Address",
+    "ADD_NEW_DEVICE": "Add New Device",
+    "EDIT_DEVICE": "Edit Device",
+    "DEVICE_CODE": "Device Code",
+    "DEVICE_NAME": "Device Name",
+    "ACCESS_LOCATION": "Access Location",
+    "DEVICES": "Devices",
+    "CONNECT_DEVICE": "Connect Device",
+    "CONNECT_DEVICE_TO_LOCATION": "Connect Device to Location"
+  },
+  "DEVICES_LOCATION_PAGE": {
+    "DEVICES_LOCATION": "Devices Location",
+    "LOCATION_NAME": "Location Name",
+    "LOCATION_NAME_AR": "Location Name (Arabic)",
+    "LOCATION_NAME_EN": "Location Name (English)",
+    "ADD_NEW_LOCATION": "Add New Location",
+    "EDIT_LOCATION": "Edit Location"
   }
 }

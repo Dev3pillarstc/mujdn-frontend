@@ -16,6 +16,7 @@ import { M } from '@angular/material/dialog.d-B5HZULyo';
 import { Observable } from 'rxjs';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 
 @Component({
   selector: 'app-view-action-visit-request-popup',
@@ -32,7 +33,7 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   declare direction: LAYOUT_DIRECTION_ENUM;
   languageService = inject(LanguageService);
   dialogRef = inject(MatDialogRef);
-
+  accessLocations: BaseLookupModel[] = [];
   // Enum references for template
   ViewModeEnum = ViewModeEnum;
   VisitStatusEnum = VisitStatusEnum;
@@ -53,6 +54,7 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   initPopup() {
     this.model = this.data.model || new Visit();
     this.viewMode = this.data.viewMode || ViewModeEnum.VIEW;
+    this.accessLocations = this.data.accessLocations || [];
   }
 
   // Helper methods for template
@@ -157,5 +159,9 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
 
   canViewCancel(): boolean {
     return !this.shouldShowActions();
+  }
+  get selectedAccessLocations() {
+    const ids = this.model.accessLocationIds || [];
+    return this.accessLocations.filter((loc) => ids.includes(loc.id!));
   }
 }

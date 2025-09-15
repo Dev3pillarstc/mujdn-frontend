@@ -219,6 +219,62 @@
           <app-validation-messages [control]="emailControl"></app-validation-messages>
         </div>
 
+        <!-- location  -->
+        <div>
+          <label class="label" for="location">{{
+            'VISIT_REQUEST_PAGE.DEVICES_LOCATION' | translate
+          }}</label>
+          <div class="relative">
+            <p-multiselect
+              [options]="accessLocations"
+              [optionLabel]="getPropertyName()"
+              optionValue="id"
+              [formControl]="accessLocationIdsControl"
+              [maxSelectedLabels]="3"
+              class="w-full"
+              id="location"
+              name="location"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.DEVICES_LOCATION' | translate }}"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="accessLocationIdsControl"></app-validation-messages>
+        </div>
+      </div>
+      <div class="mt-6 pt-6 mb-6 border-t border-[#d2d6db]">
+        <h4 class="text-[14px] text-[#6c737f]">
+          {{ 'VISIT_REQUEST_PAGE.SELECTED_DEVICES_LOCATIONS' | translate }}
+        </h4>
+        <div class="mt-2 flex flex-wrap gap-2">
+          @for (loc of selectedAccessLocations; track $index) {
+            <div
+              class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
+            >
+              <span>{{ loc.nameAr }}</span>
+              <button type="button" (click)="removeAccessLocation(loc.id)">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                    fill="#161616"
+                  />
+                </svg>
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Visit Date -->
         <div>
           <label class="label" for="visitDate">{{

@@ -89,22 +89,22 @@ export class SideBarLinksService {
       routerLink: ['/holidays'],
       routeId: RouteIdsEnum.HOLIDAYS,
     },
-    // {
-    //   labelKey: 'MENU.VISITS',
-    //   iconUrl: 'assets/icons/menu-icons/visits.svg',
-    //   children: [
-    //     {
-    //       labelKey: 'MENU.VISIT_REQUEST',
-    //       routerLink: ['/visit-request'],
-    //       routeId: RouteIdsEnum.VISIT_REQUEST,
-    //     },
-    //     {
-    //       labelKey: 'MENU.BLACKLIST',
-    //       routerLink: ['/blacklist'],
-    //       routeId: RouteIdsEnum.BLACKLIST,
-    //     },
-    //   ],
-    // },
+    {
+      labelKey: 'MENU.VISITS',
+      iconUrl: 'assets/icons/menu-icons/visits.svg',
+      children: [
+        {
+          labelKey: 'MENU.VISIT_REQUEST',
+          routerLink: ['/visit-request'],
+          routeId: RouteIdsEnum.VISIT_REQUEST,
+        },
+        {
+          labelKey: 'MENU.BLACKLIST',
+          routerLink: ['/blacklist'],
+          routeId: RouteIdsEnum.BLACKLIST,
+        },
+      ],
+    },
     {
       labelKey: 'MENU.WORK_MISSIONS',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',
@@ -165,6 +165,16 @@ export class SideBarLinksService {
           labelKey: 'MENU.REGIONS',
           routerLink: ['/regions'],
           routeId: RouteIdsEnum.REGIONS,
+        },
+        {
+          labelKey: 'MENU.ACCESS_LOCATIONS',
+          routerLink: ['/devices-location'],
+          routeId: RouteIdsEnum.ACCESS_LOCATIONS,
+        },
+        {
+          labelKey: 'MENU.DEVICES_CONFIGURATION',
+          routerLink: ['/devices-configuration'],
+          routeId: RouteIdsEnum.DEVICES_CONFIGURATION,
         },
       ],
     },

@@ -221,20 +221,10 @@
 
         <!-- location  -->
         <div>
-          <label class="label" for="location">موقع جهاز البصمة</label>
+          <label class="label" for="location">{{
+            'VISIT_REQUEST_PAGE.DEVICES_LOCATION' | translate
+          }}</label>
           <div class="relative">
-            <!-- <p-multiselect
-              [options]="accessLocations"
-              [optionLabel]="getPropertyName()"
-              formControlName="accessLocationIds"
-              placeholder="Select"
-              [maxSelectedLabels]="3"
-              class="w-full"
-              id="location"
-              optionValue="id"
-              name="location"
-              placeholder="موقع جهاز البصمة"
-            /> -->
             <p-multiselect
               [options]="accessLocations"
               [optionLabel]="getPropertyName()"
@@ -244,7 +234,7 @@
               class="w-full"
               id="location"
               name="location"
-              placeholder="موقع جهاز البصمة"
+              placeholder="{{ 'VISIT_REQUEST_PAGE.DEVICES_LOCATION' | translate }}"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -254,7 +244,9 @@
         </div>
       </div>
       <div class="mt-6 pt-6 mb-6 border-t border-[#d2d6db]">
-        <h4 class="text-[14px] text-[#6c737f]">مواقع أجهزة البصمة المختارة</h4>
+        <h4 class="text-[14px] text-[#6c737f]">
+          {{ 'VISIT_REQUEST_PAGE.SELECTED_DEVICES_LOCATIONS' | translate }}
+        </h4>
         <div class="mt-2 flex flex-wrap gap-2">
           @for (loc of selectedAccessLocations; track $index) {
             <div

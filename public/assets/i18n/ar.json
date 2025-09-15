@@ -679,7 +679,9 @@
     "ACCEPT": "قبول",
     "REJECT": "رفض",
     "VISITOR_EXISTS_CONFIRMATION": "تأكيد وجود الزائر",
-    "DO_YOU_WANT_TO_CONTINUE": "الزائر الذي يحمل هذا الرقم الوطني موجود بالفعل، هل تريد الاستمرار في تحديث بيانات الزائر؟"
+    "DO_YOU_WANT_TO_CONTINUE": "الزائر الذي يحمل هذا الرقم الوطني موجود بالفعل، هل تريد الاستمرار في تحديث بيانات الزائر؟",
+    "DEVICES_LOCATION": "مواقع أجهزة البصمة",
+    "SELECTED_DEVICES_LOCATIONS": "مواقع أجهزة البصمة المختارة"
   },
   "QR_CODE_POPUP": {
     "GENERAL_WARNINGS": "تحذيرات عامة",
@@ -687,7 +689,8 @@
     "NO_PARKING": "ممنوع الوقوف",
     "DOWNLOAD_AS_FILE": "تحميل كملف",
     "DOWNLOAD_SUCCESS": "تم تحميل رمز الاستجابة السريعة بنجاح",
-    "DOWNLOAD_ERROR": "خطأ في تحميل رمز الاستجابة السريعة. يرجى المحاولة مرة أخرى."
+    "DOWNLOAD_ERROR": "خطأ في تحميل رمز الاستجابة السريعة. يرجى المحاولة مرة أخرى.",
+    "SELECTED_DEVICES_LOCATIONS": "مواقع أجهزة البصمة المختارة"
   },
   "DEVICE_STATUS": {
     "NOT_CONNECTED": "غير متصل",

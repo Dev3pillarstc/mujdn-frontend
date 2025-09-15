@@ -681,7 +681,9 @@
     "ACCEPT": "Accept",
     "REJECT": "Reject",
     "VISITOR_EXISTS_CONFIRMATION": "Visitor exists confirmation",
-    "DO_YOU_WANT_TO_CONTINUE": "Visitor with this National ID already exists, Do you want to continue to update the visitor data?"
+    "DO_YOU_WANT_TO_CONTINUE": "Visitor with this National ID already exists, Do you want to continue to update the visitor data?",
+    "DEVICES_LOCATIONS": "Devices Locations",
+    "SELECTED_DEVICES_LOCATIONS": "Selected Devices Locations"
   },
   "QR_CODE_POPUP": {
     "GENERAL_WARNINGS": "General Warnings",
@@ -689,7 +691,8 @@
     "NO_PARKING": "No Parking",
     "DOWNLOAD_AS_FILE": "Download as File",
     "DOWNLOAD_SUCCESS": "QR Code downloaded successfully",
-    "DOWNLOAD_ERROR": "Error downloading QR Code. Please try again."
+    "DOWNLOAD_ERROR": "Error downloading QR Code. Please try again.",
+    "SELECTED_DEVICES_LOCATIONS": "Selected Devices Locations"
   },
   "DEVICE_STATUS": {
     "NOT_CONNECTED": "Not Connected",

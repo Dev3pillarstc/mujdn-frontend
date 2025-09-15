@@ -32,10 +32,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { MultiSelectModule } from 'primeng/multiselect';
-interface City {
-  name: string;
-  code: string;
-}
+
 @Component({
   selector: 'app-add-edit-visit-request-popup',
   imports: [
@@ -58,8 +55,6 @@ interface City {
   styleUrl: './add-edit-visit-request-popup.component.scss',
 })
 export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit> implements OnInit {
-  selectedCities!: City[];
-
   declare model: Visit;
   declare form: FormGroup;
   declare viewMode: ViewModeEnum;

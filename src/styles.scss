@@ -73,9 +73,19 @@
   --p-multiselect-padding-x: 16px !important;
   --p-multiselect-background: #fff !important;
   --p-multiselect-color: #334155 !important;
+  //accordion
+  --p-accordion-header-padding: 1rem !important;
+  --p-accordion-content-border-color: #d2d6db !important;
+  --p-accordion-content-padding: 0 !important;
 }
-.p-multiselect-header .p-checkbox {
-  display: none;
+.p-iconfield .p-inputicon:last-child {
+  inset-inline-end: 0 !important;
+  inset-inline-start: 8px !important;
+  pointer-events: none;
+}
+.p-iconfield .p-inputtext:not(:last-child) {
+  padding-inline-end: 16px !important;
+  padding-inline-start: 32px !important;
 }
 
 .black-table-btn-action {

@@ -165,7 +165,7 @@
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
         {{ 'ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST' | translate }}
       </h4>
-      <div class="actions flex items-center gap-4 ms-auto">
+      <div class="actions flex items-center gap-4 ms-auto flex-wrap">
         <button
           (click)="exportExcel('attendance-logs.xlsx', true)"
           class="table-head-action-btn min-w-[40px]"
@@ -181,6 +181,10 @@
             <span>{{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_ATTENDANCE_LOG' | translate }}</span>
           </button>
         }
+        <button class="btn black-btn" (click)="openImportDialog()">
+          <img src="/assets/icons/import-icon.svg" alt="" />
+          <span>استيراد سجل حركات</span>
+        </button>
       </div>
     </div>
     @if (list && list.length > 0) {

@@ -140,6 +140,16 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'reports-processing',
+        loadComponent: () =>
+          import('@/views/features/reports/reports-processing/reports-processing.component'),
+      },
+      {
+        path: 'attendance-report',
+        loadComponent: () =>
+          import('@/views/features/reports/attendance-report/attendance-report-container/attendance-report-container.component'),
+      },
+      {
         path: 'nationalities',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NATIONALITIES },

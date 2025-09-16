@@ -36,6 +36,7 @@ import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ib
 import { formatSwipeTime } from '@/utils/general-helper';
 import { CustomValidators } from '@/validators/custom-validators';
 import { AuthService } from '@/services/auth/auth.service';
+import { ImportLogPopupComponent } from '../import-log-popup/import-log-popup.component';
 
 @Component({
   selector: 'app-others-attendance-log-list',
@@ -88,6 +89,10 @@ export default class OthersAttendanceLogListComponent
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
+  };
+  dialogSize2 = {
+    width: '100%',
+    maxWidth: '600px',
   };
 
   override get service() {
@@ -346,5 +351,18 @@ export default class OthersAttendanceLogListComponent
       // [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
       //   this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
     };
+  }
+  openImportDialog(model?: any) {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      model: model,
+    };
+    dialogConfig.width = this.dialogSize2.width;
+    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
+    const dialogRef = this.matDialog.open(ImportLogPopupComponent as any, dialogConfig);
+
+    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      console.log('closed');
+    });
   }
 }

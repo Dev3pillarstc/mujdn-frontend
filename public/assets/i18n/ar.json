@@ -422,7 +422,9 @@
     "VISITS": "الزيارات",
     "BLACKLIST": "معايير حظر الزائرين",
     "WORK_MISSIONS": "مهام الأعمال و الاسناد",
-    "VISIT_REQUEST": "طلبات الزيارات"
+    "VISIT_REQUEST": "طلبات الزيارات",
+    "ACCESS_LOCATIONS": "مواقع أجهزة البصمة",
+    "DEVICES_CONFIGURATION": "إعدادات أجهزة البصمة"
   },
   "NOTIFICATION": {
     "GENERAL_SETTINGS": "الإعدادات العامة",

@@ -424,7 +424,9 @@
     "VISITS": "Visits",
     "BLACKLIST": "Visitor blacklist criteria",
     "WORK_MISSIONS": "Work missions and assignments",
-    "VISIT_REQUEST": "Visit Requests"
+    "VISIT_REQUEST": "Visit Requests",
+    "ACCESS_LOCATIONS": "Access Locations",
+    "DEVICES_CONFIGURATION": "Devices Configuration"
   },
   "NOTIFICATION": {
     "GENERAL_SETTINGS": "General Settings",

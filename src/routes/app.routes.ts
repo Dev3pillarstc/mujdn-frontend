@@ -197,7 +197,7 @@ export const routes: Routes = [
       {
         path: 'devices-configuration',
         canActivate: [authGuard],
-        // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.DEVICES_CONFIGURATION },
         resolve: { list: devicesConfigurationResolver },
         loadComponent: () =>
           import('@/views/features/settings/devices-configuration/devices-configuration.component'),
@@ -205,7 +205,7 @@ export const routes: Routes = [
       {
         path: 'devices-location',
         canActivate: [authGuard],
-        // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.ACCESS_LOCATIONS },
         resolve: { list: accessLocationResolver },
         loadComponent: () =>
           import('@/views/features/settings/devices-location/devices-location.component'),

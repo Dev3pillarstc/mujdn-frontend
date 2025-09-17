@@ -104,6 +104,21 @@ export class MyWorkMissionListComponent extends BaseListComponent<
   override initListComponent(): void {
     this.loadInitialData();
   }
+  resetFilter(): void {
+    this.filterModel = new MyWorkMissionFilter(); // fresh empty filter
+  }
+  loadMyMissions(): void {
+    // Always fetch fresh data
+    this.paginationParams.pageNumber = 1;
+    this.first = 0;
+    this.service
+      .getMyWorkMissionsAsync(this.paginationParams, { ...this.appliedFilterModel })
+      .subscribe((res: PaginatedListResponseData<WorkMission>) => {
+        this.list = res.data.list;
+        this.paginationInfo = res.data.paginationInfo;
+      });
+  }
+
   private loadInitialData(): void {
     const resolverData = this.activatedRoute.snapshot.data['list'];
     this.creators = resolverData.creators || [];

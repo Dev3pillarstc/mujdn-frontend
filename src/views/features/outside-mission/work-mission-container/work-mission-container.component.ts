@@ -51,6 +51,7 @@ export default class WorkMissionContainerComponent implements OnInit {
   authService = inject(AuthService);
   workMissionService = inject(WorkMissionService); // Add this service injection
   @ViewChild(AssignWorkMissionListComponent) assignTabComponent!: AssignWorkMissionListComponent;
+  @ViewChild(MyWorkMissionListComponent) myMissionsTabComponent!: MyWorkMissionListComponent;
 
   canAssign = false;
   isAssignTabDataLoaded = false; // Track if assign tab data is loaded
@@ -66,11 +67,15 @@ export default class WorkMissionContainerComponent implements OnInit {
   onTabChange(tabValue: any) {
     this.currentTabIndex = tabValue;
 
-    if (tabValue === '1' && this.canAssign) {
-      // Reset filter before loading data
-      this.assignTabComponent?.resetFilter();
+    if (tabValue === '0') {
+      // My Missions tab
+      this.myMissionsTabComponent?.resetFilter(); // clear filters
+      this.myMissionsTabComponent?.loadMyMissions(); // fetch fresh data
+    }
 
-      // Load fresh data
+    if (tabValue === '1' && this.canAssign) {
+      // Assign Missions tab
+      this.assignTabComponent?.resetFilter();
       this.loadAssignTabData();
     }
   }

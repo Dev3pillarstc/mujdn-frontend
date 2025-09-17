@@ -727,12 +727,11 @@
     "SEARCH_FILTER": "Search Filter",
     "DATE_FROM": "Date (From)",
     "DATE_TO": "Date (To)",
-    "SELECT_DEPARTMENT": "Human Resources Department",
+    "SELECT_DEPARTMENT": "Select Department",
     "EMPLOYEE_NAME": "Employee Name",
     "SELECT_ALL_DEPARTMENTS": "Select All Departments",
     "PROCESS_ALL_EMPLOYEES": "Process All Employees",
     "EMPLOYEES_FOR_PROCESSING": "Employees for Processing",
-    "DELETE_ALL_EMPLOYEES": "Delete All Employees",
-    "SAMPLE_EMPLOYEE_NAME": "Mohamed Ahmed Taha"
+    "DELETE_ALL_EMPLOYEES": "Delete All Employees"
   }
 }

@@ -725,12 +725,11 @@
     "SEARCH_FILTER": "تصفية البحث",
     "DATE_FROM": "التاريخ (من)",
     "DATE_TO": "التاريخ (الى)",
-    "SELECT_DEPARTMENT": "إدارة الموارد البشرية",
+    "SELECT_DEPARTMENT": "اختر إدارة",
     "EMPLOYEE_NAME": "اسم الموظف",
     "SELECT_ALL_DEPARTMENTS": "تحديد كل الادارات",
     "PROCESS_ALL_EMPLOYEES": "معالجة جميع الموظفين",
     "EMPLOYEES_FOR_PROCESSING": "الموظفون المعنيون بالمعالجة",
-    "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين",
-    "SAMPLE_EMPLOYEE_NAME": "محمد احمد طه"
+    "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين"
   }
 }

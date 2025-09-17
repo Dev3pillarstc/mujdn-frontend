@@ -14,6 +14,11 @@ import { MultiSelect } from 'primeng/multiselect';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { LanguageService } from '@/services/shared/language.service';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import { UserService } from '@/services/features/user.service';
+import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
+import { Department } from '@/models/features/lookups/department/department';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 
 @Component({
   selector: 'app-reports-processing',
@@ -41,6 +46,10 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
   langService = inject(LanguageService);
   activatedRoute = inject(ActivatedRoute);
+  departmentService = inject(DepartmentService);
+  userService = inject(UserService);
+  departmentList: BaseLookupModel[] = [];
+  employeeList: UsersWithDepartmentLookup[] = [];
 
   breadcrumbs: MenuItem[] = [];
   home = {
@@ -55,6 +64,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.setHomeItem();
     this.initBreadcrumbs();
+    this.loadLookups();
 
     // Get current language
     this.currentLang =
@@ -72,6 +82,16 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     // Listen to language service changes if available
     this.langService.languageChanged$.pipe(takeUntil(this.destroy$)).subscribe((lang: string) => {
       this.currentLang = lang;
+    });
+  }
+
+  loadLookups(): void {
+    this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
+      this.departmentList = res;
+    });
+
+    this.userService.getUsersWithDepartment().subscribe((res: UsersWithDepartmentLookup[]) => {
+      this.employeeList = res;
     });
   }
 

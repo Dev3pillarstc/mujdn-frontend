@@ -66,9 +66,10 @@
                 'EMPLOYEES_PAGE.DEPARTMENT' | translate
               }}</label>
               <p-select
-                optionLabel="name"
+                optionLabel="nameAr"
                 [placeholder]="'ATTENDANCE_REPORT_PAGE.SELECT_DEPARTMENT' | translate"
                 class="w-full"
+                [options]="departmentList"
               />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -80,10 +81,11 @@
               }}</label>
               <div class="relative">
                 <p-multiselect
-                  optionLabel="name"
+                  optionLabel="nameAr"
                   [placeholder]="'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate"
                   [maxSelectedLabels]="3"
                   class="w-full"
+                  [options]="employeeList"
                 />
                 <span
                   class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -108,9 +110,7 @@
         <div class="flex flex-wrap gap-8 mt-3 rounded dimmed-form">
           <label class="flex items-center gap-3 cursor-pointer relative">
             <input
-              checked
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-              disabled
+              class="appearance-none cursor-pointer w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
               type="checkbox"
             />
             <svg
@@ -139,10 +139,11 @@
           <p-accordion-panel value="0">
             <p-accordion-header>
               <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">
-                  {{ 'DEPARTMENTS.HUMAN_RESOURCES' | translate }}
-                </h4>
-                <button class="text-[#b42318] text-xs font-medium flex items-center gap-1">
+                <h4 class="text-[#161616] font-semibold">selected department</h4>
+                <button
+                  type="button"
+                  class="text-[#b42318] text-xs font-medium flex items-center gap-1"
+                >
                   <img src="assets/icons/delete.svg" alt="" />
                   {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
                 </button>
@@ -153,7 +154,7 @@
                 <div
                   class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
                 >
-                  <span>{{ 'ATTENDANCE_REPORT_PAGE.SAMPLE_EMPLOYEE_NAME' | translate }}</span>
+                  <span>employee name</span>
                   <button type="button">
                     <svg
                       width="18"
@@ -178,9 +179,7 @@
           <p-accordion-panel value="1">
             <p-accordion-header>
               <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">
-                  {{ 'DEPARTMENTS.VETERANS_MANAGEMENT' | translate }}
-                </h4>
+                <h4 class="text-[#161616] font-semibold">selected department</h4>
                 <button class="text-[#b42318] text-xs font-medium flex items-center gap-1">
                   <img src="assets/icons/delete.svg" alt="" />
                   {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
@@ -192,7 +191,7 @@
                 <div
                   class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
                 >
-                  <span>{{ 'ATTENDANCE_REPORT_PAGE.SAMPLE_EMPLOYEE_NAME' | translate }}</span>
+                  <span>employee name</span>
                   <button type="button">
                     <svg
                       width="18"
@@ -217,9 +216,7 @@
           <p-accordion-panel value="3">
             <p-accordion-header>
               <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">
-                  {{ 'DEPARTMENTS.SECURITY_MANAGEMENT' | translate }}
-                </h4>
+                <h4 class="text-[#161616] font-semibold">selected department</h4>
                 <button class="text-[#b42318] text-xs font-medium flex items-center gap-1">
                   <img src="assets/icons/delete.svg" alt="" />
                   {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
@@ -231,7 +228,7 @@
                 <div
                   class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
                 >
-                  <span>{{ 'ATTENDANCE_REPORT_PAGE.SAMPLE_EMPLOYEE_NAME' | translate }}</span>
+                  <span>employee name</span>
                   <button type="button">
                     <svg
                       width="18"

@@ -15,7 +15,6 @@ import { catchError, forkJoin, map, of } from 'rxjs';
 
 export const WorkMissionResolver: ResolveFn<
   {
-    missions: PaginatedList<WorkMission> | null;
     departments: BaseLookupModel[] | null;
     myMissions: PaginatedList<WorkMission> | null;
     creators: BaseLookupModel[] | null;
@@ -28,16 +27,11 @@ export const WorkMissionResolver: ResolveFn<
 
   const user = authService.getUser().value;
 
-  const canLoadMissionsAndDepartments = !!(
-    authService.isDepartmentManager || authService.isHROfficer
-  );
+  const canLoadDepartments = !!(authService.isDepartmentManager || authService.isHROfficer);
 
   return forkJoin({
-    missions: canLoadMissionsAndDepartments
-      ? workMissionService.loadPaginated(new PaginationParams()).pipe(catchError(() => of(null)))
-      : of(null),
-
-    departments: canLoadMissionsAndDepartments
+    // Remove missions from resolver - will be loaded on tab change instead
+    departments: canLoadDepartments
       ? departmentService.getBaseLookupsForMissionsAsync().pipe(
           map((resp: ListResponseData<BaseLookupModel>) => resp?.data ?? null),
           catchError(() => of(null))

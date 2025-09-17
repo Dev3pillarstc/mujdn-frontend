@@ -1,26 +1,37 @@
+<!-- reports-processing.component.html -->
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <a [routerLink]="item.url" class="cursor-pointer">
+            <span>{{ item.label | translate }}</span>
+          </a>
+        </ng-template>
+      </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        معالجة بيانات تقارير الموظفين
+        {{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEE_REPORTS_PROCESSING' | translate }}
       </h3>
     </div>
 
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
       <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
         <div class="flex items-center justify-between">
-          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+            {{ 'ATTENDANCE_REPORT_PAGE.SEARCH_FILTER' | translate }}
+          </h5>
         </div>
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
             <div class="relative">
-              <label for="" class="label">التاريخ (من)</label>
+              <label for="" class="label">{{
+                'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate
+              }}</label>
               <p-datepicker
                 [(ngModel)]="date2"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
-                placeholder="التاريخ (من)"
+                [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate"
                 class="peer block w-full"
                 inputId="icondisplay"
               >
@@ -33,12 +44,12 @@
               ></span>
             </div>
             <div class="relative">
-              <label for="" class="label">التاريخ (الى)</label>
+              <label for="" class="label">{{ 'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate }}</label>
               <p-datepicker
                 [(ngModel)]="date2"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
-                placeholder="التاريخ (الى)"
+                [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate"
                 class="peer block w-full"
                 inputId="icondisplay"
               >
@@ -51,19 +62,26 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="department">الادارة</label>
-              <p-select optionLabel="name" placeholder="إدارة الموارد البشرية" class="w-full" />
-
+              <label class="label" for="department">{{
+                'EMPLOYEES_PAGE.DEPARTMENT' | translate
+              }}</label>
+              <p-select
+                optionLabel="name"
+                [placeholder]="'ATTENDANCE_REPORT_PAGE.SELECT_DEPARTMENT' | translate"
+                class="w-full"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
             <div class="relative">
-              <label class="label" for="employee">اسم الموظف</label>
+              <label class="label" for="employee">{{
+                'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate
+              }}</label>
               <div class="relative">
                 <p-multiselect
                   optionLabel="name"
-                  placeholder="اسم الموظف"
+                  [placeholder]="'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate"
                   [maxSelectedLabels]="3"
                   class="w-full"
                 />
@@ -75,14 +93,18 @@
           </div>
 
           <div class="actions flex items-center gap-4 pt-6">
-            <button class="btn black-btn">بحث</button>
-            <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+            <button class="btn black-btn">{{ 'COMMON.SEARCH' | translate }}</button>
+            <button class="btn gray-btn border border-[#d2d6db]">
+              {{ 'COMMON.RESET_SEARCH' | translate }}
+            </button>
           </div>
         </div>
       </div>
 
       <div class="mt-10 pt-10 border-t border-[#d2d6db]">
-        <h3 class="text-[#1f2a37] font-[600] text-lg">تحديد كل الادارات</h3>
+        <h3 class="text-[#1f2a37] font-[600] text-lg">
+          {{ 'ATTENDANCE_REPORT_PAGE.SELECT_ALL_DEPARTMENTS' | translate }}
+        </h3>
         <div class="flex flex-wrap gap-8 mt-3 rounded dimmed-form">
           <label class="flex items-center gap-3 cursor-pointer relative">
             <input
@@ -102,31 +124,36 @@
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            <span class="text-base font-medium text-[#1f2a37]">معالجة جميع الموظفين</span>
+            <span class="text-base font-medium text-[#1f2a37]">{{
+              'ATTENDANCE_REPORT_PAGE.PROCESS_ALL_EMPLOYEES' | translate
+            }}</span>
           </label>
         </div>
       </div>
+
       <div class="mt-10 pt-10 border-t border-[#d2d6db]">
         <h3 class="text-[#1f2a37] font-[600] text-xl border-b border-[#d2d6db] pb-4">
-          الموظفون المعنيون بالمعالجة
+          {{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEES_FOR_PROCESSING' | translate }}
         </h3>
         <p-accordion value="0">
           <p-accordion-panel value="0">
             <p-accordion-header>
               <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">إدارة الموارد البشرية</h4>
+                <h4 class="text-[#161616] font-semibold">
+                  {{ 'DEPARTMENTS.HUMAN_RESOURCES' | translate }}
+                </h4>
                 <button class="text-[#b42318] text-xs font-medium flex items-center gap-1">
                   <img src="assets/icons/delete.svg" alt="" />
-                  حذف كل الموظفين
+                  {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
                 </button>
-              </div></p-accordion-header
-            >
+              </div>
+            </p-accordion-header>
             <p-accordion-content>
               <div class="px-8 py-6 bg-[#f3f4f6]">
                 <div
                   class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
                 >
-                  <span>محمد احمد طه</span>
+                  <span>{{ 'ATTENDANCE_REPORT_PAGE.SAMPLE_EMPLOYEE_NAME' | translate }}</span>
                   <button type="button">
                     <svg
                       width="18"
@@ -147,22 +174,25 @@
               </div>
             </p-accordion-content>
           </p-accordion-panel>
+
           <p-accordion-panel value="1">
             <p-accordion-header>
               <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">الإدارة العامة للمجاهدين</h4>
+                <h4 class="text-[#161616] font-semibold">
+                  {{ 'DEPARTMENTS.VETERANS_MANAGEMENT' | translate }}
+                </h4>
                 <button class="text-[#b42318] text-xs font-medium flex items-center gap-1">
                   <img src="assets/icons/delete.svg" alt="" />
-                  حذف كل الموظفين
+                  {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
                 </button>
-              </div></p-accordion-header
-            >
+              </div>
+            </p-accordion-header>
             <p-accordion-content>
               <div class="px-8 py-6 bg-[#f3f4f6]">
                 <div
                   class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
                 >
-                  <span>محمد احمد طه</span>
+                  <span>{{ 'ATTENDANCE_REPORT_PAGE.SAMPLE_EMPLOYEE_NAME' | translate }}</span>
                   <button type="button">
                     <svg
                       width="18"
@@ -183,22 +213,25 @@
               </div>
             </p-accordion-content>
           </p-accordion-panel>
+
           <p-accordion-panel value="3">
             <p-accordion-header>
               <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">إدارة الأمن</h4>
+                <h4 class="text-[#161616] font-semibold">
+                  {{ 'DEPARTMENTS.SECURITY_MANAGEMENT' | translate }}
+                </h4>
                 <button class="text-[#b42318] text-xs font-medium flex items-center gap-1">
                   <img src="assets/icons/delete.svg" alt="" />
-                  حذف كل الموظفين
+                  {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
                 </button>
-              </div></p-accordion-header
-            >
+              </div>
+            </p-accordion-header>
             <p-accordion-content>
               <div class="px-8 py-6 bg-[#f3f4f6]">
                 <div
                   class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
                 >
-                  <span>محمد احمد طه</span>
+                  <span>{{ 'ATTENDANCE_REPORT_PAGE.SAMPLE_EMPLOYEE_NAME' | translate }}</span>
                   <button type="button">
                     <svg
                       width="18"

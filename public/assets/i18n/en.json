@@ -721,5 +721,18 @@
     "LOCATION_NAME_EN": "Location Name (English)",
     "ADD_NEW_LOCATION": "Add New Location",
     "EDIT_LOCATION": "Edit Location"
+  },
+  "ATTENDANCE_REPORT_PAGE": {
+    "EMPLOYEE_REPORTS_PROCESSING": "Employee Reports Processing",
+    "SEARCH_FILTER": "Search Filter",
+    "DATE_FROM": "Date (From)",
+    "DATE_TO": "Date (To)",
+    "SELECT_DEPARTMENT": "Human Resources Department",
+    "EMPLOYEE_NAME": "Employee Name",
+    "SELECT_ALL_DEPARTMENTS": "Select All Departments",
+    "PROCESS_ALL_EMPLOYEES": "Process All Employees",
+    "EMPLOYEES_FOR_PROCESSING": "Employees for Processing",
+    "DELETE_ALL_EMPLOYEES": "Delete All Employees",
+    "SAMPLE_EMPLOYEE_NAME": "Mohamed Ahmed Taha"
   }
 }

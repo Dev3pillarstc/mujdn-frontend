@@ -719,5 +719,18 @@
     "LOCATION_NAME_EN": "اسم الموقع بالإنجليزية",
     "ADD_NEW_LOCATION": "إضافة موقع جديد",
     "EDIT_LOCATION": "تعديل الموقع"
+  },
+  "ATTENDANCE_REPORT_PAGE": {
+    "EMPLOYEE_REPORTS_PROCESSING": "معالجة بيانات تقارير الموظفين",
+    "SEARCH_FILTER": "تصفية البحث",
+    "DATE_FROM": "التاريخ (من)",
+    "DATE_TO": "التاريخ (الى)",
+    "SELECT_DEPARTMENT": "إدارة الموارد البشرية",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "SELECT_ALL_DEPARTMENTS": "تحديد كل الادارات",
+    "PROCESS_ALL_EMPLOYEES": "معالجة جميع الموظفين",
+    "EMPLOYEES_FOR_PROCESSING": "الموظفون المعنيون بالمعالجة",
+    "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين",
+    "SAMPLE_EMPLOYEE_NAME": "محمد احمد طه"
   }
 }

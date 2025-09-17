@@ -214,4 +214,8 @@ export class AssignWorkMissionListComponent
       },
     ];
   }
+
+  resetFilter(): void {
+    this.filterModel = new WorkMissionFilter(); // fresh empty filter
+  }
 }

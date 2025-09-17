@@ -13,8 +13,8 @@
         {{ 'WORK_MISSIONS.WORK_MISSIONS' | translate }}
       </h3>
     </div>
-    <!-- Tabs Structure Only -->
-    <p-tabs value="0">
+    <!-- Tabs Structure with onChange handler -->
+    <p-tabs [(value)]="currentTabIndex" (valueChange)="onTabChange($event)">
       <p-tablist class="my-6">
         <p-tab value="0">{{ 'WORK_MISSIONS.MY_WORK_MISSIONS' | translate }}</p-tab>
         @if (canAssign) {

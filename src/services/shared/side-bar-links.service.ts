@@ -89,17 +89,22 @@ export class SideBarLinksService {
       routerLink: ['/holidays'],
       routeId: RouteIdsEnum.HOLIDAYS,
     },
-    {
-      labelKey: 'MENU.VISITS',
-      iconUrl: 'assets/icons/menu-icons/visits.svg',
-      children: [
-        {
-          labelKey: 'MENU.BLACKLIST',
-          routerLink: ['/blacklist'],
-          routeId: RouteIdsEnum.BLACKLIST,
-        },
-      ],
-    },
+    // {
+    //   labelKey: 'MENU.VISITS',
+    //   iconUrl: 'assets/icons/menu-icons/visits.svg',
+    //   children: [
+    //     {
+    //       labelKey: 'MENU.VISIT_REQUEST',
+    //       routerLink: ['/visit-request'],
+    //       routeId: RouteIdsEnum.VISIT_REQUEST,
+    //     },
+    //     {
+    //       labelKey: 'MENU.BLACKLIST',
+    //       routerLink: ['/blacklist'],
+    //       routeId: RouteIdsEnum.BLACKLIST,
+    //     },
+    //   ],
+    // },
     {
       labelKey: 'MENU.WORK_MISSIONS',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',

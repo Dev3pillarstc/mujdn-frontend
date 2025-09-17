@@ -22,6 +22,7 @@ import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
 import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blacklisted-national-id.resolver';
 import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
 import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
+import { visitResolver } from '@/resolvers/features/visit/visit.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -108,6 +109,16 @@ export const routes: Routes = [
       },
       {
         path: 'visit-request',
+        canActivate: [authGuard],
+        resolve: { list: visitResolver },
+        data: {
+          roles: [
+            ROLES_ENUM.SECURITY_LEADER,
+            ROLES_ENUM.DEPARTMENT_MANAGER,
+            ROLES_ENUM.SECURITY_MEMBER,
+          ], // all roles can view the page
+          routeId: RouteIdsEnum.VISIT_REQUEST,
+        },
         loadComponent: () =>
           import(
             '@/views/features/visit/visit-request/visit-request-container/visit-request-container.component'
@@ -170,6 +181,22 @@ export const routes: Routes = [
         resolve: { channel: notificationSettingResolver },
         loadComponent: () =>
           import('@/views/features/settings/notification-settings/notification-settings.component'),
+      },
+      {
+        path: 'devices-configuration',
+        // canActivate: [authGuard],
+        // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
+        // resolve: { channel: notificationSettingResolver },
+        loadComponent: () =>
+          import('@/views/features/settings/devices-configuration/devices-configuration.component'),
+      },
+      {
+        path: 'devices-location',
+        // canActivate: [authGuard],
+        // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
+        // resolve: { channel: notificationSettingResolver },
+        loadComponent: () =>
+          import('@/views/features/settings/devices-location/devices-location.component'),
       },
       {
         path: 'permissions',

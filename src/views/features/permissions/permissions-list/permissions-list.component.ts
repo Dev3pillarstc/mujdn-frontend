@@ -142,7 +142,7 @@ export default class PermissionsListComponent
 
   loadIncomingPermissions() {
     this.service
-      .loadDepartmentPermissionPaginated(this.paginationParams, { ...this.filterModel! })
+      .loadDepartmentPermissionPaginated(this.paginationParams, { ...this.appliedFilterModel! })
       .subscribe({
         next: (response) => {
           this.list = response.list || [];
@@ -168,18 +168,14 @@ export default class PermissionsListComponent
   }
 
   clickMyPermissionTab() {
-    this.isIncomingPermissions = false;
-    this.filterModel = new PermissionFilter();
     if (this.activeTabIndex == PERMISSION_TABS_ENUM.INCOMING_PERMISSIONS) {
-      this.loadList().subscribe({
-        next: (response) => this.handleLoadListSuccess(response),
-        error: this.handleLoadListError,
-      });
+      this.resetSearch();
     }
     this.activeTabIndex = PERMISSION_TABS_ENUM.MY_PERMISSIONS;
   }
 
   departmentPermissionSearch() {
+    this.appliedFilterModel = { ...this.filterModel };
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     this.loadIncomingPermissions();
@@ -187,6 +183,7 @@ export default class PermissionsListComponent
 
   departmentPermissionResetSearch() {
     this.filterModel = new PermissionFilter();
+    this.appliedFilterModel = new PermissionFilter();
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
     this.first = 0;
@@ -236,13 +233,18 @@ export default class PermissionsListComponent
     };
 
     const fetchAll = isIncomingPermissions
-      ? this.service.loadDepartmentPermissionPaginated(allDataParams, { ...this.filterModel! })
-      : this.service.loadPaginated(allDataParams, { ...this.filterModel! });
+      ? this.service.loadDepartmentPermissionPaginated(allDataParams, {
+          ...this.appliedFilterModel!,
+        })
+      : this.service.loadPaginated(allDataParams, { ...this.appliedFilterModel! });
 
     fetchAll.subscribe({
       next: (response) => {
         const fullList = response.list || [];
-        if (fullList.length > 0) {
+        if (fullList.length === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
+        } else {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
           const transformedData = fullList.map((item) =>
             isIncomingPermissions

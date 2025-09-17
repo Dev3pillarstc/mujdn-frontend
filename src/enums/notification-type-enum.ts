@@ -1,0 +1,8 @@
+export enum NotificationTypeEnum {
+  ASSIGN_TASK = 1,
+  PRESENCE_INQUIRY = 2,
+  LEAVE_RESULT = 3,
+  HOLIDAY = 4,
+  SHIFT_ASSIGNMENT = 5,
+  DEFAULT_SHIFT_CHANGE = 6,
+}

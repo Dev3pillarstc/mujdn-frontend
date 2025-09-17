@@ -64,7 +64,6 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   shifts: Shift[] = [];
 
   confirmationService = inject(ConfirmationService);
-  alertService = inject(AlertService);
   userworkShiftService = inject(UserWorkShiftService);
   override get filterModel(): UserWorkShiftsFilter {
     return this.filterOptions;
@@ -94,10 +93,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
       return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
     });
   }
-  filterEmployeesByDepartment(departmentId: number) {
-    this.filteredEmployees = this.usersProfiles.filter((emp) => emp.departmentId === departmentId);
-    this.filteredEmployees = this.sortByName(this.filteredEmployees, this.optionLabel);
-  }
+
   protected override mapModelToExcelRow(model: UserWorkShift): { [key: string]: any } {
     return {
       [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR')]: model.shiftNameAr,
@@ -156,6 +152,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
 
   override resetSearch(isStoredProcedure: boolean = false) {
     this.filterModel = {} as UserWorkShiftsFilter;
+    this.appliedFilterModel = {} as UserWorkShiftsFilter;
     this.filteredEmployees = this.usersProfiles;
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;

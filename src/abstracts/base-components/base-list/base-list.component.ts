@@ -15,7 +15,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { filter, mapTo, of, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { CustomValidators } from '@/validators/custom-validators';
 
 @Directive()
@@ -42,6 +42,7 @@ export abstract class BaseListComponent<
   confirmService = inject(ConfirmationService);
   alertsService = inject(AlertService);
   translateService = inject(TranslateService);
+  alertService = inject(AlertService);
   declare selectedModel?: Model;
   home = {
     label: this.translateService.instant('COMMON.HOME'),
@@ -58,6 +59,21 @@ export abstract class BaseListComponent<
   abstract openDialog(nationality: Model): void;
 
   abstract initListComponent(): void;
+
+  afterDeleteModel() {
+    const successObject = { messages: ['COMMON.DELETED_SUCCESSFULLY'] };
+    this.alertService.showSuccessMessage(successObject);
+  }
+
+  private _appliedFilterModel: FilterModel = {} as FilterModel;
+
+  get appliedFilterModel(): FilterModel {
+    return this._appliedFilterModel;
+  }
+
+  set appliedFilterModel(val: FilterModel) {
+    this._appliedFilterModel = val;
+  }
 
   openBaseDialog(
     popupComponent: PopupComponent,
@@ -145,14 +161,15 @@ export abstract class BaseListComponent<
   }
 
   loadList() {
-    return this.service.loadPaginated(this.paginationParams, { ...this.filterModel! });
+    return this.service.loadPaginated(this.paginationParams, { ...this._appliedFilterModel! });
   }
 
   loadListSP() {
-    return this.service.loadPaginatedSP(this.paginationParams, { ...this.filterModel! });
+    return this.service.loadPaginatedSP(this.paginationParams, { ...this._appliedFilterModel! });
   }
 
   search(isStoredProcedure: boolean = false) {
+    this._appliedFilterModel = { ...this.filterModel };
     this.paginationParams.pageNumber = 1;
     this.first = 0;
     if (isStoredProcedure) {
@@ -161,7 +178,7 @@ export abstract class BaseListComponent<
         error: this.handleLoadListError,
       });
     } else {
-      console.log('searching with params', this.paginationParams, this.filterModel);
+      console.log('searching with params', this.paginationParams, this._appliedFilterModel);
       this.loadList().subscribe({
         next: (response) => this.handleLoadListSuccess(response),
         error: this.handleLoadListError,
@@ -171,6 +188,8 @@ export abstract class BaseListComponent<
 
   resetSearch(isStoredProcedure: boolean = false) {
     this.filterModel = {} as FilterModel;
+    this._appliedFilterModel = {} as FilterModel;
+
     this.paginationParams.pageNumber = 1;
     this.paginationParams.pageSize = 10;
     this.first = 0;
@@ -213,13 +232,16 @@ export abstract class BaseListComponent<
     };
 
     const fetchAll = isStoredProcedure
-      ? this.service.loadPaginatedSP(allDataParams, { ...this.filterModel! })
-      : this.service.loadPaginated(allDataParams, { ...this.filterModel! });
+      ? this.service.loadPaginatedSP(allDataParams, { ...this._appliedFilterModel! })
+      : this.service.loadPaginated(allDataParams, { ...this._appliedFilterModel! });
 
     fetchAll.subscribe({
       next: (response) => {
         const fullList = response.list || [];
-        if (fullList.length > 0) {
+        if (fullList.length === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
+        } else {
           const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
           const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
           const ws = XLSX.utils.json_to_sheet(transformedData);
@@ -245,25 +267,28 @@ export abstract class BaseListComponent<
 
     dialogRef
       .afterClosed()
-      .pipe(takeUntil(this.destroy$))
       .pipe(
-        filter((result) => {
-          return result == DIALOG_ENUM.OK;
-        })
-      )
-      .pipe(
-        switchMap((_) => {
-          return this.service.delete(id);
-        })
-      )
-      .pipe(
-        switchMap((_) => {
-          return isStoredProcedure ? this.loadListSP() : this.loadList();
-        })
-      )
-      .pipe(
-        switchMap((response) => {
-          if (response.list.length === 0) {
+        takeUntil(this.destroy$),
+        filter((result) => result === DIALOG_ENUM.OK),
+
+        // delete
+        switchMap(() => this.service.delete(id)),
+
+        // if success -> show toast (afterDeleteModel) and PAUSE a bit
+        switchMap((response: any) => {
+          if (response?.error == null) {
+            this.afterDeleteModel(); // shows "deleted successfully"
+            // return timer(700).pipe(mapTo(response)); // <-- delay before spinner/reload
+          }
+          return of(response); // keep flowing even if backend returns an error object
+        }),
+
+        // reload (this is where your spinner likely starts)
+        switchMap(() => (isStoredProcedure ? this.loadListSP() : this.loadList())),
+
+        // if page becomes empty, go back to page 1 and reload
+        switchMap((response: any) => {
+          if (response?.list?.length === 0) {
             this.paginationParams.pageNumber = 1;
             return isStoredProcedure ? this.loadListSP() : this.loadList();
           }
@@ -271,7 +296,9 @@ export abstract class BaseListComponent<
         })
       )
       .subscribe({
-        next: (response) => this.handleLoadListSuccess(response),
+        next: (response) => {
+          this.handleLoadListSuccess(response);
+        },
         error: this.handleLoadListError,
       });
   }

@@ -69,12 +69,15 @@ export class DepartmentHeaderComponent {
 
     const dialogRef = this.matDialog.open(DepartmentPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: any) => {
-      if (result && result == DIALOG_ENUM.OK) {
-        this.dialogClosed.emit();
-        dialogRef.close(DIALOG_ENUM.OK);
-      }
-    });
+    return dialogRef
+      .afterClosed()
+      .subscribe((result: { action: DIALOG_ENUM; data: Department }) => {
+        if (result.action && result.action == DIALOG_ENUM.OK) {
+          this.departmentData = { ...result.data } as Department;
+          this.dialogClosed.emit();
+          dialogRef.close(DIALOG_ENUM.OK);
+        }
+      });
   }
 
   isCurrentLanguageEnglish() {

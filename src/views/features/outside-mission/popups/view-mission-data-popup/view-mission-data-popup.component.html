@@ -4,7 +4,11 @@
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
-      {{ 'WORK_MISSIONS.MISSION_DATA' | translate }}
+      @if (model.isMyMission) {
+        {{ 'WORK_MISSIONS.MY_MISSION_DATA' | translate }}
+      } @else {
+        {{ 'WORK_MISSIONS.MISSION_DATA' | translate }}
+      }
     </h3>
     <div class="bg-[#074d31] rounded-2xl p-6 mb-6">
       <div class="bg-[#1B835433] border border-[#1b8354] rounded-2xl px-6 py-3">

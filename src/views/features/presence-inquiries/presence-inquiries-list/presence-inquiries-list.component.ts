@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
@@ -14,9 +14,8 @@ import { OthersPresenceInquiriesListComponent } from '../others-presence-inquiri
 import { AuthService } from '@/services/auth/auth.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
-interface Adminstration {
-  type: string;
-}
+import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
 
 @Component({
   selector: 'app-presence-inquiries-list',
@@ -26,7 +25,6 @@ interface Adminstration {
     TableModule,
     CommonModule,
     RouterModule,
-    CommonModule,
     PaginatorModule,
     DatePickerModule,
     FormsModule,
@@ -38,14 +36,16 @@ interface Adminstration {
   templateUrl: './presence-inquiries-list.component.html',
   styleUrl: './presence-inquiries-list.component.scss',
 })
-export default class PresenceInquiriesListComponent implements OnInit, OnDestroy {
+export default class PresenceInquiriesListComponent implements OnInit, AfterViewInit, OnDestroy {
   breadcrumbs: MenuItem[] = [];
   translateService = inject(TranslateService);
-  destroy$: Subject<void> = new Subject<void>();
+  destroy$ = new Subject<void>();
   authService = inject(AuthService);
 
-  // Track active tab
-  activeTabIndex: number = 0;
+  @ViewChild('myList') myList!: MyPresenceInquiriesListComponent;
+  @ViewChild('othersList') othersList!: OthersPresenceInquiriesListComponent;
+
+  activeTabIndex = 0;
 
   home = {
     label: this.translateService.instant('COMMON.HOME'),
@@ -57,14 +57,14 @@ export default class PresenceInquiriesListComponent implements OnInit, OnDestroy
     this.setHomeItem();
     this.initBreadcrumbs();
 
-    // Listen to language changes
+    // Update breadcrumbs on language change
     this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.setHomeItem();
       this.initBreadcrumbs();
     });
   }
 
-  setHomeItem(): void {
+  private setHomeItem(): void {
     this.home = {
       label: this.translateService.instant('COMMON.HOME'),
       icon: 'pi pi-home',
@@ -80,42 +80,38 @@ export default class PresenceInquiriesListComponent implements OnInit, OnDestroy
     }));
   }
 
-  protected getBreadcrumbKeys(): {
-    labelKey: string;
-    icon?: string;
-    routerLink?: string;
-  }[] {
+  protected getBreadcrumbKeys(): { labelKey: string; icon?: string; routerLink?: string }[] {
     return [{ labelKey: 'INQUIRIES_PAGE.PRESENCE_INQUIRIES' }];
   }
 
-  onTabChange(event: any) {
-    this.activeTabIndex = event.index;
-    // The child components will automatically detect the change in isActive
-    // and trigger their data loading
-  }
-  showOthersInquiries() {
-    return this.authService.isFollowUpOfficer;
+  showOthersInquiries(): boolean {
+    return this.authService.isFollowUpOfficer!;
   }
 
-  clickMyTab() {
-    this.activeTabIndex = 0;
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.myList) {
+        this.myList.loadList().subscribe();
+      }
+    });
   }
 
-  clickOthersTab() {
-    this.activeTabIndex = 1;
-  }
+  onTabChange(index: number | string) {
+    const selectedIndex = Number(index);
 
-  // Helper methods to determine if each tab is active
-  isMyTabActive(): boolean {
-    return this.activeTabIndex === 0;
-  }
-
-  isOthersTabActive(): boolean {
-    return this.activeTabIndex === 1;
+    if (selectedIndex === 0 && this.myList) {
+      this.myList.loadList().subscribe({
+        next: (response) => this.myList.handleLoadListSuccess(response),
+      });
+    } else if (selectedIndex === 1 && this.othersList) {
+      this.othersList.loadList().subscribe({
+        next: (response) => this.othersList.handleLoadListSuccess(response),
+      });
+    }
   }
 
   ngOnDestroy() {
     this.destroy$.next();
-    this.destroy$.unsubscribe();
+    this.destroy$.complete();
   }
 }

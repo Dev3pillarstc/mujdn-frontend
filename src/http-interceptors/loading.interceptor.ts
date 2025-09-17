@@ -25,7 +25,9 @@ export const loadingInterceptor = (
 
   return next(req).pipe(
     finalize(() => {
-      spinnerService.hide();
+      setTimeout(() => {
+        spinnerService.hide();
+      }, 123);
     })
   );
 };

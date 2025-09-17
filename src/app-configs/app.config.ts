@@ -1,4 +1,10 @@
-import { ApplicationConfig, ErrorHandler, importProvidersFrom } from '@angular/core';
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  importProvidersFrom,
+  inject,
+  provideEnvironmentInitializer,
+} from '@angular/core';
 import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 import { routes } from '@/routes/app.routes';
 import { GeneralInterceptor } from '@/model-interceptors/general-interceptor';
@@ -15,6 +21,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { provideInterceptors } from 'cast-response';
 import { AuthInterceptor } from '@/http-interceptors/auth.interceptor';
 import { httpErrorInterceptor } from '@/http-interceptors/http-error-interceptor';
+import { ScrollToTopPaginationService } from '@/services/shared/scroll-to-top-pagination.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -51,5 +58,8 @@ export const appConfig: ApplicationConfig = {
         },
       })
     ),
+    provideEnvironmentInitializer(() => {
+      inject(ScrollToTopPaginationService);
+    }),
   ],
 };

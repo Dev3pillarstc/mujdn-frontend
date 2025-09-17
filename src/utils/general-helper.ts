@@ -70,6 +70,15 @@ export function convertUtcToSystemTimeZone(utcDateTime: Date | string): Date {
   return ksaTime;
 }
 
+export function convertKsaToUtc(ksaDateTime: Date | string): Date {
+  // Convert the input (string or Date) into a Date object
+  const ksaDate = new Date(ksaDateTime);
+
+  // Subtract 3 hours to convert KSA → UTC
+  const utcDate = new Date(ksaDate.getTime() - 3 * 60 * 60 * 1000);
+
+  return utcDate;
+}
 // --Formating date for view only--
 // Format time string (HH:MM:SS) to 12-hour format (No time zone conversion)
 export function formatTimeTo12Hour(
@@ -95,6 +104,21 @@ export function formatTimeTo12Hour(
 
   return formatted;
 }
+export function changeTimeSuffix<T>(
+  isCurrentLanguageEnglish: () => boolean,
+  item: T,
+  timeKey: keyof T,
+  formattedKey: keyof T
+): void {
+  if (!item) return;
+
+  const locale: 'en-US' | 'ar-EG' = isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+  const timeValue = item[timeKey] as unknown as string | null | undefined;
+
+  if (timeValue) {
+    (item as any)[formattedKey] = formatTimeTo12Hour(timeValue, locale);
+  }
+}
 
 // Format Date object to 12-hour format (No time zone conversion)
 export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-US'): string {
@@ -110,6 +134,20 @@ export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-U
   if (locale === 'ar-EG') {
     return formatted.replace('AM', 'ص').replace('PM', 'م');
   }
+
+  return formatted;
+}
+
+export function formatDateOnly(date: any): string {
+  if (!date) return '';
+
+  date = new Date(date);
+  // Always use 'en-US' to ensure numbers are Latin digits
+  const formatted = date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
 
   return formatted;
 }

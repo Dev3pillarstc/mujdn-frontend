@@ -34,7 +34,8 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   declare qRcode: string;
   declare arrivalTime: string | null;
   declare leaveTime: string | null;
-
+  declare accessLocationIds: number[]; // selected IDs (for saving)
+  declare accessLocations: BaseLookupModel[];
   constructor() {
     super();
   }
@@ -54,6 +55,7 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
       visitTimeFrom,
       visitTimeTo,
       visitPurpose,
+      accessLocationIds,
     } = this;
     return {
       nationalId: [nationalId, [Validators.required, CustomValidators.pattern('NATIONAL_ID')]],
@@ -96,6 +98,7 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
         [Validators.required],
       ],
       visitPurpose: [visitPurpose, [Validators.required]],
+      accessLocationIds: [accessLocationIds ?? [], [Validators.required]],
     };
   }
 }

@@ -1,50 +1,63 @@
-<div dir="rtl">
+<div [dir]="direction">
   <div class="p-6">
     <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">إضافة موقع جديد</h3>
-    <form class="">
-      <div class="grid grid-cols-1">
-        <div class="xl:col-span-1">
-          <label class="label" for="shiftName">اسم الموقع بالعربية</label>
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{
+        (isCreateMode
+          ? 'DEVICES_LOCATION_PAGE.ADD_NEW_LOCATION'
+          : 'DEVICES_LOCATION_PAGE.EDIT_LOCATION'
+        ) | translate
+      }}
+    </h3>
+    <form [formGroup]="form" class="mt-6">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <label class="label" for="locationAr-popup">{{
+            'DEVICES_LOCATION_PAGE.LOCATION_NAME_AR' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="nationalityAr"
+              formControlName="nameAr"
+              id="locationAr-popup"
               pInputText
-              placeholder="اسم الموقع بالعربية"
+              placeholder="{{ 'DEVICES_LOCATION_PAGE.LOCATION_NAME_AR' | translate }}"
               type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="nameArControl"></app-validation-messages>
         </div>
-        <div class="xl:col-span-1">
-          <label class="label" for="shiftName">اسم الموقع بالانجليزية</label>
+        <div>
+          <label class="label" for="locationEn-popup">{{
+            'DEVICES_LOCATION_PAGE.LOCATION_NAME_EN' | translate
+          }}</label>
           <div class="relative">
             <input
               class="peer"
               fluid="true"
-              id="nationalityAr"
+              formControlName="nameEn"
+              id="locationEn-popup"
               pInputText
-              placeholder="اسم الموقع بالانجليزية"
+              placeholder="{{ 'DEVICES_LOCATION_PAGE.LOCATION_NAME_EN' | translate }}"
               type="text"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <span class="validation-message">هذا الحقل مطلوب</span>
+          <app-validation-messages [control]="nameEnControl"></app-validation-messages>
         </div>
       </div>
-      <div class="actions mt-6 flex items-center justify-between gap-4">
-        <button (click)="close()" class="btn gray-btn">الغاء</button>
-        <button class="btn green-btn flex items-center">
-          <span>اضافة</span>
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button (click)="save$.next()" class="btn green-btn">
+          {{ 'COMMON.SAVE' | translate }}
         </button>
       </div>
     </form>

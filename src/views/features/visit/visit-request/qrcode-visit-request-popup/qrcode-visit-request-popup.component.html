@@ -67,6 +67,18 @@
             <h4 class="font-semibold text-[#161616]">{{ model.creationUser.phoneNumber }}</h4>
           </div>
         </div>
+        <div class="mt-6 pt-6 border-t border-[#d2d6db]">
+          <h4 class="text-[14px] text-[#6c737f]">
+            {{ 'QR_CODE_POPUP.SELECTED_DEVICES_LOCATIONS' | translate }}
+          </h4>
+          <div class="mt-2 flex flex-wrap gap-2">
+            @for (loc of selectedAccessLocations; track $index) {
+              <div class="bg-[#ffffff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
+                <span>{{ loc.nameAr }}</span>
+              </div>
+            }
+          </div>
+        </div>
         <div
           class="relative flex items-start gap-4 px-6 py-4 rounded-lg bg-white mb-6 border border-[#fedf89] border-s-[6px] border-s-[#dc6803] mt-6"
         >

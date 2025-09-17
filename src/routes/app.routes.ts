@@ -23,6 +23,8 @@ import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blackl
 import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
 import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
 import { visitResolver } from '@/resolvers/features/visit/visit.resolver';
+import { accessLocationResolver } from '@/resolvers/business/access-location.resolver';
+import { devicesConfigurationResolver } from '@/resolvers/business/devices-configuration.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -138,6 +140,16 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'reports-processing',
+        loadComponent: () =>
+          import('@/views/features/reports/reports-processing/reports-processing.component'),
+      },
+      {
+        path: 'attendance-report',
+        loadComponent: () =>
+          import('@/views/features/reports/attendance-report/attendance-report-container/attendance-report-container.component'),
+      },
+      {
         path: 'nationalities',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.NATIONALITIES },
@@ -184,17 +196,17 @@ export const routes: Routes = [
       },
       {
         path: 'devices-configuration',
-        // canActivate: [authGuard],
-        // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
-        // resolve: { channel: notificationSettingResolver },
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.DEVICES_CONFIGURATION },
+        resolve: { list: devicesConfigurationResolver },
         loadComponent: () =>
           import('@/views/features/settings/devices-configuration/devices-configuration.component'),
       },
       {
         path: 'devices-location',
-        // canActivate: [authGuard],
-        // data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
-        // resolve: { channel: notificationSettingResolver },
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.ACCESS_LOCATIONS },
+        resolve: { list: accessLocationResolver },
         loadComponent: () =>
           import('@/views/features/settings/devices-location/devices-location.component'),
       },

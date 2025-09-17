@@ -722,7 +722,6 @@
   },
   "ATTENDANCE_REPORT_PAGE": {
     "EMPLOYEE_REPORTS_PROCESSING": "معالجة بيانات تقارير الموظفين",
-    "SEARCH_FILTER": "تصفية البحث",
     "DATE_FROM": "التاريخ (من)",
     "DATE_TO": "التاريخ (الى)",
     "SELECT_DEPARTMENT": "اختر إدارة",
@@ -730,6 +729,9 @@
     "SELECT_ALL_DEPARTMENTS": "تحديد كل الادارات",
     "PROCESS_ALL_EMPLOYEES": "معالجة جميع الموظفين",
     "EMPLOYEES_FOR_PROCESSING": "الموظفون المعنيون بالمعالجة",
-    "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين"
+    "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين",
+    "PROCESS_EMPLOYEES": "تأكيد معالجة البيانات",
+    "SELECT_EMPLOYEES": "تحديد الموظفين",
+    "RESET": "إعادة تعيين"
   }
 }

@@ -724,7 +724,6 @@
   },
   "ATTENDANCE_REPORT_PAGE": {
     "EMPLOYEE_REPORTS_PROCESSING": "Employee Reports Processing",
-    "SEARCH_FILTER": "Search Filter",
     "DATE_FROM": "Date (From)",
     "DATE_TO": "Date (To)",
     "SELECT_DEPARTMENT": "Select Department",
@@ -732,6 +731,9 @@
     "SELECT_ALL_DEPARTMENTS": "Select All Departments",
     "PROCESS_ALL_EMPLOYEES": "Process All Employees",
     "EMPLOYEES_FOR_PROCESSING": "Employees for Processing",
-    "DELETE_ALL_EMPLOYEES": "Delete All Employees"
+    "DELETE_ALL_EMPLOYEES": "Delete All Employees",
+    "PROCESS_EMPLOYEES": "Process Employees",
+    "SELECT_EMPLOYEES": "Select Employees",
+    "RESET": "Reset"
   }
 }

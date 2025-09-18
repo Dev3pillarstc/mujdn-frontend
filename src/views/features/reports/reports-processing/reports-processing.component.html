@@ -15,243 +15,203 @@
     </div>
 
     <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
-      <div>
-        <div class="flex items-center justify-between">
-          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-            {{ 'ATTENDANCE_REPORT_PAGE.SELECT_EMPLOYEES' | translate }}
-          </h5>
-        </div>
-        <div class="pt-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
-            <div class="relative">
-              <label for="" class="label">{{
-                'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate
-              }}</label>
-              <p-datepicker
-                [(ngModel)]="date2"
-                [iconDisplay]="'input'"
-                [showIcon]="true"
-                [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate"
-                class="peer block w-full"
-                inputId="icondisplay"
-              >
-                <ng-template pTemplate="inputicon">
-                  <img src="/assets/icons/calender-icon.svg" alt="" />
-                </ng-template>
-              </p-datepicker>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
-              <label for="" class="label">{{ 'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate }}</label>
-              <p-datepicker
-                [(ngModel)]="date2"
-                [iconDisplay]="'input'"
-                [showIcon]="true"
-                [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate"
-                class="peer block w-full"
-                inputId="icondisplay"
-              >
-                <ng-template pTemplate="inputicon">
-                  <img src="/assets/icons/calender-icon.svg" alt="" />
-                </ng-template>
-              </p-datepicker>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
-              <label class="label" for="department">{{
-                'EMPLOYEES_PAGE.DEPARTMENT' | translate
-              }}</label>
-              <p-select
-                optionLabel="nameAr"
-                [placeholder]="'ATTENDANCE_REPORT_PAGE.SELECT_DEPARTMENT' | translate"
-                class="w-full"
-                [options]="departmentList"
-              />
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-              ></span>
-            </div>
-            <div class="relative">
-              <label class="label" for="employee">{{
-                'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate
-              }}</label>
+      <form [formGroup]="form">
+        <div>
+          <div class="flex items-center justify-between">
+            <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+              {{ 'ATTENDANCE_REPORT_PAGE.SELECT_EMPLOYEES' | translate }}
+            </h5>
+          </div>
+          <div class="pt-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
               <div class="relative">
-                <p-multiselect
-                  optionLabel="nameAr"
-                  [placeholder]="'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate"
-                  [maxSelectedLabels]="3"
+                <label for="" class="label">{{
+                  'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate
+                }}</label>
+                <p-datepicker
+                  formControlName="dateFrom"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate"
+                  class="peer block w-full"
+                  inputId="dateFrom"
+                >
+                  <ng-template pTemplate="inputicon">
+                    <img src="/assets/icons/calender-icon.svg" alt="" />
+                  </ng-template>
+                </p-datepicker>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                ></span>
+                <app-validation-messages [control]="dateFromControl"></app-validation-messages>
+              </div>
+              <div class="relative">
+                <label for="" class="label">{{
+                  'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate
+                }}</label>
+                <p-datepicker
+                  formControlName="dateTo"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate"
+                  class="peer block w-full"
+                  inputId="dateTo"
+                >
+                  <ng-template pTemplate="inputicon">
+                    <img src="/assets/icons/calender-icon.svg" alt="" />
+                  </ng-template>
+                </p-datepicker>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                ></span>
+                <app-validation-messages [control]="dateToControl"></app-validation-messages>
+              </div>
+              <div class="relative">
+                <label class="label" for="department">{{
+                  'EMPLOYEES_PAGE.DEPARTMENT' | translate
+                }}</label>
+                <p-select
+                  formControlName="departmentId"
+                  [optionLabel]="optionLabel"
+                  optionValue="id"
+                  [placeholder]="'ATTENDANCE_REPORT_PAGE.SELECT_DEPARTMENT' | translate"
                   class="w-full"
-                  [options]="employeeList"
+                  [options]="departmentList"
+                  [showClear]="true"
                 />
                 <span
                   class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                 ></span>
               </div>
+              <div class="relative">
+                <label class="label" for="employee">{{
+                  'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate
+                }}</label>
+                <div class="relative">
+                  <p-multiselect
+                    formControlName="userIds"
+                    [optionLabel]="optionLabel"
+                    optionValue="id"
+                    [placeholder]="'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate"
+                    [maxSelectedLabels]="3"
+                    class="w-full"
+                    [options]="filteredEmployeeList"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="mt-10 pt-10 border-t border-[#d2d6db]">
-        <h3 class="text-[#1f2a37] font-[600] text-lg">
-          {{ 'ATTENDANCE_REPORT_PAGE.SELECT_ALL_DEPARTMENTS' | translate }}
-        </h3>
-        <div class="flex flex-wrap gap-8 mt-3 rounded dimmed-form">
-          <label class="flex items-center gap-3 cursor-pointer relative">
-            <input
-              class="appearance-none cursor-pointer w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-              type="checkbox"
-            />
-            <svg
-              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              viewBox="0 0 24 24"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span class="text-base font-medium text-[#1f2a37]">{{
-              'ATTENDANCE_REPORT_PAGE.PROCESS_ALL_EMPLOYEES' | translate
-            }}</span>
-          </label>
+        <div class="mt-10 pt-10 border-t border-[#d2d6db]">
+          <h3 class="text-[#1f2a37] font-[600] text-lg">
+            {{ 'ATTENDANCE_REPORT_PAGE.SELECT_ALL_DEPARTMENTS' | translate }}
+          </h3>
+          <div class="flex flex-wrap gap-8 mt-3 rounded dimmed-form">
+            <label class="flex items-center gap-3 cursor-pointer relative">
+              <input
+                class="appearance-none cursor-pointer w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                type="checkbox"
+                [(ngModel)]="processAllEmployees"
+                (change)="onProcessAllEmployeesChange()"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <svg
+                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                viewBox="0 0 24 24"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span class="text-base font-medium text-[#1f2a37]">{{
+                'ATTENDANCE_REPORT_PAGE.PROCESS_ALL_EMPLOYEES' | translate
+              }}</span>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="mt-10 pt-10 border-t border-[#d2d6db]">
-        <h3 class="text-[#1f2a37] font-[600] text-xl border-b border-[#d2d6db] pb-4">
-          {{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEES_FOR_PROCESSING' | translate }}
-        </h3>
-        <p-accordion value="0">
-          <p-accordion-panel value="0">
-            <p-accordion-header>
-              <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">selected department</h4>
-                <button
-                  type="button"
-                  class="text-[#b42318] text-xs font-medium flex items-center gap-1"
-                >
-                  <img src="assets/icons/delete.svg" alt="" />
-                  {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
-                </button>
-              </div>
-            </p-accordion-header>
-            <p-accordion-content>
-              <div class="px-8 py-6 bg-[#f3f4f6]">
-                <div
-                  class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
-                >
-                  <span>employee name</span>
-                  <button type="button">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                        fill="#161616"
-                      />
-                    </svg>
+        <div
+          class="mt-10 pt-10 border-t border-[#d2d6db]"
+          *ngIf="departmentEmployeesGroups.length > 0"
+        >
+          <h3 class="text-[#1f2a37] font-[600] text-xl border-b border-[#d2d6db] pb-4">
+            {{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEES_FOR_PROCESSING' | translate }}
+          </h3>
+          <p-accordion [value]="'0'">
+            <p-accordion-panel
+              *ngFor="let group of departmentEmployeesGroups; let i = index"
+              [value]="i.toString()"
+            >
+              <p-accordion-header>
+                <div class="flex items-center justify-between ps-8 w-[100%]">
+                  <h4 class="text-[#161616] font-semibold">
+                    {{ currentLang === 'ar' ? group.department.nameAr : group.department.nameEn }}
+                  </h4>
+                  <button
+                    type="button"
+                    class="text-[#b42318] text-xs font-medium flex items-center gap-1"
+                    (click)="
+                      removeAllEmployeesFromDepartment(group.department.id);
+                      $event.stopPropagation()
+                    "
+                  >
+                    <img src="assets/icons/delete.svg" alt="" />
+                    {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
                   </button>
                 </div>
-              </div>
-            </p-accordion-content>
-          </p-accordion-panel>
-
-          <p-accordion-panel value="1">
-            <p-accordion-header>
-              <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">selected department</h4>
-                <button class="text-[#b42318] text-xs font-medium flex items-center gap-1">
-                  <img src="assets/icons/delete.svg" alt="" />
-                  {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
-                </button>
-              </div>
-            </p-accordion-header>
-            <p-accordion-content>
-              <div class="px-8 py-6 bg-[#f3f4f6]">
-                <div
-                  class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
-                >
-                  <span>employee name</span>
-                  <button type="button">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+              </p-accordion-header>
+              <p-accordion-content>
+                <div class="px-8 py-6 bg-[#f3f4f6]">
+                  <div class="flex flex-wrap gap-2">
+                    <div
+                      *ngFor="let employee of group.employees"
+                      class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
                     >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                        fill="#161616"
-                      />
-                    </svg>
-                  </button>
+                      <span>{{ currentLang === 'ar' ? employee.nameAr : employee.nameEn }}</span>
+                      <button type="button" (click)="removeEmployee(employee)">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 18 18"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                            fill="#161616"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </p-accordion-content>
-          </p-accordion-panel>
+              </p-accordion-content>
+            </p-accordion-panel>
+          </p-accordion>
+        </div>
 
-          <p-accordion-panel value="3">
-            <p-accordion-header>
-              <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">selected department</h4>
-                <button class="text-[#b42318] text-xs font-medium flex items-center gap-1">
-                  <img src="assets/icons/delete.svg" alt="" />
-                  {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
-                </button>
-              </div>
-            </p-accordion-header>
-            <p-accordion-content>
-              <div class="px-8 py-6 bg-[#f3f4f6]">
-                <div
-                  class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
-                >
-                  <span>employee name</span>
-                  <button type="button">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                        fill="#161616"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </p-accordion-content>
-          </p-accordion-panel>
-        </p-accordion>
-      </div>
-      <div class="actions flex items-center gap-4 mt-8 justify-between">
-        <button class="btn gray-btn border border-[#d2d6db] !bg-transparent hover:!bg-[#e5e7eb]">
-          {{ 'ATTENDANCE_REPORT_PAGE.RESET' | translate }}
-        </button>
-        <button class="btn green-btn">
-          {{ 'ATTENDANCE_REPORT_PAGE.PROCESS_EMPLOYEES' | translate }}
-        </button>
-      </div>
+        <div class="actions flex items-center gap-4 mt-8 justify-between">
+          <button
+            type="button"
+            class="btn gray-btn border border-[#d2d6db] !bg-transparent hover:!bg-[#e5e7eb]"
+            (click)="resetForm()"
+          >
+            {{ 'ATTENDANCE_REPORT_PAGE.RESET' | translate }}
+          </button>
+          <button (click)="processEmployees()" type="submit" class="btn green-btn">
+            {{ 'ATTENDANCE_REPORT_PAGE.PROCESS_EMPLOYEES' | translate }}
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

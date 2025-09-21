@@ -719,5 +719,17 @@
     "LOCATION_NAME_EN": "اسم الموقع بالإنجليزية",
     "ADD_NEW_LOCATION": "إضافة موقع جديد",
     "EDIT_LOCATION": "تعديل الموقع"
+  },
+  "ATTENDANCE_STATUS": {
+    "HOLIDAY": "عطلة رسمية",
+    "WEEKEND": "عطلة نهاية الأسبوع",
+    "MISSION": "مهمة",
+    "ABSENT": "غائب",
+    "PRESENT": "حاضر",
+    "EXEMPTED": "معفى من البصمة"
+  },
+  "ATTENDANCE_REPORT_PAGE": {
+    "SPECIAL_SHIFT": "وردية عمل خاصة",
+    "DEFAULT_SHIFT": "وردية عمل افتراضية"
   }
 }

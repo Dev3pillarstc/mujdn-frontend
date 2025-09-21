@@ -160,13 +160,9 @@
         </ng-template>
         <ng-template #body let-inquiry>
           <tr>
-            @if (inquiry.assignedDate) {
-              <td>{{ inquiry.assignedDate | date: 'dd-MM-yyyy' }}</td>
-              <td>{{ inquiry.assignedDate | date: 'HH:mm:ss' }}</td>
-            } @else {
-              <td>_</td>
-              <td>_</td>
-            }
+            <td>{{ formatDate(inquiry.assignedDate) }}</td>
+            <td>{{ formatTime(inquiry.assignedDate) }}</td>
+
             <td>
               <span
                 class="text-[16px] font-medium text-[#1849a9] min-w-[67px] min-h-[24px] inline-flex justify-center items-center px-3 rounded-full border border-[#b2ddff] bg-[#eff8ff]"

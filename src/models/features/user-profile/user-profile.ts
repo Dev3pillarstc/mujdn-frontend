@@ -24,6 +24,7 @@ export class UserProfile extends BaseCrudModel<UserProfile, UserProfileService, 
   declare joinDate?: Date | string;
   declare nationalId?: string;
   declare roleKeys?: string[];
+  declare canLeaveWithoutFingerPrint: boolean;
 
   constructor() {
     super();

@@ -721,5 +721,17 @@
     "LOCATION_NAME_EN": "Location Name (English)",
     "ADD_NEW_LOCATION": "Add New Location",
     "EDIT_LOCATION": "Edit Location"
+  },
+  "ATTENDANCE_STATUS": {
+    "HOLIDAY": "Holiday",
+    "WEEKEND": "Weekend",
+    "MISSION": "Mission",
+    "ABSENT": "Absent",
+    "PRESENT": "Present",
+    "EXEMPTED": "Exempted"
+  },
+  "ATTENDANCE_REPORT_PAGE": {
+    "SPECIAL_SHIFT": "Special Shift",
+    "DEFAULT_SHIFT": "Default Shift"
   }
 }

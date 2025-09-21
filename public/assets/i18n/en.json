@@ -728,6 +728,7 @@
     "DATE_TO": "Date (To)",
     "SELECT_DEPARTMENT": "Select Department",
     "EMPLOYEE_NAME": "Employee Name",
+    "SELECTED_EMPLOYEES": "Selected Employees",
     "SELECT_ALL_DEPARTMENTS": "Select All Departments",
     "PROCESS_ALL_EMPLOYEES": "Process All Employees",
     "EMPLOYEES_FOR_PROCESSING": "Employees for Processing",

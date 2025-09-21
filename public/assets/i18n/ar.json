@@ -726,6 +726,7 @@
     "DATE_TO": "التاريخ (الى)",
     "SELECT_DEPARTMENT": "اختر إدارة",
     "EMPLOYEE_NAME": "اسم الموظف",
+    "SELECTED_EMPLOYEES": "الموظفون المعنيون",
     "SELECT_ALL_DEPARTMENTS": "تحديد كل الادارات",
     "PROCESS_ALL_EMPLOYEES": "معالجة جميع الموظفين",
     "EMPLOYEES_FOR_PROCESSING": "الموظفون المعنيون بالمعالجة",

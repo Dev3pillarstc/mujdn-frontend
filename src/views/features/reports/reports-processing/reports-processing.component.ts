@@ -292,4 +292,16 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   get dateToControl(): FormControl {
     return this.form.get('dateTo') as FormControl;
   }
+
+  get userIdsControl(): FormControl {
+    return this.form.get('userIds') as FormControl;
+  }
+
+  getSelectedEmployeesLabel() {
+    return (
+      this.translateService.instant('ATTENDANCE_REPORT_PAGE.SELECTED_EMPLOYEES') +
+      ' ' +
+      this.userIdsControl?.value?.length
+    );
+  }
 }

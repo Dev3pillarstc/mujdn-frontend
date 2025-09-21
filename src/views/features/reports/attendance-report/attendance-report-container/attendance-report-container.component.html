@@ -4,15 +4,19 @@
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
       <p-breadcrumb class="max-w-full" [model]="breadcrumbs" [home]="home"></p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        تقرير الحضور والانصراف
+        <h2>{{ 'ATTENDANCE_REPORT_PAGE.TITLE' | translate }}</h2>
       </h3>
     </div>
 
     <!-- Tabs -->
     <p-tabs [(value)]="activeTabIndex" (valueChange)="onTabChange($event)">
       <p-tablist class="my-6">
-        <p-tab [value]="0"> تقريري </p-tab>
-        <p-tab [value]="1"> سجل تقارير الموظفين التابعين </p-tab>
+        <p-tab [value]="0">
+          {{ 'ATTENDANCE_REPORT_PAGE.MY_ATTENDANCE_REPORTS' | translate }}
+        </p-tab>
+        <p-tab [value]="1">
+          {{ 'ATTENDANCE_REPORT_PAGE.OTHERS_ATTENDANCE_REPORTS' | translate }}
+        </p-tab>
       </p-tablist>
 
       <p-tabpanels>

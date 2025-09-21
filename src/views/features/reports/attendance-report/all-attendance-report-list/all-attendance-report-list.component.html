@@ -1,7 +1,9 @@
 <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
   <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
     <div class="flex items-center justify-between">
-      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+        {{ 'COMMON.SEARCH_FILTERS' | translate }}
+      </h5>
     </div>
     <div class="pt-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
@@ -42,10 +44,12 @@
         </div>
         <!-- National ID -->
         <div class="relative">
-          <label class="label" for="nationalId">الرقم القومي</label>
+          <label class="label" for="nationalId">
+            {{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}</label
+          >
           <input
             id="nationalId"
-            placeholder="الرقم القومي"
+            placeholder="{{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}"
             class="peer"
             pInputText
             type="text"
@@ -96,24 +100,41 @@
           ></span>
         </div>
         <div class="relative">
-          <label class="label" for="department">الحالة</label>
-          <p-select optionLabel="name" placeholder="الحالة" class="w-full" />
+          <label for="department" class="label">
+            {{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</label
+          >
+          <p-select
+            [options]="departments"
+            [(ngModel)]="filterModel.departmentId"
+            [optionLabel]="getPropertyName()"
+            [showClear]="true"
+            [filter]="true"
+            class="w-full peer"
+            id="department"
+            optionLabel="type"
+            optionValue="id"
+            placeholder="{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+        <div class="relative">
+          <label class="label" for="status">{{
+            'ATTENDANCE_REPORT_PAGE.STATUS' | translate
+          }}</label>
+          <p-select
+            optionLabel="name"
+            placeholder="{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}"
+            class="w-full"
+          />
 
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
         </div>
-        <!-- <div class="relative">
-          <label class="label" for="department">حالة المعالجة</label>
-          <p-select optionLabel="name" placeholder="حالة المعالجة" class="w-full" />
-
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
-        </div> -->
       </div>
 
-      <
       <div class="actions flex items-center gap-4 pt-6">
         <button (click)="search()" class="btn black-btn">
           {{ 'COMMON.SEARCH' | translate }}
@@ -129,7 +150,7 @@
       class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
     >
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-        تقرير الحضور و الانصراف
+        {{ 'ATTENDANCE_REPORT_PAGE.TITLE' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <button (click)="exportExcel()" class="table-head-action-btn min-w-[40px]">
@@ -141,25 +162,37 @@
       <p-table [value]="list">
         <ng-template #header>
           <tr>
-            <th>اسم الموظف</th>
-            <th>رقم الهوية</th>
-            <th>الإدارة</th>
-            <th>التاريخ</th>
-            <th>اسم الوردية</th>
-            <th>نوع الوردية</th>
-            <th>اسم الإجازة</th>
-            <th>اسم المهمة</th>
-            <th>التوثيق</th>
-            <th>وقت الحضور</th>
-            <th>وقت الانصراف</th>
-            <th>الحالة</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.NATIONAL_ID' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.DEPARTMENT' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.DATE' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_TYPE' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.LEAVE_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.MISSION_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.DOCUMENTATION' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKIN_TIME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKOUT_TIME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template #body let-attendance>
           <tr>
-            <td>{{ attendance.user?.fullNameAr }}</td>
+            <td>
+              {{
+                isCurrentLanguageEnglish()
+                  ? attendance.user?.fullNameEn
+                  : attendance.user?.fullNameAr
+              }}
+            </td>
             <td>{{ attendance.user?.nationalId }}</td>
-            <td>{{ attendance.user?.department.nameAr }}</td>
+            <td>
+              {{
+                isCurrentLanguageEnglish()
+                  ? attendance.departmentNameEn
+                  : attendance.departmentNameAr
+              }}
+            </td>
             <td>{{ formatDate(attendance.processingDate) }}</td>
             <td>{{ attendance.getShiftName() }}</td>
             <td>

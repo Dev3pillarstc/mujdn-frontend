@@ -24,7 +24,9 @@ export default class AttendanceReport extends BaseCrudModel<
   declare holidayId?: number | null;
   declare holidayNameEn?: string | null;
   declare holidayNameAr?: string | null;
-
+  declare departmentId?: number | null;
+  declare departmentNameAr?: string | null;
+  declare departmentNameEn?: string | null;
   declare shiftId?: number | null;
   declare shiftNameEn?: string | null;
   declare shiftNameAr?: string | null;

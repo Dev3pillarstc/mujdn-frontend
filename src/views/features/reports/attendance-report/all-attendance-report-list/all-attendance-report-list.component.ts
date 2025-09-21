@@ -75,7 +75,7 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
   }
 
   protected override getBreadcrumbKeys() {
-    return [{ labelKey: 'ATTENDANCE_REPORT_PAGE.ATTENDANCE_REPORTS' }];
+    return [{ labelKey: 'ATTENDANCE_REPORT_PAGE.TITLE' }];
   }
 
   override openDialog(model: AttendanceReport): void {

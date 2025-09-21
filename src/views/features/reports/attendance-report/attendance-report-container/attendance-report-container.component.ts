@@ -6,7 +6,7 @@ import { MyAttendanceReportListComponent } from '../my-attendance-report-list/my
 import { AllAttendanceReportListComponent } from '../all-attendance-report-list/all-attendance-report-list.component';
 import { MenuItem } from '@/models/shared/menu-item';
 import { AuthService } from '@/services/auth/auth.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -17,6 +17,7 @@ import { Subject, takeUntil } from 'rxjs';
     TabsModule,
     MyAttendanceReportListComponent,
     AllAttendanceReportListComponent,
+    TranslatePipe,
   ],
   templateUrl: './attendance-report-container.component.html',
   styleUrl: './attendance-report-container.component.scss',
@@ -68,7 +69,7 @@ export default class AttendanceReportContainerComponent
   }
 
   protected getBreadcrumbKeys(): { labelKey: string; icon?: string; routerLink?: string }[] {
-    return [{ labelKey: 'ATTENDANCE_REPORTS_PAGE.ATTENDANCE_REPORTS' }];
+    return [{ labelKey: 'ATTENDANCE_REPORT_PAGE.TITLE' }];
   }
 
   showAllReports(): boolean {

@@ -4,7 +4,7 @@ import { Notification } from '@/models/features/setting/notification';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { ResponseData } from '@/models/shared/response/response-data';
 import { Injectable } from '@angular/core';
-import { CastResponseContainer } from 'cast-response';
+import { CastResponseContainer, HasInterception, InterceptParam } from 'cast-response';
 import { Observable, of, switchMap } from 'rxjs';
 
 @CastResponseContainer({
@@ -27,9 +27,10 @@ export class ManualProcessingService extends BaseCrudService<ManualProcessing> {
     return this.urlService.URLS.MANUAL_PROCESSING;
   }
 
-  excuteManualProcessing(model: ManualProcessing): Observable<string> {
+  @HasInterception
+  excuteManualProcessing(@InterceptParam() model: ManualProcessing): Observable<string> {
     return this.http
-      .post<ResponseData<string>>(this.getUrlSegment() + '/excute', model, {
+      .post<ResponseData<string>>(this.getUrlSegment() + '/execute', model, {
         withCredentials: true,
       })
       .pipe(

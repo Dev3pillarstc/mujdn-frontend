@@ -29,7 +29,7 @@
                   'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate
                 }}</label>
                 <p-datepicker
-                  formControlName="dateFrom"
+                  formControlName="startDate"
                   [iconDisplay]="'input'"
                   [showIcon]="true"
                   [minDate]="minAllowedDate"
@@ -45,14 +45,14 @@
                 <span
                   class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                 ></span>
-                <app-validation-messages [control]="dateFromControl"></app-validation-messages>
+                <app-validation-messages [control]="startDateControl"></app-validation-messages>
               </div>
               <div class="relative">
                 <label for="" class="label">{{
                   'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate
                 }}</label>
                 <p-datepicker
-                  formControlName="dateTo"
+                  formControlName="endDate"
                   [iconDisplay]="'input'"
                   [showIcon]="true"
                   [minDate]="minAllowedDate"
@@ -68,7 +68,7 @@
                 <span
                   class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                 ></span>
-                <app-validation-messages [control]="dateToControl"></app-validation-messages>
+                <app-validation-messages [control]="endDateControl"></app-validation-messages>
                 <app-validation-messages [control]="form"></app-validation-messages>
               </div>
               <div class="relative">
@@ -95,7 +95,7 @@
                 }}</label>
                 <div class="relative">
                   <p-multiselect
-                    formControlName="userIds"
+                    formControlName="userIdsArray"
                     [optionLabel]="optionLabel"
                     optionValue="id"
                     [placeholder]="'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate"

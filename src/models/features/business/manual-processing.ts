@@ -1,26 +1,27 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
-import { notificationSettingInterceptor } from '@/model-interceptors/setting/notification-setting.interceptor';
+import { ManualProcessingInterceptor } from '@/model-interceptors/features/business/manual-processing.interceptor';
 import { ManualProcessingService } from '@/services/features/business/manual-processing.service';
-import { NotificationSettingService } from '@/services/features/setting/notification-setting.service';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 
-const { send, receive } = new notificationSettingInterceptor();
+const { send, receive } = new ManualProcessingInterceptor();
 
 @InterceptModel({ send, receive })
 export class ManualProcessing extends BaseCrudModel<ManualProcessing, ManualProcessingService> {
   override $$__service_name__$$: string = 'ManualProcessingService';
 
-  declare dateFrom?: Date | string;
-  declare dateTo?: Date | string;
-  declare userIds?: number[];
+  declare startDate?: Date | string;
+  declare endDate?: Date | string;
+  declare userIdsArray?: number[];
+  declare departmentIds?: number[];
 
   buildForm() {
-    const { dateFrom, dateTo, userIds } = this;
+    const { startDate, endDate, userIdsArray } = this;
     const form = {
-      dateFrom: [dateFrom, [Validators.required]],
-      dateTo: [dateTo, [Validators.required]],
-      userIds: [userIds, []],
+      startDate: [startDate, [Validators.required]],
+      endDate: [endDate, [Validators.required]],
+      departmentIds: [null, []],
+      userIdsArray: [userIdsArray, []],
     };
 
     return form;

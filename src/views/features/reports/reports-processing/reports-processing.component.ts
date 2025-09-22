@@ -33,6 +33,7 @@ import { AlertService } from '@/services/shared/alert.service';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { CustomValidators } from '@/validators/custom-validators';
+import { ManualProcessingService } from '@/services/features/business/manual-processing.service';
 
 interface DepartmentEmployees {
   department: BaseLookupModel;
@@ -51,7 +52,6 @@ interface DepartmentEmployees {
     DatePickerModule,
     FormsModule,
     ReactiveFormsModule,
-    Select,
     MultiSelect,
     AccordionModule,
     TranslatePipe,
@@ -72,6 +72,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   userService = inject(UserService);
   confirmationService = inject(ConfirmationService);
   alertService = inject(AlertService);
+  manualProcessingService = inject(ManualProcessingService);
   fb = inject(FormBuilder);
 
   departmentList: BaseLookupModel[] = [];
@@ -80,10 +81,6 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   selectedEmployees: UsersWithDepartmentLookup[] = [];
   selectedDepartments: BaseLookupModel[] = [];
   processAllEmployees = false;
-
-  // Grouped employees by department for accordion display
-  departmentEmployeesGroups: DepartmentEmployees[] = [];
-
   private readonly _minAllowedDate = new Date(2025, 0, 1); // Jan 1, 2025
   private readonly _maxAllowedDate = (() => {
     const d = new Date();
@@ -92,13 +89,8 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     return d;
   })();
 
-  // global min / max for both pickers
-  get minAllowedDate(): Date {
-    return this._minAllowedDate;
-  }
-  get maxAllowedDate(): Date {
-    return this._maxAllowedDate;
-  }
+  // Grouped employees by department for accordion display
+  departmentEmployeesGroups: DepartmentEmployees[] = [];
 
   breadcrumbs: MenuItem[] = [];
   home = {
@@ -141,9 +133,9 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
 
     this.form = this.fb.group(
       {
-        dateFrom: formConfig.dateFrom,
-        dateTo: formConfig.dateTo,
-        userIds: formConfig.userIds,
+        startDate: formConfig.startDate,
+        endDate: formConfig.endDate,
+        userIdsArray: formConfig.userIdsArray,
         departmentIds: [null], // Changed from departmentId to departmentIds for multi-select
       },
       {
@@ -183,7 +175,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
 
   onDepartmentChange(departmentIds: number[] | null): void {
     // Get previously selected departments
-    const previousDepartmentIds = this.selectedDepartments.map((dept) => dept.id);
+    // const previousDepartmentIds = this.selectedDepartments.map((dept) => dept.id);
 
     if (departmentIds && departmentIds.length > 0) {
       // Update selected departments
@@ -349,8 +341,12 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     console.log('Form is valid', this.form);
     if (this.form.valid) {
       const formValue = this.form.value;
-      console.log('Processing employees with data:', formValue);
-      // Implement your processing logic here
+      const submittedModel = Object.assign(new ManualProcessing(), { ...formValue });
+      const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
+      this.manualProcessingService.excuteManualProcessing(submittedModel).subscribe((res) => {
+        this.alertService.showSuccessMessage(successObject);
+        this.resetForm();
+      });
     } else {
       console.log('Form is invalid');
       // Mark all fields as touched to show validation errors
@@ -358,11 +354,6 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
         this.form.get(key)?.markAsTouched();
       });
     }
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   setHomeItem(): void {
@@ -390,24 +381,32 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   }
 
   // Form control getters
-  get dateFromControl(): FormControl {
-    return this.form.get('dateFrom') as FormControl;
+  get startDateControl(): FormControl {
+    return this.form.get('startDate') as FormControl;
   }
 
-  get dateToControl(): FormControl {
-    return this.form.get('dateTo') as FormControl;
+  get endDateControl(): FormControl {
+    return this.form.get('endDate') as FormControl;
   }
 
-  get userIdsControl(): FormControl {
-    return this.form.get('userIds') as FormControl;
+  get userIdsArrayControl(): FormControl {
+    return this.form.get('userIdsArray') as FormControl;
   }
 
   get departmentIdsControl(): FormControl {
     return this.form.get('departmentIds') as FormControl;
   }
 
+  // global min / max for both pickers
+  get minAllowedDate(): Date {
+    return this._minAllowedDate;
+  }
+  get maxAllowedDate(): Date {
+    return this._maxAllowedDate;
+  }
+
   getSelectedEmployeesLabel() {
-    const count = this.userIdsControl?.value?.length || 0;
+    const count = this.userIdsArrayControl?.value?.length || 0;
     return this.translateService.instant('ATTENDANCE_REPORT_PAGE.SELECTED_EMPLOYEES') + ' ' + count;
   }
 
@@ -416,5 +415,10 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     return (
       this.translateService.instant('ATTENDANCE_REPORT_PAGE.SELECTED_DEPARTMENTS') + ' ' + count
     );
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

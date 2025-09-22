@@ -8,8 +8,10 @@ export class ManualProcessingInterceptor implements ModelInterceptorContract<Man
   }
 
   send(model: Partial<ManualProcessing>): Partial<ManualProcessing> {
-    model.dateFrom = toDateOnly(model.dateFrom);
-    model.dateTo = toDateOnly(model.dateTo);
+    model.startDate = toDateOnly(model.startDate);
+    model.endDate = toDateOnly(model.endDate);
+    delete model.departmentIds;
+    // convert userIds array into comma separated
     return model;
   }
 }

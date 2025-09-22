@@ -89,9 +89,9 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
       ),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME')]:
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-          ? model.user?.fullName?.nameEn
-          : model.user?.fullName?.nameAr,
-      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.NATIONAL_ID')]: model.user?.nationalId,
+          ? model.fullNameEn
+          : model.fullNameAr,
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.NATIONAL_ID')]: model.nationalId,
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.SHIFT')]: model.getShiftName(),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.SHIFT_TYPE')]:
         model.shiftType === SHIFT_TYPE_ENUM.DEFAULT

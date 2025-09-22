@@ -123,12 +123,25 @@
           <label class="label" for="status">{{
             'ATTENDANCE_REPORT_PAGE.STATUS' | translate
           }}</label>
-          <p-select
-            optionLabel="name"
-            placeholder="{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}"
-            class="w-full"
-          />
 
+          <p-select
+            [options]="attendanceStatuses"
+            optionValue="value"
+            [showClear]="true"
+            [(ngModel)]="filterModel.statusId"
+            placeholder="{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}"
+            class="w-full peer"
+          >
+            <!-- dropdown list items -->
+            <ng-template let-option pTemplate="item">
+              {{ option.labelKey | translate }}
+            </ng-template>
+
+            <!-- selected item -->
+            <ng-template let-selected pTemplate="selectedItem">
+              {{ selected?.labelKey ? (selected.labelKey | translate) : '' }}
+            </ng-template>
+          </p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
@@ -179,13 +192,9 @@
         <ng-template #body let-attendance>
           <tr>
             <td>
-              {{
-                isCurrentLanguageEnglish()
-                  ? attendance.user?.fullNameEn
-                  : attendance.user?.fullNameAr
-              }}
+              {{ isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr }}
             </td>
-            <td>{{ attendance.user?.nationalId }}</td>
+            <td>{{ attendance.nationalId }}</td>
             <td>
               {{
                 isCurrentLanguageEnglish()
@@ -221,15 +230,15 @@
             <td>
               <div
                 class="px-2 py-1 flex items-center gap-2 rounded-full font-medium text-[14px] w-fit"
-                [style.background-color]="getStatusConfig(attendance.status).bgColor"
-                [style.color]="getStatusConfig(attendance.status).textColor"
+                [style.background-color]="getStatusConfig(attendance.attendanceStatus).bgColor"
+                [style.color]="getStatusConfig(attendance.attendanceStatus).textColor"
               >
                 <span
                   class="block w-[10px] h-[10px] rounded-full"
-                  [style.background-color]="getStatusConfig(attendance.status).dotColor"
+                  [style.background-color]="getStatusConfig(attendance.attendanceStatus).dotColor"
                 ></span>
                 <span>
-                  {{ getStatusConfig(attendance.status).labelKey | translate }}
+                  {{ getStatusConfig(attendance.attendanceStatus).labelKey | translate }}
                 </span>
               </div>
             </td>

@@ -17,16 +17,27 @@ export default class AttendanceReport extends BaseCrudModel<
   override $$__service_name__$$: string = 'AttendanceReportService';
 
   declare id: number;
+
+  // processing day data
   declare processingDate: Date | string | null;
   declare dayOfWeekIndex: number;
+
+  // user data
   declare userId: number;
-  declare user?: UserProfile;
+  declare nationalId: string;
+  declare fullNameEn: string;
+  declare fullNameAr: string;
+  declare departmentId?: number | null;
+  declare departmentNameEn?: string | null;
+  declare departmentNameAr?: string | null;
+  declare isActive: boolean;
+  declare canLeaveWithoutFingerPrint: boolean;
+
+  // processed data
   declare holidayId?: number | null;
   declare holidayNameEn?: string | null;
   declare holidayNameAr?: string | null;
-  declare departmentId?: number | null;
-  declare departmentNameAr?: string | null;
-  declare departmentNameEn?: string | null;
+
   declare shiftId?: number | null;
   declare shiftNameEn?: string | null;
   declare shiftNameAr?: string | null;

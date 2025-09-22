@@ -47,8 +47,6 @@ export class AttendanceReportInterceptor implements ModelInterceptorContract<Att
   send(model: Partial<AttendanceReport>): Partial<AttendanceReport> {
     // remove frontend-only props if any
     delete (model as any).languageService;
-    delete model.user;
-
     return model;
   }
 }

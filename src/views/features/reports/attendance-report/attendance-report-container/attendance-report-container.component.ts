@@ -22,9 +22,7 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './attendance-report-container.component.html',
   styleUrl: './attendance-report-container.component.scss',
 })
-export default class AttendanceReportContainerComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export default class AttendanceReportContainerComponent implements OnInit, OnDestroy {
   breadcrumbs: MenuItem[] = [];
   translateService = inject(TranslateService);
   destroy$ = new Subject<void>();
@@ -77,13 +75,13 @@ export default class AttendanceReportContainerComponent
     return this.authService.isFollowUpOfficer!;
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      if (this.myReports) {
-        this.myReports.loadList().subscribe();
-      }
-    });
-  }
+  // ngAfterViewInit() {
+  //   setTimeout(() => {
+  //     if (this.myReports) {
+  //       this.myReports.loadList().subscribe();
+  //     }
+  //   });
+  // }
 
   onTabChange(index: number | string) {
     const selectedIndex = Number(index);

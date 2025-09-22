@@ -15,8 +15,6 @@ import {
   FormGroup,
   Validators,
   FormControl,
-  ValidatorFn,
-  AbstractControl,
 } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { MultiSelect } from 'primeng/multiselect';
@@ -34,6 +32,7 @@ import { RequiredMarkerDirective } from '../../../../directives/required-marker.
 import { AlertService } from '@/services/shared/alert.service';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { CustomValidators } from '@/validators/custom-validators';
 
 interface DepartmentEmployees {
   department: BaseLookupModel;
@@ -101,93 +100,6 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     return this._maxAllowedDate;
   }
 
-  // dateFrom picker: min is fixed, max can be limited by dateTo if user chose it
-  get dateFromMin(): Date {
-    return this.minAllowedDate;
-  }
-  get dateFromMax(): Date {
-    const to = this.form.get('dateTo')!.value as Date | null;
-    if (!to) return this.maxAllowedDate;
-    const normTo = this._normalize(to);
-    // dateFrom cannot be after dateTo - 1 day (because dateTo must be strictly greater)
-    const latest = new Date(normTo);
-    latest.setDate(latest.getDate() - 1);
-    return this._minDateOrMax(latest, this.maxAllowedDate);
-  }
-
-  // dateTo picker: min must be dateFrom + 1 day (strictly greater), max = min(dateFrom + 3 months, yesterday)
-  get dateToMin(): Date {
-    const from = this.form.get('dateFrom')!.value as Date | null;
-    if (!from) return this.minAllowedDate;
-    const nextDay = this._addDays(this._normalize(from), 1); // strictly greater
-    return this._minDateOrMax(nextDay, this.maxAllowedDate); // ensure not past global max
-  }
-  get dateToMax(): Date {
-    const from = this.form.get('dateFrom')!.value as Date | null;
-    if (!from) return this.maxAllowedDate;
-    const allowedMax = this._addMonths(this._normalize(from), 3);
-    return this._minDateOrMax(allowedMax, this.maxAllowedDate);
-  }
-  // ---------- small helpers ----------
-  private _normalize(d: Date): Date {
-    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  }
-  private _addDays(d: Date, days: number): Date {
-    const n = new Date(d.getTime());
-    n.setDate(n.getDate() + days);
-    n.setHours(0, 0, 0, 0);
-    return n;
-  }
-  private _addMonths(d: Date, months: number): Date {
-    const n = new Date(d.getTime());
-    n.setMonth(n.getMonth() + months);
-    n.setHours(0, 0, 0, 0);
-    return n;
-  }
-  // return the earlier of a and b
-  private _minDateOrMax(a: Date, b: Date): Date {
-    return a < b ? a : b;
-  }
-  // add months safely (js handles month overflow)
-  private addMonths(d: Date, months: number): Date {
-    const n = new Date(d.getTime());
-    n.setMonth(n.getMonth() + months);
-    n.setHours(0, 0, 0, 0);
-    return n;
-  }
-
-  // cross-field validator: dateTo must be > dateFrom and at most `maxMonths` months after dateFrom
-  private dateOrderAndRangeValidator(maxMonths: number): ValidatorFn {
-    return (group: AbstractControl) => {
-      const from: Date | null = group.get('dateFrom')?.value ?? null;
-      const to: Date | null = group.get('dateTo')?.value ?? null;
-      // clear previous errors we set on group
-      const errors: any = {};
-
-      if (!from || !to) {
-        // don't set errors when either side missing (single-field required validators handle presence)
-        return null;
-      }
-
-      const f = this._normalize(from);
-      const t = this._normalize(to);
-
-      // dateTo must be strictly greater than dateFrom
-      if (!(t > f)) {
-        errors.dateOrder = { message: 'DATE_TO_MUST_BE_GREATER_THAN_DATE_FROM' };
-      }
-
-      // max months check: dateTo <= addMonths(dateFrom, maxMonths)
-      const maxAllowed = this.addMonths(f, maxMonths);
-      if (t > maxAllowed) {
-        errors.maxRange = { maxMonths, allowedMaxDate: maxAllowed };
-      }
-
-      return Object.keys(errors).length ? errors : null;
-    };
-  }
-
-  // Breadcrumbs
   breadcrumbs: MenuItem[] = [];
   home = {
     label: this.translateService.instant('COMMON.HOME'),
@@ -227,13 +139,19 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     const model = new ManualProcessing();
     const formConfig = model.buildForm();
 
-    this.form = this.fb.group({
-      dateFrom: formConfig.dateFrom,
-      dateTo: formConfig.dateTo,
-      userIds: formConfig.userIds,
-      departmentIds: [null], // Changed from departmentId to departmentIds for multi-select
-      validators: [this.dateOrderAndRangeValidator(3)],
-    });
+    this.form = this.fb.group(
+      {
+        dateFrom: formConfig.dateFrom,
+        dateTo: formConfig.dateTo,
+        userIds: formConfig.userIds,
+        departmentIds: [null], // Changed from departmentId to departmentIds for multi-select
+      },
+      {
+        validators: [
+          CustomValidators.dateRangeValidator(this.minAllowedDate, this.maxAllowedDate, 3),
+        ],
+      }
+    );
 
     // Watch for department changes to filter employees
     this.form

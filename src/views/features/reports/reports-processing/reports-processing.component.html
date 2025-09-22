@@ -32,8 +32,8 @@
                   formControlName="dateFrom"
                   [iconDisplay]="'input'"
                   [showIcon]="true"
-                  [minDate]="dateFromMin"
-                  [maxDate]="dateFromMax"
+                  [minDate]="minAllowedDate"
+                  [maxDate]="maxAllowedDate"
                   [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate"
                   class="peer block w-full"
                   inputId="dateFrom"
@@ -55,6 +55,8 @@
                   formControlName="dateTo"
                   [iconDisplay]="'input'"
                   [showIcon]="true"
+                  [minDate]="minAllowedDate"
+                  [maxDate]="maxAllowedDate"
                   [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate"
                   class="peer block w-full"
                   inputId="dateTo"
@@ -67,6 +69,7 @@
                   class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                 ></span>
                 <app-validation-messages [control]="dateToControl"></app-validation-messages>
+                <app-validation-messages [control]="form"></app-validation-messages>
               </div>
               <div class="relative">
                 <label class="label" for="department">{{

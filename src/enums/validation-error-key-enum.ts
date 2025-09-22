@@ -17,4 +17,5 @@ export enum ValidationErrorKeyEnum {
   INVALID_NUMBER = 'invalidNumber',
   NUMBER_RANGE = 'numberRange',
   PASSWORD_MISMATCH = 'passwordMismatch',
+  DATE_MAX_RANGE_EXCEEDED = 'maxRangeExceeded',
 }

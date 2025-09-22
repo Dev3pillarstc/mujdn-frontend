@@ -738,6 +738,7 @@
     "SELECT_EMPLOYEES": "Select Employees",
     "RESET": "Reset",
     "CONFIRM_PROCESS_ALL_EMPLOYEES": "Confirm Process All Employees",
-    "CONFIRM_PROCESS_ALL_EMPLOYEES_MESSAGE": "Are you sure you want to process all employees?"
+    "CONFIRM_PROCESS_ALL_EMPLOYEES_MESSAGE": "Are you sure you want to process all employees?",
+    "DATE_MAX_RANGE_EXCEEDED": "You can process up to 3 months at one time"
   }
 }

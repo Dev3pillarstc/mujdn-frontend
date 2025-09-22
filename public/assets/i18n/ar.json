@@ -726,13 +726,16 @@
     "DATE_TO": "التاريخ (الى)",
     "SELECT_DEPARTMENT": "اختر إدارة",
     "EMPLOYEE_NAME": "اسم الموظف",
-    "SELECTED_EMPLOYEES": "الموظفون المعنيون",
+    "SELECTED_EMPLOYEES": "الموظفون المختارون",
+    "SELECTED_DEPARTMENTS": "الادارات المختارة",
     "SELECT_ALL_DEPARTMENTS": "تحديد كل الادارات",
     "PROCESS_ALL_EMPLOYEES": "معالجة جميع الموظفين",
     "EMPLOYEES_FOR_PROCESSING": "الموظفون المعنيون بالمعالجة",
     "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين",
     "PROCESS_EMPLOYEES": "تأكيد معالجة البيانات",
     "SELECT_EMPLOYEES": "تحديد الموظفين",
-    "RESET": "إعادة تعيين"
+    "RESET": "إعادة تعيين",
+    "CONFIRM_PROCESS_ALL_EMPLOYEES": "هل أنت متأكد من معالجة جميع الموظفين؟",
+    "CONFIRM_PROCESS_ALL_EMPLOYEES_MESSAGE": "يرجى العلم أنه في حال متابعة هذا الإجراء، سيتم إلغاء أي تخصيصات سابقة تمت على مستوى الموظفين أو الإدارات، وإعادة التعيين لمعالجة جميع الموظفين بشكل كامل."
   }
 }

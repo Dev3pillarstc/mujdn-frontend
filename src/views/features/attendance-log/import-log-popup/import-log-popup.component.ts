@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-import-log-popup',
   imports: [],
   templateUrl: './import-log-popup.component.html',
-  styleUrl: './import-log-popup.component.scss'
+  styleUrl: './import-log-popup.component.scss',
 })
-export class ImportLogPopupComponent {
-
-}
+export class ImportLogPopupComponent {}

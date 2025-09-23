@@ -424,7 +424,8 @@
     "WORK_MISSIONS": "مهام الأعمال و الاسناد",
     "VISIT_REQUEST": "طلبات الزيارات",
     "ACCESS_LOCATIONS": "مواقع أجهزة البصمة",
-    "DEVICES_CONFIGURATION": "إعدادات أجهزة البصمة"
+    "DEVICES_CONFIGURATION": "إعدادات أجهزة البصمة",
+    "ATTENDANCE_REPORT_PROCESSING": "معالجة بيانات تقارير الموظفين"
   },
   "NOTIFICATION": {
     "GENERAL_SETTINGS": "الإعدادات العامة",
@@ -747,7 +748,7 @@
     "MY_ATTENDANCE_REPORTS": "تقريري",
     "OTHERS_ATTENDANCE_REPORTS": "سجل تقارير الموظفين التابعين"
   },
-  "ATTENDANCE_REPORT_PAGE": {
+  "ATTENDANCE_REPORT_PROCESSING_PAGE": {
     "EMPLOYEE_REPORTS_PROCESSING": "معالجة بيانات تقارير الموظفين",
     "DATE_FROM": "التاريخ (من)",
     "DATE_TO": "التاريخ (الى)",

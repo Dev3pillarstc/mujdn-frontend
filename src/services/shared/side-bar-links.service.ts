@@ -26,11 +26,18 @@ export class SideBarLinksService {
     //   iconUrl: 'assets/icons/menu-icons/home.svg',
     //   routerLink: ['/dashboard'],
     // },
-    // {
-    //   labelKey: 'MENU.ATTENDANCE_REPORT',
-    //   iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
-    //   routerLink: ['/dashboard'],
-    // },
+    {
+      labelKey: 'MENU.ATTENDANCE_REPORT',
+      iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
+      routerLink: ['/attendance-report'],
+      routeId: RouteIdsEnum.ATTENDANCE_REPORT,
+    },
+    {
+      labelKey: 'MENU.ATTENDANCE_REPORT_PROCESSING',
+      iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
+      routerLink: ['/reports-processing'],
+      routeId: RouteIdsEnum.ATTENDANCE_REPORT_PROCESSING,
+    },
     {
       labelKey: 'MENU.ATTENDANCE_LOGS',
       iconUrl: 'assets/icons/menu-icons/icon.svg',

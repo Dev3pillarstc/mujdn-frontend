@@ -316,8 +316,8 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     const dialogRef = this.confirmationService.open({
       icon: 'warning',
       messages: [
-        'ATTENDANCE_REPORT_PAGE.CONFIRM_PROCESS_ALL_EMPLOYEES',
-        'ATTENDANCE_REPORT_PAGE.CONFIRM_PROCESS_ALL_EMPLOYEES_MESSAGE',
+        'ATTENDANCE_REPORT_PROCESSING_PAGE.CONFIRM_PROCESS_ALL_EMPLOYEES',
+        'ATTENDANCE_REPORT_PROCESSING_PAGE.CONFIRM_PROCESS_ALL_EMPLOYEES_MESSAGE',
       ],
       confirmText: 'COMMON.OK',
       cancelText: 'COMMON.CANCEL',
@@ -377,7 +377,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     icon?: string;
     routerLink?: string;
   }[] {
-    return [{ labelKey: 'ATTENDANCE_REPORT_PAGE.EMPLOYEE_REPORTS_PROCESSING' }];
+    return [{ labelKey: 'ATTENDANCE_REPORT_PROCESSING_PAGE.EMPLOYEE_REPORTS_PROCESSING' }];
   }
 
   // Form control getters
@@ -407,13 +407,19 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
 
   getSelectedEmployeesLabel() {
     const count = this.userIdsArrayControl?.value?.length || 0;
-    return this.translateService.instant('ATTENDANCE_REPORT_PAGE.SELECTED_EMPLOYEES') + ' ' + count;
+    return (
+      this.translateService.instant('ATTENDANCE_REPORT_PROCESSING_PAGE.SELECTED_EMPLOYEES') +
+      ' ' +
+      count
+    );
   }
 
   getSelectedDepartmentsLabel() {
     const count = this.departmentIdsControl?.value?.length || 0;
     return (
-      this.translateService.instant('ATTENDANCE_REPORT_PAGE.SELECTED_DEPARTMENTS') + ' ' + count
+      this.translateService.instant('ATTENDANCE_REPORT_PROCESSING_PAGE.SELECTED_DEPARTMENTS') +
+      ' ' +
+      count
     );
   }
 

@@ -10,7 +10,7 @@
         </ng-template>
       </p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        {{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEE_REPORTS_PROCESSING' | translate }}
+        {{ 'ATTENDANCE_REPORT_PROCESSING_PAGE.EMPLOYEE_REPORTS_PROCESSING' | translate }}
       </h3>
     </div>
 
@@ -19,14 +19,14 @@
         <div>
           <div class="flex items-center justify-between">
             <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-              {{ 'ATTENDANCE_REPORT_PAGE.SELECT_EMPLOYEES' | translate }}
+              {{ 'ATTENDANCE_REPORT_PROCESSING_PAGE.SELECT_EMPLOYEES' | translate }}
             </h5>
           </div>
           <div class="pt-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
               <div class="relative">
                 <label for="" class="label">{{
-                  'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate
+                  'ATTENDANCE_REPORT_PROCESSING_PAGE.DATE_FROM' | translate
                 }}</label>
                 <p-datepicker
                   formControlName="startDate"
@@ -34,7 +34,7 @@
                   [showIcon]="true"
                   [minDate]="minAllowedDate"
                   [maxDate]="maxAllowedDate"
-                  [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_FROM' | translate"
+                  [placeholder]="'ATTENDANCE_REPORT_PROCESSING_PAGE.DATE_FROM' | translate"
                   class="peer block w-full"
                   inputId="dateFrom"
                 >
@@ -49,7 +49,7 @@
               </div>
               <div class="relative">
                 <label for="" class="label">{{
-                  'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate
+                  'ATTENDANCE_REPORT_PROCESSING_PAGE.DATE_TO' | translate
                 }}</label>
                 <p-datepicker
                   formControlName="endDate"
@@ -57,7 +57,7 @@
                   [showIcon]="true"
                   [minDate]="minAllowedDate"
                   [maxDate]="maxAllowedDate"
-                  [placeholder]="'ATTENDANCE_REPORT_PAGE.DATE_TO' | translate"
+                  [placeholder]="'ATTENDANCE_REPORT_PROCESSING_PAGE.DATE_TO' | translate"
                   class="peer block w-full"
                   inputId="dateTo"
                 >
@@ -79,7 +79,7 @@
                   formControlName="departmentIds"
                   [optionLabel]="optionLabel"
                   optionValue="id"
-                  [placeholder]="'ATTENDANCE_REPORT_PAGE.SELECT_DEPARTMENT' | translate"
+                  [placeholder]="'ATTENDANCE_REPORT_PROCESSING_PAGE.SELECT_DEPARTMENT' | translate"
                   [maxSelectedLabels]="2"
                   class="w-full"
                   [options]="departmentList"
@@ -91,14 +91,14 @@
               </div>
               <div class="relative">
                 <label class="label" for="employee">{{
-                  'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate
+                  'ATTENDANCE_REPORT_PROCESSING_PAGE.EMPLOYEE_NAME' | translate
                 }}</label>
                 <div class="relative">
                   <p-multiselect
                     formControlName="userIdsArray"
                     [optionLabel]="optionLabel"
                     optionValue="id"
-                    [placeholder]="'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate"
+                    [placeholder]="'ATTENDANCE_REPORT_PROCESSING_PAGE.EMPLOYEE_NAME' | translate"
                     [maxSelectedLabels]="0"
                     class="w-full"
                     [options]="filteredEmployeeList"
@@ -115,7 +115,7 @@
 
         <div class="mt-10 pt-10 border-t border-[#d2d6db]">
           <h3 class="text-[#1f2a37] font-[600] text-lg">
-            {{ 'ATTENDANCE_REPORT_PAGE.SELECT_ALL_DEPARTMENTS' | translate }}
+            {{ 'ATTENDANCE_REPORT_PROCESSING_PAGE.SELECT_ALL_DEPARTMENTS' | translate }}
           </h3>
           <div class="flex flex-wrap gap-8 mt-3 rounded dimmed-form">
             <label class="flex items-center gap-3 cursor-pointer relative">
@@ -138,7 +138,7 @@
                 <polyline points="20 6 9 17 4 12" />
               </svg>
               <span class="text-base font-medium text-[#1f2a37]">{{
-                'ATTENDANCE_REPORT_PAGE.PROCESS_ALL_EMPLOYEES' | translate
+                'ATTENDANCE_REPORT_PROCESSING_PAGE.PROCESS_ALL_EMPLOYEES' | translate
               }}</span>
             </label>
           </div>
@@ -149,7 +149,7 @@
           *ngIf="departmentEmployeesGroups.length > 0"
         >
           <h3 class="text-[#1f2a37] font-[600] text-xl border-b border-[#d2d6db] pb-4">
-            {{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEES_FOR_PROCESSING' | translate }}
+            {{ 'ATTENDANCE_REPORT_PROCESSING_PAGE.EMPLOYEES_FOR_PROCESSING' | translate }}
           </h3>
           <p-accordion [value]="'0'">
             <p-accordion-panel
@@ -170,7 +170,7 @@
                     "
                   >
                     <img src="assets/icons/delete.svg" alt="" />
-                    {{ 'ATTENDANCE_REPORT_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
+                    {{ 'ATTENDANCE_REPORT_PROCESSING_PAGE.DELETE_ALL_EMPLOYEES' | translate }}
                   </button>
                 </div>
               </p-accordion-header>
@@ -212,10 +212,10 @@
             class="btn gray-btn border border-[#d2d6db] !bg-transparent hover:!bg-[#e5e7eb]"
             (click)="resetForm()"
           >
-            {{ 'ATTENDANCE_REPORT_PAGE.RESET' | translate }}
+            {{ 'ATTENDANCE_REPORT_PROCESSING_PAGE.RESET' | translate }}
           </button>
           <button (click)="processEmployees()" type="submit" class="btn green-btn">
-            {{ 'ATTENDANCE_REPORT_PAGE.PROCESS_EMPLOYEES' | translate }}
+            {{ 'ATTENDANCE_REPORT_PROCESSING_PAGE.PROCESS_EMPLOYEES' | translate }}
           </button>
         </div>
       </form>

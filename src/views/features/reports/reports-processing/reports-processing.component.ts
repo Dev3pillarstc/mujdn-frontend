@@ -155,10 +155,10 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
 
     // Watch for employee selection changes
     this.form
-      .get('userIds')
+      .get('userIdsArray')
       ?.valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe((userIds) => {
-        this.onEmployeeSelectionChange(userIds);
+      .subscribe((userIdsArray) => {
+        this.onEmployeeSelectionChange(userIdsArray);
       });
   }
 
@@ -208,7 +208,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   }
 
   removeEmployeesFromDeselectedDepartments(deselectedDepartmentIds: (number | undefined)[]): void {
-    const currentUserIds = this.form.get('userIds')?.value || [];
+    const currentUserIds = this.form.get('userIdsArray')?.value || [];
 
     // Find employees that belong to deselected departments
     const employeesToRemove = this.employeeList
@@ -220,14 +220,16 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
       (userId: number) => !employeesToRemove.includes(userId)
     );
 
-    this.form.patchValue({ userIds: updatedUserIds });
+    this.form.patchValue({ userIdsArray: updatedUserIds });
   }
 
-  onEmployeeSelectionChange(userIds: number[] | null): void {
-    if (userIds && userIds.length > 0) {
+  onEmployeeSelectionChange(userIdsArray: number[] | null): void {
+    if (userIdsArray && userIdsArray.length > 0) {
       console.log('employeeList', this.employeeList);
       // Get selected employees from the full list
-      this.selectedEmployees = this.employeeList.filter((emp) => userIds.includes(emp.id || 0));
+      this.selectedEmployees = this.employeeList.filter((emp) =>
+        userIdsArray.includes(emp.id || 0)
+      );
     } else {
       this.selectedEmployees = [];
     }
@@ -262,25 +264,25 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   }
 
   removeEmployee(employee: UsersWithDepartmentLookup): void {
-    const currentUserIds = this.form.get('userIds')?.value || [];
+    const currentUserIds = this.form.get('userIdsArray')?.value || [];
     const updatedUserIds = currentUserIds.filter((id: number) => id !== employee.id);
-    this.form.patchValue({ userIds: updatedUserIds });
+    this.form.patchValue({ userIdsArray: updatedUserIds });
   }
 
   removeAllEmployeesFromDepartment(departmentId: number | undefined): void {
-    const currentUserIds = this.form.get('userIds')?.value || [];
+    const currentUserIds = this.form.get('userIdsArray')?.value || [];
     const employeesToRemove = this.selectedEmployees
       .filter((emp) => emp.departmentId === departmentId)
       .map((emp) => emp.id);
 
     const updatedUserIds = currentUserIds.filter((id: number) => !employeesToRemove.includes(id));
-    this.form.patchValue({ userIds: updatedUserIds });
+    this.form.patchValue({ userIdsArray: updatedUserIds });
   }
 
   onProcessAllEmployeesChange(): void {
     const hasValues =
       (this.form.get('departmentIds')?.value?.length ?? 0) > 0 ||
-      (this.form.get('userIds')?.value?.length ?? 0) > 0;
+      (this.form.get('userIdsArray')?.value?.length ?? 0) > 0;
 
     if (this.processAllEmployees) {
       if (hasValues) {
@@ -298,18 +300,18 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     } else {
       // Clear selection
       this.form.get('departmentIds')?.enable();
-      this.form.get('userIds')?.enable();
-      this.form.patchValue({ userIds: [] });
+      this.form.get('userIdsArray')?.enable();
+      this.form.patchValue({ userIdsArray: [] });
     }
   }
 
   private resetFormForProcessAll(): void {
-    const allUserIds = this.filteredEmployeeList.map((emp) => emp.id);
+    // const allUserIds = this.filteredEmployeeList.map((emp) => emp.id);
 
-    this.form.patchValue({ userIds: [] });
+    this.form.patchValue({ userIdsArray: [] });
     this.form.patchValue({ departmentIds: [] });
     this.form.get('departmentIds')?.disable();
-    this.form.get('userIds')?.disable();
+    this.form.get('userIdsArray')?.disable();
   }
 
   openConfirmation(): Observable<boolean> {
@@ -334,7 +336,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     this.processAllEmployees = false;
     this.filteredEmployeeList = [];
     this.form.get('departmentIds')?.enable();
-    this.form.get('userIds')?.enable();
+    this.form.get('userIdsArray')?.enable();
   }
 
   processEmployees(): void {

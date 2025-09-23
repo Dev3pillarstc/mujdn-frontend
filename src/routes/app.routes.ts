@@ -25,6 +25,7 @@ import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver
 import { visitResolver } from '@/resolvers/features/visit/visit.resolver';
 import { accessLocationResolver } from '@/resolvers/business/access-location.resolver';
 import { devicesConfigurationResolver } from '@/resolvers/business/devices-configuration.resolver';
+import { attendanceReportResolver } from '@/resolvers/business/attendance-report.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -147,6 +148,8 @@ export const routes: Routes = [
       },
       {
         path: 'attendance-report',
+        canActivate: [authGuard],
+        resolve: { list: attendanceReportResolver },
         loadComponent: () =>
           import(
             '@/views/features/reports/attendance-report/attendance-report-container/attendance-report-container.component'

@@ -25,10 +25,6 @@ export class UserProfile extends BaseCrudModel<UserProfile, UserProfileService, 
   declare nationalId?: string;
   declare roleKeys?: string[];
 
-  constructor() {
-    super();
-  }
-
   buildForm() {
     const { email, phoneNumber } = this;
 

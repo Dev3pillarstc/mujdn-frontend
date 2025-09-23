@@ -1,8 +1,8 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, input, SimpleChanges } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
 import { Select } from 'primeng/select';
 import { TabsModule } from 'primeng/tabs';
 import { TableModule } from 'primeng/table';
@@ -20,6 +20,7 @@ import { UserPresenceInquiryStatusService } from '@/services/features/user-prese
 import { LanguageService } from '@/services/shared/language.service';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
+import { formatDateTo12Hour } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-my-presence-inquiries-list',
@@ -88,7 +89,7 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
         model.assignedDate
       ),
       [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_TIME')]: this.formatTime(
-        model.assignedDate
+        model.assignedDate ? new Date(model.assignedDate) : undefined
       ),
       [this.translateService.instant('INQUIRIES_PAGE.ALLOWED_ATTENDANCE_PERIOD')]: model.buffer,
       [this.translateService.instant('INQUIRIES_PAGE.CONFIRMATION_STATUS')]: this.getStatusName(
@@ -124,9 +125,10 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
     return this.datePipe.transform(new Date(date), 'dd-MM-yyyy') ?? '-';
   }
 
-  formatTime(date: string | Date | null | undefined): string {
+  formatTime(date: Date | null | undefined): string {
     if (!date) return '-';
-    return this.datePipe.transform(new Date(date), 'HH:mm:ss') ?? '-';
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    return formatDateTo12Hour(date, locale);
   }
 
   override exportExcel(
@@ -163,5 +165,8 @@ export class MyPresenceInquiriesListComponent extends BaseListComponent<
           this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
         },
       });
+  }
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 }

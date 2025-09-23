@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
@@ -17,6 +17,8 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { AuthService } from '@/services/auth/auth.service';
+import { WorkMissionService } from '@/services/features/business/work-mission.service';
+import { PaginationParams } from '@/models/shared/pagination-params';
 
 @Component({
   selector: 'app-work-mission-container',
@@ -37,6 +39,7 @@ import { AuthService } from '@/services/auth/auth.service';
   templateUrl: './work-mission-container.component.html',
   styleUrl: './work-mission-container.component.scss',
 })
+// Updated WorkMissionContainerComponent
 export default class WorkMissionContainerComponent implements OnInit {
   breadcrumbs: MenuItem[] | undefined;
   home: MenuItem | undefined;
@@ -45,13 +48,55 @@ export default class WorkMissionContainerComponent implements OnInit {
   matDialog = inject(MatDialog);
   dialog = inject(MatDialog);
   activatedRoute = inject(ActivatedRoute);
-  authService = inject(AuthService); // 👈 inject here
+  authService = inject(AuthService);
+  workMissionService = inject(WorkMissionService); // Add this service injection
+  @ViewChild(AssignWorkMissionListComponent) assignTabComponent!: AssignWorkMissionListComponent;
+  @ViewChild(MyWorkMissionListComponent) myMissionsTabComponent!: MyWorkMissionListComponent;
 
   canAssign = false;
+  isAssignTabDataLoaded = false; // Track if assign tab data is loaded
+  currentTabIndex = '0'; // Track current tab
+
   ngOnInit() {
-    // Set the signal values
-    this.missions.set(this.activatedRoute.snapshot.data['list'].missions);
-    this.departments.set(this.activatedRoute.snapshot.data['list'].departments);
+    // Only set departments from resolver, not missions
+    this.departments.set(this.activatedRoute.snapshot.data['list'].departments || []);
     this.canAssign = !!(this.authService.isDepartmentManager || this.authService.isHROfficer);
+  }
+
+  // Method to handle tab change
+  onTabChange(tabValue: any) {
+    this.currentTabIndex = tabValue;
+
+    if (tabValue === '0') {
+      // My Missions tab
+      this.myMissionsTabComponent?.resetFilter(); // clear filters
+      this.myMissionsTabComponent?.loadMyMissions(); // fetch fresh data
+    }
+
+    if (tabValue === '1' && this.canAssign) {
+      // Assign Missions tab
+      this.assignTabComponent?.resetFilter();
+      this.loadAssignTabData();
+    }
+  }
+
+  // Load missions data for assign tab
+  private loadAssignTabData() {
+    // Reset pagination for fresh fetch
+    const pagination = new PaginationParams();
+    pagination.pageNumber = 1; // start from first page
+    pagination.pageSize = 10; // default page size, adjust as needed
+
+    this.workMissionService.loadPaginated(pagination).subscribe({
+      next: (response) => {
+        // Always set the missions signal to fresh data
+        this.missions.set(response || new PaginatedList<WorkMission>());
+      },
+      error: (error) => {
+        console.error('Error loading missions data:', error);
+        // Reset missions to empty in case of error
+        this.missions.set(new PaginatedList<WorkMission>());
+      },
+    });
   }
 }

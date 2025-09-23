@@ -720,6 +720,33 @@
     "ADD_NEW_LOCATION": "إضافة موقع جديد",
     "EDIT_LOCATION": "تعديل الموقع"
   },
+  "ATTENDANCE_STATUS": {
+    "HOLIDAY": "عطلة رسمية",
+    "WEEKEND": "عطلة نهاية الأسبوع",
+    "MISSION": "مهمة",
+    "ABSENT": "غائب",
+    "PRESENT": "حاضر",
+    "EXEMPTED": "معفى من البصمة"
+  },
+  "ATTENDANCE_REPORT_PAGE": {
+    "SPECIAL_SHIFT": "وردية عمل خاصة",
+    "DEFAULT_SHIFT": "وردية عمل افتراضية",
+    "DATE": "التاريخ",
+    "SHIFT_NAME": "اسم الوردية",
+    "SHIFT_TYPE": "نوع الوردية",
+    "LEAVE_NAME": "اسم الإجازة",
+    "MISSION_NAME": "اسم المهمة",
+    "DOCUMENTATION": "التوثيق",
+    "CHECKIN_TIME": "وقت الحضور",
+    "CHECKOUT_TIME": "وقت الانصراف",
+    "STATUS": "الحالة",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "NATIONAL_ID": "رقم الهوية",
+    "DEPARTMENT": "الإدارة",
+    "TITLE": "تقرير الحضور والانصراف",
+    "MY_ATTENDANCE_REPORTS": "تقريري",
+    "OTHERS_ATTENDANCE_REPORTS": "سجل تقارير الموظفين التابعين"
+  },
   "ATTENDANCE_REPORT_PAGE": {
     "EMPLOYEE_REPORTS_PROCESSING": "معالجة بيانات تقارير الموظفين",
     "DATE_FROM": "التاريخ (من)",

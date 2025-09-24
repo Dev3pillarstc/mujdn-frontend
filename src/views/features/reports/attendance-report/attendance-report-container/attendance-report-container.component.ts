@@ -96,6 +96,13 @@ export default class AttendanceReportContainerComponent implements OnInit, OnDes
       });
     }
   }
+  showOthersReportsTab(): boolean {
+    return (
+      this.authService.isDepartmentManager! ||
+      this.authService.isHROfficer! ||
+      this.authService.isAdmin!
+    );
+  }
 
   ngOnDestroy() {
     this.destroy$.next();

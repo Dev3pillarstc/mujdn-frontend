@@ -26,9 +26,11 @@
         </p-tabpanel>
 
         <!-- Subordinates Attendance Reports -->
-        <p-tabpanel [value]="1">
-          <app-all-attendance-report-list #allReports></app-all-attendance-report-list>
-        </p-tabpanel>
+        @if (showOthersReportsTab()) {
+          <p-tabpanel [value]="1">
+            <app-all-attendance-report-list #allReports></app-all-attendance-report-list>
+          </p-tabpanel>
+        }
       </p-tabpanels>
     </p-tabs>
   </div>

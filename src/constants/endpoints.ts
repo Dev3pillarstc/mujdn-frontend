@@ -31,6 +31,7 @@ export const EndPoints = {
   DEVICES_CONFIGURATIONS: '/devicesconfigurations',
   DEVICE_STATUS: '/deviceStatuses',
   ATTENDANCE_REPORT: '/attendancereports',
+  MANUAL_PROCESSING: '/ManualProcessing',
 };
 
 export type EndpointsType = typeof EndPoints;

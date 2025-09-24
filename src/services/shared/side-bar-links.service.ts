@@ -33,6 +33,12 @@ export class SideBarLinksService {
       routeId: RouteIdsEnum.ATTENDANCE_REPORT,
     },
     {
+      labelKey: 'MENU.ATTENDANCE_REPORT_PROCESSING',
+      iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
+      routerLink: ['/reports-processing'],
+      routeId: RouteIdsEnum.ATTENDANCE_REPORT_PROCESSING,
+    },
+    {
       labelKey: 'MENU.ATTENDANCE_LOGS',
       iconUrl: 'assets/icons/menu-icons/icon.svg',
       routerLink: ['/attendance-logs'],

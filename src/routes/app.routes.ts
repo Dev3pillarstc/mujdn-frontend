@@ -132,7 +132,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         resolve: { list: attendanceResolver },
         data: {
-          roles: [ROLES_ENUM.EMPLOYEE], // all roles can view the page
+          roles: [ROLES_ENUM.EMPLOYEE],
           routeId: RouteIdsEnum.ATTENDANCE_LOGS,
         },
         loadComponent: () =>
@@ -142,6 +142,11 @@ export const routes: Routes = [
       },
       {
         path: 'reports-processing',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.HR_OFFICER],
+          routeId: RouteIdsEnum.ATTENDANCE_REPORT_PROCESSING,
+        },
         loadComponent: () =>
           import('@/views/features/reports/reports-processing/reports-processing.component'),
       },
@@ -149,6 +154,16 @@ export const routes: Routes = [
         path: 'attendance-report',
         canActivate: [authGuard],
         resolve: { list: attendanceReportResolver },
+        data: {
+          roles: [
+            ROLES_ENUM.HR_OFFICER,
+            ROLES_ENUM.ADMIN,
+            ROLES_ENUM.SECURITY_LEADER,
+            ROLES_ENUM.DEPARTMENT_MANAGER,
+            ROLES_ENUM.FOLLOW_UP_OFFICER,
+          ],
+          routeId: RouteIdsEnum.ATTENDANCE_REPORT,
+        },
         loadComponent: () =>
           import(
             '@/views/features/reports/attendance-report/attendance-report-container/attendance-report-container.component'

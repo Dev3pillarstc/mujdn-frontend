@@ -87,7 +87,7 @@ export class SideMenuComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
 
-    // ✅ إزالة listener لتفادي memory leak
+    // ✅ listener  memory leak
     window.removeEventListener('resize', this.resizeListener);
   }
 

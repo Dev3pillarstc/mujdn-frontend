@@ -747,7 +747,11 @@
     "DEPARTMENT": "الإدارة",
     "TITLE": "تقرير الحضور والانصراف",
     "MY_ATTENDANCE_REPORTS": "تقريري",
-    "OTHERS_ATTENDANCE_REPORTS": "سجل تقارير الموظفين التابعين"
+    "OTHERS_ATTENDANCE_REPORTS": "سجل تقارير الموظفين التابعين",
+    "PRESENCE": "حضور",
+    "LEAVE": "انصراف",
+    "PRESENCE_LEAVE": "حضور - انصراف",
+    "PERMISSIONS": "الاستئذانات"
   },
   "ATTENDANCE_REPORT_PROCESSING_PAGE": {
     "EMPLOYEE_REPORTS_PROCESSING": "معالجة بيانات تقارير الموظفين",

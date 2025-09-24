@@ -165,6 +165,118 @@ export function timeFromBeforeTimeTo(fromKey: string, toKey: string): ValidatorF
     return from >= to ? { timeFromAfterTimeTo: true } : null;
   };
 }
+/**
+ * Date range validator for ensuring dates are within allowed business rules
+ * @param minDate - Minimum allowed date
+ * @param maxDate - Maximum allowed date
+ * @param maxRangeMonths - Maximum allowed range in months between start and end dates
+ */
+export function dateRangeValidator(
+  minDate: Date,
+  maxDate: Date,
+  maxRangeMonths: number = 3
+): ValidatorFn {
+  return (formGroup: AbstractControl): ValidationErrors | null => {
+    const dateFromControl = formGroup.get('dateFrom');
+    const dateToControl = formGroup.get('dateTo');
+
+    if (!dateFromControl || !dateToControl) return null;
+
+    const dateFrom = dateFromControl.value;
+    const dateTo = dateToControl.value;
+
+    if (!dateFrom || !dateTo) return null;
+
+    const normalizedFrom = normalizeDate(dateFrom);
+    const normalizedTo = normalizeDate(dateTo);
+    const normalizedMin = normalizeDate(minDate);
+    const normalizedMax = normalizeDate(maxDate);
+
+    const errors: ValidationErrors = {};
+
+    // Check if dateFrom is within allowed range
+    if (normalizedFrom < normalizedMin || normalizedFrom > normalizedMax) {
+      errors['dateFromOutOfRange'] = {
+        min: minDate,
+        max: maxDate,
+        actual: normalizedFrom,
+      };
+    }
+
+    // Check if dateTo is within allowed range
+    if (normalizedTo < normalizedMin || normalizedTo > normalizedMax) {
+      errors['dateToOutOfRange'] = {
+        min: minDate,
+        max: maxDate,
+        actual: normalizedTo,
+      };
+    }
+
+    // Check if dateTo is after dateFrom
+    if (normalizedTo <= normalizedFrom) {
+      errors['dateOrder'] = {
+        message: 'Date To must be greater than Date From',
+      };
+    }
+
+    // Check if the range exceeds maximum allowed months
+    if (normalizedTo > normalizedFrom) {
+      const monthsDiff = getMonthsDifference(normalizedFrom, normalizedTo);
+      if (monthsDiff >= maxRangeMonths) {
+        const maxAllowedTo = addMonths(normalizedFrom, maxRangeMonths);
+        maxAllowedTo.setDate(maxAllowedTo.getDate() - 1);
+
+        errors['maxRangeExceeded'] = {
+          maxMonths: maxRangeMonths,
+          actualMonths: monthsDiff,
+          maxAllowedTo: maxAllowedTo,
+        };
+      }
+    }
+
+    return Object.keys(errors).length > 0 ? errors : null;
+  };
+}
+
+/**
+ * Utility function to normalize date (set time to 00:00:00)
+ */
+function normalizeDate(date: Date): Date {
+  const normalized = new Date(date);
+  normalized.setHours(0, 0, 0, 0);
+  return normalized;
+}
+
+/**
+ * Utility function to add months to a date
+ */
+function addMonths(date: Date, months: number): Date {
+  const result = new Date(date);
+  result.setMonth(result.getMonth() + months);
+  result.setHours(23, 59, 59, 999);
+  return result;
+}
+
+/**
+ * Utility function to calculate months difference between two dates
+ */
+function getMonthsDifference(startDate: Date, endDate: Date): number {
+  const start = normalizeDate(startDate);
+  const end = normalizeDate(endDate);
+
+  const yearsDiff = end.getFullYear() - start.getFullYear();
+  const monthsDiff = end.getMonth() - start.getMonth();
+  const daysDiff = end.getDate() - start.getDate();
+
+  let totalMonths = yearsDiff * 12 + monthsDiff;
+
+  // If the end date's day is before the start date's day, subtract a month
+  if (daysDiff < 0) {
+    totalMonths--;
+  }
+
+  return totalMonths;
+}
 
 export type customValidationTypes =
   | 'ENG_NUM'
@@ -256,6 +368,7 @@ export const CustomValidators = {
   defaultLengths,
   pattern,
   startBeforeEnd,
+  dateRangeValidator,
   strongPassword,
   numberMaxLength,
   numberMinLength,

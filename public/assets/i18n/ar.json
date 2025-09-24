@@ -424,7 +424,8 @@
     "WORK_MISSIONS": "مهام الأعمال و الاسناد",
     "VISIT_REQUEST": "طلبات الزيارات",
     "ACCESS_LOCATIONS": "مواقع أجهزة البصمة",
-    "DEVICES_CONFIGURATION": "إعدادات أجهزة البصمة"
+    "DEVICES_CONFIGURATION": "إعدادات أجهزة البصمة",
+    "ATTENDANCE_REPORT_PROCESSING": "معالجة بيانات تقارير الموظفين"
   },
   "NOTIFICATION": {
     "GENERAL_SETTINGS": "الإعدادات العامة",
@@ -746,5 +747,24 @@
     "TITLE": "تقرير الحضور والانصراف",
     "MY_ATTENDANCE_REPORTS": "تقريري",
     "OTHERS_ATTENDANCE_REPORTS": "سجل تقارير الموظفين التابعين"
+  },
+  "ATTENDANCE_REPORT_PROCESSING_PAGE": {
+    "EMPLOYEE_REPORTS_PROCESSING": "معالجة بيانات تقارير الموظفين",
+    "DATE_FROM": "التاريخ (من)",
+    "DATE_TO": "التاريخ (الى)",
+    "SELECT_DEPARTMENT": "اختر إدارة",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "SELECTED_EMPLOYEES": "الموظفون المختارون",
+    "SELECTED_DEPARTMENTS": "الادارات المختارة",
+    "SELECT_ALL_DEPARTMENTS": "تحديد كل الادارات",
+    "PROCESS_ALL_EMPLOYEES": "معالجة جميع الموظفين",
+    "EMPLOYEES_FOR_PROCESSING": "الموظفون المعنيون بالمعالجة",
+    "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين",
+    "PROCESS_EMPLOYEES": "تأكيد معالجة البيانات",
+    "SELECT_EMPLOYEES": "تحديد الموظفين",
+    "RESET": "إعادة تعيين",
+    "CONFIRM_PROCESS_ALL_EMPLOYEES": "هل أنت متأكد من معالجة جميع الموظفين؟",
+    "CONFIRM_PROCESS_ALL_EMPLOYEES_MESSAGE": "يرجى العلم أنه في حال متابعة هذا الإجراء، سيتم إلغاء أي تخصيصات سابقة تمت على مستوى الموظفين أو الإدارات، وإعادة التعيين لمعالجة جميع الموظفين بشكل كامل.",
+    "DATE_MAX_RANGE_EXCEEDED": "يمكنك معالجة 3 شهور فقط علي الاكثر"
   }
 }

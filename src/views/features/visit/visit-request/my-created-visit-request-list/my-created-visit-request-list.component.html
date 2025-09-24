@@ -177,10 +177,12 @@
             <td>{{ visit.visitorOrganization }}</td>
             <td>{{ getDepartmentName(visit) }}</td>
             <td>
-              <span [class]="getStatusBadgeClass(visit.visitStatus)">
-                <span [class]="getStatusBadgeDotClass(visit.visitStatus)"></span>
-                {{ getStatusText(visit.visitStatus) }}
-              </span>
+              <div class="flex items-center justify-center">
+                <span [class]="getStatusBadgeClass(visit.visitStatus)">
+                  <span [class]="getStatusBadgeDotClass(visit.visitStatus)"></span>
+                  {{ getStatusText(visit.visitStatus) }}
+                </span>
+              </div>
             </td>
             <td>{{ formatTime(visit.arrivalTime) }}</td>
             <td>{{ formatTime(visit.leaveTime) }}</td>

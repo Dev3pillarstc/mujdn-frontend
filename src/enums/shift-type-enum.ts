@@ -1,4 +1,4 @@
 export enum SHIFT_TYPE_ENUM {
-  DEFAULT = 0,
-  SPECIAL = 1,
+  DEFAULT = 1,
+  SPECIAL = 2,
 }

@@ -177,8 +177,8 @@ export function dateRangeValidator(
   maxRangeMonths: number = 3
 ): ValidatorFn {
   return (formGroup: AbstractControl): ValidationErrors | null => {
-    const dateFromControl = formGroup.get('dateFrom');
-    const dateToControl = formGroup.get('dateTo');
+    const dateFromControl = formGroup.get('startDate');
+    const dateToControl = formGroup.get('endDate');
 
     if (!dateFromControl || !dateToControl) return null;
 

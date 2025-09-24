@@ -179,4 +179,17 @@ export class MyAttendanceReportListComponent extends BaseListComponent<
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
+
+  getPermissionLabel(attendance: any): string {
+    if (attendance.attendancePermissionId && attendance.leavePermissionId) {
+      return 'ATTENDANCE_REPORT_PAGE.PRESENCE_LEAVE';
+    }
+    if (attendance.leavePermissionId && !attendance.attendancePermissionId) {
+      return 'ATTENDANCE_REPORT_PAGE.LEAVE';
+    }
+    if (attendance.attendancePermissionId && !attendance.leavePermissionId) {
+      return 'ATTENDANCE_REPORT_PAGE.PRESENCE';
+    }
+    return '';
+  }
 }

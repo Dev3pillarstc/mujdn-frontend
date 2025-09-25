@@ -75,6 +75,7 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   first: number = 0;
   rows: number = 10;
   selectedEmployees: any[] = [];
+  private readonly _minDate: Date = new Date();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -237,5 +238,9 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   removeAccessLocation(id: number | undefined) {
     const currentIds: number[] = this.accessLocationIdsControl.value || [];
     this.accessLocationIdsControl.setValue(currentIds.filter((x) => x !== id));
+  }
+
+  get minDate(): Date {
+    return this._minDate;
   }
 }

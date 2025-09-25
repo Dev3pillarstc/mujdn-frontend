@@ -221,9 +221,9 @@
 
         <!-- location  -->
         <div>
-          <label class="label" for="location">{{
-            'VISIT_REQUEST_PAGE.DEVICES_LOCATION' | translate
-          }}</label>
+          <label class="label" for="location">
+            {{ 'VISIT_REQUEST_PAGE.SELECTED_DEVICES_LOCATIONS' | translate }}
+          </label>
           <div class="relative">
             <p-multiselect
               [options]="accessLocations"
@@ -234,7 +234,10 @@
               class="w-full"
               id="location"
               name="location"
-              placeholder="{{ 'VISIT_REQUEST_PAGE.DEVICES_LOCATION' | translate }}"
+              placeholder="          {{
+                'VISIT_REQUEST_PAGE.SELECTED_DEVICES_LOCATIONS' | translate
+              }}
+"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"

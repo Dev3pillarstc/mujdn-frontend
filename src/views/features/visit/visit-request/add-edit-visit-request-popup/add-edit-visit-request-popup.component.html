@@ -318,6 +318,7 @@
               inputId="visitTimeFrom"
               name="visitTimeFrom"
               placeholder="{{ 'VISIT_REQUEST_PAGE.VISIT_TIME_FROM' | translate }}"
+              [hourFormat]="'12'"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
@@ -346,6 +347,7 @@
               inputId="visitTimeTo"
               name="visitTimeTo"
               placeholder="{{ 'VISIT_REQUEST_PAGE.VISIT_TIME_TO' | translate }}"
+              [hourFormat]="'12'"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />

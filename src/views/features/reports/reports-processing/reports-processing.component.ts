@@ -84,7 +84,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   private readonly _minAllowedDate = new Date(2025, 0, 1); // Jan 1, 2025
   private readonly _maxAllowedDate = (() => {
     const d = new Date();
-    d.setDate(d.getDate() - 1); // yesterday
+    d.setDate(d.getDate()); // yesterday
     d.setHours(0, 0, 0, 0);
     return d;
   })();

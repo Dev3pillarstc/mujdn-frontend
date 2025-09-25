@@ -14,9 +14,11 @@
         <p-tab [value]="0">
           {{ 'ATTENDANCE_REPORT_PAGE.MY_ATTENDANCE_REPORTS' | translate }}
         </p-tab>
-        <p-tab [value]="1">
-          {{ 'ATTENDANCE_REPORT_PAGE.OTHERS_ATTENDANCE_REPORTS' | translate }}
-        </p-tab>
+        @if (showOthersReportsTab()) {
+          <p-tab [value]="1">
+            {{ 'ATTENDANCE_REPORT_PAGE.OTHERS_ATTENDANCE_REPORTS' | translate }}
+          </p-tab>
+        }
       </p-tablist>
 
       <p-tabpanels>

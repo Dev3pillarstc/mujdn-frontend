@@ -115,7 +115,8 @@
     "VISITOR_NATIONALITY_BLACKLISTED": "عفوا لا يمكن تقديم طلب الزيارة نظرا لوجود جنسية الزائر ضمن قائمة الحظر",
     "VISITOR_CANNOT_BE_BLOCKED": "عفوا لا يمكن حظر الزائر",
     "VISIT_NOT_FOUND": "الزيارة غير موجودة",
-    "ATTENDANCE_REPORT": "تقرير الحضور والانصراف"
+    "ATTENDANCE_REPORT": "تقرير الحضور والانصراف",
+    "VISIT_TIME_CONFLICTING": "هناك تعارض في وقت الزيارة مع الزيارات الأخرى لنفس المستخدم"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"

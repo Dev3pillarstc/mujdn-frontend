@@ -676,6 +676,7 @@
     "NEW": "New",
     "REJECTED": "Rejected",
     "ACCEPTED": "Accepted",
+    "EXPIRED": "Expired",
     "VISITOR_SELECTION": "Visitor Selection",
     "LOAD_EXISTING_VISITOR": "Load Existing Visitor Data",
     "ADD_NEW_VISITOR": "Add New Visitor",

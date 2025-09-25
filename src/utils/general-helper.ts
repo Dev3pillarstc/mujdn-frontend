@@ -180,6 +180,17 @@ export function formatSwipeTime(
   return { date, time };
 }
 
+export function didTimePassed(givenDate: Date, givenTime: string): boolean {
+  givenDate = new Date(givenDate || '');
+  const givenTimeTo = timeStringToDate(givenTime as string);
+
+  givenTimeTo.setDate(givenDate.getDate());
+
+  const today = new Date();
+
+  return givenTimeTo < today;
+}
+
 export function markFormGroupTouched(form: FormGroup | FormArray) {
   Object.values(form.controls).forEach((control) => {
     if (control instanceof FormGroup || control instanceof FormArray) {

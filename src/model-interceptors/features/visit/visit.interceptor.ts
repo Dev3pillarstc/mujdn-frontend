@@ -1,7 +1,9 @@
+import { VisitStatusEnum } from '@/enums/visit-status-enum';
 import { Visit } from '@/models/features/visit/visit';
 import {
   convertUtcToSystemTimeZone,
   dateToTimeString,
+  didTimePassed,
   timeStringToDate,
   toDateOnly,
   toDateTime,
@@ -18,6 +20,12 @@ export class VisitInterceptor implements ModelInterceptorContract<Visit> {
     model.leaveTime = model.leaveTime
       ? dateToTimeString(convertUtcToSystemTimeZone(timeStringToDate(model.leaveTime || '')))
       : null;
+    if (
+      didTimePassed(model.visitDate as Date, model.visitTimeTo as string) &&
+      model.visitStatus === VisitStatusEnum.NEW
+    ) {
+      model.visitStatus = VisitStatusEnum.EXPIRED;
+    }
     return model;
   }
 

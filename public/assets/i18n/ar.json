@@ -674,6 +674,7 @@
     "NEW": "جديد",
     "REJECTED": "مرفوض",
     "ACCEPTED": "مقبول",
+    "EXPIRED": "انتهت الصلاحية",
     "VISITOR_SELECTION": "اختيار الزائر",
     "LOAD_EXISTING_VISITOR": "استدعاء بيانات زائر سابق",
     "ADD_NEW_VISITOR": "اضافة زائر جديد",

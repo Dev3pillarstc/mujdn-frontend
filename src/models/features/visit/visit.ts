@@ -36,6 +36,8 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   declare leaveTime: string | null;
   declare accessLocationIds: number[]; // selected IDs (for saving)
   declare accessLocations: BaseLookupModel[];
+  declare nationalityNameAr?: string;
+  declare nationalityNameEn?: string;
   constructor() {
     super();
   }

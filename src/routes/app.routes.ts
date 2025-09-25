@@ -25,6 +25,7 @@ import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver
 import { visitResolver } from '@/resolvers/features/visit/visit.resolver';
 import { accessLocationResolver } from '@/resolvers/business/access-location.resolver';
 import { devicesConfigurationResolver } from '@/resolvers/business/devices-configuration.resolver';
+import { attendanceReportResolver } from '@/resolvers/business/attendance-report.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -131,7 +132,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         resolve: { list: attendanceResolver },
         data: {
-          roles: [ROLES_ENUM.EMPLOYEE], // all roles can view the page
+          roles: [ROLES_ENUM.EMPLOYEE],
           routeId: RouteIdsEnum.ATTENDANCE_LOGS,
         },
         loadComponent: () =>
@@ -141,13 +142,32 @@ export const routes: Routes = [
       },
       {
         path: 'reports-processing',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.HR_OFFICER],
+          routeId: RouteIdsEnum.ATTENDANCE_REPORT_PROCESSING,
+        },
         loadComponent: () =>
           import('@/views/features/reports/reports-processing/reports-processing.component'),
       },
       {
         path: 'attendance-report',
+        canActivate: [authGuard],
+        resolve: { list: attendanceReportResolver },
+        data: {
+          roles: [
+            ROLES_ENUM.HR_OFFICER,
+            ROLES_ENUM.ADMIN,
+            ROLES_ENUM.SECURITY_LEADER,
+            ROLES_ENUM.DEPARTMENT_MANAGER,
+            ROLES_ENUM.FOLLOW_UP_OFFICER,
+          ],
+          routeId: RouteIdsEnum.ATTENDANCE_REPORT,
+        },
         loadComponent: () =>
-          import('@/views/features/reports/attendance-report/attendance-report-container/attendance-report-container.component'),
+          import(
+            '@/views/features/reports/attendance-report/attendance-report-container/attendance-report-container.component'
+          ),
       },
       {
         path: 'nationalities',

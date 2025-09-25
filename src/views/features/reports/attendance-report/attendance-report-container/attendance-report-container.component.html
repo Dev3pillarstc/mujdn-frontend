@@ -1,23 +1,36 @@
 <div class="bg-white">
   <div class="bg-[#f9fafb] p-3 sm:p-6">
+    <!-- Header -->
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-      <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+      <p-breadcrumb class="max-w-full" [model]="breadcrumbs" [home]="home"></p-breadcrumb>
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        تقرير الحضور و الانصراف
+        <h2>{{ 'ATTENDANCE_REPORT_PAGE.TITLE' | translate }}</h2>
       </h3>
     </div>
-    <p-tabs value="0">
+
+    <!-- Tabs -->
+    <p-tabs [(value)]="activeTabIndex" (valueChange)="onTabChange($event)">
       <p-tablist class="my-6">
-        <p-tab value="0">تقريري </p-tab>
-        <p-tab value="1">سجل تقارير الموظفين التابعين </p-tab>
+        <p-tab [value]="0">
+          {{ 'ATTENDANCE_REPORT_PAGE.MY_ATTENDANCE_REPORTS' | translate }}
+        </p-tab>
+        <p-tab [value]="1">
+          {{ 'ATTENDANCE_REPORT_PAGE.OTHERS_ATTENDANCE_REPORTS' | translate }}
+        </p-tab>
       </p-tablist>
+
       <p-tabpanels>
-        <p-tabpanel value="0">
-          <app-my-attendance-report-list></app-my-attendance-report-list>
+        <!-- My Attendance Reports -->
+        <p-tabpanel [value]="0">
+          <app-my-attendance-report-list #myReports></app-my-attendance-report-list>
         </p-tabpanel>
-        <p-tabpanel value="1">
-          <app-all-attendance-report-list></app-all-attendance-report-list>
-        </p-tabpanel>
+
+        <!-- Subordinates Attendance Reports -->
+        @if (showOthersReportsTab()) {
+          <p-tabpanel [value]="1">
+            <app-all-attendance-report-list #allReports></app-all-attendance-report-list>
+          </p-tabpanel>
+        }
       </p-tabpanels>
     </p-tabs>
   </div>

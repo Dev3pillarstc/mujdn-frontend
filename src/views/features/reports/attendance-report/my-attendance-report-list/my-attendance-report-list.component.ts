@@ -1,13 +1,30 @@
-import { Component } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Component, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
+import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import AttendanceReport from '@/models/features/attendance/attendance-report/attendance-report';
+import { AttendanceReportFilter } from '@/models/features/attendance/attendance-report/attendance-report-filter';
+import { AttendanceReportService } from '@/services/features/attendance-report.service';
+import { LanguageService } from '@/services/shared/language.service';
+import { CustomValidators } from '@/validators/custom-validators';
+import * as XLSX from 'xlsx';
+import { TranslatePipe } from '@ngx-translate/core';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import {
+  ATTENDANCE_STATUS_ENUM,
+  ATTENDANCE_STATUS_CONFIG,
+  ATTENDANCE_STATUS_OPTIONS,
+} from '@/enums/attendance-status-enum';
+import { SHIFT_TYPE_ENUM } from '@/enums/shift-type-enum';
+import { formatDateTo12Hour } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-my-attendance-report-list',
@@ -21,25 +38,158 @@ import { Select } from 'primeng/select';
     DatePickerModule,
     FormsModule,
     Select,
+    TranslatePipe,
   ],
+  providers: [DatePipe],
+
   templateUrl: './my-attendance-report-list.component.html',
   styleUrl: './my-attendance-report-list.component.scss',
 })
-export class MyAttendanceReportListComponent {
-  first: number = 0;
-  rows: number = 10;
-  date2: Date | undefined;
-  attendance!: any[];
-  items: MenuItem[] | undefined;
-  home: MenuItem | undefined;
+export class MyAttendanceReportListComponent extends BaseListComponent<
+  AttendanceReport,
+  any, // No dialog for now, replace if needed
+  AttendanceReportService,
+  AttendanceReportFilter
+> {
+  override dialogSize = {
+    width: '100%',
+    maxWidth: '800px',
+  };
 
-  ngOnInit() {
-    this.items = [{ label: 'لوحة المعلومات' }, { label: 'ورديات العمل المؤقتة' }];
-    // Updated dummy data to match your Arabic table structure
-    this.attendance = [{}];
+  attendanceReportService = inject(AttendanceReportService);
+  filterModel: AttendanceReportFilter = new AttendanceReportFilter();
+  languageService = inject(LanguageService);
+  datePipe = inject(DatePipe);
+  departments: BaseLookupModel[] = [];
+  departmentService = inject(DepartmentService);
+  shiftType = SHIFT_TYPE_ENUM;
+  attendanceStatuses = ATTENDANCE_STATUS_OPTIONS; // import from your enum file
+
+  override get service() {
+    return this.attendanceReportService;
   }
-  onPageChange(event: PaginatorState) {
-    this.first = event.first ?? 0;
-    this.rows = event.rows ?? 10;
+
+  override initListComponent(): void {
+    this.departmentService.getLookup().subscribe((res) => {
+      this.departments = res;
+    });
+  }
+
+  // preload lookups if you need (e.g., shifts, holidays)
+
+  protected override getBreadcrumbKeys() {
+    return [{ labelKey: 'ATTENDANCE_REPORT_PAGE.ATTENDANCE_REPORTS' }];
+  }
+
+  override openDialog(model: AttendanceReport): void {
+    // No dialog currently needed for Attendance Reports
+  }
+
+  override loadList() {
+    return this.service.loadMyAttendanceReportsPaginated(this.paginationParams, {
+      ...this.appliedFilterModel!,
+    });
+  }
+
+  protected override mapModelToExcelRow(model: AttendanceReport): { [key: string]: any } {
+    return {
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.PROCESSING_DATE')]: this.formatDate(
+        model.processingDate
+      ),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.SHIFT')]: model.getShiftName(),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.SHIFT_TYPE')]:
+        model.shiftType === SHIFT_TYPE_ENUM.DEFAULT
+          ? this.translateService.instant('ATTENDANCE_REPORT_PAGE.DEFAULT_SHIFT')
+          : this.translateService.instant('ATTENDANCE_REPORT_PAGE.SPECIAL_SHIFT'),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.HOLIDAY')]: model.getHolidayName(),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.MISSION')]: model.getMissionName(),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.LAST_LEAVE_FINGER_PRINT')]:
+        this.formatTime(
+          model.lastLeaveFingerPrint ? new Date(model.lastLeaveFingerPrint) : undefined
+        ),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.FIRST_ATTENDANCE_FINGER_PRINT')]:
+        this.formatTime(
+          model.firstAttendanceFingerPrint ? new Date(model.firstAttendanceFingerPrint) : undefined
+        ),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.STATUS')]: model.attendanceStatus
+        ? this.translateService.instant(this.getStatusConfig(model.attendanceStatus).labelKey)
+        : '',
+    };
+  }
+
+  formatDate(date: string | Date | null | undefined): string {
+    if (!date) return '-';
+    return this.datePipe.transform(new Date(date), 'dd-MM-yyyy') ?? '-';
+  }
+  formatTime(date: Date | null | undefined): string {
+    if (!date) return '-';
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    return formatDateTo12Hour(date, locale);
+  }
+  override exportExcel(fileName: string = 'AttendanceReports.xlsx'): void {
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
+    };
+
+    this.service
+      .loadMyAttendanceReportsPaginated(allDataParams, {
+        ...this.appliedFilterModel!,
+      })
+      .subscribe({
+        next: (response) => {
+          const fullList = response.list || [];
+          if (fullList.length === 0) {
+            this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+            return;
+          }
+
+          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
+          const ws = XLSX.utils.json_to_sheet(transformedData);
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          wb.Workbook = { Views: [{ RTL: isRTL }] };
+          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+          XLSX.writeFile(wb, fileName);
+        },
+        error: (_) => {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+        },
+      });
+  }
+  set dateFrom(value: Date | null) {
+    this.filterModel.dateFrom = value;
+    if (this.filterModel.dateTo && value && this.filterModel.dateTo < value) {
+      this.filterModel.dateTo = null;
+    }
+  }
+
+  get dateFrom(): Date | null | undefined {
+    return this.filterModel.dateFrom;
+  }
+  getPropertyName() {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+  }
+  getStatusConfig(status: ATTENDANCE_STATUS_ENUM) {
+    return (
+      ATTENDANCE_STATUS_CONFIG[status] ?? ATTENDANCE_STATUS_CONFIG[ATTENDANCE_STATUS_ENUM.ABSENT]
+    );
+  }
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
+  }
+
+  getPermissionLabel(attendance: any): string {
+    if (attendance.attendancePermissionId && attendance.leavePermissionId) {
+      return 'ATTENDANCE_REPORT_PAGE.PRESENCE_LEAVE';
+    }
+    if (attendance.leavePermissionId && !attendance.attendancePermissionId) {
+      return 'ATTENDANCE_REPORT_PAGE.LEAVE';
+    }
+    if (attendance.attendancePermissionId && !attendance.leavePermissionId) {
+      return 'ATTENDANCE_REPORT_PAGE.PRESENCE';
+    }
+    return '';
   }
 }

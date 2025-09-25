@@ -1,22 +1,25 @@
 <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
   <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
     <div class="flex items-center justify-between">
-      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
+      <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+        {{ 'COMMON.SEARCH_FILTERS' | translate }}
+      </h5>
     </div>
     <div class="pt-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
         <div class="relative">
-          <label for="" class="label">التاريخ (من)</label>
+          <label class="label" for="permission-date-picker">{{ 'COMMON.FROM' | translate }}</label>
           <p-datepicker
-            [(ngModel)]="date2"
+            [(ngModel)]="dateFrom"
             [iconDisplay]="'input'"
             [showIcon]="true"
-            placeholder="التاريخ (من)"
+            [showClear]="true"
             class="peer block w-full"
-            inputId="icondisplay"
+            inputId="icondisplayFrom"
+            placeholder="{{ 'COMMON.FROM' | translate }}"
           >
             <ng-template pTemplate="inputicon">
-              <img src="/assets/icons/calender-icon.svg" alt="" />
+              <img alt="" src="assets/icons/calender-icon.svg" />
             </ng-template>
           </p-datepicker>
           <span
@@ -24,44 +27,65 @@
           ></span>
         </div>
         <div class="relative">
-          <label for="" class="label">التاريخ (الى)</label>
+          <label class="label" for="permission-date-picker">{{ 'COMMON.TO' | translate }}</label>
           <p-datepicker
-            [(ngModel)]="date2"
+            [(ngModel)]="filterModel.dateTo"
+            [minDate]="dateFrom"
             [iconDisplay]="'input'"
             [showIcon]="true"
-            placeholder="التاريخ (الى)"
+            [showClear]="true"
             class="peer block w-full"
-            inputId="icondisplay"
+            inputId="icondisplayTo"
+            placeholder="{{ 'COMMON.TO' | translate }}"
           >
             <ng-template pTemplate="inputicon">
-              <img src="/assets/icons/calender-icon.svg" alt="" />
+              <img alt="" src="assets/icons/calender-icon.svg" />
             </ng-template>
           </p-datepicker>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
         </div>
-        <div class="relative">
-          <label class="label" for="department">الحالة</label>
-          <p-select optionLabel="name" placeholder="الحالة" class="w-full" />
 
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
-        </div>
-        <div class="relative">
-          <label class="label" for="department">حالة المعالجة</label>
-          <p-select optionLabel="name" placeholder="حالة المعالجة" class="w-full" />
+        <div>
+          <label class="label">
+            {{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}
+          </label>
+          <div class="relative">
+            <p-select
+              [options]="attendanceStatuses"
+              optionValue="value"
+              [showClear]="true"
+              [(ngModel)]="filterModel.statusId"
+              placeholder="{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}"
+              class="w-full peer"
+            >
+              <!-- dropdown list items -->
+              <ng-template let-option pTemplate="item">
+                {{ option.labelKey | translate }}
+              </ng-template>
 
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+              <!-- selected item -->
+              <ng-template let-selected pTemplate="selectedItem">
+                {{ selected?.labelKey ? (selected.labelKey | translate) : '' }}
+              </ng-template>
+            </p-select>
+
+            <!-- underline animation -->
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
         </div>
       </div>
 
       <div class="actions flex items-center gap-4 pt-6">
-        <button class="btn black-btn">بحث</button>
-        <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
+        <button (click)="search()" class="btn black-btn">
+          {{ 'COMMON.SEARCH' | translate }}
+        </button>
+        <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
+          {{ 'COMMON.RESET_SEARCH' | translate }}
+        </button>
       </div>
     </div>
   </div>
@@ -70,102 +94,95 @@
       class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
     >
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-        تقرير الحضور و الانصراف
+        {{ 'ATTENDANCE_REPORT_PAGE.TITLE' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
-        <button class="table-head-action-btn">
+        <button (click)="exportExcel()" class="table-head-action-btn min-w-[40px]">
           <img src="assets/icons/excel.svg" alt="" />
-        </button>
-        <button class="table-head-action-btn">
-          <img src="assets/icons/print.svg" alt="" />
         </button>
       </div>
     </div>
-    <p-table [value]="attendance">
-      <ng-template #header>
-        <tr>
-          <th>التاريخ</th>
-          <th>اسم الوردية</th>
-          <th>نوع الوردية</th>
-          <th>اسم الإجازة</th>
-          <th>اسم المهمة</th>
-          <th>التوثيق</th>
-          <th>وقت الحضور</th>
-          <th>الحالة</th>
-          <th>حالة المعالجة</th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-attendance>
-        <tr>
-          <td>12/12/2022</td>
-          <td>اسم الوردية</td>
-          <td>وردية مسائية</td>
-          <td>اليوم الوطني</td>
-          <td>مهمة عمل</td>
-          <td>
-            <div class="flex items-center justify-center">
-              <img src="assets/icons/right-icon.svg" alt="" />
-              <img src="assets/icons/wrong-icon.svg" alt="" />
-            </div>
-          </td>
-          <td>08:00</td>
-          <td>
-            <div
-              class="px-2 py-1 flex items-center gap-2 rounded-full bg-[#f9fafb] text-[#1f2a37] font-medium text-[14px] w-fit"
-            >
-              <span class="block w-[10px] h-[10px] rounded-full bg-[#4d5761]"></span>
-              <span>اجازة رسمية</span>
-            </div>
-            <div
-              class="px-2 py-1 flex items-center gap-2 rounded-full bg-[#f9fafb] text-[#1f2a37] font-medium text-[14px] w-fit"
-            >
-              <span class="block w-[10px] h-[10px] rounded-full bg-[#4d5761]"></span>
-              <span>عطلة اسبوعية</span>
-            </div>
-            <div
-              class="px-2 py-1 flex items-center gap-2 rounded-full bg-[#fffaeb] text-[#93370d] font-medium text-[14px] w-fit"
-            >
-              <span class="block w-[10px] h-[10px] rounded-full bg-[#93370d]"></span>
-              <span>معفي من البصمة</span>
-            </div>
-            <div
-              class="px-2 py-1 flex items-center gap-2 rounded-full bg-[#eff8ff] text-[#1849a9] font-medium text-[14px] w-fit"
-            >
-              <span class="block w-[10px] h-[10px] rounded-full bg-[#1849a9]"></span>
-              <span>مهمة عمل</span>
-            </div>
-            <div
-              class="px-2 py-1 flex items-center gap-2 rounded-full bg-[#ecfdf3] text-[#085d3a] font-medium text-[14px] w-fit"
-            >
-              <span class="block w-[10px] h-[10px] rounded-full bg-[#085d3a]"></span>
-              <span>حضور</span>
-            </div>
-            <div
-              class="px-2 py-1 flex items-center gap-2 rounded-full bg-[#fef3f2] text-[#912018] font-medium text-[14px] w-fit"
-            >
-              <span class="block w-[10px] h-[10px] rounded-full bg-[#912018]"></span>
-              <span>غياب</span>
-            </div>
-          </td>
-          <td>
-            <div
-              class="bg-[#f9fafb] border border-[#e5e7eb] rounded-full px-2 py-1 text-[#1f2a37] font-medium text-xs"
-            >
-              تمت المعالجة
-            </div>
-            <button class="btn green-btn">بحاجة للمعالجة</button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-    <p-paginator
-      class="mt-6"
-      (onPageChange)="onPageChange($event)"
-      [first]="first"
-      [rows]="rows"
-      [totalRecords]="120"
-      [rowsPerPageOptions]="[10, 20, 30]"
-    />
-    <div></div>
+    @if (list && list.length > 0) {
+      <p-table [value]="list">
+        <ng-template #header>
+          <tr>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.DATE' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_TYPE' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.LEAVE_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.MISSION_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.PERMISSIONS' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.DOCUMENTATION' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKIN_TIME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKOUT_TIME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-attendance>
+          <tr>
+            <td>{{ formatDate(attendance.processingDate) }}</td>
+            <td>{{ attendance.getShiftName() }}</td>
+            <td>
+              @if (attendance.shiftType === shiftType.SPECIAL) {
+                {{ 'ATTENDANCE_REPORT_PAGE.SPECIAL_SHIFT' | translate }}
+              } @else {
+                {{ 'ATTENDANCE_REPORT_PAGE.DEFAULT_SHIFT' | translate }}
+              }
+            </td>
+            <td>{{ attendance.getHolidayName() }}</td>
+            <td>{{ attendance.getMissionName() }}</td>
+            <td>
+              {{ getPermissionLabel(attendance) | translate }}
+            </td>
+            <td>
+              @if (attendance.isPresenceInquirySucceed) {
+                <div class="flex items-center justify-center">
+                  <img src="assets/icons/right-icon.svg" alt="" />
+                </div>
+              } @else if (attendance.isPresenceInquirySucceed === false) {
+                <div class="flex items-center justify-center">
+                  <img src="assets/icons/wrong-icon.svg" alt="" />
+                </div>
+              }
+            </td>
+            <td>{{ formatTime(attendance.firstAttendanceFingerPrint) }}</td>
+            <td>{{ formatTime(attendance.lastLeaveFingerPrint) }}</td>
+
+            <td>
+              <div
+                class="px-2 py-1 flex items-center gap-2 rounded-full font-medium text-[14px] w-fit"
+                [style.background-color]="getStatusConfig(attendance.attendanceStatus).bgColor"
+                [style.color]="getStatusConfig(attendance.attendanceStatus).textColor"
+              >
+                <span
+                  class="block w-[10px] h-[10px] rounded-full"
+                  [style.background-color]="getStatusConfig(attendance.attendanceStatus).dotColor"
+                ></span>
+                <span>
+                  {{ getStatusConfig(attendance.attendanceStatus).labelKey | translate }}
+                </span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    } @else {
+      <div class="flex items-center justify-center h-64">
+        <p class="text-gray-500">
+          {{ 'COMMON.NO_DATA_TO_SHOW' | translate }}
+        </p>
+      </div>
+    }
+    @if (paginationInfo) {
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [rows]="rows"
+        [showCurrentPageReport]="false"
+        [totalRecords]="paginationInfo.totalItems"
+        class="mt-6"
+      />
+    }
   </div>
 </div>

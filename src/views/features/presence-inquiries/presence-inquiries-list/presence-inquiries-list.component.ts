@@ -36,7 +36,7 @@ import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inq
   templateUrl: './presence-inquiries-list.component.html',
   styleUrl: './presence-inquiries-list.component.scss',
 })
-export default class PresenceInquiriesListComponent implements OnInit, AfterViewInit, OnDestroy {
+export default class PresenceInquiriesListComponent implements OnInit, OnDestroy {
   breadcrumbs: MenuItem[] = [];
   translateService = inject(TranslateService);
   destroy$ = new Subject<void>();
@@ -86,14 +86,6 @@ export default class PresenceInquiriesListComponent implements OnInit, AfterView
 
   showOthersInquiries(): boolean {
     return this.authService.isFollowUpOfficer!;
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      if (this.myList) {
-        this.myList.loadList().subscribe();
-      }
-    });
   }
 
   onTabChange(index: number | string) {

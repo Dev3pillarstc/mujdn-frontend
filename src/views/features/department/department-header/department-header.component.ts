@@ -45,6 +45,7 @@ export class DepartmentHeaderComponent {
   delete(departmentId: number | undefined): void {
     this.departmentDeleted.emit(departmentId);
   }
+
   private readonly selectedDepartmentEffect = effect(() => {
     const selectedDepartment = this.selectedDepartmentSignal();
     if (selectedDepartment) {

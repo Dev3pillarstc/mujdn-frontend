@@ -27,6 +27,7 @@ import { UserProfileService } from '@/services/features/user-profile.service';
 import * as XLSX from 'xlsx';
 import { CustomValidators } from '@/validators/custom-validators';
 import { LanguageService } from '@/services/shared/language.service';
+import { formatDateTo12Hour } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-others-presence-inquiries-list',
@@ -106,7 +107,7 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
         model.assignedDate
       ),
       [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_TIME')]: this.formatTime(
-        model.assignedDate
+        model.assignedDate ? new Date(model.assignedDate) : undefined
       ),
       [this.translateService.instant('INQUIRIES_PAGE.ALLOWED_ATTENDANCE_PERIOD')]: model.buffer,
       [this.translateService.instant('INQUIRIES_PAGE.INQUIRY_STATUS')]: this.getStatusName(
@@ -159,9 +160,10 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
     return this.datePipe.transform(new Date(date), 'dd-MM-yyyy') ?? '-';
   }
 
-  formatTime(date: string | Date | null | undefined): string {
+  formatTime(date: Date | null | undefined): string {
     if (!date) return '-';
-    return this.datePipe.transform(new Date(date), 'HH:mm:ss') ?? '-';
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    return formatDateTo12Hour(date, locale);
   }
 
   getStatusName(id: number): string {
@@ -202,5 +204,8 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
           this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
         },
       });
+  }
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 }

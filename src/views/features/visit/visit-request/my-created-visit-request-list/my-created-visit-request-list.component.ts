@@ -20,7 +20,7 @@ import { VisitService } from '@/services/features/visit/visit.service';
 import { MyCreatedVisitFilter } from '@/models/features/visit/my-created-visit-filter';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { VisitStatusEnum } from '@/enums/visit-status-enum';
-import { didTimePassed, formatTimeTo12Hour, timeStringToDate } from '@/utils/general-helper';
+import { didVisitTimePassed, formatTimeTo12Hour } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
@@ -211,7 +211,7 @@ export class MyCreatedVisitRequestListComponent
       return false;
     }
 
-    return !didTimePassed(visit.visitDate as Date, visit.visitTimeTo as string);
+    return !didVisitTimePassed(visit);
   }
 
   openDialog(model?: Visit) {

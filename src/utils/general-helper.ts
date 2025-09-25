@@ -1,4 +1,5 @@
 import { WeekDaysEnum } from '@/enums/week-days-enum';
+import { Visit } from '@/models/features/visit/visit';
 import { FormArray, FormGroup } from '@angular/forms';
 
 // used in base-crud service for date filtering
@@ -180,11 +181,12 @@ export function formatSwipeTime(
   return { date, time };
 }
 
-export function didTimePassed(givenDate: Date, givenTime: string): boolean {
-  givenDate = new Date(givenDate || '');
-  const givenTimeTo = timeStringToDate(givenTime as string);
+export function didVisitTimePassed(visit: Visit): boolean {
+  const givenDate = new Date(visit.visitDate as string);
+  const givenTimeTo = timeStringToDate(visit.visitTimeTo as string);
 
-  givenTimeTo.setDate(givenDate.getDate());
+  // align year, month, and day from givenDate
+  givenTimeTo.setFullYear(givenDate.getFullYear(), givenDate.getMonth(), givenDate.getDate());
 
   const today = new Date();
 

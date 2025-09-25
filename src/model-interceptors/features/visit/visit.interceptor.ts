@@ -3,7 +3,7 @@ import { Visit } from '@/models/features/visit/visit';
 import {
   convertUtcToSystemTimeZone,
   dateToTimeString,
-  didTimePassed,
+  didVisitTimePassed,
   timeStringToDate,
   toDateOnly,
   toDateTime,
@@ -20,10 +20,7 @@ export class VisitInterceptor implements ModelInterceptorContract<Visit> {
     model.leaveTime = model.leaveTime
       ? dateToTimeString(convertUtcToSystemTimeZone(timeStringToDate(model.leaveTime || '')))
       : null;
-    if (
-      didTimePassed(model.visitDate as Date, model.visitTimeTo as string) &&
-      model.visitStatus === VisitStatusEnum.NEW
-    ) {
+    if (model.visitStatus === VisitStatusEnum.NEW && didVisitTimePassed(model)) {
       model.visitStatus = VisitStatusEnum.EXPIRED;
     }
     return model;

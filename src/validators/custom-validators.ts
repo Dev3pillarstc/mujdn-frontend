@@ -213,8 +213,8 @@ export function dateRangeValidator(
     }
 
     // Check if dateTo is after dateFrom
-    if (normalizedTo <= normalizedFrom) {
-      errors['dateOrder'] = {
+    if (normalizedTo < normalizedFrom) {
+      errors['startAfterEnd'] = {
         message: 'Date To must be greater than Date From',
       };
     }

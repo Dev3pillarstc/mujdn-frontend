@@ -17,6 +17,8 @@ import { Observable } from 'rxjs';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { BlacklistedNationalIdService } from '@/services/features/visit/blacklisted-national-id.service';
+import { BlacklistedNationalId } from '@/models/features/visit/blacklisted-national-id';
 
 @Component({
   selector: 'app-view-action-visit-request-popup',
@@ -29,6 +31,7 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   declare viewMode: ViewModeEnum;
   alertService = inject(AlertService);
   visitService = inject(VisitService);
+  blacklistedNationalIdService = inject(BlacklistedNationalIdService);
   translateService = inject(TranslateService);
   declare direction: LAYOUT_DIRECTION_ENUM;
   languageService = inject(LanguageService);
@@ -130,9 +133,10 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   onBlockVisitor(): void {
     // Implementation to be added later
     console.log('Block visitor:', this.model.nationalId);
+    const blacklistedNationalId = new BlacklistedNationalId();
+    blacklistedNationalId.nationalId = this.model.nationalId;
 
-    // Call visit service to block the visitor
-    this.visitService.blockVisitor(this.model.nationalId, this.model.id).subscribe((response) => {
+    this.blacklistedNationalIdService.create(blacklistedNationalId).subscribe((response) => {
       this.alertService.showSuccessMessage(this.successObject);
       this.dialogRef.close(DIALOG_ENUM.OK);
     });
@@ -150,6 +154,14 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   // Check if visitor can be blocked (business logic can be added here)
   canBlockVisitor(): boolean {
     return this.shouldShowActions();
+  }
+
+  canReject(): boolean {
+    return (
+      this.shouldShowActions() &&
+      (this.model.visitStatus === VisitStatusEnum.NEW ||
+        this.model.visitStatus === VisitStatusEnum.APPROVED)
+    );
   }
 
   // Check if request can be accepted/rejected

@@ -14,6 +14,7 @@ import {
   VisitStatusOption,
 } from '@/models/features/visit/visit-status-option';
 import { AuthService } from '@/services/auth/auth.service';
+import { UserService } from '@/services/features/user.service';
 
 enum TabIndex {
   MY_VISITS = 0,
@@ -41,6 +42,7 @@ export default class VisitRequestContainerComponent implements OnInit, OnDestroy
   departmentService = inject(DepartmentService);
   nationalityService = inject(NationalityService);
   authService = inject(AuthService);
+  userService = inject(UserService);
 
   private readonly translateService = inject(TranslateService);
   private readonly destroy$ = new Subject<void>();
@@ -80,9 +82,15 @@ export default class VisitRequestContainerComponent implements OnInit, OnDestroy
   }
 
   private loadDepartments(): void {
-    this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
-      this.departments = res;
-    });
+    if(this.authService.isSecurityLeader || this.authService.isSecurityMember) {
+      this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
+        this.departments = res;
+      });
+    } else {
+      this.userService.getMyDepartmentsLookup().subscribe((res: BaseLookupModel[]) => {
+        this.departments = res;
+      });
+    }
   }
 
   private loadNationalities(): void {

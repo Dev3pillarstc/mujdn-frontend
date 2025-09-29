@@ -36,6 +36,8 @@ export class VisitInterceptor implements ModelInterceptorContract<Visit> {
     // deleting unnecessary models
     delete model.targetDepartment;
     delete model.creationUser;
+    delete model.nationalityNameAr;
+    delete model.nationalityNameEn;
     return model;
   }
 }

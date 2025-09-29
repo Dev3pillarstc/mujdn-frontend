@@ -239,6 +239,9 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
     const currentIds: number[] = this.accessLocationIdsControl.value || [];
     this.accessLocationIdsControl.setValue(currentIds.filter((x) => x !== id));
   }
+  isEnglishLanguage() {
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
+  }
 
   get minDate(): Date {
     return this._minDate;

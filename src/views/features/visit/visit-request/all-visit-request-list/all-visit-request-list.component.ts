@@ -261,6 +261,8 @@ export class AllVisitRequestListComponent
     if (model?.visitStatus === VisitStatusEnum.APPROVED) {
       return this.openQrcodeDialog(model);
     }
+    this.setNationalityNames(model!);
+
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
@@ -282,6 +284,8 @@ export class AllVisitRequestListComponent
 
   openTakeActionDialog(model: Visit) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    this.setNationalityNames(model);
+
     dialogConfig.data = {
       model: model,
       viewMode: ViewModeEnum.TAKE_ACTION,
@@ -327,5 +331,14 @@ export class AllVisitRequestListComponent
       nationalities: this.nationalities,
       accessLocations: this.accessLocations,
     });
+  }
+
+  private setNationalityNames(model: Visit | null): void {
+    if (!model) return;
+
+    const nationality = this.nationalities.find((n) => n.id === model.fkNationalityId);
+
+    model.nationalityNameAr = nationality?.nameAr ?? '';
+    model.nationalityNameEn = nationality?.nameEn ?? '';
   }
 }

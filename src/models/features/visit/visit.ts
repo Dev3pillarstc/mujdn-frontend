@@ -36,6 +36,8 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   declare leaveTime: string | null;
   declare accessLocationIds: number[]; // selected IDs (for saving)
   declare accessLocations: BaseLookupModel[];
+  declare nationalityNameAr?: string;
+  declare nationalityNameEn?: string;
   constructor() {
     super();
   }
@@ -97,7 +99,14 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
         visitTimeTo ? timeStringToDate(visitTimeTo.toString()) : null,
         [Validators.required],
       ],
-      visitPurpose: [visitPurpose, [Validators.required]],
+      visitPurpose: [
+        visitPurpose,
+        [
+          Validators.required,
+          Validators.maxLength(CustomValidators.defaultLengths.NOTES),
+          Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
+        ],
+      ],
       accessLocationIds: [accessLocationIds ?? [], [Validators.required]],
     };
   }

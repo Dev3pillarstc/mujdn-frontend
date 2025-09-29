@@ -57,6 +57,7 @@ export class BlacklistedNationalityListComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isActive']) {
+      this.resetSearch();
       const current = changes['isActive'].currentValue;
       const previous = changes['isActive'].previousValue;
 

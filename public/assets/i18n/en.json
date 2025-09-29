@@ -112,6 +112,7 @@
     "CAN_NOT_TAKE_ACTION": "You can not take this action",
     "VISITOR_NOT_FOUND": "Visitor not found with this National ID",
     "VISITOR_NATIONAL_ID_BLACKLISTED": "Sorry, you can't submit a visit request because the visitor is blacklisted",
+    "VISITOR_BLOCKED": "Sorry, you can't approve the visit request because the visitor is blacklisted",
     "VISITOR_NATIONALITY_BLACKLISTED": "Sorry, you can't submit a visit request because the visitor nationality is blacklisted",
     "VISITOR_CANNOT_BE_BLOCKED": "Sorry, you can't block the visitor",
     "VISIT_NOT_FOUND": "Visit not found",

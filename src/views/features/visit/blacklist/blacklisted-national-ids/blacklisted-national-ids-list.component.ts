@@ -55,6 +55,8 @@ export class BlacklistedNationalIdListComponent
   ngOnChanges(changes: SimpleChanges): void {
     // Watch for changes in isActive input
     if (changes['isActive'] && changes['isActive'].currentValue === true) {
+      this.resetSearch();
+
       this.loadDataIfNeeded();
     }
   }

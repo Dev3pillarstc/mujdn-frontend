@@ -34,6 +34,7 @@ import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import { ManualProcessingService } from '@/services/features/business/manual-processing.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 interface DepartmentEmployees {
   department: BaseLookupModel;
@@ -119,6 +120,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
         this.currentLang = langChangeEvent.lang;
         this.setHomeItem();
         this.initBreadcrumbs();
+        this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(this.departmentEmployeesGroups);
       });
 
     // Listen to language service changes if available
@@ -260,7 +262,14 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.departmentEmployeesGroups = Array.from(groupsMap.values());
+    this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(Array.from(groupsMap.values()));
+  }
+
+  sortDepartmentsAlphabetically(departments: DepartmentEmployees[]) {
+    const departmentNamePropertyName = this.currentLang == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+    return departments.sort((a, b) =>
+      a.department.nameEn!.localeCompare(b.department[departmentNamePropertyName]!)
+    );
   }
 
   removeEmployee(employee: UsersWithDepartmentLookup): void {

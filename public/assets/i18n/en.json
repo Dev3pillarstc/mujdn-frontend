@@ -116,7 +116,8 @@
     "VISITOR_NATIONALITY_BLACKLISTED": "Sorry, you can't submit a visit request because the visitor nationality is blacklisted",
     "VISITOR_CANNOT_BE_BLOCKED": "Sorry, you can't block the visitor",
     "VISIT_NOT_FOUND": "Visit not found",
-    "ATTENDANCE_REPORT": "Attendance Report"
+    "ATTENDANCE_REPORT": "Attendance Report",
+    "VISIT_TIME_CONFLICTING": "Visit time conflicting with another visit for same user"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -376,7 +377,7 @@
     "CREATOR_AR": "Creator (Arabic)",
     "CREATOR_EN": "Creator (English)",
     "SYSTEM": "System",
-    "ADD_NEW_ATTENDANCE_LOG": "Add New Attendance Log",
+    "ADD_NEW_ATTENDANCE_LOG": "Add New Movement",
     "EMPLOYEE_ID": "Employee ID",
     "EMPLOYEE_NAME_AR": "Employee Name (Arabic)",
     "EMPLOYEE_NAME_EN": "Employee Name (English)",
@@ -677,6 +678,7 @@
     "NEW": "New",
     "REJECTED": "Rejected",
     "ACCEPTED": "Accepted",
+    "EXPIRED": "Expired",
     "VISITOR_SELECTION": "Visitor Selection",
     "LOAD_EXISTING_VISITOR": "Load Existing Visitor Data",
     "ADD_NEW_VISITOR": "Add New Visitor",

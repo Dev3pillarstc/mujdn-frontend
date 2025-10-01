@@ -221,9 +221,9 @@
 
         <!-- location  -->
         <div>
-          <label class="label" for="location">{{
-            'VISIT_REQUEST_PAGE.DEVICES_LOCATION' | translate
-          }}</label>
+          <label class="label" for="location">
+            {{ 'VISIT_REQUEST_PAGE.SELECTED_DEVICES_LOCATIONS' | translate }}
+          </label>
           <div class="relative">
             <p-multiselect
               [options]="accessLocations"
@@ -234,7 +234,10 @@
               class="w-full"
               id="location"
               name="location"
-              placeholder="{{ 'VISIT_REQUEST_PAGE.DEVICES_LOCATION' | translate }}"
+              placeholder="          {{
+                'VISIT_REQUEST_PAGE.SELECTED_DEVICES_LOCATIONS' | translate
+              }}
+"
             />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -252,7 +255,7 @@
             <div
               class="bg-[#f3f4f6] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
             >
-              <span>{{ loc.nameAr }}</span>
+              <span>{{ isEnglishLanguage() ? loc.nameEn : loc.nameAr }}</span>
               <button type="button" (click)="removeAccessLocation(loc.id)">
                 <svg
                   width="18"
@@ -286,6 +289,7 @@
               [showIcon]="true"
               class="peer block w-full"
               formControlName="visitDate"
+              [minDate]="minDate"
               id="visitDate"
               inputId="visitDate"
               name="visitDate"
@@ -318,6 +322,7 @@
               inputId="visitTimeFrom"
               name="visitTimeFrom"
               placeholder="{{ 'VISIT_REQUEST_PAGE.VISIT_TIME_FROM' | translate }}"
+              [hourFormat]="'12'"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />
@@ -346,6 +351,7 @@
               inputId="visitTimeTo"
               name="visitTimeTo"
               placeholder="{{ 'VISIT_REQUEST_PAGE.VISIT_TIME_TO' | translate }}"
+              [hourFormat]="'12'"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />

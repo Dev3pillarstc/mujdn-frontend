@@ -20,7 +20,7 @@ import { VisitService } from '@/services/features/visit/visit.service';
 import { MyCreatedVisitFilter } from '@/models/features/visit/my-created-visit-filter';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { VisitStatusEnum } from '@/enums/visit-status-enum';
-import { formatTimeTo12Hour } from '@/utils/general-helper';
+import { didVisitTimePassed, formatTimeTo12Hour } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
@@ -142,6 +142,8 @@ export class MyCreatedVisitRequestListComponent
         return 'text-[14px] text-[#085d3a] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#ecfdf3] font-medium';
       case VisitStatusEnum.REJECTED:
         return 'text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium';
+      case VisitStatusEnum.EXPIRED:
+        return 'text-[14px] text-[#912018] min-w-[101px] min-h-[24px] inline-flex justify-center items-center gap-2 px-2 rounded-full bg-[#fef3f2] font-medium';
       default:
         return 'text-[14px] text-gray-600 px-2 py-1 rounded-full bg-gray-100 font-medium';
     }
@@ -154,6 +156,8 @@ export class MyCreatedVisitRequestListComponent
       case VisitStatusEnum.APPROVED:
         return 'w-[10px] h-[10px] bg-[#085d3a] rounded-full';
       case VisitStatusEnum.REJECTED:
+        return 'w-[10px] h-[10px] bg-[#912018] rounded-full';
+      case VisitStatusEnum.EXPIRED:
         return 'w-[10px] h-[10px] bg-[#912018] rounded-full';
       default:
         return 'w-[10px] h-[10px] bg-gray-600 rounded-full';
@@ -168,6 +172,8 @@ export class MyCreatedVisitRequestListComponent
         return this.translateService.instant('VISIT_REQUEST_PAGE.ACCEPTED');
       case VisitStatusEnum.REJECTED:
         return this.translateService.instant('VISIT_REQUEST_PAGE.REJECTED');
+      case VisitStatusEnum.EXPIRED:
+        return this.translateService.instant('VISIT_REQUEST_PAGE.EXPIRED');
       default:
         return '';
     }
@@ -205,14 +211,7 @@ export class MyCreatedVisitRequestListComponent
       return false;
     }
 
-    const visitDate = new Date(visit.visitDate);
-    const today = new Date();
-
-    // Reset time to compare only by date
-    visitDate.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-
-    return visitDate >= today;
+    return !didVisitTimePassed(visit);
   }
 
   openDialog(model?: Visit) {
@@ -259,6 +258,8 @@ export class MyCreatedVisitRequestListComponent
     if (model?.visitStatus === VisitStatusEnum.APPROVED) {
       return this.openQrcodeDialog(model);
     }
+    this.setNationalityNames(model!);
+
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       model: model,
@@ -280,6 +281,8 @@ export class MyCreatedVisitRequestListComponent
 
   openTakeActionDialog(model: Visit) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    this.setNationalityNames(model);
+
     dialogConfig.data = {
       model: model,
       viewMode: ViewModeEnum.TAKE_ACTION,
@@ -359,5 +362,13 @@ export class MyCreatedVisitRequestListComponent
         model.leaveTime?.toString() || ''
       ),
     };
+  }
+  private setNationalityNames(model: Visit | null): void {
+    if (!model) return;
+
+    const nationality = this.nationalities.find((n) => n.id === model.fkNationalityId);
+
+    model.nationalityNameAr = nationality?.nameAr ?? '';
+    model.nationalityNameEn = nationality?.nameEn ?? '';
   }
 }

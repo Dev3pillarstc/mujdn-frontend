@@ -102,18 +102,6 @@ export class VisitService extends BaseCrudService<Visit> {
   }
 
   @CastResponse(undefined, { fallback: '$action' })
-  blockVisitor(nationalId: string, visitLogId: number): Observable<string> {
-    return this.http
-      .post<
-        ResponseData<string>
-      >(this.getUrlSegment() + '/block-visitor?nationalId=' + nationalId + '&visitLogId=' + visitLogId, {}, { withCredentials: true })
-      .pipe(
-        map((response: ResponseData<string>) => {
-          return response.data;
-        })
-      );
-  }
-  @CastResponse(undefined, { fallback: '$action' })
   approveVisit(visitLogId: number): Observable<string> {
     return this.http
       .post<

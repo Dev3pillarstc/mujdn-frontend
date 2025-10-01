@@ -50,7 +50,7 @@
           <input
             id="nationalId"
             placeholder="{{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}"
-            class="peer"
+            class="peer w-full"
             pInputText
             type="text"
             [(ngModel)]="filterModel.nationalId"
@@ -183,6 +183,7 @@
             <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_TYPE' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.LEAVE_NAME' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.MISSION_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.PERMISSIONS' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.DOCUMENTATION' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKIN_TIME' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKOUT_TIME' | translate }}</th>
@@ -191,11 +192,11 @@
         </ng-template>
         <ng-template #body let-attendance>
           <tr>
-            <td>
+            <td title="{{ isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr }}">
               {{ isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr }}
             </td>
             <td>{{ attendance.nationalId }}</td>
-            <td>
+            <td title="{{ isCurrentLanguageEnglish() ? attendance.departmentNameEn : attendance.departmentNameAr }}">
               {{
                 isCurrentLanguageEnglish()
                   ? attendance.departmentNameEn
@@ -213,6 +214,9 @@
             </td>
             <td>{{ attendance.getHolidayName() }}</td>
             <td>{{ attendance.getMissionName() }}</td>
+            <td>
+              {{ getPermissionLabel(attendance) | translate }}
+            </td>
             <td>
               @if (attendance.isPresenceInquirySucceed) {
                 <div class="flex items-center justify-center">

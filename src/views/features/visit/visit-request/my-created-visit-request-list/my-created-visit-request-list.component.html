@@ -217,7 +217,7 @@
     }
     @if (paginationInfo && paginationInfo.totalItems > 0) {
       <p-paginator
-        (onPageChange)="onPageChange($event, true)"
+        (onPageChange)="onPageChange($event)"
         [first]="first"
         [rowsPerPageOptions]="[10, 20, 30]"
         [rows]="rows"

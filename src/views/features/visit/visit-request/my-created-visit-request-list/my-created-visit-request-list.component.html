@@ -192,7 +192,7 @@
                   <img alt="" src="assets/icons/view.svg" />
                 </button>
                 @if (showActionsButton(visit)) {
-                  <button class="black-table-btn-action" (click)="openTakeActionDialog(visit)">
+                  <button class="black-table-btn-action !min-w-[92px]" (click)="openTakeActionDialog(visit)">
                     <img alt="" src="assets/icons/small-edit.svg" />
                     <span>{{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}</span>
                   </button>
@@ -217,7 +217,7 @@
     }
     @if (paginationInfo && paginationInfo.totalItems > 0) {
       <p-paginator
-        (onPageChange)="onPageChange($event)"
+        (onPageChange)="onPageChange($event, true)"
         [first]="first"
         [rowsPerPageOptions]="[10, 20, 30]"
         [rows]="rows"

@@ -84,14 +84,19 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
 
   protected override mapModelToExcelRow(model: AttendanceReport): { [key: string]: any } {
     return {
-      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.PROCESSING_DATE')]: this.formatDate(
-        model.processingDate
-      ),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME')]:
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
           ? model.fullNameEn
           : model.fullNameAr,
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.NATIONAL_ID')]: model.nationalId,
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.DEPARTMENT')]:
+        this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+          ? model.departmentNameEn
+          : model.departmentNameAr,
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.PROCESSING_DATE')]: this.formatDate(
+        model.processingDate
+      ),
+
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.SHIFT')]: model.getShiftName(),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.SHIFT_TYPE')]:
         model.shiftType === SHIFT_TYPE_ENUM.DEFAULT
@@ -99,14 +104,20 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
           : this.translateService.instant('ATTENDANCE_REPORT_PAGE.SPECIAL_SHIFT'),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.HOLIDAY')]: model.getHolidayName(),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.MISSION')]: model.getMissionName(),
-      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.LAST_LEAVE_FINGER_PRINT')]:
-        this.formatTime(
-          model.lastLeaveFingerPrint ? new Date(model.lastLeaveFingerPrint) : undefined
-        ),
-      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.FIRST_ATTENDANCE_FINGER_PRINT')]:
-        this.formatTime(
-          model.firstAttendanceFingerPrint ? new Date(model.firstAttendanceFingerPrint) : undefined
-        ),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.PERMISSIONS')]:
+        this.translateService.instant(this.getPermissionLabel(model)),
+      ...(model.isPresenceInquirySucceed != null && {
+        [this.translateService.instant('ATTENDANCE_REPORT_PAGE.DOCUMENTATION')]:
+          model.isPresenceInquirySucceed
+            ? this.translateService.instant('INQUIRIES_PAGE.CONFIRMED')
+            : this.translateService.instant('INQUIRIES_PAGE.NOT_CONFIRMED'),
+      }),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.CHECKIN_TIME')]: this.formatTime(
+        model.firstAttendanceFingerPrint ? new Date(model.firstAttendanceFingerPrint) : undefined
+      ),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.CHECKOUT_TIME')]: this.formatTime(
+        model.lastLeaveFingerPrint ? new Date(model.lastLeaveFingerPrint) : undefined
+      ),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.STATUS')]: model.attendanceStatus
         ? this.translateService.instant(this.getStatusConfig(model.attendanceStatus).labelKey)
         : '',

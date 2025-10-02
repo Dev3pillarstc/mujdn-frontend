@@ -120,7 +120,9 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
         this.currentLang = langChangeEvent.lang;
         this.setHomeItem();
         this.initBreadcrumbs();
-        this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(this.departmentEmployeesGroups);
+        this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(
+          this.departmentEmployeesGroups
+        );
       });
 
     // Listen to language service changes if available
@@ -262,11 +264,14 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(Array.from(groupsMap.values()));
+    this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(
+      Array.from(groupsMap.values())
+    );
   }
 
   sortDepartmentsAlphabetically(departments: DepartmentEmployees[]) {
-    const departmentNamePropertyName = this.currentLang == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+    const departmentNamePropertyName =
+      this.currentLang == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
     return departments.sort((a, b) =>
       a.department.nameEn!.localeCompare(b.department[departmentNamePropertyName]!)
     );

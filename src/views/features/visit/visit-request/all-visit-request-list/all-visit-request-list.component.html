@@ -190,10 +190,12 @@
             <td>{{ visit.visitorOrganization }}</td>
             <td>{{ getDepartmentName(visit) }}</td>
             <td>
-              <span [class]="getStatusBadgeClass(visit.visitStatus)">
+              <div class="flex items-center justify-center">
+                 <span [class]="getStatusBadgeClass(visit.visitStatus)">
                 <span [class]="getStatusBadgeDotClass(visit.visitStatus)"></span>
                 {{ getStatusText(visit.visitStatus) }}
               </span>
+              </div>
             </td>
             <td>{{ getVisitCreatorName(visit) }}</td>
             <td>{{ formatTime(visit.arrivalTime) }}</td>
@@ -204,7 +206,7 @@
                   <img alt="" src="assets/icons/view.svg" />
                 </button>
                 @if (showActionsButton(visit)) {
-                  <button class="black-table-btn-action" (click)="openTakeActionDialog(visit)">
+                  <button class="black-table-btn-action !min-w-[92px]" (click)="openTakeActionDialog(visit)">
                     <img alt="" src="assets/icons/small-edit.svg" />
                     <span>{{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}</span>
                   </button>

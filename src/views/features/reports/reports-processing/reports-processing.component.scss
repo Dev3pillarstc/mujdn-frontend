@@ -1,0 +1,8 @@
+:host ::ng-deep {
+  .accordion-container {
+    .p-icon {
+      position: absolute !important;
+      inset-inline-start: 24px !important;
+    }
+  }
+}

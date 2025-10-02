@@ -75,6 +75,7 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   first: number = 0;
   rows: number = 10;
   selectedEmployees: any[] = [];
+  private readonly _minDate: Date = new Date();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -240,5 +241,9 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   }
   isEnglishLanguage() {
     return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
+  }
+
+  get minDate(): Date {
+    return this._minDate;
   }
 }

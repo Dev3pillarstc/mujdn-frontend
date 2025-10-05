@@ -20,8 +20,8 @@ export class ManualProcessing extends BaseCrudModel<ManualProcessing, ManualProc
     const form = {
       startDate: [startDate, [Validators.required]],
       endDate: [endDate, [Validators.required]],
-      departmentIds: [null, []],
-      userIdsArray: [userIdsArray, []],
+      departmentIds: [null, [Validators.required]],
+      userIdsArray: [userIdsArray, [Validators.required]],
     };
 
     return form;

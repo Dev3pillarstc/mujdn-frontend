@@ -90,4 +90,13 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
   getUser(): BehaviorSubject<LoggedInUser | undefined> {
     return this.loggedInUser;
   }
+
+  userVersionHasBeenChanged(user: LoggedInUser) {
+    return this.loggedInUser.value?.version != user.version;
+  }
+
+  userDepartmentHasBeenChanged(user: LoggedInUser) {
+    return this.loggedInUser.value?.departNameEn != user.departNameEn ||
+    this.loggedInUser.value?.departNameAr != user.departNameAr
+  }
 }

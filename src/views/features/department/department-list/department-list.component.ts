@@ -30,10 +30,6 @@ import { filter, switchMap, tap } from 'rxjs';
 import { Department } from '@/models/features/lookups/department/department';
 import { MatDialogConfig } from '@angular/material/dialog';
 
-interface Adminstration {
-  type: string;
-}
-
 @Component({
   selector: 'app-department-list',
   imports: [
@@ -69,8 +65,6 @@ export default class DepartmentListComponent extends BaseListComponent<
   private _selectedDepartment: Department | null = null;
 
   date2: Date | undefined;
-  adminstrations: Adminstration[] | undefined;
-  selectedAdminstration: Adminstration | undefined;
   departmentsTree: Department[] = [];
   regions: BaseLookupModel[] = [];
   cities: City[] = [];
@@ -261,8 +255,8 @@ export default class DepartmentListComponent extends BaseListComponent<
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(DepartmentPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result && result == DIALOG_ENUM.OK) {
+    return dialogRef.afterClosed().subscribe((result: {data: Department, action: DIALOG_ENUM}) => {
+      if (result && result?.action == DIALOG_ENUM.OK) {
         this.onDepartmentChange();
       }
     });
@@ -279,7 +273,11 @@ export default class DepartmentListComponent extends BaseListComponent<
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
-  onDepartmentChange() {
+  onDepartmentChange(updatedDepartment?: Department) {
+    console.log('=================', updatedDepartment, '=================');
+    if(updatedDepartment) {
+      this.selectedDepartment = Object.assign({}, updatedDepartment);
+    }
     this.filterModel.fkParentDepartmentId = this.selectedDepartment?.id ?? this.rootDepartment?.id;
     this.appliedFilterModel.fkParentDepartmentId =
       this.selectedDepartment?.id ?? this.rootDepartment?.id;

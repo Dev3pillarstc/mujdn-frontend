@@ -255,8 +255,8 @@ export default class DepartmentListComponent extends BaseListComponent<
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(DepartmentPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result && result == DIALOG_ENUM.OK) {
+    return dialogRef.afterClosed().subscribe((result: {data: Department, action: DIALOG_ENUM}) => {
+      if (result && result?.action == DIALOG_ENUM.OK) {
         this.onDepartmentChange();
       }
     });

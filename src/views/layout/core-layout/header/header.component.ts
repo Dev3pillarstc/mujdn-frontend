@@ -34,9 +34,9 @@ export class HeaderComponent implements OnInit {
   destroy$: Subject<void> = new Subject<void>();
 
   ngOnInit() {
-    this.authService.getUser().subscribe(user => {
+    this.authService.getUser().subscribe((user) => {
       this.loggedInUser = user;
-    })
+    });
     // this.loggedInUser = this.authService.getUser().value;
     this.initializeProfileMenu();
     // Re-initialize action list when language changes

@@ -82,7 +82,7 @@ export default class VisitRequestContainerComponent implements OnInit, OnDestroy
   }
 
   private loadDepartments(): void {
-    if(this.authService.isSecurityLeader || this.authService.isSecurityMember) {
+    if (this.authService.isSecurityLeader || this.authService.isSecurityMember) {
       this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
         this.departments = res;
       });

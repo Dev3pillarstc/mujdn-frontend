@@ -88,7 +88,6 @@ export class HolidaysPopupComponent extends BasePopupComponent<Holiday> implemen
   }
 
   override buildForm() {
-    this.minDate = this.data.viewMode == ViewModeEnum.EDIT ? null : new Date();
     this.form = this.fb.group(this.model.buildForm(), {
       validators: [CustomValidators.startBeforeEnd('startDate', 'endDate')],
     });

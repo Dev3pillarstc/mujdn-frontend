@@ -255,11 +255,13 @@ export default class DepartmentListComponent extends BaseListComponent<
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(DepartmentPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: {data: Department, action: DIALOG_ENUM}) => {
-      if (result && result?.action == DIALOG_ENUM.OK) {
-        this.onDepartmentChange();
-      }
-    });
+    return dialogRef
+      .afterClosed()
+      .subscribe((result: { data: Department; action: DIALOG_ENUM }) => {
+        if (result && result?.action == DIALOG_ENUM.OK) {
+          this.onDepartmentChange();
+        }
+      });
   }
   addOrEditModel(parentDepartmentId?: number, department?: Department): void {
     const departmentCopy = department ? new Department().clone(department) : new Department();
@@ -275,7 +277,7 @@ export default class DepartmentListComponent extends BaseListComponent<
   }
   onDepartmentChange(updatedDepartment?: Department) {
     console.log('=================', updatedDepartment, '=================');
-    if(updatedDepartment) {
+    if (updatedDepartment) {
       this.selectedDepartment = Object.assign({}, updatedDepartment);
     }
     this.filterModel.fkParentDepartmentId = this.selectedDepartment?.id ?? this.rootDepartment?.id;

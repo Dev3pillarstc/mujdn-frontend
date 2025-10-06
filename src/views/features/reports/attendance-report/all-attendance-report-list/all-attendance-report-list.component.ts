@@ -93,25 +93,29 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
           ? model.departmentNameEn
           : model.departmentNameAr,
-      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.PROCESSING_DATE')]: this.formatDate(
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.DATE')]: this.formatDate(
         model.processingDate
       ),
 
-      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.SHIFT')]: model.getShiftName(),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.SHIFT_NAME')]: model.getShiftName(),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.SHIFT_TYPE')]:
         model.shiftType === SHIFT_TYPE_ENUM.DEFAULT
           ? this.translateService.instant('ATTENDANCE_REPORT_PAGE.DEFAULT_SHIFT')
           : this.translateService.instant('ATTENDANCE_REPORT_PAGE.SPECIAL_SHIFT'),
-      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.HOLIDAY')]: model.getHolidayName(),
-      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.MISSION')]: model.getMissionName(),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.LEAVE_NAME')]: model.getHolidayName(),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.MISSION_NAME')]:
+        model.getMissionName(),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.PERMISSIONS')]:
-        this.translateService.instant(this.getPermissionLabel(model)),
-      ...(model.isPresenceInquirySucceed != null && {
-        [this.translateService.instant('ATTENDANCE_REPORT_PAGE.DOCUMENTATION')]:
-          model.isPresenceInquirySucceed
+        this.getPermissionLabel(model)
+          ? this.translateService.instant(this.getPermissionLabel(model))
+          : '',
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.DOCUMENTATION')]:
+        model.isPresenceInquirySucceed == null
+          ? '' // show empty if null
+          : model.isPresenceInquirySucceed
             ? this.translateService.instant('INQUIRIES_PAGE.CONFIRMED')
             : this.translateService.instant('INQUIRIES_PAGE.NOT_CONFIRMED'),
-      }),
+
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.CHECKIN_TIME')]: this.formatTime(
         model.firstAttendanceFingerPrint ? new Date(model.firstAttendanceFingerPrint) : undefined
       ),

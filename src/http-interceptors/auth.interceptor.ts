@@ -55,7 +55,7 @@ export const AuthInterceptor: HttpInterceptorFn = (
           if (userDataCookie && userDataCookie.version) {
             if (
               !authService.getUser().value ||
-              authService.getUser().value!.version !== userDataCookie.version
+              authService.userVersionHasBeenChanged(userDataCookie) || authService.userDepartmentHasBeenChanged(userDataCookie)
             ) {
               authService.setUser(userDataCookie);
             }

@@ -76,6 +76,7 @@
                   'EMPLOYEES_PAGE.DEPARTMENT' | translate
                 }}</label>
                 <p-multiselect
+                  #departmentsDropdown
                   formControlName="departmentIds"
                   [optionLabel]="optionLabel"
                   optionValue="id"
@@ -88,6 +89,7 @@
                 <span
                   class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                 ></span>
+                <app-validation-messages [control]="departmentIdsControl"></app-validation-messages>
               </div>
               <div class="relative">
                 <label class="label" for="employee">{{
@@ -95,6 +97,7 @@
                 }}</label>
                 <div class="relative">
                   <p-multiselect
+                    #usersDropdown
                     formControlName="userIdsArray"
                     [optionLabel]="optionLabel"
                     optionValue="id"
@@ -107,6 +110,7 @@
                   <span
                     class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
                   ></span>
+                  <app-validation-messages [control]="userIdsArrayControl"></app-validation-messages>
                 </div>
               </div>
             </div>

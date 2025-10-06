@@ -192,11 +192,21 @@
         </ng-template>
         <ng-template #body let-attendance>
           <tr>
-            <td title="{{ isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr }}">
+            <td
+              title="{{
+                isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr
+              }}"
+            >
               {{ isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr }}
             </td>
             <td>{{ attendance.nationalId }}</td>
-            <td title="{{ isCurrentLanguageEnglish() ? attendance.departmentNameEn : attendance.departmentNameAr }}">
+            <td
+              title="{{
+                isCurrentLanguageEnglish()
+                  ? attendance.departmentNameEn
+                  : attendance.departmentNameAr
+              }}"
+            >
               {{
                 isCurrentLanguageEnglish()
                   ? attendance.departmentNameEn

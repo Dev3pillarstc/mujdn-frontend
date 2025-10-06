@@ -105,6 +105,11 @@
   }
 }
 
+.p-multiselect.ng-touched.ng-invalid {
+  .p-multiselect-label {
+    color: #b42318;
+  }
+}
 // end kareem
 
 .p-password-toggle-mask-icon {

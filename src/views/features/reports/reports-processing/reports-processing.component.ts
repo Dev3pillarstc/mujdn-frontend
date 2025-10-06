@@ -1,22 +1,20 @@
 import { AccordionModule } from 'primeng/accordion';
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
 } from '@angular/forms';
-import { Select } from 'primeng/select';
 import { MultiSelect } from 'primeng/multiselect';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
@@ -24,7 +22,6 @@ import { LanguageService } from '@/services/shared/language.service';
 import { DepartmentService } from '@/services/features/lookups/department.service';
 import { UserService } from '@/services/features/user.service';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
-import { Department } from '@/models/features/lookups/department/department';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { ManualProcessing } from '@/models/features/business/manual-processing';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
@@ -63,6 +60,8 @@ interface DepartmentEmployees {
   styleUrl: './reports-processing.component.scss',
 })
 export default class ReportsProcessingComponent implements OnInit, OnDestroy {
+  @ViewChild('departmentsDropdown', { static: true }) departmentsDropdown!: MultiSelect;
+  @ViewChild('usersDropdown', { static: true }) usersDropdown!: MultiSelect;
   form!: FormGroup;
   items: MenuItem[] | undefined;
   translateService = inject(TranslateService);
@@ -120,7 +119,9 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
         this.currentLang = langChangeEvent.lang;
         this.setHomeItem();
         this.initBreadcrumbs();
-        this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(this.departmentEmployeesGroups);
+        this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(
+          this.departmentEmployeesGroups
+        );
       });
 
     // Listen to language service changes if available
@@ -138,7 +139,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
         startDate: formConfig.startDate,
         endDate: formConfig.endDate,
         userIdsArray: formConfig.userIdsArray,
-        departmentIds: [null], // Changed from departmentId to departmentIds for multi-select
+        departmentIds: formConfig.departmentIds, // Changed from departmentId to departmentIds for multi-select
       },
       {
         validators: [
@@ -262,13 +263,16 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(Array.from(groupsMap.values()));
+    this.departmentEmployeesGroups = this.sortDepartmentsAlphabetically(
+      Array.from(groupsMap.values())
+    );
   }
 
   sortDepartmentsAlphabetically(departments: DepartmentEmployees[]) {
-    const departmentNamePropertyName = this.currentLang == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+    const departmentNamePropertyName =
+      this.currentLang == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
     return departments.sort((a, b) =>
-      a.department.nameEn!.localeCompare(b.department[departmentNamePropertyName]!)
+      a.department[departmentNamePropertyName]!.localeCompare(b.department[departmentNamePropertyName]!)
     );
   }
 
@@ -321,6 +325,8 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     this.form.patchValue({ departmentIds: [] });
     this.form.get('departmentIds')?.disable();
     this.form.get('userIdsArray')?.disable();
+    this.departmentsDropdown.filterValue = null;
+    this.usersDropdown.filterValue = null;
   }
 
   openConfirmation(): Observable<boolean> {
@@ -346,6 +352,8 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     this.filteredEmployeeList = [];
     this.form.get('departmentIds')?.enable();
     this.form.get('userIdsArray')?.enable();
+    this.departmentsDropdown.filterValue = null;
+    this.usersDropdown.filterValue = null;
   }
 
   processEmployees(): void {
@@ -356,7 +364,6 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
       const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
       this.manualProcessingService.excuteManualProcessing(submittedModel).subscribe((res) => {
         this.alertService.showSuccessMessage(successObject);
-        this.resetForm();
       });
     } else {
       console.log('Form is invalid');

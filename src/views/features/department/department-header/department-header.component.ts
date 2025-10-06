@@ -24,7 +24,7 @@ export class DepartmentHeaderComponent {
   @Input() cities: City[] = [];
   @Input() regions: BaseLookupModel[] = [];
   @Input() usersProfiles: BaseLookupModel[] = [];
-  @Output() dialogClosed = new EventEmitter<void>();
+  @Output() dialogClosed = new EventEmitter<Department>();
   @Input() selectedDepartmentSignal!: Signal<Department | null>;
   PERMISSION_APPROVAL_LEVELS = PERMISSION_APPROVAL_LEVELS;
   languageService = inject(LanguageService);
@@ -75,7 +75,7 @@ export class DepartmentHeaderComponent {
       .subscribe((result: { action: DIALOG_ENUM; data: Department }) => {
         if (result.action && result.action == DIALOG_ENUM.OK) {
           this.departmentData = { ...result.data } as Department;
-          this.dialogClosed.emit();
+          this.dialogClosed.emit(this.departmentData);
           dialogRef.close(DIALOG_ENUM.OK);
         }
       });

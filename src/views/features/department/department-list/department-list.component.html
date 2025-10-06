@@ -30,7 +30,7 @@
       >
         <app-department-header
           (departmentDeleted)="openConfirmation($event)"
-          (dialogClosed)="onDepartmentChange()"
+          (dialogClosed)="onDepartmentChange($event)"
           [cities]="cities"
           [departmentData]="selectedDepartment"
           [regions]="regions"

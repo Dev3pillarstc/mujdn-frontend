@@ -40,6 +40,7 @@ import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { AuthService } from '@/services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
+import { formatDateOnly } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-employee-list',
@@ -258,15 +259,12 @@ export default class EmployeeListComponent
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'EMPLOYEES_PAGE.EMPLOYEES_LIST' }];
   }
+  formatJoinDate(joinDate: Date) {
+    return formatDateOnly(joinDate);
+  }
 
   // Excel Export Implementation
   protected override mapModelToExcelRow(model: User): { [key: string]: any } {
-    const formatDate = (date: Date | string | undefined): string => {
-      if (!date) return '';
-      const dateObj = typeof date === 'string' ? new Date(date) : date;
-      return dateObj.toLocaleDateString('EG');
-    };
-
     const formatBoolean = (value: boolean | undefined): string => {
       if (value === undefined || value === null) return '';
       return value
@@ -292,7 +290,7 @@ export default class EmployeeListComponent
       [this.translateService.instant('EMPLOYEES_PAGE.ACCOUNT_STATUS')]: formatBoolean(
         model.isActive
       ),
-      [this.translateService.instant('EMPLOYEES_PAGE.JOIN_DATE')]: formatDate(model.joinDate),
+      [this.translateService.instant('EMPLOYEES_PAGE.JOIN_DATE')]: formatDateOnly(model.joinDate),
     };
   }
 

@@ -19,6 +19,7 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { BlacklistedNationalIdService } from '@/services/features/visit/blacklisted-national-id.service';
 import { BlacklistedNationalId } from '@/models/features/visit/blacklisted-national-id';
+import { AccessLocationLookup } from '@/models/features/business/access-location-lookup';
 
 @Component({
   selector: 'app-view-action-visit-request-popup',
@@ -36,7 +37,7 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   declare direction: LAYOUT_DIRECTION_ENUM;
   languageService = inject(LanguageService);
   dialogRef = inject(MatDialogRef);
-  accessLocations: BaseLookupModel[] = [];
+  accessLocations: AccessLocationLookup[] = [];
   // Enum references for template
   ViewModeEnum = ViewModeEnum;
   VisitStatusEnum = VisitStatusEnum;
@@ -83,6 +84,9 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
       : this.model.targetDepartment.nameAr || '';
   }
 
+  getLocationName(loc: AccessLocationLookup): string {
+    return this.isCurrentLanguageEnglish() ? loc.nameEn || '' : loc.nameAr || '';
+  }
   getStatusText(): string {
     switch (this.model.visitStatus) {
       case VisitStatusEnum.NEW:

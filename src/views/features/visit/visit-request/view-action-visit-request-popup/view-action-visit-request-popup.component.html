@@ -129,8 +129,20 @@
         </h4>
         <div class="mt-2 flex flex-wrap gap-2">
           @for (loc of selectedAccessLocations; track $index) {
-            <div class="bg-[#ffffff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit">
-              <span>{{ loc.nameAr }}</span>
+            <div
+              class="bg-[#ffffff] py-2 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
+            >
+              <span>{{ getLocationName(loc) }}</span>
+              @if (loc.status) {
+                <span class="bg-[#067647] rounded-full text-white px-2 block">{{
+                  'DEVICE_STATUS.CONNECTED' | translate
+                }}</span>
+              }
+              @if (!loc.status) {
+                <span class="bg-[#d92d20] rounded-full text-white px-2 block">{{
+                  'DEVICE_STATUS.NOT_CONNECTED' | translate
+                }}</span>
+              }
             </div>
           }
         </div>

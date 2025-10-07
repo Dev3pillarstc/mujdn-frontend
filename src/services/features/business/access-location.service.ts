@@ -6,6 +6,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { Observable, switchMap, of } from 'rxjs';
+import { AccessLocationLookup } from '@/models/features/business/access-location-lookup';
 
 @CastResponseContainer({
   $default: {
@@ -21,6 +22,11 @@ import { Observable, switchMap, of } from 'rxjs';
     unwrap: 'data',
     shape: { data: () => BaseLookupModel },
   },
+  $statusLookup: {
+    model: () => AccessLocationLookup,
+    unwrap: 'data',
+    shape: { data: () => AccessLocationLookup },
+  }
 })
 @Injectable({
   providedIn: 'root',
@@ -43,6 +49,22 @@ export class AccessLocationService extends LookupBaseService<AccessLocation, num
       )
       .pipe(
         switchMap((response: ListResponseData<BaseLookupModel>) => {
+          return of(response.data);
+        })
+      );
+  }
+
+  @CastResponse(undefined, { fallback: '$statusLookup' })
+  getConnectedLocationsWithStatus(): Observable<AccessLocationLookup[]> {
+    return this.http
+      .get<ListResponseData<AccessLocationLookup>>(
+        this.getUrlSegment() + '/' + 'GetLocationsWithStatus',
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        switchMap((response: ListResponseData<AccessLocationLookup>) => {
           return of(response.data);
         })
       );

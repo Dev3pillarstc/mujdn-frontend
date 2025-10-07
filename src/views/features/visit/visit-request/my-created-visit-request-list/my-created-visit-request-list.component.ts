@@ -30,6 +30,8 @@ import { QrcodeVisitRequestPopupComponent } from '../qrcode-visit-request-popup/
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
 import { AccessLocationService } from '@/services/features/business/access-location.service';
+import { filter, from, map, mergeMap, switchMap } from 'rxjs';
+import { AccessLocationLookup } from '@/models/features/business/access-location-lookup';
 
 @Component({
   selector: 'app-my-created-visit-request-list',
@@ -187,12 +189,7 @@ export class MyCreatedVisitRequestListComponent
     return visit.targetDepartment?.nameAr || '';
   }
 
-  override initListComponent(): void {
-    this.accessLocationService.getLocationsConnectedToDevice().subscribe((response) => {
-      this.accessLocations = response;
-    });
-    // this.initializeVisitStatusOptions();
-  }
+  override initListComponent(): void {}
 
   protected override getBreadcrumbKeys(): {
     labelKey: string;
@@ -238,79 +235,105 @@ export class MyCreatedVisitRequestListComponent
   }
 
   openQrcodeDialog(model?: Visit) {
-    let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      model: model,
-      accessLocations: this.accessLocations,
-    };
-    dialogConfig.width = this.visitorSelectionDialogSize.width;
-    dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;
-    const dialogRef = this.matDialog.open(QrcodeVisitRequestPopupComponent as any, dialogConfig);
+    this.getSuitableLocationsService(model).subscribe((locations) => {
+      this.accessLocations = locations;
+      let dialogConfig: MatDialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        model: model,
+        accessLocations: this.accessLocations,
+      };
+      dialogConfig.width = this.visitorSelectionDialogSize.width;
+      dialogConfig.maxWidth = this.visitorSelectionDialogSize.maxWidth;
+      const dialogRef = this.matDialog.open(QrcodeVisitRequestPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result === DIALOG_ENUM.OK) {
-        this.loadDataIfNeeded();
-      }
+      return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+        if (result === DIALOG_ENUM.OK) {
+          this.loadDataIfNeeded();
+        }
+      });
     });
   }
 
   openViewDialog(model?: Visit) {
-    if (model?.visitStatus === VisitStatusEnum.APPROVED) {
-      return this.openQrcodeDialog(model);
-    }
     this.setNationalityNames(model!);
+    if (model?.visitStatus === VisitStatusEnum.APPROVED) {
+      this.openQrcodeDialog(model);
+    } else {
+      this.getSuitableLocationsService(model).subscribe((locations) => {
+        this.accessLocations = locations;
+        let dialogConfig: MatDialogConfig = new MatDialogConfig();
+        dialogConfig.data = {
+          model: model,
+          accessLocations: this.accessLocations,
+        };
+        dialogConfig.width = this.dialogSize.width;
+        dialogConfig.maxWidth = this.dialogSize.maxWidth;
+        const dialogRef = this.matDialog.open(
+          ViewActionVisitRequestPopupComponent as any,
+          dialogConfig
+        );
 
-    let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      model: model,
-      accessLocations: this.accessLocations,
-    };
-    dialogConfig.width = this.dialogSize.width;
-    dialogConfig.maxWidth = this.dialogSize.maxWidth;
-    const dialogRef = this.matDialog.open(
-      ViewActionVisitRequestPopupComponent as any,
-      dialogConfig
-    );
-
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result === DIALOG_ENUM.OK) {
-        this.loadDataIfNeeded();
-      }
-    });
+        dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+          if (result === DIALOG_ENUM.OK) {
+            this.loadDataIfNeeded();
+          }
+        });
+      });
+    }
   }
 
   openTakeActionDialog(model: Visit) {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     this.setNationalityNames(model);
 
-    dialogConfig.data = {
-      model: model,
-      viewMode: ViewModeEnum.TAKE_ACTION,
-      accessLocations: this.accessLocations,
-    };
-    dialogConfig.width = this.dialogSize.width;
-    dialogConfig.maxWidth = this.dialogSize.maxWidth;
+    this.getSuitableLocationsService(model).subscribe((locations) => {
+      this.accessLocations = locations;
+      dialogConfig.data = {
+        model: model,
+        viewMode: ViewModeEnum.TAKE_ACTION,
+        accessLocations: this.accessLocations,
+      };
+      dialogConfig.width = this.dialogSize.width;
+      dialogConfig.maxWidth = this.dialogSize.maxWidth;
 
-    const dialogRef = this.matDialog.open(
-      ViewActionVisitRequestPopupComponent as any,
-      dialogConfig
-    );
+      const dialogRef = this.matDialog.open(
+        ViewActionVisitRequestPopupComponent as any,
+        dialogConfig
+      );
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-      if (result === DIALOG_ENUM.OK) {
-        this.loadDataIfNeeded();
-      }
+      dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+        if (result === DIALOG_ENUM.OK) {
+          this.loadDataIfNeeded();
+        }
+      });
     });
   }
 
   openEditDialog(model?: Visit, viewMode?: ViewModeEnum) {
     const visit = model ?? new Visit();
     viewMode = viewMode ?? (model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE);
-    this.openBaseDialog(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
-      departments: this.departments,
-      nationalities: this.nationalities,
-      accessLocations: this.accessLocations,
+    this.getSuitableLocationsService(model).subscribe((locations) => {
+      this.accessLocations = locations;
+      this.openBaseDialog(AddEditVisitRequestPopupComponent as any, visit, viewMode, {
+        departments: this.departments,
+        nationalities: this.nationalities,
+        accessLocations: this.accessLocations,
+      });
     });
+  }
+
+  getSuitableLocationsService(model?: Visit) {
+    const visit = model?.id ? model : new Visit();
+    const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
+    return viewMode == ViewModeEnum.CREATE
+      ? this.accessLocationService.getLocationsConnectedToDevice()
+      : this.accessLocationService.getConnectedLocationsWithStatus().pipe(
+          map((locations: AccessLocationLookup[]) => {
+            return locations.filter((loc) => {
+              return loc.status == true || visit.accessLocationIds?.includes(loc.id);
+            });
+          })
+        );
   }
 
   override exportExcel(fileName: string = 'data.xlsx', isStoredProcedure: boolean = false): void {

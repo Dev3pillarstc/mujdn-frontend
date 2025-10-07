@@ -32,6 +32,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { AccessLocationLookup } from '@/models/features/business/access-location-lookup';
 
 @Component({
   selector: 'app-add-edit-visit-request-popup',
@@ -68,7 +69,7 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   // Lookup data
   nationalities: BaseLookupModel[] = [];
   departments: BaseLookupModel[] = [];
-  accessLocations: BaseLookupModel[] = [];
+  accessLocations: AccessLocationLookup[] = [];
 
   // For employee selection table
   employees!: any[];

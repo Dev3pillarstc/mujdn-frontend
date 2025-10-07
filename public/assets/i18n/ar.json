@@ -119,7 +119,7 @@
     "ATTENDANCE_REPORT": "تقرير الحضور والانصراف",
     "VISIT_TIME_CONFLICTING": "هناك تعارض في وقت الزيارة مع الزيارات الأخرى لنفس المستخدم",
     "VISIT_DATE_TIME_IN_PAST": "لا يمكن ان يكون تاريخ او وقت الزيارة في الماضي",
-    "LOCATION_NOT_VALID": "لم يتم العثور على أجهزة نشطة صالحة لمواقع الدخول المحددة."
+    "LOCATION_NOT_VALID": "أجهزة البصمة غير نشطة بالمواقع المحددة للزيارة"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -708,7 +708,7 @@
   },
   "DEVICE_CONFIGURATION": {
     "DEVICE_CONFIGURATION": "تعريف و ربط أجهزة البصمة",
-    "DEVICE_STATUS": "حالة الجهاز",
+    "CONNECTION_STATUS": "حالة الاتصال",
     "IP_ADDRESS": "عنوان الجهاز (IP)",
     "ADD_NEW_DEVICE": "إضافة جهاز جديد",
     "EDIT_DEVICE": "تعديل جهاز",

@@ -272,7 +272,9 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     const departmentNamePropertyName =
       this.currentLang == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
     return departments.sort((a, b) =>
-      a.department[departmentNamePropertyName]!.localeCompare(b.department[departmentNamePropertyName]!)
+      a.department[departmentNamePropertyName]!.localeCompare(
+        b.department[departmentNamePropertyName]!
+      )
     );
   }
 

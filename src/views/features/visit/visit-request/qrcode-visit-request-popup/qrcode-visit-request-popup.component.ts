@@ -12,6 +12,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { AccessLocationLookup } from '@/models/features/business/access-location-lookup';
 
 @Component({
   selector: 'app-qrcode-visit-request-popup',
@@ -71,6 +72,9 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
       : this.model.targetDepartment.nameAr || '';
   }
 
+  getLocationName(loc: BaseLookupModel): string {
+    return this.isCurrentLanguageEnglish() ? loc.nameEn || '' : loc.nameAr || '';
+  }
   getCreatorName(): string {
     if (!this.model.creationUser) return '';
     return this.isCurrentLanguageEnglish()

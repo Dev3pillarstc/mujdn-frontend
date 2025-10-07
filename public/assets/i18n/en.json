@@ -119,7 +119,7 @@
     "ATTENDANCE_REPORT": "Attendance Report",
     "VISIT_TIME_CONFLICTING": "Visit time conflicting with another visit for same user",
     "VISIT_DATE_TIME_IN_PAST": "The date or time of the visit cannot be in the past.",
-    "LOCATION_NOT_VALID": "No valid active devices found for the selected access locations."
+    "LOCATION_NOT_VALID": "Devices are not active at the designated visit locations."
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

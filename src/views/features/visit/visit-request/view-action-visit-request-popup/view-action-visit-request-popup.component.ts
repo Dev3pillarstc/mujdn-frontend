@@ -84,6 +84,9 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
       : this.model.targetDepartment.nameAr || '';
   }
 
+  getLocationName(loc: AccessLocationLookup): string {
+    return this.isCurrentLanguageEnglish() ? loc.nameEn || '' : loc.nameAr || '';
+  }
   getStatusText(): string {
     switch (this.model.visitStatus) {
       case VisitStatusEnum.NEW:

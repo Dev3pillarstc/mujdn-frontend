@@ -708,7 +708,7 @@
   },
   "DEVICE_CONFIGURATION": {
     "DEVICE_CONFIGURATION": "تعريف و ربط أجهزة البصمة",
-    "DEVICE_STATUS": "حالة الجهاز",
+    "CONNECTION_STATUS": "حالة الاتصال",
     "IP_ADDRESS": "عنوان الجهاز (IP)",
     "ADD_NEW_DEVICE": "إضافة جهاز جديد",
     "EDIT_DEVICE": "تعديل جهاز",

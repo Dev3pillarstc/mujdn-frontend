@@ -30,20 +30,32 @@
           </div>
         </div>
         <div>
-          <label class="label"> {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME' | translate }}</label>
+          <label class="label"> {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate }}</label>
           <div class="relative">
-            <p-select
-              [options]="users"
-              [(ngModel)]="filterModel.id"
-              [optionLabel]="getPropertyName()"
-              [showClear]="true"
-              [filter]="true"
-              class="w-full peer"
-              id="employee"
-              optionLabel="type"
-              optionValue="id"
-              placeholder="{{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME' | translate }}"
-            ></p-select>
+            <input
+              class="peer"
+              type="text"
+              [(ngModel)]="filterModel.fullNameEn"
+              pInputText
+              [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate"
+              fluid="true"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+        </div>
+        <div>
+          <label class="label"> {{ 'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate }}</label>
+          <div class="relative">
+            <input
+              class="peer"
+              type="text"
+              [(ngModel)]="filterModel.fullNameAr"
+              pInputText
+              [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate"
+              fluid="true"
+            />
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>

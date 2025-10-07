@@ -96,7 +96,9 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
   }
 
   userDepartmentHasBeenChanged(user: LoggedInUser) {
-    return this.loggedInUser.value?.departNameEn != user.departNameEn ||
-    this.loggedInUser.value?.departNameAr != user.departNameAr
+    return (
+      this.loggedInUser.value?.departNameEn != user.departNameEn ||
+      this.loggedInUser.value?.departNameAr != user.departNameAr
+    );
   }
 }

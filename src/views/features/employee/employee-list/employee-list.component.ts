@@ -40,6 +40,7 @@ import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { AuthService } from '@/services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
+import { formatDateOnly } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-employee-list',
@@ -257,6 +258,9 @@ export default class EmployeeListComponent
 
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'EMPLOYEES_PAGE.EMPLOYEES_LIST' }];
+  }
+  formatJoinDate(joinDate: Date) {
+    return formatDateOnly(joinDate);
   }
 
   // Excel Export Implementation

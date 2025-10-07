@@ -251,7 +251,7 @@ export class MyCreatedVisitRequestListComponent
           this.loadDataIfNeeded();
         }
       });
-    })
+    });
   }
 
   openViewDialog(model?: Visit) {
@@ -278,7 +278,7 @@ export class MyCreatedVisitRequestListComponent
             this.loadDataIfNeeded();
           }
         });
-      })
+      });
     }
   }
 
@@ -306,7 +306,7 @@ export class MyCreatedVisitRequestListComponent
           this.loadDataIfNeeded();
         }
       });
-    })
+    });
   }
 
   openEditDialog(model?: Visit, viewMode?: ViewModeEnum) {
@@ -328,12 +328,12 @@ export class MyCreatedVisitRequestListComponent
     return viewMode == ViewModeEnum.CREATE
       ? this.accessLocationService.getLocationsConnectedToDevice()
       : this.accessLocationService.getConnectedLocationsWithStatus().pipe(
-        map((locations: AccessLocationLookup[]) => {
-          return locations.filter((loc) => {
-            return loc.status == true || visit.accessLocationIds.includes(loc.id);
-          });
-        })
-      );
+          map((locations: AccessLocationLookup[]) => {
+            return locations.filter((loc) => {
+              return loc.status == true || visit.accessLocationIds?.includes(loc.id);
+            });
+          })
+        );
   }
 
   override exportExcel(fileName: string = 'data.xlsx', isStoredProcedure: boolean = false): void {

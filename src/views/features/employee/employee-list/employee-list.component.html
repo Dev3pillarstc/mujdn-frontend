@@ -308,7 +308,7 @@
                       }
                     </div>
                   </td>
-                  <td>{{ user.joinDate | date }}</td>
+                  <td>{{ formatJoinDate(user.joinDate) }}</td>
                   <td>
                     <div class="flex gap-4">
                       @if (authService.isAdmin) {

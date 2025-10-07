@@ -34,7 +34,7 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   declare qRcode: string;
   declare arrivalTime: string | null;
   declare leaveTime: string | null;
-  declare accessLocationIds: number[]; // selected IDs (for saving)
+  accessLocationIds: number[] = []; // selected IDs (for saving)
   declare accessLocations: BaseLookupModel[];
   declare nationalityNameAr?: string;
   declare nationalityNameEn?: string;

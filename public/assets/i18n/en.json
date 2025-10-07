@@ -710,7 +710,7 @@
   },
   "DEVICE_CONFIGURATION": {
     "DEVICE_CONFIGURATION": "Device Configuration",
-    "DEVICE_STATUS": "Device Status",
+    "CONNECTION_STATUS": "Connection Status",
     "IP_ADDRESS": "IP Address",
     "ADD_NEW_DEVICE": "Add New Device",
     "EDIT_DEVICE": "Edit Device",

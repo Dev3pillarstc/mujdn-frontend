@@ -330,7 +330,7 @@ export class AllVisitRequestListComponent
   }
 
   getSuitableLocationsService(model?: Visit) {
-    const visit = model ?? new Visit();
+    const visit = model?.id ? model : new Visit();
     const viewMode = model ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     return viewMode == ViewModeEnum.CREATE
       ? this.accessLocationService.getLocationsConnectedToDevice()

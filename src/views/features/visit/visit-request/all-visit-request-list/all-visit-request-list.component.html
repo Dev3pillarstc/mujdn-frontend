@@ -49,7 +49,7 @@
             [(ngModel)]="filterModel.fkTargetDepartmentId"
             [options]="departments"
             [placeholder]="'VISIT_REQUEST_PAGE.TARGET_DEPARTMENT' | translate"
-            optionLabel="nameAr"
+            [optionLabel]="getPropertyName()"
             optionValue="id"
             class="w-full peer"
             id="department"

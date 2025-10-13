@@ -351,4 +351,8 @@ export class AllVisitRequestListComponent
     model.nationalityNameAr = nationality?.nameAr ?? '';
     model.nationalityNameEn = nationality?.nameEn ?? '';
   }
+
+  getPropertyName() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+  }
 }

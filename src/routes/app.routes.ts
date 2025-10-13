@@ -144,7 +144,7 @@ export const routes: Routes = [
         path: 'reports-processing',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.HR_OFFICER],
+          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN],
           routeId: RouteIdsEnum.ATTENDANCE_REPORT_PROCESSING,
         },
         loadComponent: () =>

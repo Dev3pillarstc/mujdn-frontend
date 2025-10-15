@@ -325,4 +325,9 @@ export default class MyAttendanceLogListComponent
       //   this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
     };
   }
+
+  getDeviceName(attendanceLog: AttendanceLog) {
+    return attendanceLog.channelName ? attendanceLog.channelName
+      : this.translateService.instant('ATTENDANCE_LOG_PAGE.MANUAL')
+  }
 }

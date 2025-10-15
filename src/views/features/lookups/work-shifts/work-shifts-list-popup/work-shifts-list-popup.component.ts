@@ -52,6 +52,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   isCreateMode = false;
   matDialog = inject(MatDialog);
   editableControlsInEditMode = ['nameAr', 'nameEn', 'isDefaultShiftForm', 'shiftLogStartDate'];
+  isSaveAndActivateClicked = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -146,6 +147,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
 
   saveAndActivateShift() {
     this.form.get('isActive')?.setValue(true);
+    this.isSaveAndActivateClicked = true;
     this.save$.next();
   }
   override initPopup(): void {
@@ -195,7 +197,13 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     });
   }
 
-  override saveFail(error: Error): void {}
+  override saveFail(error: any): void {
+    if(this.isSaveAndActivateClicked) {
+      this.isSaveAndActivateClicked = false;
+      this.model.isActive = false;
+      this.form.get('isActive')?.setValue(false);
+    }
+  }
 
   override beforeSave(model: Shift, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;

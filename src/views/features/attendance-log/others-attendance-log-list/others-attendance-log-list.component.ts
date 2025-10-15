@@ -365,4 +365,9 @@ export default class OthersAttendanceLogListComponent
       console.log('closed');
     });
   }
+
+  getDeviceName(attendanceLog: AttendanceLog) {
+    return attendanceLog.channelName ? attendanceLog.channelName
+      : this.translateService.instant('ATTENDANCE_LOG_PAGE.MANUAL')
+  }
 }

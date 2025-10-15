@@ -160,7 +160,7 @@
                 }}</span>
               </div>
             </td>
-            <td>{{ attendanceLog.channelName }}</td>
+            <td>{{ getDeviceName(attendanceLog) }}</td>
             @if (!attendanceLog.isRawData) {
               <td>{{ attendanceLog.creatorNameAr }}</td>
               <td>{{ attendanceLog.creatorNameEn }}</td>

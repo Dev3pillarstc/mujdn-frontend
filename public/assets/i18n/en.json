@@ -401,7 +401,8 @@
     "MOVEMENT_TYPE": "Movement Type",
     "WORK_TYPE": "Work Type",
     "IDENTIFICATION_NUMBER_REQUIRED": "Identification number is required",
-    "SWIPE_TIME_REQUIRED": "Fingerprint time is required"
+    "SWIPE_TIME_REQUIRED": "Fingerprint time is required",
+    "MANUAL": "Manual"
   },
   "MENU": {
     "DASHBOARD": "Dashboard",

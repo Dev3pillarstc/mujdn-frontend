@@ -399,7 +399,8 @@
     "MOVEMENT_TYPE": "نوع الحركة",
     "WORK_TYPE": "نوع العمل",
     "IDENTIFICATION_NUMBER_REQUIRED": "رقم الهوية مطلوب",
-    "SWIPE_TIME_REQUIRED": "وقت البصمة مطلوب"
+    "SWIPE_TIME_REQUIRED": "وقت البصمة مطلوب",
+    "MANUAL": "يدوي"
   },
   "MENU": {
     "DASHBOARD": "لوحة المعلومات",

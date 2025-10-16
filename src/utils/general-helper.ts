@@ -65,8 +65,8 @@ export function convertUtcToSystemTimeZone(utcDateTime: Date | string): Date {
   // based on time zone change the offset
   const utcDate = new Date(utcDateTime);
 
-  // add 3 hours to convert to KSA time
-  const ksaTime = new Date(utcDate.getTime() + 3 * 60 * 60 * 1000);
+  // add 0 hours to convert to KSA time
+  const ksaTime = new Date(utcDate.getTime() + 0 * 60 * 60 * 1000);
 
   return ksaTime;
 }
@@ -75,8 +75,8 @@ export function convertKsaToUtc(ksaDateTime: Date | string): Date {
   // Convert the input (string or Date) into a Date object
   const ksaDate = new Date(ksaDateTime);
 
-  // Subtract 3 hours to convert KSA → UTC
-  const utcDate = new Date(ksaDate.getTime() - 3 * 60 * 60 * 1000);
+  // Subtract 0 hours to convert KSA → UTC
+  const utcDate = new Date(ksaDate.getTime() - 0 * 60 * 60 * 1000);
 
   return utcDate;
 }

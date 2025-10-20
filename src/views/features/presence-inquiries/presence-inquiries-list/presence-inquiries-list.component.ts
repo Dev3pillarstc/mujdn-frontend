@@ -16,6 +16,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PresenceInquiry } from '@/models/features/presence-inquiry/presence-inquiry';
+import { PresenceInquiryFilter } from '@/models/features/presence-inquiry/presence-inquiry-filter';
 
 @Component({
   selector: 'app-presence-inquiries-list',
@@ -92,10 +93,14 @@ export default class PresenceInquiriesListComponent implements OnInit, OnDestroy
     const selectedIndex = Number(index);
 
     if (selectedIndex === 0 && this.myList) {
+      this.myList.filterModel = {} as PresenceInquiryFilter;
+      this.myList.appliedFilterModel = {} as PresenceInquiryFilter;
       this.myList.loadList().subscribe({
         next: (response) => this.myList.handleLoadListSuccess(response),
       });
     } else if (selectedIndex === 1 && this.othersList) {
+      this.othersList.filterModel = {} as PresenceInquiryFilter;
+      this.othersList.appliedFilterModel = {} as PresenceInquiryFilter;
       this.othersList.loadList().subscribe({
         next: (response) => this.othersList.handleLoadListSuccess(response),
       });

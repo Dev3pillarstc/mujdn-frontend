@@ -117,6 +117,8 @@ export default class OthersAttendanceLogListComponent
     // Watch for changes in isActive input
     if (changes['isActive'] && changes['isActive'].currentValue === true) {
       console.log('Others attendance tab became active - loading data');
+      this.filterModel = {} as AttendanceLogFilter;
+      this.appliedFilterModel = {} as AttendanceLogFilter;
       this.loadDataIfNeeded();
     }
 
@@ -367,7 +369,8 @@ export default class OthersAttendanceLogListComponent
   }
 
   getDeviceName(attendanceLog: AttendanceLog) {
-    return attendanceLog.channelName ? attendanceLog.channelName
-      : this.translateService.instant('ATTENDANCE_LOG_PAGE.MANUAL')
+    return attendanceLog.channelName
+      ? attendanceLog.channelName
+      : this.translateService.instant('ATTENDANCE_LOG_PAGE.MANUAL');
   }
 }

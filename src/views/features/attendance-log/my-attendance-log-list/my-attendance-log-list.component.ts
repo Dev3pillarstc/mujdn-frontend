@@ -123,6 +123,8 @@ export default class MyAttendanceLogListComponent
       // Only load data if tab is active and this is not the initial change
       if (current === true && previous === false) {
         console.log('My attendance tab became active - loading data');
+        this.filterModel = {} as MyAttendanceLogFilter;
+        this.appliedFilterModel = {} as MyAttendanceLogFilter;
         this.loadDataIfNeeded();
       }
     }
@@ -327,7 +329,8 @@ export default class MyAttendanceLogListComponent
   }
 
   getDeviceName(attendanceLog: AttendanceLog) {
-    return attendanceLog.channelName ? attendanceLog.channelName
-      : this.translateService.instant('ATTENDANCE_LOG_PAGE.MANUAL')
+    return attendanceLog.channelName
+      ? attendanceLog.channelName
+      : this.translateService.instant('ATTENDANCE_LOG_PAGE.MANUAL');
   }
 }

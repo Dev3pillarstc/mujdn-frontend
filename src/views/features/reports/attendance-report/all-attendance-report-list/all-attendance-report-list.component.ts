@@ -25,6 +25,7 @@ import {
 } from '@/enums/attendance-status-enum';
 import { SHIFT_TYPE_ENUM } from '@/enums/shift-type-enum';
 import { formatDateTo12Hour } from '@/utils/general-helper';
+import { UserService } from '@/services/features/user.service';
 @Component({
   selector: 'app-all-attendance-report-list',
   imports: [
@@ -61,6 +62,7 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
   datePipe = inject(DatePipe);
   departments: BaseLookupModel[] = [];
   departmentService = inject(DepartmentService);
+  userService = inject(UserService);
   shiftType = SHIFT_TYPE_ENUM;
   attendanceStatuses = ATTENDANCE_STATUS_OPTIONS; // import from your enum file
 
@@ -69,7 +71,10 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
   }
 
   override initListComponent(): void {
-    this.departmentService.getLookup().subscribe((res) => {
+    // this.departmentService.getLookup().subscribe((res) => {
+    //   this.departments = res;
+    // });
+    this.userService.getMyDepartmentsLookup().subscribe((res) => {
       this.departments = res;
     });
   }

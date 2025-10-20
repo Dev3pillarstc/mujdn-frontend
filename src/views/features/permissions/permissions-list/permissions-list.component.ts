@@ -94,13 +94,13 @@ export default class PermissionsListComponent
     this.permissionTypeService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.permissionTypes = res;
     });
-    this.departmentService.getLookup().subscribe((res: BaseLookupModel[]) => {
+    this.userService.getMyDepartmentsLookup().subscribe((res: BaseLookupModel[]) => {
       this.departments = res;
     });
     this.prmissionStatusService.getLookup().subscribe((res: BaseLookupModel[]) => {
       this.prmissionStatuses = res;
     });
-    this.userService.getLookup().subscribe((res: BaseLookupModel[]) => {
+    this.userService.getMyDepartmentUsersLookup().subscribe((res: BaseLookupModel[]) => {
       this.users = res;
     });
     this.prmissionReasonService.getLookup().subscribe((res: BaseLookupModel[]) => {

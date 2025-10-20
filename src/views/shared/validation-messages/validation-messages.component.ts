@@ -82,6 +82,8 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.MAX]: 'COMMON.MAX_VALUE',
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
     [ValidationErrorKeyEnum.TIME_FROM_AFTER_TIME_TO]: 'COMMON.TIME_FROM_BEFORE_TIME_TO',
+    [ValidationErrorKeyEnum.TIME_RANGE_SHOULD_CROSS_DAY]: 'COMMON.TIME_RANGE_SHOULD_CROSS_DAY',
+    [ValidationErrorKeyEnum.TIME_FROM_AND_TO_ARE_EQUAL]: 'COMMON.TIME_FROM_AND_TO_ARE_EQUAL',
     [ValidationErrorKeyEnum.EMAIL]: 'COMMON.EMAIL_VALIDATION',
     [ValidationErrorKeyEnum.STRONG_PASSWORD]: 'COMMON.STRONG_PASSWORD',
     [ValidationErrorKeyEnum.NATIONAL_ID]: 'COMMON.NATIONAL_ID_VALIDATION',

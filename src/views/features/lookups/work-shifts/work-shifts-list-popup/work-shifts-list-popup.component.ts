@@ -20,7 +20,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
-import { CustomValidators } from '@/validators/custom-validators';
+import { crossDateTimeValidator, CustomValidators } from '@/validators/custom-validators';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { dateToTimeString, toDateOnly } from '@/utils/general-helper';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
@@ -157,7 +157,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
 
   override buildForm(): void {
     this.form = this.fb.group(this.model.buildForm(), {
-      validators: [CustomValidators.timeFromBeforeTimeTo('timeFrom', 'timeTo')],
+      validators: [CustomValidators.crossDateTimeValidator('timeFrom', 'timeTo', 'isCrossDayShift')],
     });
 
     if (!this.isCreateMode) {
@@ -195,6 +195,14 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
         this.form.patchValue({ isActive: false }, { emitEvent: false });
       }
     });
+
+    this.isCrossDayShiftControl.valueChanges.subscribe(() => {
+      this.form.updateValueAndValidity({ onlySelf: false, emitEvent: false });
+    })
+  }
+
+  get isCrossDayShiftControl() {
+    return this.form.get('isCrossDayShift') as FormControl;
   }
 
   override saveFail(error: any): void {

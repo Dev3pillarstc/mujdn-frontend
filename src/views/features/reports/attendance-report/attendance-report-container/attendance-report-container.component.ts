@@ -87,10 +87,12 @@ export default class AttendanceReportContainerComponent implements OnInit, OnDes
     const selectedIndex = Number(index);
 
     if (selectedIndex === 0 && this.myReports) {
+      this.myReports.resetSearch();
       this.myReports.loadList().subscribe({
         next: (response) => this.myReports.handleLoadListSuccess(response),
       });
     } else if (selectedIndex === 1 && this.allReports) {
+      this.allReports.resetSearch();
       this.allReports.loadList().subscribe({
         next: (response) => this.allReports.handleLoadListSuccess(response),
       });

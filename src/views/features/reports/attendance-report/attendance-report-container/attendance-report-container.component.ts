@@ -8,6 +8,8 @@ import { MenuItem } from '@/models/shared/menu-item';
 import { AuthService } from '@/services/auth/auth.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
+import AttendanceReport from '@/models/features/attendance/attendance-report/attendance-report';
+import { AttendanceReportFilter } from '@/models/features/attendance/attendance-report/attendance-report-filter';
 
 @Component({
   selector: 'app-attendance-report-container',
@@ -87,12 +89,14 @@ export default class AttendanceReportContainerComponent implements OnInit, OnDes
     const selectedIndex = Number(index);
 
     if (selectedIndex === 0 && this.myReports) {
-      this.myReports.resetSearch();
+      this.myReports.filterModel = {} as AttendanceReportFilter;
+      this.myReports.appliedFilterModel = {} as AttendanceReportFilter;
       this.myReports.loadList().subscribe({
         next: (response) => this.myReports.handleLoadListSuccess(response),
       });
     } else if (selectedIndex === 1 && this.allReports) {
-      this.allReports.resetSearch();
+      this.allReports.filterModel = {} as AttendanceReportFilter;
+      this.allReports.appliedFilterModel = {} as AttendanceReportFilter;
       this.allReports.loadList().subscribe({
         next: (response) => this.allReports.handleLoadListSuccess(response),
       });

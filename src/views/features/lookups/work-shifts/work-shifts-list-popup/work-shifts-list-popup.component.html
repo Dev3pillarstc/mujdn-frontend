@@ -13,11 +13,11 @@
       </h3>
     }
     <form [formGroup]="form" class="mt-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-        <div class="lg:col-span-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
           <label class="label" for="shiftNameAr">{{
-            'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate
-          }}</label>
+              'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate
+            }}</label>
           <div class="relative">
             <input
               [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ARABIC' | translate"
@@ -34,10 +34,10 @@
           </div>
           <app-validation-messages [control]="nameArControl"></app-validation-messages>
         </div>
-        <div class="lg:col-span-2">
+        <div>
           <label class="label" for="shiftNameEn">{{
-            'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate
-          }}</label>
+              'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate
+            }}</label>
           <div class="relative">
             <input
               [placeholder]="'WORK_SHIFTS_POPUP.SHIFT_NAME_ENGLISH' | translate"
@@ -54,162 +54,201 @@
           </div>
           <app-validation-messages [control]="nameEnControl"></app-validation-messages>
         </div>
-        <div class="lg:col-span-2">
-          <label class="label" for="time-pick-from">{{
-            'WORK_SHIFTS_POPUP.TIME_FROM' | translate
-          }}</label>
-          <div class="relative">
-            <p-datepicker
-              [hourFormat]="'12'"
-              [iconDisplay]="'input'"
-              [placeholder]="'WORK_SHIFTS_POPUP.TIME_FROM' | translate"
-              [showIcon]="true"
-              [timeOnly]="true"
-              class="peer block w-full"
-              formControlName="timeFrom"
-              id="time-pick-from"
-              inputId="icondisplay"
-              name="time-pick-from"
+        <div>
+          <div class="w-[50%]">
+            <label class="label" for="max-attendance-time">{{
+                'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate
+              }}</label>
+            <p-inputnumber
+              [inputStyle]="{ width: '3rem' }"
+
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              formControlName="attendanceBuffer"
+              id="max-attendance-time"
+              spinnerMode="horizontal"
+              [min]="0"
+              [max]="30"
             >
-              <ng-template pTemplate="inputicon">
-                <img alt="" src="assets/icons/time-icon.svg" />
+              <ng-template #incrementbuttonicon>
+                <span class="pi pi-plus"></span>
               </ng-template>
-            </p-datepicker>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+              <ng-template #decrementbuttonicon>
+                <span class="pi pi-minus"></span>
+              </ng-template>
+            </p-inputnumber>
+            <app-validation-messages [control]="attendanceBufferControl"></app-validation-messages>
           </div>
-          <app-validation-messages [control]="timeFromControl"></app-validation-messages>
         </div>
-        <div class="lg:col-span-2">
-          <label class="label" for="time-pick-to">{{
-            'WORK_SHIFTS_POPUP.TIME_TO' | translate
-          }}</label>
-          <div class="relative">
-            <p-datepicker
-              [hourFormat]="'12'"
-              [iconDisplay]="'input'"
-              [placeholder]="'WORK_SHIFTS_POPUP.TIME_TO' | translate"
-              [showIcon]="true"
-              [timeOnly]="true"
-              class="peer block w-full"
-              formControlName="timeTo"
-              id="time-pick-to"
-              inputId="icondisplay"
-              name="time-pick-to"
+        <div>
+          <div class="w-[50%]">
+            <label class="label" for="max-leave-time">{{
+                'WORK_SHIFTS.MAX_LEAVE_TIME' | translate
+              }}</label>
+            <p-inputnumber
+              [inputStyle]="{ width: '3rem' }"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              formControlName="leaveBuffer"
+              id="max-leave-time"
+              spinnerMode="horizontal"
+              [min]="0"
+              [max]="30"
             >
-              <ng-template pTemplate="inputicon">
-                <img alt="" src="assets/icons/time-icon.svg" />
+              <ng-template #incrementbuttonicon>
+                <span class="pi pi-plus"></span>
               </ng-template>
-            </p-datepicker>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+              <ng-template #decrementbuttonicon>
+                <span class="pi pi-minus"></span>
+              </ng-template>
+            </p-inputnumber>
+            <app-validation-messages [control]="leaveBufferControl"></app-validation-messages>
           </div>
-          <app-validation-messages [control]="timeToControl"></app-validation-messages>
-          <app-validation-messages [control]="form"></app-validation-messages>
-        </div>
-        <div class="lg:col-span-2">
-          <label class="label" for="max-attendance-time">{{
-            'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate
-          }}</label>
-          <p-inputnumber
-            [inputStyle]="{ width: '3rem' }"
-            [showButtons]="true"
-            buttonLayout="horizontal"
-            formControlName="attendanceBuffer"
-            id="max-attendance-time"
-            spinnerMode="horizontal"
-            [min]="0"
-          >
-            <ng-template #incrementbuttonicon>
-              <span class="pi pi-plus"></span>
-            </ng-template>
-            <ng-template #decrementbuttonicon>
-              <span class="pi pi-minus"></span>
-            </ng-template>
-          </p-inputnumber>
-          <app-validation-messages [control]="attendanceBufferControl"></app-validation-messages>
-        </div>
-        <div class="lg:col-span-2">
-          <label class="label" for="max-leave-time">{{
-            'WORK_SHIFTS.MAX_LEAVE_TIME' | translate
-          }}</label>
-          <p-inputnumber
-            [inputStyle]="{ width: '3rem' }"
-            [showButtons]="true"
-            buttonLayout="horizontal"
-            formControlName="leaveBuffer"
-            id="max-leave-time"
-            spinnerMode="horizontal"
-            [min]="0"
-          >
-            <ng-template #incrementbuttonicon>
-              <span class="pi pi-plus"></span>
-            </ng-template>
-            <ng-template #decrementbuttonicon>
-              <span class="pi pi-minus"></span>
-            </ng-template>
-          </p-inputnumber>
-          <app-validation-messages [control]="leaveBufferControl"></app-validation-messages>
         </div>
       </div>
 
-      <!-- Default shift section -->
       <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-4 border-t border-t-[#d2d6db] mt-6 pt-6 mb-6"
       >
-        <div class="md:col-span-6">
-          <label class="inline-flex items-center space-x-2 mb-4 cursor-pointer relative">
-            <input
-              type="checkbox"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-              formControlName="isDefaultShiftForm"
-            />
-            <svg
-              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              viewBox="0 0 24 24"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span class="text-base font-medium text-[#1f2a37]">{{
-              'WORK_SHIFTS_POPUP.MARK_AS_DEFAULT' | translate
-            }}</span>
-          </label>
-        </div>
-
-        @if (form.get('isDefaultShiftForm')?.value) {
+        <div class="grid lg:grid-cols-2 gap-6">
           <div class="lg:col-span-2">
+            <label class="inline-flex items-center space-x-2 mb-4 cursor-pointer relative">
+              <input
+                type="checkbox"
+                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-300 disabled:border-none disabled:checked:bg-gray-300 disabled:checked:cursor-not-allowed "
+                formControlName="isCrossDayShift"
+              />
+              <svg
+                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                viewBox="0 0 24 24"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span class="text-base font-medium text-[#1f2a37]">{{
+                  'WORK_SHIFTS_POPUP.CROSS_DAY_SHIFT' | translate
+                }}</span>
+            </label>
+          </div>
+          <div >
+            <label class="label" for="time-pick-from">{{
+                'WORK_SHIFTS_POPUP.TIME_FROM' | translate
+              }}</label>
             <div class="relative">
-              <label for="" class="label">
-                {{ 'WORK_SHIFTS_POPUP.START_DATE_DEFAULT_SHIFT' | translate }}
-                <span style="color: #b42318; font-weight: bold">*</span>
-              </label>
               <p-datepicker
+                [hourFormat]="'12'"
                 [iconDisplay]="'input'"
+                [placeholder]="'WORK_SHIFTS_POPUP.TIME_FROM' | translate"
                 [showIcon]="true"
-                [placeholder]="'COMMON.FROM' | translate"
+                [timeOnly]="true"
                 class="peer block w-full"
-                formControlName="shiftLogStartDate"
+                formControlName="timeFrom"
+                id="time-pick-from"
                 inputId="icondisplay"
+                name="time-pick-from"
               >
                 <ng-template pTemplate="inputicon">
-                  <img src="/assets/icons/calender-icon.svg" alt="" />
+                  <img alt="" src="assets/icons/time-icon.svg" />
                 </ng-template>
               </p-datepicker>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
             </div>
-            <app-validation-messages [control]="shiftLogStartDateControl"></app-validation-messages>
+            <app-validation-messages [control]="timeFromControl"></app-validation-messages>
           </div>
-        }
+          <div >
+            <label class="label" for="time-pick-to">{{
+                'WORK_SHIFTS_POPUP.TIME_TO' | translate
+              }}</label>
+            <div class="relative">
+              <p-datepicker
+                [hourFormat]="'12'"
+                [iconDisplay]="'input'"
+                [placeholder]="'WORK_SHIFTS_POPUP.TIME_TO' | translate"
+                [showIcon]="true"
+                [timeOnly]="true"
+                class="peer block w-full"
+                formControlName="timeTo"
+                id="time-pick-to"
+                inputId="icondisplay"
+                name="time-pick-to"
+              >
+                <ng-template pTemplate="inputicon">
+                  <img alt="" src="assets/icons/time-icon.svg" />
+                </ng-template>
+              </p-datepicker>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <app-validation-messages [control]="timeToControl"></app-validation-messages>
+            <app-validation-messages [control]="form"></app-validation-messages>
+          </div>
+        </div>
+        <div
+          class="grid  lg:grid-cols-2 gap-6"
+        >
+          <div>
+            <label class="inline-flex items-center space-x-2 mb-4 cursor-pointer relative">
+              <input
+                type="checkbox"
+                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-300 disabled:checked:bg-gray-300 disabled:checked:cursor-not-allowed "
+                formControlName="isDefaultShiftForm"
+              />
+              <svg
+                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                viewBox="0 0 24 24"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span class="text-base font-medium text-[#1f2a37]">{{
+                  'WORK_SHIFTS_POPUP.MARK_AS_DEFAULT' | translate
+                }}</span>
+            </label>
+          </div>
+
+          @if (form.get('isDefaultShiftForm')?.value) {
+            <div class="lg:col-span-3">
+              <div class="relative">
+                <label for="" class="label">
+                  {{ 'WORK_SHIFTS_POPUP.START_DATE_DEFAULT_SHIFT' | translate }}
+                  <span style="color: #b42318; font-weight: bold">*</span>
+                </label>
+                <p-datepicker
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [placeholder]="'COMMON.FROM' | translate"
+                  class="peer block w-full"
+                  formControlName="shiftLogStartDate"
+                  inputId="icondisplay"
+                >
+                  <ng-template pTemplate="inputicon">
+                    <img src="/assets/icons/calender-icon.svg" alt="" />
+                  </ng-template>
+                </p-datepicker>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                ></span>
+              </div>
+              <app-validation-messages [control]="shiftLogStartDateControl"></app-validation-messages>
+            </div>
+          }
+        </div>
+
       </div>
+
+      <!-- Default shift section -->
+
 
       @if (form.get('isDefaultShiftForm')?.value && model.shiftLogId) {
         <div
@@ -217,8 +256,8 @@
         >
           <div class="lg:col-span-2">
             <span class="text-[14px] font-normal text-[#6c737f]">{{
-              'WORK_SHIFTS_POPUP.SHIFT_ACTIVATION_DATE' | translate
-            }}</span>
+                'WORK_SHIFTS_POPUP.SHIFT_ACTIVATION_DATE' | translate
+              }}</span>
             <p class="text-[16px] font-semibold text-[#161616]">
               {{
                 model.isActive
@@ -229,8 +268,8 @@
           </div>
           <div class="lg:col-span-2">
             <span class="text-[14px] font-normal text-[#6c737f]">{{
-              'WORK_SHIFTS_POPUP.ACTIVATION_STATUS' | translate
-            }}</span>
+                'WORK_SHIFTS_POPUP.ACTIVATION_STATUS' | translate
+              }}</span>
             @if (model.isActive) {
               <div
                 class="px-2 py-1 rounded-full w-fit text-sm flex items-center gap-2 bg-[#ecfdf3] text-[#085d3a]"

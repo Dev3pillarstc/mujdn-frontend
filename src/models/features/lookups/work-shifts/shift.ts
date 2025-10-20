@@ -28,6 +28,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
   isUpdateOnly: boolean = false;
   isAvailableDefaultShift?: boolean = false;
   declare defaultShiftId?: number;
+  isCrossDayShift: boolean = false;
 
   buildForm() {
     const {
@@ -37,6 +38,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       timeTo,
       attendanceBuffer,
       leaveBuffer,
+      isCrossDayShift,
       isDefaultShift,
       isDefaultShiftForm,
       isActive,
@@ -68,17 +70,18 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       attendanceBuffer: [
         attendanceBuffer,
         [
-          CustomValidators.numberMaxLength(CustomValidators.defaultLengths.NUMBERS_MAXLENGTH),
           CustomValidators.positiveNumber(),
+          Validators.max(CustomValidators.defaultLengths.maxShiftBuffer),
         ],
       ],
       leaveBuffer: [
         leaveBuffer,
         [
-          CustomValidators.numberMaxLength(CustomValidators.defaultLengths.NUMBERS_MAXLENGTH),
           CustomValidators.positiveNumber(),
+          Validators.max(CustomValidators.defaultLengths.maxShiftBuffer),
         ],
       ],
+      isCrossDayShift: [isCrossDayShift, []],
       isDefaultShift: [isDefaultShift, []],
       isDefaultShiftForm: [isDefaultShiftForm],
       shiftLogStartDate: [shiftLogStartDate],

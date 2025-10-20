@@ -27,6 +27,7 @@ const defaultLengths = {
   EXPLANATIONS: 1333,
   _500: 500,
   INT_MAX: 2_147_483_647,
+  maxShiftBuffer: 30
 };
 
 export function pattern(patternName: customValidationTypes): ValidatorFn {
@@ -165,6 +166,45 @@ export function timeFromBeforeTimeTo(fromKey: string, toKey: string): ValidatorF
     return from >= to ? { timeFromAfterTimeTo: true } : null;
   };
 }
+
+export function crossDateTimeValidator(fromKey: string, toKey: string, crossDayKey: string,
+                                       { strictEqualInvalid = true } = {}): ValidatorFn {
+  return (form: AbstractControl): ValidationErrors | null => {
+    const fromCtrl = form.get(fromKey);
+    const toCtrl = form.get(toKey);
+    const crossCtrl = form.get(crossDayKey);
+
+    if (!fromCtrl || !toCtrl || !crossCtrl) return null;
+    if (!fromCtrl.value || !toCtrl.value) return null;
+
+    const from = new Date(fromCtrl.value);
+    const to = new Date(toCtrl.value);
+
+    // Compare by HH:mm only (avoid date parts)
+    const fromMin = from.getHours() * 60 + from.getMinutes();
+    const toMin = to.getHours() * 60 + to.getMinutes();
+
+    // 1) Always disallow equal times
+    if (fromMin === toMin) {
+      return { timeFromAndToAreEqual: true };
+    }
+
+    const isCrossDay = !!crossCtrl.value;
+
+    // 2) Normal shift: from must be before to (same day)
+    if (!isCrossDay && fromMin > toMin) {
+      return { timeFromAfterTimeTo: true };
+    }
+
+    // 3) Cross-day shift: from must be after to (wraps past midnight)
+    if (isCrossDay && fromMin < toMin) {
+      return { timeRangeShouldCrossDay: true };
+    }
+
+    return null;
+  };
+}
+
 /**
  * Date range validator for ensuring dates are within allowed business rules
  * @param minDate - Minimum allowed date
@@ -375,4 +415,5 @@ export const CustomValidators = {
   positiveNumber,
   numberRange,
   timeFromBeforeTimeTo,
+  crossDateTimeValidator
 };

@@ -8,6 +8,8 @@ export enum ValidationErrorKeyEnum {
   MAX = 'max',
   START_AFTER_END = 'startAfterEnd',
   TIME_FROM_AFTER_TIME_TO = 'timeFromAfterTimeTo',
+  TIME_RANGE_SHOULD_CROSS_DAY = 'timeRangeShouldCrossDay',
+  TIME_FROM_AND_TO_ARE_EQUAL = 'timeFromAndToAreEqual',
   EMAIL = 'EMAIL',
   STRONG_PASSWORD = 'strongPassword',
   NATIONAL_ID = 'NATIONAL_ID',

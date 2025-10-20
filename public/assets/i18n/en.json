@@ -33,6 +33,8 @@
     "SEARCH_FILTERS": "Search filters",
     "START_BEFORE_END": "Start date must be before end date",
     "TIME_FROM_BEFORE_TIME_TO": "Time from must be before time to",
+    "TIME_RANGE_SHOULD_CROSS_DAY": "Time to must be less than time from",
+    "TIME_FROM_AND_TO_ARE_EQUAL": "Time from and time to can not be equal",
     "UNKNOWN_ERROR": "Unknown error",
     "SERVICE_UNAVAILABLE": "Service unavailable",
     "STRONG_PASSWORD": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
@@ -362,7 +364,8 @@
     "NOT_ACTIVE": "Not active",
     "ACTIVATE": "Activate",
     "SAVE_AND_ACTIVATE": "Save and Activate",
-    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "When a new default shift is added, the previous default shift is automatically unset."
+    "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "When a new default shift is added, the previous default shift is automatically unset.",
+    "CROSS_DAY_SHIFT": "Cross-Day Shift (check-in and check-out on different days)"
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "My Attendance Logs",

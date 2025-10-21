@@ -182,4 +182,10 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
       this.selectedUsers.map((selectedUser) => selectedUser.id).includes(availableUser.id)
     );
   }
+
+  getUserName(user: UserProfilePresenceInquiry) {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? user.fullNameEn
+      : user.fullNameAr;
+  }
 }

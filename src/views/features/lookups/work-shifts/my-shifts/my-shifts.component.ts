@@ -71,8 +71,10 @@ export default class MyShiftsComponent extends BaseListComponent<
   currentShift: EmployeeShift | null = null;
   service = inject(MyShiftsService);
   languageService = inject(LanguageService);
+  locale: 'en-US' | 'ar-EG' = 'en-US';
 
   override initListComponent(): void {
+    this.locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
     this.loadInitialData();
 
     if (this.currentShift?.timeTo) {
@@ -87,6 +89,7 @@ export default class MyShiftsComponent extends BaseListComponent<
     }
 
     this.languageService.languageChanged$.subscribe(() => {
+      this.locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
       // Format multiple shifts
       this.employeeShifts?.forEach((shift) => {
         changeTimeSuffix(
@@ -226,7 +229,7 @@ export default class MyShiftsComponent extends BaseListComponent<
 
     this.service.getMyShifts(this.paginationParams, filterOptions).subscribe({
       next: (response) => {
-        this.handleLoadSuccess(response);
+        this.handleSearchSuccess(response);
       },
       error: (error) => {
         this.handleLoadListError();
@@ -238,7 +241,26 @@ export default class MyShiftsComponent extends BaseListComponent<
   private handleSearchSuccess(response: any): void {
     this.employeeShifts = response.list || [];
     this.list = this.employeeShifts;
+
+    this.convertTimeFormatToTwelve();
     this.updatePaginationInfo(response);
+  }
+
+  convertTimeFormatToTwelve() {
+    this.employeeShifts?.forEach((shift) => {
+      changeTimeSuffix(
+        this.isCurrentLanguageEnglish.bind(this),
+        shift,
+        'timeFrom',
+        'formattedTimeFrom'
+      );
+      changeTimeSuffix(
+        this.isCurrentLanguageEnglish.bind(this),
+        shift,
+        'timeTo',
+        'formattedTimeTo'
+      );
+    });
   }
 
   private handleLoadSuccess(response: any): void {

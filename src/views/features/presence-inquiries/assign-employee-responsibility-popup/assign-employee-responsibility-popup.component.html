@@ -182,7 +182,7 @@
             *ngFor="let user of selectedUsers"
             class="min-w-[142px] min-h-[21px] flex flex-row justify-center items-center gap-1 px-3 py-1 rounded-full bg-[#f3f4f6] text-[#161616] font-medium"
           >
-            <span>{{ user.fullNameAr }}</span>
+            <span>{{ getUserName(user) }}</span>
             <button type="button" (click)="toggleUserSelection(user.id)">
               <svg
                 width="18"

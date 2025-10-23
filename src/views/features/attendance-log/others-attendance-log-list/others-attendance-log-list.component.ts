@@ -359,8 +359,8 @@ export default class OthersAttendanceLogListComponent
     dialogConfig.data = {
       model: model,
     };
-    dialogConfig.width = this.dialogSize2.width;
-    dialogConfig.maxWidth = this.dialogSize2.maxWidth;
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(ImportLogPopupComponent as any, dialogConfig);
 
     return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {

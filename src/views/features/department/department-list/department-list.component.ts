@@ -29,6 +29,7 @@ import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { filter, switchMap, tap } from 'rxjs';
 import { Department } from '@/models/features/lookups/department/department';
 import { MatDialogConfig } from '@angular/material/dialog';
+import { ImportLogPopupComponent } from '../import-log-popup/import-log-popup.component';
 
 @Component({
   selector: 'app-department-list',
@@ -262,6 +263,12 @@ export default class DepartmentListComponent extends BaseListComponent<
           this.onDepartmentChange();
         }
       });
+  }
+  openImportModal() {
+    this.matDialog.open(ImportLogPopupComponent as any, {
+      width: '100%',
+      maxWidth: '800px',
+    });
   }
   addOrEditModel(parentDepartmentId?: number, department?: Department): void {
     const departmentCopy = department ? new Department().clone(department) : new Department();

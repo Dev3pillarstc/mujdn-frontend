@@ -6,10 +6,15 @@
           <span>{{ item.label | translate }}</span>
         </ng-template>
       </p-breadcrumb>
-
-      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
-        {{ 'MENU.DEPARTMENTS' | translate }}
-      </h3>
+      <div class="flex items-center justify-between gap-6 flex-wrap">
+        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+          {{ 'MENU.DEPARTMENTS' | translate }}
+        </h3>
+        <button class="btn black-btn" (click)="openImportModal()">
+          <img src="/assets/icons/import-icon.svg" alt="" />
+          <span>استيراد سجل لجميع الادارات</span>
+        </button>
+      </div>
     </div>
     <section class="flex items-start flex-col xl:flex-row gap-6 max-w-full">
       <button *ngIf="!showDepartmentTree" (click)="showDepartmentTree = true">

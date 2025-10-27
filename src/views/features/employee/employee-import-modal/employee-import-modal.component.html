@@ -1,6 +1,6 @@
 <div [dir]="direction">
   <div class="p-6">
-    <button class="block ms-auto">
+    <button (click)="onCancel()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">{{'IMPORT.EMPLOYEES.IMPORT_NEW_EMPLOYEE_LIST' | translate}}</h3>

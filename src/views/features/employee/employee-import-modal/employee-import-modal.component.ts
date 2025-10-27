@@ -9,6 +9,7 @@ import { LanguageService } from '@/services/shared/language.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { ExcelHelper } from '@/utils/excel-helper';
+import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-employee-import-modal',
@@ -40,48 +41,89 @@ export class EmployeeImportModalComponent implements OnInit {
   }
 
   onFileSelected(event: Event): void {
+    // const input = event.target as HTMLInputElement;
+    // if (input.files && input.files.length > 0) {
+    //   ExcelHelper.validateImportEmployeesHeaders(input.files[0]).subscribe((result) => {
+    //     // if (result.validHeaders) {
+    //     //   if (this.isValidFileSize(input.files![0])) {
+    //     //     this.selectedFile = input.files![0];
+    //     //   } else {
+    //     //     input.value = '';
+    //     //     this.showInvalidFileSizeError();
+    //     //   }
+    //     // } else {
+    //     //   input.value = '';
+    //     //   let errorMessage = this.translateService
+    //     //     .instant('COMMON.EXCEL_MISSING_FIELDS')
+    //     //     .concat(' ('.concat(result.missing.join(', ').concat(')')));
+    //     //   this.alertService.showErrorMessage({ messages: [errorMessage] });
+    //     // }
+    //
+    //     const file = input.files?.[0];
+    //     if (!file) return;
+    //
+    //     if(!result.validHeaders) {
+    //       input.value = '';
+    //
+    //       const missingFields = result.missing.join(', ');
+    //       const errorMessage = this.translateService
+    //         .instant('COMMON.EXCEL_MISSING_FIELDS')
+    //         .concat(` (${missingFields})`);
+    //
+    //       this.alertService.showErrorMessage({ messages: [errorMessage] });
+    //       return;
+    //     }
+    //
+    //     if (!this.isValidFileSize(file)) {
+    //       input.value = '';
+    //       this.showInvalidFileSizeError();
+    //       return;
+    //     }
+    //
+    //     this.selectedFile = file;
+    //   });
+    // }
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      ExcelHelper.validateImportEmployeesHeaders(input.files[0]).subscribe((result) => {
-        // if (result.validHeaders) {
-        //   if (this.isValidFileSize(input.files![0])) {
-        //     this.selectedFile = input.files![0];
-        //   } else {
-        //     input.value = '';
-        //     this.showInvalidFileSizeError();
-        //   }
-        // } else {
-        //   input.value = '';
-        //   let errorMessage = this.translateService
-        //     .instant('COMMON.EXCEL_MISSING_FIELDS')
-        //     .concat(' ('.concat(result.missing.join(', ').concat(')')));
-        //   this.alertService.showErrorMessage({ messages: [errorMessage] });
-        // }
+    const file = input.files?.[0];
+    if (!file) return;
 
-        const file = input.files?.[0];
-        if (!file) return;
-
-        if(!result.validHeaders) {
+    ExcelHelper.validateImportEmployeesHeaders(file).pipe(
+      tap(result => {
+        if (!result.validHeaders) {
           input.value = '';
-
           const missingFields = result.missing.join(', ');
           const errorMessage = this.translateService
             .instant('COMMON.EXCEL_MISSING_FIELDS')
             .concat(` (${missingFields})`);
-
           this.alertService.showErrorMessage({ messages: [errorMessage] });
-          return;
+          throw new Error('Invalid headers'); // stop the stream
         }
 
         if (!this.isValidFileSize(file)) {
           input.value = '';
           this.showInvalidFileSizeError();
-          return;
+          throw new Error('Invalid file size'); // stop the stream
         }
-
+      }),
+      switchMap(() => ExcelHelper.validateHasDataRows(file)),
+      tap(hasData => {
+        if (!hasData) {
+          input.value = '';
+          const msg = this.translateService.instant('COMMON.EXCEL_NO_DATA_ROWS');
+          this.alertService.showErrorMessage({ messages: [msg] });
+          throw new Error('No data rows');
+        }
+      })
+    ).subscribe({
+      next: () => {
+        // ✅ All validations passed
         this.selectedFile = file;
-      });
-    }
+      },
+      error: err => {
+        // Errors are already handled via alerts — optional log
+        console.warn('Validation stopped:', err.message || err);
+      }
+    });
   }
 
   showInvalidFileSizeError() {
@@ -120,5 +162,6 @@ export class EmployeeImportModalComponent implements OnInit {
 
   onCancel(): void {
     this.selectedFile = null;
+    this.dialogRef.close(DIALOG_ENUM.CANCEL);
   }
 }

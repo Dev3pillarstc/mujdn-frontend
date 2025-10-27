@@ -69,5 +69,32 @@ export class ExcelHelper {
     });
   }
 
+  static validateHasDataRows(file: File): Observable<boolean> {
+    return new Observable(observer => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        try {
+          const data = new Uint8Array(reader.result as ArrayBuffer);
+          const wb = XLSX.read(data, { type: 'array' });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+
+          // Read sheet as array of rows
+          const rows: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1, blankrows: false });
+
+          // Check if there’s at least one non-empty row after the header
+          const hasData = rows.length > 1 && rows.slice(1).some(row => row.some(cell => cell !== null && cell !== ''));
+
+          observer.next(hasData);
+          observer.complete();
+        } catch (error) {
+          observer.error(error);
+        }
+      };
+
+      reader.onerror = err => observer.error(err);
+      reader.readAsArrayBuffer(file);
+    });
+  }
 
 }

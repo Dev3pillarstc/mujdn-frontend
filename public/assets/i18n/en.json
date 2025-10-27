@@ -122,7 +122,10 @@
     "VISIT_TIME_CONFLICTING": "Visit time conflicting with another visit for same user",
     "VISIT_DATE_TIME_IN_PAST": "The date or time of the visit cannot be in the past.",
     "LOCATION_NOT_VALID": "Devices are not active at the designated visit locations.",
-    "NOT_VALID_USERS_FOR_ASSIGNMENT": "The request cannot be completed because the status of some employees has changed, and they no longer meet the presence inquiry criteria."
+    "NOT_VALID_USERS_FOR_ASSIGNMENT": "The request cannot be completed because the status of some employees has changed, and they no longer meet the presence inquiry criteria.",
+    "EXCEL_MISSING_FIELDS": "You should provide the next fields",
+    "FILE_SIZE_CAN_NOT_EXCEED": "File size can not be exceed {size} MB",
+    "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "Data has been imported successfully"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -783,5 +786,22 @@
     "CONFIRM_PROCESS_ALL_EMPLOYEES": "Confirm Process All Employees",
     "CONFIRM_PROCESS_ALL_EMPLOYEES_MESSAGE": "Are you sure you want to process all employees?",
     "DATE_MAX_RANGE_EXCEEDED": "You can process up to 3 months at one time"
+  },
+  "IMPORT": {
+    "DOWNLOAD_IMPORT_TEMPLATE": "Download Import template",
+    "THE_TEMPLATE_SHOWS_THE_REQUIRED_COLUMNS": "The template shows the required columns for data entry. After filling in the data, upload the file to complete the process.",
+    "DOWNLOAD_TEMPLATE": "Download Template",
+    "UNABLE_TO_IMPORT_ALL_DATA": "Unable to import all data — the import file contains invalid data",
+    "VALID_DATA_WAS_IMPORTED_SUCCESSFULLY": "Valid data was imported successfully, while some records contain errors that need to be corrected before approval. You can",
+    "DOWNLOAD_THE_REVIEW_FILE": "download the review file",
+    "TO_VIEW_AND_CORRECT_THE_RECORDS": "to view and correct the records that were not imported, then re-upload the file after making corrections",
+    "UPLOAD_FILE": "Upload file",
+    "THE_MAXIMUM_ALLOWED_FILE_SIZE": "The maximum allowed file size is 2 MB. Supported formats: (xls, xlsx).",
+    "BROWSE_FILES": "Browse Files",
+    "IMPORT": "Import",
+    "EMPLOYEES": {
+      "IMPORT_NEW_EMPLOYEE_LIST": "Import a new employee list",
+      "IMPORT_EMPLOYEES_LIST": "Import Employees List"
+    }
   }
 }

@@ -41,48 +41,6 @@ export class EmployeeImportModalComponent implements OnInit {
   }
 
   onFileSelected(event: Event): void {
-    // const input = event.target as HTMLInputElement;
-    // if (input.files && input.files.length > 0) {
-    //   ExcelHelper.validateImportEmployeesHeaders(input.files[0]).subscribe((result) => {
-    //     // if (result.validHeaders) {
-    //     //   if (this.isValidFileSize(input.files![0])) {
-    //     //     this.selectedFile = input.files![0];
-    //     //   } else {
-    //     //     input.value = '';
-    //     //     this.showInvalidFileSizeError();
-    //     //   }
-    //     // } else {
-    //     //   input.value = '';
-    //     //   let errorMessage = this.translateService
-    //     //     .instant('COMMON.EXCEL_MISSING_FIELDS')
-    //     //     .concat(' ('.concat(result.missing.join(', ').concat(')')));
-    //     //   this.alertService.showErrorMessage({ messages: [errorMessage] });
-    //     // }
-    //
-    //     const file = input.files?.[0];
-    //     if (!file) return;
-    //
-    //     if(!result.validHeaders) {
-    //       input.value = '';
-    //
-    //       const missingFields = result.missing.join(', ');
-    //       const errorMessage = this.translateService
-    //         .instant('COMMON.EXCEL_MISSING_FIELDS')
-    //         .concat(` (${missingFields})`);
-    //
-    //       this.alertService.showErrorMessage({ messages: [errorMessage] });
-    //       return;
-    //     }
-    //
-    //     if (!this.isValidFileSize(file)) {
-    //       input.value = '';
-    //       this.showInvalidFileSizeError();
-    //       return;
-    //     }
-    //
-    //     this.selectedFile = file;
-    //   });
-    // }
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;

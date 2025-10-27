@@ -93,7 +93,6 @@ export class UserProfileService extends LookupBaseService<UserProfile, string> {
       })
       .pipe(
         switchMap((response: ResponseData<UserProfile>) => {
-          console.log('UserProfileService getMyProfile response:', response);
           return of(response.data);
         })
       );

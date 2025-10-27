@@ -101,19 +101,13 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
 
   onTabChange(event: any) {
     this.activeTabIndex = event.index;
-    console.log('Tab changed to index:', this.activeTabIndex);
-
-    // The child components will automatically detect the change in isActive
-    // and trigger their data loading
   }
 
   clickMyAttendanceLogTab() {
-    console.log('clickMyAttendanceLogTab');
     this.activeTabIndex = 0;
   }
 
   clickOthersAttendanceLogTab() {
-    console.log('clickOthersAttendanceLogTab');
     this.activeTabIndex = 1;
   }
 

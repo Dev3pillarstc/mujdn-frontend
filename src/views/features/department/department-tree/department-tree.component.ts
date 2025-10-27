@@ -212,7 +212,6 @@ export class DepartmentTreeComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.selectedNode = event.node;
     });
-    console.log('unselect', event);
   }
 
   private translateDepartmentName() {

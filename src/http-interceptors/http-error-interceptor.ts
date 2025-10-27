@@ -44,7 +44,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
 
       let messageKey = 'COMMON.UNKNOWN_ERROR';
       let backendError = error?.error?.error;
-      console.log('Backend error response:', backendError); // Debug log
 
       if (backendError?.messageKey === notAuthorizedErrorKey && authService.isAuthenticated) {
         matDialog.closeAll();
@@ -53,7 +52,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
 
       if (backendError?.messageKey) {
         messageKey = 'COMMON.' + backendError?.messageKey;
-        console.log('Message key:', messageKey); // Debug log
 
         if (skipKeys.includes(backendError?.messageKey)) {
           return throwError(() => error);
@@ -68,7 +66,6 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
       }
 
       const message = translateService.instant(messageKey);
-      console.log('Default message:', message); // Debug log
       alertService.showErrorMessage({ messages: [message] });
       return throwError(() => error);
     })

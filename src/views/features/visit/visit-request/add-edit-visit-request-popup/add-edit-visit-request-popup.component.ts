@@ -88,8 +88,6 @@ export class AddEditVisitRequestPopupComponent extends BasePopupComponent<Visit>
   }
 
   override initPopup() {
-    console.log(this.data);
-
     this.model = this.data.model;
     this.nationalities = this.data.lookups.nationalities || [];
     this.departments = this.data.lookups.departments || [];

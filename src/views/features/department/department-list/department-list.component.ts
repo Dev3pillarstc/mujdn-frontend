@@ -283,7 +283,6 @@ export default class DepartmentListComponent extends BaseListComponent<
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
   onDepartmentChange(updatedDepartment?: Department) {
-    console.log('=================', updatedDepartment, '=================');
     if (updatedDepartment) {
       this.selectedDepartment = Object.assign({}, updatedDepartment);
     }

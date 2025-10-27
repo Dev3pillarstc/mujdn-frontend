@@ -178,7 +178,6 @@ export abstract class BaseListComponent<
         error: this.handleLoadListError,
       });
     } else {
-      console.log('searching with params', this.paginationParams, this._appliedFilterModel);
       this.loadList().subscribe({
         next: (response) => this.handleLoadListSuccess(response),
         error: this.handleLoadListError,

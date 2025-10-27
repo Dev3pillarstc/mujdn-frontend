@@ -224,7 +224,6 @@ export function buildTranslationParams(details: any, translateService: any): any
     }
   });
 
-  console.log('Translation params:', translationParams); // Debug log
   return translationParams;
 }
 

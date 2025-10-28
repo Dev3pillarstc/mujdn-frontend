@@ -9,13 +9,13 @@ import { Observable } from 'rxjs';
 export class ImportService {
   urlService = inject(UrlService);
   getUrlSegment(): string {
-    return this.urlService.URLS.EMPLOYEE_IMPORT;
+    return this.urlService.URLS.IMPORT;
   }
   private baseUrl = this.getUrlSegment(); // adjust as needed
 
   constructor(private http: HttpClient) {}
 
   importEmployees(formData: FormData): Observable<any> {
-    return this.http.post(`${this.baseUrl}`, formData, { withCredentials: true });
+    return this.http.post(`${this.baseUrl}/employees`, formData, { withCredentials: true });
   }
 }

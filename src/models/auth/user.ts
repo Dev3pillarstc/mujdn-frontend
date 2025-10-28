@@ -36,6 +36,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
   declare roleIds?: string[];
   declare department?: BaseLookupModel;
   declare concurrencyUpdateVersion?: string;
+  declare activeDirectoryUsername?: string;
   private languageService?: LanguageService;
 
   constructor() {
@@ -58,6 +59,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
       jobTitleEn,
       jobTitleAr,
       profilePhotoKey,
+      activeDirectoryUsername,
       joinDate,
       canLeaveWithoutFingerPrint,
       isActive,
@@ -126,6 +128,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
           CustomValidators.pattern('AR_NUM'),
         ],
       ],
+      activeDirectoryUsername: [activeDirectoryUsername, [Validators.required]],
       // profilePhotoKey: [profilePhotoKey],
       joinDate: [joinDate, [Validators.required]],
       canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint],

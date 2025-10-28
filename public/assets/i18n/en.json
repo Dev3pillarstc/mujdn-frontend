@@ -284,7 +284,9 @@
     "ASSIGN_SHIFT": "Assign Shift",
     "TASKS_ASSIGNED_TO_EMPLOYEE": "Tasks Assigned to Employee",
     "DELETE_EMPLOYEE": "Delete Employee",
-    "MAX_LENGTH_NAME": "Name cannot exceed 100 characters"
+    "MAX_LENGTH_NAME": "Name cannot exceed 100 characters",
+    "ACTIVE_DIRECTORY_USERNAME": "Employee Number (Active Directory Username)",
+    "EMPLOYEE_NUMBER": "Employee Number"
   },
   "HOLIDAYS_PAGE": {
     "HOLIDAYS_LIST": "Holidays",

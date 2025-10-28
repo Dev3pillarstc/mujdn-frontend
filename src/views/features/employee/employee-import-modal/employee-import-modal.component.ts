@@ -45,43 +45,45 @@ export class EmployeeImportModalComponent implements OnInit {
     const file = input.files?.[0];
     if (!file) return;
 
-    ExcelHelper.validateImportEmployeesHeaders(file).pipe(
-      tap(result => {
-        if (!result.validHeaders) {
-          input.value = '';
-          const missingFields = result.missing.join(', ');
-          const errorMessage = this.translateService
-            .instant('COMMON.EXCEL_MISSING_FIELDS')
-            .concat(` (${missingFields})`);
-          this.alertService.showErrorMessage({ messages: [errorMessage] });
-          throw new Error('Invalid headers'); // stop the stream
-        }
+    ExcelHelper.validateImportEmployeesHeaders(file)
+      .pipe(
+        tap((result) => {
+          if (!result.validHeaders) {
+            input.value = '';
+            const missingFields = result.missing.join(', ');
+            const errorMessage = this.translateService
+              .instant('COMMON.EXCEL_MISSING_FIELDS')
+              .concat(` (${missingFields})`);
+            this.alertService.showErrorMessage({ messages: [errorMessage] });
+            throw new Error('Invalid headers'); // stop the stream
+          }
 
-        if (!this.isValidFileSize(file)) {
-          input.value = '';
-          this.showInvalidFileSizeError();
-          throw new Error('Invalid file size'); // stop the stream
-        }
-      }),
-      switchMap(() => ExcelHelper.validateHasDataRows(file)),
-      tap(hasData => {
-        if (!hasData) {
-          input.value = '';
-          const msg = this.translateService.instant('COMMON.EXCEL_NO_DATA_ROWS');
-          this.alertService.showErrorMessage({ messages: [msg] });
-          throw new Error('No data rows');
-        }
-      })
-    ).subscribe({
-      next: () => {
-        // ✅ All validations passed
-        this.selectedFile = file;
-      },
-      error: err => {
-        // Errors are already handled via alerts — optional log
-        console.warn('Validation stopped:', err.message || err);
-      }
-    });
+          if (!this.isValidFileSize(file)) {
+            input.value = '';
+            this.showInvalidFileSizeError();
+            throw new Error('Invalid file size'); // stop the stream
+          }
+        }),
+        switchMap(() => ExcelHelper.validateHasDataRows(file)),
+        tap((hasData) => {
+          if (!hasData) {
+            input.value = '';
+            const msg = this.translateService.instant('COMMON.EXCEL_NO_DATA_ROWS');
+            this.alertService.showErrorMessage({ messages: [msg] });
+            throw new Error('No data rows');
+          }
+        })
+      )
+      .subscribe({
+        next: () => {
+          // ✅ All validations passed
+          this.selectedFile = file;
+        },
+        error: (err) => {
+          // Errors are already handled via alerts — optional log
+          console.warn('Validation stopped:', err.message || err);
+        },
+      });
   }
 
   showInvalidFileSizeError() {

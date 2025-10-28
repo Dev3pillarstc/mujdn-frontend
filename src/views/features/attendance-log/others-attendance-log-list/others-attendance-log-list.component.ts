@@ -362,8 +362,7 @@ export default class OthersAttendanceLogListComponent
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     const dialogRef = this.matDialog.open(ImportLogPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
-    });
+    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {});
   }
 
   getDeviceName(attendanceLog: AttendanceLog) {

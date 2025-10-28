@@ -133,6 +133,10 @@ export class AddNewEmployeePopupComponent extends BasePopupComponent<User> imple
     return this.form.get('nationalId') as FormControl;
   }
 
+  get activeDirectoryUsernameControl() {
+    return this.form.get('activeDirectoryUsername') as FormControl;
+  }
+
   get passwordControl() {
     return this.form.get('password') as FormControl;
   }

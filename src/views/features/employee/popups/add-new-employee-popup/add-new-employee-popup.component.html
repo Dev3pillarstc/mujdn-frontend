@@ -276,7 +276,7 @@
             <input
               class="peer"
               fluid="true"
-              formControlName="employeeNumber"
+              formControlName="activeDirectoryUsername"
               id="employeeNumber-popup"
               pInputText
               placeholder="{{ 'EMPLOYEES_PAGE.EMPLOYEE_NUMBER' | translate }}"
@@ -286,7 +286,9 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <app-validation-messages [control]="nationalIdControl"></app-validation-messages>
+          <app-validation-messages
+            [control]="activeDirectoryUsernameControl"
+          ></app-validation-messages>
         </div>
         @if (isCreateMode) {
           <div>

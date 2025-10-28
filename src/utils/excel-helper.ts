@@ -2,12 +2,6 @@ import { Observable } from 'rxjs';
 import * as XLSX from 'xlsx';
 
 export class ExcelHelper {
-  static IMPORT_EMPLOYEES_REQUIRED_HEADERS = [
-    'Email','Password','FullNameEn','FullNameAr','NationalId','PhoneNumber',
-    'FkRegionId','FkCityId','JobTitleEn','JobTitleAr','FkDepartmentId',
-    'JoinDate','CanLeaveWithoutFingerPrint','IsActive'
-  ];
-
   static downloadExcelFromBase64(base64String: string, baseName = 'Report'): void {
     // Handle data URL or raw base64
     const m = base64String.match(/^data:.*;base64,(.*)$/i);
@@ -27,7 +21,7 @@ export class ExcelHelper {
       '_',
       String(now.getHours()).padStart(2, '0'),
       String(now.getMinutes()).padStart(2, '0'),
-      String(now.getSeconds()).padStart(2, '0')
+      String(now.getSeconds()).padStart(2, '0'),
     ].join('');
     const fileName = `${baseName}_${ts}.xlsx`;
 
@@ -42,8 +36,11 @@ export class ExcelHelper {
     URL.revokeObjectURL(a.href);
   }
 
-  static validateImportEmployeesHeaders(file: File): Observable<{ validHeaders: boolean; missing: string[]; provided: string[] }> {
-    return new Observable(observer => {
+  static validateImportSheetHeaders(
+    importRequiredHeaders: string[],
+    file: File
+  ): Observable<{ validHeaders: boolean; missing: string[]; provided: string[] }> {
+    return new Observable((observer) => {
       const reader = new FileReader();
       reader.onload = () => {
         try {
@@ -53,9 +50,11 @@ export class ExcelHelper {
           const rows: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1, blankrows: false });
 
           const headerRow = rows[0] ?? [];
-          const provided = headerRow.map(cell => String(cell ?? '').trim());
+          const provided = headerRow.map((cell) => String(cell ?? '').trim());
           const providedSet = new Set(provided);
-          const missing = this.IMPORT_EMPLOYEES_REQUIRED_HEADERS.filter(req => !providedSet.has(req));
+          const missing = importRequiredHeaders.filter(
+            (req) => !providedSet.has(req)
+          );
 
           observer.next({ validHeaders: missing.length === 0, missing, provided });
           observer.complete();
@@ -64,13 +63,13 @@ export class ExcelHelper {
         }
       };
 
-      reader.onerror = err => observer.error(err);
+      reader.onerror = (err) => observer.error(err);
       reader.readAsArrayBuffer(file);
     });
   }
 
   static validateHasDataRows(file: File): Observable<boolean> {
-    return new Observable(observer => {
+    return new Observable((observer) => {
       const reader = new FileReader();
 
       reader.onload = () => {
@@ -83,7 +82,9 @@ export class ExcelHelper {
           const rows: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1, blankrows: false });
 
           // Check if there’s at least one non-empty row after the header
-          const hasData = rows.length > 1 && rows.slice(1).some(row => row.some(cell => cell !== null && cell !== ''));
+          const hasData =
+            rows.length > 1 &&
+            rows.slice(1).some((row) => row.some((cell) => cell !== null && cell !== ''));
 
           observer.next(hasData);
           observer.complete();
@@ -92,9 +93,8 @@ export class ExcelHelper {
         }
       };
 
-      reader.onerror = err => observer.error(err);
+      reader.onerror = (err) => observer.error(err);
       reader.readAsArrayBuffer(file);
     });
   }
-
 }

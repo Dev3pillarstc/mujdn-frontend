@@ -797,12 +797,16 @@
     "DOWNLOAD_THE_REVIEW_FILE": "download the review file",
     "TO_VIEW_AND_CORRECT_THE_RECORDS": "to view and correct the records that were not imported, then re-upload the file after making corrections",
     "UPLOAD_FILE": "Upload file",
-    "THE_MAXIMUM_ALLOWED_FILE_SIZE": "The maximum allowed file size is 2 MB. Supported formats: (xls, xlsx).",
+    "THE_MAXIMUM_ALLOWED_FILE_SIZE": "The maximum allowed file size is {size} MB. Supported formats: (xls, xlsx).",
     "BROWSE_FILES": "Browse Files",
     "IMPORT": "Import",
     "EMPLOYEES": {
       "IMPORT_NEW_EMPLOYEE_LIST": "Import a new employee list",
       "IMPORT_EMPLOYEES_LIST": "Import Employees List"
+    },
+    "DEPARTMENTS": {
+      "IMPORT_NEW_DEPARTMENT_LIST": "Import a new department list",
+      "IMPORT_DEPARTMENTS_LIST": "Import Departments List"
     }
   }
 }

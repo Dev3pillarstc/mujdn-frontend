@@ -126,14 +126,19 @@
     "EXCEL_MISSING_FIELDS": "يجب إدخال الحقول التالية",
     "FILE_SIZE_CAN_NOT_EXCEED": "يجب الا يتجاوز حجم الملف {size} ميجابايت",
     "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "تم إستيراد البيانات بنجاح",
-    "EXCEL_NO_DATA_ROWS": "يجب أن يحتوي ملف الإكسل على صف بيانات واحد على الأقل بعد صف العناوين"
+    "EXCEL_NO_DATA_ROWS": "يجب أن يحتوي ملف الإكسل على صف بيانات واحد على الأقل بعد صف العناوين",
+    "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "اسم المستخدم فى ال Active Directory موجود بالفعل",
+    "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "خدمة Active Directory غير متاحة"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
   },
   "LOGIN_PAGE": {
     "LOGIN_LBL": "تسجيل الدخول",
+    "SYSTEM_DATA": "بيانات النظام",
+    "ACTIVE_DIRECTORY_DATA": "بيانات Active Directory",
     "NATIONAL_ID_LBL": "رقم الهوية",
+    "USERNAME_LBL": "اسم المستخدم",
     "PASSWORD_LBL": "كلمة المرور",
     "LOGIN_BTN": "دخول الآن"
   },
@@ -286,7 +291,9 @@
     "ASSIGN_SHIFT": "إسناد وردية",
     "TASKS_ASSIGNED_TO_EMPLOYEE": "سجل المهمات المسندة للموظف",
     "DELETE_EMPLOYEE": "حذف الموظف",
-    "MAX_LENGTH_NAME": "الاسم لا يمكن أن يتجاوز 100 حرف"
+    "MAX_LENGTH_NAME": "الاسم لا يمكن أن يتجاوز 100 حرف",
+    "ACTIVE_DIRECTORY_USERNAME": "رقم الموظف (اسم المستخدم في Active Directory)",
+    "EMPLOYEE_NUMBER": "رقم الموظف"
   },
   "HOLIDAYS_PAGE": {
     "HOLIDAYS_LIST": "قائمة الإجازات والأعياد",

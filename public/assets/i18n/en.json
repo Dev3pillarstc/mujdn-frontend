@@ -126,14 +126,19 @@
     "EXCEL_MISSING_FIELDS": "You should provide the next fields",
     "FILE_SIZE_CAN_NOT_EXCEED": "File size can not be exceed {size} MB",
     "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "Data has been imported successfully",
-    "EXCEL_NO_DATA_ROWS": "The Excel file must contain at least one data row after the header"
+    "EXCEL_NO_DATA_ROWS": "The Excel file must contain at least one data row after the header",
+    "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "Active Directory username already exists",
+    "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "Active Directory service is unavailable"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
   },
   "LOGIN_PAGE": {
     "LOGIN_LBL": "Login",
-    "NATIONAL_ID_LBL": "National Id",
+    "SYSTEM_DATA": "System Data",
+    "ACTIVE_DIRECTORY_DATA": "Active Directory Data",
+    "NATIONAL_ID_LBL": "National ID",
+    "USERNAME_LBL": "Username",
     "PASSWORD_LBL": "Password",
     "LOGIN_BTN": "Login"
   },
@@ -288,7 +293,9 @@
     "ASSIGN_SHIFT": "Assign Shift",
     "TASKS_ASSIGNED_TO_EMPLOYEE": "Tasks Assigned to Employee",
     "DELETE_EMPLOYEE": "Delete Employee",
-    "MAX_LENGTH_NAME": "Name cannot exceed 100 characters"
+    "MAX_LENGTH_NAME": "Name cannot exceed 100 characters",
+    "ACTIVE_DIRECTORY_USERNAME": "Employee Number (Active Directory Username)",
+    "EMPLOYEE_NUMBER": "Employee Number"
   },
   "HOLIDAYS_PAGE": {
     "HOLIDAYS_LIST": "Holidays",

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ImportService } from '@/services/shared/import.service';
 import { AlertService } from '@/services/shared/alert.service';
-import { ImportExcelError } from '@/models/shared/import-excel-error';
+import { ImportExcelResponse } from '@/models/shared/import-excel-response';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
@@ -22,10 +22,26 @@ export class EmployeeImportModalComponent implements OnInit {
   alertService = inject(AlertService);
   languageService = inject(LanguageService);
   selectedFile: File | null = null;
-  importError: ImportExcelError = new ImportExcelError();
+  importResponse: ImportExcelResponse = new ImportExcelResponse();
   dialogRef = inject(MatDialogRef);
   translateService = inject(TranslateService);
-  maxFileSizeInMB: number = 20;
+  maxFileSizeInMB: number = 2;
+  importSheetRequiredHeaders = [
+    'Email',
+    'Password',
+    'FullNameEn',
+    'FullNameAr',
+    'NationalId',
+    'PhoneNumber',
+    'FkRegionId',
+    'FkCityId',
+    'JobTitleEn',
+    'JobTitleAr',
+    'FkDepartmentId',
+    'JoinDate',
+    'CanLeaveWithoutFingerPrint',
+    'IsActive',
+  ];
   constructor(private importService: ImportService) {}
   ngOnInit() {
     this.direction =
@@ -45,43 +61,45 @@ export class EmployeeImportModalComponent implements OnInit {
     const file = input.files?.[0];
     if (!file) return;
 
-    ExcelHelper.validateImportEmployeesHeaders(file).pipe(
-      tap(result => {
-        if (!result.validHeaders) {
-          input.value = '';
-          const missingFields = result.missing.join(', ');
-          const errorMessage = this.translateService
-            .instant('COMMON.EXCEL_MISSING_FIELDS')
-            .concat(` (${missingFields})`);
-          this.alertService.showErrorMessage({ messages: [errorMessage] });
-          throw new Error('Invalid headers'); // stop the stream
-        }
+    ExcelHelper.validateImportSheetHeaders(this.importSheetRequiredHeaders, file)
+      .pipe(
+        tap((result) => {
+          if (!result.validHeaders) {
+            input.value = '';
+            const missingFields = result.missing.join(', ');
+            const errorMessage = this.translateService
+              .instant('COMMON.EXCEL_MISSING_FIELDS')
+              .concat(` (${missingFields})`);
+            this.alertService.showErrorMessage({ messages: [errorMessage] });
+            throw new Error('Invalid headers'); // stop the stream
+          }
 
-        if (!this.isValidFileSize(file)) {
-          input.value = '';
-          this.showInvalidFileSizeError();
-          throw new Error('Invalid file size'); // stop the stream
-        }
-      }),
-      switchMap(() => ExcelHelper.validateHasDataRows(file)),
-      tap(hasData => {
-        if (!hasData) {
-          input.value = '';
-          const msg = this.translateService.instant('COMMON.EXCEL_NO_DATA_ROWS');
-          this.alertService.showErrorMessage({ messages: [msg] });
-          throw new Error('No data rows');
-        }
-      })
-    ).subscribe({
-      next: () => {
-        // ✅ All validations passed
-        this.selectedFile = file;
-      },
-      error: err => {
-        // Errors are already handled via alerts — optional log
-        console.warn('Validation stopped:', err.message || err);
-      }
-    });
+          if (!this.isValidFileSize(file)) {
+            input.value = '';
+            this.showInvalidFileSizeError();
+            throw new Error('Invalid file size'); // stop the stream
+          }
+        }),
+        switchMap(() => ExcelHelper.validateHasDataRows(file)),
+        tap((hasData) => {
+          if (!hasData) {
+            input.value = '';
+            const msg = this.translateService.instant('COMMON.EXCEL_NO_DATA_ROWS');
+            this.alertService.showErrorMessage({ messages: [msg] });
+            throw new Error('No data rows');
+          }
+        })
+      )
+      .subscribe({
+        next: () => {
+          // ✅ All validations passed
+          this.selectedFile = file;
+        },
+        error: (err) => {
+          // Errors are already handled via alerts — optional log
+          console.warn('Validation stopped:', err.message || err);
+        },
+      });
   }
 
   showInvalidFileSizeError() {
@@ -106,7 +124,7 @@ export class EmployeeImportModalComponent implements OnInit {
     this.importService.importEmployees(formData).subscribe({
       next: (response) => {
         if (response.data.hasErrors) {
-          this.importError = response.data;
+          this.importResponse = response.data;
         } else if (!response.data.hasErrors) {
           this.dialogRef.close(DIALOG_ENUM.OK);
         }
@@ -115,7 +133,11 @@ export class EmployeeImportModalComponent implements OnInit {
   }
 
   downloadReviewFile(): void {
-    ExcelHelper.downloadExcelFromBase64(this.importError.errorLogFile!);
+    ExcelHelper.downloadExcelFromBase64(this.importResponse.errorLogFile!);
+  }
+
+  getMaxAllowedFileSizeMessage() {
+    return this.translateService.instant('IMPORT.THE_MAXIMUM_ALLOWED_FILE_SIZE').replace('{size}', this.maxFileSizeInMB);
   }
 
   onCancel(): void {

@@ -795,12 +795,16 @@
     "DOWNLOAD_THE_REVIEW_FILE": "تحميل ملف المراجعة",
     "TO_VIEW_AND_CORRECT_THE_RECORDS": "للإطلاع على تفاصيل السجلات التي لم يتم استيرادها وتصحيحها، ثم إعادة رفع الملف بعد التعديل",
     "UPLOAD_FILE": "رفع الملف",
-    "THE_MAXIMUM_ALLOWED_FILE_SIZE": "الحد الأقصى لحجم الملف المسموح به هو 2 ميجابايت، وتشمل الصيغ المدعومة (xls, xlsx).",
+    "THE_MAXIMUM_ALLOWED_FILE_SIZE": "الحد الأقصى لحجم الملف المسموح به هو {size} ميجابايت، وتشمل الصيغ المدعومة (xls, xlsx).",
     "BROWSE_FILES": "تصفح الملفات",
     "IMPORT": "إستيراد",
     "EMPLOYEES": {
       "IMPORT_NEW_EMPLOYEE_LIST": "استيراد سجل قائمة موظفين جديد",
       "IMPORT_EMPLOYEES_LIST": "استيراد قائمة الموظفين"
+    },
+    "DEPARTMENTS": {
+      "IMPORT_NEW_DEPARTMENT_LIST": "استيراد سجل قائمة ادارات جديد",
+      "IMPORT_DEPARTMENTS_LIST": "استيراد قائمة الإدارات"
     }
   }
 }

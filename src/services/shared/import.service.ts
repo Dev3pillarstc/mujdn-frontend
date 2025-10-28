@@ -18,4 +18,8 @@ export class ImportService {
   importEmployees(formData: FormData): Observable<any> {
     return this.http.post(`${this.baseUrl}/employees`, formData, { withCredentials: true });
   }
+
+  importDepartments(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/departments`, formData, { withCredentials: true });
+  }
 }

@@ -227,6 +227,7 @@ export default class EmployeeListComponent
 
     dialogRef.afterClosed().subscribe();
   }
+
   openImportModal() {
     const dialogRef = this.matDialog.open(EmployeeImportModalComponent, {
       width: '100%',

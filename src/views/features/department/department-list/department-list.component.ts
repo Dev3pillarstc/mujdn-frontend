@@ -1,6 +1,5 @@
 import { DepartmentPopupComponent } from '../department-popup/department-popup.component';
 import { Component, inject, signal } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -24,7 +23,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { City } from '@/models/features/lookups/city/city';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
-import { AlertService } from '@/services/shared/alert.service';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { filter, switchMap, tap } from 'rxjs';
 import { Department } from '@/models/features/lookups/department/department';
@@ -264,12 +262,27 @@ export default class DepartmentListComponent extends BaseListComponent<
         }
       });
   }
+
   openImportModal() {
-    this.matDialog.open(ImportLogPopupComponent as any, {
+    const dialogRef = this.matDialog.open(ImportLogPopupComponent, {
       width: '100%',
-      maxWidth: '800px',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result && result == DIALOG_ENUM.OK) {
+        this.loadChildDepartmentsAfterSelect();
+        this.loadDepartmentsTree(() => {
+          if (this.selectedDepartment?.id == this.rootDepartment?.id) {
+            this.selectedDepartmentSignal.set(this.rootDepartment); // ✅ keep selected
+          } else {
+            this.selectedDepartmentSignal.set(this.selectedDepartment);
+          }
+        });
+      }
     });
   }
+
   addOrEditModel(parentDepartmentId?: number, department?: Department): void {
     const departmentCopy = department ? new Department().clone(department) : new Department();
     // Only set fkParentDepartmentId if adding (not editing)

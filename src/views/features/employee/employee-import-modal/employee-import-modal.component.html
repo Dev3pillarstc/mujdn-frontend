@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    @if (importError.hasErrors) {
+    @if (importResponse.hasErrors) {
       <div class="mt-10 pt-6 border-t border-[#d2d6db]">
         <div class="p-4 rounded-2xl border border-[#d2d6db] border-s-[8px] border-s-[#dc6803]">
           <div class="flex gap-3">
@@ -99,7 +99,7 @@
     <div class="mt-6 flex flex-col">
       <h4 class="text-[#161616] text-base mb-2">{{ 'IMPORT.UPLOAD_FILE' | translate }}</h4>
       <p class="text-[#64748b] text-xs mb-4">
-        {{ 'IMPORT.THE_MAXIMUM_ALLOWED_FILE_SIZE' | translate }}
+        {{ getMaxAllowedFileSizeMessage() }}
       </p>
       <div>
         <label for="browse-file" class="btn black-btn w-fit">{{ 'IMPORT.BROWSE_FILES' | translate }}</label>

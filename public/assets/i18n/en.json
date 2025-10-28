@@ -122,14 +122,23 @@
     "VISIT_TIME_CONFLICTING": "Visit time conflicting with another visit for same user",
     "VISIT_DATE_TIME_IN_PAST": "The date or time of the visit cannot be in the past.",
     "LOCATION_NOT_VALID": "Devices are not active at the designated visit locations.",
-    "NOT_VALID_USERS_FOR_ASSIGNMENT": "The request cannot be completed because the status of some employees has changed, and they no longer meet the presence inquiry criteria."
+    "NOT_VALID_USERS_FOR_ASSIGNMENT": "The request cannot be completed because the status of some employees has changed, and they no longer meet the presence inquiry criteria.",
+    "EXCEL_MISSING_FIELDS": "You should provide the next fields",
+    "FILE_SIZE_CAN_NOT_EXCEED": "File size can not be exceed {size} MB",
+    "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "Data has been imported successfully",
+    "EXCEL_NO_DATA_ROWS": "The Excel file must contain at least one data row after the header",
+    "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "Active Directory username already exists",
+    "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "Active Directory service is unavailable"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
   },
   "LOGIN_PAGE": {
     "LOGIN_LBL": "Login",
-    "NATIONAL_ID_LBL": "National Id",
+    "SYSTEM_DATA": "System Data",
+    "ACTIVE_DIRECTORY_DATA": "Active Directory Data",
+    "NATIONAL_ID_LBL": "National ID",
+    "USERNAME_LBL": "Username",
     "PASSWORD_LBL": "Password",
     "LOGIN_BTN": "Login"
   },
@@ -284,7 +293,9 @@
     "ASSIGN_SHIFT": "Assign Shift",
     "TASKS_ASSIGNED_TO_EMPLOYEE": "Tasks Assigned to Employee",
     "DELETE_EMPLOYEE": "Delete Employee",
-    "MAX_LENGTH_NAME": "Name cannot exceed 100 characters"
+    "MAX_LENGTH_NAME": "Name cannot exceed 100 characters",
+    "ACTIVE_DIRECTORY_USERNAME": "Employee Number (Active Directory Username)",
+    "EMPLOYEE_NUMBER": "Employee Number"
   },
   "HOLIDAYS_PAGE": {
     "HOLIDAYS_LIST": "Holidays",
@@ -783,5 +794,26 @@
     "CONFIRM_PROCESS_ALL_EMPLOYEES": "Confirm Process All Employees",
     "CONFIRM_PROCESS_ALL_EMPLOYEES_MESSAGE": "Are you sure you want to process all employees?",
     "DATE_MAX_RANGE_EXCEEDED": "You can process up to 3 months at one time"
+  },
+  "IMPORT": {
+    "DOWNLOAD_IMPORT_TEMPLATE": "Download Import template",
+    "THE_TEMPLATE_SHOWS_THE_REQUIRED_COLUMNS": "The template shows the required columns for data entry. After filling in the data, upload the file to complete the process.",
+    "DOWNLOAD_TEMPLATE": "Download Template",
+    "UNABLE_TO_IMPORT_ALL_DATA": "Unable to import all data — the import file contains invalid data",
+    "VALID_DATA_WAS_IMPORTED_SUCCESSFULLY": "Valid data was imported successfully, while some records contain errors that need to be corrected before approval. You can",
+    "DOWNLOAD_THE_REVIEW_FILE": "download the review file",
+    "TO_VIEW_AND_CORRECT_THE_RECORDS": "to view and correct the records that were not imported, then re-upload the file after making corrections",
+    "UPLOAD_FILE": "Upload file",
+    "THE_MAXIMUM_ALLOWED_FILE_SIZE": "The maximum allowed file size is {size} MB. Supported formats: (xls, xlsx).",
+    "BROWSE_FILES": "Browse Files",
+    "IMPORT": "Import",
+    "EMPLOYEES": {
+      "IMPORT_NEW_EMPLOYEE_LIST": "Import a new employee list",
+      "IMPORT_EMPLOYEES_LIST": "Import Employees List"
+    },
+    "DEPARTMENTS": {
+      "IMPORT_NEW_DEPARTMENT_LIST": "Import a new department list",
+      "IMPORT_DEPARTMENTS_LIST": "Import Departments List"
+    }
   }
 }

@@ -41,6 +41,7 @@ import { AuthService } from '@/services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import { formatDateOnly } from '@/utils/general-helper';
+import { EmployeeImportModalComponent } from '../employee-import-modal/employee-import-modal.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -225,6 +226,25 @@ export default class EmployeeListComponent
     });
 
     dialogRef.afterClosed().subscribe();
+  }
+
+  openImportModal() {
+    const dialogRef = this.matDialog.open(EmployeeImportModalComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if(result && result == DIALOG_ENUM.OK) {
+        this.loadList().subscribe({
+          next: (response) => {
+            this.handleLoadListSuccess(response);
+            this.alertService.showSuccessMessage({messages: ['COMMON.DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY']});
+          },
+          error: this.handleLoadListError,
+        });
+      }
+    });
   }
 
   openConfirmation() {

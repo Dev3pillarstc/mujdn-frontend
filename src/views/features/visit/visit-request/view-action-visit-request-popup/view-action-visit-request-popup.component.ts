@@ -115,8 +115,6 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
 
   // Action button methods - to be implemented later
   onApprove(): void {
-    // Implementation to be added later
-    console.log('Accept visit request:', this.model.id);
     // Call visit service to accept the request
     this.visitService.approveVisit(this.model.id).subscribe((response) => {
       this.alertService.showSuccessMessage(this.successObject);
@@ -125,8 +123,6 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   }
 
   onReject(): void {
-    // Implementation to be added later
-    console.log('Reject visit request:', this.model.id);
     // Call visit service to reject the request
     this.visitService.rejectVisit(this.model.id).subscribe((response) => {
       this.alertService.showSuccessMessage(this.successObject);
@@ -135,8 +131,6 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   }
 
   onBlockVisitor(): void {
-    // Implementation to be added later
-    console.log('Block visitor:', this.model.nationalId);
     const blacklistedNationalId = new BlacklistedNationalId();
     blacklistedNationalId.nationalId = this.model.nationalId;
 

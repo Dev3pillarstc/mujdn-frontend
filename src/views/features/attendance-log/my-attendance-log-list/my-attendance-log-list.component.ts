@@ -122,7 +122,6 @@ export default class MyAttendanceLogListComponent
 
       // Only load data if tab is active and this is not the initial change
       if (current === true && previous === false) {
-        console.log('My attendance tab became active - loading data');
         this.filterModel = {} as MyAttendanceLogFilter;
         this.appliedFilterModel = {} as MyAttendanceLogFilter;
         this.loadDataIfNeeded();

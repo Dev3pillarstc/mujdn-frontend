@@ -24,6 +24,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { RequiredMarkerDirective } from '../../../../directives/required-marker.directive';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { LanguageService } from '@/services/shared/language.service';
 
 @Component({
   selector: 'app-attendance-log-popup',
@@ -56,6 +57,7 @@ export class AttendanceLogPopupComponent
   departments: BaseLookupModel[] = [];
   employees: UsersWithDepartmentLookup[] = [];
   filteredEmployees: UsersWithDepartmentLookup[] = [];
+  langService = inject(LanguageService);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -85,9 +87,26 @@ export class AttendanceLogPopupComponent
     return this.form.get('swipeTime') as FormControl;
   }
 
+  private sortByName<T extends { [key: string]: any }>(arr: T[], key: string): T[] {
+    return [...arr].sort((a, b) => {
+      const nameA = (a[key] || '').toString().toLowerCase();
+      const nameB = (b[key] || '').toString().toLowerCase();
+      return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+    });
+  }
+
+  getCurrentLanguage() {
+    return this.langService.getCurrentLanguage();
+  }
+
+  get optionLabel(): string {
+    return this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+  }
+
   override initPopup() {
     this.model = this.data.model;
     this.departments = this.data.lookups?.departments ?? [];
+    this.departments = this.sortByName(this.departments, this.optionLabel);
     this.employees = this.data.lookups?.employees ?? [];
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;

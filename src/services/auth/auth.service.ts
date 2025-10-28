@@ -64,6 +64,17 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
     );
   }
 
+  loginWithActiveDirectory(username: string, password: string) {
+    return this.http.post<SingleResponseData<LoggedInUser>>(
+      this.getUrlSegment() + '/login/active-directory',
+      {
+        username: username,
+        password: password,
+      },
+      { withCredentials: true }
+    );
+  }
+
   logout() {
     return this.http.get<SingleResponseData<LoggedInUser>>(this.getUrlSegment() + '/logout', {
       withCredentials: true,

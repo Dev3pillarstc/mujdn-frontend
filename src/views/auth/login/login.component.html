@@ -9,39 +9,133 @@
     @if (loginForm) {
       <article>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="relative mb-6">
-            <label for="userName" class="label">{{
-              'LOGIN_PAGE.NATIONAL_ID_LBL' | translate
-            }}</label>
-            <input
-              formControlName="username"
-              id="userName"
-              class="peer"
-              type="text"
-              pInputText
-              [placeholder]="'LOGIN_PAGE.NATIONAL_ID_LBL' | translate"
-              fluid="true"
-            />
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
-            ></span>
+          <!-- Login Mode Selection -->
+          <div class="flex flex-wrap gap-4 mb-6">
+            <label
+              class="relative flex flex-row-reverse items-center cursor-pointer gap-2 justify-between"
+              for="system-radio"
+            >
+              {{ 'LOGIN_PAGE.SYSTEM_DATA' | translate }}
+              <div class="relative w-5 h-5">
+                <input
+                  type="radio"
+                  id="system-radio"
+                  name="loginMode"
+                  [checked]="selectedLoginMode === LoginMode.SYSTEM"
+                  (change)="onLoginModeChange(LoginMode.SYSTEM)"
+                  class="peer appearance-none h-5 w-5 cursor-pointer rounded-full border border-[var(--border-storm)] checked:border-[var(--border-forest)] transition-all"
+                />
+                <span
+                  class="absolute bg-[#25935f] w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transform top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2"
+                >
+                </span>
+              </div>
+            </label>
+            <label
+              class="relative flex flex-row-reverse items-center cursor-pointer gap-2 justify-between"
+              for="ad-radio"
+            >
+              {{ 'LOGIN_PAGE.ACTIVE_DIRECTORY_DATA' | translate }}
+              <div class="relative w-5 h-5">
+                <input
+                  type="radio"
+                  id="ad-radio"
+                  name="loginMode"
+                  [checked]="selectedLoginMode === LoginMode.ACTIVE_DIRECTORY"
+                  (change)="onLoginModeChange(LoginMode.ACTIVE_DIRECTORY)"
+                  class="peer appearance-none h-5 w-5 cursor-pointer rounded-full border border-[var(--border-storm)] checked:border-[var(--border-forest)] transition-all"
+                />
+                <span
+                  class="absolute bg-[#25935f] w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transform top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2"
+                >
+                </span>
+              </div>
+            </label>
           </div>
-          <div class="relative mb-10">
-            <label for="password" class="label">{{ 'LOGIN_PAGE.PASSWORD_LBL' | translate }}</label>
-            <p-password
-              formControlName="password"
-              [toggleMask]="true"
-              class="peer"
-              id="password"
-              type="password"
-              [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
-              fluid="true"
-              [feedback]="false"
-            />
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
-            ></span>
-          </div>
+
+          <!-- System Login Form -->
+          @if (selectedLoginMode === LoginMode.SYSTEM) {
+            <div class="login-form-container">
+              <div class="relative mb-6">
+                <label for="systemUserName" class="label">{{
+                  'LOGIN_PAGE.NATIONAL_ID_LBL' | translate
+                }}</label>
+                <input
+                  formControlName="username"
+                  id="systemUserName"
+                  class="peer"
+                  type="text"
+                  pInputText
+                  [placeholder]="'LOGIN_PAGE.NATIONAL_ID_LBL' | translate"
+                  fluid="true"
+                />
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+                ></span>
+              </div>
+              <div class="relative mb-10">
+                <label for="systemPassword" class="label">{{
+                  'LOGIN_PAGE.PASSWORD_LBL' | translate
+                }}</label>
+                <p-password
+                  formControlName="password"
+                  [toggleMask]="true"
+                  class="peer"
+                  id="systemPassword"
+                  type="password"
+                  [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
+                  fluid="true"
+                  [feedback]="false"
+                />
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+                ></span>
+              </div>
+            </div>
+          }
+
+          <!-- Active Directory Login Form -->
+          @if (selectedLoginMode === LoginMode.ACTIVE_DIRECTORY) {
+            <div class="login-form-container">
+              <div class="relative mb-6">
+                <label for="adUserName" class="label">{{
+                  'LOGIN_PAGE.USERNAME_LBL' | translate
+                }}</label>
+                <input
+                  formControlName="username"
+                  id="adUserName"
+                  class="peer"
+                  type="text"
+                  pInputText
+                  [placeholder]="'LOGIN_PAGE.USERNAME_LBL' | translate"
+                  fluid="true"
+                />
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+                ></span>
+              </div>
+              <div class="relative mb-10">
+                <label for="adPassword" class="label">{{
+                  'LOGIN_PAGE.PASSWORD_LBL' | translate
+                }}</label>
+                <p-password
+                  formControlName="password"
+                  [toggleMask]="true"
+                  class="peer"
+                  id="adPassword"
+                  type="password"
+                  [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
+                  fluid="true"
+                  [feedback]="false"
+                />
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+                ></span>
+              </div>
+            </div>
+          }
+
+          <!-- Action Buttons -->
           <div class="mt-10 flex items-center justify-between flex-wrap gap-4">
             <button type="submit" class="btn green-btn w-full">
               {{ 'LOGIN_PAGE.LOGIN_BTN' | translate }}

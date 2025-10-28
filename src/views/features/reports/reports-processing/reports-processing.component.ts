@@ -228,7 +228,6 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
 
   onEmployeeSelectionChange(userIdsArray: number[] | null): void {
     if (userIdsArray && userIdsArray.length > 0) {
-      console.log('employeeList', this.employeeList);
       // Get selected employees from the full list
       this.selectedEmployees = this.employeeList.filter((emp) =>
         userIdsArray.includes(emp.id || 0)
@@ -359,7 +358,6 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
   }
 
   processEmployees(): void {
-    console.log('Form is valid', this.form);
     if (this.form.valid) {
       const formValue = this.form.value;
       const submittedModel = Object.assign(new ManualProcessing(), { ...formValue });
@@ -368,7 +366,6 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
         this.alertService.showSuccessMessage(successObject);
       });
     } else {
-      console.log('Form is invalid');
       // Mark all fields as touched to show validation errors
       Object.keys(this.form.controls).forEach((key) => {
         this.form.get(key)?.markAsTouched();

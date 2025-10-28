@@ -7,6 +7,11 @@ import { Router } from '@angular/router';
 import { filter, take } from 'rxjs';
 import { PasswordModule } from 'primeng/password';
 
+enum LoginMode {
+  SYSTEM = 'system',
+  ACTIVE_DIRECTORY = 'activeDirectory',
+}
+
 @Component({
   selector: 'app-login',
   imports: [InputTextModule, TranslatePipe, ReactiveFormsModule, PasswordModule],
@@ -18,6 +23,9 @@ export default class LoginComponent implements OnInit {
   fb = inject(FormBuilder);
   authService = inject(AuthService);
   router = inject(Router);
+
+  selectedLoginMode: LoginMode = LoginMode.SYSTEM;
+  LoginMode = LoginMode;
 
   get usernameControl() {
     return this.loginForm.get('username');
@@ -38,6 +46,11 @@ export default class LoginComponent implements OnInit {
     });
   }
 
+  onLoginModeChange(mode: LoginMode) {
+    this.selectedLoginMode = mode;
+    this.loginForm.reset();
+  }
+
   onSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -46,7 +59,12 @@ export default class LoginComponent implements OnInit {
 
     const { username, password } = this.loginForm.value;
 
-    this.authService.login(username, password).subscribe((result) => {
+    const loginObservable =
+      this.selectedLoginMode === LoginMode.ACTIVE_DIRECTORY
+        ? this.authService.loginWithActiveDirectory(username, password)
+        : this.authService.login(username, password);
+
+    loginObservable.subscribe((result) => {
       if (!result.error) {
         this.authService
           .getUser()
@@ -60,6 +78,7 @@ export default class LoginComponent implements OnInit {
       }
     });
   }
+
   onForgotPassword() {
     this.router.navigate(['auth/forget-password']);
   }

@@ -127,7 +127,8 @@
     "FILE_SIZE_CAN_NOT_EXCEED": "يجب الا يتجاوز حجم الملف {size} ميجابايت",
     "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "تم إستيراد البيانات بنجاح",
     "EXCEL_NO_DATA_ROWS": "يجب أن يحتوي ملف الإكسل على صف بيانات واحد على الأقل بعد صف العناوين",
-    "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "اسم المستخدم فى ال Active Directory موجود بالفعل"
+    "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "اسم المستخدم فى ال Active Directory موجود بالفعل",
+    "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "خدمة Active Directory غير متاحة"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"

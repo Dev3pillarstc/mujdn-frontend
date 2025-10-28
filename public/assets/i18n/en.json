@@ -127,7 +127,8 @@
     "FILE_SIZE_CAN_NOT_EXCEED": "File size can not be exceed {size} MB",
     "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "Data has been imported successfully",
     "EXCEL_NO_DATA_ROWS": "The Excel file must contain at least one data row after the header",
-    "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "Active Directory username already exists"
+    "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "Active Directory username already exists",
+    "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "Active Directory service is unavailable"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

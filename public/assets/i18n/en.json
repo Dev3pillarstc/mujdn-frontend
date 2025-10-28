@@ -128,7 +128,8 @@
     "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "Data has been imported successfully",
     "EXCEL_NO_DATA_ROWS": "The Excel file must contain at least one data row after the header",
     "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "Active Directory username already exists",
-    "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "Active Directory service is unavailable"
+    "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "Active Directory service is unavailable",
+    "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "Active Directory username or password is incorrect"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

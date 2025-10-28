@@ -128,7 +128,10 @@ export class User extends BaseCrudModel<User, UserService, string> {
           CustomValidators.pattern('AR_NUM'),
         ],
       ],
-      activeDirectoryUsername: [activeDirectoryUsername],
+      activeDirectoryUsername: [
+        activeDirectoryUsername,
+        [Validators.maxLength(CustomValidators.defaultLengths.SHORT_NAME_MAX)],
+      ],
       // profilePhotoKey: [profilePhotoKey],
       joinDate: [joinDate, [Validators.required]],
       canLeaveWithoutFingerPrint: [canLeaveWithoutFingerPrint],

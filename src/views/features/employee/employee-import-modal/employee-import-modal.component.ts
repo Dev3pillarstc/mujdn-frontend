@@ -41,6 +41,7 @@ export class EmployeeImportModalComponent implements OnInit {
     'JoinDate',
     'CanLeaveWithoutFingerPrint',
     'IsActive',
+    'ActiveDirectoryUsername',
   ];
   constructor(private importService: ImportService) {}
   ngOnInit() {
@@ -137,7 +138,9 @@ export class EmployeeImportModalComponent implements OnInit {
   }
 
   getMaxAllowedFileSizeMessage() {
-    return this.translateService.instant('IMPORT.THE_MAXIMUM_ALLOWED_FILE_SIZE').replace('{size}', this.maxFileSizeInMB);
+    return this.translateService
+      .instant('IMPORT.THE_MAXIMUM_ALLOWED_FILE_SIZE')
+      .replace('{size}', this.maxFileSizeInMB);
   }
 
   onCancel(): void {

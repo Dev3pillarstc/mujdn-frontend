@@ -25,7 +25,7 @@ export class EmployeeImportModalComponent implements OnInit {
   importResponse: ImportExcelResponse = new ImportExcelResponse();
   dialogRef = inject(MatDialogRef);
   translateService = inject(TranslateService);
-  maxFileSizeInMB: number = 2;
+  maxFileSizeInMB: number = 5;
   importSheetRequiredHeaders = [
     'Email',
     'Password',

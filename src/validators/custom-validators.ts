@@ -27,7 +27,7 @@ const defaultLengths = {
   EXPLANATIONS: 1333,
   _500: 500,
   INT_MAX: 2_147_483_647,
-  maxShiftBuffer: 30
+  maxShiftBuffer: 30,
 };
 
 export function pattern(patternName: customValidationTypes): ValidatorFn {
@@ -167,8 +167,12 @@ export function timeFromBeforeTimeTo(fromKey: string, toKey: string): ValidatorF
   };
 }
 
-export function crossDateTimeValidator(fromKey: string, toKey: string, crossDayKey: string,
-                                       { strictEqualInvalid = true } = {}): ValidatorFn {
+export function crossDateTimeValidator(
+  fromKey: string,
+  toKey: string,
+  crossDayKey: string,
+  { strictEqualInvalid = true } = {}
+): ValidatorFn {
   return (form: AbstractControl): ValidationErrors | null => {
     const fromCtrl = form.get(fromKey);
     const toCtrl = form.get(toKey);
@@ -382,7 +386,7 @@ export function strongPassword(): ValidatorFn {
     const hasUpperCase = /[A-Z]/.test(value);
     const hasLowerCase = /[a-z]/.test(value);
     const hasDigit = /\d/.test(value);
-    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+    const hasSpecial = /[!@#$%^&*()_\-+=<>?.,:;{}[\]~]/.test(value);
     const isLongEnough = value.length >= defaultLengths.PASSWORD_MIN;
     const isShortEnough = value.length <= defaultLengths.PASSWORD_MAX;
 
@@ -415,5 +419,5 @@ export const CustomValidators = {
   positiveNumber,
   numberRange,
   timeFromBeforeTimeTo,
-  crossDateTimeValidator
+  crossDateTimeValidator,
 };

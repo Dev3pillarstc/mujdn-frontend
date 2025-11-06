@@ -56,40 +56,46 @@
           <!-- System Login Form -->
           @if (selectedLoginMode === LoginMode.SYSTEM) {
             <div class="login-form-container">
-              <div class="relative mb-6">
-                <label for="systemUserName" class="label">{{
-                  'LOGIN_PAGE.NATIONAL_ID_LBL' | translate
-                }}</label>
-                <input
-                  formControlName="username"
-                  id="systemUserName"
-                  class="peer"
-                  type="text"
-                  pInputText
-                  [placeholder]="'LOGIN_PAGE.NATIONAL_ID_LBL' | translate"
-                  fluid="true"
-                />
-                <span
-                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
-                ></span>
+              <div class="mb-6">
+                <div class="relative">
+                  <label for="systemUserName" class="label">{{
+                    'LOGIN_PAGE.NATIONAL_ID_LBL' | translate
+                  }}</label>
+                  <input
+                    formControlName="username"
+                    id="systemUserName"
+                    class="peer"
+                    type="text"
+                    pInputText
+                    [placeholder]="'LOGIN_PAGE.NATIONAL_ID_LBL' | translate"
+                    fluid="true"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+                  ></span>
+                </div>
+                <app-validation-messages [control]="usernameControl"></app-validation-messages>
               </div>
-              <div class="relative mb-10">
-                <label for="systemPassword" class="label">{{
-                  'LOGIN_PAGE.PASSWORD_LBL' | translate
-                }}</label>
-                <p-password
-                  formControlName="password"
-                  [toggleMask]="true"
-                  class="peer"
-                  id="systemPassword"
-                  type="password"
-                  [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
-                  fluid="true"
-                  [feedback]="false"
-                />
-                <span
-                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
-                ></span>
+              <div class="mb-10">
+                <div class="relative">
+                  <label for="systemPassword" class="label">{{
+                    'LOGIN_PAGE.PASSWORD_LBL' | translate
+                  }}</label>
+                  <p-password
+                    formControlName="password"
+                    [toggleMask]="true"
+                    class="peer"
+                    id="systemPassword"
+                    type="password"
+                    [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
+                    fluid="true"
+                    [feedback]="false"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+                  ></span>
+                </div>
+                <app-validation-messages [control]="passwordControl"></app-validation-messages>
               </div>
             </div>
           }
@@ -97,40 +103,46 @@
           <!-- Active Directory Login Form -->
           @if (selectedLoginMode === LoginMode.ACTIVE_DIRECTORY) {
             <div class="login-form-container">
-              <div class="relative mb-6">
-                <label for="adUserName" class="label">{{
-                  'LOGIN_PAGE.USERNAME_LBL' | translate
-                }}</label>
-                <input
-                  formControlName="username"
-                  id="adUserName"
-                  class="peer"
-                  type="text"
-                  pInputText
-                  [placeholder]="'LOGIN_PAGE.USERNAME_LBL' | translate"
-                  fluid="true"
-                />
-                <span
-                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
-                ></span>
+              <div class="mb-6">
+                <div class="relative">
+                  <label for="adUserName" class="label">{{
+                    'LOGIN_PAGE.USERNAME_LBL' | translate
+                  }}</label>
+                  <input
+                    formControlName="username"
+                    id="adUserName"
+                    class="peer"
+                    type="text"
+                    pInputText
+                    [placeholder]="'LOGIN_PAGE.USERNAME_LBL' | translate"
+                    fluid="true"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+                  ></span>
+                </div>
+                <app-validation-messages [control]="usernameControl"></app-validation-messages>
               </div>
-              <div class="relative mb-10">
-                <label for="adPassword" class="label">{{
-                  'LOGIN_PAGE.PASSWORD_LBL' | translate
-                }}</label>
-                <p-password
-                  formControlName="password"
-                  [toggleMask]="true"
-                  class="peer"
-                  id="adPassword"
-                  type="password"
-                  [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
-                  fluid="true"
-                  [feedback]="false"
-                />
-                <span
-                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
-                ></span>
+              <div class="mb-10">
+                <div class="relative">
+                  <label for="adPassword" class="label">{{
+                    'LOGIN_PAGE.PASSWORD_LBL' | translate
+                  }}</label>
+                  <p-password
+                    formControlName="password"
+                    [toggleMask]="true"
+                    class="peer"
+                    id="adPassword"
+                    type="password"
+                    [placeholder]="'LOGIN_PAGE.PASSWORD_LBL' | translate"
+                    fluid="true"
+                    [feedback]="false"
+                  />
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus:left-0 peer-focus:w-full"
+                  ></span>
+                </div>
+                <app-validation-messages [control]="passwordControl"></app-validation-messages>
               </div>
             </div>
           }
@@ -143,7 +155,7 @@
             @if (selectedLoginMode === LoginMode.SYSTEM) {
               <button
                 type="button"
-                class="inline-flex items-center w-full justify-center min-h-[40px] px-3 rounded text-[14px] font-medium hover:bg-[#f1f1f1] transition"
+                class="text-[#161616] inline-flex items-center w-full justify-center min-h-[40px] px-3 rounded text-[14px] font-medium hover:bg-[#f1f1f1] transition"
                 (click)="onForgotPassword()"
               >
                 {{ 'RESET_PASSWORD.FORGOT_PASSWORD' | translate }}

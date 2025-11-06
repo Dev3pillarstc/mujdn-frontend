@@ -226,6 +226,31 @@
             </div>
           </td>
         </tr>
+        <tr>
+          <td>بداية الدوام</td>
+          <td>12/12/2024</td>
+          <td>
+            <div
+              class="bg-[#f9fafb] border border-[#e5e7eb] px-3 w-fit text-[#1f2a37] font-semibold rounded-full"
+            >
+              30 دقيقة
+            </div>
+          </td>
+          <td>08:00 صباحاً</td>
+          <td>
+            <div class="bg-[#f9fafb] px-2 rounded-full w-fit flex items-center gap-2">
+              <span class="w-[10px] h-[10px] rounded-full bg-[#4d5761] block"></span>
+              <span class="text-[#1f2a37] font-semibold text-sm">ملغى</span>
+            </div>
+          </td>
+          <td class="w-[36px] whitespace-nowrap">
+            <div class="actions">
+              <button class="table-action-gray-btn" (click)="openViewDialog()">
+                <img alt="" src="assets/icons/view-action.svg" />
+              </button>
+            </div>
+          </td>
+        </tr>
       </ng-template>
     </p-table>
     <p-paginator

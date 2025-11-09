@@ -1,11 +1,18 @@
 import { InputTextModule } from 'primeng/inputtext';
 import { Component, inject, OnInit } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { AuthService } from '@/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { filter, take } from 'rxjs';
 import { PasswordModule } from 'primeng/password';
+import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 
 enum LoginMode {
   SYSTEM = 'system',
@@ -14,7 +21,13 @@ enum LoginMode {
 
 @Component({
   selector: 'app-login',
-  imports: [InputTextModule, TranslatePipe, ReactiveFormsModule, PasswordModule],
+  imports: [
+    InputTextModule,
+    TranslatePipe,
+    ReactiveFormsModule,
+    PasswordModule,
+    ValidationMessagesComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -28,11 +41,11 @@ export default class LoginComponent implements OnInit {
   LoginMode = LoginMode;
 
   get usernameControl() {
-    return this.loginForm.get('username');
+    return this.loginForm.get('username') as FormControl;
   }
 
   get passwordControl() {
-    return this.loginForm.get('password');
+    return this.loginForm.get('password') as FormControl;
   }
 
   ngOnInit() {

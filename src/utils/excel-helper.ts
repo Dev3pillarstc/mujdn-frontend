@@ -36,7 +36,7 @@ export class ExcelHelper {
     URL.revokeObjectURL(a.href);
   }
 
-  static validateImportSheetHeaders(
+  static validateImportExcelSheetHeaders(
     importRequiredHeaders: string[],
     file: File
   ): Observable<{ validHeaders: boolean; missing: string[]; provided: string[] }> {

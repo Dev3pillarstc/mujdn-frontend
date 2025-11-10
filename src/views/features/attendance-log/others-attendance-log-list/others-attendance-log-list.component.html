@@ -180,11 +180,11 @@
             <img alt="" src="assets/icons/plus.svg" />
             <span>{{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_ATTENDANCE_LOG' | translate }}</span>
           </button>
+          <button class="btn black-btn" (click)="openImportDialog()">
+            <img src="/assets/icons/import-icon.svg" alt="" />
+            <span>{{ 'ATTENDANCE_LOG_PAGE.IMPORT_ATTENDANCE_LOG' | translate }}</span>
+          </button>
         }
-        <button class="btn black-btn" (click)="openImportDialog()">
-          <img src="/assets/icons/import-icon.svg" alt="" />
-          <span>استيراد سجل حركات</span>
-        </button>
       </div>
     </div>
     @if (list && list.length > 0) {

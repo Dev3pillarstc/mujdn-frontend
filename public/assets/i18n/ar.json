@@ -383,6 +383,7 @@
     "OTHERS_ATTENDANCE_LOGS": "سجل حضور الموظفين التابعين",
     "ATTENDANCE_LOGS_TITLE": "سجل الحضور والانصراف",
     "ATTENDANCE_LOGS_LIST": "قائمة سجل الحضور والانصراف",
+    "IMPORT_ATTENDANCE_LOG": "استيراد سجل حركات",
     "DEPARTMENT": "الإدارة",
     "EMPLOYEE": "اسم الموظف",
     "SWIPE_DATE": "تاريخ البصمة",

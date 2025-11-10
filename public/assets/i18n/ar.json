@@ -129,7 +129,8 @@
     "EXCEL_NO_DATA_ROWS": "يجب أن يحتوي ملف الإكسل على صف بيانات واحد على الأقل بعد صف العناوين",
     "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "اسم المستخدم فى ال Active Directory موجود بالفعل",
     "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "خدمة Active Directory غير متاحة",
-    "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة"
+    "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
+    "INVALID_XML_FILE_TYPE": "امتداد الملف يجب ان يكون .xml"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -813,6 +814,9 @@
     "DEPARTMENTS": {
       "IMPORT_NEW_DEPARTMENT_LIST": "استيراد سجل قائمة ادارات جديد",
       "IMPORT_DEPARTMENTS_LIST": "استيراد قائمة الإدارات"
+    },
+    "ATTENDANCE_LOG": {
+      "IMPORT_NEW_ATTENDANCE_LOG": "استيراد سجل حركات حضور وانصراف جديد"
     }
   }
 }

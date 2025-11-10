@@ -1,6 +1,5 @@
 import { Component, inject, Input, OnInit, SimpleChanges } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
-import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -13,11 +12,10 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
-import { AlertService } from '@/services/shared/alert.service';
 import { AttendanceLogPopupComponent } from '../attendance-log-popup/attendance-log-popup.component';
 import { AttendanceService } from '@/services/features/attendance-log.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { InputTextModule } from 'primeng/inputtext';
 import { LanguageService } from '@/services/shared/language.service';
@@ -353,16 +351,20 @@ export default class OthersAttendanceLogListComponent
       //   this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
     };
   }
-  openImportDialog(model?: any) {
-    let dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      model: model,
-    };
-    dialogConfig.width = this.dialogSize.width;
-    dialogConfig.maxWidth = this.dialogSize.maxWidth;
-    const dialogRef = this.matDialog.open(ImportLogPopupComponent as any, dialogConfig);
 
-    return dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+  openImportDialog() {
+    const dialogRef = this.matDialog.open(ImportLogPopupComponent, {
+      width: '100%',
+      maxWidth: '1024px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result && result == DIALOG_ENUM.OK) {
+        this.loadDataIfNeeded();
+        this.alertService.showSuccessMessage({
+          messages: ['COMMON.DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY'],
+        });
+      }
     });
   }
 

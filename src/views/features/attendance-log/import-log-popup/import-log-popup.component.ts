@@ -51,48 +51,37 @@ export class ImportLogPopupComponent implements OnInit {
       input.value = '';
       const msg = this.translateService.instant('COMMON.INVALID_XML_FILE_TYPE');
       this.alertService.showErrorMessage({ messages: [msg] });
-      return; // stop here
+      return;
     }
 
     SpreadsheetXmlHelper.validateSpreadsheetXmlHeaders(
       file,
-      this.requiredHeaders  // headers that must exist
+      this.requiredHeaders // headers that must exist
     )
       .pipe(
         tap((result) => {
           if (!result.validHeaders) {
             input.value = '';
             const missingFields = result.missing.join(', ');
-            const msg = this.translateService.instant('COMMON.EXCEL_MISSING_FIELDS')
-              + ` (${missingFields})`;
+            const msg =
+              this.translateService.instant('COMMON.EXCEL_MISSING_FIELDS') + ` (${missingFields})`;
             this.alertService.showErrorMessage({ messages: [msg] });
+            // stop the pipeline
             throw new Error('Invalid headers');
           }
 
           if (!this.isValidFileSize(file)) {
             input.value = '';
             this.showInvalidFileSizeError();
+            // stop the pipeline
             throw new Error('Invalid file size');
-          }
-        }),
-        switchMap(() =>
-          SpreadsheetXmlHelper.validateSpreadsheetXmlDataValues(
-            file,
-            this.requiredValues // only these must have values
-          )
-        ),
-        tap((hasData) => {
-          if (!hasData) {
-            input.value = '';
-            const msg = this.translateService.instant('COMMON.EXCEL_NO_DATA_ROWS');
-            this.alertService.showErrorMessage({ messages: [msg] });
-            throw new Error('No data rows');
           }
         })
       )
       .subscribe({
-        next: () => (this.selectedFile = file),
-        error: (err) => console.warn('Validation stopped:', err.message || err),
+        next: () => {
+          this.selectedFile = file;
+        },
       });
   }
 
@@ -117,14 +106,25 @@ export class ImportLogPopupComponent implements OnInit {
 
     this.importService.importAttendanceLogsXml(formData).subscribe({
       next: (response) => {
-        if (response.data.hasErrors) {
-          this.importResponse = response.data;
-          this.clearFileSelection();
-        } else if (!response.data.hasErrors) {
-          this.dialogRef.close(DIALOG_ENUM.OK);
-        }
+        this.alertService.showSuccessMessage({messages: this.getImportResponseMessages(response)}, {width: '100%', maxWidth: '600px'});
+        this.dialogRef.close();
       },
     });
+  }
+
+  successDialogSize = {
+    width: '100%',
+    maxWidth: '1024px',
+  };
+
+  getImportResponseMessages(response: {
+    data: { successCount: number; failureCount: number; skippedCount: number };
+  }) {
+    let messages: string[] = [];
+    messages.push(this.translateService.instant('IMPORT.ATTENDANCE_LOG.IMPORT_SUCCEEDED_WITH_COUNT') + response.data.successCount);
+    messages.push(this.translateService.instant('IMPORT.ATTENDANCE_LOG.IMPORT_IGNORED_WITH_COUNT') + response.data.skippedCount);
+    messages.push(this.translateService.instant('IMPORT.ATTENDANCE_LOG.IMPORT_FAILED_WITH_COUNT') + response.data.failureCount);
+    return messages;
   }
 
   downloadReviewFile(): void {

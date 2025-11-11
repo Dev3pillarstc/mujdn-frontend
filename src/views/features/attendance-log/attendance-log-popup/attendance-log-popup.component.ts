@@ -110,7 +110,7 @@ export class AttendanceLogPopupComponent
     this.employees = this.data.lookups?.employees ?? [];
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
-    this.filteredEmployees = [...this.employees];
+    this.filteredEmployees = [];
     // Initialize form controls with existing data if in edit mode
     if (this.model.swipeTime) {
       const existingDateTime = new Date(this.model.swipeTime);

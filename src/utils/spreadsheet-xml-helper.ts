@@ -14,7 +14,11 @@ export class SpreadsheetXmlHelper {
         try {
           const xml = new DOMParser().parseFromString(reader.result as string, 'text/xml');
           const rows = Array.from(xml.getElementsByTagNameNS(ns, 'Row'));
-          if (!rows.length) throw new Error('XML contains no rows');
+          if (!rows.length) {
+            observer.next({ validHeaders: false, missing: requiredHeaders, provided: [] });
+            observer.complete();
+            return;
+          }
 
           // locate header row (contains all requiredHeaders)
           const headerRow = rows.find((r) => {
@@ -51,24 +55,44 @@ export class SpreadsheetXmlHelper {
   static validateSpreadsheetXmlDataValues(
     file: File,
     nonEmptyFields: string[]
-  ): Observable<boolean> {
+  ): Observable<{ validValues: boolean; missing: string[]; rowIndex: number | null }> {
     const ns = 'urn:schemas-microsoft-com:office:spreadsheet';
     const norm = (s: string) => s?.trim().toLowerCase() ?? '';
 
     return new Observable((observer) => {
       const reader = new FileReader();
+
       reader.onload = () => {
         try {
           const xml = new DOMParser().parseFromString(reader.result as string, 'text/xml');
           const rows = Array.from(xml.getElementsByTagNameNS(ns, 'Row'));
-          if (!rows.length) throw new Error('XML contains no rows');
 
-          // find header row
+          // no rows at all
+          if (!rows.length) {
+            observer.next({
+              validValues: false,
+              missing: nonEmptyFields,
+              rowIndex: null,
+            });
+            observer.complete();
+            return;
+          }
+
+          // find header row by matching first required field
           const headerRow = rows.find((r) =>
             Array.from(r.getElementsByTagNameNS(ns, 'Data'))
               .some((d) => norm(d.textContent ?? '') === norm(nonEmptyFields[0]))
           );
-          if (!headerRow) throw new Error('No header row found');
+
+          if (!headerRow) {
+            observer.next({
+              validValues: false,
+              missing: nonEmptyFields,
+              rowIndex: null,
+            });
+            observer.complete();
+            return;
+          }
 
           const provided = Array.from(headerRow.getElementsByTagNameNS(ns, 'Data'))
             .map((d) => (d.textContent ?? '').trim())
@@ -77,41 +101,80 @@ export class SpreadsheetXmlHelper {
           const headerIndexMap = new Map<string, number>();
           provided.forEach((name, i) => headerIndexMap.set(norm(name), i));
 
-          // ensure all required fields exist
-          const nonEmptyIndices = nonEmptyFields.map((f) => {
-            const idx = headerIndexMap.get(norm(f));
-            if (idx == null) throw new Error(`Header missing required field: ${f}`);
-            return idx;
-          });
+          // map required fields to their column indices
+          const nonEmptyIndices = nonEmptyFields.map((f) => headerIndexMap.get(norm(f) as string) ?? -1);
 
-          // get data rows after header
+          // if any required header is completely missing, treat all as missing
+          if (nonEmptyIndices.some((idx) => idx < 0)) {
+            observer.next({
+              validValues: false,
+              missing: nonEmptyFields,
+              rowIndex: null,
+            });
+            observer.complete();
+            return;
+          }
+
+          // data rows after header
           const headerIndex = rows.indexOf(headerRow);
           const dataRows = rows.slice(headerIndex + 1);
-          if (!dataRows.length) throw new Error('No data rows found');
 
-          for (const row of dataRows) {
+          if (!dataRows.length) {
+            observer.next({
+              validValues: false,
+              missing: nonEmptyFields,
+              rowIndex: null,
+            });
+            observer.complete();
+            return;
+          }
+
+          // iterate rows until first completely empty row
+          for (let r = 0; r < dataRows.length; r++) {
+            const row = dataRows[r];
+
             const vals = Array.from(row.getElementsByTagNameNS(ns, 'Data'))
               .map((d) => (d.textContent ?? '').trim());
 
-            // stop validation once we hit the first *completely empty* row
             const allEmpty = vals.every((v) => !v);
-            if (allEmpty) break;
+            if (allEmpty) {
+              break;
+            }
 
-            // check if any required fields are empty
-            const hasMissing = nonEmptyIndices.some((i) => !vals[i]);
-            if (hasMissing) {
-              throw new Error('Some rows missing required values before the first empty row');
+            // which required fields are empty in this row?
+            const missing = nonEmptyIndices
+              .map((idx, pos) => (!vals[idx] ? nonEmptyFields[pos] : null))
+              .filter((f): f is string => f !== null);
+
+            if (missing.length) {
+              // rowIndex: sheet-wise index, including header (1-based if you prefer)
+              const rowIndex = headerIndex + 1 + r;
+              observer.next({
+                validValues: false,
+                missing,
+                rowIndex,
+              });
+              observer.complete();
+              return;
             }
           }
 
-          observer.next(true);
+          // if we reach here, everything before the first empty row is valid
+          observer.next({
+            validValues: true,
+            missing: [],
+            rowIndex: null,
+          });
           observer.complete();
         } catch (e) {
+          // only unexpected runtime / parsing errors
           observer.error(e);
         }
       };
+
       reader.onerror = (err) => observer.error(err);
       reader.readAsText(file);
     });
   }
+
 }

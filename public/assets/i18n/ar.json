@@ -817,7 +817,10 @@
       "IMPORT_DEPARTMENTS_LIST": "استيراد قائمة الإدارات"
     },
     "ATTENDANCE_LOG": {
-      "IMPORT_NEW_ATTENDANCE_LOG": "استيراد سجل حركات حضور وانصراف جديد"
+      "IMPORT_NEW_ATTENDANCE_LOG": "استيراد سجل حركات حضور وانصراف جديد",
+      "IMPORT_SUCCEEDED_WITH_COUNT": "تم استيرادهم بنجاح: ",
+      "IMPORT_IGNORED_WITH_COUNT": "تم تجاهلهم (بصمات مكررة او غير صحيحة): ",
+      "IMPORT_FAILED_WITH_COUNT": "فشلت لعدم اكتمال البيانات: "
     }
   }
 }

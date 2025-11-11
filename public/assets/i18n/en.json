@@ -819,7 +819,10 @@
       "IMPORT_DEPARTMENTS_LIST": "Import Departments List"
     },
     "ATTENDANCE_LOG": {
-      "IMPORT_NEW_ATTENDANCE_LOG": "Import an attendance log"
+      "IMPORT_NEW_ATTENDANCE_LOG": "Import an attendance log",
+      "IMPORT_SUCCEEDED_WITH_COUNT": "Successfully imported: ",
+      "IMPORT_IGNORED_WITH_COUNT": "Ignored (duplication or wrong fingerprint): ",
+      "IMPORT_FAILED_WITH_COUNT": "Failed due to missing data: "
     }
   }
 }

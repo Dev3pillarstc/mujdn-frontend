@@ -369,8 +369,12 @@ export default class OthersAttendanceLogListComponent
   }
 
   getDeviceName(attendanceLog: AttendanceLog) {
-    return attendanceLog.channelName
-      ? attendanceLog.channelName
-      : this.translateService.instant('ATTENDANCE_LOG_PAGE.MANUAL');
+    if (attendanceLog.channelName) {
+      return attendanceLog.channelName;
+    } else {
+      return attendanceLog.isRawData
+        ? ''
+        : this.translateService.instant('ATTENDANCE_LOG_PAGE.MANUAL');
+    }
   }
 }

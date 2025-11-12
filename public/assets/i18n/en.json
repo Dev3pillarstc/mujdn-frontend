@@ -129,7 +129,8 @@
     "EXCEL_NO_DATA_ROWS": "The Excel file must contain at least one data row after the header",
     "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "Active Directory username already exists",
     "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "Active Directory service is unavailable",
-    "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "Active Directory username or password is incorrect"
+    "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "Active Directory username or password is incorrect",
+    "INVALID_XML_FILE_TYPE": "File extension should be .xml"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -384,6 +385,7 @@
     "OTHERS_ATTENDANCE_LOGS": "Staff Attendance Log",
     "ATTENDANCE_LOGS_TITLE": "Attendance Logs",
     "ATTENDANCE_LOGS_LIST": "Attendance Logs List",
+    "IMPORT_ATTENDANCE_LOG": "Import Attendance Log",
     "DEPARTMENT": "Department",
     "EMPLOYEE": "Employee",
     "SWIPE_DATE": "Fingerprint Date",
@@ -816,6 +818,12 @@
     "DEPARTMENTS": {
       "IMPORT_NEW_DEPARTMENT_LIST": "Import a new department list",
       "IMPORT_DEPARTMENTS_LIST": "Import Departments List"
+    },
+    "ATTENDANCE_LOG": {
+      "IMPORT_NEW_ATTENDANCE_LOG": "Import an attendance log",
+      "IMPORT_SUCCEEDED_WITH_COUNT": "Successfully imported: ",
+      "IMPORT_IGNORED_WITH_COUNT": "Ignored (duplication or wrong fingerprint): ",
+      "IMPORT_FAILED_WITH_COUNT": "Failed due to missing data: "
     }
   }
 }

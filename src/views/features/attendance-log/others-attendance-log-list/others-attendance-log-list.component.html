@@ -21,6 +21,8 @@
             id="department"
             optionValue="id"
             [showClear]="true"
+            [virtualScroll]="true"
+            [virtualScrollItemSize]="38"
           ></p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -41,6 +43,8 @@
             id="employee"
             optionValue="id"
             [showClear]="true"
+            [virtualScroll]="true"
+            [virtualScrollItemSize]="38"
           ></p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -77,6 +81,8 @@
             id="creator"
             optionValue="id"
             [showClear]="true"
+            [virtualScroll]="true"
+            [virtualScrollItemSize]="38"
           ></p-select>
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -180,11 +186,11 @@
             <img alt="" src="assets/icons/plus.svg" />
             <span>{{ 'ATTENDANCE_LOG_PAGE.ADD_NEW_ATTENDANCE_LOG' | translate }}</span>
           </button>
+          <button class="btn black-btn" (click)="openImportDialog()">
+            <img src="/assets/icons/import-icon.svg" alt="" />
+            <span>{{ 'ATTENDANCE_LOG_PAGE.IMPORT_ATTENDANCE_LOG' | translate }}</span>
+          </button>
         }
-        <button class="btn black-btn" (click)="openImportDialog()">
-          <img src="/assets/icons/import-icon.svg" alt="" />
-          <span>استيراد سجل حركات</span>
-        </button>
       </div>
     </div>
     @if (list && list.length > 0) {

@@ -32,7 +32,7 @@ export const EndPoints = {
   DEVICE_STATUS: '/deviceStatuses',
   ATTENDANCE_REPORT: '/attendancereports',
   MANUAL_PROCESSING: '/ManualProcessing',
-  IMPORT: '/ImportExcel',
+  IMPORT: '/ImportSheet',
 };
 
 export type EndpointsType = typeof EndPoints;

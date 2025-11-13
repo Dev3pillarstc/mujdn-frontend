@@ -110,7 +110,7 @@ export class AttendanceLogPopupComponent
     this.employees = this.data.lookups?.employees ?? [];
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
-    this.filteredEmployees = [...this.employees];
+    this.filteredEmployees = [];
     // Initialize form controls with existing data if in edit mode
     if (this.model.swipeTime) {
       const existingDateTime = new Date(this.model.swipeTime);
@@ -133,7 +133,7 @@ export class AttendanceLogPopupComponent
     form: FormGroup
   ): AttendanceLog | Observable<AttendanceLog> {
     // Combine date and time into swipeTime
-    const combinedDateTime = this.combineDateTime(
+    const combinedDateTime = this.combineDateTimeLocalIso(
       form.get('selectedDate')?.value,
       form.get('selectedTime')?.value
     );
@@ -243,20 +243,43 @@ export class AttendanceLogPopupComponent
     const timeValue = this.form.get('selectedTime')?.value;
 
     if (dateValue && timeValue) {
-      const combinedDateTime = this.combineDateTime(dateValue, timeValue);
+      const combinedDateTime = this.combineDateTimeLocalIso(dateValue, timeValue);
       this.form.get('swipeTime')?.setValue(combinedDateTime);
     }
   }
+  private combineDateTimeObject(date: Date, time: Date): Date {
+    const combined = new Date(date);
+    combined.setHours(time.getHours(), time.getMinutes(), 0, 0);
+    return combined;
+  }
 
-  private combineDateTime(date: Date | undefined, time: Date | undefined): string {
+  private combineDateTimeLocalIso(date: Date | undefined, time: Date | undefined): string {
     if (!date || !time) return '';
 
     const combined = new Date(date);
-    combined.setHours(time.getHours());
-    combined.setMinutes(time.getMinutes());
-    combined.setSeconds(0);
-    combined.setMilliseconds(0);
+    combined.setHours(time.getHours(), time.getMinutes(), 0, 0);
 
-    return combined.toISOString();
+    const pad = (n: number) => (n < 10 ? '0' + n : n.toString());
+    const YYYY = combined.getFullYear();
+    const MM = pad(combined.getMonth() + 1);
+    const DD = pad(combined.getDate());
+    const hh = pad(combined.getHours());
+    const mm = pad(combined.getMinutes());
+    const ss = '00';
+
+    // local, no timezone suffix
+    return `${YYYY}-${MM}-${DD}T${hh}:${mm}:${ss}`;
   }
+
+  // private combineDateTime(date: Date | undefined, time: Date | undefined): string {
+  //   if (!date || !time) return '';
+
+  //   const combined = new Date(date);
+  //   combined.setHours(time.getHours());
+  //   combined.setMinutes(time.getMinutes());
+  //   combined.setSeconds(0);
+  //   combined.setMilliseconds(0);
+
+  //   return combined.toISOString();
+  // }
 }

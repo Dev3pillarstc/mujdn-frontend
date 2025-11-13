@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { ImportService } from '@/services/shared/import.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { ImportExcelResponse } from '@/models/shared/import-excel-response';
@@ -18,10 +18,11 @@ import { switchMap, tap } from 'rxjs';
   styleUrl: './employee-import-modal.component.scss',
 })
 export class EmployeeImportModalComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   declare direction: LAYOUT_DIRECTION_ENUM;
   alertService = inject(AlertService);
   languageService = inject(LanguageService);
-  selectedFile: File | null = null;
+  selectedFile?: File;
   importResponse: ImportExcelResponse = new ImportExcelResponse();
   dialogRef = inject(MatDialogRef);
   translateService = inject(TranslateService);
@@ -38,7 +39,7 @@ export class EmployeeImportModalComponent implements OnInit {
     'JobTitleEn',
     'JobTitleAr',
     'FkDepartmentId',
-    'JoinDate',
+    'JoinDate (mm/dd/yyyy)',
     'CanLeaveWithoutFingerPrint',
     'IsActive',
     'ActiveDirectoryUsername',
@@ -58,11 +59,12 @@ export class EmployeeImportModalComponent implements OnInit {
   }
 
   onFileSelected(event: Event): void {
+    this.importResponse = new ImportExcelResponse();
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
 
-    ExcelHelper.validateImportSheetHeaders(this.importSheetRequiredHeaders, file)
+    ExcelHelper.validateImportExcelSheetHeaders(this.importSheetRequiredHeaders, file)
       .pipe(
         tap((result) => {
           if (!result.validHeaders) {
@@ -126,6 +128,7 @@ export class EmployeeImportModalComponent implements OnInit {
       next: (response) => {
         if (response.data.hasErrors) {
           this.importResponse = response.data;
+          this.clearFileSelection();
         } else if (!response.data.hasErrors) {
           this.dialogRef.close(DIALOG_ENUM.OK);
         }
@@ -143,8 +146,15 @@ export class EmployeeImportModalComponent implements OnInit {
       .replace('{size}', this.maxFileSizeInMB);
   }
 
+  clearFileSelection(): void {
+    this.selectedFile = undefined;
+    if (this.fileInput?.nativeElement) {
+      this.fileInput.nativeElement.value = '';
+    }
+  }
+
   onCancel(): void {
-    this.selectedFile = null;
+    this.selectedFile = undefined;
     this.dialogRef.close(DIALOG_ENUM.CANCEL);
   }
 }

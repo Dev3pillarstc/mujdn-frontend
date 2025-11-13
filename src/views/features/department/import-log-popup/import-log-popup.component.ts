@@ -55,7 +55,7 @@ export class ImportLogPopupComponent implements OnInit{
     const file = input.files?.[0];
     if (!file) return;
 
-    ExcelHelper.validateImportSheetHeaders(this.importSheetRequiredHeaders, file)
+    ExcelHelper.validateImportExcelSheetHeaders(this.importSheetRequiredHeaders, file)
       .pipe(
         tap((result) => {
           if (!result.validHeaders) {

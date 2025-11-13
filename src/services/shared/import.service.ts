@@ -16,10 +16,14 @@ export class ImportService {
   constructor(private http: HttpClient) {}
 
   importEmployees(formData: FormData): Observable<any> {
-    return this.http.post(`${this.baseUrl}/employees`, formData, { withCredentials: true });
+    return this.http.post(`${this.baseUrl}/employees-excel`, formData, { withCredentials: true });
   }
 
   importDepartments(formData: FormData): Observable<any> {
-    return this.http.post(`${this.baseUrl}/departments`, formData, { withCredentials: true });
+    return this.http.post(`${this.baseUrl}/departments-excel`, formData, { withCredentials: true });
+  }
+
+  importAttendanceLogsXml(formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/attendance-logs-xml`, formData, { withCredentials: true });
   }
 }

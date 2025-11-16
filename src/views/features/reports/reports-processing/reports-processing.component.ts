@@ -184,14 +184,11 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
 
     if (departmentId) {
       // Update selected departments
-      this.selectedDepartments = this.departmentList.filter((dept) =>
-        departmentId == dept.id
-      );
+      this.selectedDepartments = this.departmentList.filter((dept) => departmentId == dept.id);
 
       // Filter employees by selected departments
-      this.filteredEmployeeList = this.employeeList.filter((emp) =>
-
-        departmentId == emp.departmentId
+      this.filteredEmployeeList = this.employeeList.filter(
+        (emp) => departmentId == emp.departmentId
       );
     } else {
       // No departments selected - clear everything
@@ -354,7 +351,9 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       const formValue = this.form.value;
       const submittedModel = Object.assign(new ManualProcessing(), { ...formValue });
-      const successObject = { messages: ['ATTENDANCE_REPORT_PROCESSING_PAGE.PROCESSED_SUCCESSFULLY'] };
+      const successObject = {
+        messages: ['ATTENDANCE_REPORT_PROCESSING_PAGE.PROCESSED_SUCCESSFULLY'],
+      };
       this.manualProcessingService.excuteManualProcessing(submittedModel).subscribe((res) => {
         this.alertService.showSuccessMessage(successObject);
       });

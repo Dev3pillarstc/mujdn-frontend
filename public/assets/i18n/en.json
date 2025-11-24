@@ -809,6 +809,7 @@
     "TO_VIEW_AND_CORRECT_THE_RECORDS": "to view and correct the records that were not imported, then re-upload the file after making corrections",
     "UPLOAD_FILE": "Upload file",
     "THE_MAXIMUM_ALLOWED_FILE_SIZE": "The maximum allowed file size is {size} MB. Supported formats: (xls, xlsx).",
+    "THE_MAXIMUM_ALLOWED_FILE_SIZE_XML": "The maximum allowed file size is {size} MB. Supported formats: (xml).",
     "BROWSE_FILES": "Browse Files",
     "IMPORT": "Import",
     "EMPLOYEES": {

@@ -145,7 +145,7 @@ export class ImportLogPopupComponent implements OnInit {
 
   getMaxAllowedFileSizeMessage() {
     return this.translateService
-      .instant('IMPORT.THE_MAXIMUM_ALLOWED_FILE_SIZE')
+      .instant('IMPORT.THE_MAXIMUM_ALLOWED_FILE_SIZE_XML')
       .replace('{size}', this.maxFileSizeInMB);
   }
 

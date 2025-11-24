@@ -794,7 +794,8 @@
     "RESET": "إعادة تعيين",
     "CONFIRM_PROCESS_ALL_EMPLOYEES": "هل أنت متأكد من معالجة جميع الموظفين؟",
     "CONFIRM_PROCESS_ALL_EMPLOYEES_MESSAGE": "يرجى العلم أنه في حال متابعة هذا الإجراء، سيتم إلغاء أي تخصيصات سابقة تمت على مستوى الموظفين أو الإدارات، وإعادة التعيين لمعالجة جميع الموظفين بشكل كامل.",
-    "DATE_MAX_RANGE_EXCEEDED": "يمكنك معالجة 3 شهور فقط علي الاكثر"
+    "DATE_MAX_RANGE_EXCEEDED": "يمكنك معالجة 3 شهور فقط علي الاكثر",
+    "PROCESSED_SUCCESSFULLY": "تمت المعالجة بنجاح"
   },
   "IMPORT": {
     "DOWNLOAD_IMPORT_TEMPLATE": "تحميل نموذج القائمة",
@@ -806,6 +807,7 @@
     "TO_VIEW_AND_CORRECT_THE_RECORDS": "للإطلاع على تفاصيل السجلات التي لم يتم استيرادها وتصحيحها، ثم إعادة رفع الملف بعد التعديل",
     "UPLOAD_FILE": "رفع الملف",
     "THE_MAXIMUM_ALLOWED_FILE_SIZE": "الحد الأقصى لحجم الملف المسموح به هو {size} ميجابايت، وتشمل الصيغ المدعومة (xls, xlsx).",
+    "THE_MAXIMUM_ALLOWED_FILE_SIZE_XML": "الحد الأقصى لحجم الملف المسموح به هو {size} ميجابايت، وتشمل الصيغ المدعومة (xml).",
     "BROWSE_FILES": "تصفح الملفات",
     "IMPORT": "إستيراد",
     "EMPLOYEES": {

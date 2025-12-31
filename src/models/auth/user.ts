@@ -69,7 +69,6 @@ export class User extends BaseCrudModel<User, UserService, string> {
       email: [
         email,
         [
-          Validators.required,
           CustomValidators.pattern('EMAIL'),
           Validators.maxLength(CustomValidators.defaultLengths.EMAIL_MAX),
         ],
@@ -83,7 +82,6 @@ export class User extends BaseCrudModel<User, UserService, string> {
       fullNameEn: [
         fullNameEn,
         [
-          Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('ENG_NUM'),
@@ -102,9 +100,7 @@ export class User extends BaseCrudModel<User, UserService, string> {
       phoneNumber: [
         phoneNumber,
         [
-          Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
-          Validators.minLength(CustomValidators.defaultLengths.PHONE_NUMBER_MAX),
           CustomValidators.pattern('PHONE_NUMBER'),
         ],
       ],

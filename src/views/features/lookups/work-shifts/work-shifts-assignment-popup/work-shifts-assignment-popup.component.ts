@@ -1,4 +1,5 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
   FormBuilder,
@@ -15,6 +16,11 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { DialogRef } from '@angular/cdk/dialog';
 import { Select } from 'primeng/select';
+import { MultiSelect } from 'primeng/multiselect';
+import { Accordion } from 'primeng/accordion';
+import { AccordionPanel } from 'primeng/accordion';
+import { AccordionHeader } from 'primeng/accordion';
+import { AccordionContent } from 'primeng/accordion';
 import { DatePickerModule } from 'primeng/datepicker';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
@@ -35,25 +41,32 @@ import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
   imports: [
+    CommonModule,
     FormsModule,
     Select,
+    MultiSelect,
+    Accordion,
+    AccordionPanel,
+    AccordionHeader,
+    AccordionContent,
     DatePickerModule,
     ReactiveFormsModule,
     RequiredMarkerDirective,
     TranslatePipe,
     ValidationMessagesComponent,
+    InputNumberModule
   ],
   templateUrl: './work-shifts-assignment-popup.component.html',
   styleUrl: './work-shifts-assignment-popup.component.scss',
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit
-{
+  implements OnInit {
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
@@ -139,7 +152,10 @@ export class WorkShiftsAssignmentPopupComponent
         this.selectedWorkingDays.join(','),
         [this.validateWorkingDays()], // Use array syntax for validators
       ],
-      departmentId: [null],
+      departmentIdsArray: [[]],
+      userIdsArray: [[]],
+      workScheduleType: ['standard'], // Default to standard work hours
+      timeFrom: [null],
     });
 
     // Set the correct values for dropdowns after form is built
@@ -171,18 +187,18 @@ export class WorkShiftsAssignmentPopupComponent
         this.form.get('fkShiftId')?.setValue(this.model.fkShiftId);
       }
 
-      // Set employee
+      // Set employee (convert single value to array)
       if (this.model.fkAssignedUserId) {
         const selectedEmployee = this.usersProfiles.find(
           (emp) => emp.id === this.model.fkAssignedUserId
         );
         if (selectedEmployee) {
-          this.form.get('fkAssignedUserId')?.setValue(selectedEmployee.id);
+          this.form.get('userIdsArray')?.setValue([selectedEmployee.id]);
           // 👇 auto-set department if found
           if (selectedEmployee.departmentId) {
-            this.form.get('departmentId')?.setValue(selectedEmployee.departmentId);
+            this.form.get('departmentIdsArray')?.setValue([selectedEmployee.departmentId]);
             // 👇 Now it's safe to call filterEmployeesByDepartment since form is built
-            this.filterEmployeesByDepartment(selectedEmployee.departmentId);
+            this.filterEmployeesByDepartment([selectedEmployee.departmentId]);
           }
         }
       }
@@ -321,7 +337,7 @@ export class WorkShiftsAssignmentPopupComponent
     return Array.from(allowedDays);
   }
 
-  override saveFail(error: Error): void {}
+  override saveFail(error: Error): void { }
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -343,7 +359,11 @@ export class WorkShiftsAssignmentPopupComponent
     this.model.startDate = formValue.startDate;
     this.model.endDate = formValue.endDate;
     this.model.employeeWorkingDays = formValue.employeeWorkingDays;
-    this.model.fkAssignedUserId = formValue.fkAssignedUserId;
+
+    // Convert array to single value (take first selected user)
+    const userIds = formValue.userIdsArray || [];
+    this.model.fkAssignedUserId = userIds.length > 0 ? userIds[0] : null;
+
     this.model.fkShiftId = formValue.fkShiftId;
 
     return this.model;
@@ -365,38 +385,48 @@ export class WorkShiftsAssignmentPopupComponent
     return this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
-  onDepartmentChange(event: any) {
-    const departmentId = event.value;
+  get currentLang(): string {
+    return this.getCurrentLanguage();
+  }
 
-    if (departmentId) {
-      this.filterEmployeesByDepartment(departmentId);
+  onDepartmentChange(event: any) {
+    const departmentIds = event.value || [];
+
+    if (departmentIds.length > 0) {
+      this.filterEmployeesByDepartment(departmentIds);
     } else {
       // If no department selected, show all employees
       this.filteredUsersProfiles = [...this.usersProfiles];
     }
-  }
-  filterEmployeesByDepartment(departmentId: number | any) {
-    // Handle the case where departmentId might be an event object or the ID directly
-    const actualDepartmentId =
-      typeof departmentId === 'object' && departmentId?.id ? departmentId.id : departmentId;
 
-    // Filter employees by the selected department
+    // Clear employee selection when departments change
+    this.form.get('userIdsArray')?.setValue([]);
+  }
+  filterEmployeesByDepartment(departmentIds: number[] | any) {
+    // Handle the case where departmentIds might be an event object or the IDs directly
+    const actualDepartmentIds = Array.isArray(departmentIds) ? departmentIds : [departmentIds];
+
+    // Filter employees by the selected departments
     this.filteredUsersProfiles = this.usersProfiles.filter(
-      (emp) => emp.departmentId === actualDepartmentId
+      (emp) => actualDepartmentIds.includes(emp.departmentId)
     );
 
     // Only check form if it's initialized
     if (this.form) {
-      // Check if the currently selected employee belongs to the new department
-      const selectedEmployeeId = this.form.get('fkAssignedUserId')?.value;
+      // Check if the currently selected employees belong to the new departments
+      const selectedEmployeeIds = this.form.get('userIdsArray')?.value || [];
 
-      if (selectedEmployeeId) {
-        const selectedEmployee = this.usersProfiles.find((emp) => emp.id === selectedEmployeeId);
+      if (selectedEmployeeIds.length > 0) {
+        // Filter out employees that don't belong to the selected departments
+        const validEmployeeIds = selectedEmployeeIds.filter((empId: number) => {
+          const employee = this.usersProfiles.find((emp) => emp.id === empId);
+          return employee && actualDepartmentIds.includes(employee.departmentId);
+        });
 
-        // If the selected employee doesn't belong to the new department, clear the selection
-        if (selectedEmployee && selectedEmployee.departmentId !== actualDepartmentId) {
-          this.form.get('fkAssignedUserId')?.setValue(null);
-          this.form.get('fkAssignedUserId')?.markAsTouched();
+        // Update the form with only valid employees
+        if (validEmployeeIds.length !== selectedEmployeeIds.length) {
+          this.form.get('userIdsArray')?.setValue(validEmployeeIds);
+          this.form.get('userIdsArray')?.markAsTouched();
         }
       }
     }
@@ -475,8 +505,42 @@ export class WorkShiftsAssignmentPopupComponent
   get fkAssignedUserIdControl() {
     return this.form.get('fkAssignedUserId') as FormControl;
   }
+  get userIdsArrayControl() {
+    return this.form.get('userIdsArray') as FormControl;
+  }
+  get departmentIdsArrayControl() {
+    return this.form.get('departmentIdsArray') as FormControl;
+  }
   get employeeWorkingDaysControl() {
     return this.form.get('employeeWorkingDays') as FormControl;
+  }
+
+  getSelectedDepartmentsLabel(): string {
+    const selectedIds = this.form?.get('departmentIdsArray')?.value || [];
+    const count = selectedIds.length;
+
+    if (count === 0) return '';
+
+    const currentLang = this.getCurrentLanguage();
+    if (currentLang === LANGUAGE_ENUM.ARABIC) {
+      return `${count} قسم محدد`;
+    } else {
+      return `${count} department${count > 1 ? 's' : ''} selected`;
+    }
+  }
+
+  getSelectedEmployeesLabel(): string {
+    const selectedIds = this.form?.get('userIdsArray')?.value || [];
+    const count = selectedIds.length;
+
+    if (count === 0) return '';
+
+    const currentLang = this.getCurrentLanguage();
+    if (currentLang === LANGUAGE_ENUM.ARABIC) {
+      return `${count} موظف محدد`;
+    } else {
+      return `${count} employee${count > 1 ? 's' : ''} selected`;
+    }
   }
 
   weekDays = weekDays;

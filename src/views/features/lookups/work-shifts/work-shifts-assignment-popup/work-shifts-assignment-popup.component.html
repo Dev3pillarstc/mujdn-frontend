@@ -250,6 +250,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
+          <app-validation-messages [control]="presenceInquiryTimeControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-2">
           <div class="relative">
@@ -272,14 +273,14 @@
               <ng-template #incrementbuttonicon>
                 <span class="pi pi-plus"></span>
               </ng-template>
-              <ng-template #decrementbuttonicon>
-                <span class="pi pi-minus"></span>
-              </ng-template>
             </p-inputnumber>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-[var(--bg-black)] transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
+          <app-validation-messages
+            [control]="presenceInquiryBufferControl"
+          ></app-validation-messages>
         </div>
       </div>
 

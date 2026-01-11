@@ -87,6 +87,7 @@ export class WorkShiftsAssignmentPopupComponent
   // Date constraints
   minEndDate: Date | null = null;
   maxStartDate: Date | null = null;
+  previousStandardWorkingDays: number[] = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -144,6 +145,9 @@ export class WorkShiftsAssignmentPopupComponent
     }
 
     this.selectedWorkingDays.sort((a, b) => a - b);
+
+    // Initialize persistent state
+    this.previousStandardWorkingDays = [...this.selectedWorkingDays];
   }
 
   override buildForm(): void {
@@ -253,6 +257,9 @@ export class WorkShiftsAssignmentPopupComponent
 
     // Mark the field as touched so validation messages appear
     this.form.get('employeeWorkingDays')?.markAsTouched();
+
+    // Update persistent state when manually changed (only allowed in Standard mode)
+    this.previousStandardWorkingDays = [...this.selectedWorkingDays];
   }
 
   private validateWorkingDays(): ValidatorFn {
@@ -647,6 +654,11 @@ export class WorkShiftsAssignmentPopupComponent
       if (type === WorkShiftType.WeekOnWeekOff) {
         // Handle All Working Days for Type 2
         this.selectAllWorkingDays();
+      } else if (type === WorkShiftType.Standard) {
+        // Restore previous selection for Standard
+        this.selectedWorkingDays = [...this.previousStandardWorkingDays];
+        this.validateAndUpdateWorkingDays();
+        this.updateEmployeeWorkingDaysInForm();
       }
     }
 
@@ -726,6 +738,12 @@ export class WorkShiftsAssignmentPopupComponent
   }
   get employeeWorkingDaysControl() {
     return this.form.get('employeeWorkingDays') as FormControl;
+  }
+  get presenceInquiryTimeControl() {
+    return this.form.get('presenceInquiryTime') as FormControl;
+  }
+  get presenceInquiryBufferControl() {
+    return this.form.get('presenceInquiryBuffer') as FormControl;
   }
 
   getSelectedDepartmentsLabel(): string {

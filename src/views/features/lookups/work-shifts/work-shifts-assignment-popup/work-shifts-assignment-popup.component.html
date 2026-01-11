@@ -224,6 +224,11 @@
           <div class="relative time">
             <label class="text-sm font-normal text-[#1f2a37] block mb-2">
               {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_TIME' | translate }}
+              <span
+                style="color: #b42318; font-weight: bold"
+                *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff24"
+                >*</span
+              >
             </label>
 
             <p-datepicker
@@ -250,6 +255,11 @@
           <div class="relative">
             <label for="" class="text-sm font-normal text-[#1f2a37] block mb-2">
               {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_GRACE_PERIOD' | translate }}
+              <span
+                style="color: #b42318; font-weight: bold"
+                *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff24"
+                >*</span
+              >
             </label>
             <p-inputnumber
               class="peer w-full"

@@ -162,9 +162,17 @@ export class WorkShiftsAssignmentPopupComponent
       this.onEmployeeSelectionChange(userIds);
     });
 
+    // Watch for work shift type changes
+    this.form.get('workShiftType')?.valueChanges.subscribe((type) => {
+      this.onWorkShiftTypeChange(type);
+    });
+
     // Set the correct values for dropdowns after form is built
     this.setDropdownValues();
     this.updateDateConstraints();
+
+    // Initialize state based on current type
+    this.onWorkShiftTypeChange(this.form.get('workShiftType')?.value);
   }
 
   // Update setDropdownValues to handle the department filtering after form is built
@@ -322,6 +330,15 @@ export class WorkShiftsAssignmentPopupComponent
 
   // NEW METHOD: Check if a weekday should be disabled based on date range
   isWeekDayDisabled(dayValue: number): boolean {
+    // 1. Check if Shift Type forces disable (Type 2 or 3)
+    const currentType = this.form.get('workShiftType')?.value;
+    if (
+      currentType === WorkShiftType.WeekOnWeekOff ||
+      currentType === WorkShiftType.WeekOnWeekOff24
+    ) {
+      return true; // Disable all manual selection for these types
+    }
+
     const startDate = this.form.get('startDate')?.value;
     const endDate = this.form.get('endDate')?.value;
 
@@ -605,8 +622,62 @@ export class WorkShiftsAssignmentPopupComponent
     this.validateAndUpdateWorkingDays();
   }
 
+  onWorkShiftTypeChange(type: WorkShiftType): void {
+    const presenceTimeCtrl = this.form.get('presenceInquiryTime');
+    const presenceBufferCtrl = this.form.get('presenceInquiryBuffer');
+
+    if (type === WorkShiftType.WeekOnWeekOff24) {
+      // Type 3: Enable and Require
+      presenceTimeCtrl?.enable();
+      presenceBufferCtrl?.enable();
+      presenceTimeCtrl?.setValidators([Validators.required]);
+      presenceBufferCtrl?.setValidators([Validators.required]);
+
+      // Handle All Working Days for Type 3
+      this.selectAllWorkingDays();
+    } else {
+      // Type 1 & 2: Disable and Not Required
+      presenceTimeCtrl?.disable();
+      presenceBufferCtrl?.disable();
+      presenceTimeCtrl?.clearValidators();
+      presenceBufferCtrl?.clearValidators();
+      presenceTimeCtrl?.setValue(null);
+      presenceBufferCtrl?.setValue(null);
+
+      if (type === WorkShiftType.WeekOnWeekOff) {
+        // Handle All Working Days for Type 2
+        this.selectAllWorkingDays();
+      }
+    }
+
+    presenceTimeCtrl?.updateValueAndValidity();
+    presenceBufferCtrl?.updateValueAndValidity();
+  }
+
+  private selectAllWorkingDays(): void {
+    // Select all available week days
+    this.selectedWorkingDays = this.weekDays.map((day) => day.value);
+
+    // Respect date range constraints if any
+    this.validateAndUpdateWorkingDays();
+
+    this.updateEmployeeWorkingDaysInForm();
+  }
+
   // NEW METHOD: Remove selected working days that are not allowed in the new date range
   private validateAndUpdateWorkingDays(): void {
+    // If Shift Type is 2 or 3, we want ALL days selected regardless of date range
+    const currentType = this.form.get('workShiftType')?.value;
+    if (
+      currentType === WorkShiftType.WeekOnWeekOff ||
+      currentType === WorkShiftType.WeekOnWeekOff24
+    ) {
+      // Ensure all are selected just in case (e.g. if date changed and we want to enforce pattern)
+      this.selectedWorkingDays = this.weekDays.map((day) => day.value);
+      this.updateEmployeeWorkingDaysInForm();
+      return;
+    }
+
     const startDate = this.form.get('startDate')?.value;
     const endDate = this.form.get('endDate')?.value;
 

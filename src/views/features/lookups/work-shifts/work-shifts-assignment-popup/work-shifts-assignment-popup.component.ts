@@ -157,8 +157,7 @@ export class WorkShiftsAssignmentPopupComponent
         this.selectedWorkingDays.join(','),
         [this.validateWorkingDays()], // Use array syntax for validators
       ],
-      departmentIdsArray: [[]],
-      userIdsArray: [[]],
+      userIdsArray: [[], [Validators.required]],
     });
 
     // Watch for employee selection changes to update the accordion
@@ -632,18 +631,22 @@ export class WorkShiftsAssignmentPopupComponent
   onWorkShiftTypeChange(type: WorkShiftType): void {
     const presenceTimeCtrl = this.form.get('presenceInquiryTime');
     const presenceBufferCtrl = this.form.get('presenceInquiryBuffer');
+    const endDateCtrl = this.form.get('endDate');
 
     if (type === WorkShiftType.WeekOnWeekOff24) {
-      // Type 3: Enable and Require
+      // Type 3: Enable and Require Presence Fields
       presenceTimeCtrl?.enable();
       presenceBufferCtrl?.enable();
       presenceTimeCtrl?.setValidators([Validators.required]);
       presenceBufferCtrl?.setValidators([Validators.required]);
 
+      // Require End Date for Type 3
+      endDateCtrl?.setValidators([Validators.required]);
+
       // Handle All Working Days for Type 3
       this.selectAllWorkingDays();
     } else {
-      // Type 1 & 2: Disable and Not Required
+      // Type 1 & 2: Disable and Not Required Presence Fields
       presenceTimeCtrl?.disable();
       presenceBufferCtrl?.disable();
       presenceTimeCtrl?.clearValidators();
@@ -652,9 +655,15 @@ export class WorkShiftsAssignmentPopupComponent
       presenceBufferCtrl?.setValue(null);
 
       if (type === WorkShiftType.WeekOnWeekOff) {
+        // Require End Date for Type 2
+        endDateCtrl?.setValidators([Validators.required]);
+
         // Handle All Working Days for Type 2
         this.selectAllWorkingDays();
       } else if (type === WorkShiftType.Standard) {
+        // Optional End Date for Type 1
+        endDateCtrl?.clearValidators();
+
         // Restore previous selection for Standard
         this.selectedWorkingDays = [...this.previousStandardWorkingDays];
         this.validateAndUpdateWorkingDays();
@@ -664,6 +673,7 @@ export class WorkShiftsAssignmentPopupComponent
 
     presenceTimeCtrl?.updateValueAndValidity();
     presenceBufferCtrl?.updateValueAndValidity();
+    endDateCtrl?.updateValueAndValidity();
   }
 
   private selectAllWorkingDays(): void {

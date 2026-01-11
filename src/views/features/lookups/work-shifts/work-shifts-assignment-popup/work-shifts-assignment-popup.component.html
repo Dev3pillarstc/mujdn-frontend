@@ -28,8 +28,12 @@
               ></span>
             </span>
             <div>
-              <span class="font-medium text-[#1f2a37]">وردية بنظام ساعات العمل المعتمدة</span>
-              <span class="block text-[#384250]">ساعات العمل الخاصة بالوردية</span>
+              <span class="font-medium text-[#1f2a37]">{{
+                'USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT' | translate
+              }}</span>
+              <span class="block text-[#384250]">{{
+                'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_HOURS' | translate
+              }}</span>
             </div>
           </label>
 
@@ -51,8 +55,12 @@
               ></span>
             </span>
             <div>
-              <span class="font-medium text-[#1f2a37]">ساعات العمل الخاصة بالوردية</span>
-              <span class="block text-[#384250]">أسبوع عمل/أسبوع راحة</span>
+              <span class="font-medium text-[#1f2a37]">{{
+                'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_HOURS' | translate
+              }}</span>
+              <span class="block text-[#384250]">{{
+                'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
+              }}</span>
             </div>
           </label>
 
@@ -74,8 +82,12 @@
               ></span>
             </span>
             <div>
-              <span class="font-medium text-[#1f2a37]">وردية بنظام الراحات 24 ساعة</span>
-              <span class="block text-[#384250]">أسبوع عمل/أسبوع راحة</span>
+              <span class="font-medium text-[#1f2a37]">{{
+                'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS' | translate
+              }}</span>
+              <span class="block text-[#384250]">{{
+                'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
+              }}</span>
             </div>
           </label>
         </div>
@@ -208,13 +220,13 @@
         <div class="lg:col-span-2">
           <div class="relative time">
             <label class="text-sm font-normal text-[#1f2a37] block mb-2">
-              وقت توثيق التواجد للموظفين (لنظام الراحات 24 ساعة)
+              {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_TIME' | translate }}
             </label>
 
             <p-datepicker
               [hourFormat]="'12'"
               [iconDisplay]="'input'"
-              placeholder="موعد (من)"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.TIME_FROM_PLACEHOLDER' | translate"
               [showIcon]="true"
               [timeOnly]="true"
               class="peer block w-full"
@@ -234,7 +246,7 @@
         <div class="lg:col-span-2">
           <div class="relative">
             <label for="" class="text-sm font-normal text-[#1f2a37] block mb-2">
-              فترة السماح لتوثيق التواجد (قبل / بعد)
+              {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_GRACE_PERIOD' | translate }}
             </label>
             <p-inputnumber
               class="peer w-full"
@@ -260,7 +272,7 @@
       <!-- Selected Employees Grouped by Department -->
       <div class="mt-10 p-6 bg-gray-100 rounded-xl accordion-container">
         <h3 class="text-[#1f2a37] font-[600] text-xl border-b border-[#d2d6db] pb-4">
-          الموظفون المعنيون بالاسناد
+          {{ 'USER_WORK_SHIFT_ASSIGNMENT.ASSIGNED_EMPLOYEES' | translate }}
         </h3>
         <p-accordion [value]="'0'">
           <p-accordion-panel value="0">
@@ -275,7 +287,7 @@
                   (click)="$event.stopPropagation()"
                 >
                   <img src="assets/icons/delete.svg" alt="" />
-                  حذف كل الموظفين
+                  {{ 'USER_WORK_SHIFT_ASSIGNMENT.DELETE_ALL_EMPLOYEES' | translate }}
                 </button>
               </div>
             </p-accordion-header>
@@ -341,7 +353,7 @@
                   (click)="$event.stopPropagation()"
                 >
                   <img src="assets/icons/delete.svg" alt="" />
-                  حذف كل الموظفين
+                  {{ 'USER_WORK_SHIFT_ASSIGNMENT.DELETE_ALL_EMPLOYEES' | translate }}
                 </button>
               </div>
             </p-accordion-header>

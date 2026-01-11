@@ -491,7 +491,16 @@
     "WEDNESDAY": "الأربعاء",
     "THURSDAY": "الخميس",
     "FRIDAY": "الجمعة",
-    "WORKING_DAYS": "أيام العمل الخاصة بالوردية"
+    "WORKING_DAYS": "أيام العمل الخاصة بالوردية",
+    "STANDARD_SHIFT": "وردية بنظام ساعات العمل المعتمدة",
+    "SHIFT_HOURS": "ساعات العمل الخاصة بالوردية",
+    "WORK_WEEK_REST_WEEK": "أسبوع عمل/أسبوع راحة",
+    "SHIFT_24_HOURS": "وردية بنظام الراحات 24 ساعة",
+    "ATTENDANCE_DOCUMENTATION_TIME": "وقت توثيق التواجد للموظفين (لنظام الراحات 24 ساعة)",
+    "TIME_FROM_PLACEHOLDER": "موعد (من)",
+    "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "فترة السماح لتوثيق التواجد (قبل / بعد)",
+    "ASSIGNED_EMPLOYEES": "الموظفون المعنيون بالاسناد",
+    "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "اسناد وردية لموظف",

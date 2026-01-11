@@ -493,7 +493,16 @@
     "WEDNESDAY": "Wednesday",
     "THURSDAY": "Thursday",
     "FRIDAY": "Friday",
-    "WORKING_DAYS": "Shift Working Days"
+    "WORKING_DAYS": "Shift Working Days",
+    "STANDARD_SHIFT": "Standard Work Hours Shift",
+    "SHIFT_HOURS": "Shift Work Hours",
+    "WORK_WEEK_REST_WEEK": "Work Week / Rest Week",
+    "SHIFT_24_HOURS": "24-Hour Rest Shift",
+    "ATTENDANCE_DOCUMENTATION_TIME": "Presence Inquiry Time (for 24-hour rest system)",
+    "TIME_FROM_PLACEHOLDER": "Time (From)",
+    "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "Presence Inquiry Grace Period (Before / After)",
+    "ASSIGNED_EMPLOYEES": "Employees Assigned",
+    "DELETE_ALL_EMPLOYEES": "Delete All Employees"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",

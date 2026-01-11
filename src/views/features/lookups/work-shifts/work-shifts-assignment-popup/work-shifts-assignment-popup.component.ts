@@ -21,9 +21,7 @@ import { AccordionHeader } from 'primeng/accordion';
 import { AccordionContent } from 'primeng/accordion';
 import { DatePickerModule } from 'primeng/datepicker';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import UserWorkShift, {
-  WorkShiftType,
-} from '@/models/features/lookups/work-shifts/user-work-shifts';
+
 import { forkJoin, Observable } from 'rxjs';
 import { AlertService } from '@/services/shared/alert.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
@@ -42,6 +40,8 @@ import { PaginationParams } from '@/models/shared/pagination-params';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DepartmentEmployees } from '@/models/features/lookups/work-shifts/department-employees';
+import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
+import { WorkShiftType } from '@/enums/work-shift-type';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -374,32 +374,30 @@ export class WorkShiftsAssignmentPopupComponent
     model: UserWorkShift,
     form: FormGroup
   ): UserWorkShift | Observable<UserWorkShift> {
-    // Only update the specific fields that should be sent to the API
     const formValue = form.value;
 
-    // Update only the necessary properties
-    this.model.startDate = formValue.startDate;
-    this.model.endDate = formValue.endDate;
-    this.model.employeeWorkingDays = formValue.employeeWorkingDays;
-
-    this.model.workShiftType = formValue.workShiftType;
+    model.startDate = formValue.startDate;
+    model.endDate = formValue.endDate;
+    model.employeeWorkingDays = formValue.employeeWorkingDays;
+    model.workShiftType = formValue.workShiftType;
 
     // Convert time to string HH:mm:ss if present
     if (formValue.presenceInquiryTime instanceof Date) {
       const time = formValue.presenceInquiryTime;
-      this.model.presenceInquiryTime = `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}:${time.getSeconds().toString().padStart(2, '0')}`;
+      model.presenceInquiryTime = `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}:${time.getSeconds().toString().padStart(2, '0')}`;
     } else {
-      this.model.presenceInquiryTime = formValue.presenceInquiryTime;
+      model.presenceInquiryTime = formValue.presenceInquiryTime;
     }
+    model.presenceInquiryBuffer = formValue.presenceInquiryBuffer;
 
     // Convert array to single value (take first selected user)
     const userIds = formValue.userIdsArray || [];
-    this.model.fkAssignedUserId = userIds.length > 0 ? userIds[0] : null;
-    this.model.assignedUserIds = userIds; // Set array property as well
+    model.fkAssignedUserId = userIds.length > 0 ? userIds[0] : null;
+    model.assignedUserIds = userIds;
 
-    this.model.fkShiftId = formValue.fkShiftId;
+    model.fkShiftId = formValue.fkShiftId;
 
-    return this.model;
+    return model;
   }
 
   private sortByName<T extends { [key: string]: any }>(arr: T[], key: string): T[] {

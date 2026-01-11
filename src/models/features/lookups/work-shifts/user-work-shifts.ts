@@ -1,4 +1,5 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
+import { WorkShiftType } from '@/enums/work-shift-type';
 import { UserWorkShiftInterceptor } from '@/model-interceptors/features/lookups/user-work-shift.interceptor';
 import { SingleResponseData } from '@/models/shared/response/single-response-data';
 import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
@@ -24,7 +25,7 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   declare fkAssignedUserId: number;
   declare employeeWorkingDays: string;
   declare assignedUserIds: number[];
-  declare workShiftType: number;
+  declare workShiftType: WorkShiftType;
   declare presenceInquiryTime: string;
   declare presenceInquiryBuffer: number;
 
@@ -44,6 +45,7 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
       employeeWorkingDays,
       workShiftType,
       presenceInquiryTime,
+      presenceInquiryBuffer,
     } = this;
     return {
       fkShiftId: [fkShiftId, [Validators.required]],
@@ -53,12 +55,7 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
       employeeWorkingDays: [employeeWorkingDays || ''],
       workShiftType: [workShiftType || WorkShiftType.Standard, [Validators.required]],
       presenceInquiryTime: [presenceInquiryTime, []],
+      presenceInquiryBuffer: [presenceInquiryBuffer, []],
     };
   }
-}
-
-export enum WorkShiftType {
-  Standard = 1,
-  WeekOnWeekOff = 2,
-  WeekOnWeekOff24 = 3,
 }

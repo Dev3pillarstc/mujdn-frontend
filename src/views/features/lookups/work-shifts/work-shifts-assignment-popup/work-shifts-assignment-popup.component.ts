@@ -21,7 +21,9 @@ import { AccordionHeader } from 'primeng/accordion';
 import { AccordionContent } from 'primeng/accordion';
 import { DatePickerModule } from 'primeng/datepicker';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
+import UserWorkShift, {
+  WorkShiftType,
+} from '@/models/features/lookups/work-shifts/user-work-shifts';
 import { forkJoin, Observable } from 'rxjs';
 import { AlertService } from '@/services/shared/alert.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
@@ -73,6 +75,7 @@ export class WorkShiftsAssignmentPopupComponent
   departments: BaseLookupModel[] = [];
   shifts: Shift[] = [];
   departmentEmployeesGroups: DepartmentEmployees[] = []; // Grouped employees by department
+  workShiftType = WorkShiftType;
   form!: FormGroup;
   viewMode!: ViewModeEnum;
   fb = inject(FormBuilder);
@@ -110,8 +113,6 @@ export class WorkShiftsAssignmentPopupComponent
     } else {
       // For edit mode, initialize working days from model
       this.initializeSelectedWorkingDays();
-      // Pre-filter employees if we have department info
-      this.preFilterEmployeesForEditMode();
     }
   }
 
@@ -154,34 +155,16 @@ export class WorkShiftsAssignmentPopupComponent
       ],
       departmentIdsArray: [[]],
       userIdsArray: [[]],
-      workScheduleType: ['standard'], // Default to standard work hours
-      timeFrom: [null],
     });
-
-    // Set the correct values for dropdowns after form is built
-    this.setDropdownValues();
-    this.updateDateConstraints();
 
     // Watch for employee selection changes to update the accordion
     this.form.get('userIdsArray')?.valueChanges.subscribe((userIds) => {
       this.onEmployeeSelectionChange(userIds);
     });
-  }
 
-  // Update this method in initPopup()
-  private preFilterEmployeesForEditMode(): void {
-    if (!this.isCreateMode && this.model.fkAssignedUserId) {
-      // Find the selected employee to get their department
-      const selectedEmployee = this.usersProfiles.find(
-        (emp) => emp.id === this.model.fkAssignedUserId
-      );
-      if (selectedEmployee && selectedEmployee.departmentId) {
-        // Just filter the employees, don't do form operations here
-        this.filteredUsersProfiles = this.usersProfiles.filter(
-          (emp) => emp.departmentId === selectedEmployee.departmentId
-        );
-      }
-    }
+    // Set the correct values for dropdowns after form is built
+    this.setDropdownValues();
+    this.updateDateConstraints();
   }
 
   // Update setDropdownValues to handle the department filtering after form is built
@@ -192,20 +175,40 @@ export class WorkShiftsAssignmentPopupComponent
         this.form.get('fkShiftId')?.setValue(this.model.fkShiftId);
       }
 
-      // Set employee (convert single value to array)
-      if (this.model.fkAssignedUserId) {
-        const selectedEmployee = this.usersProfiles.find(
-          (emp) => emp.id === this.model.fkAssignedUserId
-        );
-        if (selectedEmployee) {
-          this.form.get('userIdsArray')?.setValue([selectedEmployee.id]);
-          // 👇 auto-set department if found
-          if (selectedEmployee.departmentId) {
-            this.form.get('departmentIdsArray')?.setValue([selectedEmployee.departmentId]);
-            // 👇 Now it's safe to call filterEmployeesByDepartment since form is built
-            this.filterEmployeesByDepartment([selectedEmployee.departmentId]);
+      // Set employees
+      const assignedUserIds = this.model.assignedUserIds || [];
+      if (assignedUserIds.length > 0) {
+        this.form.get('userIdsArray')?.setValue(assignedUserIds);
+
+        // Find departments for these users to auto-select them
+        const departmentsToSelect = new Set<number>();
+        assignedUserIds.forEach((userId) => {
+          const emp = this.usersProfiles.find((u) => u.id === userId);
+          if (emp && emp.departmentId) {
+            departmentsToSelect.add(emp.departmentId);
           }
+        });
+
+        if (departmentsToSelect.size > 0) {
+          const deptArray = Array.from(departmentsToSelect);
+          this.form.get('departmentIdsArray')?.setValue(deptArray);
+          // Filter employees to ensure selected ones are visible in dropdown
+          this.filterEmployeesByDepartment(deptArray);
         }
+      }
+
+      // Set workShiftType
+      if (this.model.workShiftType) {
+        this.form.get('workShiftType')?.setValue(this.model.workShiftType);
+      } else {
+        this.form.get('workShiftType')?.setValue(WorkShiftType.Standard);
+      }
+
+      // Set presenceInquiryTime
+      if (this.model.presenceInquiryTime) {
+        this.form
+          .get('presenceInquiryTime')
+          ?.setValue(new Date('1970-01-01T' + this.model.presenceInquiryTime));
       }
 
       // Set dates
@@ -284,7 +287,6 @@ export class WorkShiftsAssignmentPopupComponent
       if (this.model.id && userIds.length === 1) {
         // Update data specifically for single edit mode if needed,
         // though typically edit is 1-to-1.
-        // Assuming Edit mode is single user for now or handled same as create.
         // If edit mode is single user:
         this.prepareModel(this.model, this.form);
         this.userWorkShiftService.update(this.model).subscribe({
@@ -297,15 +299,12 @@ export class WorkShiftsAssignmentPopupComponent
         });
       } else {
         // Bulk Create / Assign
-        const requests = userIds.map((userId: number) => {
-          const newModel = new UserWorkShift();
-          // Apply form values to the new model
-          this.prepareModel(newModel, this.form);
-          newModel.fkAssignedUserId = userId; // Override with specific user
-          return this.userWorkShiftService.assignUserShift(newModel);
-        });
+        const newModel = new UserWorkShift();
+        this.prepareModel(newModel, this.form);
+        // We now use assignedUserIds for bulk assignment
+        newModel.assignedUserIds = userIds;
 
-        forkJoin(requests).subscribe({
+        this.userWorkShiftService.assignUserShift(newModel).subscribe({
           next: () => {
             this.dialogRef.close(DIALOG_ENUM.OK);
           },
@@ -383,9 +382,20 @@ export class WorkShiftsAssignmentPopupComponent
     this.model.endDate = formValue.endDate;
     this.model.employeeWorkingDays = formValue.employeeWorkingDays;
 
+    this.model.workShiftType = formValue.workShiftType;
+
+    // Convert time to string HH:mm:ss if present
+    if (formValue.presenceInquiryTime instanceof Date) {
+      const time = formValue.presenceInquiryTime;
+      this.model.presenceInquiryTime = `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}:${time.getSeconds().toString().padStart(2, '0')}`;
+    } else {
+      this.model.presenceInquiryTime = formValue.presenceInquiryTime;
+    }
+
     // Convert array to single value (take first selected user)
     const userIds = formValue.userIdsArray || [];
     this.model.fkAssignedUserId = userIds.length > 0 ? userIds[0] : null;
+    this.model.assignedUserIds = userIds; // Set array property as well
 
     this.model.fkShiftId = formValue.fkShiftId;
 

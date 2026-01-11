@@ -7,24 +7,25 @@
       {{ 'USER_WORK_SHIFT_ASSIGNMENT.TEMP_SHIFT_ASSIGNMENT' | translate }}
     </h3>
     <form [formGroup]="form" class="mt-6">
-      <!-- Work Schedule Type Selection -->
+      <!-- Work Shift Type Selection -->
       <div class="mb-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Standard -->
           <label class="flex items-start cursor-pointer gap-2">
             <input
               type="radio"
               class="hidden peer"
-              name="workScheduleType"
-              value="standard"
+              name="workShiftType"
+              [value]="workShiftType.Standard"
               id="standard-hours-radio"
-              formControlName="workScheduleType"
+              formControlName="workShiftType"
             />
             <span
               class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
             >
               <span
                 class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('workScheduleType')?.value === 'standard'"
+                *ngIf="form.get('workShiftType')?.value === workShiftType.Standard"
               ></span>
             </span>
             <div>
@@ -37,21 +38,22 @@
             </div>
           </label>
 
+          <!-- WeekOnWeekOff -->
           <label class="flex items-start cursor-pointer gap-2">
             <input
               type="radio"
               class="hidden peer"
-              name="workScheduleType"
-              value="custom"
+              name="workShiftType"
+              [value]="workShiftType.WeekOnWeekOff"
               id="custom-hours-radio"
-              formControlName="workScheduleType"
+              formControlName="workShiftType"
             />
             <span
               class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
             >
               <span
                 class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('workScheduleType')?.value === 'custom'"
+                *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff"
               ></span>
             </span>
             <div>
@@ -64,21 +66,22 @@
             </div>
           </label>
 
+          <!-- WeekOnWeekOff24 -->
           <label class="flex items-start cursor-pointer gap-2">
             <input
               type="radio"
               class="hidden peer"
-              name="workScheduleType"
-              value="shift24"
+              name="workShiftType"
+              [value]="workShiftType.WeekOnWeekOff24"
               id="shift-24-radio"
-              formControlName="workScheduleType"
+              formControlName="workShiftType"
             />
             <span
               class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
             >
               <span
                 class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('workScheduleType')?.value === 'shift24'"
+                *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff24"
               ></span>
             </span>
             <div>
@@ -230,8 +233,8 @@
               [showIcon]="true"
               [timeOnly]="true"
               class="peer block w-full"
-              inputId="timeFrom"
-              formControlName="timeFrom"
+              inputId="presenceInquiryTime"
+              formControlName="presenceInquiryTime"
             >
               <ng-template pTemplate="inputicon">
                 <img alt="" src="assets/icons/time-icon.svg" />

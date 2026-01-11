@@ -23,6 +23,11 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   declare fkShiftId: number;
   declare fkAssignedUserId: number;
   declare employeeWorkingDays: string;
+  declare assignedUserIds: number[];
+  declare workShiftType: number;
+  declare presenceInquiryTime: string;
+  declare presenceInquiryBuffer: number;
+
   declare concurrencyUpdateVersion?: Uint8Array;
 
   constructor(init?: Partial<UserWorkShift>) {
@@ -31,13 +36,29 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   }
 
   buildForm() {
-    const { fkShiftId, fkAssignedUserId, startDate, endDate, employeeWorkingDays } = this;
+    const {
+      fkShiftId,
+      fkAssignedUserId,
+      startDate,
+      endDate,
+      employeeWorkingDays,
+      workShiftType,
+      presenceInquiryTime,
+    } = this;
     return {
       fkShiftId: [fkShiftId, [Validators.required]],
-      fkAssignedUserId: [fkAssignedUserId, [Validators.required]],
+      fkAssignedUserId: [fkAssignedUserId, []], // Made optional here as we might use assignedUserIds
       startDate: [startDate, [Validators.required]],
       endDate: [endDate, []],
       employeeWorkingDays: [employeeWorkingDays || ''],
+      workShiftType: [workShiftType || WorkShiftType.Standard, [Validators.required]],
+      presenceInquiryTime: [presenceInquiryTime, []],
     };
   }
+}
+
+export enum WorkShiftType {
+  Standard = 1,
+  WeekOnWeekOff = 2,
+  WeekOnWeekOff24 = 3,
 }

@@ -270,21 +270,29 @@
       </div>
 
       <!-- Selected Employees Grouped by Department -->
-      <div class="mt-10 p-6 bg-gray-100 rounded-xl accordion-container">
+      <div
+        class="mt-10 p-6 bg-gray-100 rounded-xl accordion-container"
+        *ngIf="departmentEmployeesGroups.length > 0"
+      >
         <h3 class="text-[#1f2a37] font-[600] text-xl border-b border-[#d2d6db] pb-4">
           {{ 'USER_WORK_SHIFT_ASSIGNMENT.ASSIGNED_EMPLOYEES' | translate }}
         </h3>
         <p-accordion [value]="'0'">
-          <p-accordion-panel value="0">
+          <p-accordion-panel
+            *ngFor="let group of departmentEmployeesGroups; let i = index"
+            [value]="i.toString()"
+          >
             <p-accordion-header>
               <div class="flex items-center justify-between ps-8 w-[100%]">
                 <h4 class="text-[#161616] font-semibold">
-                  {{ currentLang === 'ar' ? 'قسم الموارد البشرية' : 'Human Resources Department' }}
+                  {{ currentLang === 'ar' ? group.department.nameAr : group.department.nameEn }}
                 </h4>
                 <button
                   type="button"
                   class="text-[#b42318] text-xs font-medium flex items-center gap-1"
-                  (click)="$event.stopPropagation()"
+                  (click)="
+                    removeAllEmployeesFromDepartment(group.department.id); $event.stopPropagation()
+                  "
                 >
                   <img src="assets/icons/delete.svg" alt="" />
                   {{ 'USER_WORK_SHIFT_ASSIGNMENT.DELETE_ALL_EMPLOYEES' | translate }}
@@ -295,76 +303,11 @@
               <div class="px-8 py-6 bg-[#f3f4f6]">
                 <div class="flex flex-wrap gap-2">
                   <div
+                    *ngFor="let employee of group.employees"
                     class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
                   >
-                    <span>{{ currentLang === 'ar' ? 'أحمد محمد' : 'Ahmed Mohamed' }}</span>
-                    <button type="button">
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 18 18"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
-                          d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                          fill="#161616"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div
-                    class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
-                  >
-                    <span>{{ currentLang === 'ar' ? 'سارة علي' : 'Sara Ali' }}</span>
-                    <button type="button">
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 18 18"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
-                          d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                          fill="#161616"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </p-accordion-content>
-          </p-accordion-panel>
-
-          <p-accordion-panel value="1">
-            <p-accordion-header>
-              <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">
-                  {{ currentLang === 'ar' ? 'قسم المبيعات' : 'Sales Department' }}
-                </h4>
-                <button
-                  type="button"
-                  class="text-[#b42318] text-xs font-medium flex items-center gap-1"
-                  (click)="$event.stopPropagation()"
-                >
-                  <img src="assets/icons/delete.svg" alt="" />
-                  {{ 'USER_WORK_SHIFT_ASSIGNMENT.DELETE_ALL_EMPLOYEES' | translate }}
-                </button>
-              </div>
-            </p-accordion-header>
-            <p-accordion-content>
-              <div class="px-8 py-6 bg-[#f3f4f6]">
-                <div class="flex flex-wrap gap-2">
-                  <div
-                    class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
-                  >
-                    <span>{{ currentLang === 'ar' ? 'محمود حسن' : 'Mahmoud Hassan' }}</span>
-                    <button type="button">
+                    <span>{{ currentLang === 'ar' ? employee.nameAr : employee.nameEn }}</span>
+                    <button type="button" (click)="removeEmployee(employee.id)">
                       <svg
                         width="18"
                         height="18"

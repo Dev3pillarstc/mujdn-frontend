@@ -11,10 +11,8 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { DialogRef } from '@angular/cdk/dialog';
 import { Select } from 'primeng/select';
 import { MultiSelect } from 'primeng/multiselect';
 import { Accordion } from 'primeng/accordion';
@@ -24,8 +22,7 @@ import { AccordionContent } from 'primeng/accordion';
 import { DatePickerModule } from 'primeng/datepicker';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
-import { M } from '@angular/material/dialog.d-B5HZULyo';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { AlertService } from '@/services/shared/alert.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -42,6 +39,7 @@ import { UserWorkShiftService } from '@/services/features/lookups/user-workshift
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { DepartmentEmployees } from '@/models/features/lookups/work-shifts/department-employees';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -59,20 +57,22 @@ import { InputNumberModule } from 'primeng/inputnumber';
     RequiredMarkerDirective,
     TranslatePipe,
     ValidationMessagesComponent,
-    InputNumberModule
+    InputNumberModule,
   ],
   templateUrl: './work-shifts-assignment-popup.component.html',
   styleUrl: './work-shifts-assignment-popup.component.scss',
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit {
+  implements OnInit
+{
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
   filteredUsersProfiles: UsersWithDepartmentLookup[] = [];
   departments: BaseLookupModel[] = [];
   shifts: Shift[] = [];
+  departmentEmployeesGroups: DepartmentEmployees[] = []; // Grouped employees by department
   form!: FormGroup;
   viewMode!: ViewModeEnum;
   fb = inject(FormBuilder);
@@ -161,6 +161,11 @@ export class WorkShiftsAssignmentPopupComponent
     // Set the correct values for dropdowns after form is built
     this.setDropdownValues();
     this.updateDateConstraints();
+
+    // Watch for employee selection changes to update the accordion
+    this.form.get('userIdsArray')?.valueChanges.subscribe((userIds) => {
+      this.onEmployeeSelectionChange(userIds);
+    });
   }
 
   // Update this method in initPopup()
@@ -268,10 +273,20 @@ export class WorkShiftsAssignmentPopupComponent
     });
 
     if (this.form.valid) {
-      this.prepareModel(this.model, this.form);
+      const formValue = this.form.value;
+      const userIds = formValue.userIdsArray || [];
 
-      if (this.model.id) {
-        // Update existing shift
+      if (userIds.length === 0) {
+        // Should be caught by validation, but double check
+        return;
+      }
+
+      if (this.model.id && userIds.length === 1) {
+        // Update data specifically for single edit mode if needed,
+        // though typically edit is 1-to-1.
+        // Assuming Edit mode is single user for now or handled same as create.
+        // If edit mode is single user:
+        this.prepareModel(this.model, this.form);
         this.userWorkShiftService.update(this.model).subscribe({
           next: () => {
             this.dialogRef.close(DIALOG_ENUM.OK);
@@ -281,8 +296,16 @@ export class WorkShiftsAssignmentPopupComponent
           },
         });
       } else {
-        // Assign new shift
-        this.userWorkShiftService.assignUserShift(this.model).subscribe({
+        // Bulk Create / Assign
+        const requests = userIds.map((userId: number) => {
+          const newModel = new UserWorkShift();
+          // Apply form values to the new model
+          this.prepareModel(newModel, this.form);
+          newModel.fkAssignedUserId = userId; // Override with specific user
+          return this.userWorkShiftService.assignUserShift(newModel);
+        });
+
+        forkJoin(requests).subscribe({
           next: () => {
             this.dialogRef.close(DIALOG_ENUM.OK);
           },
@@ -337,7 +360,7 @@ export class WorkShiftsAssignmentPopupComponent
     return Array.from(allowedDays);
   }
 
-  override saveFail(error: Error): void { }
+  override saveFail(error: Error): void {}
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -400,15 +423,44 @@ export class WorkShiftsAssignmentPopupComponent
     }
 
     // Clear employee selection when departments change
-    this.form.get('userIdsArray')?.setValue([]);
+    // If we want to keep selected employees even if department is unchecked, remove this.
+    // However, usually if you uncheck a department, you might expect its users to be removed?
+    // Requirement says: "deleting all employees of department resets the department and employees".
+    // It doesn't explicitly say changing department dropdown should clear employees,
+    // but usually it filters. Let's keep existing logic but refining it.
+
+    // If I unselect a department, I should probably remove its employees from selection?
+    // Or just filter the dropdown?
+    // Current implementation only filters the dropdown options.
+    // Let's ensure we remove employees that are no longer visible if that's desired,
+    // OR just keep them.
+    // The requirement "When selecting an employee, add it down in the accordion realated to the department"
+    // suggests the accordion is the source of truth for "selected".
+
+    // If I clear departments, I probably want to clear list?
+    if (departmentIds.length === 0) {
+      this.form.get('userIdsArray')?.setValue([]);
+    } else {
+      // Optional: Remove employees not in selected departments?
+      // For now, let's just filter the dropdown list.
+      // The user might want to keep previously selected users from other departments.
+      // But typically "Filter" implies selection constraint.
+      const currentSelection = this.form.get('userIdsArray')?.value || [];
+      const validEmployees = this.usersProfiles.filter(
+        (u) => departmentIds.includes(u.departmentId) || currentSelection.includes(u.id)
+      );
+      // Actually, usually the dropdown items are what you CAN select.
+      // If I have User A (Dept 1) selected, and I uncheck Dept 1, User A is still selected in model.
+      // But logic at line 418 filters them out of the control value.
+    }
   }
   filterEmployeesByDepartment(departmentIds: number[] | any) {
     // Handle the case where departmentIds might be an event object or the IDs directly
     const actualDepartmentIds = Array.isArray(departmentIds) ? departmentIds : [departmentIds];
 
     // Filter employees by the selected departments
-    this.filteredUsersProfiles = this.usersProfiles.filter(
-      (emp) => actualDepartmentIds.includes(emp.departmentId)
+    this.filteredUsersProfiles = this.usersProfiles.filter((emp) =>
+      actualDepartmentIds.includes(emp.departmentId)
     );
 
     // Only check form if it's initialized
@@ -429,6 +481,88 @@ export class WorkShiftsAssignmentPopupComponent
           this.form.get('userIdsArray')?.markAsTouched();
         }
       }
+    }
+  }
+
+  onEmployeeSelectionChange(userIds: number[]): void {
+    // Re-calculate the groups
+    this.updateDepartmentEmployeesGroups(userIds || []);
+  }
+
+  updateDepartmentEmployeesGroups(selectedUserIds: number[]): void {
+    const groupsMap = new Map<number, DepartmentEmployees>();
+    const selectedUsers = this.usersProfiles.filter((user) => selectedUserIds.includes(user.id!));
+
+    selectedUsers.forEach((user) => {
+      const deptId = user.departmentId;
+      if (!deptId) return;
+
+      // Find department info. If user has no department, maybe group under "Other"?
+      // Assuming all have department based on previous code.
+      const department = this.departments.find((d) => d.id === deptId);
+
+      if (department) {
+        if (!groupsMap.has(deptId)) {
+          groupsMap.set(deptId, {
+            department: department,
+            employees: [],
+          });
+        }
+        groupsMap.get(deptId)!.employees.push(user);
+      }
+    });
+
+    // Convert map to array and sort
+    this.departmentEmployeesGroups = this.sortDepartments(Array.from(groupsMap.values()));
+  }
+
+  private sortDepartments(groups: DepartmentEmployees[]): DepartmentEmployees[] {
+    // Sort by department name
+    return groups.sort((a, b) => {
+      const nameA =
+        (this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+          ? a.department.nameAr
+          : a.department.nameEn) || '';
+      const nameB =
+        (this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+          ? b.department.nameAr
+          : b.department.nameEn) || '';
+      return nameA.localeCompare(nameB);
+    });
+  }
+
+  removeEmployee(userId: number | undefined): void {
+    if (!userId) return;
+    const currentIds = this.form.get('userIdsArray')?.value as number[];
+    const newIds = currentIds.filter((id) => id !== userId);
+    this.form.get('userIdsArray')?.setValue(newIds);
+  }
+
+  removeAllEmployeesFromDepartment(departmentId: number | undefined): void {
+    if (!departmentId) return;
+
+    // Get users to remove
+    // We can just filter the current selection
+    const currentIds = this.form.get('userIdsArray')?.value as number[];
+    const usersKeep = currentIds.filter((id) => {
+      const user = this.usersProfiles.find((u) => u.id === id);
+      return user && user.departmentId !== departmentId;
+    });
+    this.form.get('userIdsArray')?.setValue(usersKeep);
+
+    // Reseting department selection if needed?
+    // "deleting all employees of department resets the department and employees"
+    // This implies if I remove all employees of Dept X, maybe uncheck Dept X from filter?
+    // Let's do that if logic requires.
+    // Also valid: just removing employees.
+
+    // If we want to uncheck the department from the top filter:
+    const currentDepartments = this.form.get('departmentIdsArray')?.value as number[];
+    if (currentDepartments.includes(departmentId)) {
+      const newDepartments = currentDepartments.filter((d) => d !== departmentId);
+      this.form.get('departmentIdsArray')?.setValue(newDepartments);
+      // Trigger filter update
+      this.onDepartmentChange({ value: newDepartments });
     }
   }
   onStartDateSelect(selectedDate: Date): void {

@@ -298,7 +298,7 @@ export class WorkShiftsAssignmentPopupComponent
         return;
       }
 
-      if (this.model.id && userIds.length === 1) {
+      if (this.model.id) {
         // Update data specifically for single edit mode if needed,
         // though typically edit is 1-to-1.
         // If edit mode is single user:

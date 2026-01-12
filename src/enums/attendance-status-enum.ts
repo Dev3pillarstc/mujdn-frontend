@@ -5,6 +5,7 @@ export enum ATTENDANCE_STATUS_ENUM {
   PRESENT = 4,
   ABSENT = 5,
   EXEMPTED = 6,
+  REST = 7,
 }
 
 export const ATTENDANCE_STATUS_TRANSLATIONS: Record<ATTENDANCE_STATUS_ENUM, string> = {
@@ -14,6 +15,7 @@ export const ATTENDANCE_STATUS_TRANSLATIONS: Record<ATTENDANCE_STATUS_ENUM, stri
   [ATTENDANCE_STATUS_ENUM.MISSION]: 'ATTENDANCE_STATUS.MISSION',
   [ATTENDANCE_STATUS_ENUM.PRESENT]: 'ATTENDANCE_STATUS.PRESENT',
   [ATTENDANCE_STATUS_ENUM.ABSENT]: 'ATTENDANCE_STATUS.ABSENT',
+  [ATTENDANCE_STATUS_ENUM.REST]: 'ATTENDANCE_STATUS.REST',
 };
 
 export interface AttendanceStatusOption {
@@ -69,5 +71,11 @@ export const ATTENDANCE_STATUS_CONFIG: Record<
     bgColor: '#fef3f2',
     textColor: '#912018',
     dotColor: '#912018',
+  },
+  [ATTENDANCE_STATUS_ENUM.REST]: {
+    labelKey: 'ATTENDANCE_STATUS.REST',
+    bgColor: '#f9fafb',
+    textColor: '#1f2a37',
+    dotColor: '#4d5761',
   },
 };

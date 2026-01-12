@@ -762,7 +762,8 @@
     "MISSION": "مهمة",
     "ABSENT": "غائب",
     "PRESENT": "حاضر",
-    "EXEMPTED": "معفى من البصمة"
+    "EXEMPTED": "معفى من البصمة",
+    "REST": "راحة"
   },
   "ATTENDANCE_REPORT_PAGE": {
     "SPECIAL_SHIFT": "وردية عمل خاصة",

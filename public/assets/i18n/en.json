@@ -764,7 +764,8 @@
     "MISSION": "Mission",
     "ABSENT": "Absent",
     "PRESENT": "Present",
-    "EXEMPTED": "Exempted"
+    "EXEMPTED": "Exempted",
+    "REST": "Rest"
   },
   "ATTENDANCE_REPORT_PAGE": {
     "SPECIAL_SHIFT": "Special Shift",

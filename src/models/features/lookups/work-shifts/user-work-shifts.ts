@@ -17,8 +17,8 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   declare id: number;
   declare shiftNameAr: string;
   declare shiftNameEn: string;
-  declare employeeNameAr: string;
-  declare employeeNameEn: string;
+  // declare employeeNameAr: string;
+  // declare employeeNameEn: string;
   declare startDate: Date | string;
   declare endDate: Date | string;
   declare fkShiftId: number;

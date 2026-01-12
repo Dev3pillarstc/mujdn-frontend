@@ -7,8 +7,6 @@ export class UserWorkShiftInterceptor implements ModelInterceptorContract<UserWo
     return model;
   }
   send(model: Partial<UserWorkShift>): Partial<UserWorkShift> {
-    delete model.employeeNameAr;
-    delete model.employeeNameEn;
     delete model.shiftNameAr;
     delete model.shiftNameEn;
     delete model.fkAssignedUserId;

@@ -517,7 +517,8 @@
     "EMPLOYEE_NAME_AR": "اسم الموظف (عربي)",
     "STARTING_DATE": "تاريخ البداية",
     "ENDING_DATE": "تاريخ النهاية",
-    "EMPLOYEE_NAME_EN": "اسم الموظف (إنجليزي)"
+    "EMPLOYEE_NAME_EN": "اسم الموظف (إنجليزي)",
+    "SHIFT_TYPE": "نوع الوردية"
   },
   "PROFILE_PAGE": {
     "PROFILE": "الملف الشخصي",

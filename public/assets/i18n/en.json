@@ -519,7 +519,8 @@
     "STARTING_DATE": "Start date",
     "ENDING_DATE": "End date",
     "EMPLOYEE_NAME_AR": "Employee Name (Arabic)",
-    "EMPLOYEE_NAME_EN": "Employee Name (English)"
+    "EMPLOYEE_NAME_EN": "Employee Name (English)",
+    "SHIFT_TYPE": "Shift Type"
   },
   "PROFILE_PAGE": {
     "PROFILE": "Profile",

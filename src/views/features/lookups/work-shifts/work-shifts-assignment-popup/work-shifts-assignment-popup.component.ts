@@ -631,7 +631,7 @@ export class WorkShiftsAssignmentPopupComponent
       presenceTimeCtrl?.enable();
       presenceBufferCtrl?.enable();
       presenceTimeCtrl?.setValidators([Validators.required]);
-      presenceBufferCtrl?.setValidators([Validators.required]);
+      presenceBufferCtrl?.setValidators([Validators.required, Validators.min(0)]);
 
       // Require End Date for Type 3
       endDateCtrl?.setValidators([Validators.required]);

@@ -187,12 +187,12 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
       .pipe(
         filter((result) => result === DIALOG_ENUM.OK),
         switchMap(() => this.userworkShiftService.deleteUserShiftAssignment(shiftLogId)),
-        switchMap(() => this.userworkShiftService.loadPaginated())
+        switchMap(() => this.loadList())
       )
       .subscribe({
         next: (response: PaginatedList<UserWorkShift>) => {
-          this.list = response.list;
-          this.paginationInfo = response.paginationInfo;
+          this.handleLoadListSuccess(response);
+
           this.alertService.showSuccessMessage({
             messages: ['COMMON.DELETED_SUCCESSFULLY'],
           });

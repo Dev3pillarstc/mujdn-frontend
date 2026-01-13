@@ -151,6 +151,19 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   override buildForm(): void {
+    // Get the departments to pre-select based on assigned users
+    const assignedUserIds = this.model.assignedUserIds || [];
+    const departmentsToSelect = new Set<number>();
+
+    if (!this.isCreateMode && assignedUserIds.length > 0) {
+      assignedUserIds.forEach((userId) => {
+        const emp = this.usersProfiles.find((u) => u.id === userId);
+        if (emp && emp.departmentId) {
+          departmentsToSelect.add(emp.departmentId);
+        }
+      });
+    }
+
     this.form = this.fb.group({
       ...this.model.buildForm(),
       employeeWorkingDays: [
@@ -158,6 +171,7 @@ export class WorkShiftsAssignmentPopupComponent
         [this.validateWorkingDays()], // Use array syntax for validators
       ],
       userIdsArray: [[], [Validators.required]],
+      departmentIdsArray: [Array.from(departmentsToSelect), [Validators.required]],
     });
 
     // Watch for employee selection changes to update the accordion
@@ -191,20 +205,12 @@ export class WorkShiftsAssignmentPopupComponent
       if (assignedUserIds.length > 0) {
         this.form.get('userIdsArray')?.setValue(assignedUserIds);
 
-        // Find departments for these users to auto-select them
-        const departmentsToSelect = new Set<number>();
-        assignedUserIds.forEach((userId) => {
-          const emp = this.usersProfiles.find((u) => u.id === userId);
-          if (emp && emp.departmentId) {
-            departmentsToSelect.add(emp.departmentId);
-          }
-        });
+        // Get the pre-selected departments from the form (already set in buildForm)
+        const selectedDepartments = this.form.get('departmentIdsArray')?.value || [];
 
-        if (departmentsToSelect.size > 0) {
-          const deptArray = Array.from(departmentsToSelect);
-          this.form.get('departmentIdsArray')?.setValue(deptArray);
-          // Filter employees to ensure selected ones are visible in dropdown
-          this.filterEmployeesByDepartment(deptArray);
+        // Filter employees to ensure selected ones are visible in dropdown
+        if (selectedDepartments.length > 0) {
+          this.filterEmployeesByDepartment(selectedDepartments);
         }
       }
 

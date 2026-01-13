@@ -103,7 +103,8 @@ export class WorkShiftsAssignmentPopupComponent
     this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
 
     this.usersProfiles = this.sortByName(this.usersProfiles, this.optionLabel);
-    this.filteredUsersProfiles = this.usersProfiles;
+    // Initialize as empty - employees will appear only after department selection
+    this.filteredUsersProfiles = [];
     this.departments = this.sortByName(this.departments, this.optionLabel);
     this.shifts = this.sortByName(this.shifts, this.optionLabel);
 
@@ -451,74 +452,60 @@ export class WorkShiftsAssignmentPopupComponent
 
   onDepartmentChange(event: any) {
     const departmentIds = event.value || [];
+    const previousDepartmentIds = this.form.get('departmentIdsArray')?.value || [];
+
+    // Find which departments were deselected
+    const deselectedDepartmentIds = previousDepartmentIds.filter(
+      (id: number) => !departmentIds.includes(id)
+    );
+
+    // Remove employees from deselected departments ONLY if we still have some departments selected.
+    // If all departments are cleared, we want to keep the current selection (User request).
+    if (departmentIds.length > 0 && deselectedDepartmentIds.length > 0) {
+      this.removeEmployeesFromDeselectedDepartments(deselectedDepartmentIds);
+    }
 
     if (departmentIds.length > 0) {
       this.filterEmployeesByDepartment(departmentIds);
     } else {
-      // If no department selected, show all employees
-      this.filteredUsersProfiles = [...this.usersProfiles];
-    }
-
-    // Clear employee selection when departments change
-    // If we want to keep selected employees even if department is unchecked, remove this.
-    // However, usually if you uncheck a department, you might expect its users to be removed?
-    // Requirement says: "deleting all employees of department resets the department and employees".
-    // It doesn't explicitly say changing department dropdown should clear employees,
-    // but usually it filters. Let's keep existing logic but refining it.
-
-    // If I unselect a department, I should probably remove its employees from selection?
-    // Or just filter the dropdown?
-    // Current implementation only filters the dropdown options.
-    // Let's ensure we remove employees that are no longer visible if that's desired,
-    // OR just keep them.
-    // The requirement "When selecting an employee, add it down in the accordion realated to the department"
-    // suggests the accordion is the source of truth for "selected".
-
-    // If I clear departments, I probably want to clear list?
-    if (departmentIds.length === 0) {
-      this.form.get('userIdsArray')?.setValue([]);
-    } else {
-      // Optional: Remove employees not in selected departments?
-      // For now, let's just filter the dropdown list.
-      // The user might want to keep previously selected users from other departments.
-      // But typically "Filter" implies selection constraint.
+      // If no department selected, show only currently selected employees
       const currentSelection = this.form.get('userIdsArray')?.value || [];
-      const validEmployees = this.usersProfiles.filter(
-        (u) => departmentIds.includes(u.departmentId) || currentSelection.includes(u.id)
-      );
-      // Actually, usually the dropdown items are what you CAN select.
-      // If I have User A (Dept 1) selected, and I uncheck Dept 1, User A is still selected in model.
-      // But logic at line 418 filters them out of the control value.
+      if (currentSelection.length > 0) {
+        this.filteredUsersProfiles = this.usersProfiles.filter((emp) =>
+          currentSelection.includes(emp.id)
+        );
+      } else {
+        // No departments and no selection - show empty list
+        this.filteredUsersProfiles = [];
+      }
+      // Do NOT clear userIdsArray here
     }
   }
+
+  removeEmployeesFromDeselectedDepartments(deselectedDepartmentIds: number[]): void {
+    const currentUserIds = this.form.get('userIdsArray')?.value || [];
+
+    // Find employees that belong to deselected departments
+    const employeesToRemove = this.usersProfiles
+      .filter((emp) => deselectedDepartmentIds.includes(emp.departmentId || 0))
+      .map((emp) => emp.id);
+
+    // Filter out employees from deselected departments
+    const updatedUserIds = currentUserIds.filter(
+      (userId: number) => !employeesToRemove.includes(userId)
+    );
+
+    this.form.patchValue({ userIdsArray: updatedUserIds });
+  }
+
   filterEmployeesByDepartment(departmentIds: number[] | any) {
     // Handle the case where departmentIds might be an event object or the IDs directly
     const actualDepartmentIds = Array.isArray(departmentIds) ? departmentIds : [departmentIds];
 
-    // Filter employees by the selected departments
+    // Filter employees: show only employees from selected departments
     this.filteredUsersProfiles = this.usersProfiles.filter((emp) =>
       actualDepartmentIds.includes(emp.departmentId)
     );
-
-    // Only check form if it's initialized
-    if (this.form) {
-      // Check if the currently selected employees belong to the new departments
-      const selectedEmployeeIds = this.form.get('userIdsArray')?.value || [];
-
-      if (selectedEmployeeIds.length > 0) {
-        // Filter out employees that don't belong to the selected departments
-        const validEmployeeIds = selectedEmployeeIds.filter((empId: number) => {
-          const employee = this.usersProfiles.find((emp) => emp.id === empId);
-          return employee && actualDepartmentIds.includes(employee.departmentId);
-        });
-
-        // Update the form with only valid employees
-        if (validEmployeeIds.length !== selectedEmployeeIds.length) {
-          this.form.get('userIdsArray')?.setValue(validEmployeeIds);
-          this.form.get('userIdsArray')?.markAsTouched();
-        }
-      }
-    }
   }
 
   onEmployeeSelectionChange(userIds: number[]): void {

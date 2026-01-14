@@ -1,0 +1,20 @@
+:host ::ng-deep {
+    .accordion-container {
+        .p-icon {
+            position: absolute !important;
+            inset-inline-start: 24px !important;
+        }
+    }
+
+    .p-accordionpanel:not(.p-disabled).p-accordionpanel-active>.p-accordionheader,
+    .p-accordionpanel:last-child>.p-accordionheader,
+    .p-accordionheader,
+    .p-accordionpanel:not(.p-accordionpanel-active):not(.p-disabled)>.p-accordionheader:hover,
+    .p-accordionpanel:not(.p-disabled).p-accordionpanel-active>.p-accordionheader:hover {
+        background-color: transparent;
+    }
+
+    .p-inputnumber-horizontal .p-inputnumber-input {
+        width: 100%;
+    }
+}

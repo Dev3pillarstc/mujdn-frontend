@@ -30,6 +30,10 @@ import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icon
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { filter, switchMap } from 'rxjs';
 import { AlertService } from '@/services/shared/alert.service';
+import {
+  WORK_SHIFT_TYPE_OPTIONS,
+  WorkShiftTypeOption,
+} from '@/models/features/lookups/work-shifts/work-shift-type-option';
 
 @Component({
   selector: 'app-work-shifts-assignment',
@@ -62,6 +66,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   filteredEmployees: UsersWithDepartmentLookup[] = [];
   filterOptions: UserWorkShiftsFilter = new UserWorkShiftsFilter();
   shifts: Shift[] = [];
+  shiftTypeOptions: WorkShiftTypeOption[] = WORK_SHIFT_TYPE_OPTIONS;
 
   confirmationService = inject(ConfirmationService);
   userworkShiftService = inject(UserWorkShiftService);
@@ -98,10 +103,9 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     return {
       [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR')]: model.shiftNameAr,
       [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN')]: model.shiftNameEn,
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_AR')]:
-        model.employeeNameAr,
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME_EN')]:
-        model.employeeNameEn,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_TYPE')]: this.getShiftTypeName(
+        model.workShiftType
+      ),
       [this.translateService.instant('USER_WORK_SHIFT_PAGE.START_DATE')]: model.startDate,
       [this.translateService.instant('USER_WORK_SHIFT_PAGE.END_DATE')]: model.endDate,
     };
@@ -183,12 +187,12 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
       .pipe(
         filter((result) => result === DIALOG_ENUM.OK),
         switchMap(() => this.userworkShiftService.deleteUserShiftAssignment(shiftLogId)),
-        switchMap(() => this.userworkShiftService.loadPaginated())
+        switchMap(() => this.loadList())
       )
       .subscribe({
         next: (response: PaginatedList<UserWorkShift>) => {
-          this.list = response.list;
-          this.paginationInfo = response.paginationInfo;
+          this.handleLoadListSuccess(response);
+
           this.alertService.showSuccessMessage({
             messages: ['COMMON.DELETED_SUCCESSFULLY'],
           });
@@ -199,5 +203,14 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
           });
         },
       });
+  }
+
+  getShiftTypeName(type: number): string {
+    const option = this.shiftTypeOptions.find((opt) => opt.value === type);
+    return option
+      ? this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+        ? option.nameAr
+        : option.nameEn
+      : '';
   }
 }

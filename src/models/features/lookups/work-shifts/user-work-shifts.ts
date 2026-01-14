@@ -1,4 +1,5 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
+import { WorkShiftType } from '@/enums/work-shift-type';
 import { UserWorkShiftInterceptor } from '@/model-interceptors/features/lookups/user-work-shift.interceptor';
 import { SingleResponseData } from '@/models/shared/response/single-response-data';
 import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
@@ -16,13 +17,18 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   declare id: number;
   declare shiftNameAr: string;
   declare shiftNameEn: string;
-  declare employeeNameAr: string;
-  declare employeeNameEn: string;
+  // declare employeeNameAr: string;
+  // declare employeeNameEn: string;
   declare startDate: Date | string;
   declare endDate: Date | string;
   declare fkShiftId: number;
   declare fkAssignedUserId: number;
   declare employeeWorkingDays: string;
+  declare assignedUserIds: number[];
+  declare workShiftType: WorkShiftType;
+  declare presenceInquiryTime: string;
+  declare presenceInquiryBuffer: number;
+
   declare concurrencyUpdateVersion?: Uint8Array;
 
   constructor(init?: Partial<UserWorkShift>) {
@@ -31,13 +37,25 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   }
 
   buildForm() {
-    const { fkShiftId, fkAssignedUserId, startDate, endDate, employeeWorkingDays } = this;
+    const {
+      fkShiftId,
+      fkAssignedUserId,
+      startDate,
+      endDate,
+      employeeWorkingDays,
+      workShiftType,
+      presenceInquiryTime,
+      presenceInquiryBuffer,
+    } = this;
     return {
       fkShiftId: [fkShiftId, [Validators.required]],
-      fkAssignedUserId: [fkAssignedUserId, [Validators.required]],
+      fkAssignedUserId: [fkAssignedUserId, []], // Made optional here as we might use assignedUserIds
       startDate: [startDate, [Validators.required]],
       endDate: [endDate, []],
       employeeWorkingDays: [employeeWorkingDays || ''],
+      workShiftType: [workShiftType || WorkShiftType.Standard, [Validators.required]],
+      presenceInquiryTime: [presenceInquiryTime, []],
+      presenceInquiryBuffer: [presenceInquiryBuffer, []],
     };
   }
 }

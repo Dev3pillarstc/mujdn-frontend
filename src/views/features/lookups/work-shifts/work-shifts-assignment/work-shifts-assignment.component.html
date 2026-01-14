@@ -107,6 +107,24 @@
 
             <div class="relative">
               <label class="label">
+                {{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}
+              </label>
+              <p-select
+                [options]="shiftTypeOptions"
+                [(ngModel)]="filterOptions.workShiftType"
+                class="w-full peer"
+                [optionLabel]="optionLabel"
+                optionValue="value"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate"
+                [showClear]="true"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+
+            <div class="relative">
+              <label class="label">
                 {{ 'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate }}
               </label>
               <p-select
@@ -182,7 +200,7 @@
               <tr>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN' | translate }}</th>
-                <th>{{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.STARTING_DATE' | translate }}</th>
                 <th>{{ 'USER_WORK_SHIFT_PAGE.ENDING_DATE' | translate }}</th>
                 <th>{{ 'COMMON.ACTION' | translate }}</th>
@@ -193,9 +211,7 @@
                 <td>{{ shiftData.shiftNameAr }}</td>
                 <td>{{ shiftData.shiftNameEn }}</td>
                 <td>
-                  {{
-                    isCurrentLanguageEnglish() ? shiftData.employeeNameEn : shiftData.employeeNameAr
-                  }}
+                  {{ getShiftTypeName(shiftData.workShiftType) }}
                 </td>
                 <td>{{ shiftData.startDate | date: 'dd/MM/yyyy' }}</td>
                 @if (shiftData.endDate) {

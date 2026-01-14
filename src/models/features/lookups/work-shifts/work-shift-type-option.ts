@@ -1,0 +1,29 @@
+import { WorkShiftType } from '@/enums/work-shift-type';
+
+export interface WorkShiftTypeOption {
+  id: number;
+  nameEn: string;
+  nameAr: string;
+  value: WorkShiftType;
+}
+
+export const WORK_SHIFT_TYPE_OPTIONS: WorkShiftTypeOption[] = [
+  {
+    id: 1,
+    nameEn: 'Standard Shift',
+    nameAr: 'وردية بنظام ساعات العمل المعتمدة',
+    value: WorkShiftType.Standard,
+  },
+  {
+    id: 2,
+    nameEn: 'Week On / Week Off',
+    nameAr: 'أسبوع عمل / أسبوع راحة',
+    value: WorkShiftType.WeekOnWeekOff,
+  },
+  {
+    id: 3,
+    nameEn: 'Week On / Week Off (24h)',
+    nameAr: 'أسبوع عمل / أسبوع راحة (24 ساعة)',
+    value: WorkShiftType.WeekOnWeekOff24,
+  },
+];

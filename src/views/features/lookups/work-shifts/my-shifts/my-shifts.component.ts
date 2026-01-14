@@ -1,3 +1,4 @@
+import { MultiSelect } from 'primeng/multiselect';
 import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
@@ -48,6 +49,7 @@ import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
     DatePickerModule,
     FormsModule,
     TranslatePipe,
+    MultiSelect,
   ],
   templateUrl: './my-shifts.component.html',
   styleUrl: './my-shifts.component.scss',
@@ -62,7 +64,7 @@ export default class MyShiftsComponent extends BaseListComponent<
   filterModel: EmployeeShiftsFilter = new EmployeeShiftsFilter();
   dialogSize = {
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '1024px',
   };
 
   filterOptions: EmployeeShiftsFilter = new EmployeeShiftsFilter();

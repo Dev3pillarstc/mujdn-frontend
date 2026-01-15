@@ -411,10 +411,10 @@ export class WorkShiftsAssignmentPopupComponent
     model.employeeWorkingDays = formValue.employeeWorkingDays;
     model.workShiftType = formValue.workShiftType;
 
-    // Convert time to string HH:mm:ss if present
+    // Convert time to string HH:mm:ss if present (always set seconds to 00)
     if (formValue.presenceInquiryTime instanceof Date) {
       const time = formValue.presenceInquiryTime;
-      model.presenceInquiryTime = `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}:${time.getSeconds().toString().padStart(2, '0')}`;
+      model.presenceInquiryTime = `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}:00`;
     } else {
       model.presenceInquiryTime = formValue.presenceInquiryTime;
     }

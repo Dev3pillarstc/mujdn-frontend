@@ -130,7 +130,8 @@
     "AUTH_ACTIVE_DIRECTORY_USERNAME_EXISTS": "اسم المستخدم فى ال Active Directory موجود بالفعل",
     "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "خدمة Active Directory غير متاحة",
     "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
-    "INVALID_XML_FILE_TYPE": "امتداد الملف يجب ان يكون .xml"
+    "INVALID_XML_FILE_TYPE": "امتداد الملف يجب ان يكون .xml",
+    "INVALID_SHIFT_DURATION_FOR_WEEK_ON_WEEK_OFF_24": "مدة الوردية غير صالحة لأسبوع عمل وأسبوع راحة 24 ساعة"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"

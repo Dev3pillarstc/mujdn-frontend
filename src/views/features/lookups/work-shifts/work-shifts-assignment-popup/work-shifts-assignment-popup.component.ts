@@ -191,6 +191,11 @@ export class WorkShiftsAssignmentPopupComponent
 
     // Initialize state based on current type
     this.onWorkShiftTypeChange(this.form.get('workShiftType')?.value);
+
+    this.refreshAllowedWeekDays(
+      (this.form.get('startDate')?.value as Date | null) ?? null,
+      (this.form.get('endDate')?.value as Date | null) ?? null
+    );
   }
 
   // Update setDropdownValues to handle the department filtering after form is built
@@ -244,6 +249,11 @@ export class WorkShiftsAssignmentPopupComponent
             : this.model.endDate;
         this.form.get('endDate')?.setValue(endDate);
       }
+
+      this.refreshAllowedWeekDays(
+        (this.form.get('startDate')?.value as Date | null) ?? null,
+        (this.form.get('endDate')?.value as Date | null) ?? null
+      );
     }
   }
 
@@ -370,19 +380,16 @@ export class WorkShiftsAssignmentPopupComponent
   // NEW METHOD: Get all weekdays that fall within the date range
   private getAllowedWeekDaysInRange(startDate: Date, endDate: Date): number[] {
     const allowedDays = new Set<number>();
+
     const currentDate = new Date(startDate);
     const end = new Date(endDate);
 
-    // Iterate through each day in the range
+    // ✅ normalize to date-only (midnight)
+    currentDate.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+
     while (currentDate <= end) {
-      // JavaScript's getDay() returns 0 for Sunday, 1 for Monday, etc.
-      // Your WeekDaysEnum: SUNDAY = 0, MONDAY = 1, TUESDAY = 2, WEDNESDAY = 3, THURSDAY = 4, FRIDAY = 5, SATURDAY = 6
-      const jsDay = currentDate.getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
-
-      // Your enum matches JavaScript's getDay() exactly, so no conversion needed
-      allowedDays.add(jsDay);
-
-      // Move to next day
+      allowedDays.add(currentDate.getDay());
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
@@ -590,35 +597,70 @@ export class WorkShiftsAssignmentPopupComponent
     }
   }
   onStartDateSelect(selectedDate: Date): void {
-    if (selectedDate) {
-      this.minEndDate = new Date(selectedDate);
+    const newStartDate = selectedDate ?? null;
 
-      const currentEndDate = this.form.get('endDate')?.value;
-      if (currentEndDate && new Date(currentEndDate) < selectedDate) {
-        this.form.get('endDate')?.setValue(null);
-      }
-    } else {
-      this.minEndDate = null;
+    this.minEndDate = newStartDate ? new Date(newStartDate) : null;
+
+    const endDate = (this.form.get('endDate')?.value as Date | null) ?? null;
+
+    // if end is before new start -> clear end
+    if (newStartDate && endDate && new Date(endDate) < newStartDate) {
+      this.form.get('endDate')?.setValue(null);
     }
 
-    // Clear selected working days that are no longer valid
-    this.validateAndUpdateWorkingDays();
+    const effectiveEndDate =
+      newStartDate && endDate && new Date(endDate) < newStartDate ? null : endDate;
+
+    // ✅ compute allowed days using NEW start + current end (or null if cleared)
+    this.refreshAllowedWeekDays(newStartDate, effectiveEndDate);
+
+    // ✅ remove invalid selected working days using the same effective range
+    this.validateAndUpdateWorkingDays_WithDates(newStartDate, effectiveEndDate);
   }
 
   onEndDateSelect(selectedDate: Date): void {
-    if (selectedDate) {
-      this.maxStartDate = new Date(selectedDate);
+    const newEndDate = selectedDate ?? null;
 
-      const currentStartDate = this.form.get('startDate')?.value;
-      if (currentStartDate && new Date(currentStartDate) > selectedDate) {
-        this.form.get('startDate')?.setValue(null);
-      }
-    } else {
-      this.maxStartDate = null;
+    this.maxStartDate = newEndDate ? new Date(newEndDate) : null;
+
+    const startDate = (this.form.get('startDate')?.value as Date | null) ?? null;
+
+    // if start is after new end -> clear start
+    if (newEndDate && startDate && new Date(startDate) > newEndDate) {
+      this.form.get('startDate')?.setValue(null);
     }
 
-    // Clear selected working days that are no longer valid
-    this.validateAndUpdateWorkingDays();
+    const effectiveStartDate =
+      newEndDate && startDate && new Date(startDate) > newEndDate ? null : startDate;
+
+    // ✅ compute allowed days using current start (or null if cleared) + NEW end
+    this.refreshAllowedWeekDays(effectiveStartDate, newEndDate);
+
+    // ✅ remove invalid selected working days using the same effective range
+    this.validateAndUpdateWorkingDays_WithDates(effectiveStartDate, newEndDate);
+  }
+
+  private validateAndUpdateWorkingDays_WithDates(
+    startDate: Date | null,
+    endDate: Date | null
+  ): void {
+    if (!startDate || !endDate) return;
+
+    const allowedDays = this.getAllowedWeekDaysInRange(startDate, endDate);
+
+    this.selectedWorkingDays = this.selectedWorkingDays.filter((day) => allowedDays.includes(day));
+
+    this.updateEmployeeWorkingDaysInForm();
+  }
+
+  allowedWeekDaysInRange: number[] = [];
+
+  private refreshAllowedWeekDays(startDate: Date | null, endDate: Date | null): void {
+    if (!startDate || !endDate) {
+      this.allowedWeekDaysInRange = [];
+      return;
+    }
+    this.allowedWeekDaysInRange = this.getAllowedWeekDaysInRange(startDate, endDate);
   }
 
   onWorkShiftTypeChange(type: WorkShiftType): void {

@@ -17,7 +17,9 @@ export default class EmployeeShift extends BaseCrudModel<EmployeeShift, MyShifts
   declare employeeWorkingDays: string;
   declare startDate: Date | string;
   declare endDate: Date | string;
-
+  declare workShiftType: number;
+  declare presenceInquiryTime?: string;
+  declare PresenceInquiryBuffer?: number;
   formattedTimeFrom?: string;
   formattedTimeTo?: string;
 }

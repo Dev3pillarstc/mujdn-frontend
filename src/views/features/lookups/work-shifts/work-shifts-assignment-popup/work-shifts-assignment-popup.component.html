@@ -194,7 +194,7 @@
         </div>
 
         <div class="lg:col-span-2">
-          <label class="label" for="date-to">{{
+          <label [ngClass]="getDateToIsRequired()" class="label" for="date-to">{{
             'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
           }}</label>
           <div class="relative">

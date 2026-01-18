@@ -791,6 +791,10 @@ export class WorkShiftsAssignmentPopupComponent
     return this.form.get('presenceInquiryBuffer') as FormControl;
   }
 
+  get workShiftTypeControl() {
+    return this.form.get('workShiftType') as FormControl;
+  }
+
   getSelectedDepartmentsLabel(): string {
     const selectedIds = this.form?.get('departmentIdsArray')?.value || [];
     const count = selectedIds.length;
@@ -820,4 +824,8 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   weekDays = weekDays;
+
+  getDateToIsRequired() {
+    return this.workShiftTypeControl.value == this.workShiftType.Standard ? '' : 'required';
+  }
 }

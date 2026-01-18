@@ -110,7 +110,7 @@ export class WorkShiftsAssignmentPopupComponent
 
     if (this.isCreateMode) {
       // Initialize selected working days
-      this.workDays = this.data.lookups?.defaultWorkDays[0]!;
+      // this.workDays = this.data.lookups?.defaultWorkDays[0]!;
       this.initializeSelectedWorkingDays();
     } else {
       // For edit mode, initialize working days from model

@@ -112,7 +112,8 @@
             <th>{{ 'ATTENDANCE_REPORT_PAGE.LEAVE_NAME' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.MISSION_NAME' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.PERMISSIONS' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.DOCUMENTATION' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.PRESENCE_INQUIRY' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_PRESENCE_INQUIRY' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKIN_TIME' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKOUT_TIME' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}</th>
@@ -140,6 +141,17 @@
                   <img src="assets/icons/right-icon.svg" alt="" />
                 </div>
               } @else if (attendance.isPresenceInquirySucceed === false) {
+                <div class="flex items-center justify-center">
+                  <img src="assets/icons/wrong-icon.svg" alt="" />
+                </div>
+              }
+            </td>
+            <td>
+              @if (attendance.isShiftPresenceInquirySucceed) {
+                <div class="flex items-center justify-center">
+                  <img src="assets/icons/right-icon.svg" alt="" />
+                </div>
+              } @else if (attendance.isShiftPresenceInquirySucceed === false) {
                 <div class="flex items-center justify-center">
                   <img src="assets/icons/wrong-icon.svg" alt="" />
                 </div>

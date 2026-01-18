@@ -55,6 +55,7 @@ export default class AttendanceReport extends BaseCrudModel<
   declare missionNameAr?: string | null;
 
   declare isPresenceInquirySucceed?: boolean | null;
+  declare isShiftPresenceInquirySucceed?: boolean | null;
   declare firstAttendanceFingerPrint?: Date | string | null;
   declare lastLeaveFingerPrint?: Date | string | null;
 

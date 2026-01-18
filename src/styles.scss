@@ -119,3 +119,13 @@
 .p-tieredmenu-item-link {
   justify-content: flex-start !important;
 }
+
+.p-select-option span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.p-virtualscroller-content {
+  max-width: 100% !important;
+}

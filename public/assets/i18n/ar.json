@@ -497,9 +497,9 @@
     "SHIFT_HOURS": "ساعات العمل الخاصة بالوردية",
     "WORK_WEEK_REST_WEEK": "أسبوع عمل/أسبوع راحة",
     "SHIFT_24_HOURS": "وردية بنظام الراحات 24 ساعة",
-    "ATTENDANCE_DOCUMENTATION_TIME": "وقت توثيق التواجد للموظفين (لنظام الراحات 24 ساعة)",
+    "ATTENDANCE_DOCUMENTATION_TIME": "وقت إثبات الحضور اليومي (لنظام الراحات 24 ساعة)",
     "TIME_FROM_PLACEHOLDER": "موعد (من)",
-    "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "فترة السماح لتوثيق التواجد (قبل / بعد)",
+    "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "فترة السماح لإثبات الحضور اليومي (قبل / بعد)",
     "ASSIGNED_EMPLOYEES": "الموظفون المعنيون بالاسناد",
     "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين"
   },

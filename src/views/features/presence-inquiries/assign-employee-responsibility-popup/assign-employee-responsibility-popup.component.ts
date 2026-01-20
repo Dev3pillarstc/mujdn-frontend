@@ -91,16 +91,14 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
   }
 
   toggleUserSelection(userId: number, event?: Event) {
-    if ((event?.target as HTMLInputElement)?.checked) {
-      // Add if not already in the list
-      if (!this.selectedUsers.some((u) => u.id === userId)) {
-        const user = this.availableUsers.find((u) => u.id === userId);
-        if (user && !this.selectedUsers.some((u) => u.id === userId)) {
-          this.selectedUsers.push(user);
-        }
+    const checked = (event?.target as HTMLInputElement)?.checked;
+
+    if (checked) {
+      const user = this.availableUsers.find((u) => u.id === userId);
+      if (user && !this.selectedUsers.some((u) => u.id === userId)) {
+        this.selectedUsers.push(user);
       }
     } else {
-      // Remove if unchecked
       this.selectedUsers = this.selectedUsers.filter((u) => u.id !== userId);
     }
   }
@@ -129,14 +127,19 @@ export class AssignEmployeeResponsibilityPopupComponent implements OnInit {
   }
 
   toggleAll(checked: boolean): void {
+    const currentPageUsers = this.availableUsers.filter((u) => u.id !== undefined);
+
     if (checked) {
-      // select exactly the available users
-      this.selectedUsers = [...this.availableUsers];
+      // Add all users from current page that aren't already selected
+      const newUsers = currentPageUsers.filter(
+        (u) => !this.selectedUsers.some((su) => su.id === u.id)
+      );
+
+      this.selectedUsers = [...this.selectedUsers, ...newUsers];
     } else {
-      // unselect all available users (leave others, if you track any)
-      const availableIds = new Set(this.availableUsers.map((u) => u.id));
-      this.selectedUsers = this.selectedUsers.filter((u) => !availableIds.has(u.id));
-      // or simply: this.selectedUsers = [];
+      // Remove only users from the current page
+      const currentIds = new Set(currentPageUsers.map((u) => u.id));
+      this.selectedUsers = this.selectedUsers.filter((u) => !currentIds.has(u.id));
     }
   }
 

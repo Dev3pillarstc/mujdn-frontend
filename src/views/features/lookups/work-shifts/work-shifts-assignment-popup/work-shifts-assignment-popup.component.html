@@ -118,11 +118,12 @@
           <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-2">
-          <label class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
+          <label for="department-select" class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
           <div class="relative">
             <p-multiselect
               [options]="departments"
               class="w-full peer"
+              id="department-select"
               [optionLabel]="optionLabel"
               [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
               (onChange)="onDepartmentChange($event)"
@@ -137,6 +138,7 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
+          <app-validation-messages [control]="departmentIdsArrayControl"></app-validation-messages>
         </div>
 
         <div class="lg:col-span-2">
@@ -192,7 +194,7 @@
         </div>
 
         <div class="lg:col-span-2">
-          <label class="label" for="date-to">{{
+          <label [ngClass]="getDateToIsRequired()" class="label" for="date-to">{{
             'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
           }}</label>
           <div class="relative">

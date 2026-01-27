@@ -1,4 +1,5 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
+import { WorkShiftType } from '@/enums/work-shift-type';
 import { MyShiftsInterceptor } from '@/model-interceptors/features/lookups/my-shifts.interceptor';
 import { MyShiftsService } from '@/services/features/lookups/my-shifts.service';
 import { InterceptModel } from 'cast-response';
@@ -17,6 +18,7 @@ export default class EmployeeShift extends BaseCrudModel<EmployeeShift, MyShifts
   declare employeeWorkingDays: string;
   declare startDate: Date | string;
   declare endDate: Date | string;
+  declare workShiftType: WorkShiftType;
 
   formattedTimeFrom?: string;
   formattedTimeTo?: string;

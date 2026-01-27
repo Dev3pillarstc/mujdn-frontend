@@ -21,6 +21,7 @@ import { Select } from 'primeng/select';
 import { NotificationTypeService } from '@/services/features/setting/notification-type.service';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { formatDateOnly, formatDateTo12Hour } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-notifiactions',
@@ -95,5 +96,17 @@ export default class NotifiactionsComponent extends BaseListComponent<
   }
   getPropertyName() {
     return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+  }
+  formatTime(date: Date) {
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+
+    return formatDateTo12Hour(date, locale);
+  }
+  formatDate(date: Date) {
+    return formatDateOnly(date);
+  }
+
+  isCurrentLanguageEnglish() {
+    return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 }

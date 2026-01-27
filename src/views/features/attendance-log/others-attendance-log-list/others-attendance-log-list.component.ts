@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { MatDialogConfig } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AttendanceLogPopupComponent } from '../attendance-log-popup/attendance-log-popup.component';

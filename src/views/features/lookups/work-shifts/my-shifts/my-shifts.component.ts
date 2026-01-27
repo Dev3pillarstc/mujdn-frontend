@@ -35,6 +35,7 @@ import {
   toDateOnly,
 } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
+import { isShiftWorkingDay } from '@/utils/shift-helper';
 @Component({
   selector: 'app-my-shifts',
   imports: [
@@ -350,5 +351,14 @@ export default class MyShiftsComponent extends BaseListComponent<
 
   get endDate() {
     return this.filterOptions.endDate as Date;
+  }
+  get isTodayWorkingDay(): boolean {
+    if (!this.currentShift) return true;
+
+    return isShiftWorkingDay(
+      this.currentShift.workShiftType, // or fkWorkShiftType / typeId
+      this.currentShift.startDate, // shift cycle start date
+      new Date()
+    );
   }
 }

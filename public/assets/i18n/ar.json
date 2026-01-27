@@ -614,7 +614,7 @@
     "NOT_ASSIGNED": "لم يتم الإسناد",
     "DOCUMENTATION_INQUIRY": "مسائلة توثيق التواجد",
     "INQUIRY_TEXT": "نص المسائلة",
-    "ASSIGNED_USERS": "الموظفون المعنيون بتنفيذ المهام",
+    "ASSIGNED_USERS": "الموظفون المعنيون بتنفيذ توثيق التواجد",
     "ASSIGN_EMPLOYEES": "اسناد الموظفين"
   },
   "BLACKLIST_PAGE": {

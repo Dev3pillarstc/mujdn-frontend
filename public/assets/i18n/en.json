@@ -499,7 +499,7 @@
     "SHIFT_HOURS": "Shift Work Hours",
     "WORK_WEEK_REST_WEEK": "Work Week / Rest Week",
     "SHIFT_24_HOURS": "24-Hour Rest Shift",
-    "ATTENDANCE_DOCUMENTATION_TIME": "Dailt attendance proof Time (for 24-hour rest system)",
+    "ATTENDANCE_DOCUMENTATION_TIME": "Daily attendance proof Time (for 24-hour rest system)",
     "TIME_FROM_PLACEHOLDER": "Time (From)",
     "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "Daily attendance proof Grace Period (Before / After)",
     "ASSIGNED_EMPLOYEES": "Employees Assigned",
@@ -616,7 +616,7 @@
     "NOT_ASSIGNED": "Not Assigned",
     "DOCUMENTATION_INQUIRY": "Presence Inquiry",
     "INQUIRY_TEXT": "Inquiry Text",
-    "ASSIGNED_USERS": "Assigned Users",
+    "ASSIGNED_USERS": "Assigned users for presence inquiry",
     "ASSIGN_EMPLOYEES": "Assign Employees"
   },
   "BLACKLIST_PAGE": {

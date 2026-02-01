@@ -32,7 +32,7 @@ export const WorkMissionResolver: ResolveFn<
   return forkJoin({
     // Remove missions from resolver - will be loaded on tab change instead
     departments: canLoadDepartments
-      ? departmentService.getBaseLookupsForMissionsAsync().pipe(
+      ? departmentService.getMyDepartmentsForMissionsAsync().pipe(
           map((resp: ListResponseData<BaseLookupModel>) => resp?.data ?? null),
           catchError(() => of(null))
         )

@@ -37,7 +37,7 @@ import {
   toDateOnly,
 } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
-import { isShiftWorkingDay } from '@/utils/shift-helper';
+import { getShiftTypeTranslation, isShiftWorkingDay } from '@/utils/shift-helper';
 @Component({
   selector: 'app-my-shifts',
   imports: [
@@ -371,17 +371,6 @@ export default class MyShiftsComponent extends BaseListComponent<
 
   getShiftTypeName(shift?: EmployeeShift | null): string {
     const shiftModel = shift || this.currentShift;
-    if (!shiftModel) return '';
-    const type = shiftModel.workShiftType;
-    switch (type) {
-      case WorkShiftType.Standard:
-        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT');
-      case WorkShiftType.WeekOnWeekOff:
-        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK');
-      case WorkShiftType.WeekOnWeekOff24:
-        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS');
-      default:
-        return '';
-    }
+    return getShiftTypeTranslation(shiftModel?.workShiftType, this.translateService);
   }
 }

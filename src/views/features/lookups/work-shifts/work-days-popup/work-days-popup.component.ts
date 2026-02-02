@@ -11,6 +11,7 @@ import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-
 import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
 import { weekDays } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
+import { getShiftTypeTranslation } from '@/utils/shift-helper';
 
 @Component({
   selector: 'app-work-days-popup',
@@ -103,18 +104,7 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> im
 
   getShiftTypeName(shift?: EmployeeShift | null): string {
     const shiftModel = shift || this.model;
-    if (!shiftModel) return '';
-    const type = shiftModel.workShiftType;
-    switch (type) {
-      case WorkShiftType.Standard:
-        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT');
-      case WorkShiftType.WeekOnWeekOff:
-        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK');
-      case WorkShiftType.WeekOnWeekOff24:
-        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS');
-      default:
-        return '';
-    }
+    return getShiftTypeTranslation(shiftModel?.workShiftType, this.translateService);
   }
 
   get shiftName(): string {

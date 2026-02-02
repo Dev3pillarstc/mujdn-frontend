@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { WorkShiftType } from '@/enums/work-shift-type';
 
 /**
@@ -88,4 +89,28 @@ export function isShiftWorkingDay(
   }
 
   return false;
+}
+
+/**
+ * Gets the translated name of the work shift type.
+ * @param type The work shift type ID
+ * @param translate The translate service instance
+ * @returns The translated name of the shift type
+ */
+export function getShiftTypeTranslation(
+  type: number | undefined,
+  translate: TranslateService
+): string {
+  if (type === undefined) return '';
+
+  switch (type) {
+    case WorkShiftType.Standard:
+      return translate.instant('USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT');
+    case WorkShiftType.WeekOnWeekOff:
+      return translate.instant('USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK');
+    case WorkShiftType.WeekOnWeekOff24:
+      return translate.instant('USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS');
+    default:
+      return '';
+  }
 }

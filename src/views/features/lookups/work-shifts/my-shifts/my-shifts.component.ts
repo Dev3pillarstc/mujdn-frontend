@@ -1,3 +1,4 @@
+import { WorkShiftType } from '@/enums/work-shift-type';
 import { MultiSelect } from 'primeng/multiselect';
 import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
@@ -67,7 +68,7 @@ export default class MyShiftsComponent extends BaseListComponent<
     width: '100%',
     maxWidth: '1024px',
   };
-
+  WorkShiftType = WorkShiftType;
   filterOptions: EmployeeShiftsFilter = new EmployeeShiftsFilter();
   defaultWorkDays: WorkDaysSetting = new WorkDaysSetting();
   employeeShifts: EmployeeShift[] = [];
@@ -133,6 +134,8 @@ export default class MyShiftsComponent extends BaseListComponent<
   protected override mapModelToExcelRow(model: EmployeeShift): { [key: string]: any } {
     return {
       [this.translateService.instant('MY_SHIFTS.NAME_ARABIC')]: model.nameAr || '',
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_TYPE')]:
+        this.getShiftTypeName(model),
       [this.translateService.instant('MY_SHIFTS.NAME_ENGLISH')]: model.nameEn || '',
       [this.translateService.instant('MY_SHIFTS.START_DATE')]: model.startDate,
       [this.translateService.instant('MY_SHIFTS.END_DATE')]: model.endDate,
@@ -358,9 +361,27 @@ export default class MyShiftsComponent extends BaseListComponent<
     if (!this.currentShift) return true;
 
     return isShiftWorkingDay(
-      this.currentShift.workShiftType, // or fkWorkShiftType / typeId
-      this.currentShift.startDate, // shift cycle start date
-      new Date()
+      this.currentShift.workShiftType,
+      this.currentShift.startDate,
+      new Date(),
+      this.currentShift.employeeWorkingDays,
+      this.defaultWorkDays as any
     );
+  }
+
+  getShiftTypeName(shift?: EmployeeShift | null): string {
+    const shiftModel = shift || this.currentShift;
+    if (!shiftModel) return '';
+    const type = shiftModel.workShiftType;
+    switch (type) {
+      case WorkShiftType.Standard:
+        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT');
+      case WorkShiftType.WeekOnWeekOff:
+        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK');
+      case WorkShiftType.WeekOnWeekOff24:
+        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS');
+      default:
+        return '';
+    }
   }
 }

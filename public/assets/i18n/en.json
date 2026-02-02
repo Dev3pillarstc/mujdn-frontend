@@ -562,7 +562,8 @@
     "ATTENDANCE_BUFFER": "Attendance grace period (min)",
     "LEAVE_BUFFER": "Leave grace period (min)",
     "NO_DAYS_SELECTED": "No working days selected",
-    "DATE_RANGE_PLACEHOLDER": "Start date - End date"
+    "DATE_RANGE_PLACEHOLDER": "Start date - End date",
+    "REST_DAY_MESSAGE": "Rest day according to the current approved shift system"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "Forgot Password",

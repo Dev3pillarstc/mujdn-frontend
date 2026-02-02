@@ -560,7 +560,8 @@
     "ATTENDANCE_BUFFER": "مدة السماح للحضور(دق)",
     "LEAVE_BUFFER": "مدة السماح للانصراف(دق)",
     "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل",
-    "DATE_RANGE_PLACEHOLDER": "تاريخ البداية - تاريخ النهاية"
+    "DATE_RANGE_PLACEHOLDER": "تاريخ البداية - تاريخ النهاية",
+    "REST_DAY_MESSAGE": "يوم راحة وفق نظام الوردية الحالي المعتمد"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",

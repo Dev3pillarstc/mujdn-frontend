@@ -1,4 +1,7 @@
 import { Component, Inject, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { WorkShiftType } from '@/enums/work-shift-type';
+import { LanguageService } from '@/services/shared/language.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -11,15 +14,17 @@ import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 
 @Component({
   selector: 'app-work-days-popup',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, CommonModule],
   templateUrl: './work-days-popup.component.html',
 })
 export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> implements OnInit {
   model!: EmployeeShift;
   form!: FormGroup;
   translateService = inject(TranslateService);
+  langService = inject(LanguageService);
   workDays: WorkDaysSetting = new WorkDaysSetting();
   displayDays: { labelKey: string; value: WeekDaysEnum; isSelected: boolean }[] = [];
+  WorkShiftType = WorkShiftType;
 
   constructor(
     private fb: FormBuilder,
@@ -94,5 +99,25 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> im
   }
   getDayLabel(labelKey: string): string {
     return this.translateService.instant(labelKey);
+  }
+
+  getShiftTypeName(shift?: EmployeeShift | null): string {
+    const shiftModel = shift || this.model;
+    if (!shiftModel) return '';
+    const type = shiftModel.workShiftType;
+    switch (type) {
+      case WorkShiftType.Standard:
+        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT');
+      case WorkShiftType.WeekOnWeekOff:
+        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK');
+      case WorkShiftType.WeekOnWeekOff24:
+        return this.translateService.instant('USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS');
+      default:
+        return '';
+    }
+  }
+
+  get shiftName(): string {
+    return this.langService.getCurrentLanguage() === 'ar' ? this.model.nameAr! : this.model.nameEn!;
   }
 }

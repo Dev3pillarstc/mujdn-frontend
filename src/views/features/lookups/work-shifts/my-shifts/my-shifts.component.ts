@@ -38,6 +38,11 @@ import {
 } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 import { getShiftTypeTranslation, isShiftWorkingDay } from '@/utils/shift-helper';
+import {
+  WORK_SHIFT_TYPE_OPTIONS,
+  WorkShiftTypeOption,
+} from '@/models/features/lookups/work-shifts/work-shift-type-option';
+import { SelectModule } from 'primeng/select';
 @Component({
   selector: 'app-my-shifts',
   imports: [
@@ -51,7 +56,7 @@ import { getShiftTypeTranslation, isShiftWorkingDay } from '@/utils/shift-helper
     DatePickerModule,
     FormsModule,
     TranslatePipe,
-    MultiSelect,
+    SelectModule,
   ],
   templateUrl: './my-shifts.component.html',
   styleUrl: './my-shifts.component.scss',
@@ -76,7 +81,7 @@ export default class MyShiftsComponent extends BaseListComponent<
   service = inject(MyShiftsService);
   languageService = inject(LanguageService);
   locale: 'en-US' | 'ar-EG' = 'en-US';
-
+  shiftTypeOptions: WorkShiftTypeOption[] = WORK_SHIFT_TYPE_OPTIONS;
   override initListComponent(): void {
     this.locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
     this.loadInitialData();
@@ -293,6 +298,7 @@ export default class MyShiftsComponent extends BaseListComponent<
     this.filterModel.nameEn = this.filterOptions.nameEn;
     this.filterModel.startDate = this.filterOptions.startDate;
     this.filterModel.endDate = this.filterOptions.endDate;
+    this.filterModel.workShiftType = this.filterOptions.workShiftType;
   }
 
   // Convert filter to options contract
@@ -303,6 +309,7 @@ export default class MyShiftsComponent extends BaseListComponent<
     if (filter.nameEn) options['nameEn'] = filter.nameEn;
     if (filter.startDate) options['startDate'] = filter.startDate;
     if (filter.endDate) options['endDate'] = filter.endDate;
+    if (filter.workShiftType) options['workShiftType'] = filter.workShiftType;
 
     return options;
   }
@@ -372,5 +379,10 @@ export default class MyShiftsComponent extends BaseListComponent<
   getShiftTypeName(shift?: EmployeeShift | null): string {
     const shiftModel = shift || this.currentShift;
     return getShiftTypeTranslation(shiftModel?.workShiftType, this.translateService);
+  }
+
+  get optionLabel(): string {
+    const lang = this.langService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 }

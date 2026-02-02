@@ -561,7 +561,10 @@
     "LEAVE_BUFFER": "مدة السماح للانصراف(دق)",
     "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل",
     "DATE_RANGE_PLACEHOLDER": "تاريخ البداية - تاريخ النهاية",
-    "REST_DAY_MESSAGE": "يوم راحة وفق نظام الوردية الحالي المعتمد"
+    "REST_DAY_MESSAGE": "يوم راحة وفق نظام الوردية الحالي المعتمد",
+    "PRESENCE_INQUIRY_TIME": "وقت توثيق التواجد للموظفين (لنظام الراحات 24 س)",
+    "PRESENCE_INQUIRY_BUFFER": "فترة السماح لتوثيق التواجد (قبل / بعد)",
+    "WORK_DAY_MESSAGE": "يوم عمل وفق نظام الوردية الحالي المعتمد"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",

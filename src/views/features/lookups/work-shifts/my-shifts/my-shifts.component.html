@@ -48,6 +48,30 @@
               </svg>
               <span>{{ 'MY_SHIFTS.REST_DAY_MESSAGE' | translate }}</span>
             </div>
+          }@else{
+            <div
+              class="bg-[#eff8ff] text-[#1849a9] font-[500] rounded-full px-3 border border-[#b2ddff] flex items-center gap-1"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8.618 8.813h-.186a.563.563 0 0 1 0-1.125h.025c.154 0 .32 0 .461.018a.93.93 0 0 1 .552.256.93.93 0 0 1 .255.552c.02.14.02.306.02.46v3.776a.562.562 0 1 1-1.126 0V8.813zM8.994 5.25a.75.75 0 0 0 0 1.5h.007a.75.75 0 0 0 0-1.5h-.007z"
+                  fill="#1849A9"
+                />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M.938 9a8.062 8.062 0 1 0 16.124 0A8.062 8.062 0 0 0 .937 9zM9 15.938A6.937 6.937 0 1 1 9 2.063a6.937 6.937 0 0 1 0 13.874z"
+                  fill="#1849A9"
+                />
+              </svg>
+              <span>{{ 'MY_SHIFTS.WORK_DAY_MESSAGE' | translate }}</span>
+            </div>
           }
           @if (currentShift?.workShiftType === WorkShiftType.Standard) {
             <button
@@ -104,22 +128,26 @@
           </h5>
         </div>
         <div>
-          <p class="text-sm text-white mb-2">تاريخ البداية</p>
+          <p class="text-sm text-white mb-2">{{ 'MY_SHIFTS.STARTING_DATE' | translate }}</p>
           <h5 class="text-base font-semibold text-white">{{ currentShift?.startDate }}</h5>
         </div>
         <div>
-          <p class="text-sm text-white mb-2">تاريخ الانتهاء</p>
+          <p class="text-sm text-white mb-2">{{ 'MY_SHIFTS.ENDING_DATE' | translate }}</p>
           <h5 class="text-base font-semibold text-white">{{ currentShift?.endDate }}</h5>
         </div>
         @if (currentShift?.workShiftType === WorkShiftType.WeekOnWeekOff24) {
           <div>
-            <p class="text-sm text-white mb-2">وقت توثيق التواجد للموظفين (لنظام الراحات 24 س)</p>
+            <p class="text-sm text-white mb-2">
+              {{ 'MY_SHIFTS.PRESENCE_INQUIRY_TIME' | translate }}
+            </p>
             <h5 class="text-base font-semibold text-white">
               {{ currentShift?.presenceInquiryTime }}
             </h5>
           </div>
           <div>
-            <p class="text-sm text-white mb-2">فترة السماح لتوثيق التواجد (قبل / بعد)</p>
+            <p class="text-sm text-white mb-2">
+              {{ 'MY_SHIFTS.PRESENCE_INQUIRY_BUFFER' | translate }}
+            </p>
             <h5 class="text-base font-semibold text-white">
               {{ currentShift?.presenceInquiryBuffer }}
             </h5>
@@ -172,20 +200,21 @@
               ></span>
             </div>
             <div class="relative">
-              <label class="label">{{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}</label>
-              <div class="relative">
-                <p-multiselect
-                  class="w-full peer"
-                  [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate"
-                  optionValue="id"
-                  [maxSelectedLabels]="0"
-                  [virtualScroll]="true"
-                  [virtualScrollItemSize]="38"
-                ></p-multiselect>
-                <span
-                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-                ></span>
-              </div>
+              <label class="label">
+                {{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}
+              </label>
+              <p-select
+                [options]="shiftTypeOptions"
+                [(ngModel)]="filterOptions.workShiftType"
+                class="w-full peer"
+                [optionLabel]="optionLabel"
+                optionValue="value"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate"
+                [showClear]="true"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
             </div>
             <div class="relative">
               <label class="label" for="dateFrom">{{ 'MY_SHIFTS.START_DATE' | translate }}</label>

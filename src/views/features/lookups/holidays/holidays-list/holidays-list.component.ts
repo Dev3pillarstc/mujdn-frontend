@@ -81,7 +81,7 @@ export default class HolidaysListComponent extends BaseListComponent<
     };
   }
   showAddEditButtons() {
-    return this.authService.isHROfficer;
+    return this.authService.isHROfficer && this.authService.isRootdepartment;
   }
   openDataDialog(notes: string): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();

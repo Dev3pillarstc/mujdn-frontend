@@ -24,7 +24,7 @@
           {{ getCurrentShiftName() }}
         </h5>
         <div class="flex items-center gap-6">
-          @if (isTodayWorkingDay) {
+          @if (!isTodayWorkingDay && currentShift?.workShiftType !== WorkShiftType.Standard) {
             <div
               class="bg-[#eff8ff] text-[#1849a9] font-[500] rounded-full px-3 border border-[#b2ddff] flex items-center gap-1"
             >

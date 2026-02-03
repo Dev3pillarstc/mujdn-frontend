@@ -25,6 +25,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { dateToTimeString, toDateOnly } from '@/utils/general-helper';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icons-enum';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -46,6 +47,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   declare form: FormGroup;
   alertService = inject(AlertService);
   service = inject(ShiftService);
+  authService = inject(AuthService);
   fb = inject(FormBuilder);
   confirmationService = inject(ConfirmationService);
   translateService = inject(TranslateService);
@@ -136,13 +138,14 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
 
     // Show button only if shift date is today or before today (hide if future date)
     const isDateTodayOrBefore = shiftDate <= today;
+    const canActivate = isDateTodayOrBefore && this.authService.isRootdepartment!;
 
     if (this.isCreateMode) {
-      return isDateTodayOrBefore;
+      return canActivate;
     }
 
     // For update mode, same date logic + model must not be active
-    return !this.model.isActive && isDateTodayOrBefore;
+    return !this.model.isActive && canActivate;
   }
 
   saveAndActivateShift() {

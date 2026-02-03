@@ -6,7 +6,76 @@
     <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
       {{ 'MY_SHIFTS.SHIFT_DAYS' | translate }}
     </h3>
-    <div class="mt-6">
+    <div class="bg-[#074d31] p-6 rounded-2xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">{{ 'MY_SHIFTS.NAME_ARABIC' | translate }}</span>
+          <span class="font-semibold text-white">{{ shiftName }}</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">{{
+            'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate
+          }}</span>
+          <div class="bg-[#e5e7eb] px-3 rounded-full text-[#1f2a37] text-[16px] font-[500] w-fit">
+            {{ getShiftTypeName() }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      <div>
+        <span class="text-[#6c737f] text-sm">{{ 'WORK_SHIFTS_POPUP.TIME_FROM' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">{{ model.formattedTimeFrom }}</h5>
+      </div>
+      <div>
+        <span class="text-[#6c737f] text-sm">{{ 'WORK_SHIFTS_POPUP.TIME_TO' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">{{ model.formattedTimeTo }}</h5>
+      </div>
+      <div>
+        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.ATTENDANCE_BUFFER' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+          {{ model.attendanceBuffer || '0' }}
+        </h5>
+      </div>
+      <div>
+        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.LEAVE_BUFFER' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">{{ model.leaveBuffer || '0' }}</h5>
+      </div>
+      <div>
+        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.STARTING_DATE' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+          {{ model.startDate | date: 'dd/MM/yyyy' }}
+        </h5>
+      </div>
+      <div>
+        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.ENDING_DATE' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+          {{ model.endDate | date: 'dd/MM/yyyy' }}
+        </h5>
+      </div>
+      @if (model.workShiftType === WorkShiftType.WeekOnWeekOff24) {
+        <div>
+          <span class="text-[#6c737f] text-sm">
+            {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_TIME' | translate }}
+          </span>
+          <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+            {{ model.presenceInquiryTime }}
+          </h5>
+        </div>
+        <div>
+          <span class="text-[#6c737f] text-sm">
+            {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_GRACE_PERIOD' | translate }}
+          </span>
+          <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+            {{ model.presenceInquiryBuffer }}
+          </h5>
+        </div>
+      }
+    </div>
+    <div class="mt-6 pt-6 border-t border-t-[#d2d6db]">
+      <h3 class="text-[#1f2a37] font-[600] text-base sm:text-xl mb-4">
+        {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
+      </h3>
       <ul class="flex items-center gap-4 flex-wrap">
         @if (displayDays && displayDays.length > 0) {
           @for (day of displayDays; track day.value) {

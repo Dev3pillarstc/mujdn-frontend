@@ -43,9 +43,9 @@ export class DepartmentService extends LookupBaseService<Department, number> {
   }
 
   @CastResponse(undefined, { fallback: '$lookup' })
-  getBaseLookupsForMissionsAsync(): Observable<ListResponseData<BaseLookupModel>> {
+  getMyDepartmentsForMissionsAsync(): Observable<ListResponseData<BaseLookupModel>> {
     return this.http.get<ListResponseData<BaseLookupModel>>(
-      this.getUrlSegment() + '/' + 'GetBaseLookupsForMissionsAsync',
+      this.getUrlSegment() + '/' + 'GetMyDepartmentsForMissions',
       { withCredentials: true }
     );
   }

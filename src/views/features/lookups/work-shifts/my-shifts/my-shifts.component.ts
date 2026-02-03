@@ -1,3 +1,5 @@
+import { WorkShiftType } from '@/enums/work-shift-type';
+import { MultiSelect } from 'primeng/multiselect';
 import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
@@ -35,7 +37,12 @@ import {
   toDateOnly,
 } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
-import { isShiftWorkingDay } from '@/utils/shift-helper';
+import { getShiftTypeTranslation, isShiftWorkingDay } from '@/utils/shift-helper';
+import {
+  WORK_SHIFT_TYPE_OPTIONS,
+  WorkShiftTypeOption,
+} from '@/models/features/lookups/work-shifts/work-shift-type-option';
+import { SelectModule } from 'primeng/select';
 @Component({
   selector: 'app-my-shifts',
   imports: [
@@ -49,6 +56,7 @@ import { isShiftWorkingDay } from '@/utils/shift-helper';
     DatePickerModule,
     FormsModule,
     TranslatePipe,
+    SelectModule,
   ],
   templateUrl: './my-shifts.component.html',
   styleUrl: './my-shifts.component.scss',
@@ -63,9 +71,9 @@ export default class MyShiftsComponent extends BaseListComponent<
   filterModel: EmployeeShiftsFilter = new EmployeeShiftsFilter();
   dialogSize = {
     width: '100%',
-    maxWidth: '600px',
+    maxWidth: '1024px',
   };
-
+  WorkShiftType = WorkShiftType;
   filterOptions: EmployeeShiftsFilter = new EmployeeShiftsFilter();
   defaultWorkDays: WorkDaysSetting = new WorkDaysSetting();
   employeeShifts: EmployeeShift[] = [];
@@ -73,7 +81,7 @@ export default class MyShiftsComponent extends BaseListComponent<
   service = inject(MyShiftsService);
   languageService = inject(LanguageService);
   locale: 'en-US' | 'ar-EG' = 'en-US';
-
+  shiftTypeOptions: WorkShiftTypeOption[] = WORK_SHIFT_TYPE_OPTIONS;
   override initListComponent(): void {
     this.locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
     this.loadInitialData();
@@ -131,6 +139,8 @@ export default class MyShiftsComponent extends BaseListComponent<
   protected override mapModelToExcelRow(model: EmployeeShift): { [key: string]: any } {
     return {
       [this.translateService.instant('MY_SHIFTS.NAME_ARABIC')]: model.nameAr || '',
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_TYPE')]:
+        this.getShiftTypeName(model),
       [this.translateService.instant('MY_SHIFTS.NAME_ENGLISH')]: model.nameEn || '',
       [this.translateService.instant('MY_SHIFTS.START_DATE')]: model.startDate,
       [this.translateService.instant('MY_SHIFTS.END_DATE')]: model.endDate,
@@ -288,6 +298,7 @@ export default class MyShiftsComponent extends BaseListComponent<
     this.filterModel.nameEn = this.filterOptions.nameEn;
     this.filterModel.startDate = this.filterOptions.startDate;
     this.filterModel.endDate = this.filterOptions.endDate;
+    this.filterModel.workShiftType = this.filterOptions.workShiftType;
   }
 
   // Convert filter to options contract
@@ -298,6 +309,7 @@ export default class MyShiftsComponent extends BaseListComponent<
     if (filter.nameEn) options['nameEn'] = filter.nameEn;
     if (filter.startDate) options['startDate'] = filter.startDate;
     if (filter.endDate) options['endDate'] = filter.endDate;
+    if (filter.workShiftType) options['workShiftType'] = filter.workShiftType;
 
     return options;
   }
@@ -356,9 +368,21 @@ export default class MyShiftsComponent extends BaseListComponent<
     if (!this.currentShift) return true;
 
     return isShiftWorkingDay(
-      this.currentShift.workShiftType, // or fkWorkShiftType / typeId
-      this.currentShift.startDate, // shift cycle start date
-      new Date()
+      this.currentShift.workShiftType,
+      this.currentShift.startDate,
+      new Date(),
+      this.currentShift.employeeWorkingDays,
+      this.defaultWorkDays as any
     );
+  }
+
+  getShiftTypeName(shift?: EmployeeShift | null): string {
+    const shiftModel = shift || this.currentShift;
+    return getShiftTypeTranslation(shiftModel?.workShiftType, this.translateService);
+  }
+
+  get optionLabel(): string {
+    const lang = this.langService.getCurrentLanguage();
+    return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 }

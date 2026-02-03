@@ -8,67 +8,89 @@
     </h3>
     <div class="bg-[#074d31] p-6 rounded-2xl">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="flex flex-col gap-2 ">
-          <span class="text-sm text-white">اسم الوردية</span>
-          <span class="font-semibold text-white">دوام كلي</span>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">{{ 'MY_SHIFTS.NAME_ARABIC' | translate }}</span>
+          <span class="font-semibold text-white">{{ shiftName }}</span>
         </div>
-        <div class="flex flex-col gap-2 ">
-          <span class="text-sm text-white">نوع الاسناد</span>
-          <div class="bg-[#e5e7eb] px-3 rounded-full text-[#1f2a37] text-[16px] font-[500] w-fit">وردية بنظام الراحات
-            ساعات
-            عمل</div>
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-white">{{
+            'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate
+          }}</span>
+          <div class="bg-[#e5e7eb] px-3 rounded-full text-[#1f2a37] text-[16px] font-[500] w-fit">
+            {{ getShiftTypeName() }}
+          </div>
         </div>
       </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
       <div>
-        <span class="text-[#6c737f] text-sm">الوقت (من)</span>
-        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">02:00 ص</h5>
+        <span class="text-[#6c737f] text-sm">{{ 'WORK_SHIFTS_POPUP.TIME_FROM' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">{{ model.formattedTimeFrom }}</h5>
       </div>
       <div>
-        <span class="text-[#6c737f] text-sm">الوقت (الى)</span>
-        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">08:00 ص</h5>
+        <span class="text-[#6c737f] text-sm">{{ 'WORK_SHIFTS_POPUP.TIME_TO' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">{{ model.formattedTimeTo }}</h5>
       </div>
       <div>
-        <span class="text-[#6c737f] text-sm">مدة السماح للحضور (دق)</span>
-        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">10</h5>
+        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.ATTENDANCE_BUFFER' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+          {{ model.attendanceBuffer || '0' }}
+        </h5>
       </div>
       <div>
-        <span class="text-[#6c737f] text-sm">مدة السماح للانصراف (دق)</span>
-        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">10</h5>
+        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.LEAVE_BUFFER' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">{{ model.leaveBuffer || '0' }}</h5>
       </div>
       <div>
-        <span class="text-[#6c737f] text-sm">تاريخ البداية</span>
-        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">12/12/2023</h5>
+        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.STARTING_DATE' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+          {{ model.startDate | date: 'dd/MM/yyyy' }}
+        </h5>
       </div>
       <div>
-        <span class="text-[#6c737f] text-sm">تاريخ الانتهاء</span>
-        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">12/12/2023</h5>
+        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.ENDING_DATE' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+          {{ model.endDate | date: 'dd/MM/yyyy' }}
+        </h5>
       </div>
-      <div>
-        <span class="text-[#6c737f] text-sm">وقت توثيق التواجد للموظفين (لنظام الراحات 24 س)</span>
-        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">12:00 ص</h5>
-      </div>
-      <div>
-        <span class="text-[#6c737f] text-sm">فترة السماح لتوثيق التواجد (قبل / بعد)</span>
-        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">20 دق</h5>
-      </div>
+      @if (model.workShiftType === WorkShiftType.WeekOnWeekOff24) {
+        <div>
+          <span class="text-[#6c737f] text-sm">
+            {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_TIME' | translate }}
+          </span>
+          <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+            {{ model.presenceInquiryTime }}
+          </h5>
+        </div>
+        <div>
+          <span class="text-[#6c737f] text-sm">
+            {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_GRACE_PERIOD' | translate }}
+          </span>
+          <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+            {{ model.presenceInquiryBuffer }}
+          </h5>
+        </div>
+      }
     </div>
     <div class="mt-6 pt-6 border-t border-t-[#d2d6db]">
-      <h3 class="text-[#1f2a37] font-[600] text-base sm:text-xl mb-4">أيام العمل الخاصة بالوردية</h3>
+      <h3 class="text-[#1f2a37] font-[600] text-base sm:text-xl mb-4">
+        {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
+      </h3>
       <ul class="flex items-center gap-4 flex-wrap">
         @if (displayDays && displayDays.length > 0) {
-        @for (day of displayDays; track day.value) {
-        <li
-          class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium">
-          {{ getDayLabel(day.labelKey) }}
-        </li>
-        }
+          @for (day of displayDays; track day.value) {
+            <li
+              class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium"
+            >
+              {{ getDayLabel(day.labelKey) }}
+            </li>
+          }
         } @else {
-        <li
-          class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium">
-          {{ 'MY_SHIFTS.NO_DAYS_SELECTED' | translate }}
-        </li>
+          <li
+            class="min-w-[64px] min-h-[32px] flex flex-row justify-center items-center gap-1 px-3 rounded-full bg-[#f3f4f6] text-[#161616] text-[16px] font-medium"
+          >
+            {{ 'MY_SHIFTS.NO_DAYS_SELECTED' | translate }}
+          </li>
         }
       </ul>
       <div class="actions mt-6 flex items-center justify-end gap-4">

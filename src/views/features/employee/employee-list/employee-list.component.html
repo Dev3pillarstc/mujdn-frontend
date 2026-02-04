@@ -254,7 +254,7 @@
               <img alt="" src="assets/icons/excel.svg" />
             </button>
 
-            @if (authService.isHROfficer) {
+            @if (authService.isSuperHROfficer) {
               <button (click)="openDialog()" class="btn green-btn flex items-center">
                 <img alt="" src="assets/icons/plus.svg" />
                 <span>{{ 'EMPLOYEES_PAGE.ADD_NEW_EMPLOYEE' | translate }}</span>

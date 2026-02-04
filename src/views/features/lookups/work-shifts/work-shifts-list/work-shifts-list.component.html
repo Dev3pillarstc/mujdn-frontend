@@ -79,10 +79,12 @@
             >
               <img alt="" src="assets/icons/excel.svg" />
             </button>
-            <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
-              <img alt="" src="assets/icons/plus.svg" />
-              <span>{{ 'WORK_SHIFTS.ADD_NEW_SHIFT' | translate }}</span>
-            </button>
+            @if (canAddOrEditShifts()) {
+              <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
+                <img alt="" src="assets/icons/plus.svg" />
+                <span>{{ 'WORK_SHIFTS.ADD_NEW_SHIFT' | translate }}</span>
+              </button>
+            }
           </div>
         </div>
         <p-table [value]="list">
@@ -95,7 +97,9 @@
               <th>{{ 'WORK_SHIFTS.TIME_FROM_TO' | translate }}</th>
               <!-- hidden for release 1 -->
               <th>{{ 'WORK_SHIFTS.DEFAULT_SHIFT' | translate }}</th>
-              <th>{{ 'COMMON.ACTION' | translate }}</th>
+              @if (canAddOrEditShifts()) {
+                <th>{{ 'COMMON.ACTION' | translate }}</th>
+              }
             </tr>
           </ng-template>
           <ng-template #body let-shift>
@@ -137,16 +141,18 @@
                   <div>---</div>
                 }
               </td>
-              <td>
-                <div class="actions flex gap-2">
-                  <button (click)="addOrEditModel(shift)" class="table-action-gray-btn">
-                    <img [alt]="'COMMON.EDIT' | translate" src="assets/icons/edit-action.svg" />
-                  </button>
-                  <button (click)="deleteModel(shift.id)" class="table-action-red-btn">
-                    <img src="assets/icons/delete-action.svg" alt="" />
-                  </button>
-                </div>
-              </td>
+              @if (canAddOrEditShifts()) {
+                <td>
+                  <div class="actions flex gap-2">
+                    <button (click)="addOrEditModel(shift)" class="table-action-gray-btn">
+                      <img [alt]="'COMMON.EDIT' | translate" src="assets/icons/edit-action.svg" />
+                    </button>
+                    <button (click)="deleteModel(shift.id)" class="table-action-red-btn">
+                      <img src="assets/icons/delete-action.svg" alt="" />
+                    </button>
+                  </div>
+                </td>
+              }
             </tr>
           </ng-template>
         </p-table>

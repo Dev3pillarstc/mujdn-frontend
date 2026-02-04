@@ -18,6 +18,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { formatTimeTo12Hour } from '@/utils/general-helper';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-work-shifts-list',
@@ -42,6 +43,7 @@ export default class WorkShiftsListComponent
   filterModel: ShiftsFilter = new ShiftsFilter();
 
   shiftService = inject(ShiftService);
+  authService = inject(AuthService);
 
   languageService = inject(LanguageService);
   dialogSize = {
@@ -71,6 +73,10 @@ export default class WorkShiftsListComponent
       model.defaultShiftId = this.list.find((s) => s.defaultShiftId != null)?.defaultShiftId;
     }
     this.openBaseDialog(WorkShiftsListPopupComponent as any, model, viewMode);
+  }
+
+  canAddOrEditShifts() {
+    return this.authService.isSuperHROfficer;
   }
 
   addOrEditModel(shift?: Shift) {

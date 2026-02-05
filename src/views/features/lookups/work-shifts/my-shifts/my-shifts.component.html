@@ -295,8 +295,8 @@
             <ng-template #header>
               <tr>
                 <th>{{ 'MY_SHIFTS.NAME_ARABIC' | translate }}</th>
-                <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.NAME_ENGLISH' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.DATE_RANGE_PLACEHOLDER' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.TIME_FROM_TO' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.ATTENDANCE_BUFFER' | translate }}</th>
@@ -307,8 +307,8 @@
             <ng-template #body let-shift>
               <tr>
                 <td>{{ shift.nameAr }}</td>
-                <td>{{ getShiftTypeName(shift) }}</td>
                 <td>{{ shift.nameEn }}</td>
+                <td>{{ getShiftTypeName(shift) }}</td>
                 <td>
                   {{ shift.startDate | date: 'dd/MM/yyyy' }} -
                   {{ shift.endDate | date: 'dd/MM/yyyy' }}

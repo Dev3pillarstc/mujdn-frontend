@@ -205,7 +205,7 @@
             <th>{{ 'ATTENDANCE_LOG_PAGE.CREATOR_EN' | translate }}</th>
             <!-- hidden for release 1 -->
             <!-- <th>{{ 'ATTENDANCE_LOG_PAGE.PROCESSING_STATUS' | translate }}</th> -->
-            @if (authService.isAdmin || authService.isHROfficer) {
+            @if (authService.isAdmin) {
               <th class="w-[36px] whitespace-nowrap">
                 {{ 'ATTENDANCE_LOG_PAGE.ACTIONS' | translate }}
               </th>
@@ -257,7 +257,7 @@
                 </span>
               </div>
             </td> -->
-            @if (authService.isAdmin || authService.isHROfficer) {
+            @if (authService.isAdmin) {
               <td>
                 <div class="actions flex gap-2">
                   @if (!attendanceLog.isRawData) {

@@ -564,8 +564,8 @@
     "NO_DAYS_SELECTED": "No working days selected",
     "DATE_RANGE_PLACEHOLDER": "Start date - End date",
     "REST_DAY_MESSAGE": "Rest day according to the current approved shift system",
-    "PRESENCE_INQUIRY_TIME": "Presence inquiry time (for 24H system)",
-    "PRESENCE_INQUIRY_BUFFER": "Presence inquiry buffer (before/after)",
+    "PRESENCE_INQUIRY_TIME": "Daily attendance proof time (for 24H system)",
+    "PRESENCE_INQUIRY_BUFFER": "Daily attendance proof buffer (before/after)",
     "WORK_DAY_MESSAGE": "Work day according to the current approved shift system"
   },
   "RESET_PASSWORD": {

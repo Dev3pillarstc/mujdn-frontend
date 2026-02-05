@@ -129,11 +129,15 @@
         </div>
         <div>
           <p class="text-sm text-white mb-2">{{ 'MY_SHIFTS.STARTING_DATE' | translate }}</p>
-          <h5 class="text-base font-semibold text-white">{{ currentShift?.startDate }}</h5>
+          <h5 class="text-base font-semibold text-white">
+            {{ currentShift?.startDate | date: 'dd/MM/yyyy' }}
+          </h5>
         </div>
         <div>
           <p class="text-sm text-white mb-2">{{ 'MY_SHIFTS.ENDING_DATE' | translate }}</p>
-          <h5 class="text-base font-semibold text-white">{{ currentShift?.endDate }}</h5>
+          <h5 class="text-base font-semibold text-white">
+            {{ currentShift?.endDate | date: 'dd/MM/yyyy' }}
+          </h5>
         </div>
         @if (currentShift?.workShiftType === WorkShiftType.WeekOnWeekOff24) {
           <div>
@@ -141,7 +145,7 @@
               {{ 'MY_SHIFTS.PRESENCE_INQUIRY_TIME' | translate }}
             </p>
             <h5 class="text-base font-semibold text-white">
-              {{ currentShift?.presenceInquiryTime }}
+              {{ formatPresenceTime(currentShift) }}
             </h5>
           </div>
           <div>

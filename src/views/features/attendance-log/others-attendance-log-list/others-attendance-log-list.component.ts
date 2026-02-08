@@ -257,17 +257,17 @@ export default class OthersAttendanceLogListComponent
           // hidden for release 1
           // [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
           //   this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN_PDF')]:
             model.creatorNameEn ?? 'System',
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR_PDF')]:
             model.creatorNameAr ?? 'النظام',
           [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
           [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: this.swipeTimeArEn(
             model.swipeTime
           ),
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN')]:
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_EN_PDF')]:
             model.employeeNameEn,
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]:
+          [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR_PDF')]:
             model.employeeNameAr,
         }));
 

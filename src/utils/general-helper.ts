@@ -142,15 +142,20 @@ export function formatDateTo12Hour(date: Date, locale: 'en-US' | 'ar-EG' = 'en-U
 export function formatDateOnly(date: any): string {
   if (!date) return '';
 
-  date = new Date(date);
-  // Always use 'en-US' to ensure numbers are Latin digits
-  const formatted = date.toLocaleDateString('en-US', {
+  const dt = new Date(date);
+
+  // Force DD/MM/YYYY (stable across environments) while keeping Latin digits
+  const parts = new Intl.DateTimeFormat('en-GB', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
-  });
+  }).formatToParts(dt);
 
-  return formatted;
+  const day = parts.find((p) => p.type === 'day')?.value ?? '';
+  const month = parts.find((p) => p.type === 'month')?.value ?? '';
+  const year = parts.find((p) => p.type === 'year')?.value ?? '';
+
+  return `${day}/${month}/${year}`;
 }
 
 export function formatSwipeTime(

@@ -64,7 +64,7 @@ export default class OthersAttendanceLogListComponent
   implements OnInit
 {
   @Input() isActive: boolean = false;
-  @Input() creators: UsersWithDepartmentLookup[] = [];
+  @Input() creators: BaseLookupModel[] = [];
   @Input() employees: UsersWithDepartmentLookup[] = [];
   @Input() departments: BaseLookupModel[] = [];
   filteredEmployees: UsersWithDepartmentLookup[] = [];

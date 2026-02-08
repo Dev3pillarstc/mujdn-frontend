@@ -9,6 +9,8 @@ import { MyAttendanceLogFilter } from '@/models/features/attendance/attendance-l
 import { genericDateOnlyConvertor } from '@/utils/general-helper';
 import { HttpParams } from '@angular/common/http';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
+import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
+import { ListResponseData } from '@/models/shared/response/list-response-data';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +23,11 @@ import { PaginatedListResponseData } from '@/models/shared/response/paginated-li
     model: () => PaginatedList<AttendanceLog>,
     unwrap: 'data',
     shape: { 'list.*': () => AttendanceLog },
+  },
+  $creatorLookup: {
+    model: () => ListResponseData<BaseLookupModel>,
+    unwrap: 'data',
+    shape: { 'list.*': () => BaseLookupModel },
   },
 })
 export class AttendanceService extends BaseCrudService<AttendanceLog, string> {
@@ -56,5 +63,15 @@ export class AttendanceService extends BaseCrudService<AttendanceLog, string> {
           };
         })
       );
+  }
+
+  @CastResponse(undefined, { fallback: '$creatorLookup' })
+  loadCreatorsLookup(): Observable<ListResponseData<BaseLookupModel>> {
+    return this.http.get<ListResponseData<BaseLookupModel>>(
+      this.getUrlSegment() + '/creators-lookup',
+      {
+        withCredentials: true,
+      }
+    );
   }
 }

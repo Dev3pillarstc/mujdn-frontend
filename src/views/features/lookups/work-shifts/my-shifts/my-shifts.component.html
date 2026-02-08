@@ -129,11 +129,15 @@
         </div>
         <div>
           <p class="text-sm text-white mb-2">{{ 'MY_SHIFTS.STARTING_DATE' | translate }}</p>
-          <h5 class="text-base font-semibold text-white">{{ currentShift?.startDate }}</h5>
+          <h5 class="text-base font-semibold text-white">
+            {{ currentShift?.startDate | date: 'dd/MM/yyyy' }}
+          </h5>
         </div>
         <div>
           <p class="text-sm text-white mb-2">{{ 'MY_SHIFTS.ENDING_DATE' | translate }}</p>
-          <h5 class="text-base font-semibold text-white">{{ currentShift?.endDate }}</h5>
+          <h5 class="text-base font-semibold text-white">
+            {{ currentShift?.endDate | date: 'dd/MM/yyyy' }}
+          </h5>
         </div>
         @if (currentShift?.workShiftType === WorkShiftType.WeekOnWeekOff24) {
           <div>
@@ -141,7 +145,7 @@
               {{ 'MY_SHIFTS.PRESENCE_INQUIRY_TIME' | translate }}
             </p>
             <h5 class="text-base font-semibold text-white">
-              {{ currentShift?.presenceInquiryTime }}
+              {{ formatPresenceTime(currentShift) }}
             </h5>
           </div>
           <div>
@@ -291,8 +295,8 @@
             <ng-template #header>
               <tr>
                 <th>{{ 'MY_SHIFTS.NAME_ARABIC' | translate }}</th>
-                <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.NAME_ENGLISH' | translate }}</th>
+                <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.DATE_RANGE_PLACEHOLDER' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.TIME_FROM_TO' | translate }}</th>
                 <th>{{ 'MY_SHIFTS.ATTENDANCE_BUFFER' | translate }}</th>
@@ -303,8 +307,8 @@
             <ng-template #body let-shift>
               <tr>
                 <td>{{ shift.nameAr }}</td>
-                <td>{{ getShiftTypeName(shift) }}</td>
                 <td>{{ shift.nameEn }}</td>
+                <td>{{ getShiftTypeName(shift) }}</td>
                 <td>
                   {{ shift.startDate | date: 'dd/MM/yyyy' }} -
                   {{ shift.endDate | date: 'dd/MM/yyyy' }}

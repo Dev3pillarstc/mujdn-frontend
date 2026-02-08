@@ -274,6 +274,11 @@ export default class MyShiftsComponent extends BaseListComponent<
     });
   }
 
+  formatPresenceTime(shift: EmployeeShift | null) {
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    return formatTimeTo12Hour(shift?.presenceInquiryTime || '', locale);
+  }
+
   private handleLoadSuccess(response: any): void {
     this.employeeShifts = response.list || [];
     this.list = this.employeeShifts;

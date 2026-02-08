@@ -12,6 +12,8 @@ import { DepartmentService } from '@/services/features/lookups/department.servic
 import { UserService } from '@/services/features/user.service';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
+import { AttendanceService } from '@/services/features/attendance-log.service';
+import { ListResponseData } from '@/models/shared/response/list-response-data';
 
 @Component({
   selector: 'app-attendance-log-list',
@@ -33,6 +35,7 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   departmentService = inject(DepartmentService);
   userService = inject(UserService);
+  attendanceService = inject(AttendanceService);
   destroy$: Subject<void> = new Subject<void>();
 
   // Track active tab
@@ -40,7 +43,7 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
 
   departments: BaseLookupModel[] = [];
   employees: UsersWithDepartmentLookup[] = [];
-  creators: UsersWithDepartmentLookup[] = [];
+  creators: BaseLookupModel[] = [];
 
   home = {
     label: this.translateService.instant('COMMON.HOME'),
@@ -69,8 +72,13 @@ export default class AttendanceLogListComponent implements OnInit, OnDestroy {
 
     this.userService.getMyDepartmentUsersLookup().subscribe((res: UsersWithDepartmentLookup[]) => {
       this.employees = res;
-      this.creators = res;
     });
+
+    this.attendanceService
+      .loadCreatorsLookup()
+      .subscribe((res: ListResponseData<BaseLookupModel>) => {
+        this.creators = res.data;
+      });
 
     // Load lookups
   }

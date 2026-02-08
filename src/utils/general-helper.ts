@@ -160,22 +160,29 @@ export function formatSwipeTime(
   if (!swipeTime) return { date: '', time: '' };
 
   const dateTime = new Date(swipeTime);
-  const date = dateTime.toLocaleDateString('en-US', {
+
+  // Force DD/MM/YYYY using formatToParts (stable across environments)
+  const parts = new Intl.DateTimeFormat('en-GB', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
-  });
-  const time = dateTime.toLocaleTimeString('en-US', {
+  }).formatToParts(dateTime);
+
+  const day = parts.find((p) => p.type === 'day')?.value ?? '';
+  const month = parts.find((p) => p.type === 'month')?.value ?? '';
+  const year = parts.find((p) => p.type === 'year')?.value ?? '';
+
+  const date = `${day}/${month}/${year}`;
+
+  // Keep time formatting in English, then replace AM/PM for ar-EG
+  let time = dateTime.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
   });
 
   if (locale === 'ar-EG') {
-    return {
-      date: date.replace('AM', 'ص').replace('PM', 'م'),
-      time: time.replace('AM', 'ص').replace('PM', 'م'),
-    };
+    time = time.replace('AM', 'ص').replace('PM', 'م');
   }
 
   return { date, time };

@@ -9,7 +9,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
-import { weekDays } from '@/utils/general-helper';
+import { formatTimeTo12Hour, weekDays } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 import { getShiftTypeTranslation } from '@/utils/shift-helper';
 
@@ -109,5 +109,14 @@ export class WorkDaysPopupComponent extends BasePopupComponent<EmployeeShift> im
 
   get shiftName(): string {
     return this.langService.getCurrentLanguage() === 'ar' ? this.model.nameAr! : this.model.nameEn!;
+  }
+
+  isCurrentLanguageEnglish(): boolean {
+    return this.langService.getCurrentLanguage() === 'en';
+  }
+
+  formatPresenceTime(shift: EmployeeShift | null) {
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    return formatTimeTo12Hour(shift?.presenceInquiryTime || '', locale);
   }
 }

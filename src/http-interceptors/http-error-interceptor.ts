@@ -4,7 +4,7 @@ import {
   HttpInterceptorFn,
   HttpRequest,
 } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, throwError, timer } from 'rxjs';
 import { inject, Injector } from '@angular/core';
 import { AlertService } from '@/services/shared/alert.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,7 +34,8 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
     catchError((error: any) => {
       const notAuthorizedErrorKey = BACKEND_ERROR_ENUM.NOT_AUTHORIZED;
       const validationFailedErrorKey = BACKEND_ERROR_ENUM.VALIDATION_FAILED;
-      const skipKeys = [validationFailedErrorKey, notAuthorizedErrorKey];
+      const forbiddenActionErrorKey = BACKEND_ERROR_ENUM.FORBIDDEN_ACTION;
+      const skipKeys = [validationFailedErrorKey, notAuthorizedErrorKey, forbiddenActionErrorKey];
 
       const alertService = injector.get(AlertService);
       const translateService = injector.get(TranslateService);
@@ -48,6 +49,22 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
       if (backendError?.messageKey === notAuthorizedErrorKey && authService.isAuthenticated) {
         matDialog.closeAll();
         router.navigate(['/403']);
+      }
+
+      // In http-error-interceptor.ts
+      if (backendError?.messageKey === forbiddenActionErrorKey) {
+        // Show error message
+        const dialogRef = alertService.showErrorMessageWithRedirect({
+          messages: ['COMMON.' + forbiddenActionErrorKey],
+        });
+
+        // After dialog closes, close all dialogs and reload
+        dialogRef.afterClosed().subscribe(() => {
+          matDialog.closeAll();
+          timer(100).subscribe(() => window.location.reload());
+        });
+
+        return throwError(() => error);
       }
 
       if (backendError?.messageKey) {

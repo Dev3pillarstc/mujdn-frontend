@@ -126,7 +126,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
       .subscribe({
         next: (response) => {
           this.employees = response.data.list;
-          this.paginationInfo = response.data.paginationInfo;
+          this.paginationInfoMap(response.data);
         },
         error: () => {},
       });
@@ -222,6 +222,15 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     this.paginationParams.pageSize = 10;
     this.loadEmployees();
   }
+  paginationInfoMap(response: PaginatedList<UserProfileDataWithNationalId>) {
+    const paginationInfo = response.paginationInfo;
+    this.paginationInfo.totalItems = paginationInfo.totalItems || 0;
+    this.paginationParams.pageSize = paginationInfo.pageSize || 10;
+    this.paginationParams.pageNumber = paginationInfo.currentPage || 1;
+
+    this.rows = this.paginationParams.pageSize;
+    this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
+  }
 
   private loadEmployees() {
     this.workMissionService
@@ -229,7 +238,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
       .subscribe({
         next: (response) => {
           this.employees = response.data.list;
-          this.paginationInfo = response.data.paginationInfo;
+          this.paginationInfoMap(response.data);
         },
         error: () => {},
       });

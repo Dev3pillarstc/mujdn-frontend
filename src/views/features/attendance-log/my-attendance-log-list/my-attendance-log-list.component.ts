@@ -23,13 +23,10 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { AttendanceLog } from '@/models/features/attendance/attendance-log/attendance-log';
 import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { PROCESSING_STATUS_OPTIONS } from '@/models/shared/processing-status-option';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ibm-plex-font';
-import { formatSwipeTime } from '@/utils/general-helper';
 import { MyAttendanceLogFilter } from '@/models/features/attendance/attendance-log/my-attendance-log-filter';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
+import { formatSwipeTime } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-my-attendance-log-list',
@@ -178,98 +175,27 @@ export default class MyAttendanceLogListComponent
     return this.filterModel.swipeDateFrom;
   }
 
-  exportPdf(fileName: string = 'Attendance_Logs_List.pdf'): void {
-    const allDataParams = {
-      ...this.paginationParams,
-      pageNumber: 1,
-      pageSize: CustomValidators.defaultLengths.INT_MAX, // fetch all
+  protected override mapModelToPdfRow(model: AttendanceLog): { [key: string]: any } {
+    return {
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN_PDF')]:
+        model.creatorNameEn ?? 'System',
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR_PDF')]:
+        model.creatorNameAr ?? 'النظام',
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: this.swipeTimeArEn(
+        model.swipeTime
+      ),
     };
-
-    const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-
-    this.service.loadMyAttendanceLogPaginatedSP(allDataParams, this.appliedFilterModel!).subscribe({
-      next: (response) => {
-        const allData = response?.list || [];
-
-        if (!allData.length) return;
-
-        // Transform data for PDF
-        const transformedData = allData.map((model) => ({
-          // hidden for release 1
-          // [this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING_STATUS')]:
-          //   this.translateService.instant('ATTENDANCE_LOG_PAGE.PROCESSING'),
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN_PDF')]:
-            model.creatorNameEn ?? 'System',
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR_PDF')]:
-            model.creatorNameAr ?? 'النظام',
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
-          [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: this.swipeTimeArEn(
-            model.swipeTime
-          ),
-        }));
-
-        const formatCell = (val: any): string | number => {
-          if (val instanceof Date) {
-            return val.toLocaleString();
-          }
-          return val != null ? val : '';
-        };
-
-        const head = [Object.keys(transformedData[0])];
-        const body = transformedData.map((row) => Object.values(row).map(formatCell));
-
-        const doc = new jsPDF({
-          orientation: 'landscape',
-          format: 'a4',
-        });
-
-        registerIBMPlexArabicFont(doc);
-
-        // Calculate column width limit
-        const pageWidth = doc.internal.pageSize.getWidth() - 20; // 10 margin left/right
-        const colCount = head[0].length;
-        const maxColWidth = pageWidth / colCount;
-
-        // Build columnStyles with same maxWidth for all columns
-        const columnStyles: { [key: number]: any } = {};
-        for (let i = 0; i < colCount; i++) {
-          columnStyles[i] = { cellWidth: maxColWidth };
-        }
-
-        autoTable(doc, {
-          head,
-          body,
-          styles: {
-            font: 'IBMPlexSansArabic',
-            fontStyle: 'normal',
-            halign: isRTL ? 'right' : 'left',
-          },
-          headStyles: {
-            font: 'IBMPlexSansArabic',
-            fontStyle: 'normal',
-            halign: isRTL ? 'right' : 'left',
-          },
-          margin: { right: 10, left: 10 },
-          /** 👇 Limit max column width by index */
-          columnStyles,
-          didDrawPage: () => {
-            const title = isRTL ? 'قائمة سجل الحضور والانصراف' : 'Attendance Log List';
-            doc.setFont('IBMPlexSansArabic');
-            doc.setFontSize(12);
-            doc.text(title, isRTL ? doc.internal.pageSize.getWidth() - 20 : 10, 10, {
-              align: isRTL ? 'right' : 'left',
-            });
-          },
-        });
-
-        doc.save(fileName);
-      },
-      error: (err) => {
-        console.error('Failed to fetch data for PDF export:', err);
-        // Optional: show error toast
-      },
-    });
   }
+
+  protected override getPdfTitle(): { ar: string; en: string } {
+    return {
+      ar: 'قائمة سجل الحضور والانصراف',
+      en: 'Attendance Log List',
+    };
+  }
+
+
 
   override exportExcel(fileName: string = 'data.xlsx', isStoredProcedure: boolean = false): void {
     const allDataParams = {

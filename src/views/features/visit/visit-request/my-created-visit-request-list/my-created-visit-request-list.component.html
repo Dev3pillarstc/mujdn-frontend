@@ -146,6 +146,9 @@
         >
           <img src="assets/icons/excel.svg" alt="" />
         </button>
+        <button (click)="exportPdf('my-created-visit-requests.pdf',true)" class="table-head-action-btn">
+          <img alt="" src="assets/icons/pdf.svg" />
+        </button>
         <button (click)="openDialog()" class="btn green-btn">
           <img src="assets/icons/plus.svg" alt="" />
           <span>{{ 'VISIT_REQUEST_PAGE.ADD_NEW_VISIT_REQUEST' | translate }}</span>

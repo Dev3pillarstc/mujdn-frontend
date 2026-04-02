@@ -131,7 +131,8 @@
     "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "Active Directory service is unavailable",
     "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "Active Directory username or password is incorrect",
     "INVALID_XML_FILE_TYPE": "File extension should be .xml",
-    "INVALID_SHIFT_DURATION_FOR_WEEK_ON_WEEK_OFF_24": "Shift duration is invalid for week on week off 24 Hours"
+    "INVALID_SHIFT_DURATION_FOR_WEEK_ON_WEEK_OFF_24": "Shift duration is invalid for week on week off 24 Hours",
+    "MONTHLY_PERMISSION_LIMIT_EXCEEDED": "Monthly permission limit exceeded"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

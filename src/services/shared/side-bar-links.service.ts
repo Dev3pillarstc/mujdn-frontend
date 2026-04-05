@@ -119,6 +119,12 @@ export class SideBarLinksService {
       routeId: RouteIdsEnum.WORK_MISSION,
     },
     {
+      labelKey: 'MENU.TEMPORARY_ROLE_ASSIGNMENTS',
+      iconUrl: 'assets/icons/menu-icons/tools.svg',
+      routerLink: ['/temporary-role-assignments'],
+      routeId: RouteIdsEnum.TEMPORARY_ROLE_ASSIGNMENTS,
+    },
+    {
       labelKey: 'MENU.WORK_SHIFT',
       iconUrl: 'assets/icons/time-icon.svg',
       children: [

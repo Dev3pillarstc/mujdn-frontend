@@ -1,0 +1,109 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto" type="button">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+
+    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+      {{
+        (isCreateMode
+          ? 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ADD_NEW_ASSIGNMENT'
+          : 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.EDIT_ASSIGNMENT'
+        ) | translate
+      }}
+    </h3>
+
+    @if (model.isDateToOnlyEditable) {
+      <div class="mb-4 rounded-xl bg-[#eff8ff] px-4 py-3 text-sm text-[#1849a9]">
+        {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ONLY_END_DATE_CAN_BE_EDITED' | translate }}
+      </div>
+    }
+
+    <form [formGroup]="form" class="mt-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="label" for="temporary-role-assignment-employee">
+            {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.EMPLOYEE_NAME' | translate }}
+          </label>
+          <div class="relative">
+            <p-select
+              [optionLabel]="getPropertyName()"
+              [options]="employees"
+              [virtualScroll]="true"
+              [virtualScrollItemSize]="38"
+              class="w-full peer"
+              formControlName="fkUserProfileId"
+              id="temporary-role-assignment-employee"
+              optionValue="id"
+              placeholder="{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.EMPLOYEE_NAME' | translate }}"
+            >
+            </p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="employeeControl"></app-validation-messages>
+        </div>
+
+        <div>
+          <label class="label" for="temporary-role-assignment-date-from">
+            {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_FROM' | translate }}
+          </label>
+          <div class="relative">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [minDate]="dateFromMinDate"
+              [showIcon]="true"
+              class="peer block w-full"
+              formControlName="dateFrom"
+              id="temporary-role-assignment-date-from"
+              placeholder="{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_FROM' | translate }}"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/calender-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="dateFromControl"></app-validation-messages>
+        </div>
+
+        <div>
+          <label class="label" for="temporary-role-assignment-date-to">
+            {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_TO' | translate }}
+          </label>
+          <div class="relative">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [minDate]="dateToMinDate"
+              [showIcon]="true"
+              class="peer block w-full"
+              formControlName="dateTo"
+              id="temporary-role-assignment-date-to"
+              placeholder="{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_TO' | translate }}"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/calender-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="dateToControl"></app-validation-messages>
+        </div>
+      </div>
+
+      <div class="actions mt-6 flex items-center justify-end gap-4">
+        <button (click)="close()" class="btn gray-btn" type="button">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+        <button (click)="save$.next()" class="btn green-btn" type="button">
+          {{ 'COMMON.SAVE' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

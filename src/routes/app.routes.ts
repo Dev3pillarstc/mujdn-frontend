@@ -22,6 +22,7 @@ import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
 import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blacklisted-national-id.resolver';
 import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
 import { WorkMissionResolver } from '@/resolvers/business/work-missions.resolver';
+import { temporaryRoleAssignmentsResolver } from '@/resolvers/features/temporary-role-assignments.resolver';
 import { visitResolver } from '@/resolvers/features/visit/visit.resolver';
 import { accessLocationResolver } from '@/resolvers/business/access-location.resolver';
 import { devicesConfigurationResolver } from '@/resolvers/business/devices-configuration.resolver';
@@ -306,6 +307,19 @@ export const routes: Routes = [
         resolve: { list: notificationResolver },
         loadComponent: () =>
           import('@/views/features/lookups/notifiactions/notifiactions.component'),
+      },
+      {
+        path: 'temporary-role-assignments',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.DEPARTMENT_MANAGER],
+          routeId: RouteIdsEnum.TEMPORARY_ROLE_ASSIGNMENTS,
+        },
+        resolve: { list: temporaryRoleAssignmentsResolver },
+        loadComponent: () =>
+          import(
+            '@/views/features/temporary-role-assignment/temporary-role-assignment-list/temporary-role-assignment-list.component'
+          ),
       },
       {
         path: 'presence-inquiries',

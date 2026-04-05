@@ -181,6 +181,23 @@
     "SELECT_REGION": "اختر المنطقة",
     "REGION": "المنطقة"
   },
+  "TEMPORARY_ROLE_ASSIGNMENT_PAGE": {
+    "TEMPORARY_ROLE_ASSIGNMENTS": "إسناد الصلاحيات الإدارية المؤقتة",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "TEMPORARY_ROLE": "الدور المؤقت",
+    "DATE_FROM": "التاريخ من",
+    "DATE_TO": "التاريخ إلى",
+    "CURRENT_STATUS": "الحالة الحالية",
+    "ADD_NEW_ASSIGNMENT": "إضافة إسناد جديد",
+    "EDIT_ASSIGNMENT": "تعديل الإسناد",
+    "ACTIONS": "الإجراءات",
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
+    "SCHEDULED": "مجدول",
+    "ACTIVE_NOW": "نشط حالياً",
+    "ENDED": "منتهٍ",
+    "ONLY_END_DATE_CAN_BE_EDITED": "هذا الإسناد بدأ بالفعل، ويمكن تعديل تاريخ النهاية فقط.",
+    "END_DATE_MUST_BE_AFTER_TODAY": "يجب أن يكون تاريخ النهاية بعد اليوم."
+  },
   "DEPARTMENTS_HEADER_PAGE": {
     "ONE_LEVEL_APPROVAL": "موافقه على مستوى واحد",
     "TWO_LEVEL_APPROVAL": "موافقه على مستويين",
@@ -452,6 +469,7 @@
     "VISITS": "الزيارات",
     "BLACKLIST": "معايير حظر الزائرين",
     "WORK_MISSIONS": "مهام الأعمال و الاسناد",
+    "TEMPORARY_ROLE_ASSIGNMENTS": "الصلاحيات الإدارية المؤقتة",
     "VISIT_REQUEST": "طلبات الزيارات",
     "ACCESS_LOCATIONS": "مواقع أجهزة البصمة",
     "DEVICES_CONFIGURATION": "إعدادات أجهزة البصمة",

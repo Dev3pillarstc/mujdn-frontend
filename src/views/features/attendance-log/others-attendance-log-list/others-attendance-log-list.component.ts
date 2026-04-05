@@ -257,8 +257,6 @@ export default class OthersAttendanceLogListComponent
     return this.filterModel.swipeDateFrom;
   }
 
-
-
   protected override mapModelToExcelRow(model: AttendanceLog): { [key: string]: any } {
     return {
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME_AR')]: model.employeeNameAr,

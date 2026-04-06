@@ -675,7 +675,11 @@
     "STARTING_DATE": "تاريخ البداية",
     "ENDING_DATE": "تاريخ النهاية",
     "FROM": "التاريخ (من)",
-    "TO": "التاريخ (إلى)"
+    "TO": "التاريخ (إلى)",
+    "MISSION_TYPE": "نوع المهمة",
+    "SHIFT_BEGINNING": "بداية الدوام",
+    "SHIFT_ENDING": "نهاية الدوام",
+    "FULL_DAY": "اليوم الكامل"
   },
   "VISIT_REQUEST_PAGE": {
     "VISITOR_REQUESTS_LIST": "قائمة طلبات الزيارات",

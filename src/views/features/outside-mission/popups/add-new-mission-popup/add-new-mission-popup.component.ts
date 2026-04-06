@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { TextareaModule } from 'primeng/textarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { DialogRef } from '@angular/cdk/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabsModule } from 'primeng/tabs';
@@ -23,6 +24,7 @@ import { ValidationMessagesComponent } from '@/views/shared/validation-messages/
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { CustomValidators } from '@/validators/custom-validators';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
+import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
 
 @Component({
   selector: 'app-add-new-mission-popup',
@@ -38,6 +40,7 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
     RequiredMarkerDirective,
     TranslatePipe,
     ValidationMessagesComponent,
+    RadioButtonModule,
   ],
   templateUrl: './add-new-mission-popup.component.html',
   styleUrl: './add-new-mission-popup.component.scss',
@@ -49,6 +52,7 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
   declare viewMode: ViewModeEnum;
   isCreateMode = false;
   translateService = inject(TranslateService);
+  WorkMissionTypesEnum = WorkMissionTypesEnum;
   constructor(
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: { model: WorkMission; viewMode: ViewModeEnum }
@@ -92,5 +96,8 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
   }
   get descriptionControl() {
     return this.form.get('description') as FormControl;
+  }
+  get workMissionTypeControl() {
+    return this.form.get('workMissionType') as FormControl;
   }
 }

@@ -5,6 +5,7 @@ import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 import { BaseLookupModel } from '../lookups/base-lookup-model';
+import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
 
 const { send, receive } = new WorkMissionInterceptor();
 
@@ -21,9 +22,10 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
   declare concurrencyUpdateVersion?: Uint8Array;
   declare isMissionCreator: boolean;
   declare isMyMission: boolean;
+  workMissionType: WorkMissionTypesEnum = WorkMissionTypesEnum.FullDay;
 
   buildForm() {
-    const { nameAr, nameEn, startDate, endDate, description } = this;
+    const { nameAr, nameEn, startDate, endDate, description, workMissionType } = this;
     return {
       nameAr: [
         nameAr,
@@ -53,6 +55,7 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
         ],
       ],
+      workMissionType: [workMissionType ?? WorkMissionTypesEnum.FullDay, [Validators.required]],
     };
   }
 }

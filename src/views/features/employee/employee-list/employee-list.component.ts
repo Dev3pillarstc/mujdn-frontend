@@ -75,7 +75,6 @@ export default class EmployeeListComponent
   regionService = inject(RegionService);
   departmentService = inject(DepartmentService);
   authService = inject(AuthService);
-  checked: boolean = true;
   actionList: MenuItem[] = [];
   cities: CityLookup[] = [];
   regions: BaseLookupModel[] = [];

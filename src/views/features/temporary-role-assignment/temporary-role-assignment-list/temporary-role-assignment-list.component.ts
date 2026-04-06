@@ -63,6 +63,15 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
     return this.authService.hasRouteAccess({ actualDepartmentManagerOnly: true });
   }
 
+  set dateFrom(value: Date | null) {
+    this.filterModel.dateFrom = value;
+
+    // If dateTo is before dateFrom, reset or adjust it
+    if (this.filterModel.dateTo && value && this.filterModel.dateTo < value) {
+      this.filterModel.dateTo = null; // or set it to value
+    }
+  }
+
   override initListComponent(): void {
     if (!this.canManageTemporaryRoleAssignments) {
       this.router.navigate(['/403']);

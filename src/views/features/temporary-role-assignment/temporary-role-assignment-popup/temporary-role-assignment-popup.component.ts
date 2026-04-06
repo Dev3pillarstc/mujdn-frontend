@@ -43,6 +43,7 @@ export class TemporaryRoleAssignmentPopupComponent
 
   employees: UsersWithDepartmentLookup[] = [];
   isCreateMode = false;
+  dateToMinDate: Date | null = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -58,23 +59,6 @@ export class TemporaryRoleAssignmentPopupComponent
 
   get dateToControl(): FormControl {
     return this.form.get('dateTo') as FormControl;
-  }
-
-  get dateFromMinDate(): Date | null {
-    return null;
-  }
-
-  get dateToMinDate(): Date | null {
-    const dateFromValue = this.form?.getRawValue().dateFrom;
-    const dateFrom = dateFromValue ? this.normalizeDate(dateFromValue) : null;
-
-    if (this.model.isDateToOnlyEditable) {
-      const tomorrow = new Date(this.today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      return tomorrow;
-    }
-
-    return dateFrom;
   }
 
   override initPopup(): void {
@@ -137,9 +121,24 @@ export class TemporaryRoleAssignmentPopupComponent
   }
 
   private setupDateValidation(): void {
+    this.updateDateToMinDate();
     this.syncDateRangeValidation();
-    this.dateFromControl.valueChanges.subscribe(() => this.syncDateRangeValidation());
+    this.dateFromControl.valueChanges.subscribe(() => {
+      this.updateDateToMinDate();
+      this.syncDateRangeValidation();
+    });
     this.dateToControl.valueChanges.subscribe(() => this.syncDateRangeValidation());
+  }
+
+  private updateDateToMinDate(): void {
+    if (this.model.isDateToOnlyEditable) {
+      const tomorrow = new Date(this.today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      this.dateToMinDate = tomorrow;
+      return;
+    }
+
+    this.dateToMinDate = this.normalizeDate(this.form.getRawValue().dateFrom);
   }
 
   private syncDateRangeValidation(): void {

@@ -6,6 +6,7 @@ import { TemporaryRoleAssignmentFilter } from '@/models/features/temporary-role-
 import { TemporaryRoleAssignment } from '@/models/features/temporary-role-assignment/temporary-role-assignment';
 import { UserService } from '@/services/features/user.service';
 import { TemporaryRoleAssignmentService } from '@/services/features/temporary-role-assignment.service';
+import { AuthService } from '@/services/auth/auth.service';
 import { formatDateOnly } from '@/utils/general-helper';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
@@ -16,7 +17,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { PaginatorModule } from 'primeng/paginator';
 import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TemporaryRoleAssignmentPopupComponent } from '../temporary-role-assignment-popup/temporary-role-assignment-popup.component';
 
 @Component({
@@ -49,6 +50,8 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
 
   temporaryRoleAssignmentService = inject(TemporaryRoleAssignmentService);
   userService = inject(UserService);
+  authService = inject(AuthService);
+  router = inject(Router);
   filterModel: TemporaryRoleAssignmentFilter = new TemporaryRoleAssignmentFilter();
   employees: UsersWithDepartmentLookup[] = [];
 
@@ -56,7 +59,16 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
     return this.temporaryRoleAssignmentService;
   }
 
+  get canManageTemporaryRoleAssignments(): boolean {
+    return this.authService.hasRouteAccess({ actualDepartmentManagerOnly: true });
+  }
+
   override initListComponent(): void {
+    if (!this.canManageTemporaryRoleAssignments) {
+      this.router.navigate(['/403']);
+      return;
+    }
+
     this.userService.getMyDepartmentUsersLookup().subscribe((employees) => {
       this.employees = employees;
     });
@@ -67,6 +79,10 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
   }
 
   override openDialog(model: TemporaryRoleAssignment): void {
+    if (!this.canManageTemporaryRoleAssignments) {
+      return;
+    }
+
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
 
     this.openBaseDialog(TemporaryRoleAssignmentPopupComponent as any, model, viewMode, {

@@ -41,7 +41,7 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
   }
 
   get isdepartmentActualManager() {
-    return this.loggedInUser.value?.isDepartmentManager;
+    return this.isActualDepartmentManager();
   }
 
   get isFollowUpOfficer() {
@@ -107,6 +107,21 @@ export class AuthService extends BaseCrudService<LoggedInUser, string> {
 
   getUser(): BehaviorSubject<LoggedInUser | undefined> {
     return this.loggedInUser;
+  }
+
+  isActualDepartmentManager(user: LoggedInUser | undefined = this.loggedInUser.value): boolean {
+    return !!user?.isDepartmentManager;
+  }
+
+  hasRouteAccess(
+    accessOptions?: { actualDepartmentManagerOnly?: boolean },
+    user: LoggedInUser | undefined = this.loggedInUser.value
+  ): boolean {
+    if (accessOptions?.actualDepartmentManagerOnly && !this.isActualDepartmentManager(user)) {
+      return false;
+    }
+
+    return true;
   }
 
   userVersionHasBeenChanged(user: LoggedInUser) {

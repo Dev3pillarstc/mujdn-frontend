@@ -313,6 +313,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         data: {
           roles: [ROLES_ENUM.DEPARTMENT_MANAGER],
+          actualDepartmentManagerOnly: true,
           routeId: RouteIdsEnum.TEMPORARY_ROLE_ASSIGNMENTS,
         },
         resolve: { list: temporaryRoleAssignmentsResolver },

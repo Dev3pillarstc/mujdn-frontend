@@ -266,8 +266,13 @@ export class SideBarLinksService {
       if (item.routeId && !item.children) {
         const matchedRoute = allRoutes.find((r) => r.data?.['routeId'] === item.routeId);
         const allowedRoles = matchedRoute?.data?.['roles'] as string[] | undefined;
+        const actualDepartmentManagerOnly =
+          matchedRoute?.data?.['actualDepartmentManagerOnly'] === true;
+        const hasRoleAccess =
+          !allowedRoles || allowedRoles.some((role) => userRoles?.includes(role));
+        const hasRouteAccess = this.authService.hasRouteAccess({ actualDepartmentManagerOnly });
+        const isAllowed = hasRoleAccess && hasRouteAccess;
 
-        const isAllowed = !allowedRoles || allowedRoles.some((role) => userRoles?.includes(role));
         if (isAllowed) {
           filtered.push(item);
         }

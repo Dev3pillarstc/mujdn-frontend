@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@/services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BACKEND_ERROR_ENUM } from '@/enums/backend-error-enum';
+import { EndPoints } from '@/constants/endpoints';
 import { buildTranslationParams } from '@/utils/general-helper';
 
 // const excludedErrorPaths = [
@@ -42,6 +43,9 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
       const router = injector.get(Router);
       const authService = injector.get(AuthService);
       const matDialog = injector.get(MatDialog);
+      const isTemporaryRoleAssignmentRequest = req.url.includes(
+        EndPoints.TEMPORARY_ROLE_ASSIGNMENTS
+      );
 
       let messageKey = 'COMMON.UNKNOWN_ERROR';
       let backendError = error?.error?.error;
@@ -51,8 +55,13 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
         router.navigate(['/403']);
       }
 
-      // In http-error-interceptor.ts
       if (backendError?.messageKey === forbiddenActionErrorKey) {
+        if (isTemporaryRoleAssignmentRequest) {
+          matDialog.closeAll();
+          router.navigate(['/403']);
+          return throwError(() => error);
+        }
+
         // Show error message
         const dialogRef = alertService.showErrorMessageWithRedirect({
           messages: ['COMMON.' + forbiddenActionErrorKey],

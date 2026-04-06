@@ -677,7 +677,11 @@
     "STARTING_DATE": "Start date",
     "ENDING_DATE": "End date",
     "FROM": "Date (From)",
-    "TO": "Date (To)"
+    "TO": "Date (To)",
+    "MISSION_TYPE": "Mission type",
+    "SHIFT_BEGINNING": "Shift beginning",
+    "SHIFT_ENDING": "Shift ending",
+    "FULL_DAY": "Full day"
   },
   "VISIT_REQUEST_PAGE": {
     "VISITOR_REQUESTS_LIST": "Visitor Requests List",

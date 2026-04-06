@@ -131,7 +131,8 @@
     "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "Active Directory service is unavailable",
     "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "Active Directory username or password is incorrect",
     "INVALID_XML_FILE_TYPE": "File extension should be .xml",
-    "INVALID_SHIFT_DURATION_FOR_WEEK_ON_WEEK_OFF_24": "Shift duration is invalid for week on week off 24 Hours"
+    "INVALID_SHIFT_DURATION_FOR_WEEK_ON_WEEK_OFF_24": "Shift duration is invalid for week on week off 24 Hours",
+    "MONTHLY_PERMISSION_LIMIT_EXCEEDED": "Monthly permission limit exceeded"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -179,6 +180,23 @@
     "NO_DATA_TO_SHOW": "No data to display",
     "SELECT_REGION": "Select Region",
     "REGION": "Region"
+  },
+  "TEMPORARY_ROLE_ASSIGNMENT_PAGE": {
+    "TEMPORARY_ROLE_ASSIGNMENTS": "Temporary Management Role Assignments",
+    "EMPLOYEE_NAME": "Employee Name",
+    "TEMPORARY_ROLE": "Temporary Role",
+    "DATE_FROM": "Date From",
+    "DATE_TO": "Date To",
+    "CURRENT_STATUS": "Current Status",
+    "ADD_NEW_ASSIGNMENT": "Add New Assignment",
+    "EDIT_ASSIGNMENT": "Edit Assignment",
+    "ACTIONS": "Actions",
+    "NO_DATA_TO_SHOW": "No data to display",
+    "SCHEDULED": "Scheduled",
+    "ACTIVE_NOW": "Active Now",
+    "ENDED": "Ended",
+    "ONLY_END_DATE_CAN_BE_EDITED": "This assignment already started. You can update the end date only.",
+    "END_DATE_MUST_BE_AFTER_TODAY": "The end date must be after today."
   },
   "DEPARTMENTS_HEADER_PAGE": {
     "ONE_LEVEL_APPROVAL": "One level approval",
@@ -457,6 +475,7 @@
     "VISITS": "Visits",
     "BLACKLIST": "Visitor blacklist criteria",
     "WORK_MISSIONS": "Work missions and assignments",
+    "TEMPORARY_ROLE_ASSIGNMENTS": "Temporary Management Roles",
     "VISIT_REQUEST": "Visit Requests",
     "ACCESS_LOCATIONS": "Access Locations",
     "DEVICES_CONFIGURATION": "Devices Configuration",

@@ -22,6 +22,7 @@ export const authGuard: CanActivateFn = (
   const cookieService = inject(CookieService);
 
   const expectedRoles = route.data?.['roles'] as string[] | undefined;
+  const actualDepartmentManagerOnly = route.data?.['actualDepartmentManagerOnly'] === true;
   const userDataCookie = cookieService.getCookie(COOKIE_ENUM.USER_DATA);
 
   // 🚫 Cookie missing? Consider session expired → force logout
@@ -33,13 +34,16 @@ export const authGuard: CanActivateFn = (
 
   /** Function to check if user has required roles */
   const checkRoles = (user: any) => {
-    if (!expectedRoles || expectedRoles.length === 0) {
-      return true;
-    }
-    const userHasRole = user.roles.some((role: string) => expectedRoles.includes(role));
-    if (!userHasRole) {
+    const userHasRole =
+      !expectedRoles ||
+      expectedRoles.length === 0 ||
+      user.roles.some((role: string) => expectedRoles.includes(role));
+    const hasRouteAccess = authService.hasRouteAccess({ actualDepartmentManagerOnly }, user);
+
+    if (!userHasRole || !hasRouteAccess) {
       return router.createUrlTree(['/403']);
     }
+
     return true;
   };
 

@@ -296,7 +296,11 @@
     "DELETE_EMPLOYEE": "حذف الموظف",
     "MAX_LENGTH_NAME": "الاسم لا يمكن أن يتجاوز 100 حرف",
     "ACTIVE_DIRECTORY_USERNAME": "رقم الموظف (اسم المستخدم في Active Directory)",
-    "EMPLOYEE_NUMBER": "رقم الموظف"
+    "EMPLOYEE_NUMBER": "رقم الموظف",
+    "CONFIRM_DISABLE_FINGERPRINT_EXEMPTION": "هل أنت متأكد من أنك تريد تعطيل إعفاء البصمة لهذا الموظف؟",
+    "CONFIRM_ENABLE_FINGERPRINT_EXEMPTION": "هل أنت متأكد من أنك تريد تفعيل إعفاء البصمة لهذا الموظف؟",
+    "FINGERPRINT_EXEMPTION_DISABLED": "تم تعطيل إعفاء البصمة لهذا الموظف بنجاح",
+    "FINGERPRINT_EXEMPTION_ENABLE": "تم تفعيل إعفاء البصمة لهذا الموظف بنجاح"
   },
   "HOLIDAYS_PAGE": {
     "HOLIDAYS_LIST": "قائمة الإجازات والأعياد",

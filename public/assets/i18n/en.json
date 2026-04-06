@@ -298,7 +298,11 @@
     "DELETE_EMPLOYEE": "Delete Employee",
     "MAX_LENGTH_NAME": "Name cannot exceed 100 characters",
     "ACTIVE_DIRECTORY_USERNAME": "Employee Number (Active Directory Username)",
-    "EMPLOYEE_NUMBER": "Employee Number"
+    "EMPLOYEE_NUMBER": "Employee Number",
+    "CONFIRM_DISABLE_FINGERPRINT_EXEMPTION": "Are you sure you want to disable fingerprint exemption for this employee?",
+    "CONFIRM_ENABLE_FINGERPRINT_EXEMPTION": "Are you sure you want to enable fingerprint exemption for this employee?",
+    "FINGERPRINT_EXEMPTION_DISABLED": "Fingerprint exemption has been disabled for this employee successfully",
+    "FINGERPRINT_EXEMPTION_ENABLE": "Fingerprint exemption has been enabled for this employee successfully"
   },
   "HOLIDAYS_PAGE": {
     "HOLIDAYS_LIST": "Holidays",

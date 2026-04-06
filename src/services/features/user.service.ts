@@ -99,4 +99,24 @@ export class UserService extends LookupBaseService<User, string> {
         })
       );
   }
+
+  enableCanLeaveWithoutFingerPrint(userId: string): Observable<ResponseData<string>> {
+    return this.http.put<ResponseData<string>>(
+      `${this.getUrlSegment()}/can-leave-without-fingerprint/enable?userId=${userId}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  disableCanLeaveWithoutFingerPrint(userId: string): Observable<ResponseData<string>> {
+    return this.http.put<ResponseData<string>>(
+      `${this.getUrlSegment()}/can-leave-without-fingerprint/disable?userId=${userId}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

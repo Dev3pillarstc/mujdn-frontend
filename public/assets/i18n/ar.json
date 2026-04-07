@@ -755,7 +755,8 @@
     "VISITOR_EXISTS_CONFIRMATION": "تأكيد وجود الزائر",
     "DO_YOU_WANT_TO_CONTINUE": "الزائر الذي يحمل هذا الرقم الوطني موجود بالفعل، هل تريد الاستمرار في تحديث بيانات الزائر؟",
     "DEVICES_LOCATION": "مواقع أجهزة البصمة",
-    "SELECTED_DEVICES_LOCATIONS": "مواقع أجهزة البصمة المختارة"
+    "SELECTED_DEVICES_LOCATIONS": "مواقع أجهزة البصمة المختارة",
+    "ATTENDANCE_STATUS": "حالة الحضور"
   },
   "QR_CODE_POPUP": {
     "GENERAL_WARNINGS": "تحذيرات عامة",
@@ -800,6 +801,12 @@
     "PRESENT": "حاضر",
     "EXEMPTED": "معفى من البصمة",
     "REST": "راحة"
+  },
+  "VISIT_ATTENDANCE_STATUS": {
+    "NOT_ARRIVED": "لم يصل",
+    "IN_VISIT": "في الزيارة",
+    "FINISHED": "انتهت الزيارة",
+    "NO_SHOW": "لم يحضر"
   },
   "ATTENDANCE_REPORT_PAGE": {
     "SPECIAL_SHIFT": "وردية عمل خاصة",

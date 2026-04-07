@@ -757,7 +757,8 @@
     "VISITOR_EXISTS_CONFIRMATION": "Visitor exists confirmation",
     "DO_YOU_WANT_TO_CONTINUE": "Visitor with this National ID already exists, Do you want to continue to update the visitor data?",
     "DEVICES_LOCATIONS": "Devices Locations",
-    "SELECTED_DEVICES_LOCATIONS": "Selected Devices Locations"
+    "SELECTED_DEVICES_LOCATIONS": "Selected Devices Locations",
+    "ATTENDANCE_STATUS": "Attendance Status"
   },
   "QR_CODE_POPUP": {
     "GENERAL_WARNINGS": "General Warnings",
@@ -802,6 +803,12 @@
     "PRESENT": "Present",
     "EXEMPTED": "Exempted",
     "REST": "Rest"
+  },
+  "VISIT_ATTENDANCE_STATUS": {
+    "NOT_ARRIVED": "Not Arrived",
+    "IN_VISIT": "In Visit",
+    "FINISHED": "Finished",
+    "NO_SHOW": "No Show"
   },
   "ATTENDANCE_REPORT_PAGE": {
     "SPECIAL_SHIFT": "Special Shift",

@@ -145,6 +145,9 @@
             >
               <img alt="" src="assets/icons/excel.svg" />
             </button>
+            <button (click)="exportPdf('devices.pdf')" class="table-head-action-btn">
+              <img alt="" src="assets/icons/pdf.svg" />
+            </button>
           </div>
         </div>
         @if (list && list.length > 0) {

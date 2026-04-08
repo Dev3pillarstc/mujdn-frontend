@@ -169,6 +169,9 @@
         <button (click)="exportExcel()" class="table-head-action-btn min-w-[40px]">
           <img src="assets/icons/excel.svg" alt="" />
         </button>
+        <button (click)="exportPdf('attendance-report.pdf')" class="table-head-action-btn">
+          <img alt="" src="assets/icons/pdf.svg" />
+        </button>
       </div>
     </div>
     @if (list && list.length > 0) {

@@ -131,7 +131,8 @@
     "ACTIVE_DIRECTORY_SERVICE_UNAVAILABLE": "خدمة Active Directory غير متاحة",
     "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
     "INVALID_XML_FILE_TYPE": "امتداد الملف يجب ان يكون .xml",
-    "INVALID_SHIFT_DURATION_FOR_WEEK_ON_WEEK_OFF_24": "مدة الوردية غير صالحة لنظام الراحات 24 ساعة"
+    "INVALID_SHIFT_DURATION_FOR_WEEK_ON_WEEK_OFF_24": "مدة الوردية غير صالحة لنظام الراحات 24 ساعة",
+    "MONTHLY_PERMISSION_LIMIT_EXCEEDED": "تم تجاوز الحد الأقصى للاستئذانات الشهرية"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -179,6 +180,23 @@
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "SELECT_REGION": "اختر المنطقة",
     "REGION": "المنطقة"
+  },
+  "TEMPORARY_ROLE_ASSIGNMENT_PAGE": {
+    "TEMPORARY_ROLE_ASSIGNMENTS": "إسناد الصلاحيات الإدارية المؤقتة",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "TEMPORARY_ROLE": "الدور المؤقت",
+    "DATE_FROM": "التاريخ من",
+    "DATE_TO": "التاريخ إلى",
+    "CURRENT_STATUS": "الحالة الحالية",
+    "ADD_NEW_ASSIGNMENT": "إضافة إسناد جديد",
+    "EDIT_ASSIGNMENT": "تعديل الإسناد",
+    "ACTIONS": "الإجراءات",
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
+    "SCHEDULED": "مجدول",
+    "ACTIVE_NOW": "نشط حالياً",
+    "ENDED": "منتهٍ",
+    "ONLY_END_DATE_CAN_BE_EDITED": "هذا الإسناد بدأ بالفعل، ويمكن تعديل تاريخ النهاية فقط.",
+    "END_DATE_MUST_BE_AFTER_TODAY": "يجب أن يكون تاريخ النهاية بعد اليوم."
   },
   "DEPARTMENTS_HEADER_PAGE": {
     "ONE_LEVEL_APPROVAL": "موافقه على مستوى واحد",
@@ -296,7 +314,11 @@
     "DELETE_EMPLOYEE": "حذف الموظف",
     "MAX_LENGTH_NAME": "الاسم لا يمكن أن يتجاوز 100 حرف",
     "ACTIVE_DIRECTORY_USERNAME": "رقم الموظف (اسم المستخدم في Active Directory)",
-    "EMPLOYEE_NUMBER": "رقم الموظف"
+    "EMPLOYEE_NUMBER": "رقم الموظف",
+    "CONFIRM_DISABLE_FINGERPRINT_EXEMPTION": "هل أنت متأكد من أنك تريد تعطيل إعفاء البصمة لهذا الموظف؟",
+    "CONFIRM_ENABLE_FINGERPRINT_EXEMPTION": "هل أنت متأكد من أنك تريد تفعيل إعفاء البصمة لهذا الموظف؟",
+    "FINGERPRINT_EXEMPTION_DISABLED": "تم تعطيل إعفاء البصمة لهذا الموظف بنجاح",
+    "FINGERPRINT_EXEMPTION_ENABLED": "تم تفعيل إعفاء البصمة لهذا الموظف بنجاح"
   },
   "HOLIDAYS_PAGE": {
     "HOLIDAYS_LIST": "قائمة الإجازات والأعياد",
@@ -451,6 +473,7 @@
     "VISITS": "الزيارات",
     "BLACKLIST": "معايير حظر الزائرين",
     "WORK_MISSIONS": "مهام الأعمال و الاسناد",
+    "TEMPORARY_ROLE_ASSIGNMENTS": "الصلاحيات الإدارية المؤقتة",
     "VISIT_REQUEST": "طلبات الزيارات",
     "ACCESS_LOCATIONS": "مواقع أجهزة البصمة",
     "DEVICES_CONFIGURATION": "إعدادات أجهزة البصمة",
@@ -675,7 +698,11 @@
     "STARTING_DATE": "تاريخ البداية",
     "ENDING_DATE": "تاريخ النهاية",
     "FROM": "التاريخ (من)",
-    "TO": "التاريخ (إلى)"
+    "TO": "التاريخ (إلى)",
+    "MISSION_TYPE": "نوع المهمة",
+    "SHIFT_BEGINNING": "بداية الدوام",
+    "SHIFT_ENDING": "نهاية الدوام",
+    "FULL_DAY": "يوم كامل"
   },
   "VISIT_REQUEST_PAGE": {
     "VISITOR_REQUESTS_LIST": "قائمة طلبات الزيارات",
@@ -728,7 +755,8 @@
     "VISITOR_EXISTS_CONFIRMATION": "تأكيد وجود الزائر",
     "DO_YOU_WANT_TO_CONTINUE": "الزائر الذي يحمل هذا الرقم الوطني موجود بالفعل، هل تريد الاستمرار في تحديث بيانات الزائر؟",
     "DEVICES_LOCATION": "مواقع أجهزة البصمة",
-    "SELECTED_DEVICES_LOCATIONS": "مواقع أجهزة البصمة المختارة"
+    "SELECTED_DEVICES_LOCATIONS": "مواقع أجهزة البصمة المختارة",
+    "ATTENDANCE_STATUS": "حالة الحضور"
   },
   "QR_CODE_POPUP": {
     "GENERAL_WARNINGS": "تحذيرات عامة",
@@ -773,6 +801,12 @@
     "PRESENT": "حاضر",
     "EXEMPTED": "معفى من البصمة",
     "REST": "راحة"
+  },
+  "VISIT_ATTENDANCE_STATUS": {
+    "NOT_ARRIVED": "لم يصل",
+    "IN_VISIT": "في الزيارة",
+    "FINISHED": "انتهت الزيارة",
+    "NO_SHOW": "لم يحضر"
   },
   "ATTENDANCE_REPORT_PAGE": {
     "SPECIAL_SHIFT": "وردية عمل خاصة",

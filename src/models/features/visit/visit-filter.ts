@@ -6,4 +6,5 @@ export class VisitFilter {
   dateTo!: Date;
   visitStatus!: number;
   creationUserId!: number;
+  attendanceStatus!: number;
 }

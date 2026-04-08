@@ -201,6 +201,7 @@
             <th>{{ 'VISIT_REQUEST_PAGE.VISIT_CREATOR' | translate }}</th>
             <th>{{ 'VISIT_REQUEST_PAGE.ENTRY' | translate }}</th>
             <th>{{ 'VISIT_REQUEST_PAGE.EXIT' | translate }}</th>
+            <th>{{ 'VISIT_REQUEST_PAGE.ATTENDANCE_STATUS' | translate }}</th>
             <th class="w-[36px] whitespace-nowrap">
               {{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}
             </th>
@@ -224,6 +225,14 @@
             <td>{{ getVisitCreatorName(visit) }}</td>
             <td>{{ formatTime(visit.arrivalTime) }}</td>
             <td>{{ formatTime(visit.leaveTime) }}</td>
+            <td>
+              <div class="flex items-center justify-center">
+                <span [class]="getAttendanceBadgeClass(visit.attendanceStatus)">
+                  <span [class]="getAttendanceBadgeDotClass(visit.attendanceStatus)"></span>
+                  {{ getAttendanceStatusText(visit.attendanceStatus) }}
+                </span>
+              </div>
+            </td>
             <td>
               <div class="actions flex gap-2">
                 <button class="table-action-gray-btn" (click)="openViewDialog(visit)">

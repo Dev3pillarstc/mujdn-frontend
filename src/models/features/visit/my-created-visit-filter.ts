@@ -5,4 +5,5 @@ export class MyCreatedVisitFilter {
   dateFrom!: Date;
   dateTo!: Date;
   visitStatus!: number;
+  attendanceStatus!: number;
 }

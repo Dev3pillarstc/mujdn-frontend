@@ -402,9 +402,6 @@ export default class EmployeeListComponent
           error: () => {
             // Revert the toggle if the request fails
             user.canLeaveWithoutFingerPrint = !newValue;
-            this.alertService.showErrorMessage({
-              messages: ['COMMON.ERROR_OCCURRED'],
-            });
           },
         });
       } else {

@@ -78,9 +78,11 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
       return;
     }
 
-    this.userService.getMyDepartmentUsersLookup().subscribe((employees) => {
-      this.employees = employees;
-    });
+    this.userService
+      .getMyDepartmentEmployeesAndFirstLevelManagersLookup()
+      .subscribe((employees) => {
+        this.employees = employees;
+      });
   }
 
   protected override getBreadcrumbKeys() {

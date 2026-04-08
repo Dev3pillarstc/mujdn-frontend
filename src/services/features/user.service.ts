@@ -119,4 +119,19 @@ export class UserService extends LookupBaseService<User, string> {
       }
     );
   }
+  @CastResponse(undefined, { fallback: '$lookup' })
+  getMyDepartmentEmployeesAndFirstLevelManagersLookup(): Observable<UsersWithDepartmentLookup[]> {
+    return this.http
+      .get<ListResponseData<UsersWithDepartmentLookup>>(
+        this.getUrlSegment() + '/' + 'myDepartmentEmployeesAndFirstLevelManagersLookup',
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        switchMap((response: ListResponseData<UsersWithDepartmentLookup>) => {
+          return of(response.data);
+        })
+      );
+  }
 }

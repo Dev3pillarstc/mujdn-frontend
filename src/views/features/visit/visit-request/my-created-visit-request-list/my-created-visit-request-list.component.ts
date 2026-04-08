@@ -35,6 +35,10 @@ import { AccessLocationLookup } from '@/models/features/business/access-location
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { registerIBMPlexArabicFont } from '../../../../../../public/assets/fonts/ibm-plex-font';
+import {
+  VisitAttendanceStatusOption,
+  VISIT_ATTENDANCE_STATUS_OPTIONS,
+} from '@/enums/visit-attendance-status-enum';
 
 @Component({
   selector: 'app-my-created-visit-request-list',
@@ -73,6 +77,7 @@ export class MyCreatedVisitRequestListComponent
   visitService = inject(VisitService);
   languageService = inject(LanguageService);
   authService = inject(AuthService);
+  attendanceStatusOptions: VisitAttendanceStatusOption[] = VISIT_ATTENDANCE_STATUS_OPTIONS;
 
   private hasInitialized = false;
 
@@ -400,6 +405,25 @@ export class MyCreatedVisitRequestListComponent
 
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
+  }
+
+  // Attendance status badge methods
+  getAttendanceBadgeClass(status: number): string {
+    const option = this.attendanceStatusOptions.find((o) => o.value === status);
+    return (
+      option?.badgeClass ||
+      'text-[14px] text-gray-600 px-2 py-1 rounded-full bg-gray-100 font-medium'
+    );
+  }
+
+  getAttendanceBadgeDotClass(status: number): string {
+    const option = this.attendanceStatusOptions.find((o) => o.value === status);
+    return option?.dotClass || 'w-[10px] h-[10px] bg-gray-600 rounded-full';
+  }
+
+  getAttendanceStatusText(status: number): string {
+    const option = this.attendanceStatusOptions.find((o) => o.value === status);
+    return option ? this.translateService.instant(option.translationKey) : '';
   }
   override exportPdf(
     fileName: string = this.translateService.instant(

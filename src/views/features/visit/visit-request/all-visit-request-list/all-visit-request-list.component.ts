@@ -360,4 +360,23 @@ export class AllVisitRequestListComponent
   getPropertyName() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH ? 'nameEn' : 'nameAr';
   }
+
+  // Attendance status badge methods
+  getAttendanceBadgeClass(status: number): string {
+    const option = this.attendanceStatusOptions.find((o) => o.value === status);
+    return (
+      option?.badgeClass ||
+      'text-[14px] text-gray-600 px-2 py-1 rounded-full bg-gray-100 font-medium'
+    );
+  }
+
+  getAttendanceBadgeDotClass(status: number): string {
+    const option = this.attendanceStatusOptions.find((o) => o.value === status);
+    return option?.dotClass || 'w-[10px] h-[10px] bg-gray-600 rounded-full';
+  }
+
+  getAttendanceStatusText(status: number): string {
+    const option = this.attendanceStatusOptions.find((o) => o.value === status);
+    return option ? this.translateService.instant(option.translationKey) : '';
+  }
 }

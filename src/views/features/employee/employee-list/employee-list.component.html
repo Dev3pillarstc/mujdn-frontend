@@ -305,10 +305,19 @@
                   <td>{{ getDepartmentName(user.department) }}</td>
                   <td>
                     <div class="flex justify-center gap-2">
-                      @if (user.canLeaveWithoutFingerPrint) {
-                        <img src="assets/icons/right-icon.svg" alt="" />
+                      @if (isAdmin()) {
+                        <div class="card flex justify-center">
+                          <p-toggleswitch
+                            [(ngModel)]="user.canLeaveWithoutFingerPrint"
+                            (onChange)="onCanLeaveWithoutFingerPrintToggle(user, $event.checked)"
+                          />
+                        </div>
                       } @else {
-                        <img src="assets/icons/wrong-icon.svg" alt="" />
+                        @if (user.canLeaveWithoutFingerPrint) {
+                          <img src="assets/icons/right-icon.svg" alt="" />
+                        } @else {
+                          <img src="assets/icons/wrong-icon.svg" alt="" />
+                        }
                       }
                     </div>
                   </td>

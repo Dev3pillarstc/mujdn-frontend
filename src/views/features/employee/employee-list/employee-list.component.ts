@@ -13,7 +13,6 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
-import { AlertService } from '@/services/shared/alert.service';
 import { EmployeePermissionPopupComponent } from '../popups/employee-permission-popup/employee-permission-popup.component';
 import { AssignShiftPopupComponent } from '../popups/assign-shift-popup/assign-shift-popup.component';
 import { AddNewEmployeePopupComponent } from '../popups/add-new-employee-popup/add-new-employee-popup.component';
@@ -24,7 +23,7 @@ import { UserService } from '@/services/features/user.service';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { User } from '@/models/auth/user';
 import { UserFilter } from '@/models/auth/user-filter';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { InputTextModule } from 'primeng/inputtext';
 import { ACCOUNT_STATUS_OPTIONS, AccountStatusOption } from '@/models/shared/account-status-option';
@@ -38,10 +37,10 @@ import { DepartmentService } from '@/services/features/lookups/department.servic
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { AuthService } from '@/services/auth/auth.service';
-import { Observable } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import { formatDateOnly } from '@/utils/general-helper';
 import { EmployeeImportModalComponent } from '../employee-import-modal/employee-import-modal.component';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-employee-list',
@@ -60,6 +59,7 @@ import { EmployeeImportModalComponent } from '../employee-import-modal/employee-
     TranslatePipe,
     InputTextModule,
     DropdownModule,
+    ToggleSwitchModule,
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.scss',
@@ -75,7 +75,6 @@ export default class EmployeeListComponent
   regionService = inject(RegionService);
   departmentService = inject(DepartmentService);
   authService = inject(AuthService);
-
   actionList: MenuItem[] = [];
   cities: CityLookup[] = [];
   regions: BaseLookupModel[] = [];
@@ -364,5 +363,54 @@ export default class EmployeeListComponent
       //   command: () => this.openConfirmation(),
       // },
     ];
+  }
+  isAdmin() {
+    return this.authService.isAdmin;
+  }
+
+  onCanLeaveWithoutFingerPrintToggle(user: User, newValue: boolean) {
+    // Show confirmation dialog
+    const dialogRef = this.confirmationService.open({
+      icon: 'warning',
+      messages: [
+        newValue
+          ? 'EMPLOYEES_PAGE.CONFIRM_ENABLE_FINGERPRINT_EXEMPTION'
+          : 'EMPLOYEES_PAGE.CONFIRM_DISABLE_FINGERPRINT_EXEMPTION',
+      ],
+      confirmText: 'COMMON.YES',
+      cancelText: 'COMMON.NO',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == DIALOG_ENUM.OK) {
+        // User confirmed
+        const request$ = newValue
+          ? this.userService.enableCanLeaveWithoutFingerPrint(user.id)
+          : this.userService.disableCanLeaveWithoutFingerPrint(user.id);
+
+        request$.subscribe({
+          next: () => {
+            user.canLeaveWithoutFingerPrint = newValue;
+            this.alertService.showSuccessMessage({
+              messages: [
+                newValue
+                  ? 'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION_ENABLED'
+                  : 'EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION_DISABLED',
+              ],
+            });
+          },
+          error: () => {
+            // Revert the toggle if the request fails
+            user.canLeaveWithoutFingerPrint = !newValue;
+            this.alertService.showErrorMessage({
+              messages: ['COMMON.ERROR_OCCURRED'],
+            });
+          },
+        });
+      } else {
+        // User canceled - revert the toggle
+        user.canLeaveWithoutFingerPrint = !newValue;
+      }
+    });
   }
 }

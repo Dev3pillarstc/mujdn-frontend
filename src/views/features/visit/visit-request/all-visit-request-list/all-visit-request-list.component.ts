@@ -30,6 +30,10 @@ import { AuthService } from '@/services/auth/auth.service';
 import { AccessLocationService } from '@/services/features/business/access-location.service';
 import { map } from 'rxjs';
 import { AccessLocationLookup } from '@/models/features/business/access-location-lookup';
+import {
+  VISIT_ATTENDANCE_STATUS_OPTIONS,
+  VisitAttendanceStatusOption,
+} from '@/enums/visit-attendance-status-enum';
 
 @Component({
   selector: 'app-all-visit-request-list',
@@ -66,6 +70,7 @@ export class AllVisitRequestListComponent
   accessLocationService = inject(AccessLocationService);
   visitCreators: BaseLookupModel[] = [];
   accessLocations: BaseLookupModel[] = [];
+  attendanceStatusOptions: VisitAttendanceStatusOption[] = VISIT_ATTENDANCE_STATUS_OPTIONS;
 
   private hasInitialized = false;
 

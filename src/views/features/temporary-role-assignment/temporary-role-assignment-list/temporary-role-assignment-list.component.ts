@@ -72,6 +72,10 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
     }
   }
 
+  get dateFrom(): Date | null | undefined {
+    return this.filterModel.dateFrom;
+  }
+
   override initListComponent(): void {
     if (!this.canManageTemporaryRoleAssignments) {
       this.router.navigate(['/403']);

@@ -827,6 +827,7 @@
     "SHIFT_TYPE": "Shift Type",
     "LEAVE_NAME": "Holiday Name",
     "MISSION_NAME": "Mission Name",
+    "MISSION_TYPE": "Mission Type",
     "PRESENCE_INQUIRY": "Presence Inquiry",
     "SHIFT_PRESENCE_INQUIRY": "Attendance proof of the rest system",
     "CHECKIN_TIME": "Check-in Time",

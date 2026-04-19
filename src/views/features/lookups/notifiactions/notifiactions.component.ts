@@ -72,15 +72,14 @@ export default class NotifiactionsComponent extends BaseListComponent<
 
   protected override mapModelToExcelRow(model: Notification): { [key: string]: any } {
     return {
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ARABIC')]:
-        model.notificationType.arabicTitle,
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ENGLISH')]:
-        model.notificationType.englishTitle,
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ARABIC')]:
-        model.contentAr,
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ENGLISH')]:
-        model.contentEn,
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE')]:
+        model.getnotificationTypeTitle(),
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT')]:
+        model.getContent(),
       [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_DATE')]: model.creationDate,
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TIME')]: this.formatTime(
+        new Date(model.creationDate)
+      ),
     };
   }
   set dateFrom(value: Date | null) {

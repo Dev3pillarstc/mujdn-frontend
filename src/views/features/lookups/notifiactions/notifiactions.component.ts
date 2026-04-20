@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
@@ -71,12 +71,13 @@ export default class NotifiactionsComponent extends BaseListComponent<
   override openDialog(model: Notification): void {}
 
   protected override mapModelToExcelRow(model: Notification): { [key: string]: any } {
+    const datePipe = new DatePipe('en-US');
     return {
       [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE')]:
         model.getnotificationTypeTitle(),
       [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT')]:
         model.getContent(),
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_DATE')]: model.creationDate,
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_DATE')]: datePipe.transform(model.creationDate, 'dd/MM/yyyy'),
       [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TIME')]: this.formatTime(
         new Date(model.creationDate)
       ),

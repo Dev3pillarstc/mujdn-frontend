@@ -176,9 +176,8 @@ export default class DepartmentListComponent extends BaseListComponent<
 
   protected override mapModelToExcelRow(model: Department): { [key: string]: any } {
     return {
-      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ARABIC')]: model.nameAr,
-      [this.translateService.instant('DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME_ENGLISH')]:
-        model.nameEn,
+      [this.translateService.instant('DEPARTMENT_POPUP.DEPARTMENT_NAME_ARABIC')]: model.nameAr,
+      [this.translateService.instant('DEPARTMENT_POPUP.DEPARTMENT_NAME_ENGLISH')]: model.nameEn,
       [this.translateService.instant('DEPARTMENTS_LIST_PAGE.PERMISSION_REQUEST')]:
         model.isOneLevelApproval
           ? this.translateService.instant('DEPARTMENTS_LIST_PAGE.ONE_LEVEL_APPROVAL')

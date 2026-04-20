@@ -165,4 +165,9 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
         this.translateService.instant(this.getStatusKey(model)),
     };
   }
+  getTranslatedTemporaryRoleAssignmentLabel(): string {
+    return this.translateService.instant(
+      'TEMPORARY_ROLE_ASSIGNMENT_PAGE.TEMPORARY_ROLE_ASSIGNMENTS'
+    );
+  }
 }

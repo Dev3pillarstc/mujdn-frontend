@@ -114,6 +114,7 @@
             <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_TYPE' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.LEAVE_NAME' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.MISSION_NAME' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.MISSION_TYPE' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.PERMISSIONS' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.PRESENCE_INQUIRY' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_PRESENCE_INQUIRY' | translate }}</th>
@@ -135,6 +136,7 @@
             </td>
             <td>{{ attendance.getHolidayName() }}</td>
             <td>{{ attendance.getMissionName() }}</td>
+            <td>{{ attendance.getMissionTypeTranslationKey() | translate }}</td>
             <td>
               {{ getPermissionLabel(attendance) | translate }}
             </td>

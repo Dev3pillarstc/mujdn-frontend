@@ -34,6 +34,13 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { MenuModule } from 'primeng/menu';
 import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { Select } from 'primeng/select';
+import {
+  getWorkMissionTypeName,
+  WORK_MISSION_TYPE_OPTIONS,
+  WorkMissionTypeOption,
+} from '@/models/features/business/work-mission-type-option';
 
 @Component({
   selector: 'app-assign-work-mission-list',
@@ -46,6 +53,7 @@ import { PaginatedListResponseData } from '@/models/shared/response/paginated-li
     InputTextModule,
     PaginatorModule,
     TranslatePipe,
+    Select,
     MenuModule,
     SplitButtonModule,
   ],
@@ -83,6 +91,7 @@ export class AssignWorkMissionListComponent
   // Component data
   missions: WorkMission[] = [];
   departments: BaseLookupModel[] = [];
+  workMissionTypeOptions: WorkMissionTypeOption[] = WORK_MISSION_TYPE_OPTIONS;
 
   // Base class overrides
   override get filterModel(): WorkMissionFilter {
@@ -151,6 +160,10 @@ export class AssignWorkMissionListComponent
         model.endDate,
         'dd/MM/yyyy'
       ),
+      [this.translateService.instant('WORK_MISSIONS.MISSION_TYPE')]: getWorkMissionTypeName(
+        model.workMissionType,
+        this.isCurrentLanguageEnglish()
+      ),
     };
   }
   addOrEditModel(mission?: WorkMission): void {
@@ -217,5 +230,16 @@ export class AssignWorkMissionListComponent
 
   resetFilter(): void {
     this.filterModel = new WorkMissionFilter(); // fresh empty filter
+  }
+
+  isCurrentLanguageEnglish(): boolean {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
+  }
+
+  getPropertyName(): string {
+    return this.isCurrentLanguageEnglish() ? 'nameEn' : 'nameAr';
+  }
+  getWorkMissionTypeName(model: WorkMission): string {
+    return getWorkMissionTypeName(model.workMissionType, this.isCurrentLanguageEnglish());
   }
 }

@@ -1,6 +1,7 @@
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { WorkMission } from '@/models/features/business/work-mission';
+import { getWorkMissionTypeName } from '@/models/features/business/work-mission-type-option';
 import { LanguageService } from '@/services/shared/language.service';
 import { DialogRef } from '@angular/cdk/dialog';
 import { DatePipe } from '@angular/common';
@@ -29,6 +30,9 @@ export class ViewMissionDataPopupComponent {
 
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
+  }
+  getWorkMissionTypeName(model: WorkMission): string {
+    return getWorkMissionTypeName(model.workMissionType, this.isCurrentLanguageEnglish());
   }
 
   close() {

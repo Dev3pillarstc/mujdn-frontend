@@ -241,6 +241,8 @@ export class AllVisitRequestListComponent
       [this.translateService.instant('VISIT_REQUEST_PAGE.EXIT')]: this.formatTime(
         model.leaveTime?.toString() || ''
       ),
+      [this.translateService.instant('VISIT_REQUEST_PAGE.ATTENDANCE_STATUS')]:
+        this.getAttendanceStatusText(model.attendanceStatus),
     };
   }
 

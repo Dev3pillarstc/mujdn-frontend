@@ -38,6 +38,8 @@ export class Visit extends BaseCrudModel<Visit, VisitService> {
   declare accessLocations: BaseLookupModel[];
   declare nationalityNameAr?: string;
   declare nationalityNameEn?: string;
+  declare attendanceStatus: number;
+
   constructor() {
     super();
   }

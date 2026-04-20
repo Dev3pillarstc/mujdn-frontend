@@ -6,6 +6,7 @@ import { AttendanceReportInterceptor } from '@/model-interceptors/features/atten
 import { FactoryService } from '@/services/factory-service';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
 
 const { send, receive } = new AttendanceReportInterceptor();
 
@@ -53,6 +54,7 @@ export default class AttendanceReport extends BaseCrudModel<
   declare missionId?: number | null;
   declare missionNameEn?: string | null;
   declare missionNameAr?: string | null;
+  declare missionType?: number | null;
 
   declare isPresenceInquirySucceed?: boolean | null;
   declare isShiftPresenceInquirySucceed?: boolean | null;
@@ -82,6 +84,18 @@ export default class AttendanceReport extends BaseCrudModel<
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
       ? this.missionNameEn!
       : this.missionNameAr!;
+  }
+  getMissionTypeTranslationKey(): string {
+    switch (this.missionType) {
+      case WorkMissionTypesEnum.ShiftBeginning:
+        return 'WORK_MISSIONS.SHIFT_BEGINNING';
+      case WorkMissionTypesEnum.ShiftEnding:
+        return 'WORK_MISSIONS.SHIFT_ENDING';
+      case WorkMissionTypesEnum.FullDay:
+        return 'WORK_MISSIONS.FULL_DAY';
+      default:
+        return '';
+    }
   }
   getHolidayName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH

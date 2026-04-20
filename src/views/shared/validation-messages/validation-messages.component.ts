@@ -80,6 +80,7 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.MAX_LENGTH]: 'COMMON.MAX_LENGTH_DYNAMIC',
     [ValidationErrorKeyEnum.MIN]: 'COMMON.MIN_VALUE',
     [ValidationErrorKeyEnum.MAX]: 'COMMON.MAX_VALUE',
+    [ValidationErrorKeyEnum.PAST_DATE]: 'COMMON.DATE_CANNOT_BE_IN_PAST',
     [ValidationErrorKeyEnum.START_AFTER_END]: 'COMMON.START_BEFORE_END',
     [ValidationErrorKeyEnum.TIME_FROM_AFTER_TIME_TO]: 'COMMON.TIME_FROM_BEFORE_TIME_TO',
     [ValidationErrorKeyEnum.TIME_RANGE_SHOULD_CROSS_DAY]: 'COMMON.TIME_RANGE_SHOULD_CROSS_DAY',

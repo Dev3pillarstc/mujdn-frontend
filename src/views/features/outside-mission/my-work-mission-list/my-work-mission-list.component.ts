@@ -27,6 +27,11 @@ import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { registerIBMPlexArabicFont } from '../../../../../public/assets/fonts/ibm-plex-font';
+import {
+  getWorkMissionTypeName,
+  WORK_MISSION_TYPE_OPTIONS,
+  WorkMissionTypeOption,
+} from '@/models/features/business/work-mission-type-option';
 interface Adminstration {
   type: string;
 }
@@ -58,6 +63,7 @@ export class MyWorkMissionListComponent extends BaseListComponent<
   workMissionService = inject(WorkMissionService);
   creators: BaseLookupModel[] = [];
   myMissions: WorkMission[] = [];
+  workMissionTypeOptions: WorkMissionTypeOption[] = WORK_MISSION_TYPE_OPTIONS;
   override list: WorkMission[] = [];
   override dialogSize: any = {
     width: '100%',
@@ -148,6 +154,10 @@ export class MyWorkMissionListComponent extends BaseListComponent<
       [this.translateService.instant('WORK_MISSIONS.MISSION_NAME_EN')]: model.nameEn,
       [this.translateService.instant('WORK_MISSIONS.START_DATE')]: model.startDate,
       [this.translateService.instant('WORK_MISSIONS.END_DATE')]: model.endDate,
+      [this.translateService.instant('WORK_MISSIONS.MISSION_TYPE')]: getWorkMissionTypeName(
+        model.workMissionType,
+        this.isCurrentLanguageEnglish()
+      ),
       [this.translateService.instant('WORK_MISSIONS.MISSION_CREATOR_AR')]:
         model.missionCreator?.nameAr || '',
       [this.translateService.instant('WORK_MISSIONS.MISSION_CREATOR_EN')]:
@@ -343,5 +353,8 @@ export class MyWorkMissionListComponent extends BaseListComponent<
 
   isCurrentLanguageEnglish(): boolean {
     return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
+  }
+  getWorkMissionTypeName(model: WorkMission): string {
+    return getWorkMissionTypeName(model.workMissionType, this.isCurrentLanguageEnglish());
   }
 }

@@ -135,40 +135,39 @@
           }}</label>
           <div class="flex gap-6 mt-4">
             <div class="flex items-center">
-              <input
-                type="radio"
+              <p-radioButton
                 name="workMissionType"
                 [value]="WorkMissionTypesEnum.FullDay"
                 formControlName="workMissionType"
-                id="FullDay"
+                inputId="FullDay"
               />
-              <label [for]="'FullDay'" class="ms-2 cursor-pointer">{{
-                'WORK_MISSIONS.FULL_DAY' | translate
-              }}</label>
+              <label for="FullDay" class="ms-2 cursor-pointer">
+                {{ 'WORK_MISSIONS.FULL_DAY' | translate }}
+              </label>
             </div>
+
             <div class="flex items-center">
-              <input
-                type="radio"
+              <p-radioButton
                 name="workMissionType"
                 [value]="WorkMissionTypesEnum.ShiftBeginning"
                 formControlName="workMissionType"
-                id="ShiftBeginning"
+                inputId="ShiftBeginning"
               />
-              <label [for]="'ShiftBeginning'" class="ms-2 cursor-pointer">{{
-                'WORK_MISSIONS.SHIFT_BEGINNING' | translate
-              }}</label>
+              <label for="ShiftBeginning" class="ms-2 cursor-pointer">
+                {{ 'WORK_MISSIONS.SHIFT_BEGINNING' | translate }}
+              </label>
             </div>
+
             <div class="flex items-center">
-              <input
-                type="radio"
+              <p-radioButton
                 name="workMissionType"
                 [value]="WorkMissionTypesEnum.ShiftEnding"
                 formControlName="workMissionType"
-                id="ShiftEnding"
+                inputId="ShiftEnding"
               />
-              <label [for]="'ShiftEnding'" class="ms-2 cursor-pointer">{{
-                'WORK_MISSIONS.SHIFT_ENDING' | translate
-              }}</label>
+              <label for="ShiftEnding" class="ms-2 cursor-pointer">
+                {{ 'WORK_MISSIONS.SHIFT_ENDING' | translate }}
+              </label>
             </div>
           </div>
           <app-validation-messages [control]="workMissionTypeControl"></app-validation-messages>

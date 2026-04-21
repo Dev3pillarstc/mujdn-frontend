@@ -110,6 +110,10 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.LEAVE_NAME')]: model.getHolidayName(),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.MISSION_NAME')]:
         model.getMissionName(),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.MISSION_TYPE')]:
+        model.getMissionTypeTranslationKey()
+          ? this.translateService.instant(model.getMissionTypeTranslationKey())
+          : '',
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.PERMISSIONS')]:
         this.getPermissionLabel(model)
           ? this.translateService.instant(this.getPermissionLabel(model))

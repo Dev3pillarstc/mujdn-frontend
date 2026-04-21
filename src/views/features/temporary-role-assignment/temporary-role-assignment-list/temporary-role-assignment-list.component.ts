@@ -72,6 +72,10 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
     }
   }
 
+  get dateFrom(): Date | null | undefined {
+    return this.filterModel.dateFrom;
+  }
+
   override initListComponent(): void {
     if (!this.canManageTemporaryRoleAssignments) {
       this.router.navigate(['/403']);
@@ -160,5 +164,10 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.CURRENT_STATUS')]:
         this.translateService.instant(this.getStatusKey(model)),
     };
+  }
+  getTranslatedTemporaryRoleAssignmentLabel(): string {
+    return this.translateService.instant(
+      'TEMPORARY_ROLE_ASSIGNMENT_PAGE.TEMPORARY_ROLE_ASSIGNMENTS'
+    );
   }
 }

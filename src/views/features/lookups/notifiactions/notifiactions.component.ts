@@ -74,17 +74,13 @@ export default class NotifiactionsComponent extends BaseListComponent<
     const datePipe = new DatePipe('en-US');
 
     return {
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ARABIC')]:
-        model.notificationType.arabicTitle,
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE_ENGLISH')]:
-        model.notificationType.englishTitle,
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ARABIC')]:
-        model.contentAr,
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT_ENGLISH')]:
-        model.contentEn,
-      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_DATE')]: datePipe.transform(
-        model.creationDate,
-        'dd/MM/yyyy'
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE')]:
+        model.getnotificationTypeTitle(),
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_CONTENT')]:
+        model.getContent(),
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_DATE')]: datePipe.transform(model.creationDate, 'dd/MM/yyyy'),
+      [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TIME')]: this.formatTime(
+        new Date(model.creationDate)
       ),
     };
   }

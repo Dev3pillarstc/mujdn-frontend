@@ -108,6 +108,10 @@ export class MyAttendanceReportListComponent extends BaseListComponent<
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.LEAVE_NAME')]: model.getHolidayName(),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.MISSION_NAME')]:
         model.getMissionName(),
+      [this.translateService.instant('ATTENDANCE_REPORT_PAGE.MISSION_TYPE')]:
+        model.getMissionTypeTranslationKey()
+          ? this.translateService.instant(model.getMissionTypeTranslationKey())
+          : '',
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.PERMISSIONS')]:
         this.getPermissionLabel(model)
           ? this.translateService.instant(this.getPermissionLabel(model))
@@ -146,7 +150,7 @@ export class MyAttendanceReportListComponent extends BaseListComponent<
     const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
     return formatDateTo12Hour(date, locale);
   }
-  override exportExcel(fileName: string = 'AttendanceReports.xlsx'): void {
+  override exportExcel(fileName: string = 'My Attendance report.xlsx'): void {
     const allDataParams = {
       ...this.paginationParams,
       pageNumber: 1,

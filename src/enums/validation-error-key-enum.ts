@@ -6,6 +6,7 @@ export enum ValidationErrorKeyEnum {
   MAX_LENGTH = 'maxlength',
   MIN = 'min',
   MAX = 'max',
+  PAST_DATE = 'pastDate',
   START_AFTER_END = 'startAfterEnd',
   TIME_FROM_AFTER_TIME_TO = 'timeFromAfterTimeTo',
   TIME_RANGE_SHOULD_CROSS_DAY = 'timeRangeShouldCrossDay',

@@ -105,6 +105,23 @@
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
         </div>
+        <div>
+          <label class="label" for="workMissionType">نوع المهمة</label>
+          <div class="relative">
+            <p-select
+              [(ngModel)]="filterModel.workMissionType"
+              [options]="adminstrations"
+              class="w-full peer"
+              id="workMissionType"
+              name="workMissionType"
+              optionLabel="type"
+              placeholder="نوع المهمة"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+        </div>
       </div>
 
       <!-- Search Actions -->
@@ -149,6 +166,7 @@
             <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.MISSION_CREATOR' | translate }}</th>
+            <th>نوع المهمة</th>
             <th>{{ 'COMMON.ACTION' | translate }}</th>
           </tr>
         </ng-template>
@@ -168,6 +186,12 @@
                   ? mission.missionCreator?.nameEn
                   : mission.missionCreator?.nameAr
               }}
+            </td>
+            <td>
+              <span
+                class="bg-gray-100 rounded-lg p-1 min-w-[80px] inline-flex items-center justify-center border border-[#d9dadd] text-sm font-semibold"
+                >يوم كامل</span
+              >
             </td>
             <td>
               <!-- Only View Action -->

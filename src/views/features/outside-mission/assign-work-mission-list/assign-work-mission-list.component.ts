@@ -34,6 +34,11 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { MenuModule } from 'primeng/menu';
 import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
+import { Select } from 'primeng/select';
+
+interface Adminstration {
+  type: string;
+}
 
 @Component({
   selector: 'app-assign-work-mission-list',
@@ -48,6 +53,7 @@ import { PaginatedListResponseData } from '@/models/shared/response/paginated-li
     TranslatePipe,
     MenuModule,
     SplitButtonModule,
+    Select,
   ],
   templateUrl: './assign-work-mission-list.component.html',
   styleUrl: './assign-work-mission-list.component.scss',
@@ -62,6 +68,7 @@ export class AssignWorkMissionListComponent
   >
   implements OnInit
 {
+   adminstrations: Adminstration[] | undefined;
   override dialogSize = {
     width: '100%',
     maxWidth: '1024px',
@@ -83,6 +90,7 @@ export class AssignWorkMissionListComponent
   // Component data
   missions: WorkMission[] = [];
   departments: BaseLookupModel[] = [];
+selectedAdminstration: any;
 
   // Base class overrides
   override get filterModel(): WorkMissionFilter {

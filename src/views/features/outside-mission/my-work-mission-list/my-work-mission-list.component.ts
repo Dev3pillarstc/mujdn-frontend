@@ -63,6 +63,8 @@ export class MyWorkMissionListComponent extends BaseListComponent<
     width: '100%',
     maxWidth: '1024px',
   };
+  adminstrations: Adminstration[] | undefined;
+
   override get filterModel(): MyWorkMissionFilter {
     return this.filterOptions;
   }

@@ -351,161 +351,169 @@ export abstract class BaseListComponent<
     return { ar: '', en: '' };
   }
 
-exportPdf(fileName: string = 'data.pdf', isStoredProcedure: boolean = false): void {
-  const allDataParams = {
-    ...this.paginationParams,
-    pageNumber: 1,
-    pageSize: CustomValidators.defaultLengths.INT_MAX,
-  };
+  exportPdf(fileName: string = 'data.pdf', isStoredProcedure: boolean = false): void {
+    const allDataParams = {
+      ...this.paginationParams,
+      pageNumber: 1,
+      pageSize: CustomValidators.defaultLengths.INT_MAX,
+    };
 
-  const fetchAll = isStoredProcedure
-    ? this.service.loadPaginatedSP(allDataParams, { ...this._appliedFilterModel! })
-    : this.service.loadPaginated(allDataParams, { ...this._appliedFilterModel! });
+    const fetchAll = isStoredProcedure
+      ? this.service.loadPaginatedSP(allDataParams, { ...this._appliedFilterModel! })
+      : this.service.loadPaginated(allDataParams, { ...this._appliedFilterModel! });
 
-  const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+    const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
 
-  fetchAll.subscribe({
-    next: (response) => {
-      const fullList = response.list || [];
-      if (fullList.length === 0) {
-        this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
-        return;
-      }
-
-      const transformedData = fullList.map((item) => this.mapModelToPdfRow(item));
-
-      const formatCell = (val: any): string | number => {
-        if (val instanceof Date) return val.toLocaleString();
-        return val != null ? val : '';
-      };
-
-      // ── Table headers & body ──────────────────────────────────────────────
-      const rawHead = Object.keys(transformedData[0]);
-      const head    = isRTL ? [[...rawHead].reverse()] : [rawHead];
-      const body    = transformedData.map((row) => {
-        const values = Object.values(row).map(formatCell);
-        return isRTL ? [...values].reverse() : values;
-      });
-
-      // ── Colours ───────────────────────────────────────────────────────────
-      const HEADER_BG          : [number, number, number] = [243, 244, 246];
-      const HEADER_TEXT        : [number, number, number] = [51,  65,  85 ];
-      const ROW                : [number, number, number] = [255, 255, 255];
-      const HEADER_BORDER_COLOR: [number, number, number] = [226, 232, 240];
-      const BODY_TEXT          : [number, number, number] = [51,  51,  51 ];
-
-      // ── Document setup ───────────────────────────────────────────────────
-      const doc      = new jsPDF({ orientation: 'landscape', format: 'a4' });
-      registerIBMPlexArabicFont(doc);
-
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const colCount  = head[0].length;
-      const usableW   = pageWidth - 20;
-      const colWidth  = usableW / colCount;
-
-      const columnStyles: { [key: number]: any } = {};
-      for (let i = 0; i < colCount; i++) {
-        columnStyles[i] = { cellWidth: colWidth, halign: 'center', valign: 'middle' };
-      }
-
-      // ── Title ────────────────────────────────────────────────────────────
-      const titles = this.getPdfTitle();
-
-      autoTable(doc, {
-        head,
-        body,
-
-        // ── Global cell style ─────────────────────────────────────────────
-        styles: {
-          font        : 'IBMPlexSansArabic',
-          fontStyle   : 'normal',
-          fontSize    : 9,
-          halign      : 'center',
-          valign      : 'middle',
-          textColor   : BODY_TEXT,
-          lineWidth   : 0,
-          cellPadding : 4,
-        },
-
-        // ── Header row ───────────────────────────────────────────────────
-        headStyles: {
-          font          : 'IBMPlexSansArabic',
-          fontStyle     : 'normal',
-          fontSize      : 9,
-          halign        : 'center',
-          valign        : 'middle',
-          fillColor     : HEADER_BG,
-          textColor     : HEADER_TEXT,
-          lineColor     : HEADER_BORDER_COLOR,
-          lineWidth     : 0.25,
-          cellPadding   : 5,
-          minCellHeight : 12,
-        },
-
-        // ── Body rows ────────────────────────────────────────────────────
-        bodyStyles        : { fillColor: ROW },
-        alternateRowStyles: { fillColor: ROW },
-
-        margin      : { top: 18, right: 10, bottom: 10, left: 10 },
-        columnStyles,
-        tableWidth  : 'auto',
-
-        // ── Bottom border only on every cell ─────────────────────────────
-didParseCell: (data) => {
-  if (data.section === 'body') {
-    // bottom border only on body cells
-    data.cell.styles.lineWidth = { top: 0, right: 0, bottom: 0.3, left: 0 } as any;
-    data.cell.styles.lineColor = [226, 232, 240] as any;
-  } else if (data.section === 'head') {
-    // full border on header cells
-    data.cell.styles.lineWidth = 0.25;
-    data.cell.styles.lineColor = [226, 232, 240] as any;
-  }
-},
-
-        // ── Title drawn on every page ─────────────────────────────────────
-        didDrawPage: (_data) => {
-          const title = isRTL ? titles.ar : titles.en;
-          doc.setFont('IBMPlexSansArabic');
-          doc.setFontSize(11);
-          doc.setTextColor(45, 156, 156);
-          if (isRTL) {
-            doc.text(title, pageWidth - 10, 12, { align: 'right' });
-          } else {
-            doc.text(title, 10, 12, { align: 'left' });
-          }
-          doc.setDrawColor(45, 156, 156);
-          doc.setLineWidth(0.5);
-          doc.line(10, 14, pageWidth - 10, 14);
-        },
-      });
-
-      // ── Outer table border ────────────────────────────────────────────────
-      const last = (doc as any).lastAutoTable;
-      if (last) {
-        const marginLeft  = (last.settings?.margin?.left  ?? 10) as number;
-        const marginRight = (last.settings?.margin?.right ?? 10) as number;
-        const startY      = (last.startY ?? last.settings?.margin?.top ?? 18) as number;
-        const finalY      = (last.finalY ?? startY) as number;
-        const tableW      = pageWidth - marginLeft - marginRight;
-        const tableH      = finalY - startY;
-
-        if (tableW > 0 && tableH > 0) {
-          doc.setDrawColor(226, 232, 240);
-          doc.setLineWidth(0.4);
-          doc.rect(marginLeft, startY, tableW, tableH);
+    fetchAll.subscribe({
+      next: (response) => {
+        const fullList = response.list || [];
+        if (fullList.length === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
         }
-      }
 
-      doc.save(fileName);
-    },
+        const transformedData = fullList.map((item) => this.mapModelToPdfRow(item));
+        const headers = Object.keys(transformedData[0]);
+        const titles = this.getPdfTitle();
+        const title = isRTL ? titles.ar : titles.en;
 
-    error: (_) => {
-      this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
-    },
-  });
-}
+        const formatCell = (val: any): string => {
+          if (val instanceof Date) return val.toLocaleString();
+          return val != null ? String(val) : '';
+        };
 
+        const displayHeaders = isRTL ? [...headers].reverse() : headers;
+
+        // ── Build off-screen HTML table ───────────────────────────
+        const container = document.createElement('div');
+        container.style.cssText = `
+        position: fixed;
+        top: -9999px;
+        left: -9999px;
+        width: 1122px;
+        background: white;
+        padding: 20px;
+        font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
+        direction: ${isRTL ? 'rtl' : 'ltr'};
+      `;
+
+        container.innerHTML = `
+        <div style="
+          color: #2d9c9c;
+          font-size: 14px;
+          font-weight: bold;
+          margin-bottom: 8px;
+          text-align: ${isRTL ? 'right' : 'left'};
+          font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
+        ">${title}</div>
+        <div style="height: 2px; background: #2d9c9c; margin-bottom: 12px;"></div>
+        <table style="
+          width: 100%;
+          border-collapse: collapse;
+          font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
+          font-size: 11px;
+          direction: ${isRTL ? 'rtl' : 'ltr'};
+          border: 1px solid #e2e8f0;
+        ">
+          <thead>
+            <tr>
+              ${displayHeaders
+                .map(
+                  (h) => `
+                <th style="
+                  background: #f3f4f6;
+                  color: #33415a;
+                  padding: 8px 9px;
+                  text-align: center;
+                  border: 1px solid #e2e8f0;
+                  font-weight: bold;
+                  white-space: nowrap;
+                  font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
+                ">${h}</th>
+              `
+                )
+                .join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${transformedData
+              .map((row) => {
+                const values = isRTL ? [...Object.values(row)].reverse() : Object.values(row);
+                return `
+                <tr>
+                  ${values
+                    .map(
+                      (val) => `
+                    <td style="
+                      padding: 7px 6px;
+                      text-align: center;
+                      border-bottom: 1px solid #e2e8f0;
+                      color: #333333;
+                      white-space: nowrap;
+                      font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
+                    ">${formatCell(val)}</td>
+                  `
+                    )
+                    .join('')}
+                </tr>
+              `;
+              })
+              .join('')}
+          </tbody>
+        </table>
+      `;
+
+        document.body.appendChild(container);
+
+        // ── Capture and export ────────────────────────────────────
+        import('html2canvas').then(({ default: html2canvas }) => {
+          html2canvas(container, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            width: 1122,
+            windowWidth: 1122,
+          })
+            .then((canvas) => {
+              document.body.removeChild(container);
+
+              const imgData = canvas.toDataURL('image/png');
+              const doc = new jsPDF({ orientation: 'landscape', format: 'a4' });
+
+              const pageWidth = doc.internal.pageSize.getWidth();
+              const pageHeight = doc.internal.pageSize.getHeight();
+              const imgWidth = pageWidth - 20;
+              const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+              // ── Title on first page ───────────────────────────────
+              let heightLeft = imgHeight;
+              let position = 10;
+
+              doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+              heightLeft -= pageHeight - 20;
+
+              // ── Multi-page support ────────────────────────────────
+              while (heightLeft > 0) {
+                position = heightLeft - imgHeight;
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight - 20;
+              }
+
+              doc.save(fileName);
+            })
+            .catch(() => {
+              document.body.removeChild(container);
+              this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+            });
+        });
+      },
+
+      error: (_) => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
+  }
   private initBreadcrumbs(): void {
     this.breadcrumbs = this.getBreadcrumbKeys().map((item) => ({
       label: this.translateService.instant(item.labelKey),

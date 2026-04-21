@@ -27,6 +27,7 @@ import { OptionsContract } from '@/contracts/options-contract';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MissionEmployeesAssignement } from '@/models/features/business/mission-employees-assignment';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { getWorkMissionTypeName } from '@/models/features/business/work-mission-type-option';
 interface Adminstration {
   type: string;
 }
@@ -265,5 +266,8 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   }
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
+  }
+  getWorkMissionTypeName(model: WorkMission): string {
+    return getWorkMissionTypeName(model.workMissionType, this.isCurrentLanguageEnglish());
   }
 }

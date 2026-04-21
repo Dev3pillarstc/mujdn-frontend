@@ -232,6 +232,7 @@ export default class DepartmentListComponent extends BaseListComponent<
   override onPageChange(event: PaginatorState): void {
     this.first = event.first!;
     this.rows = event.rows!;
+    this.appliedFilterModel = { ...this.filterModel };
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     this.loadChildDepartmentsAfterSelect();

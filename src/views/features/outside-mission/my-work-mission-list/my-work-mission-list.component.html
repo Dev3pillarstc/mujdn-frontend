@@ -66,6 +66,24 @@
           ></span>
         </div>
 
+        <div class="relative">
+          <label class="label" for="workMissionTypeFilter">{{
+            'WORK_MISSIONS.MISSION_TYPE' | translate
+          }}</label>
+          <p-select
+            id="workMissionTypeFilter"
+            [options]="workMissionTypeOptions"
+            [(ngModel)]="filterModel.workMissionType"
+            optionValue="value"
+            [optionLabel]="getPropertyName()"
+            [placeholder]="'WORK_MISSIONS.MISSION_TYPE' | translate"
+            class="w-full peer"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
         <!-- Date From -->
         <div class="relative">
           <label class="label" for="">{{ 'WORK_MISSIONS.FROM' | translate }}</label>
@@ -165,6 +183,7 @@
             <th>{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_TYPE' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.MISSION_CREATOR' | translate }}</th>
             <th>نوع المهمة</th>
             <th>{{ 'COMMON.ACTION' | translate }}</th>
@@ -180,6 +199,7 @@
             </td>
             <td>{{ mission.startDate | date: 'dd/MM/yyyy' }}</td>
             <td>{{ mission.endDate | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ getWorkMissionTypeName(mission) }}</td>
             <td>
               {{
                 isCurrentLanguageEnglish()

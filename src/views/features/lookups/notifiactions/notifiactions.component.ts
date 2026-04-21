@@ -72,6 +72,7 @@ export default class NotifiactionsComponent extends BaseListComponent<
 
   protected override mapModelToExcelRow(model: Notification): { [key: string]: any } {
     const datePipe = new DatePipe('en-US');
+
     return {
       [this.translateService.instant('NOTIFICATIONS_PAGE.NOTIFICATION_TITLE')]:
         model.getnotificationTypeTitle(),

@@ -20,6 +20,7 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { BlacklistedNationalIdService } from '@/services/features/visit/blacklisted-national-id.service';
 import { BlacklistedNationalId } from '@/models/features/visit/blacklisted-national-id';
 import { AccessLocationLookup } from '@/models/features/business/access-location-lookup';
+import { VISIT_ATTENDANCE_STATUS_ENUM } from '@/enums/visit-attendance-status-enum';
 
 @Component({
   selector: 'app-view-action-visit-request-popup',
@@ -157,6 +158,8 @@ export class ViewActionVisitRequestPopupComponent implements OnInit {
   canReject(): boolean {
     return (
       this.shouldShowActions() &&
+      this.model.attendanceStatus !== VISIT_ATTENDANCE_STATUS_ENUM.Finished &&
+      this.model.attendanceStatus !== VISIT_ATTENDANCE_STATUS_ENUM.InVisit &&
       (this.model.visitStatus === VisitStatusEnum.NEW ||
         this.model.visitStatus === VisitStatusEnum.APPROVED)
     );

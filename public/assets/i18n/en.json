@@ -31,6 +31,7 @@
     "SEARCH": "Search",
     "RESET_SEARCH": "Reset",
     "SEARCH_FILTERS": "Search filters",
+    "DATE_CANNOT_BE_IN_PAST": "The date cannot be in the past.",
     "START_BEFORE_END": "Start date must be before end date",
     "TIME_FROM_BEFORE_TIME_TO": "Time from must be before time to",
     "TIME_RANGE_SHOULD_CROSS_DAY": "Time to must be less than time from",
@@ -132,7 +133,16 @@
     "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "Active Directory username or password is incorrect",
     "INVALID_XML_FILE_TYPE": "File extension should be .xml",
     "INVALID_SHIFT_DURATION_FOR_WEEK_ON_WEEK_OFF_24": "Shift duration is invalid for week on week off 24 Hours",
-    "MONTHLY_PERMISSION_LIMIT_EXCEEDED": "Monthly permission limit exceeded"
+    "MONTHLY_PERMISSION_LIMIT_EXCEEDED": "Monthly permission limit exceeded",
+    "TEMPORARY_ROLE_ASSIGNMENT_NOT_FOUND": "Temporary role assignment not found.",
+    "TEMPORARY_ROLE_ASSIGNMENT_OVERLAP": "The selected employee already has an overlapping temporary assignment for the same role.",
+    "TEMPORARY_ROLE_ASSIGNMENT_INVALID_DATE_RANGE": "DateTo must be greater than or equal to DateFrom for the temporary role assignment.",
+    "TEMPORARY_ROLE_SELF_ASSIGNMENT_NOT_ALLOWED": "You cannot assign a temporary role to yourself.",
+    "TEMPORARY_ROLE_ASSIGNMENT_ONLY_FUTURE_RECORDS_CAN_BE_UPDATED": "Only future temporary role assignments can be fully updated.",
+    "TEMPORARY_ROLE_ASSIGNMENT_ONLY_FUTURE_RECORDS_CAN_BE_DELETED": "Only temporary role assignments that start after today can be deleted.",
+    "TEMPORARY_ROLE_ASSIGNMENT_ONLY_DATE_TO_CAN_BE_UPDATED_AFTER_START": "Once a temporary role assignment has started, only DateTo can be updated.",
+    "TEMPORARY_ROLE_ASSIGNMENT_DATE_TO_MUST_BE_AFTER_TODAY": "DateTo must be after today for a started temporary role assignment.",
+    "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "Cannot reject the visit because it has attendance records"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -818,6 +828,7 @@
     "SHIFT_TYPE": "Shift Type",
     "LEAVE_NAME": "Holiday Name",
     "MISSION_NAME": "Mission Name",
+    "MISSION_TYPE": "Mission Type",
     "PRESENCE_INQUIRY": "Presence Inquiry",
     "SHIFT_PRESENCE_INQUIRY": "Attendance proof of the rest system",
     "CHECKIN_TIME": "Check-in Time",

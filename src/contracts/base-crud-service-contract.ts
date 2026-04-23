@@ -6,6 +6,8 @@ export interface BaseCrudServiceContract<Model, PrimaryKeyType = number> {
 
   load(options?: OptionsContract): Observable<Model[]>;
 
+  exportPdf(language: string, filterOptions?: OptionsContract): Observable<Blob>;
+
   create(model: Model): Observable<Model>;
 
   update(model: Model): Observable<Model>;

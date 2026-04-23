@@ -98,9 +98,8 @@ export default class DevicesConfigurationComponent
       [this.translateService.instant('DEVICE_CONFIGURATION.IP_ADDRESS')]: model.deviceIp,
       [this.translateService.instant('DEVICE_CONFIGURATION.ACCESS_LOCATION')]:
         model.getAccessLocationName(),
-      [this.translateService.instant('DEVICE_CONFIGURATION.CONNECTION_STATUS')]: model.status
-        ? this.translateService.instant(this.getStatusConfig(model.status).labelKey)
-        : '',
+      [this.translateService.instant('DEVICE_CONFIGURATION.CONNECTION_STATUS')]:
+        this.translateService.instant(this.getStatusConfig(model.status).labelKey),
     };
   }
 

@@ -9,6 +9,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer, HasInterception } from 'cast-response';
 import { Observable, map, catchError } from 'rxjs';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @CastResponseContainer({
   $default: {
@@ -95,5 +96,19 @@ export class PresenceInquiryService extends BaseCrudService<PresenceInquiry> {
   assignInquiryToUsers(inquiryId: number, userIds: number[]): Observable<PresenceInquiry> {
     const url = `${this.getUrlSegment()}/${inquiryId}/assign`;
     return this.http.post<PresenceInquiry>(url, { userIds }, { withCredentials: true });
+  }
+
+  exportAllPresenceInquiriesPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportAllPresenceInquiriesPdf', language, filterOptions);
+  }
+
+  exportMyPresenceInquiriesPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportMyPresenceInquiriesPdf', language, filterOptions);
   }
 }

@@ -11,6 +11,8 @@ import { HttpParams } from '@angular/common/http';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { ListResponseData } from '@/models/shared/response/list-response-data';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { OptionsContract } from '@/contracts/options-contract';
 
 @Injectable({
   providedIn: 'root',
@@ -73,5 +75,12 @@ export class AttendanceService extends BaseCrudService<AttendanceLog, string> {
         withCredentials: true,
       }
     );
+  }
+
+  exportMyAttendanceLogsPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportMyAttendanceLogsPdf', language, filterOptions);
   }
 }

@@ -31,6 +31,7 @@
     "SEARCH": "بحث",
     "RESET_SEARCH": "إعادة تعيين",
     "SEARCH_FILTERS": "تصفية البحث",
+    "DATE_CANNOT_BE_IN_PAST": "لا يمكن أن يكون التاريخ في الماضي.",
     "START_BEFORE_END": "يجب أن يكون تاريخ البدء قبل تاريخ الانتهاء",
     "TIME_FROM_BEFORE_TIME_TO": "يجب أن يكون وقت البدء قبل وقت الانتهاء",
     "TIME_RANGE_SHOULD_CROSS_DAY": "يجب أن يكون وقت الانتهاء اصغر من وقت البدء",
@@ -132,7 +133,16 @@
     "AUTH_ACTIVE_DIRECTORY_INVALID_CREDENTIALS": "اسم المستخدم أو كلمة المرور غير صحيحة",
     "INVALID_XML_FILE_TYPE": "امتداد الملف يجب ان يكون .xml",
     "INVALID_SHIFT_DURATION_FOR_WEEK_ON_WEEK_OFF_24": "مدة الوردية غير صالحة لنظام الراحات 24 ساعة",
-    "MONTHLY_PERMISSION_LIMIT_EXCEEDED": "تم تجاوز الحد الأقصى للاستئذانات الشهرية"
+    "MONTHLY_PERMISSION_LIMIT_EXCEEDED": "تم تجاوز الحد الأقصى للاستئذانات الشهرية",
+    "TEMPORARY_ROLE_ASSIGNMENT_NOT_FOUND": "لم يتم العثور على إسناد الدور المؤقت.",
+    "TEMPORARY_ROLE_ASSIGNMENT_OVERLAP": "الموظف المحدد لديه بالفعل إسناد دور مؤقت متداخل لنفس الدور.",
+    "TEMPORARY_ROLE_ASSIGNMENT_INVALID_DATE_RANGE": "يجب أن يكون تاريخ الانتهاء أكبر من أو مساوياً لتاريخ البدء في إسناد الدور المؤقت.",
+    "TEMPORARY_ROLE_SELF_ASSIGNMENT_NOT_ALLOWED": "لا يمكنك إسناد دور مؤقت لنفسك.",
+    "TEMPORARY_ROLE_ASSIGNMENT_ONLY_FUTURE_RECORDS_CAN_BE_UPDATED": "يمكن تحديث إسنادات الأدوار المؤقتة المستقبلية فقط بشكل كامل.",
+    "TEMPORARY_ROLE_ASSIGNMENT_ONLY_FUTURE_RECORDS_CAN_BE_DELETED": "يمكن حذف إسنادات الأدوار المؤقتة التي تبدأ بعد اليوم فقط.",
+    "TEMPORARY_ROLE_ASSIGNMENT_ONLY_DATE_TO_CAN_BE_UPDATED_AFTER_START": "بعد بدء إسناد الدور المؤقت، يمكن تحديث تاريخ الانتهاء فقط.",
+    "TEMPORARY_ROLE_ASSIGNMENT_DATE_TO_MUST_BE_AFTER_TODAY": "يجب أن يكون تاريخ الانتهاء بعد اليوم لإسناد دور مؤقت بدأ بالفعل.",
+    "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "لا يمكن رفض الزيارة لأنها تحتوي على تسجيل حضور"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -816,6 +826,7 @@
     "SHIFT_TYPE": "نوع الوردية",
     "LEAVE_NAME": "اسم الإجازة",
     "MISSION_NAME": "اسم المهمة",
+    "MISSION_TYPE": "نوع المهمة",
     "PRESENCE_INQUIRY": "التوثيق",
     "SHIFT_PRESENCE_INQUIRY": "اثبات حضور نظام الراحات",
     "CHECKIN_TIME": "وقت الحضور",

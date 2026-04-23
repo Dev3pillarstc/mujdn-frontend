@@ -14,6 +14,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { map, Observable } from 'rxjs';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -110,5 +111,23 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
         withCredentials: true,
       }
     ) as unknown as Observable<PaginatedListResponseData<WorkMission>>;
+  }
+
+  exportMyWorkMissionsPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    const processedFilterOptions: OptionsContract = { ...(filterOptions || {}) };
+
+    if (processedFilterOptions['startDate']) {
+      processedFilterOptions['startDate'] = toDateOnly(
+        processedFilterOptions['startDate'] as string
+      );
+    }
+    if (processedFilterOptions['endDate']) {
+      processedFilterOptions['endDate'] = toDateOnly(processedFilterOptions['endDate'] as string);
+    }
+
+    return this.exportPdfByEndpoint('ExportMyMissionsPdf', language, processedFilterOptions);
   }
 }

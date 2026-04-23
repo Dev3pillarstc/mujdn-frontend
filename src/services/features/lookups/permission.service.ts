@@ -9,6 +9,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer, HasInterception } from 'cast-response';
 import { Observable, map, catchError } from 'rxjs';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @CastResponseContainer({
   $default: {
@@ -74,5 +75,12 @@ export class PermissionService extends BaseCrudService<Permission> {
   rejectPermission(permissionId: number): Observable<Permission> {
     const url = `${this.getUrlSegment()}/${permissionId}/reject`;
     return this.http.put<Permission>(url, null, { withCredentials: true });
+  }
+
+  exportDepartmentPermissionsPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportDepartmentPermissionsPdf', language, filterOptions);
   }
 }

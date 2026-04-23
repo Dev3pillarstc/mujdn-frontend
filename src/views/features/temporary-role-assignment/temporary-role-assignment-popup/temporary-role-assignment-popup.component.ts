@@ -43,6 +43,7 @@ export class TemporaryRoleAssignmentPopupComponent
 
   employees: UsersWithDepartmentLookup[] = [];
   isCreateMode = false;
+  dateFromMinDate = this.getToday();
   dateToMinDate: Date | null = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
@@ -74,9 +75,7 @@ export class TemporaryRoleAssignmentPopupComponent
     this.setupDateValidation();
   }
 
-  override saveFail(_: Error): void {
-    this.alertService.showErrorMessage({ messages: ['COMMON.ERROR'] });
-  }
+  override saveFail(_: Error): void {}
 
   override prepareModel(
     model: TemporaryRoleAssignment,
@@ -87,19 +86,7 @@ export class TemporaryRoleAssignmentPopupComponent
   }
 
   beforeSave(_: TemporaryRoleAssignment, form: FormGroup): boolean {
-    this.syncDateRangeValidation();
-
-    if (this.model.isDateToOnlyEditable) {
-      const dateTo = this.normalizeDate(form.getRawValue().dateTo);
-
-      if (dateTo && dateTo <= this.today) {
-        this.alertService.showErrorMessage({
-          messages: ['TEMPORARY_ROLE_ASSIGNMENT_PAGE.END_DATE_MUST_BE_AFTER_TODAY'],
-        });
-        return false;
-      }
-    }
-
+    this.syncDateValidation();
     return form.valid;
   }
 
@@ -122,41 +109,63 @@ export class TemporaryRoleAssignmentPopupComponent
 
   private setupDateValidation(): void {
     this.updateDateToMinDate();
-    this.syncDateRangeValidation();
+    this.syncDateValidation();
     this.dateFromControl.valueChanges.subscribe(() => {
       this.updateDateToMinDate();
-      this.syncDateRangeValidation();
+      this.syncDateValidation();
     });
-    this.dateToControl.valueChanges.subscribe(() => this.syncDateRangeValidation());
+    this.dateToControl.valueChanges.subscribe(() => this.syncDateValidation());
   }
 
   private updateDateToMinDate(): void {
     if (this.model.isDateToOnlyEditable) {
-      const tomorrow = new Date(this.today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      this.dateToMinDate = tomorrow;
+      this.dateToMinDate = this.dateFromMinDate;
       return;
     }
 
-    this.dateToMinDate = this.normalizeDate(this.form.getRawValue().dateFrom);
+    const dateFrom = this.normalizeDate(this.form.getRawValue().dateFrom);
+    this.dateToMinDate =
+      dateFrom && dateFrom > this.dateFromMinDate ? dateFrom : this.dateFromMinDate;
   }
 
-  private syncDateRangeValidation(): void {
+  private syncDateValidation(): void {
     const dateFrom = this.normalizeDate(this.form.getRawValue().dateFrom);
     const dateTo = this.normalizeDate(this.form.getRawValue().dateTo);
-    const errors = { ...(this.dateToControl.errors ?? {}) };
 
-    delete errors[ValidationErrorKeyEnum.START_AFTER_END];
+    this.setControlError(
+      this.dateFromControl,
+      ValidationErrorKeyEnum.PAST_DATE,
+      !this.model.isDateToOnlyEditable && !!dateFrom && dateFrom < this.dateFromMinDate
+    );
+    this.setControlError(
+      this.dateToControl,
+      ValidationErrorKeyEnum.PAST_DATE,
+      !!dateTo && dateTo < this.dateFromMinDate
+    );
+    this.setControlError(
+      this.dateToControl,
+      ValidationErrorKeyEnum.START_AFTER_END,
+      !!dateFrom && !!dateTo && dateTo < dateFrom
+    );
+  }
 
-    if (dateFrom && dateTo && dateTo < dateFrom) {
-      this.dateToControl.setErrors({
+  private setControlError(
+    control: FormControl,
+    errorKey: ValidationErrorKeyEnum,
+    hasError: boolean
+  ): void {
+    const errors = { ...(control.errors ?? {}) };
+
+    if (hasError) {
+      control.setErrors({
         ...errors,
-        [ValidationErrorKeyEnum.START_AFTER_END]: true,
+        [errorKey]: true,
       });
       return;
     }
 
-    this.dateToControl.setErrors(Object.keys(errors).length ? errors : null);
+    delete errors[errorKey];
+    control.setErrors(Object.keys(errors).length ? errors : null);
   }
 
   private normalizeDate(value: Date | string | null | undefined): Date | null {
@@ -169,7 +178,7 @@ export class TemporaryRoleAssignmentPopupComponent
     return date;
   }
 
-  private get today(): Date {
+  private getToday(): Date {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return today;

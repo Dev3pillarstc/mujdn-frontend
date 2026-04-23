@@ -116,13 +116,18 @@
 
           <div class="actions flex items-center gap-4 ms-auto">
             <button
-              (click)="exportExcel('temporary-role-assignments.xlsx')"
+              (click)="exportExcel(getTranslatedTemporaryRoleAssignmentLabel() + '.xlsx')"
               class="table-head-action-btn min-w-[40px]"
               type="button"
             >
               <img alt="" src="assets/icons/excel.svg" />
             </button>
-
+            <button
+              (click)="exportPdf(getTranslatedTemporaryRoleAssignmentLabel() + '.pdf')"
+              class="table-head-action-btn"
+            >
+              <img alt="" src="assets/icons/pdf.svg" />
+            </button>
             <button
               (click)="addOrEditModel()"
               class="btn green-btn flex items-center"

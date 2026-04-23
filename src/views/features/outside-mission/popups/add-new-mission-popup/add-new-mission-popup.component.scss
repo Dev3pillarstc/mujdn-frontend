@@ -1,0 +1,9 @@
+::ng-deep {
+  .p-radiobutton-checked .p-radiobutton-box {
+    background: transparent !important;
+    border-color: #14573a !important;
+  }
+  .p-radiobutton-checked .p-radiobutton-box .p-radiobutton-icon {
+    background-color: #14573a !important;
+  }
+}

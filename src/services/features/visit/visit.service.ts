@@ -10,6 +10,8 @@ import { CastResponse, CastResponseContainer } from 'cast-response';
 import { map, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ResponseData } from '@/models/shared/response/response-data';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { OptionsContract } from '@/contracts/options-contract';
 
 @CastResponseContainer({
   $default: {
@@ -124,5 +126,12 @@ export class VisitService extends BaseCrudService<Visit> {
           return response.data;
         })
       );
+  }
+
+  exportMyCreatedVisitsPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportMyCreatedVisitsPdf', language, filterOptions);
   }
 }

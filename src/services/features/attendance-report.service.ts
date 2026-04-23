@@ -9,6 +9,7 @@ import { PaginatedListResponseData } from '@/models/shared/response/paginated-li
 import { genericDateOnlyConvertor } from '@/utils/general-helper';
 import { Observable, map, catchError } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -64,5 +65,12 @@ export class AttendanceReportService extends BaseCrudService<AttendanceReport, n
   assignInquiryToUsers(inquiryId: number, userIds: number[]): Observable<AttendanceReport> {
     const url = `${this.getUrlSegment()}/${inquiryId}/assign`;
     return this.http.post<AttendanceReport>(url, { userIds }, { withCredentials: true });
+  }
+
+  exportMyAttendanceReportsPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportMyAttendanceReportsPdf', language, filterOptions);
   }
 }

@@ -141,7 +141,8 @@
     "TEMPORARY_ROLE_ASSIGNMENT_ONLY_FUTURE_RECORDS_CAN_BE_UPDATED": "Only future temporary role assignments can be fully updated.",
     "TEMPORARY_ROLE_ASSIGNMENT_ONLY_FUTURE_RECORDS_CAN_BE_DELETED": "Only temporary role assignments that start after today can be deleted.",
     "TEMPORARY_ROLE_ASSIGNMENT_ONLY_DATE_TO_CAN_BE_UPDATED_AFTER_START": "Once a temporary role assignment has started, only DateTo can be updated.",
-    "TEMPORARY_ROLE_ASSIGNMENT_DATE_TO_MUST_BE_AFTER_TODAY": "DateTo must be after today for a started temporary role assignment."
+    "TEMPORARY_ROLE_ASSIGNMENT_DATE_TO_MUST_BE_AFTER_TODAY": "DateTo must be after today for a started temporary role assignment.",
+    "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "Cannot reject the visit because it has attendance records"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

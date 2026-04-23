@@ -153,7 +153,7 @@
             <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.MISSION_TYPE' | translate }}</th>
-            <th>{{ 'COMMON.ACTION' | translate }}</th>
+            <th class="w-10">{{ 'COMMON.ACTION' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template #body let-mission>
@@ -166,7 +166,12 @@
             </td>
             <td>{{ mission.startDate | date: 'dd/MM/yyyy' }}</td>
             <td>{{ mission.endDate | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ getWorkMissionTypeName(mission) }}</td>
+            <td>
+              <span
+                class="bg-gray-100 rounded-lg p-1 min-w-[80px] inline-flex items-center justify-center border border-[#d9dadd] text-sm font-semibold"
+                >{{ getWorkMissionTypeName(mission) }}</span
+              >
+            </td>
             <td>
               <!-- Full Actions: View, Assign Employees, Split Button -->
               <div class="actions flex gap-2">

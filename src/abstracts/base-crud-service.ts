@@ -13,6 +13,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { genericDateOnlyConvertor } from '@/utils/general-helper';
 import { ResponseData } from '@/models/shared/response/response-data';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 export abstract class BaseCrudService<Model, PrimaryKey = number>
   extends RegisterServiceMixin(class {})
@@ -108,6 +109,30 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
           throw err;
         })
       );
+  }
+
+  protected exportPdfByEndpoint(
+    endpoint: string,
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    filterOptions = genericDateOnlyConvertor(filterOptions);
+
+    return this.http
+      .post(this.getUrlSegment() + '/' + endpoint, filterOptions || {}, {
+        params: new HttpParams().set('Language', language),
+        withCredentials: true,
+        responseType: 'blob',
+      })
+      .pipe(
+        catchError((err) => {
+          throw err;
+        })
+      );
+  }
+
+  exportPdf(language: LANGUAGE_ENUM | string, filterOptions?: OptionsContract): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportPdf', language, filterOptions);
   }
 
   @CastResponse()

@@ -144,6 +144,7 @@
             <ng-template pTemplate="header">
               <tr>
                 <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.EMPLOYEE_NAME' | translate }}</th>
+                <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DEPARTMENT' | translate }}</th>
                 <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_FROM' | translate }}</th>
                 <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_TO' | translate }}</th>
                 <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.CURRENT_STATUS' | translate }}</th>
@@ -156,6 +157,7 @@
             <ng-template pTemplate="body" let-assignment>
               <tr>
                 <td>{{ getEmployeeName(assignment) }}</td>
+                <td>{{ getDepartmentName(assignment) }}</td>
                 <td>{{ formatDate(assignment.dateFrom) }}</td>
                 <td>{{ formatDate(assignment.dateTo) }}</td>
                 <td>

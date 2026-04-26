@@ -119,6 +119,12 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
       : model.userFullNameAr;
   }
 
+  getDepartmentName(model: TemporaryRoleAssignment): string {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+      ? model.departmentNameEn
+      : model.departmentNameAr;
+  }
+
   formatDate(value: Date | string | null | undefined): string {
     return value ? formatDateOnly(value) : '-';
   }
@@ -153,6 +159,8 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
     return {
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.EMPLOYEE_NAME')]:
         this.getEmployeeName(model),
+      [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.DEPARTMENT')]:
+        this.getDepartmentName(model),
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.TEMPORARY_ROLE')]:
         model.roleName || '',
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_FROM')]: this.formatDate(

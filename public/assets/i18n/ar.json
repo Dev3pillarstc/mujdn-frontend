@@ -194,6 +194,7 @@
   "TEMPORARY_ROLE_ASSIGNMENT_PAGE": {
     "TEMPORARY_ROLE_ASSIGNMENTS": "إسناد الصلاحيات الإدارية المؤقتة",
     "EMPLOYEE_NAME": "اسم الموظف",
+    "DEPARTMENT": "الإدارة",
     "TEMPORARY_ROLE": "الدور المؤقت",
     "DATE_FROM": "التاريخ من",
     "DATE_TO": "التاريخ إلى",

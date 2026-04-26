@@ -19,6 +19,8 @@ export class TemporaryRoleAssignment extends BaseCrudModel<
   declare dateTo: Date | string | null;
   declare userFullNameAr: string;
   declare userFullNameEn: string;
+  declare departmentNameAr: string;
+  declare departmentNameEn: string;
   declare roleName?: string | null;
   declare isCurrentlyActive: boolean;
   declare concurrencyUpdateVersion?: string;

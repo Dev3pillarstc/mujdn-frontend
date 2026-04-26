@@ -198,6 +198,8 @@
     "TEMPORARY_ROLE": "الدور المؤقت",
     "DATE_FROM": "التاريخ من",
     "DATE_TO": "التاريخ إلى",
+    "TIME_FROM": "الوقت من",
+    "TIME_TO": "الوقت إلى",
     "CURRENT_STATUS": "الحالة الحالية",
     "ADD_NEW_ASSIGNMENT": "إضافة إسناد جديد",
     "EDIT_ASSIGNMENT": "تعديل الإسناد",

@@ -4,7 +4,7 @@
       <i class="pi pi-times close-popup"></i>
     </button>
 
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
       {{
         (isCreateMode
           ? 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ADD_NEW_ASSIGNMENT'
@@ -21,6 +21,7 @@
 
     <form [formGroup]="form" class="mt-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Employee -->
         <div>
           <label class="label" for="temporary-role-assignment-employee">
             {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.EMPLOYEE_NAME' | translate }}
@@ -45,6 +46,7 @@
           <app-validation-messages [control]="employeeControl"></app-validation-messages>
         </div>
 
+        <!-- Date From -->
         <div>
           <label class="label" for="temporary-role-assignment-date-from">
             {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_FROM' | translate }}
@@ -70,6 +72,34 @@
           <app-validation-messages [control]="dateFromControl"></app-validation-messages>
         </div>
 
+        <!-- Time From -->
+        <div>
+          <label class="label" for="temporary-role-assignment-time-from">
+            {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.TIME_FROM' | translate }}
+          </label>
+          <div class="relative">
+            <p-datepicker
+              [hourFormat]="'12'"
+              [iconDisplay]="'input'"
+              [placeholder]="'TEMPORARY_ROLE_ASSIGNMENT_PAGE.TIME_FROM' | translate"
+              [showIcon]="true"
+              [timeOnly]="true"
+              class="peer block w-full"
+              formControlName="timeFrom"
+              id="temporary-role-assignment-time-from"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/time-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="timeFromControl"></app-validation-messages>
+        </div>
+
+        <!-- Date To -->
         <div>
           <label class="label" for="temporary-role-assignment-date-to">
             {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_TO' | translate }}
@@ -93,6 +123,33 @@
             ></span>
           </div>
           <app-validation-messages [control]="dateToControl"></app-validation-messages>
+        </div>
+
+        <!-- Time To -->
+        <div>
+          <label class="label" for="temporary-role-assignment-time-to">
+            {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.TIME_TO' | translate }}
+          </label>
+          <div class="relative">
+            <p-datepicker
+              [hourFormat]="'12'"
+              [iconDisplay]="'input'"
+              [placeholder]="'TEMPORARY_ROLE_ASSIGNMENT_PAGE.TIME_TO' | translate"
+              [showIcon]="true"
+              [timeOnly]="true"
+              class="peer block w-full"
+              formControlName="timeTo"
+              id="temporary-role-assignment-time-to"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/time-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="timeToControl"></app-validation-messages>
         </div>
       </div>
 

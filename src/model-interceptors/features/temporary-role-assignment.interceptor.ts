@@ -13,11 +13,11 @@ export class TemporaryRoleAssignmentInterceptor
 
   send(model: Partial<TemporaryRoleAssignment>): Partial<TemporaryRoleAssignment> {
     if (model.dateFrom) {
-      model.dateFrom = toDateOnly(model.dateFrom);
+      model.dateFrom = toDateTime(model.dateFrom);
     }
 
     if (model.dateTo) {
-      model.dateTo = toDateOnly(model.dateTo);
+      model.dateTo = toDateTime(model.dateTo);
     }
 
     if (!model.fkRoleId) {

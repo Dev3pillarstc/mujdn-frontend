@@ -198,6 +198,8 @@
     "TEMPORARY_ROLE": "Temporary Role",
     "DATE_FROM": "Date From",
     "DATE_TO": "Date To",
+    "TIME_FROM": "Time From",
+    "TIME_TO": "Time To",
     "CURRENT_STATUS": "Current Status",
     "ADD_NEW_ASSIGNMENT": "Add New Assignment",
     "EDIT_ASSIGNMENT": "Edit Assignment",

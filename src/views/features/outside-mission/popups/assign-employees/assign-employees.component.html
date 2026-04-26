@@ -9,8 +9,12 @@
     <div
       class="px-6 py-4 rounded-lg border border-[#d2d6db] bg-[#fff] mb-12 flex flex-col sm:flex-row gap-3 border-s-8 border-s-[#1570ef]"
     >
-      <div>
-        <img src="/public/assets/icons/question-icon.png" alt="" />
+      <div class="w-10 h-10 flex items-center justify-center bg-[#EFF8FF] rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+  <path d="M9.99935 6.45817C9.42405 6.45817 8.95768 6.92454 8.95768 7.49984C8.95768 7.84501 8.67786 8.12484 8.33268 8.12484C7.9875 8.12484 7.70768 7.84501 7.70768 7.49984C7.70768 6.23418 8.7337 5.20817 9.99935 5.20817C11.265 5.20817 12.291 6.23418 12.291 7.49984C12.291 7.95512 12.1576 8.38115 11.9275 8.7387C11.7834 8.96265 11.615 9.17646 11.4596 9.36953L11.3758 9.47338C11.2469 9.63289 11.1286 9.7794 11.0192 9.92965C10.7496 10.3002 10.6243 10.5788 10.6243 10.8332V11.2498C10.6243 11.595 10.3445 11.8748 9.99935 11.8748C9.65417 11.8748 9.37435 11.595 9.37435 11.2498V10.8332C9.37435 10.1671 9.70136 9.61631 10.0085 9.19421C10.1382 9.01587 10.2804 8.83997 10.4097 8.68003L10.4857 8.58591C10.64 8.39411 10.7714 8.22538 10.8764 8.06229C10.9805 7.90041 11.041 7.70814 11.041 7.49984C11.041 6.92454 10.5746 6.45817 9.99935 6.45817Z" fill="#175CD3"/>
+  <path d="M9.99284 13.3332C9.5326 13.3332 9.1595 13.7063 9.1595 14.1665C9.1595 14.6267 9.5326 14.9998 9.99284 14.9998H10.0003C10.4606 14.9998 10.8337 14.6267 10.8337 14.1665C10.8337 13.7063 10.4606 13.3332 10.0003 13.3332H9.99284Z" fill="#175CD3"/>
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M1.04102 9.99984C1.04102 5.05229 5.0518 1.0415 9.99935 1.0415C14.9469 1.0415 18.9577 5.05229 18.9577 9.99984C18.9577 14.9474 14.9469 18.9582 9.99935 18.9582C5.0518 18.9582 1.04102 14.9474 1.04102 9.99984ZM9.99935 2.2915C5.74215 2.2915 2.29102 5.74264 2.29102 9.99984C2.29102 14.257 5.74215 17.7082 9.99935 17.7082C14.2565 17.7082 17.7077 14.257 17.7077 9.99984C17.7077 5.74264 14.2565 2.2915 9.99935 2.2915Z" fill="#175CD3"/>
+</svg>
       </div>
       <div>
         <h4 class="text-[var(--color-charcoal)] mb-2 font-bold">عدم إتاحة بعض الموظفين للاسناد</h4>
@@ -23,7 +27,7 @@
       </div>
     </div>
     <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-end bg-[#f3f4f6] rounded-2xl p-8"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-end bg-[#f3f4f6] rounded-2xl p-8 mb-6"
     >
       <div>
         <label class="label">{{ 'WORK_MISSIONS.DEPARTMENT' | translate }}</label>
@@ -121,7 +125,7 @@
           </tr>
         </ng-template>
         <ng-template #body let-employee>
-          <tr>
+          <tr class="row-bg">
             <td>
               <label class="flex items-center space-x-2 cursor-pointer relative">
                 <input
@@ -143,8 +147,8 @@
                 </svg>
               </label>
             </td>
-            <td>
-              <button [pTooltip]="'COMMON.EDIT' | translate">
+            <td >
+              <button  [title]="'COMMON.EDIT' | translate" tooltipPosition="top" placeholder="Top" [pTooltip]="'COMMON.EDIT' | translate" class="flex items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

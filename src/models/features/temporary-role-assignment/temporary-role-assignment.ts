@@ -37,22 +37,26 @@ export class TemporaryRoleAssignment extends BaseCrudModel<
   }
 
   get hasStarted(): boolean {
-    const dateFrom = this.normalizeDate(this.dateFrom);
-    return !!dateFrom && dateFrom <= this.today;
+    const dateFrom = this.normalizeDateTime(this.dateFrom);
+    return !!dateFrom && dateFrom <= this.now;
   }
 
-  get hasEndedOrEndsToday(): boolean {
-    const dateTo = this.normalizeDate(this.dateTo);
-    return !!dateTo && dateTo <= this.today;
+  get hasEnded(): boolean {
+    const dateTo = this.normalizeDateTime(this.dateTo);
+    return !!dateTo && dateTo <= this.now;
+  }
+
+  get isActiveNow(): boolean {
+    return this.hasStarted && !this.hasEnded;
   }
 
   get isFutureRecord(): boolean {
-    const dateFrom = this.normalizeDate(this.dateFrom);
-    return !!dateFrom && dateFrom > this.today;
+    const dateFrom = this.normalizeDateTime(this.dateFrom);
+    return !!dateFrom && dateFrom > this.now;
   }
 
   get canEdit(): boolean {
-    return !this.hasEndedOrEndsToday;
+    return !this.hasEnded;
   }
 
   get canDelete(): boolean {
@@ -60,22 +64,23 @@ export class TemporaryRoleAssignment extends BaseCrudModel<
   }
 
   get isDateToOnlyEditable(): boolean {
-    return this.hasStarted && !this.hasEndedOrEndsToday;
+    return this.isActiveNow;
   }
 
-  private get today(): Date {
-    var today = new Date();
-    today = convertUtcToSystemTimeZone(today);
-    return today;
+  get hasEndedOrEndsToday(): boolean {
+    return this.hasEnded;
   }
 
-  private normalizeDate(value: Date | string | null | undefined): Date | null {
+  private get now(): Date {
+    const now = new Date();
+    return convertUtcToSystemTimeZone(now);
+  }
+
+  private normalizeDateTime(value: Date | string | null | undefined): Date | null {
     if (!value) {
       return null;
     }
 
-    const date = new Date(value);
-    date.setHours(0, 0, 0, 0);
-    return date;
+    return new Date(value);
   }
 }

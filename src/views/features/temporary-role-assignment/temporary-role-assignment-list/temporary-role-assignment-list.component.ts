@@ -130,11 +130,11 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
   }
 
   getStatusKey(model: TemporaryRoleAssignment): string {
-    if (model.hasEndedOrEndsToday) {
+    if (model.hasEnded) {
       return 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ENDED';
     }
 
-    if (model.hasStarted) {
+    if (model.isActiveNow) {
       return 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ACTIVE_NOW';
     }
 
@@ -142,11 +142,11 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
   }
 
   getStatusClass(model: TemporaryRoleAssignment): string {
-    if (model.hasEndedOrEndsToday) {
+    if (model.hasEnded) {
       return 'text-[#912018] bg-[#fef3f2]';
     }
 
-    if (model.hasStarted) {
+    if (model.isActiveNow) {
       return 'text-[#085d3a] bg-[#ecfdf3]';
     }
 

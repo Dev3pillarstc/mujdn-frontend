@@ -12,3 +12,6 @@
 - Revised the datetime transport to UTC ISO based on .NET `DateTime` expectations.
 - Added `SYSTEM_TIME_ZONE` runtime config wiring and replaced the helper timezone placeholders with real conversions between UTC and the configured system time zone.
 - Updated temporary role assignment receive/send to use the system-timezone conversion path.
+- Updated temporary role assignment model status logic to compare full datetimes instead of date-only values.
+- Updated list `getStatusKey` and status class logic to use `hasEnded` and `isActiveNow`.
+- Verification: `./node_modules/.bin/tsc -p tsconfig.app.json --noEmit` completed successfully after the status fix.

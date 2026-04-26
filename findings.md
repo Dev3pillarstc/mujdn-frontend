@@ -13,3 +13,4 @@
 - The popup had a behavioral gap: default or previously selected times were not guaranteed to be re-applied when the date picker changed later, which could leave `dateFrom`/`dateTo` at midnight.
 - The repo had timezone helper names and usages already (`convertUtcToSystemTimeZone`, `convertKsaToUtc`), but the implementation was a zero-offset placeholder.
 - There was no configured system/business timezone in the runtime config, so helper logic could not distinguish browser-local time from business time.
+- Temporary role assignment status logic was still date-only in the model, so any record with `dateTo` on today's calendar date was treated as ended even if its end time was still in the future.

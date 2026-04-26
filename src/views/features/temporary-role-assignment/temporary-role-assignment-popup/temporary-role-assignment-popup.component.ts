@@ -94,7 +94,7 @@ export class TemporaryRoleAssignmentPopupComponent
       ...this.model.buildForm(),
       // timeFrom/timeTo are UI-only; they are NOT part of the model sent to the API.
       // They exist purely so the user gets dedicated time pickers.
-      // On every change they are spliced into dateFrom/dateTo via setupTimeSplicing().
+      // On every change they are spliced into dateFrom/dateTo via setupDateTimeSync().
       timeFrom: [this.extractTime(this.model.dateFrom) ?? this.startOfDay(), [Validators.required]],
       timeTo: [this.extractTime(this.model.dateTo) ?? this.endOfDay(), [Validators.required]],
     });
@@ -102,7 +102,7 @@ export class TemporaryRoleAssignmentPopupComponent
     this.applyDefaultTimes();
     this.applyEditabilityRules();
     this.setupDateValidation();
-    this.setupTimeSplicing();
+    this.setupDateTimeSync();
   }
 
   override saveFail(_: Error): void {}
@@ -124,6 +124,7 @@ export class TemporaryRoleAssignmentPopupComponent
   }
 
   beforeSave(_: TemporaryRoleAssignment, form: FormGroup): boolean {
+    this.syncDateTimeControls();
     this.syncDateValidation();
     return form.valid;
   }
@@ -174,7 +175,7 @@ export class TemporaryRoleAssignmentPopupComponent
    * On every time-picker change, writes h/m/s into the corresponding date
    * control (emitEvent: true) so validation subscriptions fire automatically.
    */
-  private setupTimeSplicing(): void {
+  private setupDateTimeSync(): void {
     this.timeFromControl.valueChanges.subscribe((time: Date | null) => {
       this.spliceTimeIntoDate(this.dateFromControl, time);
     });
@@ -182,15 +183,34 @@ export class TemporaryRoleAssignmentPopupComponent
     this.timeToControl.valueChanges.subscribe((time: Date | null) => {
       this.spliceTimeIntoDate(this.dateToControl, time);
     });
+
+    this.dateFromControl.valueChanges.subscribe(() => {
+      this.spliceTimeIntoDate(this.dateFromControl, this.timeFromControl.getRawValue());
+    });
+
+    this.dateToControl.valueChanges.subscribe(() => {
+      this.spliceTimeIntoDate(this.dateToControl, this.timeToControl.getRawValue());
+    });
   }
 
   private spliceTimeIntoDate(dateControl: FormControl, time: Date | null): void {
     const rawDate = dateControl.getRawValue();
     if (!rawDate || !time) return;
 
+    const current = new Date(rawDate);
     const merged = new Date(rawDate);
     merged.setHours(time.getHours(), time.getMinutes(), time.getSeconds(), 0);
+
+    if (current.getTime() === merged.getTime()) {
+      return;
+    }
+
     dateControl.setValue(merged, { emitEvent: true });
+  }
+
+  private syncDateTimeControls(): void {
+    this.spliceTimeIntoDate(this.dateFromControl, this.timeFromControl.getRawValue());
+    this.spliceTimeIntoDate(this.dateToControl, this.timeToControl.getRawValue());
   }
 
   private setupDateValidation(): void {

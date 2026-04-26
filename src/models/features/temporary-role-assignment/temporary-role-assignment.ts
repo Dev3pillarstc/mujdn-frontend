@@ -1,6 +1,7 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { TemporaryRoleAssignmentInterceptor } from '@/model-interceptors/features/temporary-role-assignment.interceptor';
 import { TemporaryRoleAssignmentService } from '@/services/features/temporary-role-assignment.service';
+import { convertUtcToSystemTimeZone } from '@/utils/general-helper';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 
@@ -63,8 +64,8 @@ export class TemporaryRoleAssignment extends BaseCrudModel<
   }
 
   private get today(): Date {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    var today = new Date();
+    today = convertUtcToSystemTimeZone(today);
     return today;
   }
 

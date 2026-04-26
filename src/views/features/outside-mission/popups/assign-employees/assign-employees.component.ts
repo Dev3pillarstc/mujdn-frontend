@@ -69,15 +69,14 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     super();
   }
   override initPopup(): void {
-    // Load available employees for the table
-    this.loadEmployees();
     this.model = this.data.model;
     this.departments = this.data.lookups.departments;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
 
     this.sortDepartments();
-
+    // Load available employees for the table
+    this.loadEmployees();
     // Pre-fill selected employees from already assigned employees
     if (this.model.assignedEmployees && this.model.assignedEmployees.length > 0) {
       // Copy into selectedEmployees
@@ -132,35 +131,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
         },
         error: () => {},
       });
-    this.employees = [
-      {
-        id: 1,
-        nameAr: 'أحمد محمد',
-        nameEn: 'Ahmed Mohamed',
-        nationalId: '29801011234567',
-        departmentNameAr: 'الموارد البشرية',
-        departmentNameEn: 'HR',
-        hasConflictingMissions: false,
-      },
-      {
-        id: 2,
-        nameAr: 'محمد علي',
-        nameEn: 'Mohamed Ali',
-        nationalId: '29902021234567',
-        departmentNameAr: 'تكنولوجيا المعلومات',
-        departmentNameEn: 'IT',
-        hasConflictingMissions: true,
-      },
-      {
-        id: 3,
-        nameAr: 'سارة حسن',
-        nameEn: 'Sara Hassan',
-        nationalId: '30003031234567',
-        departmentNameAr: 'المالية',
-        departmentNameEn: 'Finance',
-        hasConflictingMissions: false,
-      },
-    ];
   }
 
   private loadEmployees() {
@@ -173,35 +143,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
         },
         error: () => {},
       });
-    this.employees = [
-      {
-        id: 1,
-        nameAr: 'أحمد محمد',
-        nameEn: 'Ahmed Mohamed',
-        nationalId: '29801011234567',
-        departmentNameAr: 'الموارد البشرية',
-        departmentNameEn: 'HR',
-        hasConflictingMissions: false,
-      },
-      {
-        id: 2,
-        nameAr: 'محمد علي',
-        nameEn: 'Mohamed Ali',
-        nationalId: '29902021234567',
-        departmentNameAr: 'تكنولوجيا المعلومات',
-        departmentNameEn: 'IT',
-        hasConflictingMissions: true,
-      },
-      {
-        id: 3,
-        nameAr: 'سارة حسن',
-        nameEn: 'Sara Hassan',
-        nationalId: '30003031234567',
-        departmentNameAr: 'المالية',
-        departmentNameEn: 'Finance',
-        hasConflictingMissions: false,
-      },
-    ];
   }
   // Add this method to check if all employees on current page are selected
   areAllCurrentPageSelected(): boolean {
@@ -214,19 +155,20 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     );
   }
 
-  // Update the existing toggleAll method to work better with the checkbox state
   toggleAll(checked: boolean): void {
     if (checked) {
-      // Add all employees from current page that aren't already selected
+      // Add all employees from current page that aren't already selected and don't have conflicts
       const newEmployees = this.employees.filter(
-        (u) => u.id !== undefined && !this.selectedUsers.employeesIds.includes(u.id)
+        (u) =>
+          u.id !== undefined &&
+          !this.selectedUsers.employeesIds.includes(u.id) &&
+          !u.hasConflictingMissions // Exclude employees with conflicting missions
       );
       const newEmployeeIds = newEmployees.map((u) => u.id as number);
 
       // Add to selected arrays
       this.selectedUsers.employeesIds = [...this.selectedUsers.employeesIds, ...newEmployeeIds];
 
-      // If you're using the selectedEmployees array from the previous solution
       if (this.selectedEmployees) {
         this.selectedEmployees = [...this.selectedEmployees, ...newEmployees];
       }
@@ -240,7 +182,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
         (userId) => !currentPageEmployeeIds.includes(userId)
       );
 
-      // If you're using the selectedEmployees array from the previous solution
       if (this.selectedEmployees) {
         this.selectedEmployees = this.selectedEmployees.filter(
           (emp) => !currentPageEmployeeIds.includes(emp.id!)
@@ -248,14 +189,23 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
       }
     }
   }
-  toggleUserSelection(userId: number, event?: Event) {
+
+  toggleUserSelection(userId: number, event?: Event): void {
+    const user = this.employees.find((u) => u.id === userId);
+
+    // Don't allow selection if employee has conflicting missions
+    if (user?.hasConflictingMissions) {
+      if (event?.target) {
+        (event.target as HTMLInputElement).checked = false;
+      }
+      return;
+    }
+
     if ((event?.target as HTMLInputElement)?.checked) {
       // Add if not already in the list
       if (!this.selectedUsers.employeesIds.some((id) => id === userId)) {
-        const user = this.employees.find((u) => u.id === userId);
         if (user && !this.selectedUsers.employeesIds.some((id) => id === userId)) {
           this.selectedUsers.employeesIds.push(user.id as number);
-          // Store the complete employee object
           this.selectedEmployees.push(user);
         }
       }
@@ -270,8 +220,15 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   isUserSelected(userId: number): boolean {
     return this.selectedUsers.employeesIds.some((id) => id === userId);
   }
-  returnCheckAllStatus() {
-    return this.employees.every((emp) =>
+  returnCheckAllStatus(): boolean {
+    // Only check employees without conflicts
+    const selectableEmployees = this.employees.filter((emp) => !emp.hasConflictingMissions);
+
+    if (selectableEmployees.length === 0) {
+      return false;
+    }
+
+    return selectableEmployees.every((emp) =>
       this.selectedEmployees.map((selectedUser) => selectedUser.id).includes(emp.id)
     );
   }

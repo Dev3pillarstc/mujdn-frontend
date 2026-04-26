@@ -55,7 +55,7 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
         }
       });
     }
-
+    console.log('Filter options before processing:', missionId);
     // Add missionId if provided
     if (missionId) {
       httpParams = httpParams.set('missionId', String(missionId));

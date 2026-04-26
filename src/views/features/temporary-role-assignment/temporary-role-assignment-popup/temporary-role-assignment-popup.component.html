@@ -13,7 +13,7 @@
       }}
     </h3>
 
-    @if (model.isDateToOnlyEditable) {
+    @if (model.isDateToOnlyEditable && isEditMode) {
       <div class="mb-4 rounded-xl bg-[#eff8ff] px-4 py-3 text-sm text-[#1849a9]">
         {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ONLY_END_DATE_CAN_BE_EDITED' | translate }}
       </div>

@@ -43,6 +43,7 @@ export class TemporaryRoleAssignmentPopupComponent
 
   employees: UsersWithDepartmentLookup[] = [];
   isCreateMode = false;
+  isEditMode = false;
   dateFromMinDate = this.getToday();
   dateToMinDate: Date | null = null;
 
@@ -66,6 +67,7 @@ export class TemporaryRoleAssignmentPopupComponent
     this.model = this.data.model;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
+    this.isEditMode = this.viewMode === ViewModeEnum.EDIT;
     this.employees = this.data.lookups?.employees ?? [];
   }
 

@@ -43,7 +43,8 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
   @CastResponse(undefined, { fallback: '$lookup' })
   getEmployeesToBeAssigned(
     paginationParams?: PaginationParams,
-    filterOptions?: OptionsContract
+    filterOptions?: OptionsContract,
+    missionId?: number
   ): Observable<PaginatedListResponseData<UserProfileDataWithNationalId>> {
     // Build HttpParams safely
     let httpParams = new HttpParams();
@@ -53,6 +54,11 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
           httpParams = httpParams.set(key, String(value));
         }
       });
+    }
+
+    // Add missionId if provided
+    if (missionId) {
+      httpParams = httpParams.set('missionId', String(missionId));
     }
 
     // Make the request and rely on @CastResponse for runtime mapping

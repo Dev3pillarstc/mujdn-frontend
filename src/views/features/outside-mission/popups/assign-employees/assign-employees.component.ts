@@ -27,6 +27,7 @@ import { OptionsContract } from '@/contracts/options-contract';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MissionEmployeesAssignement } from '@/models/features/business/mission-employees-assignment';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { TooltipModule } from 'primeng/tooltip';
 interface Adminstration {
   type: string;
 }
@@ -43,6 +44,7 @@ interface Adminstration {
     TableModule,
     PaginatorModule,
     TranslatePipe,
+    TooltipModule,
   ],
   templateUrl: './assign-employees.component.html',
   styleUrl: './assign-employees.component.scss',
@@ -122,7 +124,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     this.workMissionService
-      .getEmployeesToBeAssigned(this.paginationParams, this.filterModel)
+      .getEmployeesToBeAssigned(this.paginationParams, this.filterModel, this.model?.id)
       .subscribe({
         next: (response) => {
           this.employees = response.data.list;
@@ -130,6 +132,76 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
         },
         error: () => {},
       });
+    this.employees = [
+      {
+        id: 1,
+        nameAr: 'أحمد محمد',
+        nameEn: 'Ahmed Mohamed',
+        nationalId: '29801011234567',
+        departmentNameAr: 'الموارد البشرية',
+        departmentNameEn: 'HR',
+        hasConflictingMissions: false,
+      },
+      {
+        id: 2,
+        nameAr: 'محمد علي',
+        nameEn: 'Mohamed Ali',
+        nationalId: '29902021234567',
+        departmentNameAr: 'تكنولوجيا المعلومات',
+        departmentNameEn: 'IT',
+        hasConflictingMissions: true,
+      },
+      {
+        id: 3,
+        nameAr: 'سارة حسن',
+        nameEn: 'Sara Hassan',
+        nationalId: '30003031234567',
+        departmentNameAr: 'المالية',
+        departmentNameEn: 'Finance',
+        hasConflictingMissions: false,
+      },
+    ];
+  }
+
+  private loadEmployees() {
+    this.workMissionService
+      .getEmployeesToBeAssigned(this.paginationParams, this.filterModel, this.model?.id)
+      .subscribe({
+        next: (response) => {
+          this.employees = response.data.list;
+          this.paginationInfoMap(response.data);
+        },
+        error: () => {},
+      });
+    this.employees = [
+      {
+        id: 1,
+        nameAr: 'أحمد محمد',
+        nameEn: 'Ahmed Mohamed',
+        nationalId: '29801011234567',
+        departmentNameAr: 'الموارد البشرية',
+        departmentNameEn: 'HR',
+        hasConflictingMissions: false,
+      },
+      {
+        id: 2,
+        nameAr: 'محمد علي',
+        nameEn: 'Mohamed Ali',
+        nationalId: '29902021234567',
+        departmentNameAr: 'تكنولوجيا المعلومات',
+        departmentNameEn: 'IT',
+        hasConflictingMissions: true,
+      },
+      {
+        id: 3,
+        nameAr: 'سارة حسن',
+        nameEn: 'Sara Hassan',
+        nationalId: '30003031234567',
+        departmentNameAr: 'المالية',
+        departmentNameEn: 'Finance',
+        hasConflictingMissions: false,
+      },
+    ];
   }
   // Add this method to check if all employees on current page are selected
   areAllCurrentPageSelected(): boolean {
@@ -232,17 +304,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
   }
 
-  private loadEmployees() {
-    this.workMissionService
-      .getEmployeesToBeAssigned(this.paginationParams, this.filterModel)
-      .subscribe({
-        next: (response) => {
-          this.employees = response.data.list;
-          this.paginationInfoMap(response.data);
-        },
-        error: () => {},
-      });
-  }
   resetSearch() {
     this.filterModel = {};
     this.paginationParams.pageNumber = 1;

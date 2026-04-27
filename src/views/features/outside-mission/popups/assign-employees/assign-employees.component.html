@@ -116,9 +116,10 @@
             <th>
               <label class="flex items-center space-x-2 cursor-pointer relative">
                 <input
-                  class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                  class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:opacity-50 disabled:cursor-not-allowed"
                   type="checkbox"
                   [checked]="returnCheckAllStatus()"
+                  [disabled]="allCurrentPageHaveConflicts"
                   (change)="toggleAll($any($event.target).checked)"
                 />
                 <svg
@@ -145,13 +146,8 @@
           <tr [class.row-bg]="employee.hasConflictingMissions">
             @if (employee.hasConflictingMissions) {
               <td>
-                <button
-                  [title]="'COMMON.EDIT' | translate"
-                  tooltipPosition="top"
-                  placeholder="Top"
-                  [pTooltip]="'COMMON.EDIT' | translate"
-                  class="flex items-center gap-2"
-                >
+                <button class="tooltip-btn">
+                  <span class="tooltip-text">{{ 'COMMON.EDIT' | translate }}</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

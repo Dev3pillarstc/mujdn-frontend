@@ -55,7 +55,6 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
         }
       });
     }
-    console.log('Filter options before processing:', missionId);
     // Add missionId if provided
     if (missionId) {
       httpParams = httpParams.set('missionId', String(missionId));
@@ -72,10 +71,15 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
     ) as unknown as Observable<PaginatedListResponseData<UserProfileDataWithNationalId>>;
   }
 
-  addUsersToMission(model: MissionEmployeesAssignement) {
-    return this.http.post(this.getUrlSegment() + '/' + 'AddUsersToMission', model, {
-      withCredentials: true,
-    });
+  addUsersToMission(
+    model: MissionEmployeesAssignement
+  ): Observable<{ conflictingUserIds?: number[] }> {
+    return this.http
+      .post<{
+        data: { conflictingUserIds?: number[] };
+        error: null;
+      }>(this.getUrlSegment() + '/' + 'AddUsersToMission', model, { withCredentials: true })
+      .pipe(map((res) => res.data ?? {}));
   }
 
   @CastResponse(undefined, { fallback: '$pagination' })

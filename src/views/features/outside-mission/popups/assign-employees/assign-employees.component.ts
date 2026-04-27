@@ -1,20 +1,17 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
-import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { DialogRef } from '@angular/cdk/dialog';
 import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { M } from '@angular/material/dialog.d-B5HZULyo';
-import { Observable, timeout } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
@@ -28,9 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MissionEmployeesAssignement } from '@/models/features/business/mission-employees-assignment';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { TooltipModule } from 'primeng/tooltip';
-interface Adminstration {
-  type: string;
-}
+import { AlertService } from '@/services/shared/alert.service';
 
 @Component({
   selector: 'app-assign-employees',
@@ -60,6 +55,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   paginationInfo: PaginationInfo = new PaginationInfo();
   departments: BaseLookupModel[] = [];
   workMissionService = inject(WorkMissionService);
+  alertService = inject(AlertService);
   paginationParams: PaginationParams = new PaginationParams();
   filterModel: OptionsContract = {};
   constructor(
@@ -102,14 +98,14 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   }
 
   override buildForm(): void {}
-  override saveFail(error: Error): void {}
-  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
-  override beforeSave(model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
+  override saveFail(_error: Error): void {}
+  override afterSave(_model: WorkMission, _dialogRef: M<any, any>): void {}
+  override beforeSave(_model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
   }
   override prepareModel(
     model: WorkMission,
-    form: FormGroup
+    _form: FormGroup
   ): WorkMission | Observable<WorkMission> {
     return model;
   }
@@ -144,6 +140,10 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
         error: () => {},
       });
   }
+  get allCurrentPageHaveConflicts(): boolean {
+    return this.employees.length > 0 && this.employees.every((emp) => emp.hasConflictingMissions);
+  }
+
   // Add this method to check if all employees on current page are selected
   areAllCurrentPageSelected(): boolean {
     if (!this.employees || this.employees.length === 0) {
@@ -276,9 +276,23 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     this.selectedUsers.missionId = this.model?.id;
     this.workMissionService.addUsersToMission(this.selectedUsers).subscribe({
       next: (response) => {
+        const conflictingIds = response?.conflictingUserIds ?? [];
+        if (conflictingIds.length > 0) {
+          // Partial conflict: some assigned, some skipped
+          this.alertService.showWarningMessage({
+            messages: ['WORK_MISSIONS.ASSIGN_PARTIAL_CONFLICT'],
+          });
+        } else {
+          // All assigned successfully
+          this.alertService.showSuccessMessage({
+            messages: ['WORK_MISSIONS.ASSIGN_SUCCESS'],
+          });
+        }
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: () => {},
+      error: () => {
+        // All-conflict case: error message is already shown by the global HTTP interceptor
+      },
     });
   }
   isCurrentLanguageEnglish() {

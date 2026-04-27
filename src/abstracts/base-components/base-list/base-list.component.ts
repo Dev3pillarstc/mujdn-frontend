@@ -350,6 +350,10 @@ export abstract class BaseListComponent<
     return { ar: '', en: '' };
   }
 
+  getTranslatedFileName(labelKey: string, extension: string = 'pdf'): string {
+    return `${this.translateService.instant(labelKey)}.${extension}`;
+  }
+
   protected getDefaultPdfFileName(): string {
     return 'data.pdf';
   }

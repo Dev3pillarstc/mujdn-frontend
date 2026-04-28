@@ -18,14 +18,12 @@ export class AlertService {
 
   showSuccessMessage(
     params: { icon?: string; messages?: string[]; buttonLabel?: string },
-    dialogSize?: {
-      width: string;
-      maxWidth: string;
-    }
+    dialogSize?: { width: string; maxWidth: string }
   ) {
     const dialog = this.matDialog.open(AlertDialogComponent, {
       width: dialogSize?.width || '100%',
       maxWidth: dialogSize?.maxWidth || '400px',
+      panelClass: 'alert-dialog-overlay',
       data: <AlertDialogData>{
         icon: params.icon || 'success',
         messages: params.messages || ['COMMON.SAVED_SUCCESSFULLY'],
@@ -42,14 +40,12 @@ export class AlertService {
 
   showErrorMessage(
     params: { icon?: string; messages?: string[]; buttonLabel?: string },
-    dialogSize?: {
-      width: string;
-      maxWidth: string;
-    }
+    dialogSize?: { width: string; maxWidth: string }
   ) {
     const dialog = this.matDialog.open(AlertDialogComponent, {
       width: dialogSize?.width || '100%',
       maxWidth: dialogSize?.maxWidth || '400px',
+      panelClass: 'alert-dialog-overlay',
       data: <AlertDialogData>{
         icon: params.icon || 'error',
         messages: params.messages || ['COMMON.ERROR_OCCURRED'],
@@ -61,7 +57,6 @@ export class AlertService {
       const userDataCookie = this.cookieService.getCookie(COOKIE_ENUM.USER_DATA);
       if (!userDataCookie) {
         this.authService.setUser(undefined);
-        // this.authService.logout().subscribe(); // 🔁 You must implement this in AuthService
         this.router.navigate(['/auth/login']);
         this.matDialog.closeAll();
       }
@@ -71,16 +66,36 @@ export class AlertService {
     return dialog;
   }
 
-  showErrorMessageWithRedirect(
+  showWarningMessage(
     params: { icon?: string; messages?: string[]; buttonLabel?: string },
-    dialogSize?: {
-      width: string;
-      maxWidth: string;
-    }
+    dialogSize?: { width: string; maxWidth: string }
   ) {
     const dialog = this.matDialog.open(AlertDialogComponent, {
       width: dialogSize?.width || '100%',
       maxWidth: dialogSize?.maxWidth || '400px',
+      panelClass: 'alert-dialog-overlay',
+      data: <AlertDialogData>{
+        icon: params.icon || 'warning',
+        messages: params.messages || ['COMMON.WARNING'],
+        buttonLabel: params.buttonLabel || 'COMMON.OK',
+      },
+    });
+
+    setTimeout(() => {
+      dialog.close();
+    }, 5000);
+
+    return dialog;
+  }
+
+  showErrorMessageWithRedirect(
+    params: { icon?: string; messages?: string[]; buttonLabel?: string },
+    dialogSize?: { width: string; maxWidth: string }
+  ) {
+    const dialog = this.matDialog.open(AlertDialogComponent, {
+      width: dialogSize?.width || '100%',
+      maxWidth: dialogSize?.maxWidth || '400px',
+      panelClass: 'alert-dialog-overlay',
       data: <AlertDialogData>{
         icon: params.icon || 'error',
         messages: params.messages || ['COMMON.ERROR_OCCURRED'],

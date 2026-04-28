@@ -1,20 +1,17 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
-import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import { DialogRef } from '@angular/cdk/dialog';
 import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 import { WorkMission } from '@/models/features/business/work-mission';
 import { M } from '@angular/material/dialog.d-B5HZULyo';
-import { Observable, timeout } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserProfileDataWithNationalId } from '@/models/features/business/user-profile-data-with-national-id';
@@ -27,11 +24,9 @@ import { OptionsContract } from '@/contracts/options-contract';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MissionEmployeesAssignement } from '@/models/features/business/mission-employees-assignment';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { TooltipModule } from 'primeng/tooltip';
+import { AlertService } from '@/services/shared/alert.service';
 import { getWorkMissionTypeName } from '@/models/features/business/work-mission-type-option';
-interface Adminstration {
-  type: string;
-}
-
 @Component({
   selector: 'app-assign-employees',
   imports: [
@@ -44,6 +39,7 @@ interface Adminstration {
     TableModule,
     PaginatorModule,
     TranslatePipe,
+    TooltipModule,
   ],
   templateUrl: './assign-employees.component.html',
   styleUrl: './assign-employees.component.scss',
@@ -59,6 +55,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   paginationInfo: PaginationInfo = new PaginationInfo();
   departments: BaseLookupModel[] = [];
   workMissionService = inject(WorkMissionService);
+  alertService = inject(AlertService);
   paginationParams: PaginationParams = new PaginationParams();
   filterModel: OptionsContract = {};
   constructor(
@@ -68,15 +65,14 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     super();
   }
   override initPopup(): void {
-    // Load available employees for the table
-    this.loadEmployees();
     this.model = this.data.model;
     this.departments = this.data.lookups.departments;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
 
     this.sortDepartments();
-
+    // Load available employees for the table
+    this.loadEmployees();
     // Pre-fill selected employees from already assigned employees
     if (this.model.assignedEmployees && this.model.assignedEmployees.length > 0) {
       // Copy into selectedEmployees
@@ -102,14 +98,14 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   }
 
   override buildForm(): void {}
-  override saveFail(error: Error): void {}
-  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
-  override beforeSave(model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
+  override saveFail(_error: Error): void {}
+  override afterSave(_model: WorkMission, _dialogRef: M<any, any>): void {}
+  override beforeSave(_model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
     return form.valid;
   }
   override prepareModel(
     model: WorkMission,
-    form: FormGroup
+    _form: FormGroup
   ): WorkMission | Observable<WorkMission> {
     return model;
   }
@@ -123,7 +119,7 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     this.paginationParams.pageNumber = Math.floor(this.first / this.rows) + 1;
     this.paginationParams.pageSize = this.rows;
     this.workMissionService
-      .getEmployeesToBeAssigned(this.paginationParams, this.filterModel)
+      .getEmployeesToBeAssigned(this.paginationParams, this.filterModel, this.model?.id)
       .subscribe({
         next: (response) => {
           this.employees = response.data.list;
@@ -132,6 +128,22 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
         error: () => {},
       });
   }
+
+  private loadEmployees() {
+    this.workMissionService
+      .getEmployeesToBeAssigned(this.paginationParams, this.filterModel, this.model?.id)
+      .subscribe({
+        next: (response) => {
+          this.employees = response.data.list;
+          this.paginationInfoMap(response.data);
+        },
+        error: () => {},
+      });
+  }
+  get allCurrentPageHaveConflicts(): boolean {
+    return this.employees.length > 0 && this.employees.every((emp) => emp.hasConflictingMissions);
+  }
+
   // Add this method to check if all employees on current page are selected
   areAllCurrentPageSelected(): boolean {
     if (!this.employees || this.employees.length === 0) {
@@ -143,19 +155,20 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     );
   }
 
-  // Update the existing toggleAll method to work better with the checkbox state
   toggleAll(checked: boolean): void {
     if (checked) {
-      // Add all employees from current page that aren't already selected
+      // Add all employees from current page that aren't already selected and don't have conflicts
       const newEmployees = this.employees.filter(
-        (u) => u.id !== undefined && !this.selectedUsers.employeesIds.includes(u.id)
+        (u) =>
+          u.id !== undefined &&
+          !this.selectedUsers.employeesIds.includes(u.id) &&
+          !u.hasConflictingMissions // Exclude employees with conflicting missions
       );
       const newEmployeeIds = newEmployees.map((u) => u.id as number);
 
       // Add to selected arrays
       this.selectedUsers.employeesIds = [...this.selectedUsers.employeesIds, ...newEmployeeIds];
 
-      // If you're using the selectedEmployees array from the previous solution
       if (this.selectedEmployees) {
         this.selectedEmployees = [...this.selectedEmployees, ...newEmployees];
       }
@@ -169,7 +182,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
         (userId) => !currentPageEmployeeIds.includes(userId)
       );
 
-      // If you're using the selectedEmployees array from the previous solution
       if (this.selectedEmployees) {
         this.selectedEmployees = this.selectedEmployees.filter(
           (emp) => !currentPageEmployeeIds.includes(emp.id!)
@@ -177,14 +189,23 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
       }
     }
   }
-  toggleUserSelection(userId: number, event?: Event) {
+
+  toggleUserSelection(userId: number, event?: Event): void {
+    const user = this.employees.find((u) => u.id === userId);
+
+    // Don't allow selection if employee has conflicting missions
+    if (user?.hasConflictingMissions) {
+      if (event?.target) {
+        (event.target as HTMLInputElement).checked = false;
+      }
+      return;
+    }
+
     if ((event?.target as HTMLInputElement)?.checked) {
       // Add if not already in the list
       if (!this.selectedUsers.employeesIds.some((id) => id === userId)) {
-        const user = this.employees.find((u) => u.id === userId);
         if (user && !this.selectedUsers.employeesIds.some((id) => id === userId)) {
           this.selectedUsers.employeesIds.push(user.id as number);
-          // Store the complete employee object
           this.selectedEmployees.push(user);
         }
       }
@@ -199,8 +220,15 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   isUserSelected(userId: number): boolean {
     return this.selectedUsers.employeesIds.some((id) => id === userId);
   }
-  returnCheckAllStatus() {
-    return this.employees.every((emp) =>
+  returnCheckAllStatus(): boolean {
+    // Only check employees without conflicts
+    const selectableEmployees = this.employees.filter((emp) => !emp.hasConflictingMissions);
+
+    if (selectableEmployees.length === 0) {
+      return false;
+    }
+
+    return selectableEmployees.every((emp) =>
       this.selectedEmployees.map((selectedUser) => selectedUser.id).includes(emp.id)
     );
   }
@@ -233,17 +261,6 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     this.first = (this.paginationParams.pageNumber - 1) * this.paginationParams.pageSize;
   }
 
-  private loadEmployees() {
-    this.workMissionService
-      .getEmployeesToBeAssigned(this.paginationParams, this.filterModel)
-      .subscribe({
-        next: (response) => {
-          this.employees = response.data.list;
-          this.paginationInfoMap(response.data);
-        },
-        error: () => {},
-      });
-  }
   resetSearch() {
     this.filterModel = {};
     this.paginationParams.pageNumber = 1;
@@ -259,9 +276,23 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
     this.selectedUsers.missionId = this.model?.id;
     this.workMissionService.addUsersToMission(this.selectedUsers).subscribe({
       next: (response) => {
+        const conflictingIds = response?.conflictingUserIds ?? [];
+        if (conflictingIds.length > 0) {
+          // Partial conflict: some assigned, some skipped
+          this.alertService.showWarningMessage({
+            messages: ['WORK_MISSIONS.ASSIGN_PARTIAL_CONFLICT'],
+          });
+        } else {
+          // All assigned successfully
+          this.alertService.showSuccessMessage({
+            messages: ['WORK_MISSIONS.ASSIGN_SUCCESS'],
+          });
+        }
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: () => {},
+      error: () => {
+        // All-conflict case: error message is already shown by the global HTTP interceptor
+      },
     });
   }
   isCurrentLanguageEnglish() {

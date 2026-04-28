@@ -5,6 +5,7 @@
     "ADD": "إضافة",
     "ERROR": "خطأ",
     "SUCCESS": "نجاح",
+    "WARNING": "تحذير",
     "ALERT": "تنبيه",
     "YES": "نعم",
     "NO": "لا",
@@ -142,6 +143,7 @@
     "TEMPORARY_ROLE_ASSIGNMENT_ONLY_FUTURE_RECORDS_CAN_BE_DELETED": "يمكن حذف إسنادات الأدوار المؤقتة التي تبدأ بعد اليوم فقط.",
     "TEMPORARY_ROLE_ASSIGNMENT_ONLY_DATE_TO_CAN_BE_UPDATED_AFTER_START": "بعد بدء إسناد الدور المؤقت، يمكن تحديث تاريخ الانتهاء فقط.",
     "TEMPORARY_ROLE_ASSIGNMENT_DATE_TO_MUST_BE_AFTER_TODAY": "يجب أن يكون تاريخ الانتهاء بعد اليوم لإسناد دور مؤقت بدأ بالفعل.",
+    "WORK_MISSION_ALL_USERS_CONFLICT": "جميع الموظفين المحددين لديهم مهام متعارضة في نفس الفترة ولم يتم إسنادهم.",
     "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "لا يمكن رفض الزيارة لأنها تحتوي على تسجيل حضور"
   },
   "FOOTER": {
@@ -715,7 +717,10 @@
     "MISSION_TYPE": "نوع المهمة",
     "SHIFT_BEGINNING": "بداية الدوام",
     "SHIFT_ENDING": "نهاية الدوام",
-    "FULL_DAY": "يوم كامل"
+    "FULL_DAY": "يوم كامل",
+    "EMPLOYEE_NOT_AVAILABLE": "غير متاح لارتباطه بمهمة أخرى ",
+    "ASSIGN_PARTIAL_CONFLICT": "لم يتم إسناد بعض الموظفين بسبب تعارض مهامهم، وتم إسناد الموظفين الآخرين بنجاح.",
+    "ASSIGN_SUCCESS": "تم إسناد الموظفين بنجاح."
   },
   "VISIT_REQUEST_PAGE": {
     "VISITOR_REQUESTS_LIST": "قائمة طلبات الزيارات",

@@ -374,18 +374,18 @@ export abstract class BaseListComponent<
     isStoredProcedure: boolean = false
   ): void {
     this.getPdfExportRequest(isStoredProcedure).subscribe({
-        next: (blob) => {
-          if (!blob || blob.size === 0) {
-            this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
-            return;
-          }
+      next: (blob) => {
+        if (!blob || blob.size === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
+        }
 
-          downloadBlobData(blob, fileName);
-        },
-        error: () => {
-          this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
-        },
-      });
+        downloadBlobData(blob, fileName);
+      },
+      error: () => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
   }
 
   private initBreadcrumbs(): void {

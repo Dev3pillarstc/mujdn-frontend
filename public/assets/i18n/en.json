@@ -5,6 +5,7 @@
     "ADD": "Add",
     "ERROR": "Error",
     "SUCCESS": "Success",
+    "WARNING": "Warning",
     "ALERT": "Alert",
     "YES": "Yes",
     "NO": "No",
@@ -142,6 +143,7 @@
     "TEMPORARY_ROLE_ASSIGNMENT_ONLY_FUTURE_RECORDS_CAN_BE_DELETED": "Only temporary role assignments that start after today can be deleted.",
     "TEMPORARY_ROLE_ASSIGNMENT_ONLY_DATE_TO_CAN_BE_UPDATED_AFTER_START": "Once a temporary role assignment has started, only DateTo can be updated.",
     "TEMPORARY_ROLE_ASSIGNMENT_DATE_TO_MUST_BE_AFTER_TODAY": "DateTo must be after today for a started temporary role assignment.",
+    "WORK_MISSION_ALL_USERS_CONFLICT": "All selected employees have conflicting missions in the same period and could not be assigned.",
     "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "Cannot reject the visit because it has attendance records"
   },
   "FOOTER": {
@@ -717,7 +719,10 @@
     "MISSION_TYPE": "Mission type",
     "SHIFT_BEGINNING": "Shift beginning",
     "SHIFT_ENDING": "Shift ending",
-    "FULL_DAY": "Full day"
+    "FULL_DAY": "Full day",
+    "EMPLOYEE_NOT_AVAILABLE": "Employee is not available during the selected mission time",
+    "ASSIGN_PARTIAL_CONFLICT": "Some employees were not assigned because they have conflicting missions. The remaining employees were assigned successfully.",
+    "ASSIGN_SUCCESS": "Employees assigned successfully."
   },
   "VISIT_REQUEST_PAGE": {
     "VISITOR_REQUESTS_LIST": "Visitor Requests List",

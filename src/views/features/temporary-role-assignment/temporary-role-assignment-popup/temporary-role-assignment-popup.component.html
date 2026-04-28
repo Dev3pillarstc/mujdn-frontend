@@ -7,7 +7,7 @@
     <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
       {{
         (isCreateMode
-          ? 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ADD_NEW_ASSIGNMENT'
+          ? 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ADD_NEW_ASSIGNMENT_POPUP'
           : 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.EDIT_ASSIGNMENT'
         ) | translate
       }}
@@ -22,7 +22,7 @@
     <form [formGroup]="form" class="mt-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Employee -->
-        <div>
+        <div class="md:col-span-2">
           <label class="label" for="temporary-role-assignment-employee">
             {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.EMPLOYEE_NAME' | translate }}
           </label>
@@ -45,6 +45,14 @@
           </div>
           <app-validation-messages [control]="employeeControl"></app-validation-messages>
         </div>
+
+        <div class="md:col-span-2 border-b border-[#adadad]"></div>
+
+        <header class="md:col-span-2">
+          <h3 class="text-[#1f2a37] font-[600] text-lg">
+            {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.BEGINNING_DATETIME_OF_ASSIGNMENT' | translate }}
+          </h3>
+        </header>
 
         <!-- Date From -->
         <div>
@@ -98,6 +106,14 @@
           </div>
           <app-validation-messages [control]="timeFromControl"></app-validation-messages>
         </div>
+
+        <div class="md:col-span-2 border-b border-[#adadad]"></div>
+
+        <header class="md:col-span-2">
+          <h3 class="text-[#1f2a37] font-[600] text-lg">
+            {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ENDING_DATETIME_OF_ASSIGNMENT' | translate }}
+          </h3>
+        </header>
 
         <!-- Date To -->
         <div>

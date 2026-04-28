@@ -342,6 +342,10 @@ export const routes: Routes = [
         resolve: { list: userProfileResolver },
         loadComponent: () => import('@/views/features/employee/profile/profile/profile.component'),
       },
+      {
+        path: 'work-shifts-assignment-container',
+        loadComponent: () => import('@/views/features/lookups/work-shifts/work-shifts-assignment-container/work-shifts-assignment-container.component'),
+      },
     ],
   },
 

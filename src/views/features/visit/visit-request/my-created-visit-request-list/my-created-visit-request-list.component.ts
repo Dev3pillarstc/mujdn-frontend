@@ -202,7 +202,7 @@ export class MyCreatedVisitRequestListComponent
     icon?: string;
     routerLink?: string;
   }[] {
-    return [{ labelKey: 'VISIT_REQUEST_PAGE.MY_CREATED_VISITS' }];
+    return [{ labelKey: 'VISIT_REQUEST_PAGE.MY_VISITS' }];
   }
 
   showActionsButton(visit: Visit): boolean {

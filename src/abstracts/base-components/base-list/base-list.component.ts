@@ -9,17 +9,16 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import * as XLSX from 'xlsx';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import { registerIBMPlexArabicFont } from '../../../../public/assets/fonts/ibm-plex-font';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, mapTo, of, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
+import { filter, Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { CustomValidators } from '@/validators/custom-validators';
+import { OptionsContract } from '@/contracts/options-contract';
+import { downloadBlobData } from '@/utils/utils';
 
 @Directive()
 export abstract class BaseListComponent<
@@ -351,169 +350,44 @@ export abstract class BaseListComponent<
     return { ar: '', en: '' };
   }
 
-  exportPdf(fileName: string = 'data.pdf', isStoredProcedure: boolean = false): void {
-    const allDataParams = {
-      ...this.paginationParams,
-      pageNumber: 1,
-      pageSize: CustomValidators.defaultLengths.INT_MAX,
-    };
+  getTranslatedFileName(labelKey: string, extension: string = 'pdf'): string {
+    return `${this.translateService.instant(labelKey)}.${extension}`;
+  }
 
-    const fetchAll = isStoredProcedure
-      ? this.service.loadPaginatedSP(allDataParams, { ...this._appliedFilterModel! })
-      : this.service.loadPaginated(allDataParams, { ...this._appliedFilterModel! });
+  protected getDefaultPdfFileName(): string {
+    return 'data.pdf';
+  }
 
-    const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+  protected getPdfExportFilterOptions(_isStoredProcedure: boolean = false): OptionsContract {
+    return { ...this._appliedFilterModel! };
+  }
 
-    fetchAll.subscribe({
-      next: (response) => {
-        const fullList = response.list || [];
-        if (fullList.length === 0) {
+  protected getPdfExportRequest(isStoredProcedure: boolean = false): Observable<Blob> {
+    return this.service.exportPdf(
+      this.langService.getCurrentLanguage(),
+      this.getPdfExportFilterOptions(isStoredProcedure)
+    );
+  }
+
+  exportPdf(
+    fileName: string = this.getDefaultPdfFileName(),
+    isStoredProcedure: boolean = false
+  ): void {
+    this.getPdfExportRequest(isStoredProcedure).subscribe({
+      next: (blob) => {
+        if (!blob || blob.size === 0) {
           this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
           return;
         }
 
-        const transformedData = fullList.map((item) => this.mapModelToPdfRow(item));
-        const headers = Object.keys(transformedData[0]);
-        const titles = this.getPdfTitle();
-        const title = isRTL ? titles.ar : titles.en;
-
-        const formatCell = (val: any): string => {
-          if (val instanceof Date) return val.toLocaleString();
-          return val != null ? String(val) : '';
-        };
-
-        const displayHeaders = isRTL ? [...headers].reverse() : headers;
-
-        // ── Build off-screen HTML table ───────────────────────────
-        const container = document.createElement('div');
-        container.style.cssText = `
-        position: fixed;
-        top: -9999px;
-        left: -9999px;
-        width: 1122px;
-        background: white;
-        padding: 20px;
-        font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
-        direction: ${isRTL ? 'rtl' : 'ltr'};
-      `;
-
-        container.innerHTML = `
-        <div style="
-          color: #2d9c9c;
-          font-size: 14px;
-          font-weight: bold;
-          margin-bottom: 8px;
-          text-align: ${isRTL ? 'right' : 'left'};
-          font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
-        ">${title}</div>
-        <div style="height: 2px; background: #2d9c9c; margin-bottom: 12px;"></div>
-        <table style="
-          width: 100%;
-          border-collapse: collapse;
-          font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
-          font-size: 11px;
-          direction: ${isRTL ? 'rtl' : 'ltr'};
-          border: 1px solid #e2e8f0;
-        ">
-          <thead>
-            <tr>
-              ${displayHeaders
-                .map(
-                  (h) => `
-                <th style="
-                  background: #f3f4f6;
-                  color: #33415a;
-                  padding: 8px 9px;
-                  text-align: center;
-                  border: 1px solid #e2e8f0;
-                  font-weight: bold;
-                  white-space: nowrap;
-                  font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
-                ">${h}</th>
-              `
-                )
-                .join('')}
-            </tr>
-          </thead>
-          <tbody>
-            ${transformedData
-              .map((row) => {
-                const values = isRTL ? [...Object.values(row)].reverse() : Object.values(row);
-                return `
-                <tr>
-                  ${values
-                    .map(
-                      (val) => `
-                    <td style="
-                      padding: 7px 6px;
-                      text-align: center;
-                      border-bottom: 1px solid #e2e8f0;
-                      color: #333333;
-                      white-space: nowrap;
-                      font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
-                    ">${formatCell(val)}</td>
-                  `
-                    )
-                    .join('')}
-                </tr>
-              `;
-              })
-              .join('')}
-          </tbody>
-        </table>
-      `;
-
-        document.body.appendChild(container);
-
-        // ── Capture and export ────────────────────────────────────
-        import('html2canvas').then(({ default: html2canvas }) => {
-          html2canvas(container, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff',
-            width: 1122,
-            windowWidth: 1122,
-          })
-            .then((canvas) => {
-              document.body.removeChild(container);
-
-              const imgData = canvas.toDataURL('image/png');
-              const doc = new jsPDF({ orientation: 'landscape', format: 'a4' });
-
-              const pageWidth = doc.internal.pageSize.getWidth();
-              const pageHeight = doc.internal.pageSize.getHeight();
-              const imgWidth = pageWidth - 20;
-              const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-              // ── Title on first page ───────────────────────────────
-              let heightLeft = imgHeight;
-              let position = 10;
-
-              doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-              heightLeft -= pageHeight - 20;
-
-              // ── Multi-page support ────────────────────────────────
-              while (heightLeft > 0) {
-                position = heightLeft - imgHeight;
-                doc.addPage();
-                doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight - 20;
-              }
-
-              doc.save(fileName);
-            })
-            .catch(() => {
-              document.body.removeChild(container);
-              this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
-            });
-        });
+        downloadBlobData(blob, fileName);
       },
-
-      error: (_) => {
+      error: () => {
         this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
       },
     });
   }
+
   private initBreadcrumbs(): void {
     this.breadcrumbs = this.getBreadcrumbKeys().map((item) => ({
       label: this.translateService.instant(item.labelKey),

@@ -119,16 +119,22 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
       : model.userFullNameAr;
   }
 
+  getDepartmentName(model: TemporaryRoleAssignment): string {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+      ? model.departmentNameEn
+      : model.departmentNameAr;
+  }
+
   formatDate(value: Date | string | null | undefined): string {
     return value ? formatDateOnly(value) : '-';
   }
 
   getStatusKey(model: TemporaryRoleAssignment): string {
-    if (model.hasEndedOrEndsToday) {
+    if (model.hasEnded) {
       return 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ENDED';
     }
 
-    if (model.hasStarted) {
+    if (model.isActiveNow) {
       return 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ACTIVE_NOW';
     }
 
@@ -136,11 +142,11 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
   }
 
   getStatusClass(model: TemporaryRoleAssignment): string {
-    if (model.hasEndedOrEndsToday) {
+    if (model.hasEnded) {
       return 'text-[#912018] bg-[#fef3f2]';
     }
 
-    if (model.hasStarted) {
+    if (model.isActiveNow) {
       return 'text-[#085d3a] bg-[#ecfdf3]';
     }
 
@@ -153,6 +159,8 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
     return {
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.EMPLOYEE_NAME')]:
         this.getEmployeeName(model),
+      [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.DEPARTMENT')]:
+        this.getDepartmentName(model),
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.TEMPORARY_ROLE')]:
         model.roleName || '',
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_FROM')]: this.formatDate(

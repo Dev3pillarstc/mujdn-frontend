@@ -10,6 +10,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { switchMap, of, map } from 'rxjs';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -67,5 +68,12 @@ export class MyShiftsService extends LookupBaseService<EmployeeShift, number> {
           };
         })
       );
+  }
+
+  exportMyShiftsPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ) {
+    return this.exportPdfByEndpoint('ExportMyShiftsPdf', language, filterOptions);
   }
 }

@@ -106,6 +106,25 @@ export function printBlobData(data: Blob, fileName?: string): void {
   }
 }
 
+export function downloadBlobData(data: Blob, fileName: string): void {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if ((window.navigator as any).msSaveOrOpenBlob) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window.navigator as any).msSaveOrOpenBlob(data, fileName);
+    return;
+  }
+
+  const a: HTMLAnchorElement = document.createElement('a');
+  const url = URL.createObjectURL(data);
+  a.href = url;
+  a.download = fileName;
+  a.click();
+
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+  }, 0);
+}
+
 /**
  * @description Checks if given value is valid
  * @param value

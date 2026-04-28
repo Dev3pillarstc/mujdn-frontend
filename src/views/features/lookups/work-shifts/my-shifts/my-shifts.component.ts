@@ -43,9 +43,7 @@ import {
   WorkShiftTypeOption,
 } from '@/models/features/lookups/work-shifts/work-shift-type-option';
 import { SelectModule } from 'primeng/select';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import { registerIBMPlexArabicFont } from '../../../../../../public/assets/fonts/ibm-plex-font';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-my-shifts',
   imports: [
@@ -383,160 +381,15 @@ export default class MyShiftsComponent extends BaseListComponent<
       },
     });
   }
-  override exportPdf(
-    fileName: string = this.translateService.instant('MY_SHIFTS.MY_SHIFTS') + '.pdf'
-  ): void {
-    const allDataParams = {
-      ...this.paginationParams,
-      pageNumber: 1,
-      pageSize: CustomValidators.defaultLengths.INT_MAX,
-    };
+  protected override getDefaultPdfFileName(): string {
+    return this.translateService.instant('MY_SHIFTS.MY_SHIFTS') + '.pdf';
+  }
 
-    const fetchAll = this.service.getMyShifts(allDataParams, { ...this.appliedFilterModel! });
-    const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-
-    fetchAll.subscribe({
-      next: (response) => {
-        const fullList = response.list || [];
-        if (fullList.length === 0) {
-          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
-          return;
-        }
-
-        const transformedData = fullList.map((item) => this.mapModelToPdfRow(item));
-        const headers = Object.keys(transformedData[0]);
-        const titles = this.getPdfTitle();
-        const title = isRTL ? titles.ar : titles.en;
-
-        // ── Build HTML table ───────────────────────────────────────
-        const container = document.createElement('div');
-        container.style.cssText = `
-        position: fixed;
-        top: -9999px;
-        left: -9999px;
-        width: 1122px;
-        background: white;
-        padding: 20px;
-        font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
-        direction: ${isRTL ? 'rtl' : 'ltr'};
-      `;
-
-        const displayHeaders = isRTL ? [...headers].reverse() : headers;
-
-        container.innerHTML = `
-        <div style="
-          color: #2d9c9c;
-          font-size: 14px;
-          font-weight: bold;
-          margin-bottom: 8px;
-          text-align: ${isRTL ? 'right' : 'left'};
-          font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
-        ">${title}</div>
-        <div style="height: 2px; background: #2d9c9c; margin-bottom: 12px;"></div>
-        <table style="
-          width: 100%;
-          border-collapse: collapse;
-          font-family: 'IBM Plex Sans Arabic', Arial, sans-serif;
-          font-size: 11px;
-          direction: ${isRTL ? 'rtl' : 'ltr'};
-          border: 1px solid #e2e8f0;
-        ">
-          <thead>
-            <tr>
-              ${displayHeaders
-                .map(
-                  (h) => `
-                <th style="
-                  background: #f3f4f6;
-                  color: #33415a;
-                  padding: 8px 6px;
-                  text-align: center;
-                  border: 1px solid #e2e8f0;
-                  font-weight: normal;
-                  white-space: nowrap;
-                ">${h}</th>
-              `
-                )
-                .join('')}
-            </tr>
-          </thead>
-          <tbody>
-            ${transformedData
-              .map((row, i) => {
-                const values = isRTL ? [...Object.values(row)].reverse() : Object.values(row);
-                return `
-                <tr style="background: #ffffff;">
-                  ${values
-                    .map(
-                      (val) => `
-                    <td style="
-                      padding: 7px 6px;
-                      text-align: center;
-                      border-bottom: 1px solid #e2e8f0;
-                      color: #333333;
-                      white-space: nowrap;
-                    ">${val != null ? val : ''}</td>
-                  `
-                    )
-                    .join('')}
-                </tr>
-              `;
-              })
-              .join('')}
-          </tbody>
-        </table>
-      `;
-
-        document.body.appendChild(container);
-
-        // ── Render to PDF ──────────────────────────────────────────
-        import('html2canvas').then(({ default: html2canvas }) => {
-          html2canvas(container, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff',
-            width: 1122,
-            windowWidth: 1122,
-          })
-            .then((canvas) => {
-              document.body.removeChild(container);
-
-              const imgData = canvas.toDataURL('image/png');
-              const doc = new jsPDF({ orientation: 'landscape', format: 'a4' });
-
-              const pageWidth = doc.internal.pageSize.getWidth();
-              const pageHeight = doc.internal.pageSize.getHeight();
-
-              const imgWidth = pageWidth - 20;
-              const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-              // Handle multi-page
-              let heightLeft = imgHeight;
-              let position = 10;
-
-              doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-              heightLeft -= pageHeight - 20;
-
-              while (heightLeft > 0) {
-                position = heightLeft - imgHeight;
-                doc.addPage();
-                doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight - 20;
-              }
-
-              doc.save(fileName);
-            })
-            .catch(() => {
-              document.body.removeChild(container);
-              this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
-            });
-        });
-      },
-
-      error: (_) => {
-        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
-      },
-    });
+  protected override getPdfExportRequest(): Observable<Blob> {
+    return this.service.exportMyShiftsPdf(
+      this.langService.getCurrentLanguage(),
+      this.getPdfExportFilterOptions()
+    );
   }
   get startDate() {
     return this.filterOptions.startDate as Date;

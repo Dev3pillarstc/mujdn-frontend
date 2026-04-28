@@ -26,7 +26,7 @@ import { MissionEmployeesAssignement } from '@/models/features/business/mission-
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { TooltipModule } from 'primeng/tooltip';
 import { AlertService } from '@/services/shared/alert.service';
-
+import { getWorkMissionTypeName } from '@/models/features/business/work-mission-type-option';
 @Component({
   selector: 'app-assign-employees',
   imports: [
@@ -297,5 +297,8 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   }
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
+  }
+  getWorkMissionTypeName(model: WorkMission): string {
+    return getWorkMissionTypeName(model.workMissionType, this.isCurrentLanguageEnglish());
   }
 }

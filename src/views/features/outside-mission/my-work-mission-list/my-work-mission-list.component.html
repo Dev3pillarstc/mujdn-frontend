@@ -66,6 +66,24 @@
           ></span>
         </div>
 
+        <div class="relative">
+          <label class="label" for="workMissionTypeFilter">{{
+            'WORK_MISSIONS.MISSION_TYPE' | translate
+          }}</label>
+          <p-select
+            id="workMissionTypeFilter"
+            [options]="workMissionTypeOptions"
+            [(ngModel)]="filterModel.workMissionType"
+            optionValue="value"
+            [optionLabel]="getPropertyName()"
+            [placeholder]="'WORK_MISSIONS.MISSION_TYPE' | translate"
+            class="w-full peer"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
         <!-- Date From -->
         <div class="relative">
           <label class="label" for="">{{ 'WORK_MISSIONS.FROM' | translate }}</label>
@@ -134,7 +152,10 @@
         >
           <img alt="" src="assets/icons/excel.svg" />
         </button>
-        <button (click)="exportPdf('my-work-missions.pdf')" class="table-head-action-btn">
+        <button
+          (click)="exportPdf(getTranslatedFileName('WORK_MISSIONS.MY_WORK_MISSIONS_LIST'))"
+          class="table-head-action-btn"
+        >
           <img alt="" src="assets/icons/pdf.svg" />
         </button>
       </div>
@@ -148,8 +169,9 @@
             <th>{{ 'WORK_MISSIONS.MISSION_NAME_EN' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.STARTING_DATE' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.ENDING_DATE' | translate }}</th>
+            <th>{{ 'WORK_MISSIONS.MISSION_TYPE' | translate }}</th>
             <th>{{ 'WORK_MISSIONS.MISSION_CREATOR' | translate }}</th>
-            <th>{{ 'COMMON.ACTION' | translate }}</th>
+            <th class="w-10">{{ 'COMMON.ACTION' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template #body let-mission>
@@ -162,6 +184,12 @@
             </td>
             <td>{{ mission.startDate | date: 'dd/MM/yyyy' }}</td>
             <td>{{ mission.endDate | date: 'dd/MM/yyyy' }}</td>
+            <td>
+              <span
+                class="bg-gray-100 rounded-lg p-1 min-w-[80px] inline-flex items-center justify-center border border-[#d9dadd] text-sm font-semibold"
+                >{{ getWorkMissionTypeName(mission) }}</span
+              >
+            </td>
             <td>
               {{
                 isCurrentLanguageEnglish()

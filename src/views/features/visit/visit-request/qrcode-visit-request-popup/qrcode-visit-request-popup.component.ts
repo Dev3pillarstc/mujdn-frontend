@@ -86,6 +86,10 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  private getPdfFileName(): string {
+    return `${this.translateService.instant('VISIT_REQUEST_PAGE.VISIT_REQUEST_PDF_FILE_NAME')}.pdf`;
+  }
+
   // 🔹 Export PDF method
   async downloadAsPDF(): Promise<void> {
     if (!this.popupContent) return;
@@ -120,7 +124,7 @@ export class QrcodeVisitRequestPopupComponent implements OnInit {
       heightLeft -= pageHeight;
     }
 
-    pdf.save('visit-request.pdf');
+    pdf.save(this.getPdfFileName());
   }
   get selectedAccessLocations() {
     const ids = this.model.accessLocationIds || [];

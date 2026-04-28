@@ -6,6 +6,27 @@
     <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
       {{ 'WORK_MISSIONS.ASSIGN_EMPLOYEES' | translate }}
     </h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[#074d31] rounded-2xl p-6 mb-6">
+      <div class="flex flex-col gap-1 text-white">
+        <span class="text-[14px]">{{
+          (isCurrentLanguageEnglish()
+            ? 'WORK_MISSIONS.MISSION_NAME_EN'
+            : 'WORK_MISSIONS.MISSION_NAME_AR'
+          ) | translate
+        }}</span>
+        <h4 class="font-semibold text-[16px]">
+          {{ isCurrentLanguageEnglish() ? model.nameEn : model.nameAr }}
+        </h4>
+      </div>
+      <div class="flex flex-col gap-1 text-white">
+        <span class="text-[14px]">{{ 'WORK_MISSIONS.MISSION_TYPE' | translate }}</span>
+        <h4 class="font-semibold text-[16px]">
+          {{ getWorkMissionTypeName(model) }}
+        </h4>
+      </div>
+    </div>
+
     <div
       class="px-6 py-4 rounded-lg border border-[#d2d6db] bg-[#fff] mb-12 flex flex-col sm:flex-row gap-3 border-s-8 border-s-[#1570ef]"
     >

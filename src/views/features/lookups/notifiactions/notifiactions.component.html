@@ -210,7 +210,10 @@
             <button (click)="exportExcel('notifications.xlsx')" class="table-head-action-btn">
               <img alt="" src="assets/icons/excel.svg" />
             </button>
-            <button (click)="exportPdf('notifications.pdf')" class="table-head-action-btn">
+            <button
+              (click)="exportPdf(getTranslatedFileName('NOTIFICATIONS_PAGE.NOTIFICATIONS'))"
+              class="table-head-action-btn"
+            >
               <img alt="" src="assets/icons/pdf.svg" />
             </button>
           </div>

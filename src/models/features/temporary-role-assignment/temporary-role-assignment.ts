@@ -1,6 +1,12 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { TemporaryRoleAssignmentInterceptor } from '@/model-interceptors/features/temporary-role-assignment.interceptor';
 import { TemporaryRoleAssignmentService } from '@/services/features/temporary-role-assignment.service';
+import {
+  convertUtcToSystemTimeZone,
+  endOfDay,
+  extractTime,
+  startOfDay,
+} from '@/utils/general-helper';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 
@@ -19,6 +25,8 @@ export class TemporaryRoleAssignment extends BaseCrudModel<
   declare dateTo: Date | string | null;
   declare userFullNameAr: string;
   declare userFullNameEn: string;
+  declare departmentNameAr: string;
+  declare departmentNameEn: string;
   declare roleName?: string | null;
   declare isCurrentlyActive: boolean;
   declare concurrencyUpdateVersion?: string;
@@ -30,26 +38,32 @@ export class TemporaryRoleAssignment extends BaseCrudModel<
       fkUserProfileId: [fkUserProfileId, [Validators.required]],
       dateFrom: [dateFrom, [Validators.required]],
       dateTo: [dateTo, [Validators.required]],
+      timeFrom: [extractTime(this.dateFrom) ?? startOfDay(), [Validators.required]],
+      timeTo: [extractTime(this.dateTo) ?? endOfDay(), [Validators.required]],
     };
   }
 
   get hasStarted(): boolean {
-    const dateFrom = this.normalizeDate(this.dateFrom);
-    return !!dateFrom && dateFrom <= this.today;
+    const dateFrom = this.normalizeDateTime(this.dateFrom);
+    return !!dateFrom && dateFrom <= this.now;
   }
 
-  get hasEndedOrEndsToday(): boolean {
-    const dateTo = this.normalizeDate(this.dateTo);
-    return !!dateTo && dateTo <= this.today;
+  get hasEnded(): boolean {
+    const dateTo = this.normalizeDateTime(this.dateTo);
+    return !!dateTo && dateTo <= this.now;
+  }
+
+  get isActiveNow(): boolean {
+    return this.hasStarted && !this.hasEnded;
   }
 
   get isFutureRecord(): boolean {
-    const dateFrom = this.normalizeDate(this.dateFrom);
-    return !!dateFrom && dateFrom > this.today;
+    const dateFrom = this.normalizeDateTime(this.dateFrom);
+    return !!dateFrom && dateFrom > this.now;
   }
 
   get canEdit(): boolean {
-    return !this.hasEndedOrEndsToday;
+    return !this.hasEnded;
   }
 
   get canDelete(): boolean {
@@ -57,22 +71,23 @@ export class TemporaryRoleAssignment extends BaseCrudModel<
   }
 
   get isDateToOnlyEditable(): boolean {
-    return this.hasStarted && !this.hasEndedOrEndsToday;
+    return this.isActiveNow;
   }
 
-  private get today(): Date {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return today;
+  get hasEndedOrEndsToday(): boolean {
+    return this.hasEnded;
   }
 
-  private normalizeDate(value: Date | string | null | undefined): Date | null {
+  private get now(): Date {
+    const now = new Date();
+    return convertUtcToSystemTimeZone(now);
+  }
+
+  private normalizeDateTime(value: Date | string | null | undefined): Date | null {
     if (!value) {
       return null;
     }
 
-    const date = new Date(value);
-    date.setHours(0, 0, 0, 0);
-    return date;
+    return new Date(value);
   }
 }

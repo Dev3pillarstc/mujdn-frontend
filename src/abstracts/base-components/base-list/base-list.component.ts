@@ -350,6 +350,10 @@ export abstract class BaseListComponent<
     return { ar: '', en: '' };
   }
 
+  getTranslatedFileName(labelKey: string, extension: string = 'pdf'): string {
+    return `${this.translateService.instant(labelKey)}.${extension}`;
+  }
+
   protected getDefaultPdfFileName(): string {
     return 'data.pdf';
   }
@@ -370,18 +374,18 @@ export abstract class BaseListComponent<
     isStoredProcedure: boolean = false
   ): void {
     this.getPdfExportRequest(isStoredProcedure).subscribe({
-        next: (blob) => {
-          if (!blob || blob.size === 0) {
-            this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
-            return;
-          }
+      next: (blob) => {
+        if (!blob || blob.size === 0) {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+          return;
+        }
 
-          downloadBlobData(blob, fileName);
-        },
-        error: () => {
-          this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
-        },
-      });
+        downloadBlobData(blob, fileName);
+      },
+      error: () => {
+        this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+      },
+    });
   }
 
   private initBreadcrumbs(): void {

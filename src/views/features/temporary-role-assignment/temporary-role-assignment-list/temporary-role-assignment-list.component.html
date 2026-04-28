@@ -144,9 +144,9 @@
             <ng-template pTemplate="header">
               <tr>
                 <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.EMPLOYEE_NAME' | translate }}</th>
-                <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.TEMPORARY_ROLE' | translate }}</th>
-                <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_FROM' | translate }}</th>
-                <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_TO' | translate }}</th>
+                <!-- <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DEPARTMENT' | translate }}</th> -->
+                <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATETIME_FROM' | translate }}</th>
+                <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATETIME_TO' | translate }}</th>
                 <th>{{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.CURRENT_STATUS' | translate }}</th>
                 <th class="w-[36px] whitespace-nowrap">
                   {{ 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ACTIONS' | translate }}
@@ -157,9 +157,19 @@
             <ng-template pTemplate="body" let-assignment>
               <tr>
                 <td>{{ getEmployeeName(assignment) }}</td>
-                <td>{{ assignment.roleName || '-' }}</td>
-                <td>{{ formatDate(assignment.dateFrom) }}</td>
-                <td>{{ formatDate(assignment.dateTo) }}</td>
+                <!-- <td>{{ getDepartmentName(assignment) }}</td> -->
+                <td>
+                  {{ formatDate(assignment.dateFrom) }}
+                  <span class="block text-[#878b93] text-sm">
+                    {{ formatTime(assignment.dateFrom) }}
+                  </span>
+                </td>
+                <td>
+                  {{ formatDate(assignment.dateTo) }}
+                  <span class="block text-[#878b93] text-sm">
+                    {{ formatTime(assignment.dateTo) }}
+                  </span>
+                </td>
                 <td>
                   <span
                     [class]="
@@ -167,7 +177,7 @@
                       getStatusClass(assignment)
                     "
                   >
-                    {{ getStatusKey(assignment) | translate }}
+                    ⬤ &nbsp; {{ getStatusKey(assignment) | translate }}
                   </span>
                 </td>
                 <td>

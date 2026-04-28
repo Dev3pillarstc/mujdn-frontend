@@ -28,7 +28,43 @@
     </div>
 
     <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-end bg-[#f3f4f6] rounded-2xl p-8"
+      class="px-6 py-4 rounded-lg border border-[#d2d6db] bg-[#fff] mb-12 flex flex-col sm:flex-row gap-3 border-s-8 border-s-[#1570ef]"
+    >
+      <div class="w-10 h-10 flex items-center justify-center bg-[#EFF8FF] rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+        >
+          <path
+            d="M9.99935 6.45817C9.42405 6.45817 8.95768 6.92454 8.95768 7.49984C8.95768 7.84501 8.67786 8.12484 8.33268 8.12484C7.9875 8.12484 7.70768 7.84501 7.70768 7.49984C7.70768 6.23418 8.7337 5.20817 9.99935 5.20817C11.265 5.20817 12.291 6.23418 12.291 7.49984C12.291 7.95512 12.1576 8.38115 11.9275 8.7387C11.7834 8.96265 11.615 9.17646 11.4596 9.36953L11.3758 9.47338C11.2469 9.63289 11.1286 9.7794 11.0192 9.92965C10.7496 10.3002 10.6243 10.5788 10.6243 10.8332V11.2498C10.6243 11.595 10.3445 11.8748 9.99935 11.8748C9.65417 11.8748 9.37435 11.595 9.37435 11.2498V10.8332C9.37435 10.1671 9.70136 9.61631 10.0085 9.19421C10.1382 9.01587 10.2804 8.83997 10.4097 8.68003L10.4857 8.58591C10.64 8.39411 10.7714 8.22538 10.8764 8.06229C10.9805 7.90041 11.041 7.70814 11.041 7.49984C11.041 6.92454 10.5746 6.45817 9.99935 6.45817Z"
+            fill="#175CD3"
+          />
+          <path
+            d="M9.99284 13.3332C9.5326 13.3332 9.1595 13.7063 9.1595 14.1665C9.1595 14.6267 9.5326 14.9998 9.99284 14.9998H10.0003C10.4606 14.9998 10.8337 14.6267 10.8337 14.1665C10.8337 13.7063 10.4606 13.3332 10.0003 13.3332H9.99284Z"
+            fill="#175CD3"
+          />
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M1.04102 9.99984C1.04102 5.05229 5.0518 1.0415 9.99935 1.0415C14.9469 1.0415 18.9577 5.05229 18.9577 9.99984C18.9577 14.9474 14.9469 18.9582 9.99935 18.9582C5.0518 18.9582 1.04102 14.9474 1.04102 9.99984ZM9.99935 2.2915C5.74215 2.2915 2.29102 5.74264 2.29102 9.99984C2.29102 14.257 5.74215 17.7082 9.99935 17.7082C14.2565 17.7082 17.7077 14.257 17.7077 9.99984C17.7077 5.74264 14.2565 2.2915 9.99935 2.2915Z"
+            fill="#175CD3"
+          />
+        </svg>
+      </div>
+      <div>
+        <h4 class="text-[var(--color-charcoal)] mb-2 font-bold">
+          {{ 'WORK_MISSIONS.EMPLOYEES_NOT_AVAILABLE' | translate }}
+        </h4>
+        <ul class="text-[var(--text-color)]">
+          <li>{{ 'WORK_MISSIONS.EMPLOYEES_NOT_AVAILABLE_MESSAGE' | translate }}</li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-end bg-[#f3f4f6] rounded-2xl p-8 mb-6"
     >
       <div>
         <label class="label">{{ 'WORK_MISSIONS.DEPARTMENT' | translate }}</label>
@@ -100,9 +136,10 @@
             <th>
               <label class="flex items-center space-x-2 cursor-pointer relative">
                 <input
-                  class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                  class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:opacity-50 disabled:cursor-not-allowed"
                   type="checkbox"
                   [checked]="returnCheckAllStatus()"
+                  [disabled]="allCurrentPageHaveConflicts"
                   (change)="toggleAll($any($event.target).checked)"
                 />
                 <svg
@@ -126,28 +163,57 @@
           </tr>
         </ng-template>
         <ng-template #body let-employee>
-          <tr>
-            <td>
-              <label class="flex items-center space-x-2 cursor-pointer relative">
-                <input
-                  class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-                  type="checkbox"
-                  [checked]="isUserSelected(employee.id)"
-                  (change)="toggleUserSelection(employee.id, $event)"
-                />
-                <svg
-                  class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="3"
-                  viewBox="0 0 24 24"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              </label>
-            </td>
+          <tr [class.row-bg]="employee.hasConflictingMissions">
+            @if (employee.hasConflictingMissions) {
+              <td>
+                <button class="tooltip-btn">
+                  <span class="tooltip-text">{{
+                    'WORK_MISSIONS.EMPLOYEE_NOT_AVAILABLE' | translate
+                  }}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M12 13.75C12.4142 13.75 12.75 14.0858 12.75 14.5V16.5C12.75 16.9142 12.4142 17.25 12 17.25C11.5858 17.25 11.25 16.9142 11.25 16.5V14.5C11.25 14.0858 11.5858 13.75 12 13.75Z"
+                      fill="#9DA4AE"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M6.75 8.45909V6.5C6.75 3.6005 9.1005 1.25 12 1.25C14.8995 1.25 17.25 3.6005 17.25 6.5V8.45909C18.9408 8.86285 20.239 10.2984 20.4755 12.0552C20.6236 13.1556 20.75 14.3118 20.75 15.5C20.75 16.6882 20.6236 17.8444 20.4755 18.9448C20.2039 20.9618 18.5328 22.5555 16.4748 22.6501C15.0464 22.7158 13.5958 22.75 12 22.75C10.4042 22.75 8.95364 22.7158 7.52522 22.6501C5.46716 22.5555 3.79609 20.9618 3.52452 18.9448C3.37636 17.8444 3.25 16.6882 3.25 15.5C3.25 14.3118 3.37636 13.1556 3.52452 12.0552C3.76104 10.2984 5.05919 8.86285 6.75 8.45909ZM8.25 6.5C8.25 4.42893 9.92893 2.75 12 2.75C14.0711 2.75 15.75 4.42893 15.75 6.5V8.31937C14.5532 8.27365 13.3269 8.25 12 8.25C10.6732 8.25 9.44676 8.27365 8.25 8.31937V6.5ZM12 9.75C10.4264 9.75 8.9989 9.78372 7.5941 9.8483C6.2851 9.90848 5.18929 10.9319 5.0111 12.2553C4.86573 13.3351 4.75 14.4129 4.75 15.5C4.75 16.5871 4.86573 17.6649 5.0111 18.7447C5.18929 20.0681 6.2851 21.0915 7.5941 21.1517C8.9989 21.2163 10.4264 21.25 12 21.25C13.5736 21.25 15.0011 21.2163 16.4059 21.1517C17.7149 21.0915 18.8107 20.0681 18.9889 18.7447C19.1343 17.6649 19.25 16.5871 19.25 15.5C19.25 14.4129 19.1343 13.3351 18.9889 12.2553C18.8107 10.9319 17.7149 9.90848 16.4059 9.8483C15.0011 9.78372 13.5736 9.75 12 9.75Z"
+                      fill="#9DA4AE"
+                    />
+                  </svg>
+                </button>
+              </td>
+            } @else {
+              <td>
+                <label class="flex items-center space-x-2 cursor-pointer relative">
+                  <input
+                    class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+                    type="checkbox"
+                    [checked]="isUserSelected(employee.id)"
+                    (change)="toggleUserSelection(employee.id, $event)"
+                  />
+                  <svg
+                    class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="3"
+                    viewBox="0 0 24 24"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </label>
+              </td>
+            }
+
             <td>
               <span class="font-medium text-[#1b8354]"> {{ employee.nationalId }} </span>
             </td>

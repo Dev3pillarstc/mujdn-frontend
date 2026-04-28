@@ -7,7 +7,7 @@ import { TemporaryRoleAssignment } from '@/models/features/temporary-role-assign
 import { UserService } from '@/services/features/user.service';
 import { TemporaryRoleAssignmentService } from '@/services/features/temporary-role-assignment.service';
 import { AuthService } from '@/services/auth/auth.service';
-import { formatDateOnly } from '@/utils/general-helper';
+import { formatDateTime } from '@/utils/general-helper';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -119,16 +119,48 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
       : model.userFullNameAr;
   }
 
+  getDepartmentName(model: TemporaryRoleAssignment): string {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+      ? model.departmentNameEn
+      : model.departmentNameAr;
+  }
+
+  isCurrentLanguageEnglish(): boolean {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
+  }
+
   formatDate(value: Date | string | null | undefined): string {
-    return value ? formatDateOnly(value) : '-';
+    return this.formatDateTimeParts(value).date || '-';
+  }
+
+  formatTime(value: Date | string | null | undefined): string {
+    return this.formatDateTimeParts(value).time || '-';
+  }
+
+  formatDateTime(value: Date | string | null | undefined): string {
+    const { date, time } = this.formatDateTimeParts(value);
+
+    if (!date && !time) {
+      return '-';
+    }
+
+    return [date, time].filter(Boolean).join(' ');
+  }
+
+  private formatDateTimeParts(value: Date | string | null | undefined): {
+    date: string;
+    time: string;
+  } {
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+    return formatDateTime(value, locale);
   }
 
   getStatusKey(model: TemporaryRoleAssignment): string {
-    if (model.hasEndedOrEndsToday) {
+    if (model.hasEnded) {
       return 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ENDED';
     }
 
-    if (model.hasStarted) {
+    if (model.isActiveNow) {
       return 'TEMPORARY_ROLE_ASSIGNMENT_PAGE.ACTIVE_NOW';
     }
 
@@ -136,11 +168,11 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
   }
 
   getStatusClass(model: TemporaryRoleAssignment): string {
-    if (model.hasEndedOrEndsToday) {
+    if (model.hasEnded) {
       return 'text-[#912018] bg-[#fef3f2]';
     }
 
-    if (model.hasStarted) {
+    if (model.isActiveNow) {
       return 'text-[#085d3a] bg-[#ecfdf3]';
     }
 
@@ -153,14 +185,14 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
     return {
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.EMPLOYEE_NAME')]:
         this.getEmployeeName(model),
+      [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.DEPARTMENT')]:
+        this.getDepartmentName(model),
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.TEMPORARY_ROLE')]:
         model.roleName || '',
-      [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_FROM')]: this.formatDate(
-        model.dateFrom
-      ),
-      [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_TO')]: this.formatDate(
-        model.dateTo
-      ),
+      [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_FROM')]:
+        this.formatDateTime(model.dateFrom),
+      [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.DATE_TO')]:
+        this.formatDateTime(model.dateTo),
       [this.translateService.instant('TEMPORARY_ROLE_ASSIGNMENT_PAGE.CURRENT_STATUS')]:
         this.translateService.instant(this.getStatusKey(model)),
     };

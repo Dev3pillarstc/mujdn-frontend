@@ -4,4 +4,5 @@ export class UserProfileDataWithNationalId extends BaseLookupModel {
   nationalId?: string;
   departmentNameAr?: string;
   departmentNameEn?: string;
+  hasConflictingMissions?: boolean;
 }

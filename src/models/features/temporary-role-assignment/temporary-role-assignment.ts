@@ -1,7 +1,12 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { TemporaryRoleAssignmentInterceptor } from '@/model-interceptors/features/temporary-role-assignment.interceptor';
 import { TemporaryRoleAssignmentService } from '@/services/features/temporary-role-assignment.service';
-import { convertUtcToSystemTimeZone } from '@/utils/general-helper';
+import {
+  convertUtcToSystemTimeZone,
+  endOfDay,
+  extractTime,
+  startOfDay,
+} from '@/utils/general-helper';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 
@@ -33,6 +38,8 @@ export class TemporaryRoleAssignment extends BaseCrudModel<
       fkUserProfileId: [fkUserProfileId, [Validators.required]],
       dateFrom: [dateFrom, [Validators.required]],
       dateTo: [dateTo, [Validators.required]],
+      timeFrom: [extractTime(this.dateFrom) ?? startOfDay(), [Validators.required]],
+      timeTo: [extractTime(this.dateTo) ?? endOfDay(), [Validators.required]],
     };
   }
 

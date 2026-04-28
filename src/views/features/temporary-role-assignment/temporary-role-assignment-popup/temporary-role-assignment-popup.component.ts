@@ -90,14 +90,7 @@ export class TemporaryRoleAssignmentPopupComponent
   }
 
   override buildForm(): void {
-    this.form = this.fb.group({
-      ...this.model.buildForm(),
-      // timeFrom/timeTo are UI-only; they are NOT part of the model sent to the API.
-      // They exist purely so the user gets dedicated time pickers.
-      // On every change they are spliced into dateFrom/dateTo via setupDateTimeSync().
-      timeFrom: [this.extractTime(this.model.dateFrom) ?? this.startOfDay(), [Validators.required]],
-      timeTo: [this.extractTime(this.model.dateTo) ?? this.endOfDay(), [Validators.required]],
-    });
+    this.form = this.fb.group(this.model.buildForm());
 
     this.applyDefaultTimes();
     this.applyEditabilityRules();
@@ -296,33 +289,6 @@ export class TemporaryRoleAssignmentPopupComponent
 
     delete errors[errorKey];
     control.setErrors(Object.keys(errors).length ? errors : null);
-  }
-
-  /**
-   * Extracts h/m/s from a stored datetime into a standalone Date object
-   * so PrimeNG's timeOnly picker has something to display.
-   * Returns null for new records (defaults will be applied instead).
-   */
-  private extractTime(value: Date | string | null | undefined): Date | null {
-    if (!value) return null;
-    const src = new Date(value);
-    const result = new Date();
-    result.setHours(src.getHours(), src.getMinutes(), src.getSeconds(), 0);
-    return result;
-  }
-
-  /** Default timeFrom for new records: 00:00:00. */
-  private startOfDay(): Date {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    return d;
-  }
-
-  /** Default timeTo for new records: 23:59:59. */
-  private endOfDay(): Date {
-    const d = new Date();
-    d.setHours(23, 59, 59, 0);
-    return d;
   }
 
   /** Zeroes h/m/s — used for calendar-day comparisons ONLY. */

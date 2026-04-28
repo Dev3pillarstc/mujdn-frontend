@@ -209,6 +209,28 @@ export function formatSwipeTime(
   return { date, time };
 }
 
+export function extractTime(value: Date | string | null | undefined): Date | null {
+  if (!value) return null;
+  const src = new Date(value);
+  const result = new Date();
+  result.setHours(src.getHours(), src.getMinutes(), src.getSeconds(), 0);
+  return result;
+}
+
+/** Default timeFrom for new records: 00:00:00. */
+export function startOfDay(): Date {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+/** Default timeTo for new records: 23:59:59. */
+export function endOfDay(): Date {
+  const d = new Date();
+  d.setHours(23, 59, 59, 0);
+  return d;
+}
+
 export function didVisitTimePassed(visit: Visit): boolean {
   const givenDate = new Date(visit.visitDate as string);
   const givenTimeTo = timeStringToDate(visit.visitTimeTo as string);

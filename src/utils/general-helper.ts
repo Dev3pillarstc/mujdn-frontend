@@ -174,6 +174,20 @@ export function formatDateOnly(date: any): string {
   return `${day}/${month}/${year}`;
 }
 
+export function formatDateTime(
+  value: Date | string | null | undefined,
+  locale: 'en-US' | 'ar-EG' = 'en-US'
+): { date: string; time: string } {
+  if (!value) return { date: '', time: '' };
+
+  const dateTime = new Date(value);
+
+  return {
+    date: formatDateOnly(dateTime),
+    time: formatDateTo12Hour(dateTime, locale),
+  };
+}
+
 export function formatSwipeTime(
   swipeTime: string | undefined,
   locale: 'en-US' | 'ar-EG' = 'en-US'

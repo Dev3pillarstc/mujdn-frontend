@@ -55,12 +55,11 @@
         </svg>
       </div>
       <div>
-        <h4 class="text-[var(--color-charcoal)] mb-2 font-bold">عدم إتاحة بعض الموظفين للاسناد</h4>
+        <h4 class="text-[var(--color-charcoal)] mb-2 font-bold">
+          {{ 'WORK_MISSIONS.EMPLOYEES_NOT_AVAILABLE' | translate }}
+        </h4>
         <ul class="text-[var(--text-color)]">
-          <li>
-            يرجى العلم أن بعض الموظفين المدرجين في القائمة غير متاحين للاختيار، وذلك لارتباطهم بمهام
-            أخرى خلال نفس الفترة الزمنية المحددة، وبالتالي لا يمكن إسناد هذه المهمة إليهم.
-          </li>
+          <li>{{ 'WORK_MISSIONS.EMPLOYEES_NOT_AVAILABLE_MESSAGE' | translate }}</li>
         </ul>
       </div>
     </div>
@@ -168,7 +167,9 @@
             @if (employee.hasConflictingMissions) {
               <td>
                 <button class="tooltip-btn">
-                  <span class="tooltip-text">{{ 'COMMON.EDIT' | translate }}</span>
+                  <span class="tooltip-text">{{
+                    'WORK_MISSIONS.EMPLOYEE_NOT_AVAILABLE' | translate
+                  }}</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

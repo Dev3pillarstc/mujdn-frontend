@@ -135,7 +135,7 @@ export class SideBarLinksService {
         },
         {
           labelKey: 'MENU.WORK_SHIFT_ASSIGNMENT',
-          routerLink: ['/work-shifts-assignment'],
+          routerLink: ['/work-shifts-assignment-container'],
           routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
         },
         {

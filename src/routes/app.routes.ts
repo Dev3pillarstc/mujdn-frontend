@@ -265,7 +265,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'work-shifts-assignment',
+        path: 'work-shifts-assignment-container',
         canActivate: [authGuard],
         data: {
           roles: [ROLES_ENUM.HR_OFFICER],
@@ -274,7 +274,7 @@ export const routes: Routes = [
         resolve: { list: userWorkShiftResolver },
         loadComponent: () =>
           import(
-            '@/views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
+            '@/views/features/lookups/work-shifts/work-shifts-assignment-container/work-shifts-assignment-container.component'
           ),
       },
       {
@@ -341,10 +341,6 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.EMPLOYEE] },
         resolve: { list: userProfileResolver },
         loadComponent: () => import('@/views/features/employee/profile/profile/profile.component'),
-      },
-      {
-        path: 'work-shifts-assignment-container',
-        loadComponent: () => import('@/views/features/lookups/work-shifts/work-shifts-assignment-container/work-shifts-assignment-container.component'),
       },
     ],
   },

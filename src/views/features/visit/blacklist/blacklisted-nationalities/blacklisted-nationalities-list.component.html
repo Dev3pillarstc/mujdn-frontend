@@ -62,7 +62,11 @@
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <button
-          (click)="exportExcel('blacklisted-nationalities.xlsx')"
+          (click)="
+            exportExcel(
+              getTranslatedFileName('BLACKLIST_PAGE.BLACKLISTED_NATIONALITIES_LIST', 'xlsx')
+            )
+          "
           class="table-head-action-btn min-w-[40px]"
         >
           <img alt="" src="assets/icons/excel.svg" />

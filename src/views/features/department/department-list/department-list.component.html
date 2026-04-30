@@ -156,13 +156,13 @@
               <div class="actions flex items-center gap-4 ms-auto">
                 <button
                   class="table-head-action-btn min-w-[40px]"
-                  (click)="exportExcel(getTranslatedDepartmentLabel() + '.xlsx')"
+                  (click)="exportExcel('departments.xlsx')"
                 >
                   <img alt="" src="assets/icons/excel.svg" />
                 </button>
-                <button (click)="exportPdf(getTranslatedDepartmentLabel() + '.pdf')" class="table-head-action-btn">
-                      <img alt="" src="assets/icons/pdf.svg" />
-                    </button>
+                <button (click)="exportPdf('departments.pdf')" class="table-head-action-btn">
+                  <img alt="" src="assets/icons/pdf.svg" />
+                </button>
                 <!-- <button>
                   <img src="assets/icons/print.svg" alt="" />
                 </button> -->

@@ -135,10 +135,7 @@
         >
           <img alt="" src="assets/icons/excel.svg" />
         </button>
-        <button
-          (click)="exportPdf(getTranslatedFileName('ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST'))"
-          class="table-head-action-btn"
-        >
+        <button (click)="exportPdf('my-attendance-logs.pdf', true)" class="table-head-action-btn">
           <img alt="" src="assets/icons/pdf.svg" />
         </button>
       </div>

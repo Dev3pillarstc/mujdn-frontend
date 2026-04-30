@@ -207,7 +207,12 @@
             {{ 'NOTIFICATIONS_PAGE.NOTIFICATIONS' | translate }}
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
-            <button (click)="exportExcel('notifications.xlsx')" class="table-head-action-btn">
+            <button
+              (click)="
+                exportExcel(getTranslatedFileName('NOTIFICATIONS_PAGE.NOTIFICATIONS', 'xlsx'))
+              "
+              class="table-head-action-btn"
+            >
               <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button

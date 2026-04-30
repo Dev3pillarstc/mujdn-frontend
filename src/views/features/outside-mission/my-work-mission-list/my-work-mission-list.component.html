@@ -148,11 +148,16 @@
         <!-- Only Excel Export Button -->
         <button
           class="table-head-action-btn min-w-[40px]"
-          (click)="exportExcel('my-work-missions.xlsx')"
+          (click)="
+            exportExcel(getTranslatedFileName('WORK_MISSIONS.MY_WORK_MISSIONS_LIST', 'xlsx'))
+          "
         >
           <img alt="" src="assets/icons/excel.svg" />
         </button>
-        <button (click)="exportPdf('my-work-missions.pdf')" class="table-head-action-btn">
+        <button
+          (click)="exportPdf(getTranslatedFileName('WORK_MISSIONS.MY_WORK_MISSIONS_LIST'))"
+          class="table-head-action-btn"
+        >
           <img alt="" src="assets/icons/pdf.svg" />
         </button>
       </div>

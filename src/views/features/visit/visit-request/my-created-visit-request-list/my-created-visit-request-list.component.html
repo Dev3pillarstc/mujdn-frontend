@@ -161,11 +161,14 @@
       <div class="actions flex items-center gap-4 ms-auto">
         <button
           class="table-head-action-btn"
-          (click)="exportExcel('my-created-visit-requests.xlsx')"
+          (click)="exportExcel(getTranslatedFileName('VISIT_REQUEST_PAGE.ALL_VISITS', 'xlsx'))"
         >
           <img src="assets/icons/excel.svg" alt="" />
         </button>
-        <button (click)="exportPdf('my-created-visit-requests.pdf')" class="table-head-action-btn">
+        <button
+          (click)="exportPdf(getTranslatedFileName('VISIT_REQUEST_PAGE.MY_VISITS'))"
+          class="table-head-action-btn"
+        >
           <img alt="" src="assets/icons/pdf.svg" />
         </button>
         <button (click)="openDialog()" class="btn green-btn">

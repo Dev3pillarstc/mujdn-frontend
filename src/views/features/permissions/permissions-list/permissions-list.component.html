@@ -129,12 +129,17 @@
                 </h4>
                 <div class="actions flex items-center gap-4 ms-auto">
                   <button
-                    (click)="exportExcel('my permissions.xlsx')"
+                    (click)="
+                      exportExcel(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST', 'xlsx'))
+                    "
                     class="table-head-action-btn min-w-[40px]"
                   >
                     <img alt="" src="assets/icons/excel.svg" />
                   </button>
-                  <button (click)="exportPdf('my permissions.pdf')" class="table-head-action-btn">
+                  <button
+                    (click)="exportPdf(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST'))"
+                    class="table-head-action-btn"
+                  >
                     <img alt="" src="assets/icons/pdf.svg" />
                   </button>
                   @if (showAddingPermissionButton()) {
@@ -394,13 +399,20 @@
                   </h4>
                   <div class="actions flex items-center gap-4 ms-auto">
                     <button
-                      (click)="exportExcel('permissions.xlsx', true)"
+                      (click)="
+                        exportExcel(
+                          getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST', 'xlsx'),
+                          true
+                        )
+                      "
                       class="table-head-action-btn min-w-[40px]"
                     >
                       <img alt="" src="assets/icons/excel.svg" />
                     </button>
                     <button
-                      (click)="exportPdf('permissions.pdf', true)"
+                      (click)="
+                        exportPdf(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST'), true)
+                      "
                       class="table-head-action-btn"
                     >
                       <img alt="" src="assets/icons/pdf.svg" />

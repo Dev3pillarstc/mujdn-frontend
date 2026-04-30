@@ -130,12 +130,20 @@
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <button
-          (click)="exportExcel('my-attendance-logs.xlsx', true)"
+          (click)="
+            exportExcel(
+              getTranslatedFileName('ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST', 'xlsx'),
+              true
+            )
+          "
           class="table-head-action-btn min-w-[40px]"
         >
           <img alt="" src="assets/icons/excel.svg" />
         </button>
-        <button (click)="exportPdf('my-attendance-logs.pdf', true)" class="table-head-action-btn">
+        <button
+          (click)="exportPdf(getTranslatedFileName('ATTENDANCE_LOG_PAGE.ATTENDANCE_LOGS_LIST'))"
+          class="table-head-action-btn"
+        >
           <img alt="" src="assets/icons/pdf.svg" />
         </button>
       </div>

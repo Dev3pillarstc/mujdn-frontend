@@ -161,7 +161,7 @@
       <div class="actions flex items-center gap-4 ms-auto">
         <button
           class="table-head-action-btn"
-          (click)="exportExcel('my-created-visit-requests.xlsx')"
+          (click)="exportExcel(getTranslatedFileName('VISIT_REQUEST_PAGE.ALL_VISITS', 'xlsx'))"
         >
           <img src="assets/icons/excel.svg" alt="" />
         </button>

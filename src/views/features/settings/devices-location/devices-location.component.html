@@ -75,7 +75,9 @@
           </h4>
           <div class="actions flex items-center gap-4 ms-auto">
             <button
-              (click)="exportExcel('locations.xlsx')"
+              (click)="
+                exportExcel(getTranslatedFileName('DEVICES_LOCATION_PAGE.DEVICES_LOCATION', 'xlsx'))
+              "
               class="table-head-action-btn min-w-[40px]"
             >
               <img alt="" src="assets/icons/excel.svg" />

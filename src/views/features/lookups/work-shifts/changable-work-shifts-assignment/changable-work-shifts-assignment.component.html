@@ -1,6 +1,6 @@
 <div class="bg-white">
     <div class="bg-[#f9fafb] p-3 sm:p-6">
-        <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+        <!-- <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
             <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
                 <ng-template let-item pTemplate="item">
                     <a [routerLink]="item.url" class="cursor-pointer">
@@ -11,7 +11,7 @@
             <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
                 اسناد ورديات العمل المسندة للموظفين
             </h3>
-        </div>
+        </div> -->
 
         <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
             <!-- Search Filters -->
@@ -23,14 +23,14 @@
                 </div>
 
                 <div class="pt-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                        <div class="relative">
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <div class="relative lg:col-span-2">
                             <label class="label" for="assignmentId">معرف الاسناد</label>
                             <input class="peer w-full" [(ngModel)]="filterOptions.assignmentId" id="assignmentId"
                                 pInputText placeholder="معرف الاسناد" type="text" />
                         </div>
 
-                        <div class="relative">
+                        <div class="relative lg:col-span-1">
                             <label class="label">التاريخ (من)</label>
                             <p-datepicker [(ngModel)]="filterOptions.startDate" [iconDisplay]="'input'"
                                 [showIcon]="true" class="peer block w-full" placeholder="التاريخ (من)"
@@ -41,7 +41,7 @@
                             </p-datepicker>
                         </div>
 
-                        <div class="relative">
+                        <div class="relative lg:col-span-1">
                             <label class="label">التاريخ (إلى)</label>
                             <p-datepicker [(ngModel)]="filterOptions.endDate" [iconDisplay]="'input'" [showIcon]="true"
                                 class="peer block w-full" placeholder="التاريخ (إلى)" [showClear]="true">
@@ -51,14 +51,14 @@
                             </p-datepicker>
                         </div>
 
-                        <div class="relative">
+                        <div class="relative lg:col-span-1">
                             <label class="label">الادارة</label>
                             <p-select [(ngModel)]="filterOptions.fkDepartmentId" [options]="departments"
                                 class="w-full peer" [optionLabel]="optionLabel" optionValue="id" placeholder="الادارة"
                                 [showClear]="true"></p-select>
                         </div>
 
-                        <div class="relative">
+                        <div class="relative lg:col-span-1">
                             <label class="label">اسم الموظف</label>
                             <p-select [options]="usersProfiles" [(ngModel)]="filterOptions.fkAssignedUserId"
                                 class="w-full peer" [optionLabel]="optionLabel" optionValue="id"

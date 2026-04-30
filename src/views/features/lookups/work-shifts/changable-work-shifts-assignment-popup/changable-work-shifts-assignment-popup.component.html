@@ -81,7 +81,7 @@
         </div>
         <!-- Content Area (Left/Main) -->
         <div class="flex-1 p-6 rounded-lg bg-[#f3f4f6]">
-          
+
           <!-- Shift 1 Content -->
           <div *ngIf="activeShift === 0">
             <div class="mb-4">
@@ -93,12 +93,18 @@
             <div class="bg-white border border-[#d2d6db] rounded-lg p-4 mb-6 flex gap-3">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 20C0 8.954 8.954 0 20 0s20 8.954 20 20-8.954 20-20 20S0 31.046 0 20z" fill="#EFF8FF" />
-                <path d="M20 16.458c-.576 0-1.042.467-1.042 1.042a.625.625 0 1 1-1.25 0 2.292 2.292 0 1 1 4.22 1.239 7.486 7.486 0 0 1-.468.63l-.084.105c-.13.16-.247.306-.357.456-.27.37-.395.649-.395.903v.417a.625.625 0 1 1-1.25 0v-.417c0-.666.327-1.216.635-1.638.13-.179.271-.355.4-.515l.077-.094c.154-.192.285-.36.39-.523A1.042 1.042 0 0 0 20 16.459zM19.993 23.333a.833.833 0 0 0 0 1.667H20a.833.833 0 1 0 0-1.667h-.007z" fill="#175CD3" />
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.041 20a8.958 8.958 0 1 1 17.917 0 8.958 8.958 0 0 1-17.917 0zm8.958-7.708a7.708 7.708 0 1 0 0 15.417 7.708 7.708 0 0 0 0-15.417z" fill="#175CD3" />
+                <path
+                  d="M20 16.458c-.576 0-1.042.467-1.042 1.042a.625.625 0 1 1-1.25 0 2.292 2.292 0 1 1 4.22 1.239 7.486 7.486 0 0 1-.468.63l-.084.105c-.13.16-.247.306-.357.456-.27.37-.395.649-.395.903v.417a.625.625 0 1 1-1.25 0v-.417c0-.666.327-1.216.635-1.638.13-.179.271-.355.4-.515l.077-.094c.154-.192.285-.36.39-.523A1.042 1.042 0 0 0 20 16.459zM19.993 23.333a.833.833 0 0 0 0 1.667H20a.833.833 0 1 0 0-1.667h-.007z"
+                  fill="#175CD3" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M11.041 20a8.958 8.958 0 1 1 17.917 0 8.958 8.958 0 0 1-17.917 0zm8.958-7.708a7.708 7.708 0 1 0 0 15.417 7.708 7.708 0 0 0 0-15.417z"
+                  fill="#175CD3" />
               </svg>
               <div>
-                <p class="font-bold text-[#1f2a37] text-sm">نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)</p>
-                <p class="text-[11px] text-[#4b5563]">سيتم تناوب الموظفين بين الورديات بالترتيب التالي: الوردية الأولى ثم الثانية ثم الثالثة بشكل دوري.</p>
+                <p class="font-bold text-[#1f2a37] text-sm">نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع
+                  راحة)</p>
+                <p class="text-[11px] text-[#4b5563]">سيتم تناوب الموظفين بين الورديات بالترتيب التالي: الوردية الأولى
+                  ثم الثانية ثم الثالثة بشكل دوري.</p>
               </div>
             </div>
 
@@ -106,18 +112,23 @@
             <div class="grid grid-cols-2 gap-6 mb-8">
               <div class="relative">
                 <label class="label">الإدارة</label>
-                <p-select [options]="departments" formControlName="fkDepartmentId" class="w-full peer" placeholder="الإدارة"></p-select>
-                <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                <p-multiSelect [options]="departments" formControlName="fkDepartmentId" class="w-full peer"
+                  placeholder="الإدارة" optionLabel="label" optionValue="id" display="chip"></p-multiSelect>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
               </div>
               <div class="relative">
                 <label class="label">اسم الموظف</label>
-                <p-select [options]="employees" formControlName="userIdsArray" class="w-full peer" placeholder="اسم الموظف"></p-select>
-                <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                <p-multiSelect [options]="employees" formControlName="userIdsArray" class="w-full peer"
+                  placeholder="اسم الموظف" optionLabel="label" optionValue="id" display="chip"></p-multiSelect>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
               </div>
             </div>
 
             <!-- Employees Accordion -->
-            <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">الموظفون المعنيون بالإسناد (الوردية الأولى)</h5>
+            <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">الموظفون المعنيون بالإسناد (الوردية
+              الأولى)</h5>
             <p-accordion [multiple]="true" class="design-accordion">
               <p-accordion-panel [value]="'hr'">
                 <p-accordion-header>
@@ -132,7 +143,8 @@
                 </p-accordion-header>
                 <p-accordion-content>
                   <div class="flex flex-wrap gap-2 p-2">
-                    <div *ngFor="let emp of [1,2]" class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2">
+                    <div *ngFor="let emp of [1,2]"
+                      class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2">
                       <span class="font-bold">محمد أحمد طه</span>
                       <i class="pi pi-times text-[10px] text-gray-400 cursor-pointer"></i>
                     </div>
@@ -149,22 +161,46 @@
               <p class="text-xs text-[#6b7280]">فترة العمل بالوردية: 10:00 ص - 06:00 م</p>
             </div>
 
+            <!-- Blue Info Box -->
+            <div class="bg-white border border-[#d2d6db] rounded-lg p-4 mb-6 flex gap-3">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 20C0 8.954 8.954 0 20 0s20 8.954 20 20-8.954 20-20 20S0 31.046 0 20z" fill="#EFF8FF" />
+                <path
+                  d="M20 16.458c-.576 0-1.042.467-1.042 1.042a.625.625 0 1 1-1.25 0 2.292 2.292 0 1 1 4.22 1.239 7.486 7.486 0 0 1-.468.63l-.084.105c-.13.16-.247.306-.357.456-.27.37-.395.649-.395.903v.417a.625.625 0 1 1-1.25 0v-.417c0-.666.327-1.216.635-1.638.13-.179.271-.355.4-.515l.077-.094c.154-.192.285-.36.39-.523A1.042 1.042 0 0 0 20 16.459zM19.993 23.333a.833.833 0 0 0 0 1.667H20a.833.833 0 1 0 0-1.667h-.007z"
+                  fill="#175CD3" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M11.041 20a8.958 8.958 0 1 1 17.917 0 8.958 8.958 0 0 1-17.917 0zm8.958-7.708a7.708 7.708 0 1 0 0 15.417 7.708 7.708 0 0 0 0-15.417z"
+                  fill="#175CD3" />
+              </svg>
+              <div>
+                <p class="font-bold text-[#1f2a37] text-sm">نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع
+                  راحة)</p>
+                <p class="text-[11px] text-[#4b5563]">سيتم تناوب الموظفين بين الورديات بالترتيب التالي: الوردية الأولى
+                  ثم الثانية ثم الثالثة بشكل دوري.</p>
+              </div>
+            </div>
+
             <!-- Selection Controls -->
             <div class="grid grid-cols-2 gap-6 mb-8">
               <div class="relative">
                 <label class="label">الإدارة</label>
-                <p-select [options]="departments" formControlName="fkDepartmentId" class="w-full peer" placeholder="الإدارة"></p-select>
-                <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                <p-multiSelect [options]="departments" formControlName="fkDepartmentId" class="w-full peer"
+                  placeholder="الإدارة" optionLabel="label" optionValue="id" display="chip"></p-multiSelect>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
               </div>
               <div class="relative">
                 <label class="label">اسم الموظف</label>
-                <p-select [options]="employees" formControlName="userIdsArray" class="w-full peer" placeholder="اسم الموظف"></p-select>
-                <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                <p-multiSelect [options]="employees" formControlName="userIdsArray" class="w-full peer"
+                  placeholder="اسم الموظف" optionLabel="label" optionValue="id" display="chip"></p-multiSelect>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
               </div>
             </div>
 
             <!-- Employees Accordion -->
-            <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">الموظفون المعنيون بالإسناد (الوردية الثانية)</h5>
+            <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">الموظفون المعنيون بالإسناد (الوردية
+              الثانية)</h5>
             <p-accordion [multiple]="true" class="design-accordion">
               <p-accordion-panel [value]="'it'">
                 <p-accordion-header>
@@ -179,7 +215,8 @@
                 </p-accordion-header>
                 <p-accordion-content>
                   <div class="flex flex-wrap gap-2 p-2">
-                    <div *ngFor="let emp of [1,2,3]" class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2">
+                    <div *ngFor="let emp of [1,2,3]"
+                      class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2">
                       <span class="font-bold">أحمد علي حسن</span>
                       <i class="pi pi-times text-[10px] text-gray-400 cursor-pointer"></i>
                     </div>
@@ -196,22 +233,46 @@
               <p class="text-xs text-[#6b7280]">فترة العمل بالوردية: 06:00 م - 02:00 ص</p>
             </div>
 
+            <!-- Blue Info Box -->
+            <div class="bg-white border border-[#d2d6db] rounded-lg p-4 mb-6 flex gap-3">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 20C0 8.954 8.954 0 20 0s20 8.954 20 20-8.954 20-20 20S0 31.046 0 20z" fill="#EFF8FF" />
+                <path
+                  d="M20 16.458c-.576 0-1.042.467-1.042 1.042a.625.625 0 1 1-1.25 0 2.292 2.292 0 1 1 4.22 1.239 7.486 7.486 0 0 1-.468.63l-.084.105c-.13.16-.247.306-.357.456-.27.37-.395.649-.395.903v.417a.625.625 0 1 1-1.25 0v-.417c0-.666.327-1.216.635-1.638.13-.179.271-.355.4-.515l.077-.094c.154-.192.285-.36.39-.523A1.042 1.042 0 0 0 20 16.459zM19.993 23.333a.833.833 0 0 0 0 1.667H20a.833.833 0 1 0 0-1.667h-.007z"
+                  fill="#175CD3" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M11.041 20a8.958 8.958 0 1 1 17.917 0 8.958 8.958 0 0 1-17.917 0zm8.958-7.708a7.708 7.708 0 1 0 0 15.417 7.708 7.708 0 0 0 0-15.417z"
+                  fill="#175CD3" />
+              </svg>
+              <div>
+                <p class="font-bold text-[#1f2a37] text-sm">نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع
+                  راحة)</p>
+                <p class="text-[11px] text-[#4b5563]">سيتم تناوب الموظفين بين الورديات بالترتيب التالي: الوردية الأولى
+                  ثم الثانية ثم الثالثة بشكل دوري.</p>
+              </div>
+            </div>
+
             <!-- Selection Controls -->
             <div class="grid grid-cols-2 gap-6 mb-8">
               <div class="relative">
                 <label class="label">الإدارة</label>
-                <p-select [options]="departments" formControlName="fkDepartmentId" class="w-full peer" placeholder="الإدارة"></p-select>
-                <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                <p-multiSelect [options]="departments" formControlName="fkDepartmentId" class="w-full peer"
+                  placeholder="الإدارة" optionLabel="label" optionValue="id" display="chip"></p-multiSelect>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
               </div>
               <div class="relative">
                 <label class="label">اسم الموظف</label>
-                <p-select [options]="employees" formControlName="userIdsArray" class="w-full peer" placeholder="اسم الموظف"></p-select>
-                <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                <p-multiSelect [options]="employees" formControlName="userIdsArray" class="w-full peer"
+                  placeholder="اسم الموظف" optionLabel="label" optionValue="id" display="chip"></p-multiSelect>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
               </div>
             </div>
 
             <!-- Employees Accordion -->
-            <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">الموظفون المعنيون بالإسناد (الوردية الثالثة)</h5>
+            <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">الموظفون المعنيون بالإسناد (الوردية
+              الثالثة)</h5>
             <p-accordion [multiple]="true" class="design-accordion">
               <p-accordion-panel [value]="'finance'">
                 <p-accordion-header>
@@ -226,7 +287,8 @@
                 </p-accordion-header>
                 <p-accordion-content>
                   <div class="flex flex-wrap gap-2 p-2">
-                    <div *ngFor="let emp of [1]" class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2">
+                    <div *ngFor="let emp of [1]"
+                      class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2">
                       <span class="font-bold">ياسين محمود</span>
                       <i class="pi pi-times text-[10px] text-gray-400 cursor-pointer"></i>
                     </div>

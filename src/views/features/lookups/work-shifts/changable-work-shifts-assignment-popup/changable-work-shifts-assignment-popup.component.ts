@@ -25,8 +25,7 @@ import { Observable, of } from 'rxjs';
     SelectModule,
     MultiSelectModule,
     ButtonModule,
-    AccordionModule,
-    TranslatePipe,
+    AccordionModule
   ],
   templateUrl: './changable-work-shifts-assignment-popup.component.html',
   styleUrl: './changable-work-shifts-assignment-popup.component.scss',
@@ -72,7 +71,7 @@ export class ChangableWorkShiftsAssignmentPopupComponent extends BasePopupCompon
       shift1: [null],
       shift2: [null],
       shift3: [null],
-      fkDepartmentId: [null],
+      fkDepartmentId: [[]],
       userIdsArray: [[]],
     });
   }

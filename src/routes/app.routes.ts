@@ -289,6 +289,17 @@ export const routes: Routes = [
           import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
       },
       {
+        path: 'shifts-view',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.HR_OFFICER],
+        },
+        loadComponent: () =>
+          import(
+            '@/views/features/lookups/work-shifts/shifts-view/shifts-view.component'
+          ).then((m) => m.ShiftsViewComponent),
+      },
+      {
         path: 'work-missions',
         canActivate: [authGuard],
         data: {

@@ -1,0 +1,179 @@
+<div class="bg-white">
+    <div class="bg-[#f9fafb] p-3 sm:p-6">
+
+        <!-- Breadcrumb & Page Title -->
+        <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+            <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+                <ng-template let-item pTemplate="item">
+                    <a [routerLink]="item.url" class="cursor-pointer">
+                        <span class="text-gray-500 font-medium">{{ item.label | translate }}</span>
+                    </a>
+                </ng-template>
+            </p-breadcrumb>
+            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616] mt-4">
+                ورديات الموظفين
+            </h3>
+        </div>
+
+        <!-- Search Filters -->
+        <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
+            <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
+                <div class="flex items-center justify-between">
+                    <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+                        تحديد للموظفين
+                    </h5>
+                </div>
+
+                <div class="pt-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+
+                        <!-- Department -->
+                        <div class="relative xl:col-span-2">
+                            <label class="label">
+                                الإدارة
+                            </label>
+                            <p-multiSelect [options]="departments" [(ngModel)]="filterOptions.fkDepartmentId"
+                                class="w-full peer" [optionLabel]="optionLabel" optionValue="id" placeholder="الإدارة"
+                                [showClear]="true">
+                            </p-multiSelect>
+                            <span
+                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                        </div>
+
+                        <!-- Employee Name -->
+                        <div class="relative xl:col-span-2">
+                            <label class="label">
+                                اسم الموظف
+                            </label>
+                            <p-multiSelect [options]="usersProfiles" [(ngModel)]="filterOptions.fkAssignedUserId"
+                                class="w-full peer" [optionLabel]="optionLabel" optionValue="id"
+                                placeholder="اسم الموظف" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                                [showClear]="true">
+                            </p-multiSelect>
+                            <span
+                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                        </div>
+
+                        <!-- Shift Name AR -->
+                        <div class="relative">
+                            <label class="label">
+                                اسم الوردية بالعربية
+                            </label>
+                            <input class="peer" [(ngModel)]="filterOptions.nameAr" fluid="true" pInputText
+                                placeholder="اسم الوردية بالعربية" type="text" />
+                            <span
+                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                        </div>
+
+                        <!-- Shift Name EN -->
+                        <div class="relative">
+                            <label class="label">
+                                اسم الوردية بالانجليزية
+                            </label>
+                            <input class="peer" [(ngModel)]="filterOptions.nameEn" fluid="true" pInputText
+                                placeholder="اسم الوردية بالانجليزية" type="text" />
+                            <span
+                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                        </div>
+
+                        <!-- Start Date -->
+                        <div class="relative">
+                            <label class="label">
+                                التاريخ (من)
+                            </label>
+                            <p-datepicker [(ngModel)]="filterOptions.startDate" [iconDisplay]="'input'"
+                                [showIcon]="true" [maxDate]="endDate" class="peer block w-full"
+                                inputId="shiftsViewStartDate" placeholder="التاريخ (من)" [showClear]="true">
+                                <ng-template pTemplate="inputicon">
+                                    <img alt="" src="assets/icons/calender-icon.svg" />
+                                </ng-template>
+                            </p-datepicker>
+                            <span
+                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                        </div>
+
+                        <!-- End Date -->
+                        <div class="relative">
+                            <label class="label">
+                                التاريخ (إلى)
+                            </label>
+                            <p-datepicker [(ngModel)]="filterOptions.endDate" [iconDisplay]="'input'" [showIcon]="true"
+                                class="peer block w-full" inputId="shiftsViewEndDate" [minDate]="startDate"
+                                placeholder="التاريخ (إلى)" [showClear]="true">
+                                <ng-template pTemplate="inputicon">
+                                    <img alt="" src="assets/icons/calender-icon.svg" />
+                                </ng-template>
+                            </p-datepicker>
+                            <span
+                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+                        </div>
+                    </div>
+
+
+                    <!-- Actions -->
+                    <div class="actions flex items-center justify-start gap-4 pt-6">
+                        <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">
+                            إعادة تعيين
+                        </button>
+                        <button class="btn black-btn" (click)="search()">
+                            بحث
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="mt-6">
+                <div
+                    class="flex items-start xl:items-center justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
+                    <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+                        قائمة ورديات للموظفين
+                    </h4>
+                    <div class="actions flex items-center gap-4 ms-auto">
+                        <button class="table-head-action-btn min-w-[40px]"
+                            (click)="exportExcel('employee-shifts.xlsx')">
+                            <img alt="" src="assets/icons/excel.svg" />
+                        </button>
+                    </div>
+                </div>
+
+                @if (list && list.length > 0) {
+                <p-table [value]="list" [styleClass]="'p-datatable-striped'">
+                    <ng-template #header>
+                        <tr>
+                            <th class="text-start">اسم الموظف</th>
+                            <th class="text-start">التاريخ / الوقت</th>
+                            <th class="text-start">اسم الوردية</th>
+                            <th class="text-start">نوع الوردية</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-shiftData>
+                        <tr>
+                            <td class="text-start font-medium">{{ shiftData.employeeNameAr }}</td>
+                            <td class="text-start">
+                                <div class="font-bold">{{ shiftData.startDate }}</div>
+                                <div class="text-sm text-[#64748b] font-medium">
+                                    {{ shiftData.startTime }} - {{ shiftData.endTime }}
+                                </div>
+                            </td>
+                            <td class="text-start font-medium">{{ shiftData.shiftNameAr }}</td>
+                            <td class="text-start font-medium">{{ shiftData.shiftTypeName }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                } @else {
+                <div class="flex items-center justify-center h-64">
+                    <p class="text-gray-500">لا يوجد بيانات لعرضها</p>
+                </div>
+                }
+
+                @if (paginationInfo) {
+                <p-paginator (onPageChange)="onPageChange($event, false)" [first]="first"
+                    [rowsPerPageOptions]="[10, 20, 30]" [rows]="rows" [showCurrentPageReport]="false"
+                    [totalRecords]="paginationInfo.totalItems" class="mt-6" />
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

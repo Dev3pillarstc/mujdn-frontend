@@ -23,7 +23,7 @@
 
         <div class="pt-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-8">
-            <div class="relative">
+            <!-- <div class="relative">
               <label class="label" for="nationalityAr">
                 معرف الاسناد
               </label>
@@ -31,7 +31,7 @@
                 placeholder="معرف الاسناد" type="text" />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-            </div>
+            </div> -->
             <div class="relative">
               <label class="label" for="nationalityAr">
                 {{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR' | translate }}
@@ -48,6 +48,17 @@
               </label>
               <input class="peer" [(ngModel)]="filterOptions.nameEn" fluid="true" id="nationalityEn" pInputText
                 [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_NAME_PLACEHOLDER' | translate" type="text" />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+            </div>
+
+            <div class="relative xl:col-span-2">
+              <label class="label">
+                {{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}
+              </label>
+              <p-select [options]="shiftTypeOptions" [(ngModel)]="filterOptions.workShiftType" class="w-full peer"
+                [optionLabel]="optionLabel" optionValue="value"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate" [showClear]="true"></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
@@ -78,17 +89,6 @@
                   <img alt="" src="assets/icons/calender-icon.svg" />
                 </ng-template>
               </p-datepicker>
-              <span
-                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-            </div>
-
-            <div class="relative">
-              <label class="label">
-                {{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}
-              </label>
-              <p-select [options]="shiftTypeOptions" [(ngModel)]="filterOptions.workShiftType" class="w-full peer"
-                [optionLabel]="optionLabel" optionValue="value"
-                [placeholder]="'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate" [showClear]="true"></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
@@ -153,7 +153,7 @@
         <p-table [value]="list">
           <ng-template #header>
             <tr>
-              <th>معرف الاسناد</th>
+              <!-- <th>معرف الاسناد</th> -->
               <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR' | translate }}</th>
               <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN' | translate }}</th>
               <th>{{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}</th>
@@ -164,7 +164,7 @@
           </ng-template>
           <ng-template #body let-shiftData>
             <tr>
-              <td>معرف الاسناد</td>
+              <!-- <td>معرف الاسناد</td> -->
               <td>{{ shiftData.shiftNameAr }}</td>
               <td>{{ shiftData.shiftNameEn }}</td>
               <td>

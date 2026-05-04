@@ -120,35 +120,37 @@
                 </div>
               </div>
             </div>
-            @if (showAddingPermissionButton()) {
-              <div class="mt-6">
-                <div
-                  class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
-                >
-                  <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-                    {{ 'PERMISSION_PAGE.PERMISSION_LIST' | translate }}
-                  </h4>
-                  <div class="actions flex items-center gap-4 ms-auto">
-                    <button
-                      (click)="exportExcel('my permissions.xlsx')"
-                      class="table-head-action-btn min-w-[40px]"
-                    >
-                      <img alt="" src="assets/icons/excel.svg" />
-                    </button>
-                    <button
-                      (click)="exportPdf(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST'))"
-                      class="table-head-action-btn"
-                    >
-                      <img alt="" src="assets/icons/pdf.svg" />
-                    </button>
+            <div class="mt-6">
+              <div
+                class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+              >
+                <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+                  {{ 'PERMISSION_PAGE.PERMISSION_LIST' | translate }}
+                </h4>
+                <div class="actions flex items-center gap-4 ms-auto">
+                  <button
+                    (click)="
+                      exportExcel(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST', 'xlsx'))
+                    "
+                    class="table-head-action-btn min-w-[40px]"
+                  >
+                    <img alt="" src="assets/icons/excel.svg" />
+                  </button>
+                  <button
+                    (click)="exportPdf(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST'))"
+                    class="table-head-action-btn"
+                  >
+                    <img alt="" src="assets/icons/pdf.svg" />
+                  </button>
+                  @if (showAddingPermissionButton()) {
                     <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
                       <img alt="" src="assets/icons/plus.svg" />
                       <span>{{ 'PERMISSION_PAGE.ADD_NEW_PERMISSION' | translate }}</span>
                     </button>
-                  </div>
+                  }
                 </div>
               </div>
-            }
+            </div>
 
             @if (list && list.length > 0) {
               <p-table [value]="list">
@@ -397,13 +399,20 @@
                   </h4>
                   <div class="actions flex items-center gap-4 ms-auto">
                     <button
-                      (click)="exportExcel('permissions.xlsx', true)"
+                      (click)="
+                        exportExcel(
+                          getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST', 'xlsx'),
+                          true
+                        )
+                      "
                       class="table-head-action-btn min-w-[40px]"
                     >
                       <img alt="" src="assets/icons/excel.svg" />
                     </button>
                     <button
-                      (click)="exportPdf(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST'), true)"
+                      (click)="
+                        exportPdf(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST'), true)
+                      "
                       class="table-head-action-btn"
                     >
                       <img alt="" src="assets/icons/pdf.svg" />

@@ -137,7 +137,10 @@
         {{ 'INQUIRIES_PAGE.PRESENCE_INQUIRIES' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
-        <button (click)="exportExcel()" class="table-head-action-btn min-w-[40px]">
+        <button
+          (click)="exportExcel(getTranslatedFileName('INQUIRIES_PAGE.PRESENCE_INQUIRIES', 'xlsx'))"
+          class="table-head-action-btn min-w-[40px]"
+        >
           <img src="assets/icons/excel.svg" alt="" />
         </button>
         <button

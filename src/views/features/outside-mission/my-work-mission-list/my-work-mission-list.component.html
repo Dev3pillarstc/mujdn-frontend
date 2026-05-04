@@ -148,7 +148,9 @@
         <!-- Only Excel Export Button -->
         <button
           class="table-head-action-btn min-w-[40px]"
-          (click)="exportExcel('my-work-missions.xlsx')"
+          (click)="
+            exportExcel(getTranslatedFileName('WORK_MISSIONS.MY_WORK_MISSIONS_LIST', 'xlsx'))
+          "
         >
           <img alt="" src="assets/icons/excel.svg" />
         </button>

@@ -1,4 +1,4 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Inject, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
@@ -42,6 +42,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { DepartmentEmployees } from '@/models/features/lookups/work-shifts/department-employees';
 import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
 import { WorkShiftType } from '@/enums/work-shift-type';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -60,14 +61,14 @@ import { WorkShiftType } from '@/enums/work-shift-type';
     TranslatePipe,
     ValidationMessagesComponent,
     InputNumberModule,
+    InputTextModule
   ],
   templateUrl: './work-shifts-assignment-popup.component.html',
   styleUrl: './work-shifts-assignment-popup.component.scss',
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit
-{
+  implements OnInit, AfterViewInit {
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
@@ -80,6 +81,7 @@ export class WorkShiftsAssignmentPopupComponent
   viewMode!: ViewModeEnum;
   fb = inject(FormBuilder);
   alertService = inject(AlertService);
+  cdr = inject(ChangeDetectorRef);
   langService = inject(LanguageService);
   isCreateMode = false;
   selectedWorkingDays: number[] = [];
@@ -91,6 +93,10 @@ export class WorkShiftsAssignmentPopupComponent
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
+  }
+
+  ngAfterViewInit(): void {
+    this.cdr.detectChanges();
   }
 
   override initPopup(): void {
@@ -169,10 +175,16 @@ export class WorkShiftsAssignmentPopupComponent
       ...this.model.buildForm(),
       employeeWorkingDays: [
         this.selectedWorkingDays.join(','),
-        [this.validateWorkingDays()], // Use array syntax for validators
+        [this.validateWorkingDays()],
       ],
       userIdsArray: [[], [Validators.required]],
       departmentIdsArray: [Array.from(departmentsToSelect), [Validators.required]],
+      // Controls used in the rotating-shifts section
+      assignmentId: [null],
+      shift1: [null],
+      shift2: [null],
+      shift3: [null],
+      fkDepartmentId: [[]],
     });
 
     // Watch for employee selection changes to update the accordion
@@ -396,7 +408,7 @@ export class WorkShiftsAssignmentPopupComponent
     return Array.from(allowedDays);
   }
 
-  override saveFail(error: Error): void {}
+  override saveFail(error: Error): void { }
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -654,6 +666,11 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   allowedWeekDaysInRange: number[] = [];
+  activeShift: number = 0;
+
+  get employees(): UsersWithDepartmentLookup[] {
+    return this.filteredUsersProfiles;
+  }
 
   private refreshAllowedWeekDays(startDate: Date | null, endDate: Date | null): void {
     if (!startDate || !endDate) {

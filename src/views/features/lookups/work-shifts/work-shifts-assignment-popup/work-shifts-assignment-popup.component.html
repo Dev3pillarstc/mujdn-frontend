@@ -1,5 +1,5 @@
 <div [dir]="direction">
-  <div class="p-6">
+  <div class="p-6" style="max-height: 85vh; overflow-y: auto">
     <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
@@ -97,46 +97,29 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-        <div class="lg:col-span-2">
+        <!-- <div class="lg:col-span-2">
           <label class="label" for="shift-select">{{
             'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate
-          }}</label>
+            }}</label>
           <div class="relative">
-            <p-select
-              [options]="shifts"
-              class="w-full peer"
-              id="shift-select"
-              formControlName="fkShiftId"
-              [optionLabel]="optionLabel"
-              optionValue="id"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate"
-            ></p-select>
+            <p-select [options]="shifts" class="w-full peer" id="shift-select" formControlName="fkShiftId"
+              [optionLabel]="optionLabel" optionValue="id"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate"></p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
           </div>
           <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
         </div>
         <div class="lg:col-span-2">
           <label for="department-select" class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
           <div class="relative">
-            <p-multiselect
-              [options]="departments"
-              class="w-full peer"
-              id="department-select"
-              [optionLabel]="optionLabel"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
-              (onChange)="onDepartmentChange($event)"
-              formControlName="departmentIdsArray"
-              optionValue="id"
-              [maxSelectedLabels]="0"
-              [selectedItemsLabel]="getSelectedDepartmentsLabel()"
-              [virtualScroll]="true"
-              [virtualScrollItemSize]="38"
-            ></p-multiselect>
+            <p-multiselect [options]="departments" class="w-full peer" id="department-select"
+              [optionLabel]="optionLabel" [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
+              (onChange)="onDepartmentChange($event)" formControlName="departmentIdsArray" optionValue="id"
+              [maxSelectedLabels]="0" [selectedItemsLabel]="getSelectedDepartmentsLabel()" [virtualScroll]="true"
+              [virtualScrollItemSize]="38"></p-multiselect>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
           </div>
           <app-validation-messages [control]="departmentIdsArrayControl"></app-validation-messages>
         </div>
@@ -144,27 +127,18 @@
         <div class="lg:col-span-2">
           <label class="label" for="employee-select">{{
             'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate
-          }}</label>
+            }}</label>
           <div class="relative">
-            <p-multiselect
-              [options]="filteredUsersProfiles"
-              class="w-full peer"
-              id="employee-select"
-              [optionLabel]="optionLabel"
-              formControlName="userIdsArray"
-              optionValue="id"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate"
-              [maxSelectedLabels]="0"
-              [selectedItemsLabel]="getSelectedEmployeesLabel()"
-              [virtualScroll]="true"
-              [virtualScrollItemSize]="38"
-            ></p-multiselect>
+            <p-multiselect [options]="filteredUsersProfiles" class="w-full peer" id="employee-select"
+              [optionLabel]="optionLabel" formControlName="userIdsArray" optionValue="id"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate" [maxSelectedLabels]="0"
+              [selectedItemsLabel]="getSelectedEmployeesLabel()" [virtualScroll]="true"
+              [virtualScrollItemSize]="38"></p-multiselect>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-            ></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
           </div>
           <app-validation-messages [control]="userIdsArrayControl"></app-validation-messages>
-        </div>
+        </div> -->
 
         <div class="lg:col-span-2">
           <label class="label" for="date-from">{{
@@ -221,7 +195,22 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mt-6">
+      <hr class="border-gray-100 my-6" />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mt-6 items-end">
+        <div class="relative lg:col-span-2">
+          <label class="label">اسم الوردية</label>
+          <p-select
+            [options]="shifts"
+            formControlName="shift2"
+            class="w-full peer"
+            placeholder="الوردية الثانية"
+          ></p-select>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
         <div class="lg:col-span-2">
           <div class="relative time">
             <label class="text-sm font-normal text-[#1f2a37] block mb-2">
@@ -349,9 +338,9 @@
         </p-accordion>
       </div>
 
-      <div
-        class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4 border-t border-[#d2d6db] mt-6 pt-4"
-      >
+      <hr class="border-gray-100 my-6" />
+
+      <div class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4">
         <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
           {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
           <span style="color: #b42318; font-weight: bold">*</span>
@@ -396,6 +385,409 @@
       <div class="mt-2">
         <app-validation-messages [control]="employeeWorkingDaysControl"></app-validation-messages>
       </div>
+
+      <section>
+        <!-- Main Row -->
+
+        <hr class="border-gray-100 mb-6" />
+
+        <!-- Rotating Shifts Row -->
+        <h4 class="text-lg font-bold text-[#1f2a37] mb-4">ورديات التناوب</h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
+          <div class="relative">
+            <label class="label">الوردية الأولى</label>
+            <p-select
+              [options]="shifts"
+              formControlName="shift1"
+              class="w-full peer"
+              placeholder="الوردية الأولى"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <div class="relative">
+            <label class="label">الوردية الثانية</label>
+            <p-select
+              [options]="shifts"
+              formControlName="shift2"
+              class="w-full peer"
+              placeholder="الوردية الثانية"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <div class="relative">
+            <label class="label text-red-500">الوردية الثالثة</label>
+            <p-select
+              [options]="shifts"
+              formControlName="shift3"
+              class="w-full peer border-red-400"
+              placeholder="الوردية الثالثة"
+            ></p-select>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+        </div>
+
+        <!-- Main Content Area with Sidebar -->
+        <div class="flex gap-0 mt-8">
+          <!-- Sidebar Tabs (Side) -->
+          <div class="w-40 flex flex-col py-4 bg-white">
+            <button
+              type="button"
+              (click)="activeShift = 0"
+              [class.active-item]="activeShift === 0"
+              class="sidebar-item"
+            >
+              الوردية الأولى
+            </button>
+            <button
+              type="button"
+              (click)="activeShift = 1"
+              [class.active-item]="activeShift === 1"
+              class="sidebar-item"
+            >
+              الوردية الثانية
+            </button>
+            <button
+              type="button"
+              (click)="activeShift = 2"
+              [class.active-item]="activeShift === 2"
+              class="sidebar-item"
+            >
+              الوردية الثالثة
+            </button>
+          </div>
+          <!-- Content Area (Left/Main) -->
+          <div class="flex-1 p-6 rounded-lg bg-[#f3f4f6]">
+            <!-- Shift 1 Content -->
+            <div *ngIf="activeShift === 0">
+              <div class="mb-4">
+                <h4 class="text-[#1b8354] font-bold">الوردية الأولى</h4>
+                <p class="text-xs text-[#6b7280]">فترة العمل بالوردية: 02:00 ص - 10:00 ص</p>
+              </div>
+
+              <!-- Blue Info Box -->
+              <div class="bg-white border border-[#d2d6db] rounded-lg p-4 mb-6 flex gap-3">
+                <svg
+                  width="40"
+                  height="40"
+                  viewBox="0 0 40 40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 20C0 8.954 8.954 0 20 0s20 8.954 20 20-8.954 20-20 20S0 31.046 0 20z"
+                    fill="#EFF8FF"
+                  />
+                  <path
+                    d="M20 16.458c-.576 0-1.042.467-1.042 1.042a.625.625 0 1 1-1.25 0 2.292 2.292 0 1 1 4.22 1.239 7.486 7.486 0 0 1-.468.63l-.084.105c-.13.16-.247.306-.357.456-.27.37-.395.649-.395.903v.417a.625.625 0 1 1-1.25 0v-.417c0-.666.327-1.216.635-1.638.13-.179.271-.355.4-.515l.077-.094c.154-.192.285-.36.39-.523A1.042 1.042 0 0 0 20 16.459zM19.993 23.333a.833.833 0 0 0 0 1.667H20a.833.833 0 1 0 0-1.667h-.007z"
+                    fill="#175CD3"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.041 20a8.958 8.958 0 1 1 17.917 0 8.958 8.958 0 0 1-17.917 0zm8.958-7.708a7.708 7.708 0 1 0 0 15.417 7.708 7.708 0 0 0 0-15.417z"
+                    fill="#175CD3"
+                  />
+                </svg>
+                <div>
+                  <p class="font-bold text-[#1f2a37] text-sm">
+                    نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)
+                  </p>
+                  <p class="text-[11px] text-[#4b5563]">
+                    سيتم تناوب الموظفين بين الورديات بالترتيب التالي: الوردية الأولى ثم الثانية ثم
+                    الثالثة بشكل دوري.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Selection Controls -->
+              <div class="grid grid-cols-2 gap-6 mb-8">
+                <div class="relative">
+                  <label class="label">الإدارة</label>
+                  <p-multiSelect
+                    [options]="departments"
+                    formControlName="fkDepartmentId"
+                    class="w-full peer"
+                    placeholder="الإدارة"
+                    optionLabel="label"
+                    optionValue="id"
+                    display="chip"
+                  ></p-multiSelect>
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <div class="relative">
+                  <label class="label">اسم الموظف</label>
+                  <p-multiSelect
+                    [options]="employees"
+                    formControlName="userIdsArray"
+                    class="w-full peer"
+                    placeholder="اسم الموظف"
+                    optionLabel="label"
+                    optionValue="id"
+                    display="chip"
+                  ></p-multiSelect>
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+              </div>
+
+              <!-- Employees Accordion -->
+              <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">
+                الموظفون المعنيون بالإسناد (الوردية الأولى)
+              </h5>
+              <p-accordion [multiple]="true" class="design-accordion">
+                <p-accordion-panel [value]="'hr'">
+                  <p-accordion-header>
+                    <div class="flex items-center justify-between w-full">
+                      <span class="font-bold text-sm text-[#161616]">إدارة الموارد البشرية</span>
+                      <div class="flex items-center gap-2 text-[#b42318] text-xs relative z-50">
+                        <button class="flex gap-2">
+                          <span>حذف كل الموظفين</span>
+                        </button>
+                      </div>
+                    </div>
+                  </p-accordion-header>
+                  <p-accordion-content>
+                    <div class="flex flex-wrap gap-2 p-2">
+                      <div
+                        *ngFor="let emp of [1, 2]"
+                        class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2"
+                      >
+                        <span class="font-bold">محمد أحمد طه</span>
+                        <i class="pi pi-times text-[10px] text-gray-400 cursor-pointer"></i>
+                      </div>
+                    </div>
+                  </p-accordion-content>
+                </p-accordion-panel>
+              </p-accordion>
+            </div>
+
+            <!-- Shift 2 Content -->
+            <div *ngIf="activeShift === 1">
+              <div class="mb-4">
+                <h4 class="text-[#1b8354] font-bold">الوردية الثانية</h4>
+                <p class="text-xs text-[#6b7280]">فترة العمل بالوردية: 10:00 ص - 06:00 م</p>
+              </div>
+
+              <!-- Blue Info Box -->
+              <div class="bg-white border border-[#d2d6db] rounded-lg p-4 mb-6 flex gap-3">
+                <svg
+                  width="40"
+                  height="40"
+                  viewBox="0 0 40 40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 20C0 8.954 8.954 0 20 0s20 8.954 20 20-8.954 20-20 20S0 31.046 0 20z"
+                    fill="#EFF8FF"
+                  />
+                  <path
+                    d="M20 16.458c-.576 0-1.042.467-1.042 1.042a.625.625 0 1 1-1.25 0 2.292 2.292 0 1 1 4.22 1.239 7.486 7.486 0 0 1-.468.63l-.084.105c-.13.16-.247.306-.357.456-.27.37-.395.649-.395.903v.417a.625.625 0 1 1-1.25 0v-.417c0-.666.327-1.216.635-1.638.13-.179.271-.355.4-.515l.077-.094c.154-.192.285-.36.39-.523A1.042 1.042 0 0 0 20 16.459zM19.993 23.333a.833.833 0 0 0 0 1.667H20a.833.833 0 1 0 0-1.667h-.007z"
+                    fill="#175CD3"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.041 20a8.958 8.958 0 1 1 17.917 0 8.958 8.958 0 0 1-17.917 0zm8.958-7.708a7.708 7.708 0 1 0 0 15.417 7.708 7.708 0 0 0 0-15.417z"
+                    fill="#175CD3"
+                  />
+                </svg>
+                <div>
+                  <p class="font-bold text-[#1f2a37] text-sm">
+                    نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)
+                  </p>
+                  <p class="text-[11px] text-[#4b5563]">
+                    سيتم تناوب الموظفين بين الورديات بالترتيب التالي: الوردية الأولى ثم الثانية ثم
+                    الثالثة بشكل دوري.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Selection Controls -->
+              <div class="grid grid-cols-2 gap-6 mb-8">
+                <div class="relative">
+                  <label class="label">الإدارة</label>
+                  <p-multiSelect
+                    [options]="departments"
+                    formControlName="fkDepartmentId"
+                    class="w-full peer"
+                    placeholder="الإدارة"
+                    optionLabel="label"
+                    optionValue="id"
+                    display="chip"
+                  ></p-multiSelect>
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <div class="relative">
+                  <label class="label">اسم الموظف</label>
+                  <p-multiSelect
+                    [options]="employees"
+                    formControlName="userIdsArray"
+                    class="w-full peer"
+                    placeholder="اسم الموظف"
+                    optionLabel="label"
+                    optionValue="id"
+                    display="chip"
+                  ></p-multiSelect>
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+              </div>
+
+              <!-- Employees Accordion -->
+              <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">
+                الموظفون المعنيون بالإسناد (الوردية الثانية)
+              </h5>
+              <p-accordion [multiple]="true" class="design-accordion">
+                <p-accordion-panel [value]="'it'">
+                  <p-accordion-header>
+                    <div class="flex items-center justify-between w-full">
+                      <span class="font-bold text-sm text-[#161616]"
+                        >إدارة تكنولوجيا المعلومات</span
+                      >
+                      <div class="flex items-center gap-2 text-[#b42318] text-xs relative z-50">
+                        <button class="flex gap-2">
+                          <span>حذف كل الموظفين</span>
+                        </button>
+                      </div>
+                    </div>
+                  </p-accordion-header>
+                  <p-accordion-content>
+                    <div class="flex flex-wrap gap-2 p-2">
+                      <div
+                        *ngFor="let emp of [1, 2, 3]"
+                        class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2"
+                      >
+                        <span class="font-bold">أحمد علي حسن</span>
+                        <i class="pi pi-times text-[10px] text-gray-400 cursor-pointer"></i>
+                      </div>
+                    </div>
+                  </p-accordion-content>
+                </p-accordion-panel>
+              </p-accordion>
+            </div>
+
+            <!-- Shift 3 Content -->
+            <div *ngIf="activeShift === 2">
+              <div class="mb-4">
+                <h4 class="text-[#1b8354] font-bold">الوردية الثالثة</h4>
+                <p class="text-xs text-[#6b7280]">فترة العمل بالوردية: 06:00 م - 02:00 ص</p>
+              </div>
+
+              <!-- Blue Info Box -->
+              <div class="bg-white border border-[#d2d6db] rounded-lg p-4 mb-6 flex gap-3">
+                <svg
+                  width="40"
+                  height="40"
+                  viewBox="0 0 40 40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 20C0 8.954 8.954 0 20 0s20 8.954 20 20-8.954 20-20 20S0 31.046 0 20z"
+                    fill="#EFF8FF"
+                  />
+                  <path
+                    d="M20 16.458c-.576 0-1.042.467-1.042 1.042a.625.625 0 1 1-1.25 0 2.292 2.292 0 1 1 4.22 1.239 7.486 7.486 0 0 1-.468.63l-.084.105c-.13.16-.247.306-.357.456-.27.37-.395.649-.395.903v.417a.625.625 0 1 1-1.25 0v-.417c0-.666.327-1.216.635-1.638.13-.179.271-.355.4-.515l.077-.094c.154-.192.285-.36.39-.523A1.042 1.042 0 0 0 20 16.459zM19.993 23.333a.833.833 0 0 0 0 1.667H20a.833.833 0 1 0 0-1.667h-.007z"
+                    fill="#175CD3"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11.041 20a8.958 8.958 0 1 1 17.917 0 8.958 8.958 0 0 1-17.917 0zm8.958-7.708a7.708 7.708 0 1 0 0 15.417 7.708 7.708 0 0 0 0-15.417z"
+                    fill="#175CD3"
+                  />
+                </svg>
+                <div>
+                  <p class="font-bold text-[#1f2a37] text-sm">
+                    نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)
+                  </p>
+                  <p class="text-[11px] text-[#4b5563]">
+                    سيتم تناوب الموظفين بين الورديات بالترتيب التالي: الوردية الأولى ثم الثانية ثم
+                    الثالثة بشكل دوري.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Selection Controls -->
+              <div class="grid grid-cols-2 gap-6 mb-8">
+                <div class="relative">
+                  <label class="label">الإدارة</label>
+                  <p-multiSelect
+                    [options]="departments"
+                    formControlName="fkDepartmentId"
+                    class="w-full peer"
+                    placeholder="الإدارة"
+                    optionLabel="label"
+                    optionValue="id"
+                    display="chip"
+                  ></p-multiSelect>
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+                <div class="relative">
+                  <label class="label">اسم الموظف</label>
+                  <p-multiSelect
+                    [options]="employees"
+                    formControlName="userIdsArray"
+                    class="w-full peer"
+                    placeholder="اسم الموظف"
+                    optionLabel="label"
+                    optionValue="id"
+                    display="chip"
+                  ></p-multiSelect>
+                  <span
+                    class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                  ></span>
+                </div>
+              </div>
+
+              <!-- Employees Accordion -->
+              <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">
+                الموظفون المعنيون بالإسناد (الوردية الثالثة)
+              </h5>
+              <p-accordion [multiple]="true" class="design-accordion">
+                <p-accordion-panel [value]="'finance'">
+                  <p-accordion-header>
+                    <div class="flex items-center justify-between w-full">
+                      <span class="font-bold text-sm text-[#161616]">الإدارة المالية</span>
+                      <div class="flex items-center gap-2 text-[#b42318] text-xs relative z-50">
+                        <button class="flex gap-2">
+                          <span>حذف كل الموظفين</span>
+                        </button>
+                      </div>
+                    </div>
+                  </p-accordion-header>
+                  <p-accordion-content>
+                    <div class="flex flex-wrap gap-2 p-2">
+                      <div
+                        *ngFor="let emp of [1]"
+                        class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2"
+                      >
+                        <span class="font-bold">ياسين محمود</span>
+                        <i class="pi pi-times text-[10px] text-gray-400 cursor-pointer"></i>
+                      </div>
+                    </div>
+                  </p-accordion-content>
+                </p-accordion-panel>
+              </p-accordion>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button type="button" (click)="close()" class="btn gray-btn">

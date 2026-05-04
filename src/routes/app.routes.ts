@@ -265,7 +265,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'work-shifts-assignment',
+        path: 'work-shifts-assignment-container',
         canActivate: [authGuard],
         data: {
           roles: [ROLES_ENUM.HR_OFFICER],
@@ -274,7 +274,7 @@ export const routes: Routes = [
         resolve: { list: userWorkShiftResolver },
         loadComponent: () =>
           import(
-            '@/views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
+            '@/views/features/lookups/work-shifts/work-shifts-assignment-container/work-shifts-assignment-container.component'
           ),
       },
       {
@@ -287,6 +287,17 @@ export const routes: Routes = [
         resolve: { list: myShiftsResolver },
         loadComponent: () =>
           import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
+      },
+      {
+        path: 'shifts-view',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.HR_OFFICER],
+        },
+        loadComponent: () =>
+          import(
+            '@/views/features/lookups/work-shifts/shifts-view/shifts-view.component'
+          ).then((m) => m.ShiftsViewComponent),
       },
       {
         path: 'work-missions',

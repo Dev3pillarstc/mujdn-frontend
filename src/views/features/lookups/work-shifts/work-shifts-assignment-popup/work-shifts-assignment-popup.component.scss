@@ -1,10 +1,10 @@
 :host ::ng-deep {
-    .accordion-container {
-        .p-icon {
-            position: absolute !important;
-            inset-inline-start: 24px !important;
-        }
-    }
+    //.accordion-container {
+    //    .p-icon {
+    //        position: absolute !important;
+    //        inset-inline-start: 24px !important;
+    //    }
+    //}
 
     .p-accordionpanel:not(.p-disabled).p-accordionpanel-active>.p-accordionheader,
     .p-accordionpanel:last-child>.p-accordionheader,
@@ -42,7 +42,7 @@
     .design-accordion {
         .p-accordionpanel {
             border: none !important;
-            border-bottom: 1px solid #f3f4f6 !important;
+            border-top: 1px solid #D2D6DB !important;
             margin-bottom: 0 !important;
         }
 
@@ -55,7 +55,7 @@
         .p-accordioncontent {
             background: transparent !important;
             border: none !important;
-            padding: 0 0 1rem 0 !important;
+            padding: 0 !important;
         }
     }
 

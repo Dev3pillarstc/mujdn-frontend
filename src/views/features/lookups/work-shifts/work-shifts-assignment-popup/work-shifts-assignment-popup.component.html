@@ -30,11 +30,11 @@
             </span>
             <div>
               <span class="font-medium text-[#1f2a37]">{{
-                'USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT' | translate
-              }}</span>
+                  'USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT' | translate
+                }}</span>
               <span class="block text-[#384250]">{{
-                'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_HOURS' | translate
-              }}</span>
+                  'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_HOURS' | translate
+                }}</span>
             </div>
           </label>
 
@@ -58,11 +58,11 @@
             </span>
             <div>
               <span class="font-medium text-[#1f2a37]">{{
-                'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_HOURS' | translate
-              }}</span>
+                  'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_HOURS' | translate
+                }}</span>
               <span class="block text-[#384250]">{{
-                'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
-              }}</span>
+                  'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
+                }}</span>
             </div>
           </label>
 
@@ -86,64 +86,21 @@
             </span>
             <div>
               <span class="font-medium text-[#1f2a37]">{{
-                'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS' | translate
-              }}</span>
+                  'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS' | translate
+                }}</span>
               <span class="block text-[#384250]">{{
-                'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
-              }}</span>
+                  'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
+                }}</span>
             </div>
           </label>
         </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-        <!-- <div class="lg:col-span-2">
-          <label class="label" for="shift-select">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate
-            }}</label>
-          <div class="relative">
-            <p-select [options]="shifts" class="w-full peer" id="shift-select" formControlName="fkShiftId"
-              [optionLabel]="optionLabel" optionValue="id"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate"></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-          </div>
-          <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
-        </div>
-        <div class="lg:col-span-2">
-          <label for="department-select" class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
-          <div class="relative">
-            <p-multiselect [options]="departments" class="w-full peer" id="department-select"
-              [optionLabel]="optionLabel" [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
-              (onChange)="onDepartmentChange($event)" formControlName="departmentIdsArray" optionValue="id"
-              [maxSelectedLabels]="0" [selectedItemsLabel]="getSelectedDepartmentsLabel()" [virtualScroll]="true"
-              [virtualScrollItemSize]="38"></p-multiselect>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-          </div>
-          <app-validation-messages [control]="departmentIdsArrayControl"></app-validation-messages>
-        </div>
-
-        <div class="lg:col-span-2">
-          <label class="label" for="employee-select">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate
-            }}</label>
-          <div class="relative">
-            <p-multiselect [options]="filteredUsersProfiles" class="w-full peer" id="employee-select"
-              [optionLabel]="optionLabel" formControlName="userIdsArray" optionValue="id"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate" [maxSelectedLabels]="0"
-              [selectedItemsLabel]="getSelectedEmployeesLabel()" [virtualScroll]="true"
-              [virtualScrollItemSize]="38"></p-multiselect>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-          </div>
-          <app-validation-messages [control]="userIdsArrayControl"></app-validation-messages>
-        </div> -->
-
         <div class="lg:col-span-2">
           <label class="label" for="date-from">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate
-          }}</label>
+              'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate
+            }}</label>
           <div class="relative">
             <p-datepicker
               [iconDisplay]="'input'"
@@ -169,8 +126,8 @@
 
         <div class="lg:col-span-2">
           <label [ngClass]="getDateToIsRequired()" class="label" for="date-to">{{
-            'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
-          }}</label>
+              'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
+            }}</label>
           <div class="relative">
             <p-datepicker
               [iconDisplay]="'input'"
@@ -218,7 +175,7 @@
               <span
                 style="color: #b42318; font-weight: bold"
                 *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff24"
-                >*</span
+              >*</span
               >
             </label>
 
@@ -250,7 +207,7 @@
               <span
                 style="color: #b42318; font-weight: bold"
                 *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff24"
-                >*</span
+              >*</span
               >
             </label>
             <p-inputnumber
@@ -276,116 +233,173 @@
         </div>
       </div>
 
-      <!-- Selected Employees Grouped by Department -->
-      <div
-        class="mt-10 p-6 bg-gray-100 rounded-xl accordion-container"
-        *ngIf="departmentEmployeesGroups.length > 0"
-      >
-        <h3 class="text-[#1f2a37] font-[600] text-xl border-b border-[#d2d6db] pb-4">
-          {{ 'USER_WORK_SHIFT_ASSIGNMENT.ASSIGNED_EMPLOYEES' | translate }}
-        </h3>
-        <p-accordion [value]="'0'">
-          <p-accordion-panel
-            *ngFor="let group of departmentEmployeesGroups; let i = index"
-            [value]="i.toString()"
-          >
-            <p-accordion-header>
-              <div class="flex items-center justify-between ps-8 w-[100%]">
-                <h4 class="text-[#161616] font-semibold">
-                  {{ currentLang === 'ar' ? group.department.nameAr : group.department.nameEn }}
-                </h4>
-                <button
-                  type="button"
-                  class="text-[#b42318] text-xs font-medium flex items-center gap-1"
-                  (click)="
-                    removeAllEmployeesFromDepartment(group.department.id); $event.stopPropagation()
-                  "
-                >
-                  <img src="assets/icons/delete.svg" alt="" />
-                  {{ 'USER_WORK_SHIFT_ASSIGNMENT.DELETE_ALL_EMPLOYEES' | translate }}
-                </button>
-              </div>
-            </p-accordion-header>
-            <p-accordion-content>
-              <div class="px-8 py-6 bg-[#f3f4f6]">
-                <div class="flex flex-wrap gap-2">
-                  <div
-                    *ngFor="let employee of group.employees"
-                    class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
-                  >
-                    <span>{{ currentLang === 'ar' ? employee.nameAr : employee.nameEn }}</span>
-                    <button type="button" (click)="removeEmployee(employee.id)">
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 18 18"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
-                          d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
-                          fill="#161616"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </p-accordion-content>
-          </p-accordion-panel>
-        </p-accordion>
-      </div>
+      <hr class="border-gray-100 mb-6" />
 
-      <hr class="border-gray-100 my-6" />
+      <!--assign single shift-->
+      <section>
 
-      <div class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4">
-        <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-          {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
-          <span style="color: #b42318; font-weight: bold">*</span>
-        </h4>
-      </div>
+        <div class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4">
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+            {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
+            <span style="color: #b42318; font-weight: bold">*</span>
+          </h4>
+        </div>
 
-      <div class="flex flex-wrap gap-8 mt-8">
-        @for (day of weekDays; track day.value) {
-          <label
-            class="flex items-center space-x-2 mb-4 cursor-pointer relative"
-            [class.opacity-50]="isWeekDayDisabled(day.value)"
-            [class.cursor-not-allowed]="isWeekDayDisabled(day.value)"
-          >
-            <input
-              type="checkbox"
-              [checked]="isWorkingDaySelected(day.value)"
-              [disabled]="isWeekDayDisabled(day.value)"
-              (change)="onWorkingDayChange(day.value, $event)"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed"
-            />
-            <svg
-              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+        <div class="flex flex-wrap gap-8 mt-8">
+          @for (day of weekDays; track day.value) {
+            <label
+              class="flex items-center space-x-2 mb-4 cursor-pointer relative"
+              [class.opacity-50]="isWeekDayDisabled(day.value)"
+              [class.cursor-not-allowed]="isWeekDayDisabled(day.value)"
             >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span
-              class="text-base font-medium text-[#1f2a37]"
-              [class.text-gray-400]="isWeekDayDisabled(day.value)"
-            >
+              <input
+                type="checkbox"
+                [checked]="isWorkingDaySelected(day.value)"
+                [disabled]="isWeekDayDisabled(day.value)"
+                (change)="onWorkingDayChange(day.value, $event)"
+                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed"
+              />
+              <svg
+                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span
+                class="text-base font-medium text-[#1f2a37]"
+                [class.text-gray-400]="isWeekDayDisabled(day.value)"
+              >
               {{ day.labelKey | translate }}
             </span>
-          </label>
-        }
-      </div>
+            </label>
+          }
+        </div>
 
-      <div class="mt-2">
-        <app-validation-messages [control]="employeeWorkingDaysControl"></app-validation-messages>
-      </div>
+        <div class="mt-2">
+          <app-validation-messages [control]="employeeWorkingDaysControl"></app-validation-messages>
+        </div>
 
+        <div class="flex-1 px-6 pt-6 rounded-lg bg-[#f3f4f6]">
+
+          <div>
+            <div class="mb-4">
+              <h4 class="text-[#1b8354] font-bold">الوردية الأولى</h4>
+              <p class="text-xs text-[#6b7280]">فترة العمل بالوردية: 02:00 ص - 10:00 ص</p>
+            </div>
+
+            <!-- Selection Controls -->
+            <div class="grid grid-cols-2 gap-6">
+              <div class="relative">
+                <label for="department-select" class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
+                <p-multiselect
+                  [options]="departments"
+                  class="w-full peer"
+                  id="department-select"
+                  [optionLabel]="optionLabel"
+                  [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate"
+                  (onChange)="onDepartmentChange($event)"
+                  formControlName="departmentIdsArray"
+                  optionValue="id"
+                  [maxSelectedLabels]="0"
+                  [selectedItemsLabel]="getSelectedDepartmentsLabel()"
+                  [virtualScroll]="true"
+                  [virtualScrollItemSize]="38"
+                ></p-multiselect>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              </div>
+              <div class="relative">
+                <label class="label" for="employee-select">{{
+                    'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate
+                  }}</label>
+                <p-multiselect
+                  [options]="filteredUsersProfiles"
+                  class="w-full peer"
+                  id="employee-select"
+                  [optionLabel]="optionLabel"
+                  formControlName="userIdsArray"
+                  optionValue="id"
+                  [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate"
+                  [maxSelectedLabels]="0"
+                  [selectedItemsLabel]="getSelectedEmployeesLabel()"
+                  [virtualScroll]="true"
+                  [virtualScrollItemSize]="38"
+                ></p-multiselect>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              </div>
+              <app-validation-messages [control]="userIdsArrayControl"></app-validation-messages>
+            </div>
+
+            <div
+              class="mt-6 bg-gray-100 rounded-xl accordion-container"
+              *ngIf="departmentEmployeesGroups.length > 0"
+            >
+              <h3 class="text-[#1f2a37] font-[600] text-xl mb-4">
+                {{ 'USER_WORK_SHIFT_ASSIGNMENT.ASSIGNED_EMPLOYEES' | translate }}
+              </h3>
+              <p-accordion class="design-accordion" [value]="'0'">
+                <p-accordion-panel
+                  *ngFor="let group of departmentEmployeesGroups; let i = index"
+                  [value]="i.toString()"
+                >
+                  <p-accordion-header>
+                    <div class="flex items-center justify-between w-full">
+                      <h4 class="text-[#161616] font-semibold">
+                        {{ currentLang === 'ar' ? group.department.nameAr : group.department.nameEn }}
+                      </h4>
+                      <button
+                        type="button"
+                        class="text-[#b42318] text-xs font-medium flex items-center gap-1"
+                        (click)="
+                    removeAllEmployeesFromDepartment(group.department.id); $event.stopPropagation()
+                  "
+                      >
+                        <img src="assets/icons/delete.svg" alt="" />
+                        {{ 'USER_WORK_SHIFT_ASSIGNMENT.DELETE_ALL_EMPLOYEES' | translate }}
+                      </button>
+                    </div>
+                  </p-accordion-header>
+                  <p-accordion-content>
+                    <div class="px-6 py-4 bg-[#f3f4f6]">
+                      <div class="flex flex-wrap gap-2">
+                        <div
+                          *ngFor="let employee of group.employees"
+                          class="bg-[#fff] py-1 px-3 rounded-full text-[#161616] font-semibold w-fit flex items-center gap-2"
+                        >
+                          <span>{{ currentLang === 'ar' ? employee.nameAr : employee.nameEn }}</span>
+                          <button type="button" (click)="removeEmployee(employee.id)">
+                            <svg
+                              width="18"
+                              height="18"
+                              viewBox="0 0 18 18"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M3.352 3.352c.22-.22.576-.22.796 0L9 8.205l4.852-4.853a.562.562 0 1 1 .796.796L9.795 9l4.853 4.852a.562.562 0 1 1-.796.796L9 9.795l-4.852 4.853a.562.562 0 1 1-.796-.796L8.205 9 3.351 4.148a.563.563 0 0 1 0-.796z"
+                                fill="#161616"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </p-accordion-content>
+                </p-accordion-panel>
+              </p-accordion>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--assign rotating shift-->
       <section>
         <!-- Main Row -->
 
@@ -462,7 +476,7 @@
             </button>
           </div>
           <!-- Content Area (Left/Main) -->
-          <div class="flex-1 p-6 rounded-lg bg-[#f3f4f6]">
+          <div class="flex-1 px-6 pt-6 rounded-lg bg-[#f3f4f6]">
             <!-- Shift 1 Content -->
             <div *ngIf="activeShift === 0">
               <div class="mb-4">
@@ -540,7 +554,7 @@
               </div>
 
               <!-- Employees Accordion -->
-              <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">
+              <h5 class="font-bold text-[#1f2a37] mb-4">
                 الموظفون المعنيون بالإسناد (الوردية الأولى)
               </h5>
               <p-accordion [multiple]="true" class="design-accordion">
@@ -550,13 +564,14 @@
                       <span class="font-bold text-sm text-[#161616]">إدارة الموارد البشرية</span>
                       <div class="flex items-center gap-2 text-[#b42318] text-xs relative z-50">
                         <button class="flex gap-2">
+                          <img src="assets/icons/delete.svg" alt="">
                           <span>حذف كل الموظفين</span>
                         </button>
                       </div>
                     </div>
                   </p-accordion-header>
                   <p-accordion-content>
-                    <div class="flex flex-wrap gap-2 p-2">
+                    <div class="flex flex-wrap gap-2 px-6 py-4">
                       <div
                         *ngFor="let emp of [1, 2]"
                         class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2"
@@ -647,7 +662,7 @@
               </div>
 
               <!-- Employees Accordion -->
-              <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">
+              <h5 class="font-bold text-[#1f2a37] mb-4">
                 الموظفون المعنيون بالإسناد (الوردية الثانية)
               </h5>
               <p-accordion [multiple]="true" class="design-accordion">
@@ -655,17 +670,18 @@
                   <p-accordion-header>
                     <div class="flex items-center justify-between w-full">
                       <span class="font-bold text-sm text-[#161616]"
-                        >إدارة تكنولوجيا المعلومات</span
+                      >إدارة تكنولوجيا المعلومات</span
                       >
                       <div class="flex items-center gap-2 text-[#b42318] text-xs relative z-50">
                         <button class="flex gap-2">
+                          <img src="assets/icons/delete.svg" alt="">
                           <span>حذف كل الموظفين</span>
                         </button>
                       </div>
                     </div>
                   </p-accordion-header>
                   <p-accordion-content>
-                    <div class="flex flex-wrap gap-2 p-2">
+                    <div class="flex flex-wrap gap-2 px-6 py-4">
                       <div
                         *ngFor="let emp of [1, 2, 3]"
                         class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2"
@@ -756,7 +772,7 @@
               </div>
 
               <!-- Employees Accordion -->
-              <h5 class="font-bold text-[#1f2a37] border-b border-[#cccccc] pb-4 mb-4">
+              <h5 class="font-bold text-[#1f2a37] mb-4">
                 الموظفون المعنيون بالإسناد (الوردية الثالثة)
               </h5>
               <p-accordion [multiple]="true" class="design-accordion">
@@ -766,13 +782,14 @@
                       <span class="font-bold text-sm text-[#161616]">الإدارة المالية</span>
                       <div class="flex items-center gap-2 text-[#b42318] text-xs relative z-50">
                         <button class="flex gap-2">
+                          <img src="assets/icons/delete.svg" alt="">
                           <span>حذف كل الموظفين</span>
                         </button>
                       </div>
                     </div>
                   </p-accordion-header>
                   <p-accordion-content>
-                    <div class="flex flex-wrap gap-2 p-2">
+                    <div class="flex flex-wrap gap-2 px-6 py-4">
                       <div
                         *ngFor="let emp of [1]"
                         class="bg-white border border-gray-100 px-3 py-1.5 rounded-full text-[11px] flex items-center gap-2"

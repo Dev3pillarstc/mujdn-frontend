@@ -44,8 +44,8 @@ export class UserWorkShiftService extends LookupBaseService<UserWorkShift, numbe
   }
 
   deleteUserShiftAssignment(shiftLogId: number): Observable<SingleResponseData<string>> {
-    return this.http.get<SingleResponseData<string>>(
-      `${this.getUrlSegment()}/DeleteUserShiftAssignment/${shiftLogId}`,
+    return this.http.delete<SingleResponseData<string>>(
+      `${this.getUrlSegment()}/${shiftLogId}`,
       { withCredentials: true }
     );
   }

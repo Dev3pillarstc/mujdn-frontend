@@ -18,7 +18,7 @@ export const EndPoints = {
   PERMISSIONS: '/permissions',
   SHIFTS: '/shifts',
   NOTIFICATION: '/notifications',
-  User_Work_Shifts: '/UserWorkShifts',
+  User_Work_Shifts: '/shift-assignments',
   NOTIFICATION_TYPES: '/notificationtypes',
   WORK_MISSION: '/WorkMission',
   PRESENCE_INQUIRIES: '/presenceinquiries',

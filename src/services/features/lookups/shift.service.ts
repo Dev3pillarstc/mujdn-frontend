@@ -60,9 +60,9 @@ export class ShiftService extends LookupBaseService<Shift, number> {
   activateShift(
     @InterceptParam() shift: Shift,
     shiftId: number
-  ): Observable<SingleResponseData<string>> {
-    return this.http.post<SingleResponseData<string>>(
-      this.getUrlSegment() + '/AddShiftLog/' + shiftId,
+  ): Observable<SingleResponseData<Shift>> {
+    return this.http.post<SingleResponseData<Shift>>(
+      this.getUrlSegment() + '/' + shiftId + '/default',
       shift,
       { withCredentials: true }
     );

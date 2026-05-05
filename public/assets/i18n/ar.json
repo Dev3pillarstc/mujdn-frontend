@@ -381,6 +381,23 @@
     "EMPLOYEE_NAME": "اسم الموظف",
     "DEPARTMENT": "الادارة"
   },
+  "SHIFTS_VIEW_PAGE": {
+    "TITLE": "ورديات الموظفين",
+    "LIST_TITLE": "قائمة ورديات للموظفين",
+    "FILTER_SECTION_TITLE": "تحديد للموظفين",
+    "DEPARTMENT": "الإدارة",
+    "EMPLOYEE_NAME": "اسم الموظف",
+    "SHIFT_NAME_AR": "اسم الوردية بالعربية",
+    "SHIFT_NAME_EN": "اسم الوردية بالإنجليزية",
+    "DATE_FROM": "التاريخ (من)",
+    "DATE_TO": "التاريخ (إلى)",
+    "DATE_TIME": "التاريخ / الوقت",
+    "SHIFT_NAME": "اسم الوردية",
+    "SHIFT_TYPE": "نوع الوردية",
+    "IS_REST_DAY": "يوم راحة",
+    "YES": "نعم",
+    "NO": "لا"
+  },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "ورديات العمل",
     "SHIFT_NAME_EN": "اسم الوردية باللغة الانجليزية",

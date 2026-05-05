@@ -27,6 +27,7 @@ import { visitResolver } from '@/resolvers/features/visit/visit.resolver';
 import { accessLocationResolver } from '@/resolvers/business/access-location.resolver';
 import { devicesConfigurationResolver } from '@/resolvers/business/devices-configuration.resolver';
 import { attendanceReportResolver } from '@/resolvers/business/attendance-report.resolver';
+import { employeeShiftDaysResolver } from '@/resolvers/lookups/employee-shift-days.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -294,6 +295,7 @@ export const routes: Routes = [
         data: {
           roles: [ROLES_ENUM.HR_OFFICER],
         },
+        resolve: { list: employeeShiftDaysResolver },
         loadComponent: () =>
           import(
             '@/views/features/lookups/work-shifts/shifts-view/shifts-view.component'

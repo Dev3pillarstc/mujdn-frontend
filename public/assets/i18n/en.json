@@ -383,6 +383,23 @@
     "EMPLOYEE_NAME": "Employee Name",
     "DEPARTMENT": "Department"
   },
+  "SHIFTS_VIEW_PAGE": {
+    "TITLE": "Employee Shift Days",
+    "LIST_TITLE": "Employee Shifts List",
+    "FILTER_SECTION_TITLE": "Employee Selection",
+    "DEPARTMENT": "Department",
+    "EMPLOYEE_NAME": "Employee Name",
+    "SHIFT_NAME_AR": "Shift Name (Arabic)",
+    "SHIFT_NAME_EN": "Shift Name (English)",
+    "DATE_FROM": "Date From",
+    "DATE_TO": "Date To",
+    "DATE_TIME": "Date / Time",
+    "SHIFT_NAME": "Shift Name",
+    "SHIFT_TYPE": "Shift Type",
+    "IS_REST_DAY": "Rest Day",
+    "YES": "Yes",
+    "NO": "No"
+  },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
     "SHIFT_NAME_EN": "English shift name",

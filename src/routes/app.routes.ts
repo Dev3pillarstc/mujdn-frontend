@@ -294,12 +294,13 @@ export const routes: Routes = [
         canActivate: [authGuard],
         data: {
           roles: [ROLES_ENUM.HR_OFFICER],
+          routeId: RouteIdsEnum.EMPLOYEE_SHIFTS,
         },
         resolve: { list: employeeShiftDaysResolver },
         loadComponent: () =>
-          import(
-            '@/views/features/lookups/work-shifts/shifts-view/shifts-view.component'
-          ).then((m) => m.ShiftsViewComponent),
+          import('@/views/features/lookups/work-shifts/shifts-view/shifts-view.component').then(
+            (m) => m.ShiftsViewComponent
+          ),
       },
       {
         path: 'work-missions',

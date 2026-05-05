@@ -166,7 +166,7 @@
           <tr [class.row-bg]="employee.hasConflictingMissions">
             @if (employee.hasConflictingMissions) {
               <td>
-                <button class="tooltip-btn">
+                <button class="tooltip-btn" (mouseenter)="onTooltipHover($event)">
                   <span class="tooltip-text">{{
                     'WORK_MISSIONS.EMPLOYEE_NOT_AVAILABLE' | translate
                   }}</span>

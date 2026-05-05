@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject, inject, ElementRef, Renderer2 } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Select } from 'primeng/select';
@@ -301,4 +301,21 @@ export class AssignEmployeesComponent extends BasePopupComponent<WorkMission> {
   getWorkMissionTypeName(model: WorkMission): string {
     return getWorkMissionTypeName(model.workMissionType, this.isCurrentLanguageEnglish());
   }
+
+  onTooltipHover(event: MouseEvent): void {
+    const button = event.currentTarget as HTMLElement;
+    const tooltip = button.querySelector('.tooltip-text') as HTMLElement;
+    
+    if (!tooltip) return;
+
+    const rect = button.getBoundingClientRect();
+    const tooltipHeight = tooltip.offsetHeight || 40;
+    const topPosition = rect.top - tooltipHeight - 10; // 10px gap above button
+    const leftPosition = rect.left + rect.width / 2;
+
+    this.renderer.setStyle(tooltip, 'top', `${topPosition}px`);
+    this.renderer.setStyle(tooltip, 'left', `${leftPosition}px`);
+  }
+
+  private renderer = inject(Renderer2);
 }

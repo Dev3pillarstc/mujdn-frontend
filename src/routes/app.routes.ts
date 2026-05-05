@@ -293,7 +293,7 @@ export const routes: Routes = [
         path: 'shifts-view',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.HR_OFFICER],
+          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.DEPARTMENT_MANAGER],
           routeId: RouteIdsEnum.EMPLOYEE_SHIFTS,
         },
         resolve: { list: employeeShiftDaysResolver },

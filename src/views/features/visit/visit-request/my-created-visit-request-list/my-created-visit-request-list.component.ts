@@ -342,7 +342,10 @@ export class MyCreatedVisitRequestListComponent
         );
   }
 
-  override exportExcel(fileName: string = 'data.xlsx', isStoredProcedure: boolean = false): void {
+  override exportExcel(fileName: string = '', isStoredProcedure: boolean = false): void {
+    if (!fileName) {
+      fileName = this.getTranslatedFileName('VISIT_REQUEST_PAGE.MY_VISITS', 'xlsx');
+    }
     const allDataParams = {
       ...this.paginationParams,
       pageNumber: 1,

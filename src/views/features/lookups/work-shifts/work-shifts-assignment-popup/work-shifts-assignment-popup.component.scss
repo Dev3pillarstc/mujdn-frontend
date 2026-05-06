@@ -17,6 +17,9 @@
     .p-inputnumber-horizontal .p-inputnumber-input {
         width: 100%;
     }
+  .p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader:hover{
+    color: #161616 !important;
+  }
 }
 
 
@@ -68,4 +71,7 @@
         flex-direction: row-reverse;
         gap: 12px;
     }
+}
+app-shift-assignment-panel{
+  flex-grow: 1;
 }

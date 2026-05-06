@@ -1,4 +1,4 @@
-<div class="flex-1 px-6 pt-6 rounded-lg bg-[#f3f4f6]">
+<div class="flex-1 p-6 rounded-lg bg-[#f3f4f6] w-full flex-1">
   <div class="mb-4">
     <h4 class="text-[#1b8354] font-bold">{{ shiftName }}</h4>
     @if (shiftTimeRange) {
@@ -25,7 +25,7 @@
   }
 
   <!-- Selection Controls -->
-  <div class="grid grid-cols-2 gap-6 mb-6">
+  <div class="grid grid-cols-2 gap-6">
     <div class="relative">
       <label class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.DEPARTMENT' | translate }}</label>
       <p-multiSelect
@@ -66,7 +66,7 @@
   <!-- Employees Accordion -->
   @if (departmentGroups.length > 0) {
     <div class="mt-2 bg-gray-100 rounded-xl accordion-container">
-      <h3 class="text-[#1f2a37] font-[600] text-xl mb-4">
+      <h3 class="text-[#1f2a37] font-[600] text-xl mb-4 mt-6">
         {{ 'USER_WORK_SHIFT_ASSIGNMENT.ASSIGNED_EMPLOYEES' | translate }}
       </h3>
       <p-accordion class="design-accordion" [value]="'0'">

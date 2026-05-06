@@ -5,17 +5,22 @@ import { RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { InputTextModule } from 'primeng/inputtext';
-import { MultiSelect } from 'primeng/multiselect';
+import { Select } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
-import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
-import UserWorkShiftsFilter from '@/models/features/lookups/work-shifts/user-work-shifts-filter';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import { UserService } from '@/services/features/user.service';
+import { EmployeeShiftDayService } from '@/services/features/lookups/employee-shift-day.service';
+import EmployeeShiftDay from '@/models/features/lookups/work-shifts/employee-shift-day';
+import { EmployeeShiftDayFilter } from '@/models/features/lookups/work-shifts/employee-shift-day-filter';
+import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { formatDateOnly, formatTimeRange } from '@/utils/general-helper';
 import {
   WORK_SHIFT_TYPE_OPTIONS,
   WorkShiftTypeOption,
@@ -30,7 +35,7 @@ import {
     RouterModule,
     PaginatorModule,
     Breadcrumb,
-    MultiSelect,
+    Select,
     DatePickerModule,
     FormsModule,
     TranslatePipe,
@@ -39,153 +44,135 @@ import {
   styleUrl: './shifts-view.component.scss',
 })
 export class ShiftsViewComponent extends BaseListComponent<
-  UserWorkShift,
+  EmployeeShiftDay,
   any,
-  UserWorkShiftService,
-  UserWorkShiftsFilter
+  EmployeeShiftDayService,
+  EmployeeShiftDayFilter
 > {
-  dialogSize = {
-    width: '100%',
-    maxWidth: '1024px',
-  };
+  dialogSize = { width: '100%', maxWidth: '1024px' };
 
-  usersProfiles: UsersWithDepartmentLookup[] = [];
   departments: BaseLookupModel[] = [];
-  filterOptions: UserWorkShiftsFilter = new UserWorkShiftsFilter();
-  shiftTypeOptions: WorkShiftTypeOption[] = WORK_SHIFT_TYPE_OPTIONS;
+  usersProfiles: UsersWithDepartmentLookup[] = [];
 
-  userWorkShiftService = inject(UserWorkShiftService);
+  filterOptions: EmployeeShiftDayFilter = new EmployeeShiftDayFilter();
 
-  override get filterModel(): UserWorkShiftsFilter {
+  private shiftTypeOptions: WorkShiftTypeOption[] = WORK_SHIFT_TYPE_OPTIONS;
+
+  employeeShiftDayService = inject(EmployeeShiftDayService);
+  private departmentService = inject(DepartmentService);
+  private userService = inject(UserService);
+
+  override get filterModel(): EmployeeShiftDayFilter {
     return this.filterOptions;
   }
-  override set filterModel(val: UserWorkShiftsFilter) {
-    this.filterOptions = val as UserWorkShiftsFilter;
+
+  override set filterModel(val: EmployeeShiftDayFilter) {
+    this.filterOptions = val as EmployeeShiftDayFilter;
   }
-  override get service(): UserWorkShiftService {
-    return this.userWorkShiftService;
+
+  override get service(): EmployeeShiftDayService {
+    return this.employeeShiftDayService;
   }
 
   override initListComponent(): void {
-    // Static Arabic data mimicking the screenshot
-    this.list = [
-      {
-        employeeNameAr: 'أيمن أحمد طارق',
-        startDate: '12/05/2024',
-        startTime: '08:00',
-        endTime: '07:00',
-        shiftNameAr: 'وردية عمل',
-        shiftTypeName: 'وردية بنظام الراحات 24 س / عمل',
-      },
-      {
-        employeeNameAr: 'محمود محمد عادل',
-        startDate: '12/05/2024',
-        startTime: '08:00',
-        endTime: '07:00',
-        shiftNameAr: 'وردية عمل',
-        shiftTypeName: 'وردية بنظام الراحات 24 س / عمل',
-      },
-      {
-        employeeNameAr: 'محمود محمد عادل',
-        startDate: '12/05/2024',
-        startTime: '08:00',
-        endTime: '07:00',
-        shiftNameAr: 'وردية عمل',
-        shiftTypeName: 'وردية بنظام الراحات 24 س / راحة',
-      },
-      {
-        employeeNameAr: 'أيمن أحمد طارق',
-        startDate: '12/05/2024',
-        startTime: '08:00',
-        endTime: '07:00',
-        shiftNameAr: 'وردية عمل',
-        shiftTypeName: 'وردية متناوبة / راحة',
-      },
-      {
-        employeeNameAr: 'محمود محمد عادل',
-        startDate: '12/05/2024',
-        startTime: '08:00',
-        endTime: '07:00',
-        shiftNameAr: 'وردية عمل',
-        shiftTypeName: 'وردية بنظام ساعات العمل المعتمدة',
-      },
-    ] as any[];
+    this.applyTimeFormatting(this.list);
 
-    this.paginationInfo = { totalItems: 5 } as any;
+    this.departmentService.getLookup().subscribe({
+      next: (data) => {
+        this.departments = data.sort((a, b) =>
+          this.isArabic
+            ? (a.nameAr ?? '').localeCompare(b.nameAr ?? '')
+            : (a.nameEn ?? '').localeCompare(b.nameEn ?? '')
+        );
+      },
+    });
 
-    const data = this.activatedRoute.snapshot.data['list'];
-    if (data) {
-      this.usersProfiles = data.users ?? [];
-      this.departments = data.departments ?? [];
-      this.departments = this.sortByName(this.departments, this.optionLabel);
-      this.usersProfiles = this.sortByName(this.usersProfiles, this.optionLabel);
-    }
-  }
-
-  private sortByName<T extends { [key: string]: any }>(arr: T[], key: string): T[] {
-    return [...arr].sort((a, b) => {
-      const nameA = (a[key] || '').toString().toLowerCase();
-      const nameB = (b[key] || '').toString().toLowerCase();
-      return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+    this.userService.getUsersWithDepartment().subscribe({
+      next: (data) => {
+        this.usersProfiles = data.sort((a, b) =>
+          this.isArabic
+            ? (a.nameAr ?? '').localeCompare(b.nameAr ?? '')
+            : (a.nameEn ?? '').localeCompare(b.nameEn ?? '')
+        );
+      },
     });
   }
 
-  protected override mapModelToExcelRow(model: UserWorkShift): { [key: string]: any } {
-    return {
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME')]:
-        this.currentLang === 'ar' ? (model as any).employeeNameAr : (model as any).employeeNameEn,
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR')]: model.shiftNameAr,
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN')]: model.shiftNameEn,
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_TYPE')]: this.getShiftTypeName(
-        model.workShiftType
-      ),
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.START_DATE')]: model.startDate,
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.END_DATE')]: model.endDate,
-    };
+  override handleLoadListSuccess(response: PaginatedList<EmployeeShiftDay>): void {
+    super.handleLoadListSuccess(response);
+    this.applyTimeFormatting(this.list);
+  }
+
+  private applyTimeFormatting(list: EmployeeShiftDay[]): void {
+    if (!list) return;
+    const locale = this.isArabic ? 'ar-EG' : 'en-US';
+    list.forEach((item) => {
+      item.formattedTimeRange = formatTimeRange(item.timeFrom, item.timeTo, locale);
+    });
+  }
+
+  override openDialog(_model: EmployeeShiftDay): void {
+    // view-only page
   }
 
   protected override getBreadcrumbKeys() {
-    return [{ labelKey: ' ورديات الموظفين' }];
+    return [{ labelKey: 'SHIFTS_VIEW_PAGE.TITLE' }];
   }
 
-  override openDialog(_model: UserWorkShift): void {
-    // View-only page — no dialog
+  protected override mapModelToExcelRow(model: EmployeeShiftDay): { [key: string]: any } {
+    return {
+      [this.translateService.instant('SHIFTS_VIEW_PAGE.EMPLOYEE_NAME')]: this.getEmployeeName(model),
+      [this.translateService.instant('SHIFTS_VIEW_PAGE.DATE_TIME')]:
+        `${formatDateOnly(model.businessDate)} ${model.formattedTimeRange ?? ''}`.trim(),
+      [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_NAME')]: this.getShiftName(model),
+      [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_TYPE')]: this.getShiftTypeName(
+        model.shiftAssignmentType
+      ),
+    };
+  }
+
+  protected override getPdfTitle(): { ar: string; en: string } {
+    return { ar: 'ورديات الموظفين', en: 'Employee Shift Days' };
+  }
+
+  protected override getPdfExportRequest(): Observable<Blob> {
+    return this.employeeShiftDayService.exportPdf(
+      this.langService.getCurrentLanguage(),
+      this.getPdfExportFilterOptions()
+    );
   }
 
   get optionLabel(): string {
-    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+    return this.isArabic ? 'nameAr' : 'nameEn';
   }
 
-  get currentLang(): string {
-    return this.langService.getCurrentLanguage();
+  get isArabic(): boolean {
+    return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
   }
 
-  get startDate(): Date {
-    return this.filterOptions.startDate as Date;
+  getEmployeeName(item: EmployeeShiftDay): string {
+    return (this.isArabic ? item.employeeName?.nameAr : item.employeeName?.nameEn) ?? '';
   }
 
-  get endDate(): Date {
-    return this.filterOptions.endDate as Date;
+  getShiftName(item: EmployeeShiftDay): string {
+    return (this.isArabic ? item.shiftDetails?.nameAr : item.shiftDetails?.nameEn) ?? '';
   }
 
   getShiftTypeName(type: number): string {
     const option = this.shiftTypeOptions.find((opt) => opt.value === type);
-    return option
-      ? this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
-        ? option.nameAr
-        : option.nameEn
-      : '';
+    if (!option) return '';
+    return this.isArabic ? option.nameAr : option.nameEn;
   }
 
-  override resetSearch(): void {
-    this.filterModel = {} as UserWorkShiftsFilter;
-    this.appliedFilterModel = {} as UserWorkShiftsFilter;
-    this.paginationParams.pageNumber = 1;
-    this.paginationParams.pageSize = 10;
-    this.first = 0;
-    this.loadList().subscribe({
-      next: (response) => this.handleLoadListSuccess(response),
-      error: this.handleLoadListError,
-    });
+  getFormattedDate(businessDate: string): string {
+    return formatDateOnly(businessDate);
+  }
+
+  get dateFrom(): Date | undefined {
+    return this.filterOptions.dateFrom;
+  }
+
+  get dateTo(): Date | undefined {
+    return this.filterOptions.dateTo;
   }
 }

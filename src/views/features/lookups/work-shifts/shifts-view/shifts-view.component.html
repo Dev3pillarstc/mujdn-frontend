@@ -11,7 +11,7 @@
                 </ng-template>
             </p-breadcrumb>
             <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616] mt-4">
-                ورديات الموظفين
+                {{ 'SHIFTS_VIEW_PAGE.TITLE' | translate }}
             </h3>
         </div>
 
@@ -20,7 +20,7 @@
             <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
                 <div class="flex items-center justify-between">
                     <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
-                        تحديد للموظفين
+                        {{ 'SHIFTS_VIEW_PAGE.FILTER_SECTION_TITLE' | translate }}
                     </h5>
                 </div>
 
@@ -29,61 +29,95 @@
 
                         <!-- Department -->
                         <div class="relative xl:col-span-2">
-                            <label class="label">
-                                الإدارة
+                            <label class="label" for="shiftsViewDepartment">
+                                {{ 'SHIFTS_VIEW_PAGE.DEPARTMENT' | translate }}
                             </label>
-                            <p-multiSelect [options]="departments" [(ngModel)]="filterOptions.fkDepartmentId"
-                                class="w-full peer" [optionLabel]="optionLabel" optionValue="id" placeholder="الإدارة"
-                                [showClear]="true">
-                            </p-multiSelect>
+                            <p-select
+                                [(ngModel)]="filterOptions.fkDepartmentId"
+                                [options]="departments"
+                                [optionLabel]="optionLabel"
+                                [placeholder]="'SHIFTS_VIEW_PAGE.DEPARTMENT' | translate"
+                                [showClear]="true"
+                                class="w-full peer"
+                                id="shiftsViewDepartment"
+                                optionValue="id"
+                            />
                             <span
                                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                         </div>
 
                         <!-- Employee Name -->
                         <div class="relative xl:col-span-2">
-                            <label class="label">
-                                اسم الموظف
+                            <label class="label" for="shiftsViewEmployee">
+                                {{ 'SHIFTS_VIEW_PAGE.EMPLOYEE_NAME' | translate }}
                             </label>
-                            <p-multiSelect [options]="usersProfiles" [(ngModel)]="filterOptions.fkAssignedUserId"
-                                class="w-full peer" [optionLabel]="optionLabel" optionValue="id"
-                                placeholder="اسم الموظف" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                                [showClear]="true">
-                            </p-multiSelect>
+                            <p-select
+                                [(ngModel)]="filterOptions.fkUserProfileId"
+                                [options]="usersProfiles"
+                                [optionLabel]="optionLabel"
+                                [placeholder]="'SHIFTS_VIEW_PAGE.EMPLOYEE_NAME' | translate"
+                                [showClear]="true"
+                                [virtualScroll]="true"
+                                [virtualScrollItemSize]="38"
+                                class="w-full peer"
+                                id="shiftsViewEmployee"
+                                optionValue="id"
+                            />
                             <span
                                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                         </div>
 
                         <!-- Shift Name AR -->
                         <div class="relative">
-                            <label class="label">
-                                اسم الوردية بالعربية
+                            <label class="label" for="shiftsViewNameAr">
+                                {{ 'SHIFTS_VIEW_PAGE.SHIFT_NAME_AR' | translate }}
                             </label>
-                            <input class="peer" [(ngModel)]="filterOptions.nameAr" fluid="true" pInputText
-                                placeholder="اسم الوردية بالعربية" type="text" />
+                            <input
+                                [(ngModel)]="filterOptions.shiftNameAr"
+                                [placeholder]="'SHIFTS_VIEW_PAGE.SHIFT_NAME_AR' | translate"
+                                class="peer"
+                                fluid="true"
+                                id="shiftsViewNameAr"
+                                pInputText
+                                type="text"
+                            />
                             <span
                                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                         </div>
 
                         <!-- Shift Name EN -->
                         <div class="relative">
-                            <label class="label">
-                                اسم الوردية بالانجليزية
+                            <label class="label" for="shiftsViewNameEn">
+                                {{ 'SHIFTS_VIEW_PAGE.SHIFT_NAME_EN' | translate }}
                             </label>
-                            <input class="peer" [(ngModel)]="filterOptions.nameEn" fluid="true" pInputText
-                                placeholder="اسم الوردية بالانجليزية" type="text" />
+                            <input
+                                [(ngModel)]="filterOptions.shiftNameEn"
+                                [placeholder]="'SHIFTS_VIEW_PAGE.SHIFT_NAME_EN' | translate"
+                                class="peer"
+                                fluid="true"
+                                id="shiftsViewNameEn"
+                                pInputText
+                                type="text"
+                            />
                             <span
                                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                         </div>
 
-                        <!-- Start Date -->
+                        <!-- Date From -->
                         <div class="relative">
-                            <label class="label">
-                                التاريخ (من)
+                            <label class="label" for="shiftsViewDateFrom">
+                                {{ 'SHIFTS_VIEW_PAGE.DATE_FROM' | translate }}
                             </label>
-                            <p-datepicker [(ngModel)]="filterOptions.startDate" [iconDisplay]="'input'"
-                                [showIcon]="true" [maxDate]="endDate" class="peer block w-full"
-                                inputId="shiftsViewStartDate" placeholder="التاريخ (من)" [showClear]="true">
+                            <p-datepicker
+                                [(ngModel)]="filterOptions.dateFrom"
+                                [iconDisplay]="'input'"
+                                [maxDate]="dateTo"
+                                [placeholder]="'SHIFTS_VIEW_PAGE.DATE_FROM' | translate"
+                                [showClear]="true"
+                                [showIcon]="true"
+                                class="peer block w-full"
+                                inputId="shiftsViewDateFrom"
+                            >
                                 <ng-template pTemplate="inputicon">
                                     <img alt="" src="assets/icons/calender-icon.svg" />
                                 </ng-template>
@@ -92,14 +126,21 @@
                                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
                         </div>
 
-                        <!-- End Date -->
+                        <!-- Date To -->
                         <div class="relative">
-                            <label class="label">
-                                التاريخ (إلى)
+                            <label class="label" for="shiftsViewDateTo">
+                                {{ 'SHIFTS_VIEW_PAGE.DATE_TO' | translate }}
                             </label>
-                            <p-datepicker [(ngModel)]="filterOptions.endDate" [iconDisplay]="'input'" [showIcon]="true"
-                                class="peer block w-full" inputId="shiftsViewEndDate" [minDate]="startDate"
-                                placeholder="التاريخ (إلى)" [showClear]="true">
+                            <p-datepicker
+                                [(ngModel)]="filterOptions.dateTo"
+                                [iconDisplay]="'input'"
+                                [minDate]="dateFrom"
+                                [placeholder]="'SHIFTS_VIEW_PAGE.DATE_TO' | translate"
+                                [showClear]="true"
+                                [showIcon]="true"
+                                class="peer block w-full"
+                                inputId="shiftsViewDateTo"
+                            >
                                 <ng-template pTemplate="inputicon">
                                     <img alt="" src="assets/icons/calender-icon.svg" />
                                 </ng-template>
@@ -109,14 +150,13 @@
                         </div>
                     </div>
 
-
                     <!-- Actions -->
                     <div class="actions flex items-center justify-start gap-4 pt-6">
                         <button class="btn gray-btn border border-[#d2d6db]" (click)="resetSearch()">
-                            إعادة تعيين
+                            {{ 'COMMON.RESET_SEARCH' | translate }}
                         </button>
                         <button class="btn black-btn" (click)="search()">
-                            بحث
+                            {{ 'COMMON.SEARCH' | translate }}
                         </button>
                     </div>
                 </div>
@@ -127,12 +167,20 @@
                 <div
                     class="flex items-start xl:items-center justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
                     <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-                        قائمة ورديات للموظفين
+                        {{ 'SHIFTS_VIEW_PAGE.LIST_TITLE' | translate }}
                     </h4>
                     <div class="actions flex items-center gap-4 ms-auto">
-                        <button class="table-head-action-btn min-w-[40px]"
-                            (click)="exportExcel('employee-shifts.xlsx')">
+                        <button
+                            class="table-head-action-btn min-w-[40px]"
+                            (click)="exportExcel(getTranslatedFileName('SHIFTS_VIEW_PAGE.LIST_TITLE', 'xlsx'))"
+                        >
                             <img alt="" src="assets/icons/excel.svg" />
+                        </button>
+                        <button
+                            class="table-head-action-btn"
+                            (click)="exportPdf(getTranslatedFileName('SHIFTS_VIEW_PAGE.LIST_TITLE'))"
+                        >
+                            <img alt="" src="assets/icons/pdf.svg" />
                         </button>
                     </div>
                 </div>
@@ -141,29 +189,29 @@
                 <p-table [value]="list" [styleClass]="'p-datatable-striped'">
                     <ng-template #header>
                         <tr>
-                            <th class="text-start">اسم الموظف</th>
-                            <th class="text-start">التاريخ / الوقت</th>
-                            <th class="text-start">اسم الوردية</th>
-                            <th class="text-start">نوع الوردية</th>
+                            <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.EMPLOYEE_NAME' | translate }}</th>
+                            <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.DATE_TIME' | translate }}</th>
+                            <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.SHIFT_NAME' | translate }}</th>
+                            <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.SHIFT_TYPE' | translate }}</th>
                         </tr>
                     </ng-template>
-                    <ng-template #body let-shiftData>
+                    <ng-template #body let-item>
                         <tr>
-                            <td class="text-start font-medium">{{ shiftData.employeeNameAr }}</td>
+                            <td class="text-start font-medium">{{ getEmployeeName(item) }}</td>
                             <td class="text-start">
-                                <div class="font-bold">{{ shiftData.startDate }}</div>
+                                <div class="font-bold">{{ getFormattedDate(item.businessDate) }}</div>
                                 <div class="text-sm text-[#64748b] font-medium">
-                                    {{ shiftData.startTime }} - {{ shiftData.endTime }}
+                                    {{ item.formattedTimeRange }}
                                 </div>
                             </td>
-                            <td class="text-start font-medium">{{ shiftData.shiftNameAr }}</td>
-                            <td class="text-start font-medium">{{ shiftData.shiftTypeName }}</td>
+                            <td class="text-start font-medium">{{ getShiftName(item) }}</td>
+                            <td class="text-start font-medium">{{ getShiftTypeName(item.shiftAssignmentType) }}</td>
                         </tr>
                     </ng-template>
                 </p-table>
                 } @else {
                 <div class="flex items-center justify-center h-64">
-                    <p class="text-gray-500">لا يوجد بيانات لعرضها</p>
+                    <p class="text-gray-500">{{ 'COMMON.NO_DATA_TO_SHOW' | translate }}</p>
                 </div>
                 }
 

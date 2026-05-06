@@ -551,7 +551,8 @@
     "TIME_FROM_PLACEHOLDER": "Time (From)",
     "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "Daily attendance proof Grace Period (Before / After)",
     "ASSIGNED_EMPLOYEES": "Employees Assigned",
-    "DELETE_ALL_EMPLOYEES": "Delete All Employees"
+    "DELETE_ALL_EMPLOYEES": "Delete All Employees",
+    "ROTATING_SHIFT": "Rotating Assignment"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",

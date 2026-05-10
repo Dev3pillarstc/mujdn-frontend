@@ -28,7 +28,7 @@ export const userWorkShiftResolver: ResolveFn<
   return forkJoin({
     userShifts: userWorkShiftService.loadPaginated(new PaginationParams()),
     users: userService.getUsersWithDepartment(),
-    shifts: shiftService.getLookup(),
+    shifts: shiftService.getShiftLookupWithTime(),
     departments: departmentService.getLookup(),
     defaultworkDays: workDaysSettingService.getWorkDays(),
   }).pipe(

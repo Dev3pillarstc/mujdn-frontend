@@ -910,5 +910,8 @@
       "IMPORT_IGNORED_WITH_COUNT": "Ignored (duplication or wrong fingerprint): ",
       "IMPORT_FAILED_WITH_COUNT": "Failed due to missing data: "
     }
+  },
+  "SHIFT_ASSIGNMENT_PANEL": {
+    "SHIFT_WORKING_HOURS": "Shift working hours: "
   }
 }

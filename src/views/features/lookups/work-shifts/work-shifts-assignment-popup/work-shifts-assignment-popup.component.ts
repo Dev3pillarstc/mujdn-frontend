@@ -561,4 +561,9 @@ export class WorkShiftsAssignmentPopupComponent
   getDateToIsRequired() {
     return this.workShiftTypeControl.value == this.workShiftType.Standard ? '' : 'required';
   }
+
+  getSelectedShiftObject(controlName: string) {
+    let control = this.form?.get(controlName)
+    return this.shifts.find(x => x.id == control?.value);
+  }
 }

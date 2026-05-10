@@ -291,6 +291,7 @@
         <app-shift-assignment-panel
 
           shiftName="الوردية الأولى"
+          [shift]="getSelectedShiftObject('fkShiftId')"
           [departments]="departments"
           [allEmployees]="usersProfiles"
           [initialMemberIds]="singleShiftMemberIds"
@@ -387,6 +388,7 @@
           @for (group of rotationGroups; track group.periodOrder) {
             <app-shift-assignment-panel
               *ngIf="activeShift === group.periodOrder"
+              [shift]="getSelectedShiftObject('shift' + (group.periodOrder + 1))"
               [shiftName]="getRotationShiftName(group.periodOrder)"
               [shiftTimeRange]="getRotationShiftTimeRange(group.periodOrder)"
               [showInfoBox]="true"

@@ -908,5 +908,8 @@
       "IMPORT_IGNORED_WITH_COUNT": "تم تجاهلهم (بصمات مكررة او غير صحيحة): ",
       "IMPORT_FAILED_WITH_COUNT": "فشلت لعدم اكتمال البيانات: "
     }
+  },
+  "SHIFT_ASSIGNMENT_PANEL": {
+    "SHIFT_WORKING_HOURS": "مواعيد العمل بالوردية: "
   }
 }

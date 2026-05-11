@@ -27,7 +27,7 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   declare fkAssignedUserId: number;
   declare employeeWorkingDays: string;
   declare assignedUserIds: number[];
-  declare workShiftType: WorkShiftType;
+  workShiftType: WorkShiftType = WorkShiftType.Standard;
   declare presenceInquiryTime: string;
   declare presenceInquiryBuffer: number;
   rotationGroups: RotationGroup[] = [];

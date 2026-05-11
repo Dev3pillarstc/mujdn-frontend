@@ -36,6 +36,7 @@ import { RotationGroup } from '@/models/features/lookups/work-shifts/rotation-gr
 import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
 import { WorkShiftType } from '@/enums/work-shift-type';
 import { ShiftAssignmentPanelComponent } from './shift-assignment-panel/shift-assignment-panel.component';
+import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -48,6 +49,7 @@ import { ShiftAssignmentPanelComponent } from './shift-assignment-panel/shift-as
     ValidationMessagesComponent,
     InputNumberModule,
     ShiftAssignmentPanelComponent,
+    RequiredMarkerDirective
   ],
   templateUrl: './work-shifts-assignment-popup.component.html',
   styleUrl: './work-shifts-assignment-popup.component.scss',
@@ -187,11 +189,7 @@ export class WorkShiftsAssignmentPopupComponent
       if (shiftId) {
         this.form.get('fkShiftId')?.setValue(shiftId);
       }
-      if (this.model.workShiftType) {
-        this.form.get('workShiftType')?.setValue(this.model.workShiftType);
-      } else {
-        this.form.get('workShiftType')?.setValue(WorkShiftType.Standard);
-      }
+      this.form.get('workShiftType')?.setValue(this.model.workShiftType);
       if (this.model.presenceInquiryTime) {
         this.form
           .get('presenceInquiryTime')
@@ -273,39 +271,52 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   onSaveClick(): void {
-    Object.keys(this.form.controls).forEach((key) => {
-      const control = this.form.get(key);
-      if (control) {
-        control.markAsTouched();
-        control.updateValueAndValidity();
-      }
+    Object.values(this.form.controls).forEach(ctrl => {
+      ctrl.markAsTouched();
+      ctrl.updateValueAndValidity();
     });
 
-    if (this.form.valid) {
-      const formValue = this.form.value;
+    if (!this.form.valid) return;
 
-      if (this.model.id) {
-        this.prepareModel(this.model, this.form);
-        this.userWorkShiftService.update(this.model).subscribe({
-          next: () => this.dialogRef.close(DIALOG_ENUM.OK),
-          error: (err) => this.save$.error(err),
-        });
-      } else {
-        const newModel = new UserWorkShift();
-        this.prepareModel(newModel, this.form);
+    if (!this.validateEmployeeSelection()) return;
 
-        if (!this.isRotatingType) {
-          const userIds = formValue.userIdsArray || [];
-          if (userIds.length === 0) return;
-          newModel.assignedUserIds = userIds;
-        }
+    const formValue = this.form.value;
 
-        this.userWorkShiftService.assignUserShift(newModel).subscribe({
-          next: () => this.dialogRef.close(DIALOG_ENUM.OK),
-          error: (err) => this.save$.error(err),
-        });
+    if (this.model.id) {
+      this.prepareModel(this.model, this.form);
+      this.userWorkShiftService.update(this.model).subscribe({
+        next: () => this.dialogRef.close(DIALOG_ENUM.OK),
+        error: (err) => this.save$.error(err),
+      });
+    } else {
+      const newModel = new UserWorkShift();
+      this.prepareModel(newModel, this.form);
+      if (!this.isRotatingType) {
+        newModel.assignedUserIds = formValue.userIdsArray || [];
       }
+      this.userWorkShiftService.assignUserShift(newModel).subscribe({
+        next: () => this.dialogRef.close(DIALOG_ENUM.OK),
+        error: (err) => this.save$.error(err),
+      });
     }
+  }
+
+  private validateEmployeeSelection(): boolean {
+    if (this.isRotatingType) {
+      const hasEmpty = this.rotationGroups.some(g => g.memberIds.length === 0);
+      if (hasEmpty) {
+        this.alertService.showErrorMessage({
+          messages: ['USER_WORK_SHIFT_ASSIGNMENT.AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT'],
+        });
+        return false;
+      }
+    } else if (this.isSingleShiftType && this.singleShiftMemberIds.length === 0) {
+      this.alertService.showErrorMessage({
+        messages: ['USER_WORK_SHIFT_ASSIGNMENT.AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT'],
+      });
+      return false;
+    }
+    return true;
   }
 
   isWorkingDaySelected(dayValue: number): boolean {
@@ -460,71 +471,63 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   onWorkShiftTypeChange(type: WorkShiftType): void {
-    const presenceTimeCtrl = this.form.get('presenceInquiryTime');
-    const presenceBufferCtrl = this.form.get('presenceInquiryBuffer');
-    const endDateCtrl = this.form.get('endDate');
-    const userIdsCtrl = this.form.get('userIdsArray');
+    const isStandard      = type === WorkShiftType.Standard;
+    const isWeekOnOff24   = type === WorkShiftType.WeekOnWeekOff24;
+    const isSingle        = isStandard || isWeekOnOff24;
+
+    // Working days: shown and required only for Standard
     const workingDaysCtrl = this.form.get('employeeWorkingDays');
-
-    // Presence fields are not yet implemented for any active type
-    presenceTimeCtrl?.disable();
-    presenceBufferCtrl?.disable();
-    presenceTimeCtrl?.clearValidators();
-    presenceBufferCtrl?.clearValidators();
-    presenceTimeCtrl?.setValue(null);
-    presenceBufferCtrl?.setValue(null);
-
-    if (type === WorkShiftType.Rotating) {
-      endDateCtrl?.clearValidators();
-    } else {
-      // Standard (1) and WeekOnWeekOff24 (3) both show the upper section
-      endDateCtrl?.clearValidators();
+    if (isStandard) {
+      workingDaysCtrl?.setValidators([this.validateWorkingDays()]);
       this.selectedWorkingDays = [...this.previousStandardWorkingDays];
       this.validateAndUpdateWorkingDays();
       this.updateEmployeeWorkingDaysInForm();
-    }
-
-    // Single-shift section validators: required only when upper section is visible
-    if (type === WorkShiftType.Standard || type === WorkShiftType.WeekOnWeekOff24) {
-      userIdsCtrl?.setValidators([Validators.required]);
-      workingDaysCtrl?.setValidators([this.validateWorkingDays()]);
     } else {
-      userIdsCtrl?.clearValidators();
       workingDaysCtrl?.clearValidators();
     }
+    workingDaysCtrl?.updateValueAndValidity();
 
+    // Presence fields: shown and required only for WeekOnWeekOff24
+    const presenceTimeCtrl   = this.form.get('presenceInquiryTime');
+    const presenceBufferCtrl = this.form.get('presenceInquiryBuffer');
+    if (isWeekOnOff24) {
+      presenceTimeCtrl?.setValidators([Validators.required]);
+      presenceBufferCtrl?.setValidators([Validators.required, Validators.min(0)]);
+    } else {
+      presenceTimeCtrl?.clearValidators();
+      presenceTimeCtrl?.setValue(null);
+      presenceBufferCtrl?.clearValidators();
+      presenceBufferCtrl?.setValue(null);
+    }
     presenceTimeCtrl?.updateValueAndValidity();
     presenceBufferCtrl?.updateValueAndValidity();
-    endDateCtrl?.updateValueAndValidity();
-    userIdsCtrl?.updateValueAndValidity();
-    workingDaysCtrl?.updateValueAndValidity();
-  }
 
-  private selectAllWorkingDays(): void {
-    this.selectedWorkingDays = this.weekDays.map((day) => day.value);
-    this.validateAndUpdateWorkingDays();
-    this.updateEmployeeWorkingDaysInForm();
+    // Shift selection: required when the upper section is visible
+    const fkShiftIdCtrl = this.form.get('fkShiftId');
+    isSingle
+      ? fkShiftIdCtrl?.setValidators([Validators.required])
+      : fkShiftIdCtrl?.clearValidators();
+    fkShiftIdCtrl?.updateValueAndValidity();
+
+    // Employee selection: required when the upper section is visible
+    const userIdsCtrl = this.form.get('userIdsArray');
+    isSingle
+      ? userIdsCtrl?.setValidators([Validators.required])
+      : userIdsCtrl?.clearValidators();
+    userIdsCtrl?.updateValueAndValidity();
+
+    const endDateCtrl = this.form.get('endDate');
+    endDateCtrl?.setValidators([Validators.required]);
+    endDateCtrl?.updateValueAndValidity();
   }
 
   private validateAndUpdateWorkingDays(): void {
-    const currentType = this.form.get('workShiftType')?.value;
-    if (
-      currentType === WorkShiftType.WeekOnWeekOff ||
-      currentType === WorkShiftType.WeekOnWeekOff24
-    ) {
-      this.selectedWorkingDays = this.weekDays.map((day) => day.value);
-      this.updateEmployeeWorkingDaysInForm();
-      return;
-    }
-
     const startDate = this.form.get('startDate')?.value;
-    const endDate = this.form.get('endDate')?.value;
+    const endDate   = this.form.get('endDate')?.value;
 
     if (startDate && endDate) {
       const allowedDays = this.getAllowedWeekDaysInRange(startDate, endDate);
-      this.selectedWorkingDays = this.selectedWorkingDays.filter((day) =>
-        allowedDays.includes(day)
-      );
+      this.selectedWorkingDays = this.selectedWorkingDays.filter(day => allowedDays.includes(day));
       this.updateEmployeeWorkingDaysInForm();
     }
   }
@@ -554,11 +557,16 @@ export class WorkShiftsAssignmentPopupComponent
     return this.form?.get('workShiftType')?.value === WorkShiftType.Rotating;
   }
 
+  get showWorkingDays(): boolean {
+    return this.form?.get('workShiftType')?.value === WorkShiftType.Standard;
+  }
+
+  get showPresenceFields(): boolean {
+    return this.form?.get('workShiftType')?.value === WorkShiftType.WeekOnWeekOff24;
+  }
+
   weekDays = weekDays;
 
-  getDateToIsRequired() {
-    return this.workShiftTypeControl.value == this.workShiftType.Standard ? '' : 'required';
-  }
 
   getSelectedShiftObject(controlName: string) {
     let control = this.form?.get(controlName)

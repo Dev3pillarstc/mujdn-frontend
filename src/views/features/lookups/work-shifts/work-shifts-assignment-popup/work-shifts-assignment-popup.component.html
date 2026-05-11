@@ -125,7 +125,7 @@
         </div>
 
         <div class="lg:col-span-2">
-          <label [ngClass]="getDateToIsRequired()" class="label" for="date-to">{{
+          <label class="label" for="date-to">{{
               'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
             }}</label>
           <div class="relative">
@@ -157,8 +157,9 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mt-6 items-end">
         <div class="relative lg:col-span-2">
-          <label class="label">{{ 'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate }}</label>
+          <label class="label" for="fkShiftId">{{ 'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate }}</label>
           <p-select
+            id="fkShiftId"
             [options]="shifts"
             formControlName="fkShiftId"
             [optionLabel]="optionLabel"
@@ -169,14 +170,17 @@
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
+          <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
         </div>
 
+        @if (showPresenceFields) {
         <div class="lg:col-span-2">
           <div class="relative time">
-            <label class="text-sm font-normal text-[#1f2a37] block mb-2">
+            <label class="text-sm font-normal text-[#1f2a37] block mb-2" for="presenceInquiryTime">
               {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_TIME' | translate }}
             </label>
             <p-datepicker
+              id="presenceInquiryTime"
               [hourFormat]="'12'"
               [iconDisplay]="'input'"
               [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.TIME_FROM_PLACEHOLDER' | translate"
@@ -199,15 +203,15 @@
 
         <div class="lg:col-span-2">
           <div class="relative">
-            <label for="" class="text-sm font-normal text-[#1f2a37] block mb-2">
+            <label class="text-sm font-normal text-[#1f2a37] block mb-2" for="presenceInquiryBuffer">
               {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_GRACE_PERIOD' | translate }}
             </label>
             <p-inputnumber
+              id="presenceInquiryBuffer"
               class="peer w-full"
               [showButtons]="true"
               buttonLayout="horizontal"
               spinnerMode="vertical"
-              inputId="vertical"
               [min]="0"
               formControlName="presenceInquiryBuffer"
             >
@@ -221,16 +225,17 @@
           </div>
           <app-validation-messages [control]="presenceInquiryBufferControl"></app-validation-messages>
         </div>
+        }
       </div>
 
       <hr class="border-gray-100 mb-6" />
 
       <!--assign single shift-->
       <section>
+        @if (showWorkingDays) {
         <div class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4">
-          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616] required">
             {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
-            <span style="color: #b42318; font-weight: bold">*</span>
           </h4>
         </div>
 
@@ -272,6 +277,7 @@
         <div class="mt-2">
           <app-validation-messages [control]="employeeWorkingDaysControl"></app-validation-messages>
         </div>
+        } <!--end showWorkingDays-->
 
         <app-shift-assignment-panel
 

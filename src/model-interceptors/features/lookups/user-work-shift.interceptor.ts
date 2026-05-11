@@ -20,9 +20,12 @@ export class UserWorkShiftInterceptor implements ModelInterceptorContract<UserWo
       delete model.shiftPeriodCount;
     }
 
+    if (model.workShiftType !== WorkShiftType.Standard) {
+      delete model.employeeWorkingDays;
+    }
+
     if (model.workShiftType === WorkShiftType.Rotating) {
       delete model.shiftDetails;
-      delete model.employeeWorkingDays;
       delete model.fkShiftId;
       model.rotationGroups?.forEach((group) => {
         delete group.shiftDetails;

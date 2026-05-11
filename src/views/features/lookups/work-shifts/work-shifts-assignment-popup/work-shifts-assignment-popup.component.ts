@@ -100,8 +100,21 @@ export class WorkShiftsAssignmentPopupComponent
     this.shifts = this.sortByName(this.shifts, this.optionLabel);
 
     this.singleShiftMemberIds = this.model.assignedUserIds || [];
-
+    this.assignSelectedGroupsAndShiftsAndUsers();
     this.initializeSelectedWorkingDays();
+  }
+
+  assignSelectedGroupsAndShiftsAndUsers(): void {
+    // Restore rotation groups from model in edit mode
+    const savedGroups: RotationGroup[] = (this.model as any).rotationGroups || [];
+    this.rotationGroups = [0, 1, 2].map(periodOrder => {
+      const saved = savedGroups.find(g => g.periodOrder === periodOrder);
+      return Object.assign(new RotationGroup(), {
+        periodOrder,
+        memberIds: saved?.memberIds || [],
+        fkShiftId: saved?.fkShiftId,
+      });
+    });
   }
 
   private initializeSelectedWorkingDays(): void {
@@ -139,9 +152,9 @@ export class WorkShiftsAssignmentPopupComponent
       employeeWorkingDays: [this.selectedWorkingDays.join(','), [this.validateWorkingDays()]],
       userIdsArray: [this.singleShiftMemberIds, [Validators.required]],
       assignmentId: [this.model.id],
-      shift1: [this.model.rotationGroups.find(x => x.periodOrder == 0) || null],
-      shift2: [this.model.rotationGroups.find(x => x.periodOrder == 1) || null],
-      shift3: [this.model.rotationGroups.find(x => x.periodOrder == 2) || null],
+      shift1: [this.rotationGroups[0].fkShiftId ?? null],
+      shift2: [this.rotationGroups[1].fkShiftId ?? null],
+      shift3: [this.rotationGroups[2].fkShiftId ?? null],
     });
 
     // Link shift dropdowns to rotationGroups fkShiftId

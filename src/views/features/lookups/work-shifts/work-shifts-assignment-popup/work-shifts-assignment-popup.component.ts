@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Inject, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
@@ -33,7 +33,6 @@ import { PaginationParams } from '@/models/shared/pagination-params';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { RotationGroup } from '@/models/features/lookups/work-shifts/rotation-group';
-import { ShiftDetails } from '@/models/features/lookups/work-shifts/shift-details';
 import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
 import { WorkShiftType } from '@/enums/work-shift-type';
 import { ShiftAssignmentPanelComponent } from './shift-assignment-panel/shift-assignment-panel.component';
@@ -55,7 +54,7 @@ import { ShiftAssignmentPanelComponent } from './shift-assignment-panel/shift-as
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit, AfterViewInit {
+  implements OnInit {
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
@@ -66,7 +65,6 @@ export class WorkShiftsAssignmentPopupComponent
   viewMode!: ViewModeEnum;
   fb = inject(FormBuilder);
   alertService = inject(AlertService);
-  cdr = inject(ChangeDetectorRef);
   langService = inject(LanguageService);
   isCreateMode = false;
   selectedWorkingDays: number[] = [];
@@ -87,10 +85,6 @@ export class WorkShiftsAssignmentPopupComponent
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
-  }
-
-  ngAfterViewInit(): void {
-    this.cdr.detectChanges();
   }
 
   override initPopup(): void {
@@ -144,19 +138,16 @@ export class WorkShiftsAssignmentPopupComponent
       fkShiftId: [this.model.fkShiftId ?? null, []],  // not required in this popup
       employeeWorkingDays: [this.selectedWorkingDays.join(','), [this.validateWorkingDays()]],
       userIdsArray: [this.singleShiftMemberIds, [Validators.required]],
-      assignmentId: [null],
-      shift1: [null],
-      shift2: [null],
-      shift3: [null],
+      assignmentId: [this.model.id],
+      shift1: [this.model.rotationGroups.find(x => x.periodOrder == 0) || null],
+      shift2: [this.model.rotationGroups.find(x => x.periodOrder == 1) || null],
+      shift3: [this.model.rotationGroups.find(x => x.periodOrder == 2) || null],
     });
 
-    // Link shift dropdowns to rotationGroups shiftDetails
+    // Link shift dropdowns to rotationGroups fkShiftId
     ['shift1', 'shift2', 'shift3'].forEach((controlName, periodOrder) => {
       this.form.get(controlName)?.valueChanges.subscribe(shiftId => {
-        const shift = this.shifts.find(s => s.id === shiftId);
-        this.rotationGroups[periodOrder].shiftDetails = shift
-          ? { ...shift.shiftDetails, id: shift.id! }
-          : Object.assign(new ShiftDetails(), { id: shiftId });
+        this.rotationGroups[periodOrder].fkShiftId = shiftId;
       });
     });
 
@@ -231,19 +222,10 @@ export class WorkShiftsAssignmentPopupComponent
     return this.rotationGroups[periodOrder];
   }
 
-  private readonly shiftNames = ['الوردية الأولى', 'الوردية الثانية', 'الوردية الثالثة'];
-
-  getRotationShiftName(periodOrder: number): string {
-    return this.shiftNames[periodOrder] ?? '';
-  }
-
-  // Returns the formatted time range for a rotating shift panel header
-  getRotationShiftTimeRange(periodOrder: number): string | undefined {
+  getRotationShift(periodOrder: number): Shift | undefined {
     const controlName = ['shift1', 'shift2', 'shift3'][periodOrder];
     const shiftId = this.form?.get(controlName)?.value;
-    const shift = this.shifts.find(s => s.id === shiftId);
-    if (!shift?.timeFrom || !shift?.timeTo) return undefined;
-    return `${shift.timeFrom} - ${shift.timeTo}`;
+    return this.shifts.find(s => s.id === shiftId);
   }
 
   onWorkingDayChange(dayValue: number, event: Event): void {
@@ -384,8 +366,11 @@ export class WorkShiftsAssignmentPopupComponent
     model.assignedUserIds = userIds;
     model.fkShiftId = formValue.fkShiftId;
 
-    // Attach rotation groups to the model for rotating shift types
-    (model as any).rotationGroups = this.rotationGroups;
+    (model as any).rotationGroups = this.rotationGroups.map(g => ({
+      memberIds: g.memberIds,
+      periodOrder: g.periodOrder,
+      fkShiftId: g.fkShiftId,
+    }));
 
     return model;
   }

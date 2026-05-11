@@ -175,13 +175,7 @@
           <div class="relative time">
             <label class="text-sm font-normal text-[#1f2a37] block mb-2">
               {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_TIME' | translate }}
-              <span
-                style="color: #b42318; font-weight: bold"
-                *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff24"
-              >*</span
-              >
             </label>
-
             <p-datepicker
               [hourFormat]="'12'"
               [iconDisplay]="'input'"
@@ -196,22 +190,17 @@
                 <img alt="" src="assets/icons/time-icon.svg" />
               </ng-template>
             </p-datepicker>
-
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
           <app-validation-messages [control]="presenceInquiryTimeControl"></app-validation-messages>
         </div>
+
         <div class="lg:col-span-2">
           <div class="relative">
             <label for="" class="text-sm font-normal text-[#1f2a37] block mb-2">
               {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_GRACE_PERIOD' | translate }}
-              <span
-                style="color: #b42318; font-weight: bold"
-                *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff24"
-              >*</span
-              >
             </label>
             <p-inputnumber
               class="peer w-full"
@@ -230,17 +219,13 @@
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
           </div>
-          <app-validation-messages
-            [control]="presenceInquiryBufferControl"
-          ></app-validation-messages>
+          <app-validation-messages [control]="presenceInquiryBufferControl"></app-validation-messages>
         </div>
       </div>
 
       <hr class="border-gray-100 mb-6" />
-      } <!--end isSingleShiftType middle row-->
 
       <!--assign single shift-->
-      @if (isSingleShiftType) {
       <section>
         <div class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4">
           <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
@@ -300,7 +285,7 @@
         ></app-shift-assignment-panel>
         <app-validation-messages [control]="userIdsArrayControl"></app-validation-messages>
       </section>
-      } <!--end isSingleShiftType section-->
+      }
 
       <!--assign rotating shift-->
       @if (isRotatingType) {
@@ -388,9 +373,7 @@
           @for (group of rotationGroups; track group.periodOrder) {
             <app-shift-assignment-panel
               *ngIf="activeShift === group.periodOrder"
-              [shift]="getSelectedShiftObject('shift' + (group.periodOrder + 1))"
-              [shiftName]="getRotationShiftName(group.periodOrder)"
-              [shiftTimeRange]="getRotationShiftTimeRange(group.periodOrder)"
+              [shift]="getRotationShift(group.periodOrder)"
               [showInfoBox]="true"
               [departments]="departments"
               [allEmployees]="usersProfiles"
@@ -401,7 +384,7 @@
           }
         </div>
       </section>
-      } <!--end isRotatingType section-->
+      }
 
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button type="button" (click)="close()" class="btn gray-btn">

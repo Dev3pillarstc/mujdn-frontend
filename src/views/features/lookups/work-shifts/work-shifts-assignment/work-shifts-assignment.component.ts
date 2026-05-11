@@ -224,7 +224,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
         : [shift.shiftDetails.nameEn];
     } else {
       return shift.rotationGroups.map(x => x.shiftDetails).map(y => {
-        return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? y.nameAr : y.nameEn;
+        return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? y?.nameAr : y?.nameEn;
       });
     }
   }

@@ -21,12 +21,13 @@ export class UserWorkShiftInterceptor implements ModelInterceptorContract<UserWo
     }
 
     if (model.workShiftType === WorkShiftType.Rotating) {
-      // to be deleted from here
+      delete model.shiftDetails;
+      delete model.employeeWorkingDays;
+      delete model.fkShiftId;
       model.rotationGroups?.forEach((group) => {
-        group.shiftDetails.nameAr = '';
-        group.shiftDetails.nameEn = '';
+        delete group.shiftDetails;
+        delete group.shiftDetails;
       });
-      // to be deleted to here
 
       model.shiftPeriodCount = 3;
     }

@@ -98,11 +98,7 @@
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <button
-          (click)="
-            exportExcel(
-              getTranslatedFileName('ATTENDANCE_REPORT_PAGE.MY_ATTENDANCE_REPORTS', 'xlsx')
-            )
-          "
+          (click)="exportExcel(getTranslatedFileName('ATTENDANCE_REPORT_PAGE.MY_ATTENDANCE_REPORTS', 'xlsx'))"
           class="table-head-action-btn min-w-[40px]"
         >
           <img src="assets/icons/excel.svg" alt="" />

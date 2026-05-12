@@ -562,8 +562,8 @@
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
-    "SHIFT_NAME_AR": "Shift Name (Arabic)",
-    "SHIFT_NAME_EN": "Shift Name (English)",
+    "SHIFT_NAME_AR": "Shift Name In Arabic",
+    "SHIFT_NAME_EN": "Shift Name In English",
     "SHIFT_NAME_PLACEHOLDER": "Shift Name",
     "START_DATE": "Date (From)",
     "END_DATE": "Date (To)",

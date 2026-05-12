@@ -35,6 +35,7 @@ import {
   WorkShiftTypeOption,
 } from '@/models/features/lookups/work-shifts/work-shift-type-option';
 import { TooltipModule } from 'primeng/tooltip';
+import { Breadcrumb } from 'primeng/breadcrumb';
 
 
 @Component({
@@ -51,7 +52,9 @@ import { TooltipModule } from 'primeng/tooltip';
     DatePickerModule,
     FormsModule,
     TranslatePipe,
-    TooltipModule
+    TooltipModule,
+    Breadcrumb
+
   ],
   templateUrl: './work-shifts-assignment.component.html',
   styleUrl: './work-shifts-assignment.component.scss',

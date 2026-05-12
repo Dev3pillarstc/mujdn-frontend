@@ -31,6 +31,8 @@ export class ShiftInterceptor implements ModelInterceptorContract<Shift> {
   send(model: Partial<Shift>): Partial<Shift> {
     delete model.isDefaultShift;
     delete model.isDefaultShiftForm;
+    delete model.rotationGroups;
+    delete model.shiftDetails;
 
     if (model.activeShiftStartDate) {
       model.activeShiftStartDate = toDateOnly(model.activeShiftStartDate);

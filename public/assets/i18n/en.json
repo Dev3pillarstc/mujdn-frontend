@@ -383,6 +383,23 @@
     "EMPLOYEE_NAME": "Employee Name",
     "DEPARTMENT": "Department"
   },
+  "SHIFTS_VIEW_PAGE": {
+    "TITLE": "Employee Shift Days",
+    "LIST_TITLE": "Employee Shifts List",
+    "FILTER_SECTION_TITLE": "Employee Selection",
+    "DEPARTMENT": "Department",
+    "EMPLOYEE_NAME": "Employee Name",
+    "SHIFT_NAME_AR": "Shift Name (Arabic)",
+    "SHIFT_NAME_EN": "Shift Name (English)",
+    "DATE_FROM": "Date From",
+    "DATE_TO": "Date To",
+    "DATE_TIME": "Date / Time",
+    "SHIFT_NAME": "Shift Name",
+    "SHIFT_TYPE": "Shift Type",
+    "IS_REST_DAY": "Rest Day",
+    "YES": "Yes",
+    "NO": "No"
+  },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
     "SHIFT_NAME_EN": "English shift name",
@@ -484,6 +501,7 @@
     "HOLIDAYS": "Holidays",
     "WORK_SHIFT": "Work Shifts",
     "WORK_SHIFT_SETTINGS": "Definition of Work Shifts",
+    "EMPLOYEE_SHIFTS": "Employee Shifts",
     "SETTINGS": "Settings",
     "PERMISSION_REASONS": "Permission Reasons",
     "NOTIFICATION_CHANNELS": "Notification Settings",
@@ -551,12 +569,19 @@
     "TIME_FROM_PLACEHOLDER": "Time (From)",
     "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "Daily attendance proof Grace Period (Before / After)",
     "ASSIGNED_EMPLOYEES": "Employees Assigned",
-    "DELETE_ALL_EMPLOYEES": "Delete All Employees"
+    "DELETE_ALL_EMPLOYEES": "Delete All Employees",
+    "ROTATING_SHIFT": "Rotating Assignment",
+    "FIRST_SHIFT": "First Shift",
+    "SECOND_SHIFT": "Second Shift",
+    "THIRD_SHIFT": "Third Shift",
+    "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "Please assign at least one employee to each shift section before saving",
+    "DUPLICATE_SHIFT": "This shift is already assigned to another slot — each shift must be unique",
+    "ROTATING_SHIFTS": "Rotating Shifts"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
-    "SHIFT_NAME_AR": "Shift Name (Arabic)",
-    "SHIFT_NAME_EN": "Shift Name (English)",
+    "SHIFT_NAME_AR": "Shift Name In Arabic",
+    "SHIFT_NAME_EN": "Shift Name In English",
     "SHIFT_NAME_PLACEHOLDER": "Shift Name",
     "START_DATE": "Date (From)",
     "END_DATE": "Date (To)",
@@ -599,7 +624,7 @@
   "MY_SHIFTS": {
     "MY_SHIFTS": "My shifts",
     "SHIFT_DAYS": "Shift working days",
-    "ASSIGNED_SHIFTS_LIST": "Assigned shifts list",
+    "ASSIGNED_SHIFTS_LIST": "Assigned shifts",
     "NAME_ARABIC": "Shift name (Arabic)",
     "NAME_ENGLISH": "Shift name (English)",
     "START_DATE": "Date from",
@@ -909,5 +934,11 @@
       "IMPORT_IGNORED_WITH_COUNT": "Ignored (duplication or wrong fingerprint): ",
       "IMPORT_FAILED_WITH_COUNT": "Failed due to missing data: "
     }
+  },
+  "SHIFT_ASSIGNMENT_PANEL": {
+    "SHIFT_WORKING_HOURS": "Shift working hours: ",
+    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "Rotating shifts (work week / rest week)",
+    "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "Users will be rotated between shifts in the following order: ",
+    "ON_A_RECURRING_BASIS": "on a recurring basis."
   }
 }

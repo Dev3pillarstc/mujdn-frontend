@@ -348,7 +348,7 @@ export default class MyShiftsComponent extends BaseListComponent<
   }
 
   onExportExcel(): void {
-    this.exportExcel(this.getTranslatedFileName('MY_SHIFTS.ASSIGNED_SHIFTS_LIST', 'xlsx'));
+    this.exportExcel(this.getTranslatedFileName('MY_SHIFTS.MY_SHIFTS', 'xlsx'));
   }
 
   override exportExcel(fileName: string = 'my-shifts.xlsx', isStoredProcedure?: boolean): void {

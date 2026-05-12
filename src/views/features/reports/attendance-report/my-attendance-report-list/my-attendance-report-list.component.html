@@ -98,17 +98,21 @@
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
         <button
-          (click)="exportExcel(getTranslatedFileName('ATTENDANCE_REPORT_PAGE.TITLE', 'xlsx'))"
+          (click)="
+            exportExcel(
+              getTranslatedFileName('ATTENDANCE_REPORT_PAGE.MY_ATTENDANCE_REPORTS', 'xlsx')
+            )
+          "
           class="table-head-action-btn min-w-[40px]"
         >
           <img src="assets/icons/excel.svg" alt="" />
         </button>
-        <!-- <button
-          (click)="exportPdf(getTranslatedFileName('ATTENDANCE_REPORT_PAGE.TITLE'))"
+        <button
+          (click)="exportPdf(getTranslatedFileName('ATTENDANCE_REPORT_PAGE.MY_ATTENDANCE_REPORTS'))"
           class="table-head-action-btn"
         >
           <img alt="" src="assets/icons/pdf.svg" />
-        </button> -->
+        </button>
       </div>
     </div>
     @if (list && list.length > 0) {

@@ -32,6 +32,11 @@ import { map, Observable, of, switchMap } from 'rxjs';
     unwrap: 'data',
     shape: { 'list.*': () => Shift },
   },
+  $shiftLookupWithTime: {
+    model: () => ListResponseData<Shift>,
+    unwrap: 'data',
+    shape: { 'list.*': () => Shift },
+  },
   $lookup: {
     model: () => ListResponseData<BaseLookupModel>,
     unwrap: 'data',
@@ -60,9 +65,9 @@ export class ShiftService extends LookupBaseService<Shift, number> {
   activateShift(
     @InterceptParam() shift: Shift,
     shiftId: number
-  ): Observable<SingleResponseData<string>> {
-    return this.http.post<SingleResponseData<string>>(
-      this.getUrlSegment() + '/AddShiftLog/' + shiftId,
+  ): Observable<SingleResponseData<Shift>> {
+    return this.http.post<SingleResponseData<Shift>>(
+      this.getUrlSegment() + '/' + shiftId + '/default',
       shift,
       { withCredentials: true }
     );
@@ -103,6 +108,19 @@ export class ShiftService extends LookupBaseService<Shift, number> {
             list: response.data.list as EmployeeShift[],
             paginationInfo: response.data.paginationInfo,
           };
+        })
+      );
+  }
+
+  @CastResponse(undefined, { fallback: '$shiftLookupWithTime' })
+  getShiftLookupWithTime(): Observable<Shift[]> {
+    return this.http
+      .get<ListResponseData<Shift>>(this.getUrlSegment() + '/' + 'shiftLookupWithTime', {
+        withCredentials: true,
+      })
+      .pipe(
+        switchMap((response: ListResponseData<Shift>) => {
+          return of(response.data);
         })
       );
   }

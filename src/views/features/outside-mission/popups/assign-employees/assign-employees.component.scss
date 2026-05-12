@@ -12,8 +12,8 @@
 }
 
 .tooltip-text {
-  position: absolute;
-  bottom: 130%;
+  position: fixed;
+  bottom: auto;
   left: 50%;
   transform: translateX(-50%);
 
@@ -45,6 +45,7 @@
   border-width: 5px;
   border-style: solid;
   border-color: #3f3f46 transparent transparent transparent;
+  z-index: 99999;
 }
 table,
 tr,

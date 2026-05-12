@@ -121,6 +121,15 @@ export function formatTimeTo12Hour(
 
   return formatted;
 }
+export function formatTimeRange(
+  timeFrom: string,
+  timeTo: string,
+  locale: 'en-US' | 'ar-EG' = 'en-US'
+): string {
+  if (!timeFrom || !timeTo) return '';
+  return `${formatTimeTo12Hour(timeFrom, locale)} - ${formatTimeTo12Hour(timeTo, locale)}`;
+}
+
 export function changeTimeSuffix<T>(
   isCurrentLanguageEnglish: () => boolean,
   item: T,

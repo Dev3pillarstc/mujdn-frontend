@@ -1,10 +1,10 @@
 :host ::ng-deep {
-    .accordion-container {
-        .p-icon {
-            position: absolute !important;
-            inset-inline-start: 24px !important;
-        }
-    }
+    //.accordion-container {
+    //    .p-icon {
+    //        position: absolute !important;
+    //        inset-inline-start: 24px !important;
+    //    }
+    //}
 
     .p-accordionpanel:not(.p-disabled).p-accordionpanel-active>.p-accordionheader,
     .p-accordionpanel:last-child>.p-accordionheader,
@@ -17,4 +17,61 @@
     .p-inputnumber-horizontal .p-inputnumber-input {
         width: 100%;
     }
+  .p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader:hover{
+    color: #161616 !important;
+  }
+}
+
+
+:host ::ng-deep {
+    .sidebar-item {
+        padding: 0.75rem 1.5rem;
+        text-align: inherit;
+        font-size: 0.875rem;
+        color: #4b5563;
+        background: transparent;
+        border: none;
+        transition: all 0.2s;
+        border-inline-start: 3px solid transparent;
+
+        &.active-item {
+            color: #1f2a37;
+            font-weight: 700;
+            border-inline-start: 4px solid #1b8354 !important;
+        }
+    }
+
+    /* Custom styling for the accordion in this modal */
+    .design-accordion {
+        .p-accordionpanel {
+            border: none !important;
+            border-top: 1px solid #D2D6DB !important;
+            margin-bottom: 0 !important;
+        }
+
+        .p-accordionheader {
+            background: transparent !important;
+            padding: 1rem 0 !important;
+            border: none !important;
+        }
+
+        .p-accordioncontent {
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+    }
+
+    .p-accordioncontent-content {
+        background-color: transparent;
+    }
+
+    p-accordion-header {
+        user-select: none;
+        flex-direction: row-reverse;
+        gap: 12px;
+    }
+}
+app-shift-assignment-panel{
+  flex-grow: 1;
 }

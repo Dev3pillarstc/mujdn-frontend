@@ -7,6 +7,8 @@ import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 import { map, Observable } from 'rxjs';
+import { RotationGroup } from '@/models/features/lookups/work-shifts/rotation-group';
+import { ShiftDetails } from '@/models/features/lookups/work-shifts/shift-details';
 
 const { send, receive } = new UserWorkShiftInterceptor();
 
@@ -25,9 +27,12 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   declare fkAssignedUserId: number;
   declare employeeWorkingDays: string;
   declare assignedUserIds: number[];
-  declare workShiftType: WorkShiftType;
+  workShiftType: WorkShiftType = WorkShiftType.Standard;
   declare presenceInquiryTime: string;
   declare presenceInquiryBuffer: number;
+  rotationGroups: RotationGroup[] = [];
+  declare shiftDetails: ShiftDetails;
+  declare shiftPeriodCount: number;
 
   declare concurrencyUpdateVersion?: Uint8Array;
 

@@ -17,8 +17,8 @@ export const EndPoints = {
   PERMISSION_STATUS: '/permissionstatuses',
   PERMISSIONS: '/permissions',
   SHIFTS: '/shifts',
+  User_Work_Shifts: '/shift-assignments',
   NOTIFICATION: '/notifications',
-  User_Work_Shifts: '/UserWorkShifts',
   NOTIFICATION_TYPES: '/notificationtypes',
   WORK_MISSION: '/WorkMission',
   PRESENCE_INQUIRIES: '/presenceinquiries',
@@ -34,6 +34,7 @@ export const EndPoints = {
   MANUAL_PROCESSING: '/ManualProcessing',
   IMPORT: '/ImportSheet',
   TEMPORARY_ROLE_ASSIGNMENTS: '/TemporaryRoleAssignments',
+  EMPLOYEE_SHIFT_DAYS: '/employee-shift-days',
 };
 
 export type EndpointsType = typeof EndPoints;

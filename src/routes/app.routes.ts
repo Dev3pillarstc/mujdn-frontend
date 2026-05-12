@@ -27,6 +27,7 @@ import { visitResolver } from '@/resolvers/features/visit/visit.resolver';
 import { accessLocationResolver } from '@/resolvers/business/access-location.resolver';
 import { devicesConfigurationResolver } from '@/resolvers/business/devices-configuration.resolver';
 import { attendanceReportResolver } from '@/resolvers/business/attendance-report.resolver';
+import { employeeShiftDaysResolver } from '@/resolvers/lookups/employee-shift-days.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -287,6 +288,19 @@ export const routes: Routes = [
         resolve: { list: myShiftsResolver },
         loadComponent: () =>
           import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
+      },
+      {
+        path: 'shifts-view',
+        canActivate: [authGuard],
+        data: {
+          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.DEPARTMENT_MANAGER],
+          routeId: RouteIdsEnum.EMPLOYEE_SHIFTS,
+        },
+        resolve: { list: employeeShiftDaysResolver },
+        loadComponent: () =>
+          import('@/views/features/lookups/work-shifts/shifts-view/shifts-view.component').then(
+            (m) => m.ShiftsViewComponent
+          ),
       },
       {
         path: 'work-missions',

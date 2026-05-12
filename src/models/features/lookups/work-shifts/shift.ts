@@ -5,6 +5,8 @@ import { timeStringToDate } from '@/utils/general-helper';
 import { CustomValidators } from '@/validators/custom-validators';
 import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
+import { ShiftDetails } from '@/models/features/lookups/work-shifts/shift-details';
+import { RotationGroup } from '@/models/features/lookups/work-shifts/rotation-group';
 
 const { send, receive } = new ShiftInterceptor();
 
@@ -29,6 +31,8 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
   isAvailableDefaultShift?: boolean = false;
   declare defaultShiftId?: number;
   isCrossDayShift: boolean = false;
+  declare shiftDetails: ShiftDetails;
+  rotationGroups: RotationGroup[] = [];
 
   buildForm() {
     const {

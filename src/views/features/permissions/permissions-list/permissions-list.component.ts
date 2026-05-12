@@ -243,9 +243,15 @@ export default class PermissionsListComponent
   }
 
   override exportExcel(
-    fileName: string = 'data.xlsx',
+    fileName: string = '',
     isIncomingPermissions: boolean = false
   ): void {
+    if (!fileName) {
+      fileName = this.getTranslatedFileName(
+        isIncomingPermissions ? 'PERMISSION_PAGE.INCOMING_REQUESTS' : 'PERMISSION_PAGE.MY_REQUESTS',
+        'xlsx'
+      );
+    }
     const allDataParams = {
       ...this.paginationParams,
       pageNumber: 1,

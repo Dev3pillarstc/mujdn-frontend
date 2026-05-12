@@ -169,6 +169,7 @@
                 <!-- <button>
                   <img src="assets/icons/print.svg" alt="" />
                 </button> -->
+                // Show add button only for root department or when no department is selected, as sub-departments can only be added through the parent department details page
                 <button
                   (click)="addOrEditModel(selectedDepartment?.id ?? 0)"
                   class="btn green-btn flex items-center min-w-[175px] whitespace-nowrap"

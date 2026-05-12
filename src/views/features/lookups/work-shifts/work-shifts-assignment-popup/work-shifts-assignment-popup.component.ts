@@ -49,14 +49,15 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
     ValidationMessagesComponent,
     InputNumberModule,
     ShiftAssignmentPanelComponent,
-    RequiredMarkerDirective
+    RequiredMarkerDirective,
   ],
   templateUrl: './work-shifts-assignment-popup.component.html',
   styleUrl: './work-shifts-assignment-popup.component.scss',
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit {
+  implements OnInit
+{
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
@@ -81,9 +82,12 @@ export class WorkShiftsAssignmentPopupComponent
   singleShiftMemberIds: number[] = [];
 
   // Rotating shifts: one RotationGroup per tab (periodOrder 0, 1, 2)
-  rotationGroups: RotationGroup[] = [0, 1, 2].map(periodOrder =>
+  rotationGroups: RotationGroup[] = [0, 1, 2].map((periodOrder) =>
     Object.assign(new RotationGroup(), { periodOrder, memberIds: [] })
   );
+
+  // Persists dept selection per rotation group across tab switches
+  rotationGroupDeptIds: Record<number, number[]> = { 0: [], 1: [], 2: [] };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
@@ -109,8 +113,8 @@ export class WorkShiftsAssignmentPopupComponent
   assignSelectedGroupsAndShiftsAndUsers(): void {
     // Restore rotation groups from model in edit mode
     const savedGroups: RotationGroup[] = (this.model as any).rotationGroups || [];
-    this.rotationGroups = [0, 1, 2].map(periodOrder => {
-      const saved = savedGroups.find(g => g.periodOrder === periodOrder);
+    this.rotationGroups = [0, 1, 2].map((periodOrder) => {
+      const saved = savedGroups.find((g) => g.periodOrder === periodOrder);
       return Object.assign(new RotationGroup(), {
         periodOrder,
         memberIds: saved?.memberIds || [],
@@ -150,7 +154,7 @@ export class WorkShiftsAssignmentPopupComponent
   override buildForm(): void {
     this.form = this.fb.group({
       ...this.model.buildForm(),
-      fkShiftId: [this.model.fkShiftId ?? null, []],  // not required in this popup
+      fkShiftId: [this.model.fkShiftId ?? null, []], // not required in this popup
       employeeWorkingDays: [this.selectedWorkingDays.join(','), [this.validateWorkingDays()]],
       userIdsArray: [this.singleShiftMemberIds, [Validators.required]],
       assignmentId: [this.model.id],
@@ -159,16 +163,23 @@ export class WorkShiftsAssignmentPopupComponent
       shift3: [this.rotationGroups[2].fkShiftId ?? null],
     });
 
-    // Link shift dropdowns to rotationGroups fkShiftId
-    ['shift1', 'shift2', 'shift3'].forEach((controlName, periodOrder) => {
-      this.form.get(controlName)?.valueChanges.subscribe(shiftId => {
+    // Link shift dropdowns → rotationGroups, and cross-validate siblings for duplicates
+    const shiftNames = ['shift1', 'shift2', 'shift3'] as const;
+    shiftNames.forEach((controlName, periodOrder) => {
+      this.form.get(controlName)?.valueChanges.subscribe((shiftId) => {
         this.rotationGroups[periodOrder].fkShiftId = shiftId;
+        shiftNames
+          .filter((n) => n !== controlName)
+          .forEach((n) => this.form.get(n)?.updateValueAndValidity({ emitEvent: false }));
       });
     });
 
-    this.form.get('workShiftType')?.valueChanges.pipe(distinctUntilChanged()).subscribe((type) => {
-      this.onWorkShiftTypeChange(type);
-    });
+    this.form
+      .get('workShiftType')
+      ?.valueChanges.pipe(distinctUntilChanged())
+      .subscribe((type) => {
+        this.onWorkShiftTypeChange(type);
+      });
 
     // Must run before setDropdownValues so dates are not yet in the form.
     // If dates are present, validateAndUpdateWorkingDays filters the saved
@@ -229,6 +240,10 @@ export class WorkShiftsAssignmentPopupComponent
     this.rotationGroups[periodOrder].memberIds = memberIds;
   }
 
+  onRotationGroupDeptsChange(periodOrder: number, deptIds: number[]): void {
+    this.rotationGroupDeptIds[periodOrder] = deptIds;
+  }
+
   getRotationGroup(periodOrder: number): RotationGroup {
     return this.rotationGroups[periodOrder];
   }
@@ -236,7 +251,7 @@ export class WorkShiftsAssignmentPopupComponent
   getRotationShift(periodOrder: number): Shift | undefined {
     const controlName = ['shift1', 'shift2', 'shift3'][periodOrder];
     const shiftId = this.form?.get(controlName)?.value;
-    return this.shifts.find(s => s.id === shiftId);
+    return this.shifts.find((s) => s.id === shiftId);
   }
 
   onWorkingDayChange(dayValue: number, event: Event): void {
@@ -271,7 +286,7 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   onSaveClick(): void {
-    Object.values(this.form.controls).forEach(ctrl => {
+    Object.values(this.form.controls).forEach((ctrl) => {
       ctrl.markAsTouched();
       ctrl.updateValueAndValidity();
     });
@@ -303,7 +318,7 @@ export class WorkShiftsAssignmentPopupComponent
 
   private validateEmployeeSelection(): boolean {
     if (this.isRotatingType) {
-      const hasEmpty = this.rotationGroups.some(g => g.memberIds.length === 0);
+      const hasEmpty = this.rotationGroups.some((g) => g.memberIds.length === 0);
       if (hasEmpty) {
         this.alertService.showErrorMessage({
           messages: ['USER_WORK_SHIFT_ASSIGNMENT.AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT'],
@@ -355,7 +370,7 @@ export class WorkShiftsAssignmentPopupComponent
     return Array.from(allowedDays);
   }
 
-  override saveFail(error: Error): void { }
+  override saveFail(error: Error): void {}
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -390,7 +405,7 @@ export class WorkShiftsAssignmentPopupComponent
     model.assignedUserIds = userIds;
     model.fkShiftId = formValue.fkShiftId;
 
-    (model as any).rotationGroups = this.rotationGroups.map(g => ({
+    (model as any).rotationGroups = this.rotationGroups.map((g) => ({
       memberIds: g.memberIds,
       periodOrder: g.periodOrder,
       fkShiftId: g.fkShiftId,
@@ -471,9 +486,10 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   onWorkShiftTypeChange(type: WorkShiftType): void {
-    const isStandard      = type === WorkShiftType.Standard;
-    const isWeekOnOff24   = type === WorkShiftType.WeekOnWeekOff24;
-    const isSingle        = isStandard || isWeekOnOff24;
+    const isStandard = type === WorkShiftType.Standard;
+    const isWeekOnOff24 = type === WorkShiftType.WeekOnWeekOff24;
+    const isRotating = type === WorkShiftType.Rotating;
+    const isSingle = isStandard || isWeekOnOff24;
 
     // Working days: shown and required only for Standard
     const workingDaysCtrl = this.form.get('employeeWorkingDays');
@@ -488,7 +504,7 @@ export class WorkShiftsAssignmentPopupComponent
     workingDaysCtrl?.updateValueAndValidity();
 
     // Presence fields: shown and required only for WeekOnWeekOff24
-    const presenceTimeCtrl   = this.form.get('presenceInquiryTime');
+    const presenceTimeCtrl = this.form.get('presenceInquiryTime');
     const presenceBufferCtrl = this.form.get('presenceInquiryBuffer');
     if (isWeekOnOff24) {
       presenceTimeCtrl?.setValidators([Validators.required]);
@@ -502,6 +518,17 @@ export class WorkShiftsAssignmentPopupComponent
     presenceTimeCtrl?.updateValueAndValidity();
     presenceBufferCtrl?.updateValueAndValidity();
 
+    // Rotating shift dropdowns: required and must be unique when Rotating type
+    (['shift1', 'shift2', 'shift3'] as const).forEach((name) => {
+      const ctrl = this.form.get(name);
+      if (isRotating) {
+        ctrl?.setValidators([Validators.required, this.uniqueShiftValidator(name)]);
+      } else {
+        ctrl?.clearValidators();
+      }
+      ctrl?.updateValueAndValidity({ emitEvent: false });
+    });
+
     // Shift selection: required when the upper section is visible
     const fkShiftIdCtrl = this.form.get('fkShiftId');
     isSingle
@@ -511,9 +538,7 @@ export class WorkShiftsAssignmentPopupComponent
 
     // Employee selection: required when the upper section is visible
     const userIdsCtrl = this.form.get('userIdsArray');
-    isSingle
-      ? userIdsCtrl?.setValidators([Validators.required])
-      : userIdsCtrl?.clearValidators();
+    isSingle ? userIdsCtrl?.setValidators([Validators.required]) : userIdsCtrl?.clearValidators();
     userIdsCtrl?.updateValueAndValidity();
 
     const endDateCtrl = this.form.get('endDate');
@@ -523,11 +548,13 @@ export class WorkShiftsAssignmentPopupComponent
 
   private validateAndUpdateWorkingDays(): void {
     const startDate = this.form.get('startDate')?.value;
-    const endDate   = this.form.get('endDate')?.value;
+    const endDate = this.form.get('endDate')?.value;
 
     if (startDate && endDate) {
       const allowedDays = this.getAllowedWeekDaysInRange(startDate, endDate);
-      this.selectedWorkingDays = this.selectedWorkingDays.filter(day => allowedDays.includes(day));
+      this.selectedWorkingDays = this.selectedWorkingDays.filter((day) =>
+        allowedDays.includes(day)
+      );
       this.updateEmployeeWorkingDaysInForm();
     }
   }
@@ -539,14 +566,57 @@ export class WorkShiftsAssignmentPopupComponent
     if (endDate) this.maxStartDate = new Date(endDate);
   }
 
-  get fkShiftIdControl() { return this.form.get('fkShiftId') as FormControl; }
-  get startDateControl() { return this.form.get('startDate') as FormControl; }
-  get endDateControl() { return this.form.get('endDate') as FormControl; }
-  get userIdsArrayControl() { return this.form.get('userIdsArray') as FormControl; }
-  get employeeWorkingDaysControl() { return this.form.get('employeeWorkingDays') as FormControl; }
-  get presenceInquiryTimeControl() { return this.form.get('presenceInquiryTime') as FormControl; }
-  get presenceInquiryBufferControl() { return this.form.get('presenceInquiryBuffer') as FormControl; }
-  get workShiftTypeControl() { return this.form.get('workShiftType') as FormControl; }
+  private uniqueShiftValidator(ownName: string): ValidatorFn {
+    return (): ValidationErrors | null => {
+      if (!this.form) return null;
+      const ownValue = this.form.get(ownName)?.value;
+      if (ownValue == null) return null;
+      const hasDuplicate = ['shift1', 'shift2', 'shift3']
+        .filter((n) => n !== ownName)
+        .some((n) => this.form.get(n)?.value === ownValue);
+      return hasDuplicate ? { duplicateShift: true } : null;
+    };
+  }
+
+  getOccupiedMemberIds(periodOrder: number): number[] {
+    return this.rotationGroups
+      .filter((g) => g.periodOrder !== periodOrder)
+      .flatMap((g) => g.memberIds);
+  }
+
+  get fkShiftIdControl() {
+    return this.form.get('fkShiftId') as FormControl;
+  }
+  get shift1Control() {
+    return this.form.get('shift1') as FormControl;
+  }
+  get shift2Control() {
+    return this.form.get('shift2') as FormControl;
+  }
+  get shift3Control() {
+    return this.form.get('shift3') as FormControl;
+  }
+  get startDateControl() {
+    return this.form.get('startDate') as FormControl;
+  }
+  get endDateControl() {
+    return this.form.get('endDate') as FormControl;
+  }
+  get userIdsArrayControl() {
+    return this.form.get('userIdsArray') as FormControl;
+  }
+  get employeeWorkingDaysControl() {
+    return this.form.get('employeeWorkingDays') as FormControl;
+  }
+  get presenceInquiryTimeControl() {
+    return this.form.get('presenceInquiryTime') as FormControl;
+  }
+  get presenceInquiryBufferControl() {
+    return this.form.get('presenceInquiryBuffer') as FormControl;
+  }
+  get workShiftTypeControl() {
+    return this.form.get('workShiftType') as FormControl;
+  }
 
   get isSingleShiftType(): boolean {
     const type = this.form?.get('workShiftType')?.value;
@@ -567,9 +637,32 @@ export class WorkShiftsAssignmentPopupComponent
 
   weekDays = weekDays;
 
-
   getSelectedShiftObject(controlName: string) {
-    let control = this.form?.get(controlName)
-    return this.shifts.find(x => x.id == control?.value);
+    let control = this.form?.get(controlName);
+    return this.shifts.find((x) => x.id == control?.value);
+  }
+
+  getSortedShiftsNames(order: number) {
+    let selectedGroupShiftValue = this.form.get('shift' + (order + 1))?.value;
+    let nextGroupShiftValue =
+      order < 2 ? this.form.get('shift' + (order + 2))?.value : this.form.get('shift' + 1)?.value;
+    let lastGroupShiftValue =
+      order == 0
+        ? this.form.get('shift' + (order + 3))?.value
+        : this.form.get('shift' + order)?.value;
+
+    if (this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC) {
+      return (
+        (this.shifts.find((x) => x.id == selectedGroupShiftValue)?.nameAr || '-') + ',' +
+        (this.shifts.find((x) => x.id == nextGroupShiftValue)?.nameAr || '-') + ',' +
+        (this.shifts.find((x) => x.id == lastGroupShiftValue)?.nameAr || '-')
+      );
+    } else {
+      return (
+        (this.shifts.find((x) => x.id == selectedGroupShiftValue)?.nameEn || '-') + ',' +
+        (this.shifts.find((x) => x.id == nextGroupShiftValue)?.nameEn || '-') + ',' +
+        (this.shifts.find((x) => x.id == lastGroupShiftValue)?.nameEn || '-')
+      );
+    }
   }
 }

@@ -553,7 +553,12 @@
     "ASSIGNED_EMPLOYEES": "Employees Assigned",
     "DELETE_ALL_EMPLOYEES": "Delete All Employees",
     "ROTATING_SHIFT": "Rotating Assignment",
-    "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "Please assign at least one employee to each shift section before saving"
+    "FIRST_SHIFT": "First Shift",
+    "SECOND_SHIFT": "Second Shift",
+    "THIRD_SHIFT": "Third Shift",
+    "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "Please assign at least one employee to each shift section before saving",
+    "DUPLICATE_SHIFT": "This shift is already assigned to another slot — each shift must be unique",
+    "ROTATING_SHIFTS": "Rotating Shifts"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
@@ -913,6 +918,9 @@
     }
   },
   "SHIFT_ASSIGNMENT_PANEL": {
-    "SHIFT_WORKING_HOURS": "Shift working hours: "
+    "SHIFT_WORKING_HOURS": "Shift working hours: ",
+    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "Rotating shifts (work week / rest week)",
+    "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "Users will be rotated between shifts in the following order: ",
+    "ON_A_RECURRING_BASIS": "on a recurring basis."
   }
 }

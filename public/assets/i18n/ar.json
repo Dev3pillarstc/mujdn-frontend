@@ -551,7 +551,12 @@
     "ASSIGNED_EMPLOYEES": "الموظفون المعنيون بالاسناد",
     "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين",
     "ROTATING_SHIFT": "إسناد متناوب",
-    "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "يرجى تعيين موظف واحد على الأقل في كل قسم وردية قبل الحفظ"
+    "FIRST_SHIFT": "الوردية الأولى",
+    "SECOND_SHIFT": "الوردية الثانية",
+    "THIRD_SHIFT": "الوردية الثالثة",
+    "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "يرجى تعيين موظف واحد على الأقل في كل قسم وردية قبل الحفظ",
+    "DUPLICATE_SHIFT": "هذه الوردية محددة بالفعل في خانة أخرى — يجب أن تكون كل وردية مختلفة",
+    "ROTATING_SHIFTS": "ورديات التناوب"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "اسناد وردية لموظف",
@@ -911,6 +916,9 @@
     }
   },
   "SHIFT_ASSIGNMENT_PANEL": {
-    "SHIFT_WORKING_HOURS": "مواعيد العمل بالوردية: "
+    "SHIFT_WORKING_HOURS": "مواعيد العمل بالوردية: ",
+    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)",
+    "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "سيتم تناوب الموظفين بين الورديات بالترتيب التالي: ",
+    "ON_A_RECURRING_BASIS": "بشكل دوري."
   }
 }

@@ -31,15 +31,18 @@ import { formatTimeTo12Hour } from '@/utils/general-helper';
 })
 export class ShiftAssignmentPanelComponent implements OnInit {
   @Input() shift?: Shift;
-  @Input() shiftName: string = '';
   @Input() shiftTimeRange?: string;
   @Input() showInfoBox: boolean = false;
   @Input() departments: BaseLookupModel[] = [];
   @Input() allEmployees: UsersWithDepartmentLookup[] = [];
   @Input() initialMemberIds: number[] = [];
   @Input() optionLabel: string = 'nameAr';
+  @Input() occupiedMemberIds: number[] = [];
+  @Input() initialDeptIds: number[] = [];
+  @Input() sortedNames?: string;
 
   @Output() memberIdsChange = new EventEmitter<number[]>();
+  @Output() deptIdsChange = new EventEmitter<number[]>();
 
   selectedDeptIds: number[] = [];
   selectedMemberIds: number[] = [];
@@ -59,13 +62,18 @@ export class ShiftAssignmentPanelComponent implements OnInit {
   private initialize(): void {
     this.selectedMemberIds = [...this.initialMemberIds];
 
-    const deptIds = new Set<number>();
-    this.selectedMemberIds.forEach((id) => {
-      const emp = this.allEmployees.find((e) => e.id === id);
-      if (emp?.departmentId) deptIds.add(emp.departmentId);
-    });
+    // Prefer explicitly persisted dept selection; fall back to deriving from member depts
+    if (this.initialDeptIds.length > 0) {
+      this.selectedDeptIds = [...this.initialDeptIds];
+    } else {
+      const deptIds = new Set<number>();
+      this.selectedMemberIds.forEach((id) => {
+        const emp = this.allEmployees.find((e) => e.id === id);
+        if (emp?.departmentId) deptIds.add(emp.departmentId);
+      });
+      this.selectedDeptIds = Array.from(deptIds);
+    }
 
-    this.selectedDeptIds = Array.from(deptIds);
     this.previousDeptIds = [...this.selectedDeptIds];
     this.filteredEmployees =
       this.selectedDeptIds.length > 0
@@ -95,7 +103,7 @@ export class ShiftAssignmentPanelComponent implements OnInit {
         : [];
 
     this.updateDepartmentGroups();
-    // No memberIdsChange emit — dept selection is internal filter state only.
+    this.deptIdsChange.emit([...this.selectedDeptIds]);
   }
 
   onDepartmentSelectAll(event: MultiSelectSelectAllChangeEvent): void {
@@ -124,6 +132,7 @@ export class ShiftAssignmentPanelComponent implements OnInit {
     this.filteredEmployees = this.filteredEmployees.filter((e) => e.departmentId !== deptId);
     this.updateDepartmentGroups();
     this.memberIdsChange.emit([...this.selectedMemberIds]);
+    this.deptIdsChange.emit([...this.selectedDeptIds]);
   }
 
   get selectedDeptLabel(): string {
@@ -132,6 +141,13 @@ export class ShiftAssignmentPanelComponent implements OnInit {
     return this.optionLabel === 'nameAr'
       ? `${count} قسم محدد`
       : `${count} department${count > 1 ? 's' : ''} selected`;
+  }
+
+  get filteredEmployeesWithDisabled() {
+    return this.filteredEmployees.map(emp => ({
+      ...emp,
+      disabled: this.occupiedMemberIds.includes(emp.id!),
+    }));
   }
 
   get selectedEmpLabel(): string {

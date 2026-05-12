@@ -22,10 +22,10 @@
       </svg>
       <div>
         <p class="font-bold text-[#1f2a37] text-sm">
-          نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)
+          {{'SHIFT_ASSIGNMENT_PANEL.ROTATING_SHIFTS_WORK_WEEK_REST_WEEK' | translate}}
         </p>
         <p class="text-[11px] text-[#4b5563]">
-          سيتم تناوب الموظفين بين الورديات بالترتيب التالي: الوردية الأولى ثم الثانية ثم الثالثة بشكل دوري.
+          {{'SHIFT_ASSIGNMENT_PANEL.USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER' | translate}} ({{sortedNames}}) {{'SHIFT_ASSIGNMENT_PANEL.ON_A_RECURRING_BASIS' | translate}}
         </p>
       </div>
     </div>
@@ -55,12 +55,13 @@
     <div class="relative">
       <label class="label required">{{ 'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate }}</label>
       <p-multiSelect
-        [options]="filteredEmployees"
+        [options]="filteredEmployeesWithDisabled"
         [(ngModel)]="selectedMemberIds"
         (onChange)="onEmployeeChange($event.value)"
         class="w-full peer"
         [optionLabel]="optionLabel"
         optionValue="id"
+        optionDisabled="disabled"
         [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.EMPLOYEE_NAME' | translate"
         [maxSelectedLabels]="0"
         [selectedItemsLabel]="selectedEmpLabel"

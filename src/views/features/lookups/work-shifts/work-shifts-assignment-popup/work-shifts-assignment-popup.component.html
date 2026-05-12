@@ -280,8 +280,6 @@
         } <!--end showWorkingDays-->
 
         <app-shift-assignment-panel
-
-          shiftName="الوردية الأولى"
           [shift]="getSelectedShiftObject('fkShiftId')"
           [departments]="departments"
           [allEmployees]="usersProfiles"
@@ -299,49 +297,55 @@
         <hr class="border-gray-100 mb-6" />
 
         <!-- Rotating Shifts Row -->
-        <h4 class="text-lg font-bold text-[#1f2a37] mb-4">ورديات التناوب</h4>
+        <h4 class="text-lg font-bold text-[#1f2a37] mb-4">{{'USER_WORK_SHIFT_ASSIGNMENT.ROTATING_SHIFTS' | translate}}</h4>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-2">
           <div class="relative">
-            <label class="label">الوردية الأولى</label>
+            <label class="label" for="shift1">{{ 'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate }}</label>
             <p-select
+              id="shift1"
               [options]="shifts"
               formControlName="shift1"
               [optionLabel]="optionLabel"
               optionValue="id"
               class="w-full peer"
-              placeholder="الوردية الأولى"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
+            <app-validation-messages [control]="shift1Control"></app-validation-messages>
           </div>
           <div class="relative">
-            <label class="label">الوردية الثانية</label>
+            <label class="label" for="shift2">{{ 'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate }}</label>
             <p-select
+              id="shift2"
               [options]="shifts"
               formControlName="shift2"
               [optionLabel]="optionLabel"
               optionValue="id"
               class="w-full peer"
-              placeholder="الوردية الثانية"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
+            <app-validation-messages [control]="shift2Control"></app-validation-messages>
           </div>
           <div class="relative">
-            <label class="label text-red-500">الوردية الثالثة</label>
+            <label class="label" for="shift3">{{ 'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate }}</label>
             <p-select
+              id="shift3"
               [options]="shifts"
               formControlName="shift3"
               [optionLabel]="optionLabel"
               optionValue="id"
-              class="w-full peer border-red-400"
-              placeholder="الوردية الثالثة"
+              class="w-full peer"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate"
             ></p-select>
             <span
               class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
             ></span>
+            <app-validation-messages [control]="shift3Control"></app-validation-messages>
           </div>
         </div>
 
@@ -355,7 +359,7 @@
               [class.active-item]="activeShift === 0"
               class="sidebar-item"
             >
-              الوردية الأولى
+              {{'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate}}
             </button>
             <button
               type="button"
@@ -363,7 +367,7 @@
               [class.active-item]="activeShift === 1"
               class="sidebar-item"
             >
-              الوردية الثانية
+              {{'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate}}
             </button>
             <button
               type="button"
@@ -371,7 +375,7 @@
               [class.active-item]="activeShift === 2"
               class="sidebar-item"
             >
-              الوردية الثالثة
+              {{'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate}}
             </button>
           </div>
 
@@ -379,13 +383,17 @@
           @for (group of rotationGroups; track group.periodOrder) {
             <app-shift-assignment-panel
               *ngIf="activeShift === group.periodOrder"
+              [sortedNames]="getSortedShiftsNames(group.periodOrder)"
               [shift]="getRotationShift(group.periodOrder)"
               [showInfoBox]="true"
               [departments]="departments"
               [allEmployees]="usersProfiles"
               [initialMemberIds]="group.memberIds"
+              [initialDeptIds]="rotationGroupDeptIds[group.periodOrder]"
+              [occupiedMemberIds]="getOccupiedMemberIds(group.periodOrder)"
               [optionLabel]="optionLabel"
               (memberIdsChange)="onRotationGroupMembersChange(group.periodOrder, $event)"
+              (deptIdsChange)="onRotationGroupDeptsChange(group.periodOrder, $event)"
             ></app-shift-assignment-panel>
           }
         </div>

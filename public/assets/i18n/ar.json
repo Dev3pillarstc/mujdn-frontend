@@ -615,7 +615,7 @@
   "MY_SHIFTS": {
     "MY_SHIFTS": "وردياتي",
     "SHIFT_DAYS": "أيام العمل بالوردية",
-    "ASSIGNED_SHIFTS_LIST": "قائمة ورديات العمل المخصصة",
+    "ASSIGNED_SHIFTS_LIST": "ورديات العمل المسندة",
     "NAME_ARABIC": "اسم الوردية (عربي)",
     "NAME_ENGLISH": "اسم الوردية (إنجليزي)",
     "START_DATE": "التاريخ (من)",

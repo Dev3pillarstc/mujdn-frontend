@@ -130,14 +130,14 @@
                 <div class="actions flex items-center gap-4 ms-auto">
                   <button
                     (click)="
-                      exportExcel(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST', 'xlsx'))
+                      exportExcel(getTranslatedFileName('PERMISSION_PAGE.MY_REQUESTS', 'xlsx'))
                     "
                     class="table-head-action-btn min-w-[40px]"
                   >
                     <img alt="" src="assets/icons/excel.svg" />
                   </button>
                   <button
-                    (click)="exportPdf(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST'))"
+                    (click)="exportPdf(getTranslatedFileName('PERMISSION_PAGE.MY_REQUESTS'))"
                     class="table-head-action-btn"
                   >
                     <img alt="" src="assets/icons/pdf.svg" />
@@ -401,7 +401,7 @@
                     <button
                       (click)="
                         exportExcel(
-                          getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST', 'xlsx'),
+                          getTranslatedFileName('PERMISSION_PAGE.INCOMING_REQUESTS', 'xlsx'),
                           true
                         )
                       "
@@ -411,7 +411,7 @@
                     </button>
                     <button
                       (click)="
-                        exportPdf(getTranslatedFileName('PERMISSION_PAGE.PERMISSION_LIST'), true)
+                        exportPdf(getTranslatedFileName('PERMISSION_PAGE.INCOMING_REQUESTS'), true)
                       "
                       class="table-head-action-btn"
                     >

@@ -148,7 +148,10 @@ export class MyAttendanceReportListComponent extends BaseListComponent<
     const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
     return formatDateTo12Hour(date, locale);
   }
-  override exportExcel(fileName: string = 'My Attendance report.xlsx'): void {
+  override exportExcel(fileName: string = ''): void {
+    if (!fileName) {
+      fileName = this.getTranslatedFileName('ATTENDANCE_REPORT_PAGE.MY_ATTENDANCE_REPORTS', 'xlsx');
+    }
     const allDataParams = {
       ...this.paginationParams,
       pageNumber: 1,

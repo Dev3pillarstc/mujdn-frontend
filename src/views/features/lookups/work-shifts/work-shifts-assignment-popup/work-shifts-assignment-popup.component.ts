@@ -1,11 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Inject, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
@@ -14,21 +13,15 @@ import {
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { Select } from 'primeng/select';
-import { MultiSelect } from 'primeng/multiselect';
-import { Accordion } from 'primeng/accordion';
-import { AccordionPanel } from 'primeng/accordion';
-import { AccordionHeader } from 'primeng/accordion';
-import { AccordionContent } from 'primeng/accordion';
 import { DatePickerModule } from 'primeng/datepicker';
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
 
-import { forkJoin, Observable } from 'rxjs';
+import { distinctUntilChanged, Observable } from 'rxjs';
 import { AlertService } from '@/services/shared/alert.service';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import Shift from '@/models/features/lookups/work-shifts/shift';
@@ -39,68 +32,68 @@ import { UserWorkShiftService } from '@/services/features/lookups/user-workshift
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { DepartmentEmployees } from '@/models/features/lookups/work-shifts/department-employees';
+import { RotationGroup } from '@/models/features/lookups/work-shifts/rotation-group';
 import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
 import { WorkShiftType } from '@/enums/work-shift-type';
-import { InputTextModule } from 'primeng/inputtext';
+import { ShiftAssignmentPanelComponent } from './shift-assignment-panel/shift-assignment-panel.component';
+import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
   imports: [
     CommonModule,
-    FormsModule,
     Select,
-    MultiSelect,
-    Accordion,
-    AccordionPanel,
-    AccordionHeader,
-    AccordionContent,
     DatePickerModule,
     ReactiveFormsModule,
-    RequiredMarkerDirective,
     TranslatePipe,
     ValidationMessagesComponent,
     InputNumberModule,
-    InputTextModule
+    ShiftAssignmentPanelComponent,
+    RequiredMarkerDirective,
   ],
   templateUrl: './work-shifts-assignment-popup.component.html',
   styleUrl: './work-shifts-assignment-popup.component.scss',
 })
 export class WorkShiftsAssignmentPopupComponent
   extends BasePopupComponent<UserWorkShift>
-  implements OnInit, AfterViewInit {
+  implements OnInit
+{
   model!: UserWorkShift;
   usersProfiles: UsersWithDepartmentLookup[] = [];
   workDays: WorkDaysSetting = new WorkDaysSetting();
-  filteredUsersProfiles: UsersWithDepartmentLookup[] = [];
   departments: BaseLookupModel[] = [];
   shifts: Shift[] = [];
-  departmentEmployeesGroups: DepartmentEmployees[] = []; // Grouped employees by department
   workShiftType = WorkShiftType;
   form!: FormGroup;
   viewMode!: ViewModeEnum;
   fb = inject(FormBuilder);
   alertService = inject(AlertService);
-  cdr = inject(ChangeDetectorRef);
   langService = inject(LanguageService);
   isCreateMode = false;
   selectedWorkingDays: number[] = [];
   userWorkShiftService = inject(UserWorkShiftService);
-  // Date constraints
   minEndDate: Date | null = null;
   maxStartDate: Date | null = null;
   previousStandardWorkingDays: number[] = [];
+  allowedWeekDaysInRange: number[] = [];
+  activeShift: number = 0;
+
+  // Single shift: tracks selected member IDs for the standard shift panel
+  singleShiftMemberIds: number[] = [];
+
+  // Rotating shifts: one RotationGroup per tab (periodOrder 0, 1, 2)
+  rotationGroups: RotationGroup[] = [0, 1, 2].map((periodOrder) =>
+    Object.assign(new RotationGroup(), { periodOrder, memberIds: [] })
+  );
+
+  // Persists dept selection per rotation group across tab switches
+  rotationGroupDeptIds: Record<number, number[]> = { 0: [], 1: [], 2: [] };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
 
-  ngAfterViewInit(): void {
-    this.cdr.detectChanges();
-  }
-
   override initPopup(): void {
-    // Initialize model - either from data or create new instance
     this.model = this.data.model || new UserWorkShift();
     this.usersProfiles = this.data.lookups?.usersProfiles || [];
     this.departments = this.data.lookups?.departments || [];
@@ -109,33 +102,36 @@ export class WorkShiftsAssignmentPopupComponent
     this.isCreateMode = this.viewMode === ViewModeEnum.CREATE;
 
     this.usersProfiles = this.sortByName(this.usersProfiles, this.optionLabel);
-    // Initialize as empty - employees will appear only after department selection
-    this.filteredUsersProfiles = [];
     this.departments = this.sortByName(this.departments, this.optionLabel);
     this.shifts = this.sortByName(this.shifts, this.optionLabel);
 
-    if (this.isCreateMode) {
-      // Initialize selected working days
-      // this.workDays = this.data.lookups?.defaultWorkDays[0]!;
-      this.initializeSelectedWorkingDays();
-    } else {
-      // For edit mode, initialize working days from model
-      this.initializeSelectedWorkingDays();
-    }
+    this.singleShiftMemberIds = this.model.assignedUserIds || [];
+    this.assignSelectedGroupsAndShiftsAndUsers();
+    this.initializeSelectedWorkingDays();
+  }
+
+  assignSelectedGroupsAndShiftsAndUsers(): void {
+    // Restore rotation groups from model in edit mode
+    const savedGroups: RotationGroup[] = (this.model as any).rotationGroups || [];
+    this.rotationGroups = [0, 1, 2].map((periodOrder) => {
+      const saved = savedGroups.find((g) => g.periodOrder === periodOrder);
+      return Object.assign(new RotationGroup(), {
+        periodOrder,
+        memberIds: saved?.memberIds || [],
+        fkShiftId: saved?.fkShiftId,
+      });
+    });
   }
 
   private initializeSelectedWorkingDays(): void {
-    // Reset
     this.selectedWorkingDays = [];
 
     if (this.model.employeeWorkingDays) {
-      // Priority 1: Parse from model string
       this.selectedWorkingDays = this.model.employeeWorkingDays
         .split(',')
         .map((day) => parseInt(day.trim(), 10))
         .filter((day) => !isNaN(day));
     } else if (this.workDays) {
-      // Priority 2: Map boolean flags to enum values
       const mapping: { [key: string]: WeekDaysEnum } = {
         saturday: WeekDaysEnum.SATURDAY,
         sunday: WeekDaysEnum.SUNDAY,
@@ -152,101 +148,64 @@ export class WorkShiftsAssignmentPopupComponent
     }
 
     this.selectedWorkingDays.sort((a, b) => a - b);
-
-    // Initialize persistent state
     this.previousStandardWorkingDays = [...this.selectedWorkingDays];
   }
 
   override buildForm(): void {
-    // Get the departments to pre-select based on assigned users
-    const assignedUserIds = this.model.assignedUserIds || [];
-    const departmentsToSelect = new Set<number>();
-
-    if (!this.isCreateMode && assignedUserIds.length > 0) {
-      assignedUserIds.forEach((userId) => {
-        const emp = this.usersProfiles.find((u) => u.id === userId);
-        if (emp && emp.departmentId) {
-          departmentsToSelect.add(emp.departmentId);
-        }
-      });
-    }
-
     this.form = this.fb.group({
       ...this.model.buildForm(),
-      employeeWorkingDays: [
-        this.selectedWorkingDays.join(','),
-        [this.validateWorkingDays()],
-      ],
-      userIdsArray: [[], [Validators.required]],
-      departmentIdsArray: [Array.from(departmentsToSelect), [Validators.required]],
-      // Controls used in the rotating-shifts section
-      assignmentId: [null],
-      shift1: [null],
-      shift2: [null],
-      shift3: [null],
-      fkDepartmentId: [[]],
+      fkShiftId: [this.model.fkShiftId ?? null, []], // not required in this popup
+      employeeWorkingDays: [this.selectedWorkingDays.join(','), [this.validateWorkingDays()]],
+      userIdsArray: [this.singleShiftMemberIds, [Validators.required]],
+      assignmentId: [this.model.id],
+      shift1: [this.rotationGroups[0].fkShiftId ?? null],
+      shift2: [this.rotationGroups[1].fkShiftId ?? null],
+      shift3: [this.rotationGroups[2].fkShiftId ?? null],
     });
 
-    // Watch for employee selection changes to update the accordion
-    this.form.get('userIdsArray')?.valueChanges.subscribe((userIds) => {
-      this.onEmployeeSelectionChange(userIds);
+    // Link shift dropdowns → rotationGroups, and cross-validate siblings for duplicates
+    const shiftNames = ['shift1', 'shift2', 'shift3'] as const;
+    shiftNames.forEach((controlName, periodOrder) => {
+      this.form.get(controlName)?.valueChanges.subscribe((shiftId) => {
+        this.rotationGroups[periodOrder].fkShiftId = shiftId;
+        shiftNames
+          .filter((n) => n !== controlName)
+          .forEach((n) => this.form.get(n)?.updateValueAndValidity({ emitEvent: false }));
+      });
     });
 
-    // Watch for work shift type changes
-    this.form.get('workShiftType')?.valueChanges.subscribe((type) => {
-      this.onWorkShiftTypeChange(type);
-    });
+    this.form
+      .get('workShiftType')
+      ?.valueChanges.pipe(distinctUntilChanged())
+      .subscribe((type) => {
+        this.onWorkShiftTypeChange(type);
+      });
 
-    // Set the correct values for dropdowns after form is built
-    this.setDropdownValues();
-    this.updateDateConstraints();
-
-    // Initialize state based on current type
+    // Must run before setDropdownValues so dates are not yet in the form.
+    // If dates are present, validateAndUpdateWorkingDays filters the saved
+    // working days against the date range, which clears them in edit mode.
     this.onWorkShiftTypeChange(this.form.get('workShiftType')?.value);
 
+    this.setDropdownValues();
+    this.updateDateConstraints();
     this.refreshAllowedWeekDays(
       (this.form.get('startDate')?.value as Date | null) ?? null,
       (this.form.get('endDate')?.value as Date | null) ?? null
     );
   }
 
-  // Update setDropdownValues to handle the department filtering after form is built
   private setDropdownValues(): void {
     if (!this.isCreateMode) {
-      // Set shift
-      if (this.model.fkShiftId) {
-        this.form.get('fkShiftId')?.setValue(this.model.fkShiftId);
+      const shiftId = this.model.fkShiftId ?? (this.model as any).shiftDetails?.id;
+      if (shiftId) {
+        this.form.get('fkShiftId')?.setValue(shiftId);
       }
-
-      // Set employees
-      const assignedUserIds = this.model.assignedUserIds || [];
-      if (assignedUserIds.length > 0) {
-        this.form.get('userIdsArray')?.setValue(assignedUserIds);
-
-        // Get the pre-selected departments from the form (already set in buildForm)
-        const selectedDepartments = this.form.get('departmentIdsArray')?.value || [];
-
-        // Filter employees to ensure selected ones are visible in dropdown
-        if (selectedDepartments.length > 0) {
-          this.filterEmployeesByDepartment(selectedDepartments);
-        }
-      }
-
-      // Set workShiftType
-      if (this.model.workShiftType) {
-        this.form.get('workShiftType')?.setValue(this.model.workShiftType);
-      } else {
-        this.form.get('workShiftType')?.setValue(WorkShiftType.Standard);
-      }
-
-      // Set presenceInquiryTime
+      this.form.get('workShiftType')?.setValue(this.model.workShiftType);
       if (this.model.presenceInquiryTime) {
         this.form
           .get('presenceInquiryTime')
           ?.setValue(new Date('1970-01-01T' + this.model.presenceInquiryTime));
       }
-
-      // Set dates
       if (this.model.startDate) {
         const startDate =
           typeof this.model.startDate === 'string'
@@ -269,6 +228,32 @@ export class WorkShiftsAssignmentPopupComponent
     }
   }
 
+  // Called by single shift panel when selection changes
+  onSingleShiftMembersChange(memberIds: number[]): void {
+    this.singleShiftMemberIds = memberIds;
+    this.form.get('userIdsArray')?.setValue(memberIds);
+    this.form.get('userIdsArray')?.markAsTouched();
+  }
+
+  // Called by each rotating shift panel when selection changes
+  onRotationGroupMembersChange(periodOrder: number, memberIds: number[]): void {
+    this.rotationGroups[periodOrder].memberIds = memberIds;
+  }
+
+  onRotationGroupDeptsChange(periodOrder: number, deptIds: number[]): void {
+    this.rotationGroupDeptIds[periodOrder] = deptIds;
+  }
+
+  getRotationGroup(periodOrder: number): RotationGroup {
+    return this.rotationGroups[periodOrder];
+  }
+
+  getRotationShift(periodOrder: number): Shift | undefined {
+    const controlName = ['shift1', 'shift2', 'shift3'][periodOrder];
+    const shiftId = this.form?.get(controlName)?.value;
+    return this.shifts.find((s) => s.id === shiftId);
+  }
+
   onWorkingDayChange(dayValue: number, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
 
@@ -282,11 +267,7 @@ export class WorkShiftsAssignmentPopupComponent
 
     this.selectedWorkingDays.sort();
     this.updateEmployeeWorkingDaysInForm();
-
-    // Mark the field as touched so validation messages appear
     this.form.get('employeeWorkingDays')?.markAsTouched();
-
-    // Update persistent state when manually changed (only allowed in Standard mode)
     this.previousStandardWorkingDays = [...this.selectedWorkingDays];
   }
 
@@ -294,12 +275,7 @@ export class WorkShiftsAssignmentPopupComponent
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value || '';
       const selectedDays = value.split(',').filter((day: string) => day.trim() !== '');
-
-      if (selectedDays.length === 0) {
-        return { required: true }; // This should match your ValidationErrorKeyEnum.REQUIRED
-      }
-
-      return null;
+      return selectedDays.length === 0 ? { required: true } : null;
     };
   }
 
@@ -308,95 +284,81 @@ export class WorkShiftsAssignmentPopupComponent
     this.form.get('employeeWorkingDays')?.setValue(workingDaysString);
     this.form.get('employeeWorkingDays')?.updateValueAndValidity();
   }
+
   onSaveClick(): void {
-    // Mark all fields as touched to show validation errors
-    Object.keys(this.form.controls).forEach((key) => {
-      const control = this.form.get(key);
-      if (control) {
-        control.markAsTouched();
-        control.updateValueAndValidity();
-      }
+    Object.values(this.form.controls).forEach((ctrl) => {
+      ctrl.markAsTouched();
+      ctrl.updateValueAndValidity();
     });
 
-    if (this.form.valid) {
-      const formValue = this.form.value;
-      const userIds = formValue.userIdsArray || [];
+    if (!this.form.valid) return;
 
-      if (userIds.length === 0) {
-        // Should be caught by validation, but double check
-        return;
+    if (!this.validateEmployeeSelection()) return;
+
+    const formValue = this.form.value;
+
+    if (this.model.id) {
+      this.prepareModel(this.model, this.form);
+      this.userWorkShiftService.update(this.model).subscribe({
+        next: () => this.dialogRef.close(DIALOG_ENUM.OK),
+        error: (err) => this.save$.error(err),
+      });
+    } else {
+      const newModel = new UserWorkShift();
+      this.prepareModel(newModel, this.form);
+      if (!this.isRotatingType) {
+        newModel.assignedUserIds = formValue.userIdsArray || [];
       }
-
-      if (this.model.id) {
-        // Update data specifically for single edit mode if needed,
-        // though typically edit is 1-to-1.
-        // If edit mode is single user:
-        this.prepareModel(this.model, this.form);
-        this.userWorkShiftService.update(this.model).subscribe({
-          next: () => {
-            this.dialogRef.close(DIALOG_ENUM.OK);
-          },
-          error: (err) => {
-            this.save$.error(err);
-          },
-        });
-      } else {
-        // Bulk Create / Assign
-        const newModel = new UserWorkShift();
-        this.prepareModel(newModel, this.form);
-        // We now use assignedUserIds for bulk assignment
-        newModel.assignedUserIds = userIds;
-
-        this.userWorkShiftService.assignUserShift(newModel).subscribe({
-          next: () => {
-            this.dialogRef.close(DIALOG_ENUM.OK);
-          },
-          error: (err) => {
-            this.save$.error(err);
-          },
-        });
-      }
+      this.userWorkShiftService.assignUserShift(newModel).subscribe({
+        next: () => this.dialogRef.close(DIALOG_ENUM.OK),
+        error: (err) => this.save$.error(err),
+      });
     }
+  }
+
+  private validateEmployeeSelection(): boolean {
+    if (this.isRotatingType) {
+      const hasEmpty = this.rotationGroups.some((g) => g.memberIds.length === 0);
+      if (hasEmpty) {
+        this.alertService.showErrorMessage({
+          messages: ['USER_WORK_SHIFT_ASSIGNMENT.AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT'],
+        });
+        return false;
+      }
+    } else if (this.isSingleShiftType && this.singleShiftMemberIds.length === 0) {
+      this.alertService.showErrorMessage({
+        messages: ['USER_WORK_SHIFT_ASSIGNMENT.AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT'],
+      });
+      return false;
+    }
+    return true;
   }
 
   isWorkingDaySelected(dayValue: number): boolean {
     return this.selectedWorkingDays.includes(dayValue);
   }
 
-  // NEW METHOD: Check if a weekday should be disabled based on date range
   isWeekDayDisabled(dayValue: number): boolean {
-    // 1. Check if Shift Type forces disable (Type 2 or 3)
     const currentType = this.form.get('workShiftType')?.value;
     if (
       currentType === WorkShiftType.WeekOnWeekOff ||
       currentType === WorkShiftType.WeekOnWeekOff24
     ) {
-      return true; // Disable all manual selection for these types
+      return true;
     }
 
     const startDate = this.form.get('startDate')?.value;
     const endDate = this.form.get('endDate')?.value;
 
-    // If only start date is selected or no dates selected, don't disable any days
-    if (!startDate || !endDate) {
-      return false;
-    }
+    if (!startDate || !endDate) return false;
 
-    // Get the allowed weekdays for the date range
-    const allowedDays = this.getAllowedWeekDaysInRange(startDate, endDate);
-
-    // Disable if the day is not in the allowed range
-    return !allowedDays.includes(dayValue);
+    return !this.getAllowedWeekDaysInRange(startDate, endDate).includes(dayValue);
   }
 
-  // NEW METHOD: Get all weekdays that fall within the date range
   private getAllowedWeekDaysInRange(startDate: Date, endDate: Date): number[] {
     const allowedDays = new Set<number>();
-
     const currentDate = new Date(startDate);
     const end = new Date(endDate);
-
-    // ✅ normalize to date-only (midnight)
     currentDate.setHours(0, 0, 0, 0);
     end.setHours(0, 0, 0, 0);
 
@@ -408,7 +370,7 @@ export class WorkShiftsAssignmentPopupComponent
     return Array.from(allowedDays);
   }
 
-  override saveFail(error: Error): void { }
+  override saveFail(error: Error): void {}
 
   override afterSave(model: UserWorkShift, dialogRef: MatDialogRef<any, any>): void {
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
@@ -430,7 +392,6 @@ export class WorkShiftsAssignmentPopupComponent
     model.employeeWorkingDays = formValue.employeeWorkingDays;
     model.workShiftType = formValue.workShiftType;
 
-    // Convert time to string HH:mm:ss if present (always set seconds to 00)
     if (formValue.presenceInquiryTime instanceof Date) {
       const time = formValue.presenceInquiryTime;
       model.presenceInquiryTime = `${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}:00`;
@@ -439,12 +400,16 @@ export class WorkShiftsAssignmentPopupComponent
     }
     model.presenceInquiryBuffer = formValue.presenceInquiryBuffer;
 
-    // Convert array to single value (take first selected user)
     const userIds = formValue.userIdsArray || [];
     model.fkAssignedUserId = userIds.length > 0 ? userIds[0] : null;
     model.assignedUserIds = userIds;
-
     model.fkShiftId = formValue.fkShiftId;
+
+    (model as any).rotationGroups = this.rotationGroups.map((g) => ({
+      memberIds: g.memberIds,
+      periodOrder: g.periodOrder,
+      fkShiftId: g.fkShiftId,
+    }));
 
     return model;
   }
@@ -469,153 +434,11 @@ export class WorkShiftsAssignmentPopupComponent
     return this.getCurrentLanguage();
   }
 
-  onDepartmentChange(event: any) {
-    const departmentIds = event.value || [];
-    const previousDepartmentIds = this.form.get('departmentIdsArray')?.value || [];
-
-    // Find which departments were deselected
-    const deselectedDepartmentIds = previousDepartmentIds.filter(
-      (id: number) => !departmentIds.includes(id)
-    );
-
-    // Remove employees from deselected departments ONLY if we still have some departments selected.
-    // If all departments are cleared, we want to keep the current selection (User request).
-    if (departmentIds.length > 0 && deselectedDepartmentIds.length > 0) {
-      this.removeEmployeesFromDeselectedDepartments(deselectedDepartmentIds);
-    }
-
-    if (departmentIds.length > 0) {
-      this.filterEmployeesByDepartment(departmentIds);
-    } else {
-      // If no department selected, show only currently selected employees
-      const currentSelection = this.form.get('userIdsArray')?.value || [];
-      if (currentSelection.length > 0) {
-        this.filteredUsersProfiles = this.usersProfiles.filter((emp) =>
-          currentSelection.includes(emp.id)
-        );
-      } else {
-        // No departments and no selection - show empty list
-        this.filteredUsersProfiles = [];
-      }
-      // Do NOT clear userIdsArray here
-    }
-  }
-
-  removeEmployeesFromDeselectedDepartments(deselectedDepartmentIds: number[]): void {
-    const currentUserIds = this.form.get('userIdsArray')?.value || [];
-
-    // Find employees that belong to deselected departments
-    const employeesToRemove = this.usersProfiles
-      .filter((emp) => deselectedDepartmentIds.includes(emp.departmentId || 0))
-      .map((emp) => emp.id);
-
-    // Filter out employees from deselected departments
-    const updatedUserIds = currentUserIds.filter(
-      (userId: number) => !employeesToRemove.includes(userId)
-    );
-
-    this.form.patchValue({ userIdsArray: updatedUserIds });
-  }
-
-  filterEmployeesByDepartment(departmentIds: number[] | any) {
-    // Handle the case where departmentIds might be an event object or the IDs directly
-    const actualDepartmentIds = Array.isArray(departmentIds) ? departmentIds : [departmentIds];
-
-    // Filter employees: show only employees from selected departments
-    this.filteredUsersProfiles = this.usersProfiles.filter((emp) =>
-      actualDepartmentIds.includes(emp.departmentId)
-    );
-  }
-
-  onEmployeeSelectionChange(userIds: number[]): void {
-    // Re-calculate the groups
-    this.updateDepartmentEmployeesGroups(userIds || []);
-  }
-
-  updateDepartmentEmployeesGroups(selectedUserIds: number[]): void {
-    const groupsMap = new Map<number, DepartmentEmployees>();
-    const selectedUsers = this.usersProfiles.filter((user) => selectedUserIds.includes(user.id!));
-
-    selectedUsers.forEach((user) => {
-      const deptId = user.departmentId;
-      if (!deptId) return;
-
-      // Find department info. If user has no department, maybe group under "Other"?
-      // Assuming all have department based on previous code.
-      const department = this.departments.find((d) => d.id === deptId);
-
-      if (department) {
-        if (!groupsMap.has(deptId)) {
-          groupsMap.set(deptId, {
-            department: department,
-            employees: [],
-          });
-        }
-        groupsMap.get(deptId)!.employees.push(user);
-      }
-    });
-
-    // Convert map to array and sort
-    this.departmentEmployeesGroups = this.sortDepartments(Array.from(groupsMap.values()));
-  }
-
-  private sortDepartments(groups: DepartmentEmployees[]): DepartmentEmployees[] {
-    // Sort by department name
-    return groups.sort((a, b) => {
-      const nameA =
-        (this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
-          ? a.department.nameAr
-          : a.department.nameEn) || '';
-      const nameB =
-        (this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
-          ? b.department.nameAr
-          : b.department.nameEn) || '';
-      return nameA.localeCompare(nameB);
-    });
-  }
-
-  removeEmployee(userId: number | undefined): void {
-    if (!userId) return;
-    const currentIds = this.form.get('userIdsArray')?.value as number[];
-    const newIds = currentIds.filter((id) => id !== userId);
-    this.form.get('userIdsArray')?.setValue(newIds);
-  }
-
-  removeAllEmployeesFromDepartment(departmentId: number | undefined): void {
-    if (!departmentId) return;
-
-    // Get users to remove
-    // We can just filter the current selection
-    const currentIds = this.form.get('userIdsArray')?.value as number[];
-    const usersKeep = currentIds.filter((id) => {
-      const user = this.usersProfiles.find((u) => u.id === id);
-      return user && user.departmentId !== departmentId;
-    });
-    this.form.get('userIdsArray')?.setValue(usersKeep);
-
-    // Reseting department selection if needed?
-    // "deleting all employees of department resets the department and employees"
-    // This implies if I remove all employees of Dept X, maybe uncheck Dept X from filter?
-    // Let's do that if logic requires.
-    // Also valid: just removing employees.
-
-    // If we want to uncheck the department from the top filter:
-    const currentDepartments = this.form.get('departmentIdsArray')?.value as number[];
-    if (currentDepartments.includes(departmentId)) {
-      const newDepartments = currentDepartments.filter((d) => d !== departmentId);
-      this.form.get('departmentIdsArray')?.setValue(newDepartments);
-      // Trigger filter update
-      this.onDepartmentChange({ value: newDepartments });
-    }
-  }
   onStartDateSelect(selectedDate: Date): void {
     const newStartDate = selectedDate ?? null;
-
     this.minEndDate = newStartDate ? new Date(newStartDate) : null;
 
     const endDate = (this.form.get('endDate')?.value as Date | null) ?? null;
-
-    // if end is before new start -> clear end
     if (newStartDate && endDate && new Date(endDate) < newStartDate) {
       this.form.get('endDate')?.setValue(null);
     }
@@ -623,21 +446,15 @@ export class WorkShiftsAssignmentPopupComponent
     const effectiveEndDate =
       newStartDate && endDate && new Date(endDate) < newStartDate ? null : endDate;
 
-    // ✅ compute allowed days using NEW start + current end (or null if cleared)
     this.refreshAllowedWeekDays(newStartDate, effectiveEndDate);
-
-    // ✅ remove invalid selected working days using the same effective range
     this.validateAndUpdateWorkingDays_WithDates(newStartDate, effectiveEndDate);
   }
 
   onEndDateSelect(selectedDate: Date): void {
     const newEndDate = selectedDate ?? null;
-
     this.maxStartDate = newEndDate ? new Date(newEndDate) : null;
 
     const startDate = (this.form.get('startDate')?.value as Date | null) ?? null;
-
-    // if start is after new end -> clear start
     if (newEndDate && startDate && new Date(startDate) > newEndDate) {
       this.form.get('startDate')?.setValue(null);
     }
@@ -645,10 +462,7 @@ export class WorkShiftsAssignmentPopupComponent
     const effectiveStartDate =
       newEndDate && startDate && new Date(startDate) > newEndDate ? null : startDate;
 
-    // ✅ compute allowed days using current start (or null if cleared) + NEW end
     this.refreshAllowedWeekDays(effectiveStartDate, newEndDate);
-
-    // ✅ remove invalid selected working days using the same effective range
     this.validateAndUpdateWorkingDays_WithDates(effectiveStartDate, newEndDate);
   }
 
@@ -659,17 +473,8 @@ export class WorkShiftsAssignmentPopupComponent
     if (!startDate || !endDate) return;
 
     const allowedDays = this.getAllowedWeekDaysInRange(startDate, endDate);
-
     this.selectedWorkingDays = this.selectedWorkingDays.filter((day) => allowedDays.includes(day));
-
     this.updateEmployeeWorkingDaysInForm();
-  }
-
-  allowedWeekDaysInRange: number[] = [];
-  activeShift: number = 0;
-
-  get employees(): UsersWithDepartmentLookup[] {
-    return this.filteredUsersProfiles;
   }
 
   private refreshAllowedWeekDays(startDate: Date | null, endDate: Date | null): void {
@@ -681,88 +486,75 @@ export class WorkShiftsAssignmentPopupComponent
   }
 
   onWorkShiftTypeChange(type: WorkShiftType): void {
+    const isStandard = type === WorkShiftType.Standard;
+    const isWeekOnOff24 = type === WorkShiftType.WeekOnWeekOff24;
+    const isRotating = type === WorkShiftType.Rotating;
+    const isSingle = isStandard || isWeekOnOff24;
+
+    // Working days: shown and required only for Standard
+    const workingDaysCtrl = this.form.get('employeeWorkingDays');
+    if (isStandard) {
+      workingDaysCtrl?.setValidators([this.validateWorkingDays()]);
+      this.selectedWorkingDays = [...this.previousStandardWorkingDays];
+      this.validateAndUpdateWorkingDays();
+      this.updateEmployeeWorkingDaysInForm();
+    } else {
+      workingDaysCtrl?.clearValidators();
+    }
+    workingDaysCtrl?.updateValueAndValidity();
+
+    // Presence fields: shown and required only for WeekOnWeekOff24
     const presenceTimeCtrl = this.form.get('presenceInquiryTime');
     const presenceBufferCtrl = this.form.get('presenceInquiryBuffer');
-    const endDateCtrl = this.form.get('endDate');
-
-    if (type === WorkShiftType.WeekOnWeekOff24) {
-      // Type 3: Enable and Require Presence Fields
-      presenceTimeCtrl?.enable();
-      presenceBufferCtrl?.enable();
+    if (isWeekOnOff24) {
       presenceTimeCtrl?.setValidators([Validators.required]);
       presenceBufferCtrl?.setValidators([Validators.required, Validators.min(0)]);
-
-      // Require End Date for Type 3
-      endDateCtrl?.setValidators([Validators.required]);
-
-      // Handle All Working Days for Type 3
-      this.selectAllWorkingDays();
     } else {
-      // Type 1 & 2: Disable and Not Required Presence Fields
-      presenceTimeCtrl?.disable();
-      presenceBufferCtrl?.disable();
       presenceTimeCtrl?.clearValidators();
-      presenceBufferCtrl?.clearValidators();
       presenceTimeCtrl?.setValue(null);
+      presenceBufferCtrl?.clearValidators();
       presenceBufferCtrl?.setValue(null);
-
-      if (type === WorkShiftType.WeekOnWeekOff) {
-        // Require End Date for Type 2
-        endDateCtrl?.setValidators([Validators.required]);
-
-        // Handle All Working Days for Type 2
-        this.selectAllWorkingDays();
-      } else if (type === WorkShiftType.Standard) {
-        // Optional End Date for Type 1
-        endDateCtrl?.clearValidators();
-
-        // Restore previous selection for Standard
-        this.selectedWorkingDays = [...this.previousStandardWorkingDays];
-        this.validateAndUpdateWorkingDays();
-        this.updateEmployeeWorkingDaysInForm();
-      }
     }
-
     presenceTimeCtrl?.updateValueAndValidity();
     presenceBufferCtrl?.updateValueAndValidity();
+
+    // Rotating shift dropdowns: required and must be unique when Rotating type
+    (['shift1', 'shift2', 'shift3'] as const).forEach((name) => {
+      const ctrl = this.form.get(name);
+      if (isRotating) {
+        ctrl?.setValidators([Validators.required, this.uniqueShiftValidator(name)]);
+      } else {
+        ctrl?.clearValidators();
+      }
+      ctrl?.updateValueAndValidity({ emitEvent: false });
+    });
+
+    // Shift selection: required when the upper section is visible
+    const fkShiftIdCtrl = this.form.get('fkShiftId');
+    isSingle
+      ? fkShiftIdCtrl?.setValidators([Validators.required])
+      : fkShiftIdCtrl?.clearValidators();
+    fkShiftIdCtrl?.updateValueAndValidity();
+
+    // Employee selection: required when the upper section is visible
+    const userIdsCtrl = this.form.get('userIdsArray');
+    isSingle ? userIdsCtrl?.setValidators([Validators.required]) : userIdsCtrl?.clearValidators();
+    userIdsCtrl?.updateValueAndValidity();
+
+    const endDateCtrl = this.form.get('endDate');
+    endDateCtrl?.setValidators([Validators.required]);
     endDateCtrl?.updateValueAndValidity();
   }
 
-  private selectAllWorkingDays(): void {
-    // Select all available week days
-    this.selectedWorkingDays = this.weekDays.map((day) => day.value);
-
-    // Respect date range constraints if any
-    this.validateAndUpdateWorkingDays();
-
-    this.updateEmployeeWorkingDaysInForm();
-  }
-
-  // NEW METHOD: Remove selected working days that are not allowed in the new date range
   private validateAndUpdateWorkingDays(): void {
-    // If Shift Type is 2 or 3, we want ALL days selected regardless of date range
-    const currentType = this.form.get('workShiftType')?.value;
-    if (
-      currentType === WorkShiftType.WeekOnWeekOff ||
-      currentType === WorkShiftType.WeekOnWeekOff24
-    ) {
-      // Ensure all are selected just in case (e.g. if date changed and we want to enforce pattern)
-      this.selectedWorkingDays = this.weekDays.map((day) => day.value);
-      this.updateEmployeeWorkingDaysInForm();
-      return;
-    }
-
     const startDate = this.form.get('startDate')?.value;
     const endDate = this.form.get('endDate')?.value;
 
     if (startDate && endDate) {
       const allowedDays = this.getAllowedWeekDaysInRange(startDate, endDate);
-
-      // Remove any selected days that are not allowed in the new range
       this.selectedWorkingDays = this.selectedWorkingDays.filter((day) =>
         allowedDays.includes(day)
       );
-
       this.updateEmployeeWorkingDaysInForm();
     }
   }
@@ -770,18 +562,39 @@ export class WorkShiftsAssignmentPopupComponent
   private updateDateConstraints(): void {
     const startDate = this.form.get('startDate')?.value;
     const endDate = this.form.get('endDate')?.value;
+    if (startDate) this.minEndDate = new Date(startDate);
+    if (endDate) this.maxStartDate = new Date(endDate);
+  }
 
-    if (startDate) {
-      this.minEndDate = new Date(startDate);
-    }
+  private uniqueShiftValidator(ownName: string): ValidatorFn {
+    return (): ValidationErrors | null => {
+      if (!this.form) return null;
+      const ownValue = this.form.get(ownName)?.value;
+      if (ownValue == null) return null;
+      const hasDuplicate = ['shift1', 'shift2', 'shift3']
+        .filter((n) => n !== ownName)
+        .some((n) => this.form.get(n)?.value === ownValue);
+      return hasDuplicate ? { duplicateShift: true } : null;
+    };
+  }
 
-    if (endDate) {
-      this.maxStartDate = new Date(endDate);
-    }
+  getOccupiedMemberIds(periodOrder: number): number[] {
+    return this.rotationGroups
+      .filter((g) => g.periodOrder !== periodOrder)
+      .flatMap((g) => g.memberIds);
   }
 
   get fkShiftIdControl() {
     return this.form.get('fkShiftId') as FormControl;
+  }
+  get shift1Control() {
+    return this.form.get('shift1') as FormControl;
+  }
+  get shift2Control() {
+    return this.form.get('shift2') as FormControl;
+  }
+  get shift3Control() {
+    return this.form.get('shift3') as FormControl;
   }
   get startDateControl() {
     return this.form.get('startDate') as FormControl;
@@ -789,14 +602,8 @@ export class WorkShiftsAssignmentPopupComponent
   get endDateControl() {
     return this.form.get('endDate') as FormControl;
   }
-  get fkAssignedUserIdControl() {
-    return this.form.get('fkAssignedUserId') as FormControl;
-  }
   get userIdsArrayControl() {
     return this.form.get('userIdsArray') as FormControl;
-  }
-  get departmentIdsArrayControl() {
-    return this.form.get('departmentIdsArray') as FormControl;
   }
   get employeeWorkingDaysControl() {
     return this.form.get('employeeWorkingDays') as FormControl;
@@ -807,42 +614,41 @@ export class WorkShiftsAssignmentPopupComponent
   get presenceInquiryBufferControl() {
     return this.form.get('presenceInquiryBuffer') as FormControl;
   }
-
   get workShiftTypeControl() {
     return this.form.get('workShiftType') as FormControl;
   }
 
-  getSelectedDepartmentsLabel(): string {
-    const selectedIds = this.form?.get('departmentIdsArray')?.value || [];
-    const count = selectedIds.length;
-
-    if (count === 0) return '';
-
-    const currentLang = this.getCurrentLanguage();
-    if (currentLang === LANGUAGE_ENUM.ARABIC) {
-      return `${count} قسم محدد`;
-    } else {
-      return `${count} department${count > 1 ? 's' : ''} selected`;
-    }
+  get isSingleShiftType(): boolean {
+    const type = this.form?.get('workShiftType')?.value;
+    return type === WorkShiftType.Standard || type === WorkShiftType.WeekOnWeekOff24;
   }
 
-  getSelectedEmployeesLabel(): string {
-    const selectedIds = this.form?.get('userIdsArray')?.value || [];
-    const count = selectedIds.length;
+  get isRotatingType(): boolean {
+    return this.form?.get('workShiftType')?.value === WorkShiftType.Rotating;
+  }
 
-    if (count === 0) return '';
+  get showWorkingDays(): boolean {
+    return this.form?.get('workShiftType')?.value === WorkShiftType.Standard;
+  }
 
-    const currentLang = this.getCurrentLanguage();
-    if (currentLang === LANGUAGE_ENUM.ARABIC) {
-      return `${count} موظف محدد`;
-    } else {
-      return `${count} employee${count > 1 ? 's' : ''} selected`;
-    }
+  get showPresenceFields(): boolean {
+    return this.form?.get('workShiftType')?.value === WorkShiftType.WeekOnWeekOff24;
   }
 
   weekDays = weekDays;
 
-  getDateToIsRequired() {
-    return this.workShiftTypeControl.value == this.workShiftType.Standard ? '' : 'required';
+  getSelectedShiftObject(controlName: string) {
+    let control = this.form?.get(controlName);
+    return this.shifts.find((x) => x.id == control?.value);
+  }
+
+  getSortedShiftsNames(order: number): string {
+    const nameKey = this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+    const shiftIds = [1, 2, 3].map(i => this.form.get(`shift${i}`)?.value);
+    const rotated = [0, 1, 2].map(i => shiftIds[(order + i) % 3]);
+
+    return rotated
+      .map(id => this.shifts.find(s => s.id === id)?.[nameKey] ?? '-')
+      .join(',');
   }
 }

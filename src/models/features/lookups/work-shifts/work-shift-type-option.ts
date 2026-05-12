@@ -26,4 +26,10 @@ export const WORK_SHIFT_TYPE_OPTIONS: WorkShiftTypeOption[] = [
     nameAr: 'أسبوع عمل / أسبوع راحة (24 ساعة)',
     value: WorkShiftType.WeekOnWeekOff24,
   },
+  {
+    id: 4,
+    nameEn: 'Rotating Shift',
+    nameAr: 'وردية متناوبة',
+    value: WorkShiftType.Rotating,
+  }
 ];

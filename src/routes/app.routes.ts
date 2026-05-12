@@ -266,7 +266,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'work-shifts-assignment-container',
+        path: 'work-shifts-assignment',
         canActivate: [authGuard],
         data: {
           roles: [ROLES_ENUM.HR_OFFICER],
@@ -275,7 +275,7 @@ export const routes: Routes = [
         resolve: { list: userWorkShiftResolver },
         loadComponent: () =>
           import(
-            '@/views/features/lookups/work-shifts/work-shifts-assignment-container/work-shifts-assignment-container.component'
+            '@/views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
           ),
       },
       {

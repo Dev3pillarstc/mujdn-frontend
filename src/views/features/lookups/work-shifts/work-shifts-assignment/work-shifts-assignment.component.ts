@@ -34,6 +34,9 @@ import {
   WORK_SHIFT_TYPE_OPTIONS,
   WorkShiftTypeOption,
 } from '@/models/features/lookups/work-shifts/work-shift-type-option';
+import { TooltipModule } from 'primeng/tooltip';
+import { Breadcrumb } from 'primeng/breadcrumb';
+
 
 @Component({
   selector: 'app-work-shifts-assignment',
@@ -49,6 +52,9 @@ import {
     DatePickerModule,
     FormsModule,
     TranslatePipe,
+    TooltipModule,
+    Breadcrumb
+
   ],
   templateUrl: './work-shifts-assignment.component.html',
   styleUrl: './work-shifts-assignment.component.scss',
@@ -212,5 +218,17 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
         ? option.nameAr
         : option.nameEn
       : '';
+  }
+
+  getShiftNames(shift: Shift) {
+    if (shift.shiftDetails) {
+      return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+        ? [shift.shiftDetails.nameAr]
+        : [shift.shiftDetails.nameEn];
+    } else {
+      return shift.rotationGroups.map(x => x.shiftDetails).map(y => {
+        return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? y?.nameAr : y?.nameEn;
+      });
+    }
   }
 }

@@ -567,19 +567,26 @@
     "TIME_FROM_PLACEHOLDER": "موعد (من)",
     "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "فترة السماح لإثبات الحضور اليومي (قبل / بعد)",
     "ASSIGNED_EMPLOYEES": "الموظفون المعنيون بالاسناد",
-    "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين"
+    "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين",
+    "ROTATING_SHIFT": "إسناد متناوب",
+    "FIRST_SHIFT": "الوردية الأولى",
+    "SECOND_SHIFT": "الوردية الثانية",
+    "THIRD_SHIFT": "الوردية الثالثة",
+    "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "يرجى تعيين موظف واحد على الأقل في كل قسم وردية قبل الحفظ",
+    "DUPLICATE_SHIFT": "هذه الوردية محددة بالفعل في خانة أخرى — يجب أن تكون كل وردية مختلفة",
+    "ROTATING_SHIFTS": "ورديات التناوب"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT": "اسناد وردية لموظف",
-    "SHIFT_NAME_AR": "اسم الوردية (عربي)",
-    "SHIFT_NAME_EN": "اسم الوردية (انجليزي)",
+    "SHIFT_NAME_AR": "اسم الوردية بالعربية",
+    "SHIFT_NAME_EN": "اسم الوردية بالانجليزية",
     "SHIFT_NAME_PLACEHOLDER": "اسم الوردية",
     "START_DATE": "التاريخ (من)",
     "END_DATE": "التاريخ (الى)",
     "DATE_RANGE_PLACEHOLDER": "التاريخ (من - الى)",
     "DEPARTMENT": "الادارة",
     "EMPLOYEE_NAME": "اسم الموظف",
-    "SHIFT_LIST": "قائمة ورديات العمل",
+    "SHIFT_LIST": "قائمة ورديات العمل المسندة للموظفين",
     "ASSIGN_SHIFT_TO_EMPLOYEE": "اسناد وردية لموظف",
     "EMPLOYEE_NAME_AR": "اسم الموظف (عربي)",
     "STARTING_DATE": "تاريخ البداية",
@@ -925,5 +932,11 @@
       "IMPORT_IGNORED_WITH_COUNT": "تم تجاهلهم (بصمات مكررة او غير صحيحة): ",
       "IMPORT_FAILED_WITH_COUNT": "فشلت لعدم اكتمال البيانات: "
     }
+  },
+  "SHIFT_ASSIGNMENT_PANEL": {
+    "SHIFT_WORKING_HOURS": "مواعيد العمل بالوردية: ",
+    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)",
+    "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "سيتم تناوب الموظفين بين الورديات بالترتيب التالي: ",
+    "ON_A_RECURRING_BASIS": "بشكل دوري."
   }
 }

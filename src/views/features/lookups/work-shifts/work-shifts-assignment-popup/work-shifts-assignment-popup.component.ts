@@ -642,27 +642,13 @@ export class WorkShiftsAssignmentPopupComponent
     return this.shifts.find((x) => x.id == control?.value);
   }
 
-  getSortedShiftsNames(order: number) {
-    let selectedGroupShiftValue = this.form.get('shift' + (order + 1))?.value;
-    let nextGroupShiftValue =
-      order < 2 ? this.form.get('shift' + (order + 2))?.value : this.form.get('shift' + 1)?.value;
-    let lastGroupShiftValue =
-      order == 0
-        ? this.form.get('shift' + (order + 3))?.value
-        : this.form.get('shift' + order)?.value;
+  getSortedShiftsNames(order: number): string {
+    const nameKey = this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
+    const shiftIds = [1, 2, 3].map(i => this.form.get(`shift${i}`)?.value);
+    const rotated = [0, 1, 2].map(i => shiftIds[(order + i) % 3]);
 
-    if (this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC) {
-      return (
-        (this.shifts.find((x) => x.id == selectedGroupShiftValue)?.nameAr || '-') + ',' +
-        (this.shifts.find((x) => x.id == nextGroupShiftValue)?.nameAr || '-') + ',' +
-        (this.shifts.find((x) => x.id == lastGroupShiftValue)?.nameAr || '-')
-      );
-    } else {
-      return (
-        (this.shifts.find((x) => x.id == selectedGroupShiftValue)?.nameEn || '-') + ',' +
-        (this.shifts.find((x) => x.id == nextGroupShiftValue)?.nameEn || '-') + ',' +
-        (this.shifts.find((x) => x.id == lastGroupShiftValue)?.nameEn || '-')
-      );
-    }
+    return rotated
+      .map(id => this.shifts.find(s => s.id === id)?.[nameKey] ?? '-')
+      .join(',');
   }
 }

@@ -121,7 +121,7 @@
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
         </div>
-        <!-- <div class="relative">
+        <div class="relative">
           <label class="label" for="attendanceStatus">
             {{ 'VISIT_REQUEST_PAGE.ATTENDANCE_STATUS' | translate }}
           </label>
@@ -139,7 +139,7 @@
           <span
             class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
           ></span>
-        </div> -->
+        </div>
       </div>
       <div class="actions flex items-center gap-4 pt-6">
         <button class="btn black-btn" (click)="search()">
@@ -165,12 +165,12 @@
         >
           <img src="assets/icons/excel.svg" alt="" />
         </button>
-        <!-- <button
+        <button
           (click)="exportPdf(getTranslatedFileName('VISIT_REQUEST_PAGE.MY_VISITS'))"
           class="table-head-action-btn"
         >
           <img alt="" src="assets/icons/pdf.svg" />
-        </button> -->
+        </button>
         <button (click)="openDialog()" class="btn green-btn">
           <img src="assets/icons/plus.svg" alt="" />
           <span>{{ 'VISIT_REQUEST_PAGE.ADD_NEW_VISIT_REQUEST' | translate }}</span>
@@ -189,7 +189,7 @@
             <th>{{ 'VISIT_REQUEST_PAGE.VISIT_STATUS' | translate }}</th>
             <th>{{ 'VISIT_REQUEST_PAGE.ENTRY' | translate }}</th>
             <th>{{ 'VISIT_REQUEST_PAGE.EXIT' | translate }}</th>
-            <!-- <th>{{ 'VISIT_REQUEST_PAGE.ATTENDANCE_STATUS' | translate }}</th> -->
+            <th>{{ 'VISIT_REQUEST_PAGE.ATTENDANCE_STATUS' | translate }}</th>
             <th class="w-[36px] whitespace-nowrap">
               {{ 'VISIT_REQUEST_PAGE.ACTION' | translate }}
             </th>
@@ -212,14 +212,14 @@
             </td>
             <td>{{ formatTime(visit.arrivalTime) }}</td>
             <td>{{ formatTime(visit.leaveTime) }}</td>
-            <!-- <td>
+            <td>
               <div class="flex items-center justify-center">
                 <span [class]="getAttendanceBadgeClass(visit.attendanceStatus)">
                   <span [class]="getAttendanceBadgeDotClass(visit.attendanceStatus)"></span>
                   {{ getAttendanceStatusText(visit.attendanceStatus) }}
                 </span>
               </div>
-            </td> -->
+            </td>
             <td>
               <div class="actions flex gap-2">
                 <button class="table-action-gray-btn" (click)="openViewDialog(visit)">

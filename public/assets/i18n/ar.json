@@ -883,7 +883,12 @@
     "PRESENCE": "حضور",
     "LEAVE": "انصراف",
     "PRESENCE_LEAVE": "حضور - انصراف",
-    "PERMISSIONS": "الاستئذانات"
+    "PERMISSIONS": "الاستئذانات",
+    "LATE_MINUTES": "دقائق التأخير",
+    "EARLY_LEAVE_MINUTES": "دقائق الانصراف المبكر",
+    "GRACE_MINUTES_USED": "دقائق السماحية المستخدمة",
+    "IS_GRACE_APPLIED": "تم تطبيق السماحية",
+    "REMAINING_MONTHLY_GRACE_MINUTES": "دقائق السماحية الشهرية المتبقية"
   },
   "ATTENDANCE_REPORT_PROCESSING_PAGE": {
     "EMPLOYEE_REPORTS_PROCESSING": "معالجة بيانات تقارير الموظفين",

@@ -64,6 +64,12 @@ export default class AttendanceReport extends BaseCrudModel<
   declare attendancePermissionId?: number | null;
   declare leavePermissionId?: number | null;
 
+  declare lateMinutes?: number | null;
+  declare earlyLeaveMinutes?: number | null;
+  declare graceMinutesUsed?: number | null;
+  declare isGraceApplied?: boolean | null;
+  declare remainingMonthlyGraceMinutes?: number | null;
+
   declare attendanceStatus: number;
   declare processingStatus: number;
 

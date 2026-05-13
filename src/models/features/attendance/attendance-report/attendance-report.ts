@@ -64,6 +64,12 @@ export default class AttendanceReport extends BaseCrudModel<
   declare attendancePermissionId?: number | null;
   declare leavePermissionId?: number | null;
 
+  declare lateMinutes?: number | null;
+  declare earlyLeaveMinutes?: number | null;
+  declare graceMinutesUsed?: number | null;
+  declare isGraceApplied?: boolean | null;
+  declare remainingMonthlyGraceMinutes?: number | null;
+
   declare attendanceStatus: number;
   declare processingStatus: number;
 
@@ -101,5 +107,33 @@ export default class AttendanceReport extends BaseCrudModel<
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
       ? this.holidayNameEn!
       : this.holidayNameAr!;
+  }
+
+  getEffectiveAttendanceFingerPrint(): Date | null {
+    if (
+      this.isGraceApplied &&
+      !this.firstAttendanceFingerPrint &&
+      this.latestAllowedArrivalDateTime != null &&
+      this.lateMinutes != null
+    ) {
+      const date = new Date(this.latestAllowedArrivalDateTime);
+      date.setMinutes(date.getMinutes() + this.lateMinutes);
+      return date;
+    }
+    return this.firstAttendanceFingerPrint ? new Date(this.firstAttendanceFingerPrint) : null;
+  }
+
+  getEffectiveLeaveFingerPrint(): Date | null {
+    if (
+      this.isGraceApplied &&
+      !this.lastLeaveFingerPrint &&
+      this.earliestAllowedDepartureDateTime != null &&
+      this.earlyLeaveMinutes != null
+    ) {
+      const date = new Date(this.earliestAllowedDepartureDateTime);
+      date.setMinutes(date.getMinutes() - this.earlyLeaveMinutes);
+      return date;
+    }
+    return this.lastLeaveFingerPrint ? new Date(this.lastLeaveFingerPrint) : null;
   }
 }

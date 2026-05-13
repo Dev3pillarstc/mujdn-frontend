@@ -266,8 +266,8 @@
                 </div>
               }
             </td>
-            <td>{{ formatTime(attendance.firstAttendanceFingerPrint) }}</td>
-            <td>{{ formatTime(attendance.lastLeaveFingerPrint) }}</td>
+            <td>{{ formatTime(attendance.getEffectiveAttendanceFingerPrint()) }}</td>
+            <td>{{ formatTime(attendance.getEffectiveLeaveFingerPrint()) }}</td>
 
             <td>{{ attendance.lateMinutes ?? '' }}</td>
             <td>{{ attendance.earlyLeaveMinutes ?? '' }}</td>

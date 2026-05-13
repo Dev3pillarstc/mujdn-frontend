@@ -128,10 +128,10 @@ export class MyAttendanceReportListComponent extends BaseListComponent<
             : this.translateService.instant('INQUIRIES_PAGE.NOT_CONFIRMED'),
 
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.CHECKIN_TIME')]: this.formatTime(
-        model.firstAttendanceFingerPrint ? new Date(model.firstAttendanceFingerPrint) : undefined
+        model.getEffectiveAttendanceFingerPrint()
       ),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.CHECKOUT_TIME')]: this.formatTime(
-        model.lastLeaveFingerPrint ? new Date(model.lastLeaveFingerPrint) : undefined
+        model.getEffectiveLeaveFingerPrint()
       ),
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.STATUS')]: model.attendanceStatus
         ? this.translateService.instant(this.getStatusConfig(model.attendanceStatus).labelKey)

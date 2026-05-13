@@ -108,4 +108,32 @@ export default class AttendanceReport extends BaseCrudModel<
       ? this.holidayNameEn!
       : this.holidayNameAr!;
   }
+
+  getEffectiveAttendanceFingerPrint(): Date | null {
+    if (
+      this.isGraceApplied &&
+      !this.firstAttendanceFingerPrint &&
+      this.latestAllowedArrivalDateTime != null &&
+      this.lateMinutes != null
+    ) {
+      const date = new Date(this.latestAllowedArrivalDateTime);
+      date.setMinutes(date.getMinutes() + this.lateMinutes);
+      return date;
+    }
+    return this.firstAttendanceFingerPrint ? new Date(this.firstAttendanceFingerPrint) : null;
+  }
+
+  getEffectiveLeaveFingerPrint(): Date | null {
+    if (
+      this.isGraceApplied &&
+      !this.lastLeaveFingerPrint &&
+      this.earliestAllowedDepartureDateTime != null &&
+      this.earlyLeaveMinutes != null
+    ) {
+      const date = new Date(this.earliestAllowedDepartureDateTime);
+      date.setMinutes(date.getMinutes() - this.earlyLeaveMinutes);
+      return date;
+    }
+    return this.lastLeaveFingerPrint ? new Date(this.lastLeaveFingerPrint) : null;
+  }
 }

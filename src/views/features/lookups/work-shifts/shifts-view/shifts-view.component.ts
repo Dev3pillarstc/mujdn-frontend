@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -20,6 +20,7 @@ import { EmployeeShiftDayService } from '@/services/features/lookups/employee-sh
 import EmployeeShiftDay from '@/models/features/lookups/work-shifts/employee-shift-day';
 import { EmployeeShiftDayFilter } from '@/models/features/lookups/work-shifts/employee-shift-day-filter';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { PaginationInfo } from '@/models/shared/response/pagination-info';
 import { formatDateOnly, formatTimeRange } from '@/utils/general-helper';
 import {
   WORK_SHIFT_TYPE_OPTIONS,
@@ -49,6 +50,8 @@ export class ShiftsViewComponent extends BaseListComponent<
   EmployeeShiftDayService,
   EmployeeShiftDayFilter
 > {
+  @Input() embedded = false;
+
   dialogSize = { width: '100%', maxWidth: '1024px' };
 
   departments: BaseLookupModel[] = [];
@@ -75,8 +78,36 @@ export class ShiftsViewComponent extends BaseListComponent<
   }
 
   override initListComponent(): void {
-    this.applyTimeFormatting(this.list);
+    const resolverData = this.activatedRoute.snapshot.data['list'];
+    const initialList = resolverData?.employeeShiftDays ?? resolverData;
+    this.paginationInfo = this.paginationInfo || new PaginationInfo();
 
+    if (initialList?.list) {
+      this.handleLoadListSuccess(initialList);
+      this.loadLookups();
+      return;
+    }
+
+    if (this.embedded) {
+      this.list = [];
+      this.paginationInfo.totalItems = 0;
+      return;
+    } else {
+      this.applyTimeFormatting(this.list);
+    }
+
+    this.loadLookups();
+  }
+
+  loadEmbeddedData(): void {
+    this.loadLookups();
+    this.loadList().subscribe({
+      next: (response) => this.handleLoadListSuccess(response),
+      error: () => this.handleLoadListError(),
+    });
+  }
+
+  private loadLookups(): void {
     this.departmentService.getLookup().subscribe({
       next: (data) => {
         this.departments = data.sort((a, b) =>

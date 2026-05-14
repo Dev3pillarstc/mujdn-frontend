@@ -1,5 +1,6 @@
-<div class="bg-white">
-  <div class="bg-[#f9fafb] p-3 sm:p-6">
+<div class="bg-white" [ngClass]="{ 'bg-transparent': embedded }">
+  <div class="bg-[#f9fafb] p-3 sm:p-6" [ngClass]="{ '!bg-transparent !p-0': embedded }">
+    @if (!embedded) {
     <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
       <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
         <ng-template let-item pTemplate="item">
@@ -12,6 +13,7 @@
         {{ 'MY_SHIFTS.MY_SHIFTS' | translate }}
       </h3>
     </div>
+    }
 
     <!-- Current Shift Section -->
     <div

@@ -318,10 +318,10 @@ export class WorkShiftsAssignmentPopupComponent
 
   private validateEmployeeSelection(): boolean {
     if (this.isRotatingType) {
-      const hasEmpty = this.rotationGroups.some((g) => g.memberIds.length === 0);
-      if (hasEmpty) {
+      const hasAnyEmployee = this.rotationGroups.some((g) => g.memberIds.length > 0);
+      if (!hasAnyEmployee) {
         this.alertService.showErrorMessage({
-          messages: ['USER_WORK_SHIFT_ASSIGNMENT.AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT'],
+          messages: ['USER_WORK_SHIFT_ASSIGNMENT.AT_LEAST_ONE_EMPLOYEE_ONE_SHIFT'],
         });
         return false;
       }
@@ -644,11 +644,9 @@ export class WorkShiftsAssignmentPopupComponent
 
   getSortedShiftsNames(order: number): string {
     const nameKey = this.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
-    const shiftIds = [1, 2, 3].map(i => this.form.get(`shift${i}`)?.value);
-    const rotated = [0, 1, 2].map(i => shiftIds[(order + i) % 3]);
+    const shiftIds = [1, 2, 3].map((i) => this.form.get(`shift${i}`)?.value);
+    const rotated = [0, 1, 2].map((i) => shiftIds[(order + i) % 3]);
 
-    return rotated
-      .map(id => this.shifts.find(s => s.id === id)?.[nameKey] ?? '-')
-      .join(',');
+    return rotated.map((id) => this.shifts.find((s) => s.id === id)?.[nameKey] ?? '-').join(',');
   }
 }

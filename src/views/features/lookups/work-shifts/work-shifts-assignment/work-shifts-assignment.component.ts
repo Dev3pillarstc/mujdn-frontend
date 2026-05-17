@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 // import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
@@ -19,6 +19,7 @@ import ShiftsFilter from '@/models/features/lookups/work-shifts/shifts-filter';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
+import { PaginationInfo } from '@/models/shared/response/pagination-info';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import UserWorkShiftsFilter from '@/models/features/lookups/work-shifts/user-work-shifts-filter';
@@ -28,7 +29,7 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icons-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
-import { filter, switchMap } from 'rxjs';
+import { catchError, filter, forkJoin, of, switchMap } from 'rxjs';
 import { AlertService } from '@/services/shared/alert.service';
 import {
   WORK_SHIFT_TYPE_OPTIONS,
@@ -36,6 +37,10 @@ import {
 } from '@/models/features/lookups/work-shifts/work-shift-type-option';
 import { TooltipModule } from 'primeng/tooltip';
 import { Breadcrumb } from 'primeng/breadcrumb';
+import { DepartmentService } from '@/services/features/lookups/department.service';
+import { ShiftService } from '@/services/features/lookups/shift.service';
+import { UserService } from '@/services/features/user.service';
+import { WorkDaysSettingService } from '@/services/features/setting/work-days-setting.service';
 
 
 @Component({
@@ -65,6 +70,8 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   UserWorkShiftService,
   ShiftsFilter
 > {
+  @Input() embedded = false;
+
   usersProfiles: UsersWithDepartmentLookup[] = [];
   userWorkShift: UserWorkShift[] = [];
   departments: BaseLookupModel[] = [];
@@ -76,6 +83,11 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
 
   confirmationService = inject(ConfirmationService);
   userworkShiftService = inject(UserWorkShiftService);
+  private departmentService = inject(DepartmentService);
+  private shiftService = inject(ShiftService);
+  private userService = inject(UserService);
+  private workDaysSettingService = inject(WorkDaysSettingService);
+
   override get filterModel(): UserWorkShiftsFilter {
     return this.filterOptions;
   }
@@ -86,13 +98,53 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     return this.userWorkShiftService;
   }
   override initListComponent(): void {
-    var userShifts = this.activatedRoute.snapshot.data['list'].userShifts;
-    this.shifts = this.activatedRoute.snapshot.data['list'].shifts;
-    this.list = userShifts.list;
-    this.paginationInfo = userShifts.paginationInfo;
-    this.usersProfiles = this.activatedRoute.snapshot.data['list'].users;
-    this.departments = this.activatedRoute.snapshot.data['list'].departments;
-    this.defaultWorkDays = this.activatedRoute.snapshot.data['list'].defaultworkDays;
+    const resolverData = this.activatedRoute.snapshot.data['list'];
+    this.paginationInfo = this.paginationInfo || new PaginationInfo();
+
+    if (resolverData?.userShifts) {
+      this.applyAssignmentData(resolverData);
+      return;
+    }
+
+    if (this.embedded) {
+      this.list = [];
+      this.paginationInfo.totalItems = 0;
+      return;
+    }
+
+    this.loadEmbeddedData();
+  }
+
+  loadEmbeddedData(): void {
+    forkJoin({
+      userShifts: this.userWorkShiftService
+        .loadPaginated(this.paginationParams, { ...this.appliedFilterModel })
+        .pipe(catchError(() => of(null))),
+      users: this.userService.getUsersWithDepartment().pipe(catchError(() => of([]))),
+      shifts: this.shiftService.getShiftLookupWithTime().pipe(catchError(() => of([]))),
+      departments: this.departmentService.getLookup().pipe(catchError(() => of([]))),
+      defaultworkDays: this.workDaysSettingService
+        .getWorkDays()
+        .pipe(catchError(() => of(new WorkDaysSetting()))),
+    }).subscribe({
+      next: (data) => this.applyAssignmentData(data),
+      error: () => this.handleLoadListError(),
+    });
+  }
+
+  private applyAssignmentData(data: {
+    userShifts: PaginatedList<UserWorkShift> | null;
+    users: UsersWithDepartmentLookup[];
+    departments: BaseLookupModel[];
+    shifts: Shift[];
+    defaultworkDays: WorkDaysSetting;
+  }): void {
+    this.shifts = data.shifts || [];
+    this.list = data.userShifts?.list || [];
+    this.paginationInfo = data.userShifts?.paginationInfo || this.paginationInfo || new PaginationInfo();
+    this.usersProfiles = data.users || [];
+    this.departments = data.departments || [];
+    this.defaultWorkDays = data.defaultworkDays || new WorkDaysSetting();
     this.filteredEmployees = this.usersProfiles;
     this.departments = this.sortByName(this.departments, this.optionLabel);
     this.filteredEmployees = this.sortByName(this.filteredEmployees, this.optionLabel);

@@ -15,9 +15,8 @@ import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
 import { loginResolver } from '@/resolvers/login.resolver';
 import { notificationResolver } from '@/resolvers/setting/notification.resolver';
-import { userWorkShiftResolver } from '@/resolvers/lookups/user-work-shift.resolver';
 import { userProfileResolver } from '@/resolvers/features/user-profile.resolver';
-import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
+import { myShiftsContainerResolver } from '@/resolvers/lookups/my-shifts-container.resolver';
 import { presenceInquiryResolver } from '@/resolvers/presence-inquiry.resolver';
 import { blacklistedNationalIdResolver } from '@/resolvers/features/visit/blacklisted-national-id.resolver';
 import { blacklistResolver } from '@/resolvers/features/blacklist.resolver';
@@ -28,6 +27,8 @@ import { accessLocationResolver } from '@/resolvers/business/access-location.res
 import { devicesConfigurationResolver } from '@/resolvers/business/devices-configuration.resolver';
 import { attendanceReportResolver } from '@/resolvers/business/attendance-report.resolver';
 import { employeeShiftDaysResolver } from '@/resolvers/lookups/employee-shift-days.resolver';
+import { workShiftsAssignmentContainerResolver } from '@/resolvers/lookups/work-shifts-assignment-container.resolver';
+import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -269,37 +270,26 @@ export const routes: Routes = [
         path: 'work-shifts-assignment',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.HR_OFFICER],
+          roles: [ROLES_ENUM.EMPLOYEE],
           routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
         },
-        resolve: { list: userWorkShiftResolver },
+        resolve: { list: workShiftsAssignmentContainerResolver },
         loadComponent: () =>
           import(
-            '@/views/features/lookups/work-shifts/work-shifts-assignment/work-shifts-assignment.component'
+            '@/views/features/lookups/work-shifts/work-shifts-assignment-container/work-shifts-assignment-container.component'
           ),
-      },
-      {
-        path: 'my-shifts',
-        canActivate: [authGuard],
-        data: {
-          roles: [ROLES_ENUM.EMPLOYEE],
-          routeId: RouteIdsEnum.WORK_SHIFT_TEMP,
-        },
-        resolve: { list: myShiftsResolver },
-        loadComponent: () =>
-          import('@/views/features/lookups/work-shifts/my-shifts/my-shifts.component'),
       },
       {
         path: 'shifts-view',
         canActivate: [authGuard],
         data: {
-          roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.DEPARTMENT_MANAGER],
+          roles: [ROLES_ENUM.EMPLOYEE],
           routeId: RouteIdsEnum.EMPLOYEE_SHIFTS,
         },
-        resolve: { list: employeeShiftDaysResolver },
+        resolve: { list: myShiftsContainerResolver },
         loadComponent: () =>
-          import('@/views/features/lookups/work-shifts/shifts-view/shifts-view.component').then(
-            (m) => m.ShiftsViewComponent
+          import(
+            '@/views/features/lookups/work-shifts/my-shifts-container/my-shifts-container.component'
           ),
       },
       {

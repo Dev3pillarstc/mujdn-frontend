@@ -1,6 +1,6 @@
 import { WorkShiftType } from '@/enums/work-shift-type';
 import { MultiSelect } from 'primeng/multiselect';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
@@ -68,6 +68,8 @@ export default class MyShiftsComponent extends BaseListComponent<
   MyShiftsService,
   EmployeeShiftsFilter
 > {
+  @Input() embedded = false;
+
   // Required by BaseListComponent
   filterModel: EmployeeShiftsFilter = new EmployeeShiftsFilter();
   dialogSize = {
@@ -87,16 +89,7 @@ export default class MyShiftsComponent extends BaseListComponent<
     this.locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
     this.loadInitialData();
 
-    if (this.currentShift?.timeTo) {
-      this.currentShift.timeTo = dateToTimeString(
-        convertUtcToSystemTimeZone(timeStringToDate(this.currentShift.timeTo))
-      ) as string;
-    }
-    if (this.currentShift?.timeFrom) {
-      this.currentShift.timeFrom = dateToTimeString(
-        convertUtcToSystemTimeZone(timeStringToDate(this.currentShift.timeFrom))
-      ) as string;
-    }
+    this.formatCurrentShiftTime();
 
     this.languageService.languageChanged$.subscribe(() => {
       this.locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
@@ -131,6 +124,17 @@ export default class MyShiftsComponent extends BaseListComponent<
           'formattedTimeTo'
         );
       }
+    });
+  }
+
+  reloadEmbeddedData(): void {
+    this.loadShifts(this.paginationParams.pageNumber || 1);
+
+    this.service.getMyCurrentShift().subscribe({
+      next: (shift) => {
+        this.currentShift = shift || null;
+        this.formatCurrentShiftTime();
+      },
     });
   }
 
@@ -180,17 +184,45 @@ export default class MyShiftsComponent extends BaseListComponent<
 
   private loadInitialData(): void {
     const resolverData = this.activatedRoute.snapshot.data['list'];
+    const myShifts = resolverData?.myShifts;
 
-    this.employeeShifts = resolverData.myShifts.list || [];
+    this.employeeShifts = myShifts?.list || [];
     this.list = this.employeeShifts; // Update base class list
     this.paginationInfo = {
       ...new PaginationInfo(),
-      ...resolverData.myShifts.paginationInfo,
-      totalItems: resolverData.myShifts.paginationInfo.totalItems || 0,
+      ...myShifts?.paginationInfo,
+      totalItems: myShifts?.paginationInfo?.totalItems || 0,
     };
-    this.defaultWorkDays = resolverData.defaultworkDays;
+    this.defaultWorkDays = resolverData?.defaultworkDays || new WorkDaysSetting();
     // Load current shift data
-    this.currentShift = resolverData.currentShift || null;
+    this.currentShift = resolverData?.currentShift || null;
+  }
+
+  private formatCurrentShiftTime(): void {
+    if (this.currentShift?.timeTo) {
+      this.currentShift.timeTo = dateToTimeString(
+        convertUtcToSystemTimeZone(timeStringToDate(this.currentShift.timeTo))
+      ) as string;
+    }
+    if (this.currentShift?.timeFrom) {
+      this.currentShift.timeFrom = dateToTimeString(
+        convertUtcToSystemTimeZone(timeStringToDate(this.currentShift.timeFrom))
+      ) as string;
+    }
+    if (this.currentShift) {
+      changeTimeSuffix(
+        this.isCurrentLanguageEnglish.bind(this),
+        this.currentShift,
+        'timeFrom',
+        'formattedTimeFrom'
+      );
+      changeTimeSuffix(
+        this.isCurrentLanguageEnglish.bind(this),
+        this.currentShift,
+        'timeTo',
+        'formattedTimeTo'
+      );
+    }
   }
 
   getCurrentShiftName(): string {

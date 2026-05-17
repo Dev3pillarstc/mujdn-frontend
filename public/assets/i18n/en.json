@@ -398,7 +398,8 @@
     "SHIFT_TYPE": "Shift Type",
     "IS_REST_DAY": "Rest Day",
     "YES": "Yes",
-    "NO": "No"
+    "NO": "No",
+    "EMPLOYEE_SHIFT_SCHEDULE": "Employee Shift Schedule"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
@@ -575,6 +576,7 @@
     "SECOND_SHIFT": "Second Shift",
     "THIRD_SHIFT": "Third Shift",
     "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "Please assign at least one employee to each shift section before saving",
+    "AT_LEAST_ONE_EMPLOYEE_ONE_SHIFT": "Please assign at least one employee to at least one shift section before saving",
     "DUPLICATE_SHIFT": "This shift is already assigned to another slot — each shift must be unique",
     "ROTATING_SHIFTS": "Rotating Shifts"
   },
@@ -639,7 +641,8 @@
     "REST_DAY_MESSAGE": "Rest day according to the current approved shift system",
     "PRESENCE_INQUIRY_TIME": "Daily attendance proof time (for 24H system)",
     "PRESENCE_INQUIRY_BUFFER": "Daily attendance proof buffer (before/after)",
-    "WORK_DAY_MESSAGE": "Work day according to the current approved shift system"
+    "WORK_DAY_MESSAGE": "Work day according to the current approved shift system",
+    "MY_SHIFT_SCHEDULE": "My Shift Schedule"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "Forgot Password",

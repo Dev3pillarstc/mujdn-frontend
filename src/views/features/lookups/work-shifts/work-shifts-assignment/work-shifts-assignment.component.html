@@ -87,9 +87,18 @@
               <label class="label">
                 {{ 'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate }}
               </label>
-              <p-select [(ngModel)]="filterOptions.fkDepartmentId" [options]="departments" class="w-full peer"
-                        [optionLabel]="optionLabel" optionValue="id"
-                        [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate" [showClear]="true"></p-select>
+              <p-multiselect
+                [(ngModel)]="filterOptions.fkDepartmentId"
+                [options]="departments"
+                class="w-full peer"
+                [optionLabel]="optionLabel"
+                optionValue="id"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"
+                [showClear]="true"
+                [filter]="true"
+                (onChange)="onDepartmentChange()"
+                (onClear)="onDepartmentChange()"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>
@@ -98,10 +107,18 @@
               <label class="label">
                 {{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}
               </label>
-              <p-select [options]="usersProfiles" [(ngModel)]="filterOptions.fkAssignedUserId" class="w-full peer"
-                        [optionLabel]="optionLabel" optionValue="id"
-                        [placeholder]="'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate" [showClear]="true"
-                        [virtualScroll]="true" [virtualScrollItemSize]="38"></p-select>
+              <p-multiselect
+                [(ngModel)]="filterOptions.fkAssignedUserId"
+                [options]="filteredEmployees"
+                class="w-full peer"
+                [optionLabel]="optionLabel"
+                optionValue="id"
+                [placeholder]="'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate"
+                [showClear]="true"
+                [filter]="true"
+                [virtualScroll]="true"
+                [virtualScrollItemSize]="38"
+              />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
             </div>

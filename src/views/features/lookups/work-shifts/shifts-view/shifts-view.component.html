@@ -43,6 +43,8 @@
                                 class="w-full peer"
                                 id="shiftsViewDepartment"
                                 optionValue="id"
+                                (onChange)="onDepartmentChange()"
+                                (onClear)="onDepartmentChange()"
                             />
                             <span
                                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
@@ -55,7 +57,7 @@
                             </label>
                             <p-select
                                 [(ngModel)]="filterOptions.fkUserProfileId"
-                                [options]="usersProfiles"
+                                [options]="filteredUsersProfiles"
                                 [optionLabel]="optionLabel"
                                 [placeholder]="'SHIFTS_VIEW_PAGE.EMPLOYEE_NAME' | translate"
                                 [showClear]="true"
@@ -64,6 +66,7 @@
                                 class="w-full peer"
                                 id="shiftsViewEmployee"
                                 optionValue="id"
+                                [filter]="true"
                             />
                             <span
                                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>

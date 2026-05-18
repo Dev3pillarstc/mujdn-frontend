@@ -1,3 +1,4 @@
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { Component, inject, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
@@ -16,7 +17,7 @@ import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
-  imports: [MenuModule, ButtonModule, CommonModule],
+  imports: [MenuModule, ButtonModule, OverlayPanelModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -32,6 +33,23 @@ export class HeaderComponent implements OnInit {
   sharedService = inject(SharedService);
   router = inject(Router);
   destroy$: Subject<void> = new Subject<void>();
+
+  shiftPanelVisible = false;
+
+  currentShift = {
+    name: 'اسم الوردية الحالية',
+    status: 'يوم راحة',
+    workDays: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'],
+    assignmentType: 'وردية بنظام الراحات 24 س',
+    timeFrom: '02:00 ص',
+    timeTo: '08:00 ص',
+    attendanceTolerance: 30,
+    departureTolerance: 10,
+    startDate: '12/12/2023',
+    endDate: '12/12/2024',
+    presenceDocTime: '12:00 ص',
+    presenceDocTolerance: '20 دق',
+  };
 
   ngOnInit() {
     this.authService.getUser().subscribe((user) => {

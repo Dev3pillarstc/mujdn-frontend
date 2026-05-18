@@ -11,127 +11,70 @@
         <div class="relative">
           <label class="label" for="employeeNameAr">{{
             'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate
-          }}</label>
-          <input
-            [(ngModel)]="filterModel.fullNameAr"
-            [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate"
-            class="peer"
-            fluid="true"
-            id="employeeNameAr"
-            pInputText
-            type="text"
-          />
+            }}</label>
+          <input [(ngModel)]="filterModel.fullNameAr" [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ARABIC' | translate"
+            class="peer" fluid="true" id="employeeNameAr" pInputText type="text" />
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
         <div class="relative">
           <label class="label" for="employeeNameEn">{{
             'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate
-          }}</label>
-          <input
-            [(ngModel)]="filterModel.fullNameEn"
-            [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate"
-            class="peer"
-            fluid="true"
-            id="employeeNameEn"
-            pInputText
-            type="text"
-          />
+            }}</label>
+          <input [(ngModel)]="filterModel.fullNameEn" [placeholder]="'EMPLOYEES_PAGE.EMPLOYEE_NAME_ENGLISH' | translate"
+            class="peer" fluid="true" id="employeeNameEn" pInputText type="text" />
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
         <!-- National ID -->
         <div class="relative">
           <label class="label" for="nationalId">
-            {{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}</label
-          >
-          <input
-            id="nationalId"
-            placeholder="{{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}"
-            class="peer w-full"
-            pInputText
-            type="text"
-            [(ngModel)]="filterModel.nationalId"
-            name="nationalId"
-          />
+            {{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}</label>
+          <input id="nationalId" placeholder="{{ 'EMPLOYEES_PAGE.NATIONAL_ID' | translate }}" class="peer w-full"
+            pInputText type="text" [(ngModel)]="filterModel.nationalId" name="nationalId" />
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
         <div class="relative">
           <label class="label" for="permission-date-picker">{{ 'COMMON.FROM' | translate }}</label>
-          <p-datepicker
-            [(ngModel)]="dateFrom"
-            [iconDisplay]="'input'"
-            [showIcon]="true"
-            [showClear]="true"
-            class="peer block w-full"
-            inputId="icondisplayFrom"
-            placeholder="{{ 'COMMON.FROM' | translate }}"
-          >
+          <p-datepicker [(ngModel)]="dateFrom" [iconDisplay]="'input'" [showIcon]="true" [showClear]="true"
+            class="peer block w-full" inputId="icondisplayFrom" placeholder="{{ 'COMMON.FROM' | translate }}">
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
             </ng-template>
           </p-datepicker>
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
         <div class="relative">
           <label class="label" for="permission-date-picker">{{ 'COMMON.TO' | translate }}</label>
-          <p-datepicker
-            [(ngModel)]="filterModel.dateTo"
-            [minDate]="dateFrom"
-            [iconDisplay]="'input'"
-            [showIcon]="true"
-            [showClear]="true"
-            class="peer block w-full"
-            inputId="icondisplayTo"
-            placeholder="{{ 'COMMON.TO' | translate }}"
-          >
+          <p-datepicker [(ngModel)]="filterModel.dateTo" [minDate]="dateFrom" [iconDisplay]="'input'" [showIcon]="true"
+            [showClear]="true" class="peer block w-full" inputId="icondisplayTo"
+            placeholder="{{ 'COMMON.TO' | translate }}">
             <ng-template pTemplate="inputicon">
               <img alt="" src="assets/icons/calender-icon.svg" />
             </ng-template>
           </p-datepicker>
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
         <div class="relative">
           <label for="department" class="label">
-            {{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</label
-          >
-          <p-select
-            [options]="departments"
-            [(ngModel)]="filterModel.departmentId"
-            [optionLabel]="getPropertyName()"
-            [showClear]="true"
-            [filter]="true"
-            class="w-full peer"
-            id="department"
-            optionLabel="type"
-            optionValue="id"
-            placeholder="{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}"
-          ></p-select>
+            {{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}</label>
+          <p-select [options]="departments" [(ngModel)]="filterModel.departmentId" [optionLabel]="getPropertyName()"
+            [showClear]="true" [filter]="true" class="w-full peer" id="department" optionLabel="type" optionValue="id"
+            placeholder="{{ 'DEPARTMENTS_LIST_PAGE.DEPARTMENT_NAME' | translate }}"></p-select>
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
         <div class="relative">
           <label class="label" for="status">{{
             'ATTENDANCE_REPORT_PAGE.STATUS' | translate
-          }}</label>
+            }}</label>
 
-          <p-select
-            [options]="attendanceStatuses"
-            optionValue="value"
-            [showClear]="true"
-            [(ngModel)]="filterModel.statusId"
-            placeholder="{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}"
-            class="w-full peer"
-          >
+          <p-select [options]="attendanceStatuses" optionValue="value" [showClear]="true"
+            [(ngModel)]="filterModel.statusId" placeholder="{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}"
+            class="w-full peer">
             <!-- dropdown list items -->
             <ng-template let-option pTemplate="item">
               {{ option.labelKey | translate }}
@@ -143,8 +86,7 @@
             </ng-template>
           </p-select>
           <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
-          ></span>
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
         </div>
       </div>
 
@@ -160,166 +102,152 @@
   </div>
   <div class="mt-6">
     <div
-      class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
-    >
+      class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
       <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
         {{ 'ATTENDANCE_REPORT_PAGE.TITLE' | translate }}
       </h4>
       <div class="actions flex items-center gap-4 ms-auto">
-        <button
-          (click)="exportExcel(getTranslatedFileName('ATTENDANCE_REPORT_PAGE.TITLE', 'xlsx'))"
-          class="table-head-action-btn min-w-[40px]"
-        >
+        <button (click)="exportExcel(getTranslatedFileName('ATTENDANCE_REPORT_PAGE.TITLE', 'xlsx'))"
+          class="table-head-action-btn min-w-[40px]">
           <img src="assets/icons/excel.svg" alt="" />
         </button>
-        <button
-          (click)="exportPdf(getTranslatedFileName('ATTENDANCE_REPORT_PAGE.TITLE'))"
-          class="table-head-action-btn"
-        >
+        <button (click)="exportPdf(getTranslatedFileName('ATTENDANCE_REPORT_PAGE.TITLE'))"
+          class="table-head-action-btn">
           <img alt="" src="assets/icons/pdf.svg" />
         </button>
       </div>
     </div>
     @if (list && list.length > 0) {
-      <p-table [value]="list">
-        <ng-template #header>
-          <tr>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.NATIONAL_ID' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.DEPARTMENT' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.DATE' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_NAME' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_TYPE' | translate }}</th>
+    <p-table [value]="list">
+      <ng-template #header>
+        <tr>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate }}</th>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.NATIONAL_ID' | translate }}</th>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.DEPARTMENT' | translate }}</th>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.DATE' | translate }}</th>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_NAME' | translate }}</th>
+          <!-- <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_TYPE' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.LEAVE_NAME' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.MISSION_NAME' | translate }}</th>
             <th>{{ 'ATTENDANCE_REPORT_PAGE.MISSION_TYPE' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.PERMISSIONS' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.PRESENCE_INQUIRY' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_PRESENCE_INQUIRY' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKIN_TIME' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKOUT_TIME' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.LATE_MINUTES' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.EARLY_LEAVE_MINUTES' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.GRACE_MINUTES_USED' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.IS_GRACE_APPLIED' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.REMAINING_MONTHLY_GRACE_MINUTES' | translate }}</th>
-            <th>{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}</th>
-          </tr>
-        </ng-template>
-        <ng-template #body let-attendance>
-          <tr>
-            <td
-              title="{{
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.PERMISSIONS' | translate }}</th> -->
+          <!-- <th>{{ 'ATTENDANCE_REPORT_PAGE.PRESENCE_INQUIRY' | translate }}</th>
+            <th>{{ 'ATTENDANCE_REPORT_PAGE.SHIFT_PRESENCE_INQUIRY' | translate }}</th> -->
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKIN_TIME' | translate }}</th>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.CHECKOUT_TIME' | translate }}</th>
+          <!-- <th>{{ 'ATTENDANCE_REPORT_PAGE.LATE_MINUTES' | translate }}</th>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.EARLY_LEAVE_MINUTES' | translate }}</th>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.GRACE_MINUTES_USED' | translate }}</th>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.IS_GRACE_APPLIED' | translate }}</th>
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.REMAINING_MONTHLY_GRACE_MINUTES' | translate }}</th> -->
+          <th>{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}</th>
+          <th>اجراء</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-attendance>
+        <tr>
+          <td title="{{
                 isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr
-              }}"
-            >
-              {{ isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr }}
-            </td>
-            <td>{{ attendance.nationalId }}</td>
-            <td
-              title="{{
+              }}">
+            {{ isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr }}
+          </td>
+          <td>{{ attendance.nationalId }}</td>
+          <td title="{{
                 isCurrentLanguageEnglish()
                   ? attendance.departmentNameEn
                   : attendance.departmentNameAr
-              }}"
-            >
-              {{
-                isCurrentLanguageEnglish()
-                  ? attendance.departmentNameEn
-                  : attendance.departmentNameAr
-              }}
-            </td>
-            <td>{{ formatDate(attendance.processingDate) }}</td>
-            <td>{{ attendance.getShiftName() }}</td>
-            <td>
-              @if (attendance.shiftType === shiftType.SPECIAL) {
-                {{ 'ATTENDANCE_REPORT_PAGE.SPECIAL_SHIFT' | translate }}
-              } @else {
-                {{ 'ATTENDANCE_REPORT_PAGE.DEFAULT_SHIFT' | translate }}
-              }
-            </td>
-            <td>{{ attendance.getHolidayName() }}</td>
-            <td>{{ attendance.getMissionName() }}</td>
-            <td>{{ attendance.getMissionTypeTranslationKey() | translate }}</td>
-            <td>
-              {{ getPermissionLabel(attendance) | translate }}
-            </td>
-            <td>
-              @if (attendance.isPresenceInquirySucceed) {
-                <div class="flex items-center justify-center">
-                  <img src="assets/icons/right-icon.svg" alt="" />
-                </div>
-              } @else if (attendance.isPresenceInquirySucceed === false) {
-                <div class="flex items-center justify-center">
-                  <img src="assets/icons/wrong-icon.svg" alt="" />
-                </div>
-              }
-            </td>
-            <td>
-              @if (attendance.isShiftPresenceInquirySucceed) {
-                <div class="flex items-center justify-center">
-                  <img src="assets/icons/right-icon.svg" alt="" />
-                </div>
-              } @else if (attendance.isShiftPresenceInquirySucceed === false) {
-                <div class="flex items-center justify-center">
-                  <img src="assets/icons/wrong-icon.svg" alt="" />
-                </div>
-              }
-            </td>
-            <td>{{ formatTime(attendance.getEffectiveAttendanceFingerPrint()) }}</td>
-            <td>{{ formatTime(attendance.getEffectiveLeaveFingerPrint()) }}</td>
+              }}">
+            {{
+            isCurrentLanguageEnglish()
+            ? attendance.departmentNameEn
+            : attendance.departmentNameAr
+            }}
+          </td>
+          <td>{{ formatDate(attendance.processingDate) }}</td>
+          <td>{{ attendance.getShiftName() }}</td>
+          <!-- <td>
+            @if (attendance.shiftType === shiftType.SPECIAL) {
+            {{ 'ATTENDANCE_REPORT_PAGE.SPECIAL_SHIFT' | translate }}
+            } @else {
+            {{ 'ATTENDANCE_REPORT_PAGE.DEFAULT_SHIFT' | translate }}
+            }
+          </td>
+          <td>{{ attendance.getHolidayName() }}</td>
+          <td>{{ attendance.getMissionName() }}</td>
+          <td>{{ attendance.getMissionTypeTranslationKey() | translate }}</td>
+          <td>
+            {{ getPermissionLabel(attendance) | translate }}
+          </td>
+          <td>
+            @if (attendance.isPresenceInquirySucceed) {
+            <div class="flex items-center justify-center">
+              <img src="assets/icons/right-icon.svg" alt="" />
+            </div>
+            } @else if (attendance.isPresenceInquirySucceed === false) {
+            <div class="flex items-center justify-center">
+              <img src="assets/icons/wrong-icon.svg" alt="" />
+            </div>
+            }
+          </td>
+          <td>
+            @if (attendance.isShiftPresenceInquirySucceed) {
+            <div class="flex items-center justify-center">
+              <img src="assets/icons/right-icon.svg" alt="" />
+            </div>
+            } @else if (attendance.isShiftPresenceInquirySucceed === false) {
+            <div class="flex items-center justify-center">
+              <img src="assets/icons/wrong-icon.svg" alt="" />
+            </div>
+            }
+          </td> -->
+          <td>{{ formatTime(attendance.getEffectiveAttendanceFingerPrint()) }}</td>
+          <td>{{ formatTime(attendance.getEffectiveLeaveFingerPrint()) }}</td>
 
-            <td>{{ attendance.lateMinutes ?? '' }}</td>
-            <td>{{ attendance.earlyLeaveMinutes ?? '' }}</td>
-            <td>{{ attendance.graceMinutesUsed ?? '' }}</td>
-            <td>
-              @if (attendance.isGraceApplied === true) {
-                <div class="flex items-center justify-center">
-                  <img src="assets/icons/right-icon.svg" alt="" />
-                </div>
-              } @else if (attendance.isGraceApplied === false) {
-                <div class="flex items-center justify-center">
-                  <img src="assets/icons/wrong-icon.svg" alt="" />
-                </div>
-              }
-            </td>
-            <td>{{ attendance.remainingMonthlyGraceMinutes ?? '' }}</td>
+          <!-- <td>{{ attendance.lateMinutes ?? '' }}</td>
+          <td>{{ attendance.earlyLeaveMinutes ?? '' }}</td>
+          <td>{{ attendance.graceMinutesUsed ?? '' }}</td>
+          <td>
+            @if (attendance.isGraceApplied === true) {
+            <div class="flex items-center justify-center">
+              <img src="assets/icons/right-icon.svg" alt="" />
+            </div>
+            } @else if (attendance.isGraceApplied === false) {
+            <div class="flex items-center justify-center">
+              <img src="assets/icons/wrong-icon.svg" alt="" />
+            </div>
+            }
+          </td>
+          <td>{{ attendance.remainingMonthlyGraceMinutes ?? '' }}</td> -->
 
-            <td>
-              <div
-                class="px-2 py-1 flex items-center gap-2 rounded-full font-medium text-[14px] w-fit"
-                [style.background-color]="getStatusConfig(attendance.attendanceStatus).bgColor"
-                [style.color]="getStatusConfig(attendance.attendanceStatus).textColor"
-              >
-                <span
-                  class="block w-[10px] h-[10px] rounded-full"
-                  [style.background-color]="getStatusConfig(attendance.attendanceStatus).dotColor"
-                ></span>
-                <span>
-                  {{ getStatusConfig(attendance.attendanceStatus).labelKey | translate }}
-                </span>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+          <td>
+            <div class="px-2 py-1 flex items-center gap-2 rounded-full font-medium text-[14px] w-fit"
+              [style.background-color]="getStatusConfig(attendance.attendanceStatus).bgColor"
+              [style.color]="getStatusConfig(attendance.attendanceStatus).textColor">
+              <span class="block w-[10px] h-[10px] rounded-full"
+                [style.background-color]="getStatusConfig(attendance.attendanceStatus).dotColor"></span>
+              <span>
+                {{ getStatusConfig(attendance.attendanceStatus).labelKey | translate }}
+              </span>
+            </div>
+          </td>
+          <td>
+            <button class="table-action-gray-btn" (click)="openDataDialog()">
+              <img alt="" src="assets/icons/view.svg" />
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
     } @else {
-      <div class="flex items-center justify-center h-64">
-        <p class="text-gray-500">
-          {{ 'COMMON.NO_DATA_TO_SHOW' | translate }}
-        </p>
-      </div>
+    <div class="flex items-center justify-center h-64">
+      <p class="text-gray-500">
+        {{ 'COMMON.NO_DATA_TO_SHOW' | translate }}
+      </p>
+    </div>
     }
     @if (paginationInfo) {
-      <p-paginator
-        (onPageChange)="onPageChange($event)"
-        [first]="first"
-        [rowsPerPageOptions]="[10, 20, 30]"
-        [rows]="rows"
-        [showCurrentPageReport]="false"
-        [totalRecords]="paginationInfo.totalItems"
-        class="mt-6"
-      />
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rowsPerPageOptions]="[10, 20, 30]" [rows]="rows"
+      [showCurrentPageReport]="false" [totalRecords]="paginationInfo.totalItems" class="mt-6" />
     }
   </div>
 </div>

@@ -2,6 +2,7 @@
   position: relative;
   min-width: 100px;
   height: 100%;
+
   &::after {
     position: absolute;
     bottom: 0;
@@ -21,5 +22,16 @@
     &::after {
       background-color: #9da4ae;
     }
+  }
+}
+
+::ng-deep {
+  .p-popover {
+    top: 68px !important;
+  }
+
+  .p-popover:after,
+  .p-popover:before {
+    display: none !important;
   }
 }

@@ -26,6 +26,9 @@ import {
 import { SHIFT_TYPE_ENUM } from '@/enums/shift-type-enum';
 import { formatDateTo12Hour } from '@/utils/general-helper';
 import { Observable } from 'rxjs';
+import { MatDialogConfig } from '@angular/material/dialog';
+import { ReportDetailsModalComponent } from '../report-details-modal/report-details-modal.component';
+import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
 @Component({
   selector: 'app-my-attendance-report-list',
@@ -222,5 +225,17 @@ export class MyAttendanceReportListComponent extends BaseListComponent<
       this.langService.getCurrentLanguage(),
       this.getPdfExportFilterOptions()
     );
+  }
+  openDataDialog(): void {
+    let dialogConfig: MatDialogConfig = new MatDialogConfig();
+    dialogConfig.width = this.dialogSize.width;
+    dialogConfig.maxWidth = this.dialogSize.maxWidth;
+    // dialogConfig.data = { model: this.selectedItem };
+    const dialogRef = this.matDialog.open(ReportDetailsModalComponent as any, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
+      if (result && result == DIALOG_ENUM.OK) {
+      }
+    });
   }
 }

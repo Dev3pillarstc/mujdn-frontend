@@ -578,7 +578,8 @@
     "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "Please assign at least one employee to each shift section before saving",
     "AT_LEAST_ONE_EMPLOYEE_ONE_SHIFT": "Please assign at least one employee to at least one shift section before saving",
     "DUPLICATE_SHIFT": "This shift is already assigned to another slot — each shift must be unique",
-    "ROTATING_SHIFTS": "Rotating Shifts"
+    "ROTATING_SHIFTS": "Rotating Shifts",
+    "SHIFTING_PERIOD_MAX_ONE_YEAR": "Shift period cannot exceed one year"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT_TAB": "Employees Assigned Work Shifts",

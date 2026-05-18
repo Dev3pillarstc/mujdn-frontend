@@ -576,7 +576,8 @@
     "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "يرجى تعيين موظف واحد على الأقل في كل قسم وردية قبل الحفظ",
     "AT_LEAST_ONE_EMPLOYEE_ONE_SHIFT": "يرجى تعيين موظف واحد على الأقل في وردية واحدة على الأقل قبل الحفظ",
     "DUPLICATE_SHIFT": "هذه الوردية محددة بالفعل في خانة أخرى — يجب أن تكون كل وردية مختلفة",
-    "ROTATING_SHIFTS": "ورديات التناوب"
+    "ROTATING_SHIFTS": "ورديات التناوب",
+    "SHIFTING_PERIOD_MAX_ONE_YEAR": "لا يمكن أن تتجاوز فترة الوردية سنة واحدة"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT_TAB": "الورديات المسندة للموظفين التابعين",

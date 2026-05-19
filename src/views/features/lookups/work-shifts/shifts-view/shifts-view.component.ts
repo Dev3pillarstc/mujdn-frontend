@@ -173,6 +173,22 @@ export class ShiftsViewComponent extends BaseListComponent<
     );
   }
 
+  get filteredUsersProfiles(): UsersWithDepartmentLookup[] {
+    if (!this.filterOptions.fkDepartmentId) return this.usersProfiles;
+    return this.usersProfiles.filter(
+      (u) => u.departmentId === this.filterOptions.fkDepartmentId
+    );
+  }
+
+  onDepartmentChange(): void {
+    const selected = this.usersProfiles.find(
+      (u) => u.id === this.filterOptions.fkUserProfileId
+    );
+    if (selected?.departmentId !== this.filterOptions.fkDepartmentId) {
+      this.filterOptions.fkUserProfileId = undefined;
+    }
+  }
+
   get optionLabel(): string {
     return this.isArabic ? 'nameAr' : 'nameEn';
   }

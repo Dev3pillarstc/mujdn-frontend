@@ -9,6 +9,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { InputTextModule } from 'primeng/inputtext';
 import { WorkShiftsListPopupComponent } from '../work-shifts-list-popup/work-shifts-list-popup.component';
 import { Select } from 'primeng/select';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { WorkShiftsAssignmentPopupComponent } from '../work-shifts-assignment-popup/work-shifts-assignment-popup.component';
@@ -54,6 +55,7 @@ import { WorkDaysSettingService } from '@/services/features/setting/work-days-se
     CommonModule,
     PaginatorModule,
     Select,
+    MultiSelectModule,
     DatePickerModule,
     FormsModule,
     TranslatePipe,
@@ -261,6 +263,24 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
           });
         },
       });
+  }
+
+  onDepartmentChange(): void {
+    const selectedDepts = this.filterOptions.fkDepartmentId;
+    if (!selectedDepts?.length) {
+      this.filteredEmployees = this.sortByName(this.usersProfiles, this.optionLabel);
+    } else {
+      this.filteredEmployees = this.sortByName(
+        this.usersProfiles.filter((u) => u.departmentId != null && selectedDepts.includes(u.departmentId)),
+        this.optionLabel
+      );
+    }
+    if (this.filterOptions.fkAssignedUserId?.length) {
+      const validIds = new Set(this.filteredEmployees.map((e) => e.id));
+      this.filterOptions.fkAssignedUserId = this.filterOptions.fkAssignedUserId.filter((id) =>
+        validIds.has(id)
+      );
+    }
   }
 
   getShiftTypeName(type: number): string {

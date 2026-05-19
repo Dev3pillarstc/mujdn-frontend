@@ -56,7 +56,7 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
       fkShiftId: [fkShiftId, [Validators.required]],
       fkAssignedUserId: [fkAssignedUserId, []], // Made optional here as we might use assignedUserIds
       startDate: [startDate, [Validators.required]],
-      endDate: [endDate, []],
+      endDate: [endDate, [Validators.required]],
       employeeWorkingDays: [employeeWorkingDays || ''],
       workShiftType: [workShiftType || WorkShiftType.Standard, [Validators.required]],
       presenceInquiryTime: [presenceInquiryTime, []],

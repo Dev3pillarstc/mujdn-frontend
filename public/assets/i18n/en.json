@@ -581,6 +581,7 @@
     "ROTATING_SHIFTS": "Rotating Shifts"
   },
   "USER_WORK_SHIFT_PAGE": {
+    "WORK_SHIFT_ASSIGNMENT_TAB": "Assigned shifts to subordinate employees",
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
     "SHIFT_NAME_AR": "Shift Name In Arabic",
     "SHIFT_NAME_EN": "Shift Name In English",

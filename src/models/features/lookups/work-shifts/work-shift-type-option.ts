@@ -14,12 +14,12 @@ export const WORK_SHIFT_TYPE_OPTIONS: WorkShiftTypeOption[] = [
     nameAr: 'وردية بنظام ساعات العمل المعتمدة',
     value: WorkShiftType.Standard,
   },
-  {
-    id: 2,
-    nameEn: 'Work Week / Rest Week',
-    nameAr: 'أسبوع عمل / أسبوع راحة',
-    value: WorkShiftType.WeekOnWeekOff,
-  },
+  // {
+  //   id: 2,
+  //   nameEn: 'Work Week / Rest Week',
+  //   nameAr: 'أسبوع عمل / أسبوع راحة',
+  //   value: WorkShiftType.WeekOnWeekOff,
+  // },
   {
     id: 3,
     nameEn: 'Work Week / Rest Week (24h)',
@@ -31,5 +31,5 @@ export const WORK_SHIFT_TYPE_OPTIONS: WorkShiftTypeOption[] = [
     nameEn: 'Rotating Shift',
     nameAr: 'وردية متناوبة',
     value: WorkShiftType.Rotating,
-  }
+  },
 ];

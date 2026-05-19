@@ -1,6 +1,12 @@
 import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { Visit } from '@/models/features/visit/visit';
-import { FormArray, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 
 // used in base-crud service for date filtering
 export const genericDateOnlyConvertor = function (model: any) {
@@ -298,6 +304,17 @@ export function buildTranslationParams(details: any, translateService: any): any
   });
 
   return translationParams;
+}
+
+export function shiftingPeriodMaxOneYearValidator(getStartDate: () => string | Date): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const startDate = getStartDate();
+    const endDate = control.value as Date | null;
+    if (!startDate || !endDate) return null;
+    const maxEndDate = new Date(startDate);
+    maxEndDate.setFullYear(maxEndDate.getFullYear() + 1);
+    return endDate > maxEndDate ? { shiftingPeriodMaxOneYear: true } : null;
+  };
 }
 
 export const weekDays = [

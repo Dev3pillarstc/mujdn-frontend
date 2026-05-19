@@ -26,7 +26,7 @@ import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import Shift from '@/models/features/lookups/work-shifts/shift';
 import { WeekDaysEnum } from '@/enums/week-days-enum';
-import { weekDays } from '@/utils/general-helper';
+import { shiftingPeriodMaxOneYearValidator, weekDays } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 import { UserWorkShiftService } from '@/services/features/lookups/user-workshift.service';
 import { PaginationParams } from '@/models/shared/pagination-params';
@@ -448,6 +448,7 @@ export class WorkShiftsAssignmentPopupComponent
 
     this.refreshAllowedWeekDays(newStartDate, effectiveEndDate);
     this.validateAndUpdateWorkingDays_WithDates(newStartDate, effectiveEndDate);
+    this.form.get('endDate')?.updateValueAndValidity();
   }
 
   onEndDateSelect(selectedDate: Date): void {
@@ -540,9 +541,12 @@ export class WorkShiftsAssignmentPopupComponent
     const userIdsCtrl = this.form.get('userIdsArray');
     isSingle ? userIdsCtrl?.setValidators([Validators.required]) : userIdsCtrl?.clearValidators();
     userIdsCtrl?.updateValueAndValidity();
-
+    
     const endDateCtrl = this.form.get('endDate');
-    endDateCtrl?.setValidators([Validators.required]);
+    endDateCtrl?.setValidators([
+      Validators.required,
+      shiftingPeriodMaxOneYearValidator(() => this.form?.get('startDate')?.value ?? null),
+    ]);
     endDateCtrl?.updateValueAndValidity();
   }
 

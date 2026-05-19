@@ -22,4 +22,5 @@ export enum ValidationErrorKeyEnum {
   PASSWORD_MISMATCH = 'passwordMismatch',
   DATE_MAX_RANGE_EXCEEDED = 'maxRangeExceeded',
   DUPLICATE_SHIFT = 'duplicateShift',
+  SHIFTING_PERIOD_MAX_ONE_YEAR = 'shiftingPeriodMaxOneYear',
 }

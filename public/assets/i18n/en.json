@@ -112,7 +112,7 @@
     "MIN_VALUE": "The minimum allowed time is {min}",
     "MAX_VALUE": "The maximum allowed time is {max}",
     "CURRENT_PASSWORD_INCORRECT": "Old password is incorrect",
-    "CONFLICTING_USER_DATES": "Conflicting shift dates for this user - overlapping with shift: {{shiftName}}",
+    "CONFLICTING_USER_DATES": "Conflicting shift dates ",
     "CAN_NOT_TAKE_ACTION": "You can not take this action",
     "VISITOR_NOT_FOUND": "Visitor not found with this National ID",
     "VISITOR_NATIONAL_ID_BLACKLISTED": "Sorry, you can't submit a visit request because the visitor is blacklisted",
@@ -578,10 +578,11 @@
     "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "Please assign at least one employee to each shift section before saving",
     "AT_LEAST_ONE_EMPLOYEE_ONE_SHIFT": "Please assign at least one employee to at least one shift section before saving",
     "DUPLICATE_SHIFT": "This shift is already assigned to another slot — each shift must be unique",
-    "ROTATING_SHIFTS": "Rotating Shifts"
+    "ROTATING_SHIFTS": "Rotating Shifts",
+    "SHIFTING_PERIOD_MAX_ONE_YEAR": "Shift period cannot exceed one year"
   },
   "USER_WORK_SHIFT_PAGE": {
-    "WORK_SHIFT_ASSIGNMENT_TAB": "Assigned shifts to subordinate employees",
+    "WORK_SHIFT_ASSIGNMENT_TAB": "Employees Assigned Work Shifts",
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
     "SHIFT_NAME_AR": "Shift Name In Arabic",
     "SHIFT_NAME_EN": "Shift Name In English",

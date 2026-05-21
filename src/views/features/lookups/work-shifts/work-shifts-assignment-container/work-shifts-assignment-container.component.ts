@@ -57,9 +57,8 @@ export default class WorkShiftsAssignmentContainerComponent implements OnInit, O
     });
   }
 
-  showAssignmentsTab(): boolean {
-    const roles = this.authService.getUser().value?.roles ?? [];
-    return roles.includes(ROLES_ENUM.HR_OFFICER) || roles.includes(ROLES_ENUM.DEPARTMENT_MANAGER);
+  showAssignmentsTab(): boolean | undefined {
+    return this.authService.isHROfficer || this.authService.isDepartmentManager;
   }
 
   onTabChange(index: number | string): void {

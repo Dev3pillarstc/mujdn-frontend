@@ -42,7 +42,7 @@ import { DepartmentService } from '@/services/features/lookups/department.servic
 import { ShiftService } from '@/services/features/lookups/shift.service';
 import { UserService } from '@/services/features/user.service';
 import { WorkDaysSettingService } from '@/services/features/setting/work-days-setting.service';
-
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-work-shifts-assignment',
@@ -60,8 +60,7 @@ import { WorkDaysSettingService } from '@/services/features/setting/work-days-se
     FormsModule,
     TranslatePipe,
     TooltipModule,
-    Breadcrumb
-
+    Breadcrumb,
   ],
   templateUrl: './work-shifts-assignment.component.html',
   styleUrl: './work-shifts-assignment.component.scss',
@@ -89,6 +88,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   private shiftService = inject(ShiftService);
   private userService = inject(UserService);
   private workDaysSettingService = inject(WorkDaysSettingService);
+  private authService = inject(AuthService);
 
   override get filterModel(): UserWorkShiftsFilter {
     return this.filterOptions;
@@ -143,7 +143,8 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   }): void {
     this.shifts = data.shifts || [];
     this.list = data.userShifts?.list || [];
-    this.paginationInfo = data.userShifts?.paginationInfo || this.paginationInfo || new PaginationInfo();
+    this.paginationInfo =
+      data.userShifts?.paginationInfo || this.paginationInfo || new PaginationInfo();
     this.usersProfiles = data.users || [];
     this.departments = data.departments || [];
     this.defaultWorkDays = data.defaultworkDays || new WorkDaysSetting();
@@ -178,6 +179,10 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   dialog = inject(MatDialog);
   date2: Date | undefined;
   attendance!: any[];
+
+  canAddOrEditOrDelete() {
+    return this.authService.isHROfficer;
+  }
 
   addOrEditModel(userWorkShift?: UserWorkShift): void {
     this.openDialog(userWorkShift ?? new UserWorkShift());
@@ -298,9 +303,13 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
         ? [shift.shiftDetails.nameAr]
         : [shift.shiftDetails.nameEn];
     } else {
-      return shift.rotationGroups.map(x => x.shiftDetails).map(y => {
-        return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? y?.nameAr : y?.nameEn;
-      });
+      return shift.rotationGroups
+        .map((x) => x.shiftDetails)
+        .map((y) => {
+          return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
+            ? y?.nameAr
+            : y?.nameEn;
+        });
     }
   }
 }

@@ -4,27 +4,28 @@
       <button (click)="toggleSideMenu()" class="menu-button md:hidden h-full">
         <i class="pi pi-bars"></i>
       </button>
-      <button
-        (click)="shiftPanel.toggle($event)"
-        class="px-3 py-1 bg-[#ecfdf3] border border-[#abefc6] text-[#085d3a] rounded-full flex items-center gap-1 font-[500]"
-      >
-        {{ 'CURRENT_SHIFT.TODAY_SHIFT' | translate }}
-        <svg
-          [class.rotate-180]="shiftPanelVisible"
-          class="transition-transform duration-200"
-          width="18"
-          height="18"
-          viewBox="0 0 18 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+      @if (loggedInUser) {
+        <button
+          (click)="shiftPanel.toggle($event)"
+          class="px-3 py-1 bg-[#ecfdf3] border border-[#abefc6] text-[#085d3a] rounded-full flex items-center gap-1 font-[500]"
         >
-          <path
-            d="M4.953 6.416A38.61 38.61 0 0 0 6.73 8.631c.482.556.989 1.097 1.439 1.494.226.2.424.351.587.45a.899.899 0 0 0 .245.112s.088-.02.242-.112c.164-.099.362-.25.588-.45.45-.397.957-.938 1.439-1.494a38.617 38.617 0 0 0 1.777-2.214.563.563 0 0 1 .906.667l-.002.001c-.096.127-.378.502-.544.714-.333.427-.79.997-1.288 1.57-.494.57-1.038 1.153-1.543 1.6a5.355 5.355 0 0 1-.752.57c-.23.138-.52.274-.824.274-.305 0-.595-.136-.824-.275a5.352 5.352 0 0 1-.752-.57c-.505-.446-1.05-1.03-1.544-1.6a39.738 39.738 0 0 1-1.832-2.282v-.002a.563.563 0 0 1 .905-.668z"
-            fill="#085D3A"
-          />
-        </svg>
-      </button>
-
+          {{ 'CURRENT_SHIFT.TODAY_SHIFT' | translate }}
+          <svg
+            [class.rotate-180]="shiftPanelVisible"
+            class="transition-transform duration-200"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.953 6.416A38.61 38.61 0 0 0 6.73 8.631c.482.556.989 1.097 1.439 1.494.226.2.424.351.587.45a.899.899 0 0 0 .245.112s.088-.02.242-.112c.164-.099.362-.25.588-.45.45-.397.957-.938 1.439-1.494a38.617 38.617 0 0 0 1.777-2.214.563.563 0 0 1 .906.667l-.002.001c-.096.127-.378.502-.544.714-.333.427-.79.997-1.288 1.57-.494.57-1.038 1.153-1.543 1.6a5.355 5.355 0 0 1-.752.57c-.23.138-.52.274-.824.274-.305 0-.595-.136-.824-.275a5.352 5.352 0 0 1-.752-.57c-.505-.446-1.05-1.03-1.544-1.6a39.738 39.738 0 0 1-1.832-2.282v-.002a.563.563 0 0 1 .905-.668z"
+              fill="#085D3A"
+            />
+          </svg>
+        </button>
+      }
       <p-overlayPanel
         #shiftPanel
         (onShow)="onShiftPanelShow()"
@@ -45,7 +46,6 @@
         @else {
           <div class="max-w-full w-[1176px] p-5" [dir]="dir">
             <div class="flex items-center justify-between gap-4 flex-wrap">
-
               <!-- Shift name + status badge -->
               <div class="flex items-center justify-between mb-4 gap-3">
                 <span class="text-lg font-bold text-[#1f2a37]">{{ getCurrentShiftName() }}</span>
@@ -93,7 +93,6 @@
 
             <!-- Details grid -->
             <div class="grid grid-cols-3 gap-6">
-
               <div class="flex flex-col gap-1">
                 <span class="text-sm text-[#6c737f]">
                   {{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}
@@ -201,9 +200,7 @@
         <!-- User dropdown menu -->
         <p-menu #userMenu [popup]="true" [model]="menuItems">
           <ng-template let-item pTemplate="item">
-            <a
-              class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
+            <a class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
               <img [src]="item.icon" alt="icon" class="w-10 h-10" />
               <span class="text-[16px] font-medium text-[#1f2a37]">{{ item.label }}</span>
             </a>

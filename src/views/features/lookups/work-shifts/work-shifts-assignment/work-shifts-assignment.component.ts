@@ -202,6 +202,16 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
 
     return this.openBaseDialog(WorkShiftsAssignmentPopupComponent as any, model, viewMode, lookups);
   }
+
+  viewModel(userWorkShift: UserWorkShift): void {
+    const lookups = {
+      usersProfiles: this.usersProfiles,
+      departments: this.departments,
+      shifts: this.shifts,
+      defaultWorkDays: [this.defaultWorkDays],
+    };
+    this.openBaseDialog(WorkShiftsAssignmentPopupComponent as any, userWorkShift, ViewModeEnum.VIEW, lookups);
+  }
   get optionLabel(): string {
     const lang = this.langService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';

@@ -2,6 +2,7 @@
   "COMMON": {
     "OK": "Ok",
     "CANCEL": "Cancel",
+    "CLOSE": "Close",
     "ADD": "Add",
     "ERROR": "Error",
     "SUCCESS": "Success",

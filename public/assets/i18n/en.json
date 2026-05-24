@@ -866,6 +866,7 @@
     "NO_SHOW": "No Show"
   },
   "ATTENDANCE_REPORT_PAGE": {
+    "REPORT_DETAILS": "Report Details",
     "SPECIAL_SHIFT": "Special Shift",
     "DEFAULT_SHIFT": "Default Shift",
     "DATE": "Date",

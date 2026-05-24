@@ -865,6 +865,7 @@
     "NO_SHOW": "لم يحضر"
   },
   "ATTENDANCE_REPORT_PAGE": {
+    "REPORT_DETAILS": "بيانات التقرير",
     "SPECIAL_SHIFT": "وردية عمل خاصة",
     "DEFAULT_SHIFT": "وردية عمل افتراضية",
     "DATE": "التاريخ",

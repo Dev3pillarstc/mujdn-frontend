@@ -105,7 +105,7 @@
           <th>{{ 'ATTENDANCE_REPORT_PAGE.IS_GRACE_APPLIED' | translate }}</th>
           <th>{{ 'ATTENDANCE_REPORT_PAGE.REMAINING_MONTHLY_GRACE_MINUTES' | translate }}</th> -->
           <th>{{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}</th>
-          <th>اجراء</th>
+          <th>{{ 'COMMON.ACTION' | translate }}</th>
         </tr>
       </ng-template>
       <ng-template #body let-attendance>
@@ -178,7 +178,7 @@
             </div>
           </td>
           <td>
-            <button (click)="openDataDialog()" class="table-action-gray-btn">
+            <button (click)="openDataDialog(attendance)" class="table-action-gray-btn">
               <img alt="" src="assets/icons/view.svg" />
             </button>
           </td>

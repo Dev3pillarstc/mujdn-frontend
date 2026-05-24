@@ -226,11 +226,11 @@ export class MyAttendanceReportListComponent extends BaseListComponent<
       this.getPdfExportFilterOptions()
     );
   }
-  openDataDialog(): void {
+  openDataDialog(model: AttendanceReport): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
-    // dialogConfig.data = { model: this.selectedItem };
+    dialogConfig.data = { model, showEmployeeDetails: false };
     const dialogRef = this.matDialog.open(ReportDetailsModalComponent as any, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {

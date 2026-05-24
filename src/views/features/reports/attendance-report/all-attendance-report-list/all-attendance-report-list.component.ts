@@ -222,11 +222,11 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
     }
     return '';
   }
-  openDataDialog(): void {
+  openDataDialog(model: AttendanceReport): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
-    // dialogConfig.data = { model: this.selectedItem };
+    dialogConfig.data = { model, showEmployeeDetails: true };
     const dialogRef = this.matDialog.open(ReportDetailsModalComponent as any, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {

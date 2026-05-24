@@ -132,7 +132,7 @@
         <ng-template #body let-item>
           <tr>
             <td class="text-start">
-              <div class="font-bold">{{ getFormattedDate(item.businessDate) }}</div>
+              <div class="font-bold">{{ getFormattedDateRange(item.dateFrom, item.dateTo) }}</div>
               <div class="text-sm text-[#64748b] font-medium">
                 {{ item.formattedTimeRange }}
               </div>

@@ -12,7 +12,8 @@ export default class EmployeeShiftDay extends BaseCrudModel<EmployeeShiftDay, Em
   declare employeeName: { id: number; nameAr: string; nameEn: string };
   declare shiftDetails: { id: number; nameAr: string; nameEn: string };
   declare shiftAssignmentType: number;
-  declare businessDate: string;
+  declare dateFrom: string;
+  declare dateTo: string;
   declare timeFrom: string;
   declare timeTo: string;
   declare isRestDay: boolean;

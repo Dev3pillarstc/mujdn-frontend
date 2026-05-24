@@ -1,6 +1,7 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 import { ResponseData } from '@/models/shared/response/response-data';
+import { HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   CastResponse,
@@ -32,10 +33,11 @@ export class WorkDaysSettingService extends BaseCrudService<WorkDaysSetting> {
 
   @CastResponse(undefined, { fallback: '$get' })
   @HasInterception
-  getWorkDays(): Observable<WorkDaysSetting> {
+  getWorkDays(context?: HttpContext): Observable<WorkDaysSetting> {
     return this.http
       .get<ResponseData<WorkDaysSetting>>(this.getUrlSegment() + '/' + 'GetWorkDays', {
         withCredentials: true,
+        context,
       })
       .pipe(
         switchMap((response: ResponseData<WorkDaysSetting>) => {

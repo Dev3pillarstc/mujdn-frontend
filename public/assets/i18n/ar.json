@@ -948,5 +948,10 @@
     "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)",
     "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "سيتم تناوب الموظفين بين الورديات بالترتيب التالي: ",
     "ON_A_RECURRING_BASIS": "بشكل دوري."
+  },
+  "CURRENT_SHIFT": {
+    "TODAY_SHIFT": "وردية عمل اليوم",
+    "WORK_DAYS_LABEL": "أيام العمل بالوردية:",
+    "NO_SHIFT": "لا توجد وردية معينة لهذا اليوم"
   }
 }

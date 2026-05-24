@@ -949,5 +949,10 @@
     "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "Rotating shifts (work week / rest week)",
     "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "Users will be rotated between shifts in the following order: ",
     "ON_A_RECURRING_BASIS": "on a recurring basis."
+  },
+  "CURRENT_SHIFT": {
+    "TODAY_SHIFT": "Today's Work Shift",
+    "WORK_DAYS_LABEL": "Shift working days:",
+    "NO_SHIFT": "No shift assigned for today"
   }
 }

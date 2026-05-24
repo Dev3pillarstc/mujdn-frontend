@@ -152,9 +152,10 @@ export class ShiftsViewComponent extends BaseListComponent<
 
   protected override mapModelToExcelRow(model: EmployeeShiftDay): { [key: string]: any } {
     return {
-      [this.translateService.instant('SHIFTS_VIEW_PAGE.EMPLOYEE_NAME')]: this.getEmployeeName(model),
+      [this.translateService.instant('SHIFTS_VIEW_PAGE.EMPLOYEE_NAME')]:
+        this.getEmployeeName(model),
       [this.translateService.instant('SHIFTS_VIEW_PAGE.DATE_TIME')]:
-        `${formatDateOnly(model.businessDate)} ${model.formattedTimeRange ?? ''}`.trim(),
+        `${this.getFormattedDateRange(model.dateFrom, model.dateTo)} ${model.formattedTimeRange ?? ''}`.trim(),
       [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_NAME')]: this.getShiftName(model),
       [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_TYPE')]: this.getShiftTypeName(
         model.shiftAssignmentType
@@ -171,6 +172,18 @@ export class ShiftsViewComponent extends BaseListComponent<
       this.langService.getCurrentLanguage(),
       this.getPdfExportFilterOptions()
     );
+  }
+
+  get filteredUsersProfiles(): UsersWithDepartmentLookup[] {
+    if (!this.filterOptions.fkDepartmentId) return this.usersProfiles;
+    return this.usersProfiles.filter((u) => u.departmentId === this.filterOptions.fkDepartmentId);
+  }
+
+  onDepartmentChange(): void {
+    const selected = this.usersProfiles.find((u) => u.id === this.filterOptions.fkUserProfileId);
+    if (selected?.departmentId !== this.filterOptions.fkDepartmentId) {
+      this.filterOptions.fkUserProfileId = undefined;
+    }
   }
 
   get optionLabel(): string {
@@ -195,8 +208,11 @@ export class ShiftsViewComponent extends BaseListComponent<
     return this.isArabic ? option.nameAr : option.nameEn;
   }
 
-  getFormattedDate(businessDate: string): string {
-    return formatDateOnly(businessDate);
+  getFormattedDateRange(dateFrom: string, dateTo: string): string {
+    const from = formatDateOnly(dateFrom);
+    const to = formatDateOnly(dateTo);
+    return from === to ? from : `${from} - ${to}`;
+    // return `${from} - ${to}`;
   }
 
   get dateFrom(): Date | undefined {

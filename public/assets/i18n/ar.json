@@ -112,7 +112,7 @@
     "MIN_VALUE": "يجب أن يكون الحد الأدنى للوقت المدخل هو {min}",
     "MAX_VALUE": "يجب أن يكون الحد الأقصى للوقت المدخل هو {max}",
     "CURRENT_PASSWORD_INCORRECT": "كلمة المرور القديمة غير صحيحة",
-    "CONFLICTING_USER_DATES": "تعارض في مواعيد الورديات الخاصه بالمستخدم - يتعارض مع وردية: {{shiftName}}",
+    "CONFLICTING_USER_DATES": "تعارض في مواعيد الورديات",
     "CAN_NOT_TAKE_ACTION": "لا يمكن القيام بهذا الاجراء",
     "VISITOR_NOT_FOUND": "لم يتم العثور على زائر بهذا الرقم",
     "VISITOR_NATIONAL_ID_BLACKLISTED": "عفوا لا يمكن تقديم طلب الزيارة نظرا لوجود الزائر ضمن قائمة الحظر",
@@ -393,11 +393,11 @@
     "DATE_TO": "التاريخ (إلى)",
     "DATE_TIME": "التاريخ / الوقت",
     "SHIFT_NAME": "اسم الوردية",
-    "SHIFT_TYPE": "نوع الوردية",
+    "SHIFT_TYPE": "نوع الاسناد",
     "IS_REST_DAY": "يوم راحة",
     "YES": "نعم",
     "NO": "لا",
-    "EMPLOYEE_SHIFT_SCHEDULE": "الجدول اليومي للموظفين التابعين"
+    "EMPLOYEE_SHIFT_SCHEDULE": "ورديات الموظفين (فترات)"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "ورديات العمل",
@@ -497,7 +497,7 @@
     "ASSIGNED_EMPLOYEES": "الموظفون المُكلفون",
     "WORK_SHIFT_TEMP": "ورديات العمل المؤقتة",
     "WORK_SHIFT_ASSIGNMENT": "الورديات المسندة",
-    "EMPLOYEE_SHIFTS": "الورديات المسندة(الجدول اليومي)",
+    "EMPLOYEE_SHIFTS": "الورديات المسندة (فترات)",
     "HOLIDAYS": "قائمة الإجازات والأعياد",
     "WORK_SHIFT": "ورديات العمل",
     "WORK_SHIFT_SETTINGS": "تعريف ورديات العمل",
@@ -576,7 +576,8 @@
     "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "يرجى تعيين موظف واحد على الأقل في كل قسم وردية قبل الحفظ",
     "AT_LEAST_ONE_EMPLOYEE_ONE_SHIFT": "يرجى تعيين موظف واحد على الأقل في وردية واحدة على الأقل قبل الحفظ",
     "DUPLICATE_SHIFT": "هذه الوردية محددة بالفعل في خانة أخرى — يجب أن تكون كل وردية مختلفة",
-    "ROTATING_SHIFTS": "ورديات التناوب"
+    "ROTATING_SHIFTS": "ورديات التناوب",
+    "SHIFTING_PERIOD_MAX_ONE_YEAR": "لا يمكن أن تتجاوز فترة الوردية سنة واحدة"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT_TAB": "الورديات المسندة للموظفين التابعين",
@@ -641,7 +642,7 @@
     "PRESENCE_INQUIRY_TIME": "وقت توثيق الحضور للموظفين (لنظام الراحات 24 س)",
     "PRESENCE_INQUIRY_BUFFER": "فترة السماح لتوثيق الحضور (قبل / بعد)",
     "WORK_DAY_MESSAGE": "يوم عمل وفق نظام الوردية الحالي المعتمد",
-    "MY_SHIFT_SCHEDULE": "جدول وردياتي اليومي"
+    "MY_SHIFT_SCHEDULE": "وردياتي (فترات)"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",

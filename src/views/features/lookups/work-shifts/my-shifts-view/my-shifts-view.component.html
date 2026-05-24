@@ -132,7 +132,7 @@
         <ng-template #body let-item>
           <tr>
             <td class="text-start">
-              <div class="font-bold">{{ getFormattedDate(item.businessDate) }}</div>
+              <div class="font-bold">{{ getFormattedDateRange(item.dateFrom, item.dateTo) }}</div>
               <div class="text-sm text-[#64748b] font-medium">
                 {{ item.formattedTimeRange }}
               </div>
@@ -140,11 +140,11 @@
             <td class="text-start font-medium">{{ getShiftName(item) }}</td>
             <td class="text-start font-medium">{{ getShiftTypeName(item.shiftAssignmentType) }}</td>
             <td class="text-start font-medium">
-              {{
-                item.isRestDay
-                  ? ('SHIFTS_VIEW_PAGE.YES' | translate)
-                  : ('SHIFTS_VIEW_PAGE.NO' | translate)
-              }}
+              @if (item.isRestDay) {
+                <img src="assets/icons/right-icon.svg" alt="" />
+              } @else {
+                <img src="assets/icons/wrong-icon.svg" alt="" />
+              }
             </td>
           </tr>
         </ng-template>

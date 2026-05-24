@@ -97,5 +97,7 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.DATE_MAX_RANGE_EXCEEDED]:
       'ATTENDANCE_REPORT_PROCESSING_PAGE.DATE_MAX_RANGE_EXCEEDED',
     [ValidationErrorKeyEnum.DUPLICATE_SHIFT]: 'USER_WORK_SHIFT_ASSIGNMENT.DUPLICATE_SHIFT',
+    [ValidationErrorKeyEnum.SHIFTING_PERIOD_MAX_ONE_YEAR]:
+      'USER_WORK_SHIFT_ASSIGNMENT.SHIFTING_PERIOD_MAX_ONE_YEAR',
   };
 }

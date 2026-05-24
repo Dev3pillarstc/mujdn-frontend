@@ -125,7 +125,7 @@ export class MyShiftsViewComponent extends BaseListComponent<
   protected override mapModelToExcelRow(model: EmployeeShiftDay): { [key: string]: any } {
     return {
       [this.translateService.instant('SHIFTS_VIEW_PAGE.DATE_TIME')]:
-        `${formatDateOnly(model.businessDate)} ${model.formattedTimeRange ?? ''}`.trim(),
+        `${this.getFormattedDateRange(model.dateFrom, model.dateTo)} ${model.formattedTimeRange ?? ''}`.trim(),
       [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_NAME')]: this.getShiftName(model),
       [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_TYPE')]: this.getShiftTypeName(
         model.shiftAssignmentType
@@ -167,8 +167,10 @@ export class MyShiftsViewComponent extends BaseListComponent<
     return this.isArabic ? option.nameAr : option.nameEn;
   }
 
-  getFormattedDate(businessDate: string): string {
-    return formatDateOnly(businessDate);
+  getFormattedDateRange(dateFrom: string, dateTo: string): string {
+    const from = formatDateOnly(dateFrom);
+    const to = formatDateOnly(dateTo);
+    return from === to ? from : `${from} - ${to}`;
   }
 
   private applyTimeFormatting(list: EmployeeShiftDay[]): void {

@@ -29,6 +29,7 @@ import {
   WorkShiftTypeOption,
 } from '@/models/features/lookups/work-shifts/work-shift-type-option';
 import { SelectModule } from 'primeng/select';
+import { TooltipModule } from 'primeng/tooltip';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-my-shifts',
@@ -44,6 +45,7 @@ import { Observable } from 'rxjs';
     FormsModule,
     TranslatePipe,
     SelectModule,
+    TooltipModule,
   ],
   templateUrl: './my-shifts.component.html',
   styleUrl: './my-shifts.component.scss',
@@ -348,6 +350,31 @@ export default class MyShiftsComponent extends BaseListComponent<
   get endDate() {
     return this.filterOptions.endDate as Date;
   }
+  /**
+   * Returns an array of display names for a shift row.
+   * - Rotating shift  → one entry per rotation group (shown as pill badges).
+   * - All other types → single-element array (shown as plain text).
+   * Language-aware: always returns the current-UI-language name.
+   */
+  getShiftNames(shift: EmployeeShift): string[] {
+    const isArabic = !this.isCurrentLanguageEnglish();
+
+    // Rotating shift — each group has its own sub-shift details
+    if (shift.rotationGroups?.length) {
+      return shift.rotationGroups
+        .map((g) => g.shiftDetails)
+        .map((d) => (isArabic ? d?.nameAr : d?.nameEn) ?? '');
+    }
+
+    // Non-rotating shift with a nested shiftDetails object
+    if (shift.shiftDetails) {
+      return [isArabic ? shift.shiftDetails.nameAr : shift.shiftDetails.nameEn];
+    }
+
+    // Fallback: top-level nameAr / nameEn (standard API response shape)
+    return [(isArabic ? shift.nameAr : shift.nameEn) ?? ''];
+  }
+
   getShiftTypeName(shift?: EmployeeShift | null): string {
     return getShiftTypeTranslation(shift?.workShiftType, this.translateService);
   }

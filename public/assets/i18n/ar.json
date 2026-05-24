@@ -642,7 +642,8 @@
     "PRESENCE_INQUIRY_TIME": "وقت توثيق الحضور للموظفين (لنظام الراحات 24 س)",
     "PRESENCE_INQUIRY_BUFFER": "فترة السماح لتوثيق الحضور (قبل / بعد)",
     "WORK_DAY_MESSAGE": "يوم عمل وفق نظام الوردية الحالي المعتمد",
-    "MY_SHIFT_SCHEDULE": "وردياتي (فترات)"
+    "MY_SHIFT_SCHEDULE": "وردياتي (فترات)",
+    "SHIFT_NAME": "اسم الوردية"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",

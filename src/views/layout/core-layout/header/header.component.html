@@ -104,14 +104,14 @@
                 <span class="text-sm text-[#6c737f]">
                   {{ 'WORK_SHIFTS_POPUP.TIME_FROM' | translate }}
                 </span>
-                <span class="font-[600] text-[#161616]">{{ currentShift.formattedTimeFrom }}</span>
+                <span class="font-[600] text-[#161616]">{{ currentShift.formattedTimeFrom || '--' }}</span>
               </div>
 
               <div class="flex flex-col gap-1">
                 <span class="text-sm text-[#6c737f]">
                   {{ 'WORK_SHIFTS_POPUP.TIME_TO' | translate }}
                 </span>
-                <span class="font-[600] text-[#161616]">{{ currentShift.formattedTimeTo }}</span>
+                <span class="font-[600] text-[#161616]">{{ currentShift.formattedTimeTo || '--' }}</span>
               </div>
 
               <div class="flex flex-col gap-1">

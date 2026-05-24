@@ -96,15 +96,51 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // ─── Derived display helpers ──────────────────────────────────────────────────
 
-  /** Returns the shift name based on the current UI language. */
+  /** Returns the shift name based on the current UI language.
+   *
+   * Name source priority (mirrors the backend response shape):
+   *   1. `shiftDetails.nameAr/nameEn`  — non-rotating shifts
+   *   2. Active rotation group's name   — rotating shifts (resolved by `resolvedPeriodOrder`)
+   *   3. Top-level `nameAr/nameEn`      — legacy fallback
+   */
   getCurrentShiftName(): string {
     if (!this.currentShift) return '';
-    return this.isArabic() ? (this.currentShift.nameAr ?? '') : (this.currentShift.nameEn ?? '');
+    const isArabic = this.isArabic();
+
+    // Non-rotating: name is inside shiftDetails
+    if (this.currentShift.shiftDetails) {
+      return isArabic
+        ? (this.currentShift.shiftDetails.nameAr ?? '')
+        : (this.currentShift.shiftDetails.nameEn ?? '');
+    }
+
+    // Rotating: use the currently-active rotation group
+    if (this.currentShift.rotationGroups?.length) {
+      const periodOrder = this.currentShift.resolvedPeriodOrder;
+      const group =
+        periodOrder != null
+          ? (this.currentShift.rotationGroups.find((g) => g.periodOrder === periodOrder) ??
+             this.currentShift.rotationGroups[0])
+          : this.currentShift.rotationGroups[0];
+      return isArabic
+        ? (group.shiftDetails?.nameAr ?? '')
+        : (group.shiftDetails?.nameEn ?? '');
+    }
+
+    // Fallback to top-level names
+    return isArabic ? (this.currentShift.nameAr ?? '') : (this.currentShift.nameEn ?? '');
   }
 
-  /** Returns whether today is a working day for the current shift. */
+  /** Returns whether today is a working day for the current shift.
+   *
+   * Prefers the backend-authoritative `isRestDay` flag when present.
+   * Falls back to client-side calculation only when the flag is absent.
+   */
   get isTodayWorkingDay(): boolean {
     if (!this.currentShift) return true;
+    if (this.currentShift.isRestDay !== undefined && this.currentShift.isRestDay !== null) {
+      return !this.currentShift.isRestDay;
+    }
     return this.currentShiftService.isTodayWorkingDay(this.currentShift);
   }
 
@@ -116,19 +152,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
       : this.translateService.instant('MY_SHIFTS.REST_DAY_MESSAGE');
   }
 
-  /** Converts the comma-separated `employeeWorkingDays` indices into translated day names. */
+  /** Returns the translated working-day names for the current shift.
+   *
+   * - If `employeeWorkingDays` is set (comma-separated day indices), those are used.
+   * - Otherwise falls back to the organisation's default work days from `defaultWorkDays`.
+   */
   getWorkDayNames(): string[] {
-    if (!this.currentShift?.employeeWorkingDays) return [];
+    const DAY_KEYS = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'] as const;
 
-    const DAY_KEYS = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+    // Shift has explicit working days — parse the comma-separated index list
+    if (this.currentShift?.employeeWorkingDays) {
+      return this.currentShift.employeeWorkingDays
+        .split(',')
+        .map((d) => parseInt(d.trim(), 10))
+        .filter((d) => !isNaN(d) && d >= 0 && d <= 6)
+        .map((d) => this.translateService.instant(`USER_WORK_SHIFT_ASSIGNMENT.${DAY_KEYS[d]}`));
+    }
 
-    return this.currentShift.employeeWorkingDays
-      .split(',')
-      .map((d) => parseInt(d.trim(), 10))
-      .filter((d) => !isNaN(d) && d >= 0 && d <= 6)
-      .map((d) =>
-        this.translateService.instant(`USER_WORK_SHIFT_ASSIGNMENT.${DAY_KEYS[d]}`)
-      );
+    // No shift-level override — derive from the organisation's default work-days setting
+    const wd = this.defaultWorkDays;
+    const dayFlags: boolean[] = [
+      wd.sunday, wd.monday, wd.tuesday, wd.wednesday,
+      wd.thursday, wd.friday, wd.saturday,
+    ];
+
+    return dayFlags
+      .map((active, i) => ({ active, key: DAY_KEYS[i] }))
+      .filter(({ active }) => active)
+      .map(({ key }) => this.translateService.instant(`USER_WORK_SHIFT_ASSIGNMENT.${key}`));
   }
 
   /** Returns the translated shift type name (e.g. "Standard Work Hours Shift"). */

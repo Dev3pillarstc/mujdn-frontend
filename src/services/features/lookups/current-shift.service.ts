@@ -124,11 +124,41 @@ export class CurrentShiftService implements OnDestroy {
    * Writes 12-hour AM/PM strings to `formattedTimeFrom` / `formattedTimeTo`.
    * UTC → local conversion is already handled by `MyShiftsInterceptor`; only
    * formatting is done here.
+   *
+   * Time source priority:
+   *   1. `shift.shiftDetails` (non-rotating / standard shifts)
+   *   2. Active rotation group's `shiftDetails` (rotating shifts, resolved by `resolvedPeriodOrder`)
+   *   3. Top-level `timeFrom/timeTo` (legacy / fallback)
    */
   private applyFormattedTimes(shift: EmployeeShift): void {
     const isEnglish = () => this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH;
-    changeTimeSuffix(isEnglish, shift, 'timeFrom', 'formattedTimeFrom');
-    changeTimeSuffix(isEnglish, shift, 'timeTo', 'formattedTimeTo');
+    const locale: 'en-US' | 'ar-EG' = isEnglish() ? 'en-US' : 'ar-EG';
+
+    let timeFrom: string | undefined;
+    let timeTo: string | undefined;
+
+    if (shift.shiftDetails) {
+      // Standard / WeekOnWeekOff / WeekOnWeekOff24 — time lives in shiftDetails
+      timeFrom = shift.shiftDetails.timeFrom;
+      timeTo = shift.shiftDetails.timeTo;
+    } else if (shift.rotationGroups?.length) {
+      // Rotating — pick the currently-active group by resolvedPeriodOrder
+      const periodOrder = shift.resolvedPeriodOrder;
+      const group =
+        periodOrder != null
+          ? (shift.rotationGroups.find((g) => g.periodOrder === periodOrder) ??
+             shift.rotationGroups[0])
+          : shift.rotationGroups[0];
+      timeFrom = group?.shiftDetails?.timeFrom;
+      timeTo = group?.shiftDetails?.timeTo;
+    } else {
+      // Legacy / flat response shape
+      timeFrom = shift.timeFrom;
+      timeTo = shift.timeTo;
+    }
+
+    if (timeFrom) shift.formattedTimeFrom = formatTimeTo12Hour(timeFrom, locale);
+    if (timeTo) shift.formattedTimeTo = formatTimeTo12Hour(timeTo, locale);
   }
 
   /** Re-formats the cached shift on language change without hitting the backend. */

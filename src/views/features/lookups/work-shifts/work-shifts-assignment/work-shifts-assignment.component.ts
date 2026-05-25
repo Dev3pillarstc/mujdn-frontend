@@ -1,13 +1,11 @@
 import { Component, inject, Input } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 // import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { PaginatorModule } from 'primeng/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { WorkShiftsListPopupComponent } from '../work-shifts-list-popup/work-shifts-list-popup.component';
 import { Select } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -31,7 +29,6 @@ import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icons-enum';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { catchError, filter, forkJoin, of, switchMap } from 'rxjs';
-import { AlertService } from '@/services/shared/alert.service';
 import {
   WORK_SHIFT_TYPE_OPTIONS,
   WorkShiftTypeOption,
@@ -89,6 +86,7 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   private userService = inject(UserService);
   private workDaysSettingService = inject(WorkDaysSettingService);
   private authService = inject(AuthService);
+  popupViewMode: ViewModeEnum = ViewModeEnum.VIEW;
 
   override get filterModel(): UserWorkShiftsFilter {
     return this.filterOptions;
@@ -184,14 +182,25 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     return this.authService.isHROfficer;
   }
 
-  addOrEditModel(userWorkShift?: UserWorkShift): void {
-    this.openDialog(userWorkShift ?? new UserWorkShift());
+  canView() {
+    return this.authService.isDepartmentManager;
   }
+
+  addModel(): void {
+    this.popupViewMode = ViewModeEnum.CREATE;
+    this.openDialog(new UserWorkShift());
+  }
+
+  editModel(userWorkShift: UserWorkShift, viewMode: ViewModeEnum): void {
+    this.popupViewMode = viewMode;
+    this.openDialog(userWorkShift);
+  }
+
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' }];
   }
+
   override openDialog(userWorkShift: UserWorkShift) {
-    const viewMode = userWorkShift.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     const model = userWorkShift ?? new UserWorkShift();
     const lookups = {
       usersProfiles: this.usersProfiles,
@@ -200,18 +209,9 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
       defaultWorkDays: [this.defaultWorkDays],
     };
 
-    return this.openBaseDialog(WorkShiftsAssignmentPopupComponent as any, model, viewMode, lookups);
+    return this.openBaseDialog(WorkShiftsAssignmentPopupComponent as any, model, this.popupViewMode, lookups);
   }
 
-  viewModel(userWorkShift: UserWorkShift): void {
-    const lookups = {
-      usersProfiles: this.usersProfiles,
-      departments: this.departments,
-      shifts: this.shifts,
-      defaultWorkDays: [this.defaultWorkDays],
-    };
-    this.openBaseDialog(WorkShiftsAssignmentPopupComponent as any, userWorkShift, ViewModeEnum.VIEW, lookups);
-  }
   get optionLabel(): string {
     const lang = this.langService.getCurrentLanguage();
     return lang === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
@@ -280,24 +280,6 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
       });
   }
 
-  onDepartmentChange(): void {
-    const selectedDepts = this.filterOptions.fkDepartmentId;
-    if (!selectedDepts?.length) {
-      this.filteredEmployees = this.sortByName(this.usersProfiles, this.optionLabel);
-    } else {
-      this.filteredEmployees = this.sortByName(
-        this.usersProfiles.filter((u) => u.departmentId != null && selectedDepts.includes(u.departmentId)),
-        this.optionLabel
-      );
-    }
-    if (this.filterOptions.fkAssignedUserId?.length) {
-      const validIds = new Set(this.filteredEmployees.map((e) => e.id));
-      this.filterOptions.fkAssignedUserId = this.filterOptions.fkAssignedUserId.filter((id) =>
-        validIds.has(id)
-      );
-    }
-  }
-
   getShiftTypeName(type: number): string {
     const option = this.shiftTypeOptions.find((opt) => opt.value === type);
     return option
@@ -322,4 +304,6 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
         });
     }
   }
+
+  protected readonly ViewModeEnum = ViewModeEnum;
 }

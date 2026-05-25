@@ -204,6 +204,7 @@
                 <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.SHIFT_NAME' | translate }}</th>
                 <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.SHIFT_TYPE' | translate }}</th>
                 <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.IS_REST_DAY' | translate }}</th>
+                <th>{{ 'COMMON.ACTION' | translate }}</th>
               </tr>
             </ng-template>
             <ng-template #body let-item>
@@ -227,6 +228,12 @@
                   } @else {
                     <img src="assets/icons/wrong-icon.svg" alt="" />
                   }
+                </td>
+                <td>
+                  <button class="table-action-gray-btn flex items-center gap-1">
+                    <img alt="" src="assets/icons/view.svg" />
+                    بيانات الوردية
+                  </button>
                 </td>
               </tr>
             </ng-template>

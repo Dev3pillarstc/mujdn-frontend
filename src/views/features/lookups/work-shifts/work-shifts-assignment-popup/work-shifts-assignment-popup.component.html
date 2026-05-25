@@ -175,8 +175,8 @@
         <div class="flex flex-wrap gap-8 mt-8">
           @for (day of weekDays; track day.value) {
           <label class="flex items-center space-x-2 mb-4 cursor-pointer relative"
-            [class.opacity-50]="isWeekDayDisabled(day.value)" [class.cursor-not-allowed]="isWeekDayDisabled(day.value)">
-            <input type="checkbox" [checked]="isWorkingDaySelected(day.value)" [disabled]="isWeekDayDisabled(day.value)"
+            [class.opacity-50]="isWeekDayDisabled(day.value) || isViewMode" [class.cursor-not-allowed]="isWeekDayDisabled(day.value) || isViewMode">
+            <input type="checkbox" [checked]="isWorkingDaySelected(day.value)" [disabled]="isWeekDayDisabled(day.value) || isViewMode"
               (change)="onWorkingDayChange(day.value, $event)"
               class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed" />
             <svg
@@ -192,15 +192,20 @@
           }
         </div>
 
-        <div class="mt-2">
-          <app-validation-messages [control]="employeeWorkingDaysControl"></app-validation-messages>
-        </div>
+        @if (!isViewMode) {
+          <div class="mt-2">
+            <app-validation-messages [control]="employeeWorkingDaysControl"></app-validation-messages>
+          </div>
+        }
         } <!--end showWorkingDays-->
 
         <app-shift-assignment-panel [shift]="getSelectedShiftObject('fkShiftId')" [departments]="departments"
           [allEmployees]="usersProfiles" [initialMemberIds]="singleShiftMemberIds" [optionLabel]="optionLabel"
+          [viewMode]="isViewMode"
           (memberIdsChange)="onSingleShiftMembersChange($event)"></app-shift-assignment-panel>
-        <app-validation-messages [control]="userIdsArrayControl"></app-validation-messages>
+        @if (!isViewMode) {
+          <app-validation-messages [control]="userIdsArrayControl"></app-validation-messages>
+        }
       </section>
       }
 
@@ -268,6 +273,7 @@
             [showInfoBox]="true" [departments]="departments" [allEmployees]="usersProfiles"
             [initialMemberIds]="group.memberIds" [initialDeptIds]="rotationGroupDeptIds[group.periodOrder]"
             [occupiedMemberIds]="getOccupiedMemberIds(group.periodOrder)" [optionLabel]="optionLabel"
+            [viewMode]="isViewMode"
             (memberIdsChange)="onRotationGroupMembersChange(group.periodOrder, $event)"
             (deptIdsChange)="onRotationGroupDeptsChange(group.periodOrder, $event)"></app-shift-assignment-panel>
           }
@@ -277,11 +283,13 @@
 
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button type="button" (click)="close()" class="btn gray-btn">
-          {{ 'COMMON.CANCEL' | translate }}
+          {{ (isViewMode ? 'COMMON.CLOSE' : 'COMMON.CANCEL') | translate }}
         </button>
-        <button type="button" (click)="onSaveClick()" class="btn green-btn">
-          {{ 'COMMON.SAVE' | translate }}
-        </button>
+        @if (!isViewMode) {
+          <button type="button" (click)="onSaveClick()" class="btn green-btn">
+            {{ 'COMMON.SAVE' | translate }}
+          </button>
+        }
       </div>
     </form>
   </div>

@@ -1,23 +1,181 @@
 <div class="px-6 bg-white">
-  <div class="flex justify-between gap-2">
+  <div class="flex justify-between gap-2 items-center">
     <div>
       <button (click)="toggleSideMenu()" class="menu-button md:hidden h-full">
         <i class="pi pi-bars"></i>
       </button>
+      @if (loggedInUser) {
+        <button
+          (click)="shiftPanel.toggle($event)"
+          class="px-3 py-1 bg-[#ecfdf3] border border-[#abefc6] text-[#085d3a] rounded-full flex items-center gap-1 font-[500]"
+        >
+          {{ 'CURRENT_SHIFT.TODAY_SHIFT' | translate }}
+          <svg
+            [class.rotate-180]="shiftPanelVisible"
+            class="transition-transform duration-200"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.953 6.416A38.61 38.61 0 0 0 6.73 8.631c.482.556.989 1.097 1.439 1.494.226.2.424.351.587.45a.899.899 0 0 0 .245.112s.088-.02.242-.112c.164-.099.362-.25.588-.45.45-.397.957-.938 1.439-1.494a38.617 38.617 0 0 0 1.777-2.214.563.563 0 0 1 .906.667l-.002.001c-.096.127-.378.502-.544.714-.333.427-.79.997-1.288 1.57-.494.57-1.038 1.153-1.543 1.6a5.355 5.355 0 0 1-.752.57c-.23.138-.52.274-.824.274-.305 0-.595-.136-.824-.275a5.352 5.352 0 0 1-.752-.57c-.505-.446-1.05-1.03-1.544-1.6a39.738 39.738 0 0 1-1.832-2.282v-.002a.563.563 0 0 1 .905-.668z"
+              fill="#085D3A"
+            />
+          </svg>
+        </button>
+      }
+      <p-overlayPanel
+        #shiftPanel
+        (onShow)="onShiftPanelShow()"
+        (onHide)="onShiftPanelHide()"
+        styleClass="!p-0 !rounded-lg shadow-[0_4px_6px_-2px_rgba(16,24,40,0.03),0_12px_16px_-4px_rgba(16,24,40,0.08)] !border !border-gray-300"
+      >
+        <!-- No shift assigned (only shown before the very first silent load resolves) -->
+        @if (!currentShift) {
+          <div
+            class="max-w-full w-[1176px] p-5 flex items-center justify-center min-h-[200px]"
+            [dir]="dir"
+          >
+            <p class="text-gray-500 text-sm">{{ 'CURRENT_SHIFT.NO_SHIFT' | translate }}</p>
+          </div>
+        }
+
+        <!-- Shift details — rendered immediately from cache, updated silently in background -->
+        @else {
+          <div class="max-w-full w-[1176px] p-5" [dir]="dir">
+            <div class="flex items-center justify-between gap-4 flex-wrap">
+              <!-- Shift name + status badge -->
+              <div class="flex items-center justify-between mb-4 gap-3">
+                <span class="text-lg font-bold text-[#1f2a37]">{{ getCurrentShiftName() }}</span>
+                <div
+                  class="px-3 py-1 bg-[#eff8ff] border border-[#b2ddff] text-[#1849a9] text-sm rounded-full font-[500] flex items-center gap-1"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m6.703 6.855-.145-.001a.437.437 0 1 1 0-.875h.02c.12 0 .25 0 .359.015a.723.723 0 0 1 .429.199.723.723 0 0 1 .199.429c.014.109.014.238.014.358v2.937a.438.438 0 0 1-.875 0V6.855zM6.996 4.083a.583.583 0 1 0 0 1.167H7a.583.583 0 0 0 0-1.167h-.005z"
+                      fill="#1849A9"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M.73 7A6.27 6.27 0 1 0 13.27 7 6.27 6.27 0 0 0 .73 7zM7 12.396A5.396 5.396 0 1 1 7 1.604a5.396 5.396 0 0 1 0 10.792z"
+                      fill="#1849A9"
+                    />
+                  </svg>
+                  <span>{{ getShiftStatusLabel() }}</span>
+                </div>
+              </div>
+
+              <!-- Working days chips -->
+              <div class="flex items-center gap-2 mb-5 flex-wrap justify-end">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'CURRENT_SHIFT.WORK_DAYS_LABEL' | translate }}
+                </span>
+                @for (day of getWorkDayNames(); track day) {
+                  <span
+                    class="px-3 py-1 bg-[#f9fafb] border border-[#e5e7eb] text-[#1f2a37] text-sm rounded-full font-[500]"
+                  >
+                    {{ day }}
+                  </span>
+                }
+              </div>
+            </div>
+
+            <hr class="border-gray-100 mb-5" />
+
+            <!-- Details grid -->
+            <div class="grid grid-cols-3 gap-6">
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}
+                </span>
+                <span class="font-[600] text-[#161616]">{{ getShiftTypeName() }}</span>
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'WORK_SHIFTS_POPUP.TIME_FROM' | translate }}
+                </span>
+                <span class="font-[600] text-[#161616]">{{ currentShift.formattedTimeFrom || '--' }}</span>
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'WORK_SHIFTS_POPUP.TIME_TO' | translate }}
+                </span>
+                <span class="font-[600] text-[#161616]">{{ currentShift.formattedTimeTo || '--' }}</span>
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'MY_SHIFTS.ATTENDANCE_BUFFER' | translate }}
+                </span>
+                <span class="font-[600] text-[#161616]">
+                  {{ currentShift.attendanceBuffer ?? 0 }}
+                </span>
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'MY_SHIFTS.LEAVE_BUFFER' | translate }}
+                </span>
+                <span class="font-[600] text-[#161616]">
+                  {{ currentShift.leaveBuffer ?? 0 }}
+                </span>
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'MY_SHIFTS.STARTING_DATE' | translate }}
+                </span>
+                <span class="font-[600] text-[#161616]">
+                  {{ currentShift.startDate | date: 'dd/MM/yyyy' }}
+                </span>
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'MY_SHIFTS.ENDING_DATE' | translate }}
+                </span>
+                <span class="font-[600] text-[#161616]">
+                  {{ currentShift.endDate | date: 'dd/MM/yyyy' }}
+                </span>
+              </div>
+
+              @if (currentShift.workShiftType === WorkShiftType.WeekOnWeekOff24) {
+                <div class="flex flex-col gap-1">
+                  <span class="text-sm text-[#6c737f]">
+                    {{ 'MY_SHIFTS.PRESENCE_INQUIRY_TIME' | translate }}
+                  </span>
+                  <span class="font-[600] text-[#161616]">{{ getFormattedPresenceTime() }}</span>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                  <span class="text-sm text-[#6c737f]">
+                    {{ 'MY_SHIFTS.PRESENCE_INQUIRY_BUFFER' | translate }}
+                  </span>
+                  <span class="font-[600] text-[#161616]">
+                    {{ currentShift.presenceInquiryBuffer }}
+                  </span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </p-overlayPanel>
     </div>
+
     <div class="flex actions">
       @if (loggedInUser) {
-        <!-- <div>
-        <button
-          class="py-3 px-2 font-medium cursor-pointer flex items-center gap-2 text-sm sm:text-base text-[#384250]">
-          <img alt="" src="assets/icons/user.svg" />
-          <span class="flex flex-col justify-start items-start">
-            <strong> {{ getLoggedInUserName() }} </strong>
-            <span class="font-normal"> {{ getLoggedInUserDepartment() }} </span>
-          </span>
-        </button>
-      </div> -->
-        <!-- الزر الذي يفتح القائمة -->
+        <!-- User menu trigger -->
         <div>
           <button
             (click)="userMenu.toggle($event)"
@@ -39,7 +197,7 @@
           </button>
         </div>
 
-        <!-- قائمة المستخدم -->
+        <!-- User dropdown menu -->
         <p-menu #userMenu [popup]="true" [model]="menuItems">
           <ng-template let-item pTemplate="item">
             <a class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -49,6 +207,7 @@
           </ng-template>
         </p-menu>
       }
+
       <div>
         <button
           (click)="changeLanguage()"

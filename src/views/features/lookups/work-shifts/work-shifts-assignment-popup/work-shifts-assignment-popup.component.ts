@@ -93,6 +93,10 @@ export class WorkShiftsAssignmentPopupComponent
     super();
   }
 
+  get isViewMode(): boolean {
+    return this.viewMode === ViewModeEnum.VIEW;
+  }
+
   override initPopup(): void {
     this.model = this.data.model || new UserWorkShift();
     this.usersProfiles = this.data.lookups?.usersProfiles || [];
@@ -192,6 +196,10 @@ export class WorkShiftsAssignmentPopupComponent
       (this.form.get('startDate')?.value as Date | null) ?? null,
       (this.form.get('endDate')?.value as Date | null) ?? null
     );
+
+    if (this.isViewMode) {
+      this.form.disable();
+    }
   }
 
   private setDropdownValues(): void {

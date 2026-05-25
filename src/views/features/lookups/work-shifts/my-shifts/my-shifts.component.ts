@@ -1,7 +1,4 @@
-import { WorkShiftType } from '@/enums/work-shift-type';
-import { MultiSelect } from 'primeng/multiselect';
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
@@ -12,11 +9,8 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { WorkDaysPopupComponent } from '../work-days-popup/work-days-popup.component';
-import { MatDialog } from '@angular/material/dialog';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
-import { ShiftService } from '@/services/features/lookups/shift.service';
-import { CityFilter } from '@/models/features/lookups/city/city-filter';
 import { EmployeeShiftsFilter } from '@/models/features/lookups/work-shifts/employee-shifts-filter';
 import { PaginationInfo } from '@/models/shared/response/pagination-info';
 import { PaginationParams } from '@/models/shared/pagination-params';
@@ -27,22 +21,15 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import * as XLSX from 'xlsx';
-import {
-  changeTimeSuffix,
-  convertUtcToSystemTimeZone,
-  dateToTimeString,
-  formatDateTo12Hour,
-  formatTimeTo12Hour,
-  timeStringToDate,
-  toDateOnly,
-} from '@/utils/general-helper';
+import { changeTimeSuffix } from '@/utils/general-helper';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
-import { getShiftTypeTranslation, isShiftWorkingDay } from '@/utils/shift-helper';
+import { getShiftTypeTranslation } from '@/utils/shift-helper';
 import {
   WORK_SHIFT_TYPE_OPTIONS,
   WorkShiftTypeOption,
 } from '@/models/features/lookups/work-shifts/work-shift-type-option';
 import { SelectModule } from 'primeng/select';
+import { TooltipModule } from 'primeng/tooltip';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-my-shifts',
@@ -58,6 +45,7 @@ import { Observable } from 'rxjs';
     FormsModule,
     TranslatePipe,
     SelectModule,
+    TooltipModule,
   ],
   templateUrl: './my-shifts.component.html',
   styleUrl: './my-shifts.component.scss',
@@ -76,11 +64,9 @@ export default class MyShiftsComponent extends BaseListComponent<
     width: '100%',
     maxWidth: '1024px',
   };
-  WorkShiftType = WorkShiftType;
   filterOptions: EmployeeShiftsFilter = new EmployeeShiftsFilter();
   defaultWorkDays: WorkDaysSetting = new WorkDaysSetting();
   employeeShifts: EmployeeShift[] = [];
-  currentShift: EmployeeShift | null = null;
   service = inject(MyShiftsService);
   languageService = inject(LanguageService);
   locale: 'en-US' | 'ar-EG' = 'en-US';
@@ -89,11 +75,8 @@ export default class MyShiftsComponent extends BaseListComponent<
     this.locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
     this.loadInitialData();
 
-    this.formatCurrentShiftTime();
-
     this.languageService.languageChanged$.subscribe(() => {
       this.locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
-      // Format multiple shifts
       this.employeeShifts?.forEach((shift) => {
         changeTimeSuffix(
           this.isCurrentLanguageEnglish.bind(this),
@@ -108,34 +91,11 @@ export default class MyShiftsComponent extends BaseListComponent<
           'formattedTimeTo'
         );
       });
-
-      // Format current shift
-      if (this.currentShift) {
-        changeTimeSuffix(
-          this.isCurrentLanguageEnglish.bind(this),
-          this.currentShift,
-          'timeFrom',
-          'formattedTimeFrom'
-        );
-        changeTimeSuffix(
-          this.isCurrentLanguageEnglish.bind(this),
-          this.currentShift,
-          'timeTo',
-          'formattedTimeTo'
-        );
-      }
     });
   }
 
   reloadEmbeddedData(): void {
     this.loadShifts(this.paginationParams.pageNumber || 1);
-
-    this.service.getMyCurrentShift().subscribe({
-      next: (shift) => {
-        this.currentShift = shift || null;
-        this.formatCurrentShiftTime();
-      },
-    });
   }
 
   protected override getBreadcrumbKeys() {
@@ -194,41 +154,6 @@ export default class MyShiftsComponent extends BaseListComponent<
       totalItems: myShifts?.paginationInfo?.totalItems || 0,
     };
     this.defaultWorkDays = resolverData?.defaultworkDays || new WorkDaysSetting();
-    // Load current shift data
-    this.currentShift = resolverData?.currentShift || null;
-  }
-
-  private formatCurrentShiftTime(): void {
-    if (this.currentShift?.timeTo) {
-      this.currentShift.timeTo = dateToTimeString(
-        convertUtcToSystemTimeZone(timeStringToDate(this.currentShift.timeTo))
-      ) as string;
-    }
-    if (this.currentShift?.timeFrom) {
-      this.currentShift.timeFrom = dateToTimeString(
-        convertUtcToSystemTimeZone(timeStringToDate(this.currentShift.timeFrom))
-      ) as string;
-    }
-    if (this.currentShift) {
-      changeTimeSuffix(
-        this.isCurrentLanguageEnglish.bind(this),
-        this.currentShift,
-        'timeFrom',
-        'formattedTimeFrom'
-      );
-      changeTimeSuffix(
-        this.isCurrentLanguageEnglish.bind(this),
-        this.currentShift,
-        'timeTo',
-        'formattedTimeTo'
-      );
-    }
-  }
-
-  getCurrentShiftName(): string {
-    return this.langService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? (this.currentShift?.nameEn as string)
-      : (this.currentShift?.nameAr as string);
   }
 
   override search(isStoredProcedure: boolean = false): void {
@@ -323,11 +248,6 @@ export default class MyShiftsComponent extends BaseListComponent<
         'formattedTimeTo'
       );
     });
-  }
-
-  formatPresenceTime(shift: EmployeeShift | null) {
-    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
-    return formatTimeTo12Hour(shift?.presenceInquiryTime || '', locale);
   }
 
   private handleLoadSuccess(response: any): void {
@@ -430,21 +350,33 @@ export default class MyShiftsComponent extends BaseListComponent<
   get endDate() {
     return this.filterOptions.endDate as Date;
   }
-  get isTodayWorkingDay(): boolean {
-    if (!this.currentShift) return true;
+  /**
+   * Returns an array of display names for a shift row.
+   * - Rotating shift  → one entry per rotation group (shown as pill badges).
+   * - All other types → single-element array (shown as plain text).
+   * Language-aware: always returns the current-UI-language name.
+   */
+  getShiftNames(shift: EmployeeShift): string[] {
+    const isArabic = !this.isCurrentLanguageEnglish();
 
-    return isShiftWorkingDay(
-      this.currentShift.workShiftType,
-      this.currentShift.startDate,
-      new Date(),
-      this.currentShift.employeeWorkingDays,
-      this.defaultWorkDays as any
-    );
+    // Rotating shift — each group has its own sub-shift details
+    if (shift.rotationGroups?.length) {
+      return shift.rotationGroups
+        .map((g) => g.shiftDetails)
+        .map((d) => (isArabic ? d?.nameAr : d?.nameEn) ?? '');
+    }
+
+    // Non-rotating shift with a nested shiftDetails object
+    if (shift.shiftDetails) {
+      return [isArabic ? shift.shiftDetails.nameAr : shift.shiftDetails.nameEn];
+    }
+
+    // Fallback: top-level nameAr / nameEn (standard API response shape)
+    return [(isArabic ? shift.nameAr : shift.nameEn) ?? ''];
   }
 
   getShiftTypeName(shift?: EmployeeShift | null): string {
-    const shiftModel = shift || this.currentShift;
-    return getShiftTypeTranslation(shiftModel?.workShiftType, this.translateService);
+    return getShiftTypeTranslation(shift?.workShiftType, this.translateService);
   }
 
   get optionLabel(): string {

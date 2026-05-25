@@ -274,15 +274,21 @@
                 }
                 <td>
                   <div class="actions flex gap-2">
-                    <button (click)="addOrEditModel(shiftData)" class="table-action-gray-btn">
-                      <img src="assets/icons/edit-action.svg" alt="" />
-                    </button>
-                    <button
-                      (click)="deleteUserShiftAssignment(shiftData.id)"
-                      class="table-action-red-btn"
-                    >
-                      <img src="assets/icons/delete-action.svg" alt="" />
-                    </button>
+                    @if (canAddOrEditOrDelete()) {
+                      <button (click)="addOrEditModel(shiftData)" class="table-action-gray-btn">
+                        <img src="assets/icons/edit-action.svg" alt="" />
+                      </button>
+                      <button
+                        (click)="deleteUserShiftAssignment(shiftData.id)"
+                        class="table-action-red-btn"
+                      >
+                        <img src="assets/icons/delete-action.svg" alt="" />
+                      </button>
+                    } @else {
+                      <button (click)="viewModel(shiftData)" class="table-action-gray-btn">
+                        <img alt="" src="assets/icons/view.svg" />
+                      </button>
+                    }
                   </div>
                 </td>
               </tr>

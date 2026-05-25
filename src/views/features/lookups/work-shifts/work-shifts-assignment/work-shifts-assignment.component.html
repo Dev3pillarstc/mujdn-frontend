@@ -127,7 +127,7 @@
                 {{ 'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate }}
               </label>
 
-              <p-multiselect
+              <p-select
                 [(ngModel)]="filterOptions.fkDepartmentId"
                 [options]="departments"
                 class="w-full peer"
@@ -135,10 +135,9 @@
                 optionValue="id"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"
                 [showClear]="true"
-                [filter]="true"
                 (onChange)="onDepartmentChange()"
                 (onClear)="onDepartmentChange()"
-              />
+              ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -149,18 +148,17 @@
                 {{ 'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate }}
               </label>
 
-              <p-multiselect
-                [(ngModel)]="filterOptions.fkAssignedUserId"
+              <p-select
                 [options]="filteredEmployees"
+                [(ngModel)]="filterOptions.fkAssignedUserId"
                 class="w-full peer"
                 [optionLabel]="optionLabel"
                 optionValue="id"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate"
                 [showClear]="true"
-                [filter]="true"
                 [virtualScroll]="true"
                 [virtualScrollItemSize]="38"
-              />
+              ></p-select>
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>

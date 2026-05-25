@@ -1,8 +1,8 @@
 export default class UserWorkShiftsFilter {
   declare nameAr: string;
   declare nameEn: string;
-  declare fkAssignedUserId: number[];
-  declare fkDepartmentId: number[];
+  fkAssignedUserId: number | null = null;
+  fkDepartmentId: number | null = null;
   declare startDate: any;
   declare endDate: any;
   declare workShiftType: number;

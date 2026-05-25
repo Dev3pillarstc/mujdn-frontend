@@ -209,7 +209,12 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
       defaultWorkDays: [this.defaultWorkDays],
     };
 
-    return this.openBaseDialog(WorkShiftsAssignmentPopupComponent as any, model, this.popupViewMode, lookups);
+    return this.openBaseDialog(
+      WorkShiftsAssignmentPopupComponent as any,
+      model,
+      this.popupViewMode,
+      lookups
+    );
   }
 
   get optionLabel(): string {
@@ -278,6 +283,26 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
           });
         },
       });
+  }
+
+  onDepartmentChange(): void {
+    const selectedDepts = this.filterOptions.fkDepartmentId;
+    if (!selectedDepts?.length) {
+      this.filteredEmployees = this.sortByName(this.usersProfiles, this.optionLabel);
+    } else {
+      this.filteredEmployees = this.sortByName(
+        this.usersProfiles.filter(
+          (u) => u.departmentId != null && selectedDepts.includes(u.departmentId)
+        ),
+        this.optionLabel
+      );
+    }
+    if (this.filterOptions.fkAssignedUserId?.length) {
+      const validIds = new Set(this.filteredEmployees.map((e) => e.id));
+      this.filterOptions.fkAssignedUserId = this.filterOptions.fkAssignedUserId.filter((id) =>
+        validIds.has(id)
+      );
+    }
   }
 
   getShiftTypeName(type: number): string {

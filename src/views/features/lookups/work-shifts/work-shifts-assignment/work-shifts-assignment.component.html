@@ -135,18 +135,18 @@
                 [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"
                 [showClear]="true"
               ></p-select>
-              <p-multiselect
-                [(ngModel)]="filterOptions.fkDepartmentId"
-                [options]="departments"
-                class="w-full peer"
-                [optionLabel]="optionLabel"
-                optionValue="id"
-                [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"
-                [showClear]="true"
-                [filter]="true"
-                (onChange)="onDepartmentChange()"
-                (onClear)="onDepartmentChange()"
-              />
+<!--              <p-multiselect-->
+<!--                [(ngModel)]="filterOptions.fkDepartmentId"-->
+<!--                [options]="departments"-->
+<!--                class="w-full peer"-->
+<!--                [optionLabel]="optionLabel"-->
+<!--                optionValue="id"-->
+<!--                [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"-->
+<!--                [showClear]="true"-->
+<!--                [filter]="true"-->
+<!--                (onChange)="onDepartmentChange()"-->
+<!--                (onClear)="onDepartmentChange()"-->
+<!--              />-->
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -167,18 +167,18 @@
                 [virtualScroll]="true"
                 [virtualScrollItemSize]="38"
               ></p-select>
-              <p-multiselect
-                [(ngModel)]="filterOptions.fkAssignedUserId"
-                [options]="filteredEmployees"
-                class="w-full peer"
-                [optionLabel]="optionLabel"
-                optionValue="id"
-                [placeholder]="'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate"
-                [showClear]="true"
-                [filter]="true"
-                [virtualScroll]="true"
-                [virtualScrollItemSize]="38"
-              />
+<!--              <p-multiselect-->
+<!--                [(ngModel)]="filterOptions.fkAssignedUserId"-->
+<!--                [options]="filteredEmployees"-->
+<!--                class="w-full peer"-->
+<!--                [optionLabel]="optionLabel"-->
+<!--                optionValue="id"-->
+<!--                [placeholder]="'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate"-->
+<!--                [showClear]="true"-->
+<!--                [filter]="true"-->
+<!--                [virtualScroll]="true"-->
+<!--                [virtualScrollItemSize]="38"-->
+<!--              />-->
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
               ></span>
@@ -219,7 +219,7 @@
               <img alt="" src="assets/icons/pdf.svg" />
             </button>
             @if (canAddOrEditOrDelete()) {
-              <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
+              <button (click)="addModel()" class="btn green-btn flex items-center">
                 <img alt="" src="assets/icons/plus.svg" />
                 <span>{{ 'USER_WORK_SHIFT_PAGE.ASSIGN_SHIFT_TO_EMPLOYEE' | translate }}</span>
               </button>
@@ -275,7 +275,7 @@
                 <td>
                   <div class="actions flex gap-2">
                     @if (canAddOrEditOrDelete()) {
-                      <button (click)="addOrEditModel(shiftData)" class="table-action-gray-btn">
+                      <button (click)="editModel(shiftData, ViewModeEnum.EDIT)" class="table-action-gray-btn">
                         <img src="assets/icons/edit-action.svg" alt="" />
                       </button>
                       <button
@@ -284,8 +284,9 @@
                       >
                         <img src="assets/icons/delete-action.svg" alt="" />
                       </button>
-                    } @else {
-                      <button (click)="viewModel(shiftData)" class="table-action-gray-btn">
+                    }
+                    @if(canView()) {
+                      <button (click)="editModel(shiftData, ViewModeEnum.VIEW)" class="table-action-gray-btn">
                         <img alt="" src="assets/icons/view.svg" />
                       </button>
                     }

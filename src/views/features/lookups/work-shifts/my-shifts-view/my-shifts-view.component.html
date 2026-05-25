@@ -140,9 +140,9 @@
             <td class="text-start font-medium">{{ getShiftName(item) }}</td>
             <td class="text-start font-medium">{{ getShiftTypeName(item.shiftAssignmentType) }}</td>
             <td class="text-start font-medium">
-              @if (item.isRestDay) {
+              @if (item.isRestDay === true) {
                 <img src="assets/icons/right-icon.svg" alt="" />
-              } @else {
+              } @else if (item.isRestDay === false) {
                 <img src="assets/icons/wrong-icon.svg" alt="" />
               }
             </td>

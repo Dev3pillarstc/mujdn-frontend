@@ -201,7 +201,7 @@
               <img alt="" src="assets/icons/pdf.svg" />
             </button>
             @if (canAddOrEditOrDelete()) {
-              <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
+              <button (click)="addModel()" class="btn green-btn flex items-center">
                 <img alt="" src="assets/icons/plus.svg" />
                 <span>{{ 'USER_WORK_SHIFT_PAGE.ASSIGN_SHIFT_TO_EMPLOYEE' | translate }}</span>
               </button>
@@ -257,7 +257,10 @@
                 <td>
                   <div class="actions flex gap-2">
                     @if (canAddOrEditOrDelete()) {
-                      <button (click)="addOrEditModel(shiftData)" class="table-action-gray-btn">
+                      <button
+                        (click)="editModel(shiftData, ViewModeEnum.EDIT)"
+                        class="table-action-gray-btn"
+                      >
                         <img src="assets/icons/edit-action.svg" alt="" />
                       </button>
                       <button
@@ -266,8 +269,12 @@
                       >
                         <img src="assets/icons/delete-action.svg" alt="" />
                       </button>
-                    } @else {
-                      <button (click)="viewModel(shiftData)" class="table-action-gray-btn">
+                    }
+                    @if (canView()) {
+                      <button
+                        (click)="editModel(shiftData, ViewModeEnum.VIEW)"
+                        class="table-action-gray-btn"
+                      >
                         <img alt="" src="assets/icons/view.svg" />
                       </button>
                     }

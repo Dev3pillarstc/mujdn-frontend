@@ -286,22 +286,22 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   }
 
   onDepartmentChange(): void {
-    const selectedDepts = this.filterOptions.fkDepartmentId;
-    if (!selectedDepts?.length) {
+    const selectedDeptId = this.filterOptions.fkDepartmentId;
+    if (!selectedDeptId) {
       this.filteredEmployees = this.sortByName(this.usersProfiles, this.optionLabel);
     } else {
       this.filteredEmployees = this.sortByName(
         this.usersProfiles.filter(
-          (u) => u.departmentId != null && selectedDepts.includes(u.departmentId)
+          (u) => u.departmentId != null && u.departmentId === selectedDeptId
         ),
         this.optionLabel
       );
     }
-    if (this.filterOptions.fkAssignedUserId?.length) {
+    if (this.filterOptions.fkAssignedUserId != null) {
       const validIds = new Set(this.filteredEmployees.map((e) => e.id));
-      this.filterOptions.fkAssignedUserId = this.filterOptions.fkAssignedUserId.filter((id) =>
-        validIds.has(id)
-      );
+      if (!validIds.has(this.filterOptions.fkAssignedUserId)) {
+        this.filterOptions.fkAssignedUserId = null;
+      }
     }
   }
 

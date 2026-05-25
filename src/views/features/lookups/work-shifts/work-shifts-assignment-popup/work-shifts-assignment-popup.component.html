@@ -3,7 +3,7 @@
     <button (click)="close()" class="block ms-auto">
       <i class="pi pi-times close-popup"></i>
     </button>
-    <h3 class="text-[#1f2a37 font-[600] mb-4 text-lg sm:text-xl">
+    <h3 class="text-[#1f2a37] font-[600] mb-4 text-lg sm:text-xl">
       {{ 'USER_WORK_SHIFT_ASSIGNMENT.TEMP_SHIFT_ASSIGNMENT' | translate }}
     </h3>
     <form [formGroup]="form" class="mt-6">
@@ -12,58 +12,85 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Standard -->
           <label class="flex items-start cursor-pointer gap-2">
-            <input type="radio" class="hidden peer" name="workShiftType" [value]="workShiftType.Standard"
-              id="standard-hours-radio" formControlName="workShiftType" />
+            <input
+              type="radio"
+              class="hidden peer"
+              name="workShiftType"
+              [value]="workShiftType.Standard"
+              id="standard-hours-radio"
+              formControlName="workShiftType"
+            />
             <span
-              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]">
-              <span class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('workShiftType')?.value === workShiftType.Standard"></span>
+              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
+            >
+              <span
+                class="w-4 h-4 rounded-full bg-[#22a06b] block"
+                *ngIf="form.get('workShiftType')?.value === workShiftType.Standard"
+              ></span>
             </span>
             <div>
               <span class="font-medium text-[#1f2a37]">{{
                 'USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT' | translate
-                }}</span>
+              }}</span>
               <span class="block text-[#384250] mt-2">{{
                 'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_HOURS' | translate
-                }}</span>
+              }}</span>
             </div>
           </label>
 
           <!-- Rotating -->
           <label class="flex items-start cursor-pointer gap-2">
-            <input type="radio" class="hidden peer" name="workShiftType" [value]="workShiftType.Rotating"
-              id="rotating-radio" formControlName="workShiftType" />
+            <input
+              type="radio"
+              class="hidden peer"
+              name="workShiftType"
+              [value]="workShiftType.Rotating"
+              id="rotating-radio"
+              formControlName="workShiftType"
+            />
             <span
-              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]">
-              <span class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('workShiftType')?.value === workShiftType.Rotating"></span>
+              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
+            >
+              <span
+                class="w-4 h-4 rounded-full bg-[#22a06b] block"
+                *ngIf="form.get('workShiftType')?.value === workShiftType.Rotating"
+              ></span>
             </span>
             <div>
               <span class="font-medium text-[#1f2a37]">{{
                 'USER_WORK_SHIFT_ASSIGNMENT.ROTATING_SHIFT' | translate
-                }}</span>
+              }}</span>
               <span class="block text-[#384250] mt-2">{{
                 'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
-                }}</span>
+              }}</span>
             </div>
           </label>
 
           <!-- WeekOnWeekOff24 -->
           <label class="flex items-start cursor-pointer gap-2">
-            <input type="radio" class="hidden peer" name="workShiftType" [value]="workShiftType.WeekOnWeekOff24"
-              id="shift-24-radio" formControlName="workShiftType" />
+            <input
+              type="radio"
+              class="hidden peer"
+              name="workShiftType"
+              [value]="workShiftType.WeekOnWeekOff24"
+              id="shift-24-radio"
+              formControlName="workShiftType"
+            />
             <span
-              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]">
-              <span class="w-4 h-4 rounded-full bg-[#22a06b] block"
-                *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff24"></span>
+              class="w-6 h-6 rounded-full border-2 border-[#64748b] flex items-center justify-center peer-checked:border-[#22a06b]"
+            >
+              <span
+                class="w-4 h-4 rounded-full bg-[#22a06b] block"
+                *ngIf="form.get('workShiftType')?.value === workShiftType.WeekOnWeekOff24"
+              ></span>
             </span>
             <div>
               <span class="font-medium text-[#1f2a37]">{{
                 'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS' | translate
-                }}</span>
+              }}</span>
               <span class="block text-[#384250] mt-2">{{
                 'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
-                }}</span>
+              }}</span>
             </div>
           </label>
         </div>
@@ -73,17 +100,35 @@
         <div class="lg:col-span-2">
           <label class="label" for="date-from">{{
             'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="date-from"
-              formControlName="startDate" [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate"
-              [maxDate]="maxStartDate" (onSelect)="onStartDateSelect($event)" id="date-from">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              inputId="date-from"
+              formControlName="startDate"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate"
+              [maxDate]="maxStartDate"
+              (onSelect)="onStartDateSelect($event)"
+              id="date-from"
+            >
               <ng-template pTemplate="inputicon">
-                <img alt="" src="assets/icons/calender-icon.svg" />
+                <img
+                  *ngIf="!startDateControl?.disabled"
+                  alt=""
+                  src="assets/icons/calender-icon.svg"
+                />
+                <img
+                  *ngIf="startDateControl?.disabled"
+                  src="assets/icons/calender-disapled.png"
+                  alt=""
+                />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="startDateControl"></app-validation-messages>
         </div>
@@ -91,194 +136,318 @@
         <div class="lg:col-span-2">
           <label class="label" for="date-to">{{
             'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
-            }}</label>
+          }}</label>
           <div class="relative">
-            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="date-to"
-              formControlName="endDate" [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate"
-              [minDate]="minEndDate" (onSelect)="onEndDateSelect($event)" id="date-to">
+            <p-datepicker
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              inputId="date-to"
+              formControlName="endDate"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate"
+              [minDate]="minEndDate"
+              (onSelect)="onEndDateSelect($event)"
+              id="date-to"
+            >
               <ng-template pTemplate="inputicon">
-                <img alt="" src="assets/icons/calender-icon.svg" />
+                <img
+                  *ngIf="!endDateControl?.disabled"
+                  alt=""
+                  src="assets/icons/calender-icon.svg"
+                />
+                <img
+                  *ngIf="endDateControl?.disabled"
+                  src="assets/icons/calender-disapled.png"
+                  alt=""
+                />
               </ng-template>
             </p-datepicker>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
           </div>
           <app-validation-messages [control]="endDateControl"></app-validation-messages>
         </div>
       </div>
 
       @if (isSingleShiftType) {
-      <h3 class="text-[#161616] font-[600] text-[18px] mt-6 pt-6 border-t border-[#D2D6DB]">
-        الوردية الثابتة
-      </h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mt-6 items-end">
-        <div class="relative lg:col-span-2">
-          <label class="label" for="fkShiftId">{{ 'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate }}</label>
-          <p-select id="fkShiftId" [options]="shifts" formControlName="fkShiftId" [optionLabel]="optionLabel"
-            optionValue="id" class="w-full peer"
-            [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate"></p-select>
-          <span
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-          <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
-        </div>
-
-        @if (showPresenceFields) {
-        <div class="lg:col-span-2">
-          <div class="relative time">
-            <label class="text-sm font-normal text-[#1f2a37] block mb-2" for="presenceInquiryTime">
-              {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_TIME' | translate }}
-            </label>
-            <p-datepicker id="presenceInquiryTime" [hourFormat]="'12'" [iconDisplay]="'input'"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.TIME_FROM_PLACEHOLDER' | translate" [showIcon]="true"
-              [timeOnly]="true" class="peer block w-full" inputId="presenceInquiryTime"
-              formControlName="presenceInquiryTime">
-              <ng-template pTemplate="inputicon">
-                <img alt="" src="assets/icons/time-icon.svg" />
-              </ng-template>
-            </p-datepicker>
+        <h3 class="text-[#161616] font-[600] text-[18px] mt-6 pt-6 border-t border-[#D2D6DB]">
+          الوردية الثابتة
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mt-6 items-end">
+          <div class="relative lg:col-span-2">
+            <label class="label" for="fkShiftId">{{
+              'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate
+            }}</label>
+            <p-select
+              id="fkShiftId"
+              [options]="shifts"
+              formControlName="fkShiftId"
+              [optionLabel]="optionLabel"
+              optionValue="id"
+              class="w-full peer"
+              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate"
+            ></p-select>
             <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+            <app-validation-messages [control]="fkShiftIdControl"></app-validation-messages>
           </div>
-          <app-validation-messages [control]="presenceInquiryTimeControl"></app-validation-messages>
-        </div>
 
-        <div class="lg:col-span-2">
-          <div class="relative">
-            <label class="text-sm font-normal text-[#1f2a37] block mb-2" for="presenceInquiryBuffer">
-              {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_GRACE_PERIOD' | translate }}
-            </label>
-            <p-inputnumber id="presenceInquiryBuffer" class="peer w-full" [showButtons]="true" buttonLayout="horizontal"
-              spinnerMode="vertical" [min]="0" formControlName="presenceInquiryBuffer">
-              <ng-template #incrementbuttonicon>
-                <span class="pi pi-plus"></span>
-              </ng-template>
-            </p-inputnumber>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-          </div>
-          <app-validation-messages [control]="presenceInquiryBufferControl"></app-validation-messages>
-        </div>
-        }
-      </div>
+          @if (showPresenceFields) {
+            <div class="lg:col-span-2">
+              <div class="relative time">
+                <label
+                  class="text-sm font-normal text-[#1f2a37] block mb-2"
+                  for="presenceInquiryTime"
+                >
+                  {{ 'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_TIME' | translate }}
+                </label>
+                <p-datepicker
+                  id="presenceInquiryTime"
+                  [hourFormat]="'12'"
+                  [iconDisplay]="'input'"
+                  [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.TIME_FROM_PLACEHOLDER' | translate"
+                  [showIcon]="true"
+                  [timeOnly]="true"
+                  class="peer block w-full"
+                  inputId="presenceInquiryTime"
+                  formControlName="presenceInquiryTime"
+                >
+                  <ng-template pTemplate="inputicon">
+                    <img alt="" src="assets/icons/time-icon.svg" />
+                  </ng-template>
+                </p-datepicker>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                ></span>
+              </div>
+              <app-validation-messages
+                [control]="presenceInquiryTimeControl"
+              ></app-validation-messages>
+            </div>
 
-      <hr class="border-gray-100 mb-6" />
-
-      <!--assign single shift-->
-      <section>
-        @if (showWorkingDays) {
-        <div class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4">
-          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616] required">
-            {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
-          </h4>
-        </div>
-
-        <div class="flex flex-wrap gap-8 mt-8">
-          @for (day of weekDays; track day.value) {
-          <label class="flex items-center space-x-2 mb-4 cursor-pointer relative"
-            [class.opacity-50]="isWeekDayDisabled(day.value) || isViewMode" [class.cursor-not-allowed]="isWeekDayDisabled(day.value) || isViewMode">
-            <input type="checkbox" [checked]="isWorkingDaySelected(day.value)" [disabled]="isWeekDayDisabled(day.value) || isViewMode"
-              (change)="onWorkingDayChange(day.value, $event)"
-              class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed" />
-            <svg
-              class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-              stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span class="text-base font-medium text-[#1f2a37]" [class.text-gray-400]="isWeekDayDisabled(day.value)">
-              {{ day.labelKey | translate }}
-            </span>
-          </label>
+            <div class="lg:col-span-2">
+              <div class="relative">
+                <label
+                  class="text-sm font-normal text-[#1f2a37] block mb-2"
+                  for="presenceInquiryBuffer"
+                >
+                  {{
+                    'USER_WORK_SHIFT_ASSIGNMENT.ATTENDANCE_DOCUMENTATION_GRACE_PERIOD' | translate
+                  }}
+                </label>
+                <p-inputnumber
+                  id="presenceInquiryBuffer"
+                  class="peer w-full"
+                  [showButtons]="true"
+                  buttonLayout="horizontal"
+                  spinnerMode="vertical"
+                  [min]="0"
+                  formControlName="presenceInquiryBuffer"
+                >
+                  <ng-template #incrementbuttonicon>
+                    <span class="pi pi-plus"></span>
+                  </ng-template>
+                </p-inputnumber>
+                <span
+                  class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+                ></span>
+              </div>
+              <app-validation-messages
+                [control]="presenceInquiryBufferControl"
+              ></app-validation-messages>
+            </div>
           }
         </div>
 
-        @if (!isViewMode) {
-          <div class="mt-2">
-            <app-validation-messages [control]="employeeWorkingDaysControl"></app-validation-messages>
-          </div>
-        }
-        } <!--end showWorkingDays-->
+        <hr class="border-gray-100 mb-6" />
 
-        <app-shift-assignment-panel [shift]="getSelectedShiftObject('fkShiftId')" [departments]="departments"
-          [allEmployees]="usersProfiles" [initialMemberIds]="singleShiftMemberIds" [optionLabel]="optionLabel"
-          [viewMode]="isViewMode"
-          (memberIdsChange)="onSingleShiftMembersChange($event)"></app-shift-assignment-panel>
-        @if (!isViewMode) {
-          <app-validation-messages [control]="userIdsArrayControl"></app-validation-messages>
-        }
-      </section>
+        <!--assign single shift-->
+        <section>
+          @if (showWorkingDays) {
+            <div
+              class="flex items-start lg:items-center justify-between flex-col lg:flex-row gap-4"
+            >
+              <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616] required">
+                {{ 'USER_WORK_SHIFT_ASSIGNMENT.WORKING_DAYS' | translate }}
+              </h4>
+            </div>
+
+            <div class="flex flex-wrap gap-8 mt-8">
+              @for (day of weekDays; track day.value) {
+                <label
+                  class="flex items-center space-x-2 mb-4 cursor-pointer relative"
+                  [class.opacity-50]="isWeekDayDisabled(day.value) || isViewMode"
+                  [class.cursor-not-allowed]="isWeekDayDisabled(day.value) || isViewMode"
+                >
+                  <input
+                    type="checkbox"
+                    [checked]="isWorkingDaySelected(day.value)"
+                    [disabled]="isWeekDayDisabled(day.value) || isViewMode"
+                    (change)="onWorkingDayChange(day.value, $event)"
+                    class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed"
+                  />
+                  <svg
+                    class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span
+                    class="text-base font-medium text-[#1f2a37]"
+                    [class.text-gray-400]="isWeekDayDisabled(day.value)"
+                  >
+                    {{ day.labelKey | translate }}
+                  </span>
+                </label>
+              }
+            </div>
+
+            @if (!isViewMode) {
+              <div class="mt-2">
+                <app-validation-messages
+                  [control]="employeeWorkingDaysControl"
+                ></app-validation-messages>
+              </div>
+            }
+          }
+          <!--end showWorkingDays-->
+
+          <app-shift-assignment-panel
+            [shift]="getSelectedShiftObject('fkShiftId')"
+            [departments]="departments"
+            [allEmployees]="usersProfiles"
+            [initialMemberIds]="singleShiftMemberIds"
+            [optionLabel]="optionLabel"
+            [viewMode]="isViewMode"
+            (memberIdsChange)="onSingleShiftMembersChange($event)"
+          ></app-shift-assignment-panel>
+          @if (!isViewMode) {
+            <app-validation-messages [control]="userIdsArrayControl"></app-validation-messages>
+          }
+        </section>
       }
 
       <!--assign rotating shift-->
       @if (isRotatingType) {
-      <section>
-
-
-        <!-- Rotating Shifts Row -->
-        <h4 class="text-[#161616] font-[600] text-[18px] mt-6 pt-6 border-t border-[#D2D6DB]">
-          {{'USER_WORK_SHIFT_ASSIGNMENT.ROTATING_SHIFTS' | translate}}
-        </h4>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          <div class="relative">
-            <label class="label" for="shift1">{{ 'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate }}</label>
-            <p-select id="shift1" [options]="shifts" formControlName="shift1" [optionLabel]="optionLabel"
-              optionValue="id" class="w-full peer"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate"></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-            <app-validation-messages [control]="shift1Control"></app-validation-messages>
+        <section>
+          <!-- Rotating Shifts Row -->
+          <h4 class="text-[#161616] font-[600] text-[18px] mt-6 pt-6 border-t border-[#D2D6DB]">
+            {{ 'USER_WORK_SHIFT_ASSIGNMENT.ROTATING_SHIFTS' | translate }}
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div class="relative">
+              <label class="label" for="shift1">{{
+                'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate
+              }}</label>
+              <p-select
+                id="shift1"
+                [options]="shifts"
+                formControlName="shift1"
+                [optionLabel]="optionLabel"
+                optionValue="id"
+                class="w-full peer"
+                [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+              <app-validation-messages [control]="shift1Control"></app-validation-messages>
+            </div>
+            <div class="relative">
+              <label class="label" for="shift2">{{
+                'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate
+              }}</label>
+              <p-select
+                id="shift2"
+                [options]="shifts"
+                formControlName="shift2"
+                [optionLabel]="optionLabel"
+                optionValue="id"
+                class="w-full peer"
+                [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+              <app-validation-messages [control]="shift2Control"></app-validation-messages>
+            </div>
+            <div class="relative">
+              <label class="label" for="shift3">{{
+                'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate
+              }}</label>
+              <p-select
+                id="shift3"
+                [options]="shifts"
+                formControlName="shift3"
+                [optionLabel]="optionLabel"
+                optionValue="id"
+                class="w-full peer"
+                [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate"
+              ></p-select>
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+              <app-validation-messages [control]="shift3Control"></app-validation-messages>
+            </div>
           </div>
-          <div class="relative">
-            <label class="label" for="shift2">{{ 'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate }}</label>
-            <p-select id="shift2" [options]="shifts" formControlName="shift2" [optionLabel]="optionLabel"
-              optionValue="id" class="w-full peer"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate"></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-            <app-validation-messages [control]="shift2Control"></app-validation-messages>
-          </div>
-          <div class="relative">
-            <label class="label" for="shift3">{{ 'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate }}</label>
-            <p-select id="shift3" [options]="shifts" formControlName="shift3" [optionLabel]="optionLabel"
-              optionValue="id" class="w-full peer"
-              [placeholder]="'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate"></p-select>
-            <span
-              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-            <app-validation-messages [control]="shift3Control"></app-validation-messages>
-          </div>
-        </div>
 
-        <!-- Main Content Area with Sidebar -->
-        <div class="flex gap-0 mt-8">
-          <!-- Sidebar Tabs -->
-          <div class="w-40 flex flex-col py-4 bg-white">
-            <button type="button" (click)="activeShift = 0" [class.active-item]="activeShift === 0"
-              class="sidebar-item">
-              {{'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate}}
-            </button>
-            <button type="button" (click)="activeShift = 1" [class.active-item]="activeShift === 1"
-              class="sidebar-item">
-              {{'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate}}
-            </button>
-            <button type="button" (click)="activeShift = 2" [class.active-item]="activeShift === 2"
-              class="sidebar-item">
-              {{'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate}}
-            </button>
-          </div>
+          <!-- Main Content Area with Sidebar -->
+          <div class="flex gap-0 mt-8">
+            <!-- Sidebar Tabs -->
+            <div class="w-40 flex flex-col py-4 bg-white">
+              <button
+                type="button"
+                (click)="activeShift = 0"
+                [class.active-item]="activeShift === 0"
+                class="sidebar-item"
+              >
+                {{ 'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate }}
+              </button>
+              <button
+                type="button"
+                (click)="activeShift = 1"
+                [class.active-item]="activeShift === 1"
+                class="sidebar-item"
+              >
+                {{ 'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate }}
+              </button>
+              <button
+                type="button"
+                (click)="activeShift = 2"
+                [class.active-item]="activeShift === 2"
+                class="sidebar-item"
+              >
+                {{ 'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate }}
+              </button>
+            </div>
 
-          <!-- Rotating Shift Panels -->
-          @for (group of rotationGroups; track group.periodOrder) {
-          <app-shift-assignment-panel *ngIf="activeShift === group.periodOrder"
-            [sortedNames]="getSortedShiftsNames(group.periodOrder)" [shift]="getRotationShift(group.periodOrder)"
-            [showInfoBox]="true" [departments]="departments" [allEmployees]="usersProfiles"
-            [initialMemberIds]="group.memberIds" [initialDeptIds]="rotationGroupDeptIds[group.periodOrder]"
-            [occupiedMemberIds]="getOccupiedMemberIds(group.periodOrder)" [optionLabel]="optionLabel"
-            [viewMode]="isViewMode"
-            (memberIdsChange)="onRotationGroupMembersChange(group.periodOrder, $event)"
-            (deptIdsChange)="onRotationGroupDeptsChange(group.periodOrder, $event)"></app-shift-assignment-panel>
-          }
-        </div>
-      </section>
+            <!-- Rotating Shift Panels -->
+            @for (group of rotationGroups; track group.periodOrder) {
+              <app-shift-assignment-panel
+                *ngIf="activeShift === group.periodOrder"
+                [sortedNames]="getSortedShiftsNames(group.periodOrder)"
+                [shift]="getRotationShift(group.periodOrder)"
+                [showInfoBox]="true"
+                [departments]="departments"
+                [allEmployees]="usersProfiles"
+                [initialMemberIds]="group.memberIds"
+                [initialDeptIds]="rotationGroupDeptIds[group.periodOrder]"
+                [occupiedMemberIds]="getOccupiedMemberIds(group.periodOrder)"
+                [optionLabel]="optionLabel"
+                [viewMode]="isViewMode"
+                (memberIdsChange)="onRotationGroupMembersChange(group.periodOrder, $event)"
+                (deptIdsChange)="onRotationGroupDeptsChange(group.periodOrder, $event)"
+              ></app-shift-assignment-panel>
+            }
+          </div>
+        </section>
       }
 
       <div class="actions mt-6 flex items-center justify-end gap-4">
@@ -290,6 +459,10 @@
             {{ 'COMMON.SAVE' | translate }}
           </button>
         }
+        <button class="btn black-btn">
+          <img src="/assets/icons/copy.png" alt="" />
+          نسخ الاسناد
+        </button>
       </div>
     </form>
   </div>

@@ -1,6 +1,6 @@
 export class EmployeeShiftDayFilter {
-  declare fkDepartmentId?: number;
-  declare fkUserProfileId?: number;
+  declare fkDepartmentIds?: number[];
+  declare fkUserProfileIds?: number[];
   declare shiftNameAr?: string;
   declare shiftNameEn?: string;
   declare dateFrom?: Date;

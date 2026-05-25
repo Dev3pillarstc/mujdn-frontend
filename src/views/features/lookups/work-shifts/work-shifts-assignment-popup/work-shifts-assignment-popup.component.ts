@@ -37,6 +37,7 @@ import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shift
 import { WorkShiftType } from '@/enums/work-shift-type';
 import { ShiftAssignmentPanelComponent } from './shift-assignment-panel/shift-assignment-panel.component';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -77,6 +78,7 @@ export class WorkShiftsAssignmentPopupComponent
   previousStandardWorkingDays: number[] = [];
   allowedWeekDaysInRange: number[] = [];
   activeShift: number = 0;
+  authService: AuthService = inject(AuthService);
 
   // Single shift: tracks selected member IDs for the standard shift panel
   singleShiftMemberIds: number[] = [];
@@ -95,6 +97,14 @@ export class WorkShiftsAssignmentPopupComponent
 
   get isViewMode(): boolean {
     return this.viewMode === ViewModeEnum.VIEW;
+  }
+
+  get isHROfficer(): boolean {
+    return this.authService.isHROfficer!;
+  }
+
+  get isNotNewOrCloned(): boolean {
+    return !!this.model.id;
   }
 
   override initPopup(): void {
@@ -161,7 +171,6 @@ export class WorkShiftsAssignmentPopupComponent
       fkShiftId: [this.model.fkShiftId ?? null, []], // not required in this popup
       employeeWorkingDays: [this.selectedWorkingDays.join(','), [this.validateWorkingDays()]],
       userIdsArray: [this.singleShiftMemberIds, [Validators.required]],
-      assignmentId: [this.model.id],
       shift1: [this.rotationGroups[0].fkShiftId ?? null],
       shift2: [this.rotationGroups[1].fkShiftId ?? null],
       shift3: [this.rotationGroups[2].fkShiftId ?? null],
@@ -549,7 +558,7 @@ export class WorkShiftsAssignmentPopupComponent
     const userIdsCtrl = this.form.get('userIdsArray');
     isSingle ? userIdsCtrl?.setValidators([Validators.required]) : userIdsCtrl?.clearValidators();
     userIdsCtrl?.updateValueAndValidity();
-    
+
     const endDateCtrl = this.form.get('endDate');
     endDateCtrl?.setValidators([
       Validators.required,
@@ -660,5 +669,20 @@ export class WorkShiftsAssignmentPopupComponent
     const rotated = [0, 1, 2].map((i) => shiftIds[(order + i) % 3]);
 
     return rotated.map((id) => this.shifts.find((s) => s.id === id)?.[nameKey] ?? '-').join(',');
+  }
+
+  clone() {
+    // Remove the ID so the next save creates a new record
+    delete (this.model as any).id;
+
+    // Switch out of view mode so the Save button becomes available
+    if (this.isViewMode) {
+      this.viewMode = ViewModeEnum.EDIT;
+      this.form.enable();
+    }
+
+    this.alertService.showSuccessMessage({
+      messages: ['USER_WORK_SHIFT_ASSIGNMENT.SHIFT_CLONED_NOTIFICATION'],
+    });
   }
 }

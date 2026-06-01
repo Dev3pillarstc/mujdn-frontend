@@ -400,7 +400,7 @@
     "IS_REST_DAY": "Rest Day",
     "YES": "Yes",
     "NO": "No",
-    "EMPLOYEE_SHIFT_SCHEDULE": "Employee Shift Schedule"
+    "EMPLOYEE_SHIFT_SCHEDULE": "Employee Shift (periods)"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
@@ -503,7 +503,7 @@
     "HOLIDAYS": "Holidays",
     "WORK_SHIFT": "Work Shifts",
     "WORK_SHIFT_SETTINGS": "Definition of Work Shifts",
-    "EMPLOYEE_SHIFTS": "Employee Shifts",
+    "EMPLOYEE_SHIFTS": "Employee Shifts (periods)",
     "SETTINGS": "Settings",
     "PERMISSION_REASONS": "Permission Reasons",
     "NOTIFICATION_CHANNELS": "Notification Settings",

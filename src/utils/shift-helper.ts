@@ -110,6 +110,8 @@ export function getShiftTypeTranslation(
       return translate.instant('USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK');
     case WorkShiftType.WeekOnWeekOff24:
       return translate.instant('USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS');
+    case WorkShiftType.Rotating:
+      return translate.instant('USER_WORK_SHIFT_ASSIGNMENT.ROTATING_SHIFT');
     default:
       return '';
   }

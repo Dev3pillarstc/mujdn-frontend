@@ -2,6 +2,7 @@
   "COMMON": {
     "OK": "Ok",
     "CANCEL": "Cancel",
+    "CLOSE": "Close",
     "ADD": "Add",
     "ERROR": "Error",
     "SUCCESS": "Success",
@@ -399,7 +400,7 @@
     "IS_REST_DAY": "Rest Day",
     "YES": "Yes",
     "NO": "No",
-    "EMPLOYEE_SHIFT_SCHEDULE": "Employee Shift Schedule"
+    "EMPLOYEE_SHIFT_SCHEDULE": "Employee Shift (periods)"
   },
   "WORK_SHIFTS": {
     "WORK_SHIFTS": "Work shifts",
@@ -502,7 +503,7 @@
     "HOLIDAYS": "Holidays",
     "WORK_SHIFT": "Work Shifts",
     "WORK_SHIFT_SETTINGS": "Definition of Work Shifts",
-    "EMPLOYEE_SHIFTS": "Employee Shifts",
+    "EMPLOYEE_SHIFTS": "Employee Shifts (periods)",
     "SETTINGS": "Settings",
     "PERMISSION_REASONS": "Permission Reasons",
     "NOTIFICATION_CHANNELS": "Notification Settings",
@@ -577,6 +578,8 @@
     "THIRD_SHIFT": "Third Shift",
     "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "Please assign at least one employee to each shift section before saving",
     "AT_LEAST_ONE_EMPLOYEE_ONE_SHIFT": "Please assign at least one employee to at least one shift section before saving",
+    "SHIFT_CLONED_NOTIFICATION": "Shift assignment cloned successfully. Review the details and press Save to create a new assignment.",
+    "CLONE_ASSIGNMENT": "Clone Assignment",
     "DUPLICATE_SHIFT": "This shift is already assigned to another slot — each shift must be unique",
     "ROTATING_SHIFTS": "Rotating Shifts",
     "SHIFTING_PERIOD_MAX_ONE_YEAR": "Shift period cannot exceed one year"
@@ -644,7 +647,8 @@
     "PRESENCE_INQUIRY_TIME": "Daily attendance proof time (for 24H system)",
     "PRESENCE_INQUIRY_BUFFER": "Daily attendance proof buffer (before/after)",
     "WORK_DAY_MESSAGE": "Work day according to the current approved shift system",
-    "MY_SHIFT_SCHEDULE": "My Shift Schedule"
+    "MY_SHIFT_SCHEDULE": "My Shift (periods)",
+    "SHIFT_NAME": "Shift Name"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "Forgot Password",
@@ -868,6 +872,7 @@
     "NO_SHOW": "No Show"
   },
   "ATTENDANCE_REPORT_PAGE": {
+    "REPORT_DETAILS": "Report Details",
     "SPECIAL_SHIFT": "Special Shift",
     "DEFAULT_SHIFT": "Default Shift",
     "DATE": "Date",
@@ -950,5 +955,10 @@
     "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "Rotating shifts (work week / rest week)",
     "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "Users will be rotated between shifts in the following order: ",
     "ON_A_RECURRING_BASIS": "on a recurring basis."
+  },
+  "CURRENT_SHIFT": {
+    "TODAY_SHIFT": "Today's Work Shift",
+    "WORK_DAYS_LABEL": "Shift working days:",
+    "NO_SHIFT": "No shift assigned for today"
   }
 }

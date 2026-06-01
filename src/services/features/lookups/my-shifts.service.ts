@@ -6,7 +6,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { SingleResponseData } from '@/models/shared/response/single-response-data';
 import { genericDateOnlyConvertor } from '@/utils/general-helper';
-import { HttpParams } from '@angular/common/http';
+import { HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { switchMap, of, map } from 'rxjs';
@@ -31,10 +31,11 @@ export class MyShiftsService extends LookupBaseService<EmployeeShift, number> {
     return this.urlService.URLS.SHIFTS;
   }
   @CastResponse(undefined, { fallback: '$currentShift' })
-  getMyCurrentShift() {
+  getMyCurrentShift(context?: HttpContext) {
     return this.http
       .get<SingleResponseData<EmployeeShift>>(this.getUrlSegment() + '/' + 'GetMyCurrentShift', {
         withCredentials: true,
+        context,
       })
       .pipe(
         switchMap((response: SingleResponseData<EmployeeShift>) => {

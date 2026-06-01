@@ -1,0 +1,312 @@
+<div [dir]="direction">
+  <div class="p-6">
+
+    <!-- ── Header ──────────────────────────────────────────────────────────── -->
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-[#1f2a37] font-[600] text-lg sm:text-xl">
+        {{ 'ATTENDANCE_REPORT_PAGE.REPORT_DETAILS' | translate }}
+      </h3>
+      <button (click)="close()" type="button" class="p-1 rounded hover:bg-[#f3f4f6] transition-colors">
+        <i class="pi pi-times close-popup text-[#6c737f]"></i>
+      </button>
+    </div>
+
+    <div class="mb-6">
+
+      <!-- ── Employee Details Card (All Attendance Report) ────────────────── -->
+      @if (showEmployeeDetails) {
+        <div class="bg-[#074d31] p-6 rounded-2xl mb-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 border-b border-[#ffffff26] mb-6 pb-6">
+            <!-- Employee Name -->
+            <div class="flex flex-wrap gap-1 items-center">
+              <span class="text-sm text-white opacity-80">
+                {{ 'ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME' | translate }}:
+              </span>
+              <span class="text-white font-[600]">{{ employeeName }}</span>
+            </div>
+            <!-- National ID -->
+            <div class="flex flex-wrap gap-1 items-center justify-start lg:justify-end">
+              <span class="text-sm text-[#fae996] opacity-80">
+                {{ 'ATTENDANCE_REPORT_PAGE.NATIONAL_ID' | translate }}:
+              </span>
+              <span class="text-[#fae996] font-[600]">{{ model.nationalId }}</span>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Department -->
+            <div class="flex flex-col gap-1">
+              <span class="text-sm text-white opacity-80">
+                {{ 'ATTENDANCE_REPORT_PAGE.DEPARTMENT' | translate }}
+              </span>
+              <span class="text-white font-[600]">{{ departmentName }}</span>
+            </div>
+            <!-- Date -->
+            <div class="flex flex-col gap-1">
+              <span class="text-sm text-white opacity-80">
+                {{ 'ATTENDANCE_REPORT_PAGE.DATE' | translate }}
+              </span>
+              <span class="text-white font-[600]">{{ formatDate(model.processingDate) }}</span>
+            </div>
+            <!-- Status -->
+            <div class="flex flex-col gap-1">
+              <span class="text-sm text-white opacity-80">
+                {{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}
+              </span>
+              <div
+                class="px-3 py-1 rounded-full font-[600] flex items-center gap-2 w-fit text-sm"
+                [style.background-color]="getStatusConfig(model.attendanceStatus).bgColor"
+                [style.color]="getStatusConfig(model.attendanceStatus).textColor"
+              >
+                <span
+                  class="w-[8px] h-[8px] shrink-0 block rounded-full"
+                  [style.background-color]="getStatusConfig(model.attendanceStatus).dotColor"
+                ></span>
+                {{ getStatusConfig(model.attendanceStatus).labelKey | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- ── Simplified Card (My Attendance Report) ────────────────────────── -->
+      } @else {
+        <div class="bg-[#074d31] p-6 rounded-2xl mb-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Date -->
+            <div class="flex flex-col gap-1">
+              <span class="text-sm text-white opacity-80">
+                {{ 'ATTENDANCE_REPORT_PAGE.DATE' | translate }}
+              </span>
+              <span class="text-white font-[600]">{{ formatDate(model.processingDate) }}</span>
+            </div>
+            <!-- Status -->
+            <div class="flex flex-col gap-1">
+              <span class="text-sm text-white opacity-80">
+                {{ 'ATTENDANCE_REPORT_PAGE.STATUS' | translate }}
+              </span>
+              <div
+                class="px-3 py-1 rounded-full font-[600] flex items-center gap-2 w-fit text-sm"
+                [style.background-color]="getStatusConfig(model.attendanceStatus).bgColor"
+                [style.color]="getStatusConfig(model.attendanceStatus).textColor"
+              >
+                <span
+                  class="w-[8px] h-[8px] shrink-0 block rounded-full"
+                  [style.background-color]="getStatusConfig(model.attendanceStatus).dotColor"
+                ></span>
+                {{ getStatusConfig(model.attendanceStatus).labelKey | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- ── Shift Details Section ─────────────────────────────────────────── -->
+      <div>
+        <!-- Shift Name heading -->
+        @if (model.shiftId) {
+          <h3 class="text-[#1f2a37] font-[600] text-[18px] my-5">
+            {{ model.getShiftName() }}
+          </h3>
+        }
+
+        <!-- Row 1: Check-in / Check-out / Permissions -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-6 border-b border-[#e5e7eb]"
+          [class.mb-6]="hasInquiryData || hasHolidayOrMission || model.isGraceApplied"
+        >
+          <div class="flex flex-col gap-1">
+            <span class="text-sm text-[#6c737f]">
+              {{ 'ATTENDANCE_REPORT_PAGE.CHECKIN_TIME' | translate }}
+            </span>
+            <span class="text-[#161616] font-[600]">
+              {{ formatTime(model.getEffectiveAttendanceFingerPrint()) }}
+            </span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-sm text-[#6c737f]">
+              {{ 'ATTENDANCE_REPORT_PAGE.CHECKOUT_TIME' | translate }}
+            </span>
+            <span class="text-[#161616] font-[600]">
+              {{ formatTime(model.getEffectiveLeaveFingerPrint()) }}
+            </span>
+          </div>
+          @if (hasPermission) {
+            <div class="flex flex-col gap-1">
+              <span class="text-sm text-[#6c737f]">
+                {{ 'ATTENDANCE_REPORT_PAGE.PERMISSIONS' | translate }}
+              </span>
+              <div class="border border-[#e5e7eb] bg-[#f9fafb] px-3 py-1 rounded-full w-fit font-[500] text-sm">
+                {{ getPermissionLabel() | translate }}
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Row 2: Inquiry badges + Holiday/Mission info ─────────────────── -->
+        @if (hasInquiryData || hasHolidayOrMission) {
+          <div class="mb-6 pb-6 border-b border-[#e5e7eb]">
+
+            <!-- Presence inquiry status badges -->
+            @if (hasInquiryData) {
+              <div class="flex items-center gap-2 mb-4 flex-wrap">
+
+                <!-- Shift Presence Inquiry badge -->
+                @if (model.isShiftPresenceInquirySucceed === false) {
+                  <div
+                    class="border border-[#fecdca] bg-[#fef3f2] text-[#912018] font-[500] rounded-full px-3 py-1 flex items-center gap-2 w-fit text-sm"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M9 17.25A8.25 8.25 0 1 0 9 .75a8.25 8.25 0 0 0 0 16.5z" fill="#fff" />
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M17.25 9A8.25 8.25 0 1 1 .75 9a8.25 8.25 0 0 1 16.5 0zM6.53 5.47a.75.75 0 1 0-1.06 1.06L7.94 9l-2.47 2.47a.75.75 0 1 0 1.06 1.06L9 10.06l2.47 2.47a.75.75 0 1 0 1.06-1.06L10.06 9l2.47-2.47a.75.75 0 1 0-1.06-1.06L9 7.94 6.53 5.47z"
+                        fill="#B42318" />
+                    </svg>
+                    {{ 'ATTENDANCE_REPORT_PAGE.SHIFT_PRESENCE_INQUIRY' | translate }}
+                  </div>
+                } @else if (model.isShiftPresenceInquirySucceed === true) {
+                  <div
+                    class="border border-[#abefc6] bg-[#ecfdf3] text-[#085d3a] font-[500] rounded-full px-3 py-1 flex items-center gap-2 w-fit text-sm"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M9 17.25A8.25 8.25 0 1 0 9 .75a8.25 8.25 0 0 0 0 16.5zM5.288 8.341a.75.75 0 0 0 0 1.06l2.121 2.122a.75.75 0 0 0 1.06 0l4.243-4.243a.75.75 0 1 0-1.06-1.06L7.939 9.932 6.35 8.341a.75.75 0 0 0-1.061 0z"
+                        fill="#067647" />
+                    </svg>
+                    {{ 'ATTENDANCE_REPORT_PAGE.SHIFT_PRESENCE_INQUIRY' | translate }}
+                  </div>
+                }
+
+                <!-- Presence Inquiry badge -->
+                @if (model.isPresenceInquirySucceed === false) {
+                  <div
+                    class="border border-[#fecdca] bg-[#fef3f2] text-[#912018] font-[500] rounded-full px-3 py-1 flex items-center gap-2 w-fit text-sm"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M9 17.25A8.25 8.25 0 1 0 9 .75a8.25 8.25 0 0 0 0 16.5z" fill="#fff" />
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M17.25 9A8.25 8.25 0 1 1 .75 9a8.25 8.25 0 0 1 16.5 0zM6.53 5.47a.75.75 0 1 0-1.06 1.06L7.94 9l-2.47 2.47a.75.75 0 1 0 1.06 1.06L9 10.06l2.47 2.47a.75.75 0 1 0 1.06-1.06L10.06 9l2.47-2.47a.75.75 0 1 0-1.06-1.06L9 7.94 6.53 5.47z"
+                        fill="#B42318" />
+                    </svg>
+                    {{ 'ATTENDANCE_REPORT_PAGE.PRESENCE_INQUIRY' | translate }}
+                  </div>
+                } @else if (model.isPresenceInquirySucceed === true) {
+                  <div
+                    class="border border-[#abefc6] bg-[#ecfdf3] text-[#085d3a] font-[500] rounded-full px-3 py-1 flex items-center gap-2 w-fit text-sm"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M9 17.25A8.25 8.25 0 1 0 9 .75a8.25 8.25 0 0 0 0 16.5zM5.288 8.341a.75.75 0 0 0 0 1.06l2.121 2.122a.75.75 0 0 0 1.06 0l4.243-4.243a.75.75 0 1 0-1.06-1.06L7.939 9.932 6.35 8.341a.75.75 0 0 0-1.061 0z"
+                        fill="#067647" />
+                    </svg>
+                    {{ 'ATTENDANCE_REPORT_PAGE.PRESENCE_INQUIRY' | translate }}
+                  </div>
+                }
+
+              </div>
+            }
+
+            <!-- Holiday & Mission info -->
+            @if (hasHolidayOrMission) {
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @if (model.holidayId) {
+                  <div class="flex flex-col gap-1">
+                    <span class="text-sm text-[#6c737f]">
+                      {{ 'ATTENDANCE_REPORT_PAGE.LEAVE_NAME' | translate }}
+                    </span>
+                    <span class="text-[#161616] font-[600]">{{ model.getHolidayName() }}</span>
+                  </div>
+                }
+                @if (model.missionId) {
+                  <div class="flex flex-col gap-1">
+                    <span class="text-sm text-[#6c737f]">
+                      {{ 'ATTENDANCE_REPORT_PAGE.MISSION_TYPE' | translate }}
+                    </span>
+                    <span class="text-[#161616] font-[600]">
+                      {{ model.getMissionTypeTranslationKey() | translate }}
+                    </span>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <span class="text-sm text-[#6c737f]">
+                      {{ 'ATTENDANCE_REPORT_PAGE.MISSION_NAME' | translate }}
+                    </span>
+                    <div
+                      class="border border-[#e5e7eb] bg-[#f9fafb] px-3 py-1 rounded-full w-fit font-[500] text-sm"
+                    >
+                      {{ model.getMissionName() }}
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+
+          </div>
+        }
+
+        <!-- Row 3: Grace section ──────────────────────────────────────────── -->
+        @if (model.isGraceApplied) {
+          <div>
+            <!-- Grace applied badge -->
+            <div
+              class="border border-[#abefc6] bg-[#ecfdf3] text-[#085d3a] font-[500] rounded-full px-3 py-1 flex items-center gap-2 w-fit mb-4 text-sm"
+            >
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M9 17.25A8.25 8.25 0 1 0 9 .75a8.25 8.25 0 0 0 0 16.5zM5.288 8.341a.75.75 0 0 0 0 1.06l2.121 2.122a.75.75 0 0 0 1.06 0l4.243-4.243a.75.75 0 1 0-1.06-1.06L7.939 9.932 6.35 8.341a.75.75 0 0 0-1.061 0z"
+                  fill="#067647" />
+              </svg>
+              {{ 'ATTENDANCE_REPORT_PAGE.IS_GRACE_APPLIED' | translate }}
+            </div>
+
+            <!-- Grace section heading: "Remaining Monthly Grace Minutes (N)" -->
+            <h3 class="text-[#1f2a37] font-[600] text-[18px] mb-4">
+              {{ 'ATTENDANCE_REPORT_PAGE.REMAINING_MONTHLY_GRACE_MINUTES' | translate }}
+              ({{ model.remainingMonthlyGraceMinutes ?? 0 }})
+            </h3>
+
+            <!-- Late / Early leave / Grace used -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'ATTENDANCE_REPORT_PAGE.LATE_MINUTES' | translate }}
+                </span>
+                <span class="text-[#161616] font-[600]">
+                  {{ model.lateMinutes ?? '-' }}
+                </span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'ATTENDANCE_REPORT_PAGE.EARLY_LEAVE_MINUTES' | translate }}
+                </span>
+                <span class="text-[#161616] font-[600]">
+                  {{ model.earlyLeaveMinutes ?? '-' }}
+                </span>
+              </div>
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-[#6c737f]">
+                  {{ 'ATTENDANCE_REPORT_PAGE.GRACE_MINUTES_USED' | translate }}
+                </span>
+                <div
+                  class="border border-[#e5e7eb] bg-[#f9fafb] px-3 py-1 rounded-full w-fit font-[500] text-sm"
+                >
+                  {{ model.graceMinutesUsed ?? '-' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+      </div>
+    </div>
+
+    <!-- ── Footer ──────────────────────────────────────────────────────────── -->
+    <button
+      class="btn gray-btn !bg-white hover:!bg-[#e5e7eb] border border-[#d2d6db]"
+      type="button"
+      (click)="close()"
+    >
+      {{ 'COMMON.CANCEL' | translate }}
+    </button>
+
+  </div>
+</div>

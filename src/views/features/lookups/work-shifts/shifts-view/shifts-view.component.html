@@ -32,17 +32,18 @@
               <label class="label" for="shiftsViewDepartment">
                 {{ 'SHIFTS_VIEW_PAGE.DEPARTMENT' | translate }}
               </label>
-              <p-select
-                [(ngModel)]="filterOptions.fkDepartmentId"
+              <p-multiselect
+                [(ngModel)]="filterOptions.fkDepartmentIds"
                 [options]="departments"
                 [optionLabel]="optionLabel"
                 [placeholder]="'SHIFTS_VIEW_PAGE.DEPARTMENT' | translate"
                 [showClear]="true"
+                [filter]="true"
+                [showToggleAll]="true"
                 class="w-full peer"
-                id="shiftsViewDepartment"
+                inputId="shiftsViewDepartment"
                 optionValue="id"
                 (onChange)="onDepartmentChange()"
-                (onClear)="onDepartmentChange()"
               />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -54,18 +55,19 @@
               <label class="label" for="shiftsViewEmployee">
                 {{ 'SHIFTS_VIEW_PAGE.EMPLOYEE_NAME' | translate }}
               </label>
-              <p-select
-                [(ngModel)]="filterOptions.fkUserProfileId"
+              <p-multiselect
+                [(ngModel)]="filterOptions.fkUserProfileIds"
                 [options]="filteredUsersProfiles"
                 [optionLabel]="optionLabel"
                 [placeholder]="'SHIFTS_VIEW_PAGE.EMPLOYEE_NAME' | translate"
                 [showClear]="true"
                 [virtualScroll]="true"
                 [virtualScrollItemSize]="38"
-                class="w-full peer"
-                id="shiftsViewEmployee"
-                optionValue="id"
                 [filter]="true"
+                [showToggleAll]="true"
+                class="w-full peer"
+                inputId="shiftsViewEmployee"
+                optionValue="id"
               />
               <span
                 class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
@@ -222,9 +224,9 @@
                   {{ getShiftTypeName(item.shiftAssignmentType) }}
                 </td>
                 <td class="text-start font-medium">
-                  @if (item.isRestDay) {
+                  @if (item.isRestDay === true) {
                     <img src="assets/icons/right-icon.svg" alt="" />
-                  } @else {
+                  } @else if (item.isRestDay === false) {
                     <img src="assets/icons/wrong-icon.svg" alt="" />
                   }
                 </td>

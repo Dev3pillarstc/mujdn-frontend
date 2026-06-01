@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { InputTextModule } from 'primeng/inputtext';
-import { Select } from 'primeng/select';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -36,7 +36,7 @@ import {
     RouterModule,
     PaginatorModule,
     Breadcrumb,
-    Select,
+    MultiSelectModule,
     DatePickerModule,
     FormsModule,
     TranslatePipe,
@@ -175,15 +175,23 @@ export class ShiftsViewComponent extends BaseListComponent<
   }
 
   get filteredUsersProfiles(): UsersWithDepartmentLookup[] {
-    if (!this.filterOptions.fkDepartmentId) return this.usersProfiles;
-    return this.usersProfiles.filter((u) => u.departmentId === this.filterOptions.fkDepartmentId);
+    const selectedDeptIds = this.filterOptions.fkDepartmentIds;
+    if (!selectedDeptIds || selectedDeptIds.length === 0) return this.usersProfiles;
+    return this.usersProfiles.filter(
+      (u) => u.departmentId != null && selectedDeptIds.includes(u.departmentId)
+    );
   }
 
   onDepartmentChange(): void {
-    const selected = this.usersProfiles.find((u) => u.id === this.filterOptions.fkUserProfileId);
-    if (selected?.departmentId !== this.filterOptions.fkDepartmentId) {
-      this.filterOptions.fkUserProfileId = undefined;
-    }
+    const selectedDeptIds = this.filterOptions.fkDepartmentIds;
+    if (!selectedDeptIds || selectedDeptIds.length === 0) return;
+
+    // Remove any already-selected employees whose department is no longer selected
+    const currentUserIds = this.filterOptions.fkUserProfileIds ?? [];
+    this.filterOptions.fkUserProfileIds = currentUserIds.filter((userId) => {
+      const user = this.usersProfiles.find((u) => u.id === userId);
+      return user?.departmentId != null && selectedDeptIds.includes(user.departmentId);
+    });
   }
 
   get optionLabel(): string {

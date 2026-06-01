@@ -2,6 +2,7 @@
   "COMMON": {
     "OK": "نعم",
     "CANCEL": "إلغاء",
+    "CLOSE": "إغلاق",
     "ADD": "إضافة",
     "ERROR": "خطأ",
     "SUCCESS": "نجاح",
@@ -575,6 +576,8 @@
     "THIRD_SHIFT": "الوردية الثالثة",
     "AT_LEAST_ONE_EMPLOYEE_EACH_SHIFT": "يرجى تعيين موظف واحد على الأقل في كل قسم وردية قبل الحفظ",
     "AT_LEAST_ONE_EMPLOYEE_ONE_SHIFT": "يرجى تعيين موظف واحد على الأقل في وردية واحدة على الأقل قبل الحفظ",
+    "SHIFT_CLONED_NOTIFICATION": "تم نسخ الاسناد بنجاحً. راجع البيانات واضغط حفظ لإنشاء اسناد جديد.",
+    "CLONE_ASSIGNMENT": "نسخ الإسناد",
     "DUPLICATE_SHIFT": "هذه الوردية محددة بالفعل في خانة أخرى — يجب أن تكون كل وردية مختلفة",
     "ROTATING_SHIFTS": "ورديات التناوب",
     "SHIFTING_PERIOD_MAX_ONE_YEAR": "لا يمكن أن تتجاوز فترة الوردية سنة واحدة"
@@ -642,7 +645,8 @@
     "PRESENCE_INQUIRY_TIME": "وقت توثيق الحضور للموظفين (لنظام الراحات 24 س)",
     "PRESENCE_INQUIRY_BUFFER": "فترة السماح لتوثيق الحضور (قبل / بعد)",
     "WORK_DAY_MESSAGE": "يوم عمل وفق نظام الوردية الحالي المعتمد",
-    "MY_SHIFT_SCHEDULE": "وردياتي (فترات)"
+    "MY_SHIFT_SCHEDULE": "وردياتي (فترات)",
+    "SHIFT_NAME": "اسم الوردية"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",
@@ -866,6 +870,7 @@
     "NO_SHOW": "لم يحضر"
   },
   "ATTENDANCE_REPORT_PAGE": {
+    "REPORT_DETAILS": "بيانات التقرير",
     "SPECIAL_SHIFT": "وردية عمل خاصة",
     "DEFAULT_SHIFT": "وردية عمل افتراضية",
     "DATE": "التاريخ",
@@ -948,5 +953,10 @@
     "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)",
     "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "سيتم تناوب الموظفين بين الورديات بالترتيب التالي: ",
     "ON_A_RECURRING_BASIS": "بشكل دوري."
+  },
+  "CURRENT_SHIFT": {
+    "TODAY_SHIFT": "وردية عمل اليوم",
+    "WORK_DAYS_LABEL": "أيام العمل بالوردية:",
+    "NO_SHIFT": "لا توجد وردية معينة لهذا اليوم"
   }
 }

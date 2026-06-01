@@ -40,6 +40,7 @@ export class ShiftAssignmentPanelComponent implements OnInit {
   @Input() occupiedMemberIds: number[] = [];
   @Input() initialDeptIds: number[] = [];
   @Input() sortedNames?: string;
+  @Input() viewMode: boolean = false;
 
   @Output() memberIdsChange = new EventEmitter<number[]>();
   @Output() deptIdsChange = new EventEmitter<number[]>();

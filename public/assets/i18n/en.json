@@ -647,7 +647,7 @@
     "PRESENCE_INQUIRY_TIME": "Daily attendance proof time (for 24H system)",
     "PRESENCE_INQUIRY_BUFFER": "Daily attendance proof buffer (before/after)",
     "WORK_DAY_MESSAGE": "Work day according to the current approved shift system",
-    "MY_SHIFT_SCHEDULE": "My Shift Schedule",
+    "MY_SHIFT_SCHEDULE": "My Shift (periods)",
     "SHIFT_NAME": "Shift Name"
   },
   "RESET_PASSWORD": {

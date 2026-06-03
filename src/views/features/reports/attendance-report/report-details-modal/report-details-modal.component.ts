@@ -23,8 +23,6 @@ export interface ReportDetailsDialogData {
   styleUrl: './report-details-modal.component.scss',
 })
 export class ReportDetailsModalComponent extends BaseAppComponent implements OnInit {
-  readonly emptyValue = '-';
-
   model!: AttendanceReport;
   showEmployeeDetails: boolean = false;
 
@@ -41,39 +39,34 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
   // ─── Computed getters ──────────────────────────────────────────────────────
 
   get employeeName(): string {
-    return this.displayValue(
-      this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-        ? this.model.fullNameEn
-        : this.model.fullNameAr
-    );
+    return this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+      ? this.model.fullNameEn
+      : this.model.fullNameAr;
   }
 
   get departmentName(): string {
-    return this.displayValue(
-      this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+    return (
+      (this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
         ? this.model.departmentNameEn
-        : this.model.departmentNameAr
+        : this.model.departmentNameAr) ?? '-'
     );
-  }
-
-  get shiftName(): string {
-    return this.displayValue(this.model.getShiftName());
-  }
-
-  get holidayName(): string {
-    return this.displayValue(this.model.getHolidayName());
-  }
-
-  get missionName(): string {
-    return this.displayValue(this.model.getMissionName());
-  }
-
-  get missionTypeTranslationKey(): string | null {
-    return this.model.getMissionTypeTranslationKey() || null;
   }
 
   get hasPermission(): boolean {
     return !!(this.model.attendancePermissionId || this.model.leavePermissionId);
+  }
+
+  get hasHolidayOrMission(): boolean {
+    return !!(this.model.holidayId || this.model.missionId);
+  }
+
+  get hasInquiryData(): boolean {
+    return (
+      (this.model.isShiftPresenceInquirySucceed !== null &&
+        this.model.isShiftPresenceInquirySucceed !== undefined) ||
+      (this.model.isPresenceInquirySucceed !== null &&
+        this.model.isPresenceInquirySucceed !== undefined)
+    );
   }
 
   // ─── Formatting helpers ────────────────────────────────────────────────────
@@ -87,10 +80,6 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
     if (!date) return '-';
     const locale = this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH ? 'en-US' : 'ar-EG';
     return formatDateTo12Hour(date, locale);
-  }
-
-  displayValue(value: string | number | null | undefined): string {
-    return value === null || value === undefined || value === '' ? this.emptyValue : `${value}`;
   }
 
   getStatusConfig(status: number) {

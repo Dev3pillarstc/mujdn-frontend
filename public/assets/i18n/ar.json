@@ -305,7 +305,7 @@
     "EMAIL": "البريد الإلكتروني",
     "INVALID_EMAIL": "صيغة البريد الإلكتروني غير صالحة",
     "MAX_LENGTH_EMAIL": "البريد الإلكتروني لا يمكن أن يتجاوز 100 حرف",
-    "SHIFT_TYPE": "نوع الدوام",
+    "SHIFT_TYPE": "نوع الإسناد",
     "NATIONAL_ID": "رقم الهوية",
     "INVALID_NATIONAL_ID": "رقم الهوية يجب أن يتكون من 10 أرقام",
     "PASSWORD": "كلمة المرور",
@@ -599,7 +599,7 @@
     "STARTING_DATE": "تاريخ البداية",
     "ENDING_DATE": "تاريخ النهاية",
     "EMPLOYEE_NAME_EN": "اسم الموظف (إنجليزي)",
-    "SHIFT_TYPE": "نوع الوردية"
+    "SHIFT_TYPE": "نوع الإسناد"
   },
   "PROFILE_PAGE": {
     "PROFILE": "الملف الشخصي",
@@ -875,7 +875,7 @@
     "DEFAULT_SHIFT": "وردية عمل افتراضية",
     "DATE": "التاريخ",
     "SHIFT_NAME": "اسم الوردية",
-    "SHIFT_TYPE": "نوع الوردية",
+    "SHIFT_TYPE": "نوع الإسناد",
     "LEAVE_NAME": "اسم الإجازة",
     "MISSION_NAME": "اسم المهمة",
     "MISSION_TYPE": "نوع المهمة",

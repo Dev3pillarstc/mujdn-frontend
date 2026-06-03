@@ -307,7 +307,7 @@
     "EMAIL": "Email",
     "INVALID_EMAIL": "Invalid email format",
     "MAX_LENGTH_EMAIL": "Email cannot exceed 100 characters",
-    "SHIFT_TYPE": "Shift Type",
+    "SHIFT_TYPE": "Assignment Type",
     "NATIONAL_ID": "National ID",
     "INVALID_NATIONAL_ID": "National ID must be 10 digits",
     "PASSWORD": "Password",
@@ -396,7 +396,7 @@
     "DATE_TO": "Date To",
     "DATE_TIME": "Date / Time",
     "SHIFT_NAME": "Shift Name",
-    "SHIFT_TYPE": "Shift Type",
+    "SHIFT_TYPE": "Assignment Type",
     "IS_REST_DAY": "Rest Day",
     "YES": "Yes",
     "NO": "No",
@@ -601,7 +601,7 @@
     "ENDING_DATE": "End date",
     "EMPLOYEE_NAME_AR": "Employee Name (Arabic)",
     "EMPLOYEE_NAME_EN": "Employee Name (English)",
-    "SHIFT_TYPE": "Shift Type"
+    "SHIFT_TYPE": "Assignment Type"
   },
   "PROFILE_PAGE": {
     "PROFILE": "Profile",
@@ -877,7 +877,7 @@
     "DEFAULT_SHIFT": "Default Shift",
     "DATE": "Date",
     "SHIFT_NAME": "Shift Name",
-    "SHIFT_TYPE": "Shift Type",
+    "SHIFT_TYPE": "Assignment Type",
     "LEAVE_NAME": "Holiday Name",
     "MISSION_NAME": "Mission Name",
     "MISSION_TYPE": "Mission Type",

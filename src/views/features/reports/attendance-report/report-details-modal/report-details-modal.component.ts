@@ -6,10 +6,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import AttendanceReport from '@/models/features/attendance/attendance-report/attendance-report';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import {
-  ATTENDANCE_STATUS_CONFIG,
-  ATTENDANCE_STATUS_ENUM,
-} from '@/enums/attendance-status-enum';
+import { ATTENDANCE_STATUS_CONFIG, ATTENDANCE_STATUS_ENUM } from '@/enums/attendance-status-enum';
 import { formatDateTo12Hour } from '@/utils/general-helper';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 
@@ -26,6 +23,8 @@ export interface ReportDetailsDialogData {
   styleUrl: './report-details-modal.component.scss',
 })
 export class ReportDetailsModalComponent extends BaseAppComponent implements OnInit {
+  readonly emptyValue = '-';
+
   model!: AttendanceReport;
   showEmployeeDetails: boolean = false;
 
@@ -33,9 +32,7 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
   private datePipe = inject(DatePipe);
   private dialogRef = inject(MatDialogRef<ReportDetailsModalComponent>);
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ReportDetailsDialogData
-  ) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ReportDetailsDialogData) {
     super();
     this.model = data?.model;
     this.showEmployeeDetails = data?.showEmployeeDetails ?? false;
@@ -44,34 +41,39 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
   // ─── Computed getters ──────────────────────────────────────────────────────
 
   get employeeName(): string {
-    return this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-      ? this.model.fullNameEn
-      : this.model.fullNameAr;
+    return this.displayValue(
+      this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+        ? this.model.fullNameEn
+        : this.model.fullNameAr
+    );
   }
 
   get departmentName(): string {
-    return (
-      (this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+    return this.displayValue(
+      this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
         ? this.model.departmentNameEn
-        : this.model.departmentNameAr) ?? '-'
+        : this.model.departmentNameAr
     );
+  }
+
+  get shiftName(): string {
+    return this.displayValue(this.model.getShiftName());
+  }
+
+  get holidayName(): string {
+    return this.displayValue(this.model.getHolidayName());
+  }
+
+  get missionName(): string {
+    return this.displayValue(this.model.getMissionName());
+  }
+
+  get missionTypeTranslationKey(): string | null {
+    return this.model.getMissionTypeTranslationKey() || null;
   }
 
   get hasPermission(): boolean {
     return !!(this.model.attendancePermissionId || this.model.leavePermissionId);
-  }
-
-  get hasHolidayOrMission(): boolean {
-    return !!(this.model.holidayId || this.model.missionId);
-  }
-
-  get hasInquiryData(): boolean {
-    return (
-      this.model.isShiftPresenceInquirySucceed !== null &&
-        this.model.isShiftPresenceInquirySucceed !== undefined) ||
-      (this.model.isPresenceInquirySucceed !== null &&
-        this.model.isPresenceInquirySucceed !== undefined
-      );
   }
 
   // ─── Formatting helpers ────────────────────────────────────────────────────
@@ -83,9 +85,12 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
 
   formatTime(date: Date | null | undefined): string {
     if (!date) return '-';
-    const locale =
-      this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH ? 'en-US' : 'ar-EG';
+    const locale = this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH ? 'en-US' : 'ar-EG';
     return formatDateTo12Hour(date, locale);
+  }
+
+  displayValue(value: string | number | null | undefined): string {
+    return value === null || value === undefined || value === '' ? this.emptyValue : `${value}`;
   }
 
   getStatusConfig(status: number) {

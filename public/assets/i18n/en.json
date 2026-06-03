@@ -587,7 +587,7 @@
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT_TAB": "Employees Assigned Work Shifts",
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
-    "SHIFT_NAME_AR": "Shift Name In Arabic",
+    "SHIFT_NAME_AR": "Shift Name",
     "SHIFT_NAME_EN": "Shift Name In English",
     "SHIFT_NAME_PLACEHOLDER": "Shift Name",
     "START_DATE": "Date (From)",

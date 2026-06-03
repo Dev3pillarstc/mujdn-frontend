@@ -9,6 +9,7 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { ATTENDANCE_STATUS_CONFIG, ATTENDANCE_STATUS_ENUM } from '@/enums/attendance-status-enum';
 import { formatDateTo12Hour } from '@/utils/general-helper';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { WorkShiftType } from '@/enums/work-shift-type';
 
 export interface ReportDetailsDialogData {
   model: AttendanceReport;
@@ -87,6 +88,21 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
       ATTENDANCE_STATUS_CONFIG[status as ATTENDANCE_STATUS_ENUM] ??
       ATTENDANCE_STATUS_CONFIG[ATTENDANCE_STATUS_ENUM.ABSENT]
     );
+  }
+
+  getShiftTypeTranslationKey(): string {
+    switch (this.model.shiftType) {
+      case WorkShiftType.Standard:
+        return 'USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT';
+      case WorkShiftType.WeekOnWeekOff:
+        return 'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK';
+      case WorkShiftType.WeekOnWeekOff24:
+        return 'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS';
+      case WorkShiftType.Rotating:
+        return 'USER_WORK_SHIFT_ASSIGNMENT.ROTATING_SHIFT';
+      default:
+        return '';
+    }
   }
 
   getPermissionLabel(): string {

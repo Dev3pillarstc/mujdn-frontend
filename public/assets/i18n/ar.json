@@ -395,7 +395,7 @@
     "DATE_TIME": "التاريخ / الوقت",
     "SHIFT_NAME": "اسم الوردية",
     "SHIFT_TYPE": "نوع الاسناد",
-    "IS_REST_DAY": "يوم راحة",
+    "IS_REST_DAY": "فترة راحة (نظام الراحات)",
     "YES": "نعم",
     "NO": "لا",
     "EMPLOYEE_SHIFT_SCHEDULE": "ورديات الموظفين (فترات)"
@@ -570,7 +570,7 @@
     "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "فترة السماح لإثبات الحضور اليومي (قبل / بعد)",
     "ASSIGNED_EMPLOYEES": "الموظفون المعنيون بالاسناد",
     "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين",
-    "ROTATING_SHIFT": "إسناد متناوب",
+    "ROTATING_SHIFT": "وردية متناوبة",
     "FIRST_SHIFT": "الوردية الأولى",
     "SECOND_SHIFT": "الوردية الثانية",
     "THIRD_SHIFT": "الوردية الثالثة",

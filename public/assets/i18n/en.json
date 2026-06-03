@@ -397,7 +397,7 @@
     "DATE_TIME": "Date / Time",
     "SHIFT_NAME": "Shift Name",
     "SHIFT_TYPE": "Assignment Type",
-    "IS_REST_DAY": "Rest Day",
+    "IS_REST_DAY": "Rest Period (Rest shift)",
     "YES": "Yes",
     "NO": "No",
     "EMPLOYEE_SHIFT_SCHEDULE": "Employee Shift (periods)"

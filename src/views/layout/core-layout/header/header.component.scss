@@ -28,19 +28,18 @@
 ::ng-deep {
   .p-popover {
     top: 68px !important;
-    left: unset !important;
-    inset-inline-end: 280px !important;
+
+
+
     padding: 0 !important;
     border-radius: 0.5rem !important;
     border: 1px solid #d1d5db !important;
-    box-shadow:
-      0 4px 6px -2px rgba(16, 24, 40, 0.03),
+    box-shadow: 0 4px 6px -2px rgba(16, 24, 40, 0.03),
       0 12px 16px -4px rgba(16, 24, 40, 0.08);
-    width: min(1176px, 95vw) !important;
+    width: 1176px !important;
     max-width: min(1176px, 62vw) !important;
 
     @media (max-width: 768px) {
-      inset-inline-end: 8px !important;
       max-width: min(1176px, 90vw) !important;
     }
   }

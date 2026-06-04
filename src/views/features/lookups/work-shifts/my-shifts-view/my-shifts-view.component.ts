@@ -9,7 +9,7 @@ import {
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginationInfo } from '@/models/shared/response/pagination-info';
 import { EmployeeShiftDayService } from '@/services/features/lookups/employee-shift-day.service';
-import { formatDateOnly, formatTimeRange } from '@/utils/general-helper';
+import { formatDateOnly, formatTimeRange, formatTimeTo12Hour } from '@/utils/general-helper';
 import { CustomValidators } from '@/validators/custom-validators';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,12 @@ import { TableModule } from 'primeng/table';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import * as XLSX from 'xlsx';
+import { WorkDaysPopupComponent } from '../work-days-popup/work-days-popup.component';
+import { WorkDaysSettingService } from '@/services/features/setting/work-days-setting.service';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
+import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift';
+import { WorkShiftType } from '@/enums/work-shift-type';
+import { ViewModeEnum } from '@/enums/view-mode-enum';
 
 @Component({
   selector: 'app-my-shifts-view',
@@ -46,6 +52,8 @@ export class MyShiftsViewComponent extends BaseListComponent<
 
   filterOptions: EmployeeShiftDayFilter = new EmployeeShiftDayFilter();
   employeeShiftDayService = inject(EmployeeShiftDayService);
+  private workDaysSettingService = inject(WorkDaysSettingService);
+  private defaultWorkDays: WorkDaysSetting = new WorkDaysSetting();
   private shiftTypeOptions: WorkShiftTypeOption[] = WORK_SHIFT_TYPE_OPTIONS;
 
   override get filterModel(): EmployeeShiftDayFilter {
@@ -67,10 +75,15 @@ export class MyShiftsViewComponent extends BaseListComponent<
 
     if (initialList?.list) {
       this.handleLoadListSuccess(initialList);
-      return;
+    } else {
+      this.applyTimeFormatting(this.list);
     }
 
-    this.applyTimeFormatting(this.list);
+    this.workDaysSettingService.getWorkDays().subscribe({
+      next: (data) => {
+        this.defaultWorkDays = data;
+      },
+    });
   }
 
   override loadList(): Observable<PaginatedList<EmployeeShiftDay>> {
@@ -116,6 +129,27 @@ export class MyShiftsViewComponent extends BaseListComponent<
 
   override openDialog(_model: EmployeeShiftDay): void {
     // View-only tab.
+  }
+
+  openShiftDetails(item: EmployeeShiftDay): void {
+    const locale = this.isArabic ? 'ar-EG' : 'en-US';
+    const shift = new EmployeeShift();
+    shift.nameAr = item.shiftDetails?.nameAr;
+    shift.nameEn = item.shiftDetails?.nameEn;
+    shift.workShiftType = item.shiftAssignmentType as unknown as WorkShiftType;
+    shift.timeFrom = item.timeFrom;
+    shift.timeTo = item.timeTo;
+    shift.formattedTimeFrom = formatTimeTo12Hour(item.timeFrom, locale);
+    shift.formattedTimeTo = formatTimeTo12Hour(item.timeTo, locale);
+    shift.startDate = item.dateFrom;
+    shift.endDate = item.dateTo;
+    shift.attendanceBuffer = item.attendanceBuffer;
+    shift.leaveBuffer = item.leaveBuffer;
+    shift.employeeWorkingDays = item.employeeWorkingDays!;
+    shift.presenceInquiryTime = item.presenceInquiryTime!;
+    shift.presenceInquiryBuffer = item.presenceInquiryBuffer;
+    const lookups = { defaultWorkDays: [this.defaultWorkDays] };
+    this.openBaseDialog(WorkDaysPopupComponent as any, shift as any, ViewModeEnum.VIEW, lookups);
   }
 
   protected override getBreadcrumbKeys() {

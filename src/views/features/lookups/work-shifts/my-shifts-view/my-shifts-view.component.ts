@@ -130,9 +130,12 @@ export class MyShiftsViewComponent extends BaseListComponent<
       [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_TYPE')]: this.getShiftTypeName(
         model.shiftAssignmentType
       ),
-      [this.translateService.instant('SHIFTS_VIEW_PAGE.IS_REST_DAY')]: model.isRestDay
-        ? this.translateService.instant('SHIFTS_VIEW_PAGE.YES')
-        : this.translateService.instant('SHIFTS_VIEW_PAGE.NO'),
+      [this.translateService.instant('SHIFTS_VIEW_PAGE.IS_REST_DAY')]:
+        model.isRestDay == null
+          ? ''
+          : model.isRestDay
+            ? this.translateService.instant('SHIFTS_VIEW_PAGE.YES')
+            : this.translateService.instant('SHIFTS_VIEW_PAGE.NO'),
     };
   }
 

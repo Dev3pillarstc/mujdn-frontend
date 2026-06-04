@@ -139,6 +139,13 @@ export class MyShiftsViewComponent extends BaseListComponent<
     };
   }
 
+  protected override getPdfExportRequest(): Observable<Blob> {
+    return this.employeeShiftDayService.exportMyShiftDaysPdf(
+      this.langService.getCurrentLanguage(),
+      this.getPdfExportFilterOptions()
+    );
+  }
+
   get isArabic(): boolean {
     return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
   }

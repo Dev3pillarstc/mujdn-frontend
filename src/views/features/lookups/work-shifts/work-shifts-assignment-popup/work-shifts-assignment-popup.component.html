@@ -456,12 +456,6 @@
         </button>
         <div class="flex gap-2">
           @if (isHROfficer) {
-            @if (isNotNewOrCloned) {
-              <button (click)="clone()" class="btn black-btn">
-                <img src="/assets/icons/copy.png" alt="" />
-                {{ 'USER_WORK_SHIFT_ASSIGNMENT.CLONE_ASSIGNMENT' | translate }}
-              </button>
-            }
             @if (!isViewMode) {
               <button type="button" (click)="onSaveClick()" class="btn green-btn">
                 {{ 'COMMON.SAVE' | translate }}

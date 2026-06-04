@@ -205,6 +205,13 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     this.openDialog(userWorkShift);
   }
 
+  cloneModel(userWorkShift: UserWorkShift): void {
+    const cloned = Object.assign(new UserWorkShift(), userWorkShift);
+    delete (cloned as any).id;
+    this.popupViewMode = ViewModeEnum.EDIT;
+    this.openDialog(cloned);
+  }
+
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT' }];
   }

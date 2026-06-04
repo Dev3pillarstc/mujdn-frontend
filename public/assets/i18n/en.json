@@ -572,6 +572,7 @@
     "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "Daily attendance proof Grace Period (Before / After)",
     "ASSIGNED_EMPLOYEES": "Employees Assigned",
     "DELETE_ALL_EMPLOYEES": "Delete All Employees",
+    "STANDARD_SHIFT_LABLE": "Fixed Shift",
     "ROTATING_SHIFT": "Rotating Assignment",
     "FIRST_SHIFT": "First Shift",
     "SECOND_SHIFT": "Second Shift",

@@ -571,6 +571,7 @@
     "ASSIGNED_EMPLOYEES": "الموظفون المعنيون بالاسناد",
     "DELETE_ALL_EMPLOYEES": "حذف كل الموظفين",
     "ROTATING_SHIFT": "وردية متناوبة",
+    "STANDARD_SHIFT_LABLE": "الوردية الثابتة",
     "FIRST_SHIFT": "الوردية الأولى",
     "SECOND_SHIFT": "الوردية الثانية",
     "THIRD_SHIFT": "الوردية الثالثة",

@@ -30,11 +30,11 @@
             </span>
             <div>
               <span class="font-medium text-[#1f2a37]">{{
-                  'USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT' | translate
-                }}</span>
+                'USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT' | translate
+              }}</span>
               <span class="block text-[#384250] mt-2">{{
-                  'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_HOURS' | translate
-                }}</span>
+                'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_HOURS' | translate
+              }}</span>
             </div>
           </label>
 
@@ -58,11 +58,11 @@
             </span>
             <div>
               <span class="font-medium text-[#1f2a37]">{{
-                  'USER_WORK_SHIFT_ASSIGNMENT.ROTATING_SHIFT' | translate
-                }}</span>
+                'USER_WORK_SHIFT_ASSIGNMENT.ROTATING_SHIFT' | translate
+              }}</span>
               <span class="block text-[#384250] mt-2">{{
-                  'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
-                }}</span>
+                'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
+              }}</span>
             </div>
           </label>
 
@@ -86,11 +86,11 @@
             </span>
             <div>
               <span class="font-medium text-[#1f2a37]">{{
-                  'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS' | translate
-                }}</span>
+                'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS' | translate
+              }}</span>
               <span class="block text-[#384250] mt-2">{{
-                  'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
-                }}</span>
+                'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK' | translate
+              }}</span>
             </div>
           </label>
         </div>
@@ -99,8 +99,8 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
         <div class="lg:col-span-2">
           <label class="label" for="date-from">{{
-              'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate
-            }}</label>
+            'USER_WORK_SHIFT_ASSIGNMENT.START_DATE' | translate
+          }}</label>
           <div class="relative">
             <p-datepicker
               [iconDisplay]="'input'"
@@ -135,8 +135,8 @@
 
         <div class="lg:col-span-2">
           <label class="label" for="date-to">{{
-              'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
-            }}</label>
+            'USER_WORK_SHIFT_ASSIGNMENT.END_DATE' | translate
+          }}</label>
           <div class="relative">
             <p-datepicker
               [iconDisplay]="'input'"
@@ -177,8 +177,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mt-6 items-end">
           <div class="relative lg:col-span-2">
             <label class="label" for="fkShiftId">{{
-                'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate
-              }}</label>
+              'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_NAME' | translate
+            }}</label>
             <p-select
               id="fkShiftId"
               [options]="shifts"
@@ -286,7 +286,7 @@
                     [checked]="isWorkingDaySelected(day.value)"
                     [disabled]="isWeekDayDisabled(day.value) || isViewMode"
                     (change)="onWorkingDayChange(day.value, $event)"
-                    class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-not-allowed"
+                    class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
                   />
                   <svg
                     class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
@@ -344,8 +344,8 @@
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             <div class="relative">
               <label class="label" for="shift1">{{
-                  'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate
-                }}</label>
+                'USER_WORK_SHIFT_ASSIGNMENT.FIRST_SHIFT' | translate
+              }}</label>
               <p-select
                 id="shift1"
                 [options]="shifts"
@@ -362,8 +362,8 @@
             </div>
             <div class="relative">
               <label class="label" for="shift2">{{
-                  'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate
-                }}</label>
+                'USER_WORK_SHIFT_ASSIGNMENT.SECOND_SHIFT' | translate
+              }}</label>
               <p-select
                 id="shift2"
                 [options]="shifts"
@@ -380,8 +380,8 @@
             </div>
             <div class="relative">
               <label class="label" for="shift3">{{
-                  'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate
-                }}</label>
+                'USER_WORK_SHIFT_ASSIGNMENT.THIRD_SHIFT' | translate
+              }}</label>
               <p-select
                 id="shift3"
                 [options]="shifts"
@@ -455,13 +455,7 @@
           {{ (isViewMode ? 'COMMON.CLOSE' : 'COMMON.CANCEL') | translate }}
         </button>
         <div class="flex gap-2">
-          @if(isHROfficer) {
-            @if(isNotNewOrCloned){
-              <button (click)="clone()" class="btn black-btn">
-                <img src="/assets/icons/copy.png" alt="" />
-                {{ 'USER_WORK_SHIFT_ASSIGNMENT.CLONE_ASSIGNMENT' | translate }}
-              </button>
-            }
+          @if (isHROfficer) {
             @if (!isViewMode) {
               <button type="button" (click)="onSaveClick()" class="btn green-btn">
                 {{ 'COMMON.SAVE' | translate }}

@@ -632,7 +632,7 @@
     "MY_SHIFTS": "وردياتي",
     "SHIFT_DAYS": "أيام العمل بالوردية",
     "ASSIGNED_SHIFTS_LIST": "ورديات العمل المسندة",
-    "NAME_ARABIC": "اسم الوردية (عربي)",
+    "NAME_ARABIC": "اسم الوردية",
     "NAME_ENGLISH": "اسم الوردية (إنجليزي)",
     "START_DATE": "التاريخ (من)",
     "END_DATE": "التاريخ (إلى)",
@@ -649,7 +649,8 @@
     "WORK_DAY_MESSAGE": "يوم عمل وفق نظام الوردية الحالي المعتمد",
     "MY_SHIFT_SCHEDULE": "وردياتي (فترات)",
     "SHIFT_NAME": "اسم الوردية",
-    "SHIFT_DETAILS": "بيانات الوردية"
+    "SHIFT_DETAILS": "بيانات الوردية",
+    "REST_DAY": "يوم راحة"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "نسيت كلمة المرور",

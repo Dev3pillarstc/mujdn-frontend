@@ -148,6 +148,7 @@ export class MyShiftsViewComponent extends BaseListComponent<
     shift.employeeWorkingDays = item.employeeWorkingDays!;
     shift.presenceInquiryTime = item.presenceInquiryTime!;
     shift.presenceInquiryBuffer = item.presenceInquiryBuffer;
+    shift.isRestDay = item.isRestDay;
     const lookups = { defaultWorkDays: [this.defaultWorkDays] };
     this.openBaseDialog(WorkDaysPopupComponent as any, shift as any, ViewModeEnum.VIEW, lookups);
   }

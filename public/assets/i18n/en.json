@@ -651,7 +651,8 @@
     "WORK_DAY_MESSAGE": "Work day according to the current approved shift system",
     "MY_SHIFT_SCHEDULE": "My Shift (periods)",
     "SHIFT_NAME": "Shift Name",
-    "SHIFT_DETAILS": "Shift Details"
+    "SHIFT_DETAILS": "Shift Details",
+    "REST_DAY": "Rest Day"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "Forgot Password",

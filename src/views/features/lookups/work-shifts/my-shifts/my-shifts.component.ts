@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
@@ -102,35 +102,20 @@ export default class MyShiftsComponent extends BaseListComponent<
     return [{ labelKey: 'MY_SHIFTS.MY_SHIFTS' }];
   }
   protected override mapModelToExcelRow(model: EmployeeShift): { [key: string]: any } {
-    // Ensure formatted times are set
-    if (!model.formattedTimeFrom) {
-      changeTimeSuffix(
-        this.isCurrentLanguageEnglish.bind(this),
-        model,
-        'timeFrom',
-        'formattedTimeFrom'
-      );
-    }
-    if (!model.formattedTimeTo) {
-      changeTimeSuffix(
-        this.isCurrentLanguageEnglish.bind(this),
-        model,
-        'timeTo',
-        'formattedTimeTo'
-      );
-    }
+    const shiftName = this.getShiftNames(model).filter(Boolean).join(', ');
+    const startDate = model.startDate
+      ? formatDate(model.startDate, 'dd/MM/yyyy', 'en-US')
+      : '';
+    const endDate = model.endDate
+      ? formatDate(model.endDate, 'dd/MM/yyyy', 'en-US')
+      : '';
 
     return {
-      [this.translateService.instant('MY_SHIFTS.NAME_ARABIC')]: model.nameAr || '',
+      [this.translateService.instant('MY_SHIFTS.SHIFT_NAME')]: shiftName,
       [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_TYPE')]:
         this.getShiftTypeName(model),
-      [this.translateService.instant('MY_SHIFTS.NAME_ENGLISH')]: model.nameEn || '',
-      [this.translateService.instant('MY_SHIFTS.START_DATE')]: model.startDate,
-      [this.translateService.instant('MY_SHIFTS.END_DATE')]: model.endDate,
-      [this.translateService.instant('MY_SHIFTS.TIME_FROM_TO')]:
-        `${model.formattedTimeFrom} - ${model.formattedTimeTo}`,
-      [this.translateService.instant('MY_SHIFTS.ATTENDANCE_BUFFER')]: model.attendanceBuffer ?? '',
-      [this.translateService.instant('MY_SHIFTS.LEAVE_BUFFER')]: model.leaveBuffer ?? '',
+      [this.translateService.instant('MY_SHIFTS.START_DATE')]: startDate,
+      [this.translateService.instant('MY_SHIFTS.END_DATE')]: endDate,
     };
   }
 

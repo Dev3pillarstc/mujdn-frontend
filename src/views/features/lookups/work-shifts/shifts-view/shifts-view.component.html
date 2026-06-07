@@ -206,6 +206,7 @@
                 <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.SHIFT_NAME' | translate }}</th>
                 <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.SHIFT_TYPE' | translate }}</th>
                 <th class="text-start">{{ 'SHIFTS_VIEW_PAGE.IS_REST_DAY' | translate }}</th>
+                <th class="text-start">{{ 'COMMON.ACTION' | translate }}</th>
               </tr>
             </ng-template>
             <ng-template #body let-item>
@@ -229,6 +230,15 @@
                   } @else if (item.isRestDay === false) {
                     <img src="assets/icons/wrong-icon.svg" alt="" />
                   }
+                </td>
+                <td class="text-start">
+                  <button
+                    class="table-action-gray-btn gap-1 !min-w-[146px] !px-6"
+                    (click)="openShiftDetails(item)"
+                  >
+                    <img src="/assets/icons/view.svg" alt="عرض" />
+                    {{ 'MY_SHIFTS.SHIFT_DETAILS' | translate }}
+                  </button>
                 </td>
               </tr>
             </ng-template>

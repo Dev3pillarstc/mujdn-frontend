@@ -650,7 +650,8 @@
     "PRESENCE_INQUIRY_BUFFER": "Daily attendance proof buffer (before/after)",
     "WORK_DAY_MESSAGE": "Work day according to the current approved shift system",
     "MY_SHIFT_SCHEDULE": "My Shift (periods)",
-    "SHIFT_NAME": "Shift Name"
+    "SHIFT_NAME": "Shift Name",
+    "SHIFT_DETAILS": "Shift Details"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "Forgot Password",

@@ -232,8 +232,12 @@
                   }
                 </td>
                 <td class="text-start">
-                  <button class="action-btn" (click)="openShiftDetails(item)">
-                    <img src="assets/icons/view-action.svg" alt="" />
+                  <button
+                    class="table-action-gray-btn gap-1 !min-w-[146px] !px-6"
+                    (click)="openShiftDetails(item)"
+                  >
+                    <img src="/assets/icons/view.svg" alt="عرض" />
+                    {{ 'MY_SHIFTS.SHIFT_DETAILS' | translate }}
                   </button>
                 </td>
               </tr>

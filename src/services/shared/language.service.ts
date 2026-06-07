@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,6 +13,7 @@ import { FactoryService } from '@/services/factory-service';
 export class LanguageService {
   translateService = inject(TranslateService);
   localStorageService = inject(LocalStorageService);
+  private document = inject(DOCUMENT);
   private _currentLanguage: string = LANGUAGE_ENUM.ENGLISH.toString();
   languageChanged$: BehaviorSubject<string> = new BehaviorSubject(this._currentLanguage);
 
@@ -22,6 +24,7 @@ export class LanguageService {
       this._currentLanguage = storedLanguage;
       this.translateService.use(storedLanguage);
     }
+    this.updateDocumentDir(this._currentLanguage);
 
     FactoryService.registerService('LanguageService', this);
   }
@@ -34,6 +37,12 @@ export class LanguageService {
     this._currentLanguage = lang;
     this.translateService.use(lang);
     this.localStorageService.set(LOCALSTORAGE_ENUM.LANGUAGE, lang);
+    this.updateDocumentDir(lang);
     this.languageChanged$.next(this._currentLanguage);
+  }
+
+  private updateDocumentDir(lang: string): void {
+    const dir = lang === LANGUAGE_ENUM.ARABIC ? 'rtl' : 'ltr';
+    this.document.documentElement.dir = dir;
   }
 }

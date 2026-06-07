@@ -1,13 +1,13 @@
 <div class="px-6 bg-white">
   <div class="flex justify-between gap-2 items-center">
-    <div>
+    <div class="flex items-center gap-2">
       <button (click)="toggleSideMenu()" class="menu-button md:hidden h-full">
         <i class="pi pi-bars"></i>
       </button>
       @if (loggedInUser) {
         <button
           (click)="shiftPanel.toggle($event)"
-          class="px-3 py-1 bg-[#ecfdf3] border border-[#abefc6] text-[#085d3a] rounded-full flex items-center gap-1 font-[500]"
+          class="px-1 md:px-3 py-1 bg-[#ecfdf3] border border-[#abefc6] text-[#085d3a] rounded-full flex items-center gap-1 font-[500] text-xs md:text-base"
         >
           {{ 'CURRENT_SHIFT.TODAY_SHIFT' | translate }}
           <svg
@@ -26,25 +26,17 @@
           </svg>
         </button>
       }
-      <p-overlayPanel
-        #shiftPanel
-        (onShow)="onShiftPanelShow()"
-        (onHide)="onShiftPanelHide()"
-        styleClass="!p-0 !rounded-lg shadow-[0_4px_6px_-2px_rgba(16,24,40,0.03),0_12px_16px_-4px_rgba(16,24,40,0.08)] !border !border-gray-300"
-      >
+      <p-overlayPanel #shiftPanel (onShow)="onShiftPanelShow()" (onHide)="onShiftPanelHide()">
         <!-- No shift assigned (only shown before the very first silent load resolves) -->
         @if (!currentShift) {
-          <div
-            class="max-w-full w-[1176px] p-5 flex items-center justify-center min-h-[200px]"
-            [dir]="dir"
-          >
+          <div class="p-5 flex items-center justify-center min-h-[200px]">
             <p class="text-gray-500 text-sm">{{ 'CURRENT_SHIFT.NO_SHIFT' | translate }}</p>
           </div>
         }
 
         <!-- Shift details — rendered immediately from cache, updated silently in background -->
         @else {
-          <div class="max-w-full w-[1176px] p-5" [dir]="dir">
+          <div class="p-5" [dir]="dir">
             <div class="flex items-center justify-between gap-4 flex-wrap">
               <!-- Shift name + status badge -->
               <div class="flex items-center justify-between mb-4 gap-3">
@@ -92,7 +84,7 @@
             <hr class="border-gray-100 mb-5" />
 
             <!-- Details grid -->
-            <div class="grid grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div class="flex flex-col gap-1">
                 <span class="text-sm text-[#6c737f]">
                   {{ 'USER_WORK_SHIFT_PAGE.SHIFT_TYPE' | translate }}
@@ -104,14 +96,18 @@
                 <span class="text-sm text-[#6c737f]">
                   {{ 'WORK_SHIFTS_POPUP.TIME_FROM' | translate }}
                 </span>
-                <span class="font-[600] text-[#161616]">{{ currentShift.formattedTimeFrom || '--' }}</span>
+                <span class="font-[600] text-[#161616]">{{
+                  currentShift.formattedTimeFrom || '--'
+                }}</span>
               </div>
 
               <div class="flex flex-col gap-1">
                 <span class="text-sm text-[#6c737f]">
                   {{ 'WORK_SHIFTS_POPUP.TIME_TO' | translate }}
                 </span>
-                <span class="font-[600] text-[#161616]">{{ currentShift.formattedTimeTo || '--' }}</span>
+                <span class="font-[600] text-[#161616]">{{
+                  currentShift.formattedTimeTo || '--'
+                }}</span>
               </div>
 
               <div class="flex flex-col gap-1">
@@ -184,12 +180,12 @@
             <img alt="" src="assets/icons/user.svg" class="w-8 h-8 rounded-full" />
             <span class="flex flex-col justify-start items-start">
               <strong
-                class="truncate max-w-[25ch] whitespace-nowrap overflow-hidden text-ellipsis block"
+                class="truncate max-w-[13ch] sm:max-w-[25ch] whitespace-nowrap overflow-hidden text-ellipsis block"
               >
                 {{ getLoggedInUserName() }}
               </strong>
               <span
-                class="font-normal truncate max-w-[25ch] whitespace-nowrap overflow-hidden text-ellipsis block"
+                class="font-normal truncate max-w-[13ch] sm:max-w-[25ch] whitespace-nowrap overflow-hidden text-ellipsis block"
               >
                 {{ getLoggedInUserDepartment() }}
               </span>

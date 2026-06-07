@@ -120,11 +120,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const group =
         periodOrder != null
           ? (this.currentShift.rotationGroups.find((g) => g.periodOrder === periodOrder) ??
-             this.currentShift.rotationGroups[0])
+            this.currentShift.rotationGroups[0])
           : this.currentShift.rotationGroups[0];
-      return isArabic
-        ? (group.shiftDetails?.nameAr ?? '')
-        : (group.shiftDetails?.nameEn ?? '');
+      return isArabic ? (group.shiftDetails?.nameAr ?? '') : (group.shiftDetails?.nameEn ?? '');
     }
 
     // Fallback to top-level names
@@ -158,7 +156,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * - Otherwise falls back to the organisation's default work days from `defaultWorkDays`.
    */
   getWorkDayNames(): string[] {
-    const DAY_KEYS = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'] as const;
+    const DAY_KEYS = [
+      'SUNDAY',
+      'MONDAY',
+      'TUESDAY',
+      'WEDNESDAY',
+      'THURSDAY',
+      'FRIDAY',
+      'SATURDAY',
+    ] as const;
 
     // Shift has explicit working days — parse the comma-separated index list
     if (this.currentShift?.employeeWorkingDays) {
@@ -172,8 +178,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // No shift-level override — derive from the organisation's default work-days setting
     const wd = this.defaultWorkDays;
     const dayFlags: boolean[] = [
-      wd.sunday, wd.monday, wd.tuesday, wd.wednesday,
-      wd.thursday, wd.friday, wd.saturday,
+      wd.sunday,
+      wd.monday,
+      wd.tuesday,
+      wd.wednesday,
+      wd.thursday,
+      wd.friday,
+      wd.saturday,
     ];
 
     return dayFlags
@@ -199,6 +210,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   /** Returns the current text direction based on the active language. */
   get dir(): 'rtl' | 'ltr' {
     return this.isArabic() ? 'rtl' : 'ltr';
+  }
+
+  constructor() {
+    console.log(this.dir);
   }
 
   // ─── Auth / language helpers ──────────────────────────────────────────────────

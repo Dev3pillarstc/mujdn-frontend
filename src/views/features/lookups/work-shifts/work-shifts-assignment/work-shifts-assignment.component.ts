@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 // import { Breadcrumb } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { MatDialog } from '@angular/material/dialog';
@@ -159,14 +159,23 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   }
 
   protected override mapModelToExcelRow(model: UserWorkShift): { [key: string]: any } {
+    const shiftName = (this.getShiftNames(model as any) as (string | undefined)[])
+      .filter(Boolean)
+      .join(', ');
+    const startDate = model.startDate
+      ? formatDate(model.startDate, 'dd/MM/yyyy', 'en-US')
+      : '';
+    const endDate = model.endDate
+      ? formatDate(model.endDate, 'dd/MM/yyyy', 'en-US')
+      : '---';
+
     return {
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR')]: model.shiftNameAr,
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_EN')]: model.shiftNameEn,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_NAME_AR')]: shiftName,
       [this.translateService.instant('USER_WORK_SHIFT_PAGE.SHIFT_TYPE')]: this.getShiftTypeName(
         model.workShiftType
       ),
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.START_DATE')]: model.startDate,
-      [this.translateService.instant('USER_WORK_SHIFT_PAGE.END_DATE')]: model.endDate,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.START_DATE')]: startDate,
+      [this.translateService.instant('USER_WORK_SHIFT_PAGE.END_DATE')]: endDate,
     };
   }
   dialogSize = {
@@ -194,6 +203,13 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
   editModel(userWorkShift: UserWorkShift, viewMode: ViewModeEnum): void {
     this.popupViewMode = viewMode;
     this.openDialog(userWorkShift);
+  }
+
+  cloneModel(userWorkShift: UserWorkShift): void {
+    const cloned = Object.assign(new UserWorkShift(), userWorkShift);
+    delete (cloned as any).id;
+    this.popupViewMode = ViewModeEnum.EDIT;
+    this.openDialog(cloned);
   }
 
   protected override getBreadcrumbKeys() {

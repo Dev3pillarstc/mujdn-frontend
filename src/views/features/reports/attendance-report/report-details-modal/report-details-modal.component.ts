@@ -6,12 +6,10 @@ import { CommonModule, DatePipe } from '@angular/common';
 import AttendanceReport from '@/models/features/attendance/attendance-report/attendance-report';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
-import {
-  ATTENDANCE_STATUS_CONFIG,
-  ATTENDANCE_STATUS_ENUM,
-} from '@/enums/attendance-status-enum';
+import { ATTENDANCE_STATUS_CONFIG, ATTENDANCE_STATUS_ENUM } from '@/enums/attendance-status-enum';
 import { formatDateTo12Hour } from '@/utils/general-helper';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { WorkShiftType } from '@/enums/work-shift-type';
 
 export interface ReportDetailsDialogData {
   model: AttendanceReport;
@@ -33,9 +31,7 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
   private datePipe = inject(DatePipe);
   private dialogRef = inject(MatDialogRef<ReportDetailsModalComponent>);
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ReportDetailsDialogData
-  ) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: ReportDetailsDialogData) {
     super();
     this.model = data?.model;
     this.showEmployeeDetails = data?.showEmployeeDetails ?? false;
@@ -67,11 +63,11 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
 
   get hasInquiryData(): boolean {
     return (
-      this.model.isShiftPresenceInquirySucceed !== null &&
+      (this.model.isShiftPresenceInquirySucceed !== null &&
         this.model.isShiftPresenceInquirySucceed !== undefined) ||
       (this.model.isPresenceInquirySucceed !== null &&
-        this.model.isPresenceInquirySucceed !== undefined
-      );
+        this.model.isPresenceInquirySucceed !== undefined)
+    );
   }
 
   // ─── Formatting helpers ────────────────────────────────────────────────────
@@ -83,8 +79,7 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
 
   formatTime(date: Date | null | undefined): string {
     if (!date) return '-';
-    const locale =
-      this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH ? 'en-US' : 'ar-EG';
+    const locale = this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH ? 'en-US' : 'ar-EG';
     return formatDateTo12Hour(date, locale);
   }
 
@@ -93,6 +88,21 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
       ATTENDANCE_STATUS_CONFIG[status as ATTENDANCE_STATUS_ENUM] ??
       ATTENDANCE_STATUS_CONFIG[ATTENDANCE_STATUS_ENUM.ABSENT]
     );
+  }
+
+  getShiftTypeTranslationKey(): string {
+    switch (this.model.shiftType) {
+      case WorkShiftType.Standard:
+        return 'USER_WORK_SHIFT_ASSIGNMENT.STANDARD_SHIFT';
+      case WorkShiftType.WeekOnWeekOff:
+        return 'USER_WORK_SHIFT_ASSIGNMENT.WORK_WEEK_REST_WEEK';
+      case WorkShiftType.WeekOnWeekOff24:
+        return 'USER_WORK_SHIFT_ASSIGNMENT.SHIFT_24_HOURS';
+      case WorkShiftType.Rotating:
+        return 'USER_WORK_SHIFT_ASSIGNMENT.ROTATING_SHIFT';
+      default:
+        return '';
+    }
   }
 
   getPermissionLabel(): string {

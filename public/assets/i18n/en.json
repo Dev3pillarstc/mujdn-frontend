@@ -42,6 +42,7 @@
     "SERVICE_UNAVAILABLE": "Service unavailable",
     "STRONG_PASSWORD": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
     "ACTION": "Action",
+    "ACTIONS": "Actions",
     "EDIT": "Edit",
     "DELETE": "Delete",
     "DASHBOARD": "Dashboard",
@@ -307,7 +308,7 @@
     "EMAIL": "Email",
     "INVALID_EMAIL": "Invalid email format",
     "MAX_LENGTH_EMAIL": "Email cannot exceed 100 characters",
-    "SHIFT_TYPE": "Shift Type",
+    "SHIFT_TYPE": "Assignment Type",
     "NATIONAL_ID": "National ID",
     "INVALID_NATIONAL_ID": "National ID must be 10 digits",
     "PASSWORD": "Password",
@@ -396,8 +397,8 @@
     "DATE_TO": "Date To",
     "DATE_TIME": "Date / Time",
     "SHIFT_NAME": "Shift Name",
-    "SHIFT_TYPE": "Shift Type",
-    "IS_REST_DAY": "Rest Day",
+    "SHIFT_TYPE": "Assignment Type",
+    "IS_REST_DAY": "Rest Period (Rest shift)",
     "YES": "Yes",
     "NO": "No",
     "EMPLOYEE_SHIFT_SCHEDULE": "Employee Shift (periods)"
@@ -572,6 +573,7 @@
     "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "Daily attendance proof Grace Period (Before / After)",
     "ASSIGNED_EMPLOYEES": "Employees Assigned",
     "DELETE_ALL_EMPLOYEES": "Delete All Employees",
+    "STANDARD_SHIFT_LABLE": "Fixed Shift",
     "ROTATING_SHIFT": "Rotating Assignment",
     "FIRST_SHIFT": "First Shift",
     "SECOND_SHIFT": "Second Shift",
@@ -587,7 +589,7 @@
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT_TAB": "Employees Assigned Work Shifts",
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
-    "SHIFT_NAME_AR": "Shift Name In Arabic",
+    "SHIFT_NAME_AR": "Shift Name",
     "SHIFT_NAME_EN": "Shift Name In English",
     "SHIFT_NAME_PLACEHOLDER": "Shift Name",
     "START_DATE": "Date (From)",
@@ -601,7 +603,7 @@
     "ENDING_DATE": "End date",
     "EMPLOYEE_NAME_AR": "Employee Name (Arabic)",
     "EMPLOYEE_NAME_EN": "Employee Name (English)",
-    "SHIFT_TYPE": "Shift Type"
+    "SHIFT_TYPE": "Assignment Type"
   },
   "PROFILE_PAGE": {
     "PROFILE": "Profile",
@@ -648,7 +650,9 @@
     "PRESENCE_INQUIRY_BUFFER": "Daily attendance proof buffer (before/after)",
     "WORK_DAY_MESSAGE": "Work day according to the current approved shift system",
     "MY_SHIFT_SCHEDULE": "My Shift (periods)",
-    "SHIFT_NAME": "Shift Name"
+    "SHIFT_NAME": "Shift Name",
+    "SHIFT_DETAILS": "Shift Details",
+    "REST_DAY": "Rest Day"
   },
   "RESET_PASSWORD": {
     "FORGOT_PASSWORD": "Forgot Password",
@@ -877,12 +881,14 @@
     "DEFAULT_SHIFT": "Default Shift",
     "DATE": "Date",
     "SHIFT_NAME": "Shift Name",
-    "SHIFT_TYPE": "Shift Type",
+    "SHIFT_TYPE": "Assignment Type",
     "LEAVE_NAME": "Holiday Name",
     "MISSION_NAME": "Mission Name",
     "MISSION_TYPE": "Mission Type",
-    "PRESENCE_INQUIRY": "Presence Inquiry",
-    "SHIFT_PRESENCE_INQUIRY": "Attendance proof of the rest system",
+    "PRESENCE_INQUIRY_SUCCEED": "Presence Inquiry Succeeded",
+    "PRESENCE_INQUIRY_FAILED": "Presence Inquiry Failed",
+    "SHIFT_PRESENCE_INQUIRY_SUCCEED": "Attendance proof of the rest system Succeeded",
+    "SHIFT_PRESENCE_INQUIRY_FAILED": "Attendance proof of the rest system Failed",
     "CHECKIN_TIME": "Check-in Time",
     "CHECKOUT_TIME": "Check-out Time",
     "STATUS": "Status",

@@ -103,10 +103,6 @@ export class WorkShiftsAssignmentPopupComponent
     return this.authService.isHROfficer!;
   }
 
-  get isNotNewOrCloned(): boolean {
-    return !!this.model.id;
-  }
-
   override initPopup(): void {
     this.model = this.data.model || new UserWorkShift();
     this.usersProfiles = this.data.lookups?.usersProfiles || [];
@@ -671,18 +667,4 @@ export class WorkShiftsAssignmentPopupComponent
     return rotated.map((id) => this.shifts.find((s) => s.id === id)?.[nameKey] ?? '-').join(',');
   }
 
-  clone() {
-    // Remove the ID so the next save creates a new record
-    delete (this.model as any).id;
-
-    // Switch out of view mode so the Save button becomes available
-    if (this.isViewMode) {
-      this.viewMode = ViewModeEnum.EDIT;
-      this.form.enable();
-    }
-
-    this.alertService.showSuccessMessage({
-      messages: ['USER_WORK_SHIFT_ASSIGNMENT.SHIFT_CLONED_NOTIFICATION'],
-    });
-  }
 }

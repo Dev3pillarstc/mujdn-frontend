@@ -9,6 +9,8 @@ import { Observable, map } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { genericDateOnlyConvertor } from '@/utils/general-helper';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { OptionsContract } from '@/contracts/options-contract';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +35,13 @@ export class EmployeeShiftDayService extends BaseCrudService<EmployeeShiftDay> {
 
   override getUrlSegment(): string {
     return this.urlService.URLS.EMPLOYEE_SHIFT_DAYS;
+  }
+
+  exportMyShiftDaysPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportMyShiftDaysPdf', language, filterOptions);
   }
 
   @CastResponse(undefined, { fallback: '$myShiftDaysPagination' })

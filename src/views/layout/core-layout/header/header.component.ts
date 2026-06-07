@@ -272,10 +272,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
       },
     ];
   }
-
-  getOverlayDirClass(): string {
-    return this.isArabic()
-      ? 'md:!rtl:right-[280px] !right-2 !left-[unset] '
-      : 'md:!ltr:left-[280px] !left-2 ';
-  }
 }

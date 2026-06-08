@@ -879,6 +879,7 @@
     "REPORT_DETAILS": "Report Details",
     "SPECIAL_SHIFT": "Special Shift",
     "DEFAULT_SHIFT": "Default Shift",
+    "SHIFT_CATEGORY": "Shift Type",
     "DATE": "Date",
     "SHIFT_NAME": "Shift Name",
     "SHIFT_TYPE": "Assignment Type",

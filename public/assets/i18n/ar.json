@@ -877,6 +877,7 @@
     "REPORT_DETAILS": "بيانات التقرير",
     "SPECIAL_SHIFT": "وردية عمل خاصة",
     "DEFAULT_SHIFT": "وردية عمل افتراضية",
+    "SHIFT_CATEGORY": "نوع الوردية",
     "DATE": "التاريخ",
     "SHIFT_NAME": "اسم الوردية",
     "SHIFT_TYPE": "نوع الإسناد",

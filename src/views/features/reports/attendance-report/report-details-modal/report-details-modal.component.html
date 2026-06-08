@@ -103,14 +103,22 @@
 
       <!-- ── Shift Details Section ─────────────────────────────────────────── -->
       <div>
-        <!-- Shift Name + Assignment Type — always visible -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 my-5">
+        <!-- Shift Name + Assignment Type + Shift Category — always visible -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 my-5">
           <div class="flex flex-col gap-1">
             <span class="text-sm text-[#6c737f]">
               {{ 'ATTENDANCE_REPORT_PAGE.SHIFT_NAME' | translate }}
             </span>
             <span class="text-[#1f2a37] font-[600] text-[18px]">
               {{ model.getShiftName() || '-' }}
+            </span>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-sm text-[#6c737f]">
+              {{ 'ATTENDANCE_REPORT_PAGE.SHIFT_CATEGORY' | translate }}
+            </span>
+            <span class="text-[#1f2a37] font-[600] text-[18px]">
+              {{ model.getShiftCategoryTranslationKey() | translate }}
             </span>
           </div>
           <div class="flex flex-col gap-1">

@@ -187,13 +187,17 @@
             <button
               class="table-head-action-btn min-w-[40px]"
               (click)="
-                exportExcel(getTranslatedFileName('USER_WORK_SHIFT_PAGE.SHIFT_LIST', 'xlsx'))
+                exportExcel(
+                  getTranslatedFileName('USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT_TAB', 'xlsx')
+                )
               "
             >
               <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button
-              (click)="exportPdf(getTranslatedFileName('USER_WORK_SHIFT_PAGE.SHIFT_LIST'))"
+              (click)="
+                exportPdf(getTranslatedFileName('USER_WORK_SHIFT_PAGE.WORK_SHIFT_ASSIGNMENT_TAB'))
+              "
               class="table-head-action-btn"
             >
               <img alt="" src="assets/icons/pdf.svg" />

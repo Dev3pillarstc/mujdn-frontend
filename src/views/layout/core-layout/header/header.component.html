@@ -26,7 +26,7 @@
           </svg>
         </button>
       }
-      <p-overlayPanel #shiftPanel (onShow)="onShiftPanelShow()" (onHide)="onShiftPanelHide()">
+      <p-popover #shiftPanel (onShow)="onShiftPanelShow()" (onHide)="onShiftPanelHide()">
         <!-- No shift assigned (only shown before the very first silent load resolves) -->
         @if (!currentShift) {
           <div class="p-5 flex items-center justify-center min-h-[200px]">
@@ -166,7 +166,7 @@
             </div>
           </div>
         }
-      </p-overlayPanel>
+      </p-popover>
     </div>
 
     <div class="flex actions">

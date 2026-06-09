@@ -20,10 +20,11 @@ import EmployeeShift from '@/models/features/lookups/work-shifts/employee-shift'
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 import { WorkShiftType } from '@/enums/work-shift-type';
 import { getShiftTypeTranslation } from '@/utils/shift-helper';
+import { PopoverModule } from 'primeng/popover';
 
 @Component({
   selector: 'app-header',
-  imports: [MenuModule, ButtonModule, OverlayPanelModule, CommonModule, TranslatePipe],
+  imports: [MenuModule, ButtonModule, PopoverModule, CommonModule, TranslatePipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

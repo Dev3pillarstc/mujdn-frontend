@@ -109,6 +109,16 @@ export default class AttendanceReport extends BaseCrudModel<
       : this.holidayNameAr!;
   }
 
+  isDefaultShift(): boolean {
+    return this.shiftType === 0;
+  }
+
+  getShiftCategoryTranslationKey(): string {
+    return this.isDefaultShift()
+      ? 'ATTENDANCE_REPORT_PAGE.DEFAULT_SHIFT'
+      : 'ATTENDANCE_REPORT_PAGE.SPECIAL_SHIFT';
+  }
+
   getEffectiveAttendanceFingerPrint(): Date | null {
     if (
       this.isGraceApplied &&

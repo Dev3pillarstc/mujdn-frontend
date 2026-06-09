@@ -28,9 +28,6 @@
 ::ng-deep {
   .p-popover {
     top: 68px !important;
-    left: unset !important;
-    inset-inline-start: 280px !important;
-
     padding: 0 !important;
     border-radius: 0.5rem !important;
     border: 1px solid #d1d5db !important;
@@ -42,7 +39,8 @@
 
     @media (max-width: 768px) {
       max-width: min(1176px, 90vw) !important;
-      inset-inline-start: 8px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
     }
   }
 

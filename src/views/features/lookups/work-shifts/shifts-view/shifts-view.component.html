@@ -184,13 +184,17 @@
           <div class="actions flex items-center gap-4 ms-auto">
             <button
               class="table-head-action-btn min-w-[40px]"
-              (click)="exportExcel(getTranslatedFileName('SHIFTS_VIEW_PAGE.LIST_TITLE', 'xlsx'))"
+              (click)="
+                exportExcel(
+                  getTranslatedFileName('SHIFTS_VIEW_PAGE.EMPLOYEE_SHIFT_SCHEDULE', 'xlsx')
+                )
+              "
             >
               <img alt="" src="assets/icons/excel.svg" />
             </button>
             <button
               class="table-head-action-btn"
-              (click)="exportPdf(getTranslatedFileName('SHIFTS_VIEW_PAGE.LIST_TITLE'))"
+              (click)="exportPdf(getTranslatedFileName('SHIFTS_VIEW_PAGE.EMPLOYEE_SHIFT_SCHEDULE'))"
             >
               <img alt="" src="assets/icons/pdf.svg" />
             </button>

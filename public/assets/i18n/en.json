@@ -442,7 +442,10 @@
     "ACTIVATE": "Activate",
     "SAVE_AND_ACTIVATE": "Save and Activate",
     "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "When a new default shift is added, the previous default shift is automatically unset.",
-    "CROSS_DAY_SHIFT": "Cross-Day Shift (check-in and check-out on different days)"
+    "CROSS_DAY_SHIFT": "Cross-Day Shift (check-in and check-out on different days)",
+    "READ_ONLY_SHIFT_DETAILS": "Shift details (read only)",
+    "DAY_BOUNDARY": "Day Start Boundary",
+    "SHIFT_DURATION": "Shift duration"
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "My Attendance Logs",
@@ -645,6 +648,7 @@
     "LEAVE_BUFFER": "Leave grace period (min)",
     "NO_DAYS_SELECTED": "No working days selected",
     "DATE_RANGE_PLACEHOLDER": "Start date - End date",
+    "BOUNDARY_TIME": "Day Start Boundary",
     "REST_DAY_MESSAGE": "Rest day according to the current approved shift system",
     "PRESENCE_INQUIRY_TIME": "Daily attendance proof time (for 24H system)",
     "PRESENCE_INQUIRY_BUFFER": "Daily attendance proof buffer (before/after)",

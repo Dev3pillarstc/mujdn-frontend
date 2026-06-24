@@ -440,7 +440,10 @@
     "ACTIVATE": "تفعيل",
     "SAVE_AND_ACTIVATE": "حفظ وتفعيل",
     "NEW_DEFAULT_SHIFT_TO_BE_ADDED": "عند إضافة وردية افتراضية جديدة، يتم إلغاء تعيين الوردية السابقة كافتراضية تلقائياً",
-    "CROSS_DAY_SHIFT": "وردية متداخلة الايام (موعد الحضور وموعد الانصراف في يومين مختلفين)"
+    "CROSS_DAY_SHIFT": "وردية متداخلة الايام (موعد الحضور وموعد الانصراف في يومين مختلفين)",
+    "READ_ONLY_SHIFT_DETAILS": "بيانات الوردية (للعرض فقط)",
+    "DAY_BOUNDARY": "حد بداية اليوم",
+    "SHIFT_DURATION": "مدة الوردية"
   },
   "ATTENDANCE_LOG_PAGE": {
     "MY_ATTENDANCE_LOGS": "سجل حضوري",
@@ -643,6 +646,7 @@
     "LEAVE_BUFFER": "مدة السماح للانصراف(دق)",
     "NO_DAYS_SELECTED": "لم يتم اختيار أيام العمل",
     "DATE_RANGE_PLACEHOLDER": "تاريخ البداية - تاريخ النهاية",
+    "BOUNDARY_TIME": "حد بداية اليوم",
     "REST_DAY_MESSAGE": "يوم راحة وفق نظام الوردية الحالي المعتمد",
     "PRESENCE_INQUIRY_TIME": "وقت توثيق الحضور للموظفين (لنظام الراحات 24 س)",
     "PRESENCE_INQUIRY_BUFFER": "فترة السماح لتوثيق الحضور (قبل / بعد)",

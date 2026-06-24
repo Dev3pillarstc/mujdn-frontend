@@ -15,6 +15,7 @@ export default class EmployeeShift extends BaseCrudModel<EmployeeShift, MyShifts
   declare nameEn?: string;
   declare timeFrom?: string;
   declare timeTo?: string;
+  declare boundaryTime?: string;
   declare attendanceBuffer?: number;
   declare leaveBuffer?: number;
   declare employeeWorkingDays: string;

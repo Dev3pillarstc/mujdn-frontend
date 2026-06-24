@@ -73,6 +73,9 @@ export default class AttendanceReport extends BaseCrudModel<
   declare attendanceStatus: number;
   declare processingStatus: number;
 
+  declare firstFingerPrintOfDay?: Date | string | null;
+  declare lastFingerPrintOfDay?: Date | string | null;
+
   declare creationDate: Date | string | null;
   declare modificationDate?: Date | string | null;
   private languageService?: LanguageService;

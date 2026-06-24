@@ -52,6 +52,12 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
       <div>
+        <p class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.BOUNDARY_TIME' | translate }}</p>
+        <h5 class="text-[#161616] text-base font-medium">
+          {{ formatTime(model.boundaryTime) }}
+        </h5>
+      </div>
+      <div>
         <span class="text-[#6c737f] text-sm">{{ 'WORK_SHIFTS_POPUP.TIME_FROM' | translate }}</span>
         <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">{{ model.formattedTimeFrom }}</h5>
       </div>

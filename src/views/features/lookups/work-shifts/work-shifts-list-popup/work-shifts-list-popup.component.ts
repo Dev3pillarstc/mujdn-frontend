@@ -22,10 +22,12 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { crossDateTimeValidator, CustomValidators } from '@/validators/custom-validators';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { dateToTimeString, toDateOnly } from '@/utils/general-helper';
+import { dateToTimeString, formatDateTo12Hour, toDateOnly } from '@/utils/general-helper';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
 import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icons-enum';
 import { AuthService } from '@/services/auth/auth.service';
+import { ConfigService } from '@/services/config.service';
+import { LANGUAGE_ENUM } from '@/enums/language-enum';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -43,6 +45,12 @@ import { AuthService } from '@/services/auth/auth.service';
   styleUrl: './work-shifts-list-popup.component.scss',
 })
 export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> implements OnInit {
+  configService = inject(ConfigService);
+  minBeforeBuffer = +this.configService.CONFIG.MIN_BEFORE_BUFFER;
+  minAfterBuffer = +this.configService.CONFIG.MIN_AFTER_BUFFER;
+  maxBeforeBuffer = +this.configService.CONFIG.MAX_BEFORE_BUFFER;
+  maxAfterBuffer = +this.configService.CONFIG.MAX_AFTER_BUFFER;
+  dayBoundaryMinutes = +this.configService.CONFIG.DAY_BOUNDARY_BEFORE_START_SHIFT_TIME_WITH;
   declare model: Shift;
   declare form: FormGroup;
   alertService = inject(AlertService);
@@ -75,7 +83,9 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   get timeToControl() {
     return this.form.get('timeTo') as FormControl;
   }
-
+  get boundaryTimeControl() {
+    return this.form.get('boundaryTime') as FormControl;
+  }
   get attendanceBufferControl() {
     return this.form.get('attendanceBuffer') as FormControl;
   }
@@ -239,6 +249,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       ...formValue,
       timeFrom: dateToTimeString(formValue.timeFrom),
       timeTo: dateToTimeString(formValue.timeTo),
+      boundaryTime: dateToTimeString(formValue.boundaryTime),
     });
   }
 
@@ -330,5 +341,101 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     } else {
       this.save$.next();
     }
+  }
+  getShiftDuration() {
+    if (!this.timeFromControl.value || !this.timeToControl.value) {
+      return '';
+    }
+
+    let from = new Date(this.timeFromControl.value);
+    let to = new Date(this.timeToControl.value);
+
+    // 🔥 FIX: Remove seconds + milliseconds
+    from.setSeconds(0, 0);
+    to.setSeconds(0, 0);
+
+    if (from > to && !this.isCrossDayShiftControl.value) {
+      return '';
+    }
+
+    if (from < to && this.isCrossDayShiftControl.value) {
+      return '';
+    }
+
+    // Add day if needed
+    if (this.isCrossDayShiftControl.value) {
+      to.setDate(to.getDate() + 1);
+    }
+
+    let diffMs = to.getTime() - from.getTime();
+
+    const totalMinutes = Math.floor(diffMs / 60000); // ignore seconds
+    if (totalMinutes < 0) {
+      return '';
+    }
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    return `${hours.toString().padStart(2, '0')} : ${minutes.toString().padStart(2, '0')}`;
+  }
+  getDayBoundaryTime() {
+    const dayMinutesCount = 24 * 60;
+    if (!this.timeFromControl.value || !this.timeToControl.value) {
+      this.boundaryTimeControl.setValue('');
+      return '';
+    }
+
+    let from = new Date(this.timeFromControl.value);
+    let to = new Date(this.timeToControl.value);
+
+    if (from > to && !this.isCrossDayShiftControl.value) {
+      this.boundaryTimeControl.setValue('');
+      return '';
+    }
+
+    if (from < to && this.isCrossDayShiftControl.value) {
+      this.boundaryTimeControl.setValue('');
+      return '';
+    }
+
+    let beforeFrom = +this.attendanceBufferControl.value || 0;
+    let afterTo = +this.leaveBufferControl.value || 0;
+
+    // 🔥 FIX: Remove seconds + milliseconds
+    from.setSeconds(0, 0);
+    to.setSeconds(0, 0);
+
+    // Add day if needed
+    if (this.isCrossDayShiftControl.value) {
+      to.setDate(to.getDate() + 1);
+    }
+
+    let diffMs = to.getTime() - from.getTime();
+
+    const totalMinutes = Math.floor(diffMs / 60000); // ignore seconds
+    const totalWithGracePeriods = totalMinutes + beforeFrom + afterTo;
+
+    if (totalWithGracePeriods > dayMinutesCount) {
+      this.boundaryTimeControl.setValue('');
+      return '';
+    }
+
+    const nonShiftMinutes = dayMinutesCount - totalWithGracePeriods;
+    let boundaryTime = from;
+    const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
+
+    if (nonShiftMinutes > this.dayBoundaryMinutes * 2) {
+      boundaryTime.setMinutes(from.getMinutes() - this.dayBoundaryMinutes);
+      this.boundaryTimeControl.setValue(boundaryTime);
+      return formatDateTo12Hour(boundaryTime, locale);
+    }
+
+    boundaryTime.setMinutes(from.getMinutes() - beforeFrom - Math.floor(nonShiftMinutes / 2));
+
+    this.boundaryTimeControl.setValue(boundaryTime);
+    return formatDateTo12Hour(boundaryTime, locale);
+  }
+  isCurrentLanguageEnglish() {
+    return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;
   }
 }

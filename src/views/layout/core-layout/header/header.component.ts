@@ -21,6 +21,7 @@ import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 import { WorkShiftType } from '@/enums/work-shift-type';
 import { getShiftTypeTranslation } from '@/utils/shift-helper';
 import { PopoverModule } from 'primeng/popover';
+import { formatTimeTo12Hour } from '@/utils/general-helper';
 
 @Component({
   selector: 'app-header',
@@ -272,5 +273,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         command: () => this.logout(),
       },
     ];
+  }
+  formatTime(timestamp?: string) {
+    if (!timestamp) return '-';
+    const locale = this.isArabic() ? 'ar-EG' : 'en-US';
+    return formatTimeTo12Hour(timestamp, locale);
   }
 }

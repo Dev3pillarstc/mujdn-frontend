@@ -83,8 +83,8 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   get timeToControl() {
     return this.form.get('timeTo') as FormControl;
   }
-  get boundaryTimeControl() {
-    return this.form.get('boundaryTime') as FormControl;
+  get dayBoundaryTimeControl() {
+    return this.form.get('dayBoundaryTime') as FormControl;
   }
   get attendanceBufferControl() {
     return this.form.get('attendanceBuffer') as FormControl;
@@ -249,7 +249,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       ...formValue,
       timeFrom: dateToTimeString(formValue.timeFrom),
       timeTo: dateToTimeString(formValue.timeTo),
-      boundaryTime: dateToTimeString(formValue.boundaryTime),
+      dayBoundaryTime: dateToTimeString(formValue.dayBoundaryTime),
     });
   }
 
@@ -378,10 +378,10 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
 
     return `${hours.toString().padStart(2, '0')} : ${minutes.toString().padStart(2, '0')}`;
   }
-  getDayBoundaryTime() {
+  getDaydayBoundaryTime() {
     const dayMinutesCount = 24 * 60;
     if (!this.timeFromControl.value || !this.timeToControl.value) {
-      this.boundaryTimeControl.setValue('');
+      this.dayBoundaryTimeControl.setValue('');
       return '';
     }
 
@@ -389,12 +389,12 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     let to = new Date(this.timeToControl.value);
 
     if (from > to && !this.isCrossDayShiftControl.value) {
-      this.boundaryTimeControl.setValue('');
+      this.dayBoundaryTimeControl.setValue('');
       return '';
     }
 
     if (from < to && this.isCrossDayShiftControl.value) {
-      this.boundaryTimeControl.setValue('');
+      this.dayBoundaryTimeControl.setValue('');
       return '';
     }
 
@@ -416,24 +416,24 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     const totalWithGracePeriods = totalMinutes + beforeFrom + afterTo;
 
     if (totalWithGracePeriods > dayMinutesCount) {
-      this.boundaryTimeControl.setValue('');
+      this.dayBoundaryTimeControl.setValue('');
       return '';
     }
 
     const nonShiftMinutes = dayMinutesCount - totalWithGracePeriods;
-    let boundaryTime = from;
+    let dayBoundaryTime = from;
     const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
 
     if (nonShiftMinutes > this.dayBoundaryMinutes * 2) {
-      boundaryTime.setMinutes(from.getMinutes() - this.dayBoundaryMinutes);
-      this.boundaryTimeControl.setValue(boundaryTime);
-      return formatDateTo12Hour(boundaryTime, locale);
+      dayBoundaryTime.setMinutes(from.getMinutes() - this.dayBoundaryMinutes);
+      this.dayBoundaryTimeControl.setValue(dayBoundaryTime);
+      return formatDateTo12Hour(dayBoundaryTime, locale);
     }
 
-    boundaryTime.setMinutes(from.getMinutes() - beforeFrom - Math.floor(nonShiftMinutes / 2));
+    dayBoundaryTime.setMinutes(from.getMinutes() - beforeFrom - Math.floor(nonShiftMinutes / 2));
 
-    this.boundaryTimeControl.setValue(boundaryTime);
-    return formatDateTo12Hour(boundaryTime, locale);
+    this.dayBoundaryTimeControl.setValue(dayBoundaryTime);
+    return formatDateTo12Hour(dayBoundaryTime, locale);
   }
   isCurrentLanguageEnglish() {
     return this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH;

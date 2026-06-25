@@ -52,9 +52,9 @@ export class ShiftInterceptor implements ModelInterceptorContract<Shift> {
         convertKsaToUtc(timeStringToDate(model.timeTo as string))
       ) as string;
     }
-    if (model.boundaryTime) {
-      model.boundaryTime = dateToTimeString(
-        convertKsaToUtc(timeStringToDate(model.boundaryTime as string))
+    if (model.dayBoundaryTime) {
+      model.dayBoundaryTime = dateToTimeString(
+        convertKsaToUtc(timeStringToDate(model.dayBoundaryTime as string))
       ) as string;
     }
     return model;

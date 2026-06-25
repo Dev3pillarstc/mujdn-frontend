@@ -18,7 +18,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
   declare nameEn?: string;
   declare timeFrom?: string;
   declare timeTo?: string;
-  declare boundaryTime?: string;
+  declare dayBoundaryTime?: string;
   declare attendanceBuffer?: number;
   declare leaveBuffer?: number;
   isDefaultShift?: boolean = false;
@@ -41,7 +41,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       nameEn,
       timeFrom,
       timeTo,
-      boundaryTime,
+      dayBoundaryTime,
       attendanceBuffer,
       leaveBuffer,
       isCrossDayShift,
@@ -73,7 +73,7 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       ],
       timeFrom: [timeFrom ? timeStringToDate(timeFrom) : null, [Validators.required]],
       timeTo: [timeTo ? timeStringToDate(timeTo) : null, [Validators.required]],
-      boundaryTime: [],
+      dayBoundaryTime: [],
       attendanceBuffer: [
         attendanceBuffer,
         [

@@ -6,7 +6,10 @@ import { InterceptModel } from 'cast-response';
 const { send, receive } = new EmployeeShiftDayInterceptor();
 
 @InterceptModel({ send, receive })
-export default class EmployeeShiftDay extends BaseCrudModel<EmployeeShiftDay, EmployeeShiftDayService> {
+export default class EmployeeShiftDay extends BaseCrudModel<
+  EmployeeShiftDay,
+  EmployeeShiftDayService
+> {
   override $$__service_name__$$: string = 'EmployeeShiftDayService';
   declare id: number;
   declare employeeName: { id: number; nameAr: string; nameEn: string };
@@ -16,6 +19,7 @@ export default class EmployeeShiftDay extends BaseCrudModel<EmployeeShiftDay, Em
   declare dateTo: string;
   declare timeFrom: string;
   declare timeTo: string;
+  declare dayBoundaryTime?: string;
   declare isRestDay: boolean;
   declare attendanceBuffer?: number;
   declare leaveBuffer?: number;

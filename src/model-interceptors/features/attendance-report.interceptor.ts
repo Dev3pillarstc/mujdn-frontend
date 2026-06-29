@@ -36,11 +36,11 @@ export class AttendanceReportInterceptor implements ModelInterceptorContract<Att
     // fall back to the day's first/last fingerprint when no dedicated attendance/leave fingerprint is set
     model.firstAttendanceFingerPrint = model.firstAttendanceFingerPrint
       ? convertUtcToSystemTimeZone(model.firstAttendanceFingerPrint as string)
-      : model.firstFingerPrintOfDay;
+      : null;
 
     model.lastLeaveFingerPrint = model.lastLeaveFingerPrint
       ? convertUtcToSystemTimeZone(model.lastLeaveFingerPrint as string)
-      : model.lastFingerPrintOfDay;
+      : null;
 
     model.creationDate = model.creationDate
       ? convertUtcToSystemTimeZone(model.creationDate as string)

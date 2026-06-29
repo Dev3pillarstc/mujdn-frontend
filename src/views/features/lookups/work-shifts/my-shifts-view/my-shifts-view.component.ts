@@ -139,6 +139,7 @@ export class MyShiftsViewComponent extends BaseListComponent<
     shift.workShiftType = item.shiftAssignmentType as unknown as WorkShiftType;
     shift.timeFrom = item.timeFrom;
     shift.timeTo = item.timeTo;
+    shift.dayBoundaryTime = item.dayBoundaryTime;
     shift.formattedTimeFrom = formatTimeTo12Hour(item.timeFrom, locale);
     shift.formattedTimeTo = formatTimeTo12Hour(item.timeTo, locale);
     shift.startDate = item.dateFrom;

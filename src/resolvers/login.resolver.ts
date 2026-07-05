@@ -7,7 +7,7 @@ export const loginResolver: ResolveFn<true | null> = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
   if (authService.isAuthenticated) {
-    router.navigate(['/home']);
+    router.navigate(['/auth/choose-system']);
     return of(true);
   } else {
     return of(null);

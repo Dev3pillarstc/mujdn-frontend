@@ -63,6 +63,12 @@ export const routes: Routes = [
         loadComponent: () => import('@/views/auth/login/login.component'),
       },
       {
+        path: 'choose-system',
+        canActivate: [authGuard],
+        loadComponent: () => import('@/views/auth/choose-system/choose-system.component'),
+        data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOME },
+      },
+      {
         path: 'forget-password',
         loadComponent: () => import('../views/auth/forget-password/forget-password.component'),
       },

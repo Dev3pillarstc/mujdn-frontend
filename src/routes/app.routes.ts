@@ -355,6 +355,34 @@ export const routes: Routes = [
     ],
   },
 
+  // ✅ Attendance system
+  {
+    path: 'attendance',
+    loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
+    children: [
+      {
+        path: 'home',
+        canActivate: [authGuard],
+        loadComponent: () => import('@/views/home/home.component'),
+        data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOME },
+      },
+    ],
+  },
+
+  // ✅ Visits system
+  {
+    path: 'visits',
+    loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
+    children: [
+      {
+        path: 'home',
+        canActivate: [authGuard],
+        loadComponent: () => import('@/views/home/home.component'),
+        data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOME },
+      },
+    ],
+  },
+
   // 404 handler
   {
     path: '404',

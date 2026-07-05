@@ -29,6 +29,7 @@ import { attendanceReportResolver } from '@/resolvers/business/attendance-report
 import { employeeShiftDaysResolver } from '@/resolvers/lookups/employee-shift-days.resolver';
 import { workShiftsAssignmentContainerResolver } from '@/resolvers/lookups/work-shifts-assignment-container.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
+import { chooseSystemResolver } from '@/resolvers/choose-system.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -64,6 +65,7 @@ export const routes: Routes = [
       },
       {
         path: 'choose-system',
+        resolve: { notUsed: chooseSystemResolver },
         canActivate: [authGuard],
         loadComponent: () => import('@/views/auth/choose-system/choose-system.component'),
         data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOME },

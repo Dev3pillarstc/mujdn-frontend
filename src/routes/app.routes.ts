@@ -346,6 +346,10 @@ export const routes: Routes = [
         resolve: { list: userProfileResolver },
         loadComponent: () => import('@/views/features/employee/profile/profile/profile.component'),
       },
+      {
+        path: 'choose-system',
+        loadComponent: () => import('@/views/auth/choose-system/choose-system.component'),
+      },
     ],
   },
 

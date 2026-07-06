@@ -22,6 +22,7 @@ import { WorkShiftType } from '@/enums/work-shift-type';
 import { getShiftTypeTranslation } from '@/utils/shift-helper';
 import { PopoverModule } from 'primeng/popover';
 import { formatTimeTo12Hour } from '@/utils/general-helper';
+import { SystemTypeEnum } from '@/enums/system-type-enum';
 
 @Component({
   selector: 'app-header',
@@ -278,5 +279,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (!timestamp) return '-';
     const locale = this.isArabic() ? 'ar-EG' : 'en-US';
     return formatTimeTo12Hour(timestamp, locale);
+  }
+
+  toggleSystem() {
+    const firstSegment = this.router.url.split('?')[0].split('/')[1];
+    if(firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase()) {
+      this.router.navigate(['/visits/home'])
+    } else {
+      this.router.navigate(['/attendance/home'])
+    }
   }
 }

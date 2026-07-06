@@ -132,7 +132,7 @@ export default class VisitRequestContainerComponent implements OnInit, OnDestroy
     this.home = {
       label: this.translateService.instant('COMMON.HOME'),
       icon: 'pi pi-home',
-      routerLink: '/home',
+      routerLink: '../home',
     };
   }
 

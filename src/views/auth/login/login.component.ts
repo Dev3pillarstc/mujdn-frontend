@@ -86,7 +86,8 @@ export default class LoginComponent implements OnInit {
             take(1)
           )
           .subscribe(() => {
-            this.router.navigate(['home']);
+            this.authService.hasVisitsAccess && this.router.navigate(['auth/choose-system']) ||
+              this.router.navigate(['/attendance/home']);
           });
       }
     });

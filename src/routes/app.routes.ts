@@ -29,6 +29,7 @@ import { attendanceReportResolver } from '@/resolvers/business/attendance-report
 import { employeeShiftDaysResolver } from '@/resolvers/lookups/employee-shift-days.resolver';
 import { workShiftsAssignmentContainerResolver } from '@/resolvers/lookups/work-shifts-assignment-container.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
+import { chooseSystemResolver } from '@/resolvers/choose-system.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -63,6 +64,13 @@ export const routes: Routes = [
         loadComponent: () => import('@/views/auth/login/login.component'),
       },
       {
+        path: 'choose-system',
+        resolve: { notUsed: chooseSystemResolver },
+        canActivate: [authGuard],
+        loadComponent: () => import('@/views/auth/choose-system/choose-system.component'),
+        data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOME },
+      },
+      {
         path: 'forget-password',
         loadComponent: () => import('../views/auth/forget-password/forget-password.component'),
       },
@@ -76,8 +84,10 @@ export const routes: Routes = [
       },
     ],
   },
+
+  // ✅ Attendance system
   {
-    path: '',
+    path: 'attendance',
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
       {
@@ -87,48 +97,12 @@ export const routes: Routes = [
         data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOME },
       },
       {
-        // it will be 403
-        canActivate: [authGuard],
-        path: '403',
-        loadComponent: () => import('@/views/shared/not-authorized/not-authorized.component'),
-      },
-      {
         path: 'employees',
         resolve: { list: userResolver },
         canActivate: [authGuard],
         loadComponent: () =>
           import('@/views/features/employee/employee-list/employee-list.component'),
         data: { roles: [ROLES_ENUM.HR_OFFICER, ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.EMPLOYEES },
-      },
-      {
-        path: 'blacklist',
-        canActivate: [authGuard],
-        resolve: { list: blacklistResolver },
-        data: {
-          roles: [ROLES_ENUM.SECURITY_LEADER], // all roles can view the page
-          routeId: RouteIdsEnum.BLACKLIST,
-        },
-        loadComponent: () =>
-          import(
-            '@/views/features/visit/blacklist/blacklisted-container/blacklisted-container.component'
-          ),
-      },
-      {
-        path: 'visit-request',
-        canActivate: [authGuard],
-        resolve: { list: visitResolver },
-        data: {
-          roles: [
-            ROLES_ENUM.SECURITY_LEADER,
-            ROLES_ENUM.DEPARTMENT_MANAGER,
-            ROLES_ENUM.SECURITY_MEMBER,
-          ], // all roles can view the page
-          routeId: RouteIdsEnum.VISIT_REQUEST,
-        },
-        loadComponent: () =>
-          import(
-            '@/views/features/visit/visit-request/visit-request-container/visit-request-container.component'
-          ),
       },
       {
         path: 'attendance-logs',
@@ -347,6 +321,78 @@ export const routes: Routes = [
         loadComponent: () => import('@/views/features/employee/profile/profile/profile.component'),
       },
     ],
+  },
+
+  // ✅ Visits system
+  {
+    path: 'visits',
+    canActivate: [authGuard],
+    data: {
+      roles: [
+        ROLES_ENUM.SECURITY_LEADER,
+        ROLES_ENUM.DEPARTMENT_MANAGER,
+        ROLES_ENUM.SECURITY_MEMBER,
+      ], // all roles can view the page
+      routeId: RouteIdsEnum.VISIT_REQUEST,
+    },
+    loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
+    children: [
+      {
+        path: 'home',
+        canActivate: [authGuard],
+        loadComponent: () => import('@/views/home/home.component'),
+        data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.HOME },
+      },
+      {
+        path: 'visit-request',
+        canActivate: [authGuard],
+        resolve: { list: visitResolver },
+        data: {
+          roles: [
+            ROLES_ENUM.SECURITY_LEADER,
+            ROLES_ENUM.DEPARTMENT_MANAGER,
+            ROLES_ENUM.SECURITY_MEMBER,
+          ], // all roles can view the page
+          routeId: RouteIdsEnum.VISIT_REQUEST,
+        },
+        loadComponent: () =>
+          import(
+            '@/views/features/visit/visit-request/visit-request-container/visit-request-container.component'
+          ),
+      },
+      {
+        path: 'blacklist',
+        canActivate: [authGuard],
+        resolve: { list: blacklistResolver },
+        data: {
+          roles: [ROLES_ENUM.SECURITY_LEADER], // all roles can view the page
+          routeId: RouteIdsEnum.BLACKLIST,
+        },
+        loadComponent: () =>
+          import(
+            '@/views/features/visit/blacklist/blacklisted-container/blacklisted-container.component'
+          ),
+      },
+    ],
+  },
+
+  // ✅ Legacy absolute-path redirects — keep existing links (breadcrumbs, guards, header) working
+  {
+    path: 'home',
+    redirectTo: 'attendance/home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'profile',
+    redirectTo: 'attendance/profile',
+    pathMatch: 'full',
+  },
+
+  // 403 handler
+  {
+    path: '403',
+    canActivate: [authGuard],
+    loadComponent: () => import('@/views/shared/not-authorized/not-authorized.component'),
   },
 
   // 404 handler

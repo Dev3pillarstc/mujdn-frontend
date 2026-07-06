@@ -88,6 +88,8 @@ export const routes: Routes = [
   // ✅ Attendance system
   {
     path: 'attendance',
+    canActivate: [authGuard],
+
     loadComponent: () => import('@/views/layout/main/main-layout/main-layout.component'),
     children: [
       {

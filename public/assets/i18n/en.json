@@ -975,5 +975,12 @@
     "TODAY_SHIFT": "Today's Work Shift",
     "WORK_DAYS_LABEL": "Shift working days:",
     "NO_SHIFT": "No shift assigned for today"
+  },
+
+  "CHOOSE_SYSTEM_SCREEN": {
+    "CHOOSE_SYSTEM": "Choose The System",
+    "CHOOSE_THE_SYSTEM_YOU_WANT_TO_USE": "Select the system you want to use. You can switch between the two systems at any time.",
+    "ATTENDANCE_SYSTEM": "Attendance System",
+    "VISITS_SYSTEM": "Visits System"
   }
 }

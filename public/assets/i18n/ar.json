@@ -973,5 +973,12 @@
     "TODAY_SHIFT": "وردية عمل اليوم",
     "WORK_DAYS_LABEL": "أيام العمل بالوردية:",
     "NO_SHIFT": "لا توجد وردية معينة لهذا اليوم"
+  },
+
+  "CHOOSE_SYSTEM_SCREEN": {
+    "CHOOSE_SYSTEM": "اختر النظام",
+    "CHOOSE_THE_SYSTEM_YOU_WANT_TO_USE": "اختر النظام الذي ترغب في استخدامه. يمكنك التبديل بين النظامين في اى وقت",
+    "ATTENDANCE_SYSTEM": "نظام الحضور والانصراف",
+    "VISITS_SYSTEM": "نظام الزيارات"
   }
 }

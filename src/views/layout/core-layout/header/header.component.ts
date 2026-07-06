@@ -281,12 +281,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return formatTimeTo12Hour(timestamp, locale);
   }
 
+  showToggleSystem() {
+    const firstSegment = this.router.url.split('?')[0].split('/')[1];
+    return (
+      firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase() ||
+      firstSegment == SystemTypeEnum.VISITS.toLowerCase()
+    );
+  }
+
   toggleSystem() {
     const firstSegment = this.router.url.split('?')[0].split('/')[1];
-    if(firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase()) {
-      this.router.navigate(['/visits/home'])
+    if (firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase()) {
+      this.router.navigate(['/visits/home']);
     } else {
-      this.router.navigate(['/attendance/home'])
+      this.router.navigate(['/attendance/home']);
+    }
+  }
+
+  toggleSystemButtonTitle() {
+    const firstSegment = this.router.url.split('?')[0].split('/')[1];
+    if (firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase()) {
+      return this.translateService.instant('COMMON.SWITCH_TO_VISITS_SYSTEM');
+    } else {
+      return this.translateService.instant('COMMON.SWITCH_TO_ATTENDANCE_SYSTEM');
     }
   }
 }

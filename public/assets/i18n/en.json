@@ -147,7 +147,9 @@
     "TEMPORARY_ROLE_ASSIGNMENT_DATE_TO_MUST_BE_AFTER_TODAY": "DateTo must be after today for a started temporary role assignment.",
     "TEMPORARY_ROLE_ASSIGNMENT_DATE_FROM_CANNOT_BE_IN_PAST": "DateFrom cannot be in the past.",
     "WORK_MISSION_ALL_USERS_CONFLICT": "All selected employees have conflicting missions in the same period and could not be assigned.",
-    "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "Cannot reject the visit because it has attendance records"
+    "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "Cannot reject the visit because it has attendance records",
+    "SWITCH_TO_ATTENDANCE_SYSTEM": "Switch To Attendance System",
+    "SWITCH_TO_VISITS_SYSTEM": "Switch To Visits System"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

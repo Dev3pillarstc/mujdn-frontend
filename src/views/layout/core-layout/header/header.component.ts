@@ -289,6 +289,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
 
+  showTodayShiftButton() {
+    const firstSegment = this.router.url.split('?')[0].split('/')[1];
+    return (
+      firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase()
+    );
+  }
+
   toggleSystem() {
     const firstSegment = this.router.url.split('?')[0].split('/')[1];
     if (firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase()) {

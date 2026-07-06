@@ -4,7 +4,7 @@
       <button (click)="toggleSideMenu()" class="menu-button md:hidden h-full">
         <i class="pi pi-bars"></i>
       </button>
-      @if (loggedInUser) {
+      @if (loggedInUser && showTodayShiftButton()) {
       <button (click)="shiftPanel.toggle($event)"
         class="px-1 md:px-3 py-1 bg-[#ecfdf3] border border-[#abefc6] text-[#085d3a] rounded-full flex items-center gap-1 font-[500] text-xs md:text-base">
         {{ 'CURRENT_SHIFT.TODAY_SHIFT' | translate }}

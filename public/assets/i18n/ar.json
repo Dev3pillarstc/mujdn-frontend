@@ -147,7 +147,9 @@
     "TEMPORARY_ROLE_ASSIGNMENT_DATE_TO_MUST_BE_AFTER_TODAY": "يجب أن يكون تاريخ الانتهاء بعد اليوم لإسناد دور مؤقت بدأ بالفعل.",
     "TEMPORARY_ROLE_ASSIGNMENT_DATE_FROM_CANNOT_BE_IN_PAST": "لا يمكن أن يكون تاريخ البداية في الماضي.",
     "WORK_MISSION_ALL_USERS_CONFLICT": "جميع الموظفين المحددين لديهم مهام متعارضة في نفس الفترة ولم يتم إسنادهم.",
-    "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "لا يمكن رفض الزيارة لأنها تحتوي على تسجيل حضور"
+    "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "لا يمكن رفض الزيارة لأنها تحتوي على تسجيل حضور",
+    "SWITCH_TO_ATTENDANCE_SYSTEM": "الذهاب إلى نظام الحضور والانصراف",
+    "SWITCH_TO_VISITS_SYSTEM": "الذهاب إلى نظام الزيارات"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -971,5 +973,12 @@
     "TODAY_SHIFT": "وردية عمل اليوم",
     "WORK_DAYS_LABEL": "أيام العمل بالوردية:",
     "NO_SHIFT": "لا توجد وردية معينة لهذا اليوم"
+  },
+
+  "CHOOSE_SYSTEM_SCREEN": {
+    "CHOOSE_SYSTEM": "اختر النظام",
+    "CHOOSE_THE_SYSTEM_YOU_WANT_TO_USE": "اختر النظام الذي ترغب في استخدامه. يمكنك التبديل بين النظامين في اى وقت",
+    "ATTENDANCE_SYSTEM": "نظام الحضور والانصراف",
+    "VISITS_SYSTEM": "نظام الزيارات"
   }
 }

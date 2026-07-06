@@ -1,0 +1,38 @@
+<div class="page-container">
+    <main class="content py-4">
+        <section class="custom-container">
+            <div class="px-8 py-6 sm:px-24 sm:py-16 max-w-[600px] rounded-xl bg-white">
+                <h1 class="text-[#161616] text-2xl sm:text-4xl font-bold  mb-8">
+                  {{'CHOOSE_SYSTEM_SCREEN.CHOOSE_SYSTEM' | translate}}
+                </h1>
+                <p class="mt-4 text-gray-600 mb-8">
+                  {{'CHOOSE_SYSTEM_SCREEN.CHOOSE_THE_SYSTEM_YOU_WANT_TO_USE' | translate}}
+                </p>
+                <div class="flex  gap-6">
+                    <div class="border border-[#d2d6db] p-4 rounded-2xl flex flex-col gap-6 flex-1">
+                        <div class="bg-[#f3fcf6] p-3 rounded-full w-fit">
+                            <img class="w-[48px]" src="/assets/icons/green-calender.png" alt="">
+                        </div>
+                        <h3 class="font-lg font-bold">
+                          {{'CHOOSE_SYSTEM_SCREEN.ATTENDANCE_SYSTEM' | translate}}
+                        </h3>
+                        <button class="btn green-btn ltr:rotate-180 w-fit " (click)="goToAttendance()">
+                            <img class="w-[24px]" src="/assets/icons/white-arrow.png" alt="">
+                        </button>
+                    </div>
+                    <div class="border border-[#d2d6db] p-4 rounded-2xl flex flex-col gap-6 flex-1">
+                        <div class="bg-[#f3fcf6] p-3 rounded-full w-fit">
+                            <img class="w-[48px]" src="/assets/icons/green-user.png" alt="">
+                        </div>
+                        <h3 class="font-lg font-bold">
+                          {{'CHOOSE_SYSTEM_SCREEN.VISITS_SYSTEM' | translate}}
+                        </h3>
+                        <button class="btn green-btn ltr:rotate-180 w-fit mt-auto " (click)="goToVisits()">
+                            <img class="w-[24px]" src="/assets/icons/white-arrow.png" alt="">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

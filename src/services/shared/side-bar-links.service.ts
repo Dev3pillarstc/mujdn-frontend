@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { Router, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AuthService } from '@/services/auth/auth.service';
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { MenuItem } from '@/models/shared/menu-item';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, map } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { SystemTypeEnum } from '@/enums/system-type-enum';
 
 type MenuItemConfig = Omit<MenuItem, 'label' | 'children'> & {
   labelKey: string;
@@ -18,6 +19,7 @@ export class SideBarLinksService {
   translateService = inject(TranslateService);
   router = inject(Router);
   authService = inject(AuthService);
+  route = inject(ActivatedRoute);
 
   private rawMenuConfig: MenuItemConfig[] = [
     // hidden for release 1
@@ -29,32 +31,37 @@ export class SideBarLinksService {
     {
       labelKey: 'MENU.ATTENDANCE_REPORT',
       iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
-      routerLink: ['/attendance-report'],
+      routerLink: ['/attendance/attendance-report'],
       routeId: RouteIdsEnum.ATTENDANCE_REPORT,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     {
       labelKey: 'MENU.ATTENDANCE_REPORT_PROCESSING',
       iconUrl: 'assets/icons/menu-icons/icon-stroke-rounded.svg',
-      routerLink: ['/reports-processing'],
+      routerLink: ['/attendance/reports-processing'],
       routeId: RouteIdsEnum.ATTENDANCE_REPORT_PROCESSING,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     {
       labelKey: 'MENU.ATTENDANCE_LOGS',
       iconUrl: 'assets/icons/menu-icons/icon.svg',
-      routerLink: ['/attendance-logs'],
+      routerLink: ['/attendance/attendance-logs'],
       routeId: RouteIdsEnum.ATTENDANCE_LOGS,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     {
       labelKey: 'MENU.DEPARTMENTS',
       iconUrl: 'assets/icons/menu-icons/tools.svg',
-      routerLink: ['/departments'],
+      routerLink: ['/attendance/departments'],
       routeId: RouteIdsEnum.DEPARTMENTS,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     {
       labelKey: 'MENU.EMPLOYEES',
       iconUrl: 'assets/icons/menu-icons/employees.svg',
-      routerLink: ['/employees'],
+      routerLink: ['/attendance/employees'],
       routeId: RouteIdsEnum.EMPLOYEES,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     // {
     //   labelKey: 'MENU.PRESENCE_INQUIRIES',
@@ -64,14 +71,16 @@ export class SideBarLinksService {
     {
       labelKey: 'MENU.PERMISSIONS',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',
-      routerLink: ['/permissions'],
+      routerLink: ['/attendance/permissions'],
       routeId: RouteIdsEnum.PERMISSIONS,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     {
       labelKey: 'MENU.PRESENCE_INQUIRIES',
       iconUrl: 'assets/icons/menu-icons/tools.svg',
-      routerLink: ['/presence-inquiries'],
+      routerLink: ['/attendance/presence-inquiries'],
       routeId: RouteIdsEnum.PRESENCE_INQUIRIES,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     // {
     //   labelKey: 'MENU.ASSIGNED_EMPLOYEES',
@@ -93,101 +102,120 @@ export class SideBarLinksService {
     {
       labelKey: 'MENU.HOLIDAYS',
       iconUrl: 'assets/icons/menu-icons/vacations.svg',
-      routerLink: ['/holidays'],
+      routerLink: ['/attendance/holidays'],
       routeId: RouteIdsEnum.HOLIDAYS,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     {
       labelKey: 'MENU.VISITS',
       iconUrl: 'assets/icons/menu-icons/visits.svg',
+      system: SystemTypeEnum.VISITS,
       children: [
         {
           labelKey: 'MENU.VISIT_REQUEST',
-          routerLink: ['/visit-request'],
+          routerLink: ['/visits/visit-request'],
           routeId: RouteIdsEnum.VISIT_REQUEST,
+          system: SystemTypeEnum.VISITS,
         },
         {
           labelKey: 'MENU.BLACKLIST',
-          routerLink: ['/blacklist'],
+          routerLink: ['/visits/blacklist'],
           routeId: RouteIdsEnum.BLACKLIST,
+          system: SystemTypeEnum.VISITS,
         },
       ],
     },
     {
       labelKey: 'MENU.WORK_MISSIONS',
       iconUrl: 'assets/icons/menu-icons/permissions.svg',
-      routerLink: ['/work-missions'],
+      routerLink: ['/attendance/work-missions'],
       routeId: RouteIdsEnum.WORK_MISSION,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     {
       labelKey: 'MENU.TEMPORARY_ROLE_ASSIGNMENTS',
       iconUrl: 'assets/icons/menu-icons/tools.svg',
-      routerLink: ['/temporary-role-assignments'],
+      routerLink: ['/attendance/temporary-role-assignments'],
       routeId: RouteIdsEnum.TEMPORARY_ROLE_ASSIGNMENTS,
+      system: SystemTypeEnum.ATTENDANCE,
     },
     {
       labelKey: 'MENU.WORK_SHIFT',
       iconUrl: 'assets/icons/time-icon.svg',
+      system: SystemTypeEnum.ATTENDANCE,
       children: [
         {
           labelKey: 'MENU.WORK_SHIFT_SETTINGS',
-          routerLink: ['/work-shifts'],
+          routerLink: ['/attendance/work-shifts'],
           routeId: RouteIdsEnum.WORK_SHIFTS,
+          system: SystemTypeEnum.ATTENDANCE,
         },
         {
           labelKey: 'MENU.WORK_SHIFT_ASSIGNMENT',
-          routerLink: ['/work-shifts-assignment'],
+          routerLink: ['/attendance/work-shifts-assignment'],
           routeId: RouteIdsEnum.WORK_SHIFT_ASSIGNMENT,
+          system: SystemTypeEnum.ATTENDANCE,
         },
         {
           labelKey: 'MENU.EMPLOYEE_SHIFTS',
-          routerLink: ['/shifts-view'],
+          routerLink: ['/attendance/shifts-view'],
           routeId: RouteIdsEnum.EMPLOYEE_SHIFTS,
+          system: SystemTypeEnum.ATTENDANCE,
         },
       ],
     },
     {
       labelKey: 'MENU.SETTINGS',
       iconUrl: 'assets/icons/menu-icons/settings.svg',
+      system: SystemTypeEnum.ATTENDANCE,
       children: [
         {
           labelKey: 'MENU.PERMISSIONS_SETTINGS',
-          routerLink: ['/permission-reasons'],
+          routerLink: ['/attendance/permission-reasons'],
           routeId: RouteIdsEnum.PERMISSION_REASONS,
+          system: SystemTypeEnum.ATTENDANCE,
         },
         {
           labelKey: 'MENU.NOTIFICATIONS',
-          routerLink: ['/notifications'],
+          routerLink: ['/attendance/notifications'],
           routeId: RouteIdsEnum.NOTIFICATIONS,
+          system: SystemTypeEnum.ATTENDANCE,
         },
         {
           labelKey: 'MENU.GENERAL_SETTINGS',
-          routerLink: ['/general-settings'],
+          routerLink: ['/attendance/general-settings'],
           routeId: RouteIdsEnum.GENERAL_SETTINGS,
+          system: SystemTypeEnum.ATTENDANCE,
         },
         {
           labelKey: 'MENU.NATIONALITIES',
-          routerLink: ['/nationalities'],
+          routerLink: ['/attendance/nationalities'],
           routeId: RouteIdsEnum.NATIONALITIES,
+          system: SystemTypeEnum.ATTENDANCE,
         },
         {
           labelKey: 'MENU.CITIES',
-          routerLink: ['/cities'],
+          routerLink: ['/attendance/cities'],
           routeId: RouteIdsEnum.CITIES,
+          system: SystemTypeEnum.ATTENDANCE,
         },
         {
           labelKey: 'MENU.REGIONS',
-          routerLink: ['/regions'],
+          routerLink: ['/attendance/regions'],
           routeId: RouteIdsEnum.REGIONS,
+          system: SystemTypeEnum.ATTENDANCE,
         },
         {
           labelKey: 'MENU.ACCESS_LOCATIONS',
-          routerLink: ['/devices-location'],
+          routerLink: ['/attendance/devices-location'],
           routeId: RouteIdsEnum.ACCESS_LOCATIONS,
+          system: SystemTypeEnum.ATTENDANCE,
         },
         {
           labelKey: 'MENU.DEVICES_CONFIGURATION',
-          routerLink: ['/devices-configuration'],
+          routerLink: ['/attendance/devices-configuration'],
           routeId: RouteIdsEnum.DEVICES_CONFIGURATION,
+          system: SystemTypeEnum.ATTENDANCE,
         },
       ],
     },
@@ -245,6 +273,7 @@ export class SideBarLinksService {
         routeId: item.routeId,
         routerLink: item.routerLink,
         iconUrl: item.iconUrl,
+        system: item.system
       };
 
       if (item.children) {
@@ -271,7 +300,8 @@ export class SideBarLinksService {
         const hasRoleAccess =
           !allowedRoles || allowedRoles.some((role) => userRoles?.includes(role));
         const hasRouteAccess = this.authService.hasRouteAccess({ actualDepartmentManagerOnly });
-        const isAllowed = hasRoleAccess && hasRouteAccess;
+        const isBelongToSystem = this.isBelongToActiveSystem(item);
+        const isAllowed = hasRoleAccess && hasRouteAccess && isBelongToSystem;
 
         if (isAllowed) {
           filtered.push(item);
@@ -287,7 +317,12 @@ export class SideBarLinksService {
         }
       }
     }
-
     return filtered;
+  }
+
+  isBelongToActiveSystem(menuItem: MenuItem) {
+    const firstSegment = this.router.url.split('?')[0].split('/')[1];
+    return menuItem.system == SystemTypeEnum.ATTENDANCE && firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase() ||
+    menuItem.system == SystemTypeEnum.VISITS && firstSegment == SystemTypeEnum.VISITS.toLowerCase()
   }
 }

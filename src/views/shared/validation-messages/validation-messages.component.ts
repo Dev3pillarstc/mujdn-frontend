@@ -99,5 +99,7 @@ export class ValidationMessagesComponent implements OnInit {
     [ValidationErrorKeyEnum.DUPLICATE_SHIFT]: 'USER_WORK_SHIFT_ASSIGNMENT.DUPLICATE_SHIFT',
     [ValidationErrorKeyEnum.SHIFTING_PERIOD_MAX_ONE_YEAR]:
       'USER_WORK_SHIFT_ASSIGNMENT.SHIFTING_PERIOD_MAX_ONE_YEAR',
+      [ValidationErrorKeyEnum.INVALID_SHIFT_CONFIGURATION]: 'COMMON.INVALID_SHIFT_CONFIGURATION',
+
   };
 }

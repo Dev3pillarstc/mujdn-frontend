@@ -149,7 +149,8 @@
     "WORK_MISSION_ALL_USERS_CONFLICT": "All selected employees have conflicting missions in the same period and could not be assigned.",
     "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "Cannot reject the visit because it has attendance records",
     "SWITCH_TO_ATTENDANCE_SYSTEM": "Switch To Attendance System",
-    "SWITCH_TO_VISITS_SYSTEM": "Switch To Visits System"
+    "SWITCH_TO_VISITS_SYSTEM": "Switch To Visits System",
+    "INVALID_SHIFT_CONFIGURATION": "The daily working hours (including grace periods before attendance and after leave) should not exceed 24 hours"
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"

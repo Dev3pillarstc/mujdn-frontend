@@ -149,7 +149,8 @@
     "WORK_MISSION_ALL_USERS_CONFLICT": "جميع الموظفين المحددين لديهم مهام متعارضة في نفس الفترة ولم يتم إسنادهم.",
     "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "لا يمكن رفض الزيارة لأنها تحتوي على تسجيل حضور",
     "SWITCH_TO_ATTENDANCE_SYSTEM": "الذهاب إلى نظام الحضور والانصراف",
-    "SWITCH_TO_VISITS_SYSTEM": "الذهاب إلى نظام الزيارات"
+    "SWITCH_TO_VISITS_SYSTEM": "الذهاب إلى نظام الزيارات",
+    "INVALID_SHIFT_CONFIGURATION": "عدد ساعات العمل اليومية (شاملة فترات السماح قبل الحضور وبعد الانصراف) يجب الا يتجاوز 24 ساعة"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"

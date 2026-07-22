@@ -41,7 +41,7 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
 
   get employeeName(): string {
     return this.langSvc.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-      ? this.model.fullNameEn
+      ? (this.model.fullNameEn ?? this.model.fullNameAr)
       : this.model.fullNameAr;
   }
 

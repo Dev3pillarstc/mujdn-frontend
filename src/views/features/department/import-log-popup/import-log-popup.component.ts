@@ -27,7 +27,6 @@ export class ImportLogPopupComponent implements OnInit {
   translateService = inject(TranslateService);
   maxFileSizeInMB: number = 2;
   importSheetRequiredHeaders = [
-    'NameEn',
     'NameAr',
     'FkParentDepartmentId',
     'Address',

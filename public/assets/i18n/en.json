@@ -573,6 +573,7 @@
     "STANDARD_SHIFT": "Standard Work Hours Shift",
     "SHIFT_HOURS": "Shift Work Hours",
     "WORK_WEEK_REST_WEEK": "Work Week / Rest Week",
+    "WORK_WEEK_REST_2WEEK": "2 Weeks Work / 2 Weeks Rest",
     "SHIFT_24_HOURS": "24-Hour Rest Shift",
     "ATTENDANCE_DOCUMENTATION_TIME": "Daily attendance proof Time (for 24-hour rest system)",
     "TIME_FROM_PLACEHOLDER": "Time (From)",
@@ -968,7 +969,7 @@
   },
   "SHIFT_ASSIGNMENT_PANEL": {
     "SHIFT_WORKING_HOURS": "Shift working hours: ",
-    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "Rotating shifts (work week / rest week)",
+    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "Rotating shifts (2 weeks work / 2 weeks rest)",
     "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "Users will be rotated between shifts in the following order: ",
     "ON_A_RECURRING_BASIS": "on a recurring basis."
   },

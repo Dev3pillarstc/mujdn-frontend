@@ -94,12 +94,12 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
     return {
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME')]:
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-          ? model.fullNameEn
+          ? model.fullNameEn || model.fullNameAr
           : model.fullNameAr,
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.NATIONAL_ID')]: model.nationalId,
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.DEPARTMENT')]:
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-          ? model.departmentNameEn
+          ? model.departmentNameEn || model.departmentNameAr
           : model.departmentNameAr,
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.DATE')]: this.formatDate(
         model.processingDate

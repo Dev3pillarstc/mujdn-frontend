@@ -246,11 +246,19 @@ export class ShiftsViewComponent extends BaseListComponent<
   }
 
   getEmployeeName(item: EmployeeShiftDay): string {
-    return (this.isArabic ? item.employeeName?.nameAr : item.employeeName?.nameEn) ?? '';
+    return (
+      (this.isArabic
+        ? item.employeeName?.nameAr
+        : item.employeeName?.nameEn || item.employeeName?.nameAr) ?? ''
+    );
   }
 
   getShiftName(item: EmployeeShiftDay): string {
-    return (this.isArabic ? item.shiftDetails?.nameAr : item.shiftDetails?.nameEn) ?? '';
+    return (
+      (this.isArabic
+        ? item.shiftDetails?.nameAr
+        : item.shiftDetails?.nameEn || item.shiftDetails?.nameAr) ?? ''
+    );
   }
 
   getShiftTypeName(type: number): string {

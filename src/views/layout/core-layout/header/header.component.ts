@@ -236,11 +236,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   getLoggedInUserName(): string | undefined {
-    return this.isArabic() ? this.loggedInUser?.fullNameAr : this.loggedInUser?.fullNameEn;
+    return this.isArabic()
+      ? this.loggedInUser?.fullNameAr
+      : (this.loggedInUser?.fullNameEn ?? this.loggedInUser?.fullNameAr);
   }
 
   getLoggedInUserDepartment(): string | undefined {
-    return this.isArabic() ? this.loggedInUser?.departNameAr : this.loggedInUser?.departNameEn;
+    return this.isArabic()
+      ? this.loggedInUser?.departNameAr
+      : (this.loggedInUser?.departNameEn ?? this.loggedInUser?.departNameAr);
   }
 
   toggleSideMenu(): void {

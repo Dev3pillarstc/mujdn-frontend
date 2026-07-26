@@ -334,14 +334,14 @@ export default class WorkShiftsAssignmentComponent extends BaseListComponent<
     if (shift.shiftDetails) {
       return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
         ? [shift.shiftDetails.nameAr]
-        : [shift.shiftDetails.nameEn];
+        : [shift.shiftDetails.nameEn || shift.shiftDetails.nameAr];
     } else {
       return shift.rotationGroups
         .map((x) => x.shiftDetails)
         .map((y) => {
           return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
             ? y?.nameAr
-            : y?.nameEn;
+            : y?.nameEn || y?.nameAr;
         });
     }
   }

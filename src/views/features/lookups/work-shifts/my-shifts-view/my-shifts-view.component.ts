@@ -204,7 +204,13 @@ export class MyShiftsViewComponent extends BaseListComponent<
 
     return this.isArabic
       ? (shiftDay.shiftDetails?.nameAr ?? shiftDay.shiftNameAr ?? shiftDay.nameAr ?? '')
-      : (shiftDay.shiftDetails?.nameEn ?? shiftDay.shiftNameEn ?? shiftDay.nameEn ?? '');
+      : (shiftDay.shiftDetails?.nameEn ??
+        shiftDay.shiftNameEn ??
+        shiftDay.nameEn ??
+        shiftDay.shiftDetails?.nameAr ??
+        shiftDay.shiftNameAr ??
+        shiftDay.nameAr ??
+        '');
   }
 
   getShiftTypeName(type: number): string {

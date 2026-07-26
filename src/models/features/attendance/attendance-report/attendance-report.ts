@@ -86,12 +86,12 @@ export default class AttendanceReport extends BaseCrudModel<
   }
   getShiftName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? this.shiftNameEn!
+      ? this.shiftNameEn || this.shiftNameAr!
       : this.shiftNameAr!;
   }
   getMissionName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? this.missionNameEn!
+      ? this.missionNameEn || this.missionNameAr!
       : this.missionNameAr!;
   }
   getMissionTypeTranslationKey(): string {
@@ -108,7 +108,7 @@ export default class AttendanceReport extends BaseCrudModel<
   }
   getHolidayName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
-      ? this.holidayNameEn!
+      ? this.holidayNameEn || this.holidayNameAr!
       : this.holidayNameAr!;
   }
 

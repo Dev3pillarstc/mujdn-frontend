@@ -147,9 +147,9 @@
       <ng-template #body let-attendance>
         <tr>
           <td title="{{
-                isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr
+                isCurrentLanguageEnglish() && attendance.fullNameEn ? attendance.fullNameEn : attendance.fullNameAr
               }}">
-            {{ isCurrentLanguageEnglish() ? attendance.fullNameEn : attendance.fullNameAr }}
+            {{ isCurrentLanguageEnglish() && attendance.fullNameEn ? attendance.fullNameEn : attendance.fullNameAr }}
           </td>
           <td>{{ attendance.nationalId }}</td>
           <td title="{{

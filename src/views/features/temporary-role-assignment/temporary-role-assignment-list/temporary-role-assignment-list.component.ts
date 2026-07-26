@@ -115,13 +115,13 @@ export default class TemporaryRoleAssignmentListComponent extends BaseListCompon
 
   getEmployeeName(model: TemporaryRoleAssignment): string {
     return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-      ? model.userFullNameEn
+      ? model.userFullNameEn || model.userFullNameAr
       : model.userFullNameAr;
   }
 
   getDepartmentName(model: TemporaryRoleAssignment): string {
     return this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-      ? model.departmentNameEn
+      ? model.departmentNameEn || model.departmentNameAr
       : model.departmentNameAr;
   }
 

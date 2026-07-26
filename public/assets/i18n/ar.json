@@ -570,7 +570,8 @@
     "WORKING_DAYS": "أيام العمل الخاصة بالوردية",
     "STANDARD_SHIFT": "وردية بنظام ساعات العمل المعتمدة",
     "SHIFT_HOURS": "ساعات العمل الخاصة بالوردية",
-    "WORK_WEEK_REST_WEEK": "أسبوع عمل/أسبوع راحة",
+    "WORK_WEEK_REST_WEEK": "أسبوع عمل / أسبوع راحة",
+    "WORK_WEEK_REST_2WEEK": "أسبوعين عمل / أسبوعين راحة",
     "SHIFT_24_HOURS": "أسبوع عمل / أسبوع راحة (24 ساعة)",
     "ATTENDANCE_DOCUMENTATION_TIME": "وقت إثبات الحضور اليومي (لنظام الراحات 24 ساعة)",
     "TIME_FROM_PLACEHOLDER": "موعد (من)",
@@ -966,7 +967,7 @@
   },
   "SHIFT_ASSIGNMENT_PANEL": {
     "SHIFT_WORKING_HOURS": "مواعيد العمل بالوردية: ",
-    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)",
+    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "نظام الورديات المتناوبة لساعات العمل (أسبوعين عمل / أسبوعين راحة)",
     "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "سيتم تناوب الموظفين بين الورديات بالترتيب التالي: ",
     "ON_A_RECURRING_BASIS": "بشكل دوري."
   },

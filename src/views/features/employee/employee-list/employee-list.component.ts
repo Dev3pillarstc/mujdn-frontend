@@ -302,7 +302,7 @@ export default class EmployeeListComponent
       [this.translateService.instant('EMPLOYEES_PAGE.DEPARTMENT')]:
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
           ? model.department?.nameAr || ''
-          : model.department?.nameEn || '',
+          : model.department?.nameEn || model.department?.nameAr || '',
       [this.translateService.instant('EMPLOYEES_PAGE.FINGERPRINT_EXEMPTION')]: formatBoolean(
         model.canLeaveWithoutFingerPrint
       ),

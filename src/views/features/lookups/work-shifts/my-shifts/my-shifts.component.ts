@@ -348,16 +348,20 @@ export default class MyShiftsComponent extends BaseListComponent<
     if (shift.rotationGroups?.length) {
       return shift.rotationGroups
         .map((g) => g.shiftDetails)
-        .map((d) => (isArabic ? d?.nameAr : d?.nameEn) ?? '');
+        .map((d) => (isArabic ? d?.nameAr : d?.nameEn || d?.nameAr) ?? '');
     }
 
     // Non-rotating shift with a nested shiftDetails object
     if (shift.shiftDetails) {
-      return [isArabic ? shift.shiftDetails.nameAr : shift.shiftDetails.nameEn];
+      return [
+        isArabic
+          ? shift.shiftDetails.nameAr
+          : shift.shiftDetails.nameEn || shift.shiftDetails.nameAr,
+      ];
     }
 
     // Fallback: top-level nameAr / nameEn (standard API response shape)
-    return [(isArabic ? shift.nameAr : shift.nameEn) ?? ''];
+    return [(isArabic ? shift.nameAr : shift.nameEn || shift.nameAr) ?? ''];
   }
 
   getShiftTypeName(shift?: EmployeeShift | null): string {

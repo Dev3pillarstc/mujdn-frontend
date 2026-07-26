@@ -190,7 +190,7 @@ export class MyCreatedVisitRequestListComponent
   // Department name display
   getDepartmentName(visit: Visit): string {
     if (this.isCurrentLanguageEnglish()) {
-      return visit.targetDepartment?.nameEn || '';
+      return visit.targetDepartment?.nameEn || visit.targetDepartment?.nameAr || '';
     }
     return visit.targetDepartment?.nameAr || '';
   }

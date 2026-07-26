@@ -73,4 +73,19 @@ export class AttendanceReportService extends BaseCrudService<AttendanceReport, n
   ): Observable<Blob> {
     return this.exportPdfByEndpoint('ExportMyAttendanceReportsPdf', language, filterOptions);
   }
+
+  exportMyAttendanceReportsExcel(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract,
+    orderBy?: string,
+    sortDir?: string
+  ): Observable<Blob> {
+    return this.exportExcelByEndpoint(
+      'ExportMyAttendanceReportsExcel',
+      language,
+      filterOptions,
+      orderBy,
+      sortDir
+    );
+  }
 }

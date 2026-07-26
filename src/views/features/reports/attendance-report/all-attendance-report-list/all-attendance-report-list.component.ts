@@ -13,8 +13,6 @@ import AttendanceReport from '@/models/features/attendance/attendance-report/att
 import { AttendanceReportFilter } from '@/models/features/attendance/attendance-report/attendance-report-filter';
 import { AttendanceReportService } from '@/services/features/attendance-report.service';
 import { LanguageService } from '@/services/shared/language.service';
-import { CustomValidators } from '@/validators/custom-validators';
-import * as XLSX from 'xlsx';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { DepartmentService } from '@/services/features/lookups/department.service';
@@ -29,6 +27,7 @@ import { UserService } from '@/services/features/user.service';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { ReportDetailsModalComponent } from '../report-details-modal/report-details-modal.component';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { downloadBlobData } from '@/utils/utils';
 @Component({
   selector: 'app-all-attendance-report-list',
   imports: [
@@ -155,34 +154,22 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
     const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
     return formatDateTo12Hour(date, locale);
   }
-  override exportExcel(fileName: string = 'AttendanceReports.xlsx'): void {
-    const allDataParams = {
-      ...this.paginationParams,
-      pageNumber: 1,
-      pageSize: CustomValidators.defaultLengths.INT_MAX,
-    };
+  override exportExcel(fileName: string = ''): void {
+    if (!fileName) {
+      fileName = this.getTranslatedFileName('ATTENDANCE_REPORT_PAGE.TITLE', 'xlsx');
+    }
 
-    this.service
-      .loadPaginated(allDataParams, {
-        ...this.appliedFilterModel!,
-      })
+    this.attendanceReportService
+      .exportExcel(this.langService.getCurrentLanguage(), this.getPdfExportFilterOptions())
       .subscribe({
-        next: (response) => {
-          const fullList = response.list || [];
-          if (fullList.length === 0) {
+        next: (blob) => {
+          if (!blob || blob.size === 0) {
             this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
             return;
           }
-
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
+          downloadBlobData(blob, fileName);
         },
-        error: (_) => {
+        error: () => {
           this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
         },
       });

@@ -135,6 +135,45 @@ export abstract class BaseCrudService<Model, PrimaryKey = number>
     return this.exportPdfByEndpoint('ExportPdf', language, filterOptions);
   }
 
+  protected exportExcelByEndpoint(
+    endpoint: string,
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract,
+    orderBy?: string,
+    sortDir?: string
+  ): Observable<Blob> {
+    filterOptions = genericDateOnlyConvertor(filterOptions);
+
+    let params = new HttpParams().set('language', language);
+    if (orderBy) {
+      params = params.set('orderBy', orderBy);
+    }
+    if (sortDir) {
+      params = params.set('sortDir', sortDir);
+    }
+
+    return this.http
+      .post(this.getUrlSegment() + '/' + endpoint, filterOptions || {}, {
+        params,
+        withCredentials: true,
+        responseType: 'blob',
+      })
+      .pipe(
+        catchError((err) => {
+          throw err;
+        })
+      );
+  }
+
+  exportExcel(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract,
+    orderBy?: string,
+    sortDir?: string
+  ): Observable<Blob> {
+    return this.exportExcelByEndpoint('ExportExcel', language, filterOptions, orderBy, sortDir);
+  }
+
   @CastResponse()
   @HasInterception
   create(@InterceptParam() model: Model): Observable<Model> {

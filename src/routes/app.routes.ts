@@ -111,7 +111,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         resolve: { list: attendanceResolver },
         data: {
-          roles: [ROLES_ENUM.EMPLOYEE],
+          roles: [ROLES_ENUM.ADMIN],
           routeId: RouteIdsEnum.ATTENDANCE_LOGS,
         },
         loadComponent: () =>

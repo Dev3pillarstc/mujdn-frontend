@@ -285,19 +285,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return formatTimeTo12Hour(timestamp, locale);
   }
 
-  showToggleSystem() {
-    const firstSegment = this.router.url.split('?')[0].split('/')[1];
+  showToggleSystem(): boolean {
+    const url = new URL(this.router.url, window.location.origin);
+
+    const firstSegment = url.pathname
+      .split('/')
+      .filter((segment) => segment !== '')[0]
+      ?.toLowerCase();
+
     return (
-      firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase() ||
-      firstSegment == SystemTypeEnum.VISITS.toLowerCase()
+      firstSegment === SystemTypeEnum.ATTENDANCE.toLowerCase() ||
+      firstSegment === SystemTypeEnum.VISITS.toLowerCase()
     );
+  }
+  hasVisitsAccess() {
+    return this.authService.hasVisitsAccess;
   }
 
   showTodayShiftButton() {
     const firstSegment = this.router.url.split('?')[0].split('/')[1];
-    return (
-      firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase()
-    );
+    return firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase();
   }
 
   toggleSystem() {

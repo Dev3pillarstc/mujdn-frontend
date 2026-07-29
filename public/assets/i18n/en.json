@@ -128,6 +128,7 @@
     "LOCATION_NOT_VALID": "Devices are not active at the designated visit locations.",
     "NOT_VALID_USERS_FOR_ASSIGNMENT": "The request cannot be completed because the status of some employees has changed, and they no longer meet the presence inquiry criteria.",
     "EXCEL_MISSING_FIELDS": "You should provide the next fields",
+    "DAILY_PERMISSION_LIMIT_EXCEEDED": "Daily permission limit exceeded",
     "FILE_SIZE_CAN_NOT_EXCEED": "File size can not be exceed {size} MB",
     "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "Data has been imported successfully",
     "EXCEL_NO_DATA_ROWS": "The Excel file must contain at least one data row after the header",

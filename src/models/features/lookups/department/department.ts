@@ -52,7 +52,6 @@ export class Department extends BaseCrudModel<Department, DepartmentService> {
       nameEn: [
         nameEn,
         [
-          Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('ENG_NUM'),

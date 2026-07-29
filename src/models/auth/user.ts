@@ -111,7 +111,6 @@ export class User extends BaseCrudModel<User, UserService, string> {
       jobTitleEn: [
         jobTitleEn,
         [
-          Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
           CustomValidators.pattern('ENG_NUM'),
         ],

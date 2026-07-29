@@ -4,7 +4,7 @@ export class AttendanceReportFilter {
   declare nationalId?: string;
   declare dateFrom?: Date | null;
   declare dateTo?: Date | null;
-  declare departmentId?: number | null;
+  declare departmentIds?: number[] | null;
   declare statusId?: number | null;
   declare processingStatus?: number | null;
 }

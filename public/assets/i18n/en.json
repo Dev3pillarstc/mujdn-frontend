@@ -386,7 +386,9 @@
     "DECLINE": "Decline",
     "UNDER_REVIEW": "Under Review",
     "EMPLOYEE_NAME": "Employee Name",
-    "DEPARTMENT": "Department"
+    "DEPARTMENT": "Department",
+    "DOWNLOAD_AS_FILE": "Download as File",
+    "PERMISSION_PDF_FILE_NAME": "Permission Data"
   },
   "SHIFTS_VIEW_PAGE": {
     "TITLE": "Employee Shift Days",

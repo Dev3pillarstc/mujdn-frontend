@@ -130,6 +130,22 @@
   max-width: 100% !important;
 }
 
+// Table row action button holding a white icon, matches .table-action-gray-btn sizing
+.table-action-green-btn {
+  background-color: #1b8354;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #166a45;
+  }
+}
+
 // Alert dialogs must appear above the spinner overlay (z-index: 1100)
 // The CDK overlay container wraps all dialogs; we elevate only alert panels
 .cdk-overlay-container:has(.alert-dialog-overlay) {

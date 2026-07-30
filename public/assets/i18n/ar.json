@@ -385,7 +385,9 @@
     "DECLINE": "رفض",
     "UNDER_REVIEW": "قيد المراجعة",
     "EMPLOYEE_NAME": "اسم الموظف",
-    "DEPARTMENT": "الادارة"
+    "DEPARTMENT": "الادارة",
+    "DOWNLOAD_AS_FILE": "تحميل كملف",
+    "PERMISSION_PDF_FILE_NAME": "بيانات الإذن"
   },
   "SHIFTS_VIEW_PAGE": {
     "TITLE": "ورديات الموظفين",

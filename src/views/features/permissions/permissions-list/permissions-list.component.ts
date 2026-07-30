@@ -31,7 +31,6 @@ import { MatDialogConfig } from '@angular/material/dialog';
 import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
 import { PERMISSION_TABS_ENUM } from '@/enums/permission-tabs-enum';
 import { CustomValidators } from '@/validators/custom-validators';
-import * as XLSX from 'xlsx';
 import { AuthService } from '@/services/auth/auth.service';
 import { Observable } from 'rxjs';
 
@@ -271,17 +270,14 @@ export default class PermissionsListComponent
           this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
           return;
         } else {
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) =>
-            isIncomingPermissions
-              ? this.mapIncomingRequestsToExcelRow(item)
-              : this.mapModelToExcelRow(item)
+          const transformedData = this.addSequenceToExcelRows(
+            fullList.map((item) =>
+              isIncomingPermissions
+                ? this.mapIncomingRequestsToExcelRow(item)
+                : this.mapModelToExcelRow(item)
+            )
           );
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
+          this.writeExcelFile(transformedData, fileName);
         }
       },
       error: (_) => {

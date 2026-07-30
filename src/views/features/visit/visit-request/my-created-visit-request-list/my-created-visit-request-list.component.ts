@@ -28,7 +28,6 @@ import { VisitStatusOption } from '@/models/features/visit/visit-status-option';
 import { AuthService } from '@/services/auth/auth.service';
 import { QrcodeVisitRequestPopupComponent } from '../qrcode-visit-request-popup/qrcode-visit-request-popup.component';
 import { CustomValidators } from '@/validators/custom-validators';
-import * as XLSX from 'xlsx';
 import { AccessLocationService } from '@/services/features/business/access-location.service';
 import { filter, from, map, mergeMap, switchMap } from 'rxjs';
 import { AccessLocationLookup } from '@/models/features/business/access-location-lookup';
@@ -360,13 +359,8 @@ export class MyCreatedVisitRequestListComponent
       next: (response) => {
         const fullList = response.list || [];
         if (fullList.length > 0) {
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
+          const transformedData = this.mapModelsToExcelRows(fullList);
+          this.writeExcelFile(transformedData, fileName);
         }
       },
       error: (_) => {

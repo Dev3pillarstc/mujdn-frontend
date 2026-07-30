@@ -11,6 +11,7 @@
     "YES": "Yes",
     "NO": "No",
     "NEXT": "Next",
+    "SEQUENCE": "Sequence",
     "CONFIRM_DELETE": "Are you sure you want to delete this item?",
     "SAVED_SUCCESSFULLY": "Saved successfully",
     "UPDATED_SUCCESSFULLY": "Updated successfully",

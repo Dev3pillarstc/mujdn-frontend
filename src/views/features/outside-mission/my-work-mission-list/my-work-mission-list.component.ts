@@ -23,7 +23,6 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { CustomValidators } from '@/validators/custom-validators';
-import * as XLSX from 'xlsx';
 import {
   getWorkMissionTypeName,
   WORK_MISSION_TYPE_OPTIONS,
@@ -183,13 +182,8 @@ export class MyWorkMissionListComponent extends BaseListComponent<
           this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
           return;
         } else {
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
+          const transformedData = this.mapModelsToExcelRows(fullList);
+          this.writeExcelFile(transformedData, fileName);
         }
       },
       error: (_) => {

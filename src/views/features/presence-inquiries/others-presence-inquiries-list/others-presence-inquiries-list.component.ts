@@ -24,7 +24,6 @@ import { PRESENCE_INQUIRY_STATUS_ENUM } from '@/enums/presence-inquiry-status-en
 import { AssignEmployeeResponsibilityPopupComponent } from '../assign-employee-responsibility-popup/assign-employee-responsibility-popup.component';
 import { ViewEmployeesCheckPopupComponent } from '../view-employees-check-popup/view-employees-check-popup.component';
 import { UserProfileService } from '@/services/features/user-profile.service';
-import * as XLSX from 'xlsx';
 import { CustomValidators } from '@/validators/custom-validators';
 import { LanguageService } from '@/services/shared/language.service';
 import { formatDateTo12Hour } from '@/utils/general-helper';
@@ -193,13 +192,8 @@ export class OthersPresenceInquiriesListComponent extends BaseListComponent<
             return;
           }
 
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
+          const transformedData = this.mapModelsToExcelRows(fullList);
+          this.writeExcelFile(transformedData, fileName);
         },
         error: (_) => {
           this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });

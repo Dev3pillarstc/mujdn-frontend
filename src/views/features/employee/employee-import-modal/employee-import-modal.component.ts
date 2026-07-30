@@ -30,13 +30,11 @@ export class EmployeeImportModalComponent implements OnInit {
   importSheetRequiredHeaders = [
     'Email',
     'Password',
-    'FullNameEn',
     'FullNameAr',
     'NationalId',
     'PhoneNumber',
     'FkRegionId',
     'FkCityId',
-    'JobTitleEn',
     'JobTitleAr',
     'FkDepartmentId',
     'JoinDate (mm/dd/yyyy)',

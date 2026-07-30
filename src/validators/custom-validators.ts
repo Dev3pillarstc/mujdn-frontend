@@ -27,7 +27,7 @@ const defaultLengths = {
   EXPLANATIONS: 1333,
   _500: 500,
   INT_MAX: 2_147_483_647,
-  maxShiftBuffer: 30,
+  maxShiftBuffer: 60,
 };
 
 export function pattern(patternName: customValidationTypes): ValidatorFn {

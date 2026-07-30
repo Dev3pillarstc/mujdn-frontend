@@ -128,6 +128,7 @@
     "LOCATION_NOT_VALID": "أجهزة البصمة غير نشطة بالمواقع المحددة للزيارة",
     "NOT_VALID_USERS_FOR_ASSIGNMENT": "لا يمكن إتمام الطلب لأن حالة بعض الموظفين قد تغيرت وأصبحوا غير مستوفين لمعايير توثيق التواجد.",
     "EXCEL_MISSING_FIELDS": "يجب إدخال الحقول التالية",
+    "DAILY_PERMISSION_LIMIT_EXCEEDED": "تم تجاوز الحد اليومي للاستئذان",
     "FILE_SIZE_CAN_NOT_EXCEED": "يجب الا يتجاوز حجم الملف {size} ميجابايت",
     "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "تم إستيراد البيانات بنجاح",
     "EXCEL_NO_DATA_ROWS": "يجب أن يحتوي ملف الإكسل على صف بيانات واحد على الأقل بعد صف العناوين",

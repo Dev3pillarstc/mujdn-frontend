@@ -9,6 +9,7 @@ import { BaseLookupModel } from '../base-lookup-model';
 import { LanguageService } from '@/services/shared/language.service';
 import { FactoryService } from '@/services/factory-service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
 
 const { send, receive } = new PermissionInterceptor();
 
@@ -50,6 +51,9 @@ export class Permission extends BaseCrudModel<Permission, PermissionService> {
         ],
       ],
     };
+  }
+  isAccepted(): boolean {
+    return (this.fkStatusId ?? this.status?.id) === PERMISSION_STATUS_ENUM.Accepted;
   }
   getStatusName(): string {
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH

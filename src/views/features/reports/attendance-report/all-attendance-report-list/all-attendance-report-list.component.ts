@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import AttendanceReport from '@/models/features/attendance/attendance-report/attendance-report';
@@ -40,6 +41,7 @@ import { downloadBlobData } from '@/utils/utils';
     DatePickerModule,
     FormsModule,
     Select,
+    MultiSelectModule,
     TranslatePipe,
   ],
   providers: [DatePipe],

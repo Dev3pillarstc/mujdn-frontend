@@ -11,6 +11,7 @@
     "YES": "Yes",
     "NO": "No",
     "NEXT": "Next",
+    "SEQUENCE": "Sequence",
     "CONFIRM_DELETE": "Are you sure you want to delete this item?",
     "SAVED_SUCCESSFULLY": "Saved successfully",
     "UPDATED_SUCCESSFULLY": "Updated successfully",
@@ -128,6 +129,7 @@
     "LOCATION_NOT_VALID": "Devices are not active at the designated visit locations.",
     "NOT_VALID_USERS_FOR_ASSIGNMENT": "The request cannot be completed because the status of some employees has changed, and they no longer meet the presence inquiry criteria.",
     "EXCEL_MISSING_FIELDS": "You should provide the next fields",
+    "DAILY_PERMISSION_LIMIT_EXCEEDED": "Daily permission limit exceeded",
     "FILE_SIZE_CAN_NOT_EXCEED": "File size can not be exceed {size} MB",
     "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "Data has been imported successfully",
     "EXCEL_NO_DATA_ROWS": "The Excel file must contain at least one data row after the header",
@@ -386,7 +388,9 @@
     "DECLINE": "Decline",
     "UNDER_REVIEW": "Under Review",
     "EMPLOYEE_NAME": "Employee Name",
-    "DEPARTMENT": "Department"
+    "DEPARTMENT": "Department",
+    "DOWNLOAD_AS_FILE": "Download as File",
+    "PERMISSION_PDF_FILE_NAME": "Permission Data"
   },
   "SHIFTS_VIEW_PAGE": {
     "TITLE": "Employee Shift Days",

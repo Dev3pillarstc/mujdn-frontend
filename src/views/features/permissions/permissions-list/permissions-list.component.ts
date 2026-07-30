@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -31,9 +31,9 @@ import { MatDialogConfig } from '@angular/material/dialog';
 import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
 import { PERMISSION_TABS_ENUM } from '@/enums/permission-tabs-enum';
 import { CustomValidators } from '@/validators/custom-validators';
-import * as XLSX from 'xlsx';
 import { AuthService } from '@/services/auth/auth.service';
 import { Observable } from 'rxjs';
+import { PermissionDetailsCardComponent } from '../components/permission-details-card/permission-details-card.component';
 
 @Component({
   selector: 'app-permissions-list',
@@ -50,6 +50,7 @@ import { Observable } from 'rxjs';
     TabsModule,
     InputTextModule,
     TranslatePipe,
+    PermissionDetailsCardComponent,
   ],
 
   templateUrl: './permissions-list.component.html',
@@ -64,7 +65,6 @@ export default class PermissionsListComponent
   >
   implements OnInit
 {
-
   activeTabIndex = 0;
   languageService = inject(LanguageService); // Assuming you have a LanguageService to handle language changes
   override dialogSize = {
@@ -87,6 +87,12 @@ export default class PermissionsListComponent
   viewMode = ViewModeEnum;
   isIncomingPermissions: boolean = false;
   authService = inject(AuthService);
+  changeDetectorRef = inject(ChangeDetectorRef);
+
+  /** Permission rendered off-screen while its PDF file is being generated. */
+  pdfPermission?: Permission;
+
+  @ViewChild(PermissionDetailsCardComponent) pdfCard?: PermissionDetailsCardComponent;
 
   override get service() {
     return this.permissionService;
@@ -210,11 +216,19 @@ export default class PermissionsListComponent
     this.loadIncomingPermissions();
   }
 
-  openDataDialog(model: Permission, canTakeAction?: ViewModeEnum): void {
+  openDataDialog(
+    model: Permission,
+    canTakeAction?: ViewModeEnum,
+    isIncomingPermission: boolean = false
+  ): void {
     let dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
-    dialogConfig.data = { model: model, ViewMode: canTakeAction };
+    dialogConfig.data = {
+      model: model,
+      ViewMode: canTakeAction,
+      isIncomingPermission: isIncomingPermission,
+    };
     const dialogRef = this.matDialog.open(PermissionsDataPopupComponent as any, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result: DIALOG_ENUM) => {
@@ -226,6 +240,23 @@ export default class PermissionsListComponent
 
   showIncomingPermissions() {
     return this.authService.isDepartmentManager || this.authService.isHROfficer;
+  }
+
+  /** Downloading a permission as a file is offered to department managers, on accepted requests only. */
+  showDownloadPdf(permission: Permission): boolean {
+    return !!this.authService.isDepartmentManager && permission.isAccepted();
+  }
+
+  async downloadPermissionPdf(permission: Permission): Promise<void> {
+    this.pdfPermission = permission;
+    this.changeDetectorRef.detectChanges();
+
+    try {
+      await this.pdfCard?.downloadAsPDF();
+    } finally {
+      this.pdfPermission = undefined;
+      this.changeDetectorRef.detectChanges();
+    }
   }
 
   showAddingPermissionButton(): boolean {
@@ -242,10 +273,7 @@ export default class PermissionsListComponent
     this.loadIncomingPermissions();
   }
 
-  override exportExcel(
-    fileName: string = '',
-    isIncomingPermissions: boolean = false
-  ): void {
+  override exportExcel(fileName: string = '', isIncomingPermissions: boolean = false): void {
     if (!fileName) {
       fileName = this.getTranslatedFileName(
         isIncomingPermissions ? 'PERMISSION_PAGE.INCOMING_REQUESTS' : 'PERMISSION_PAGE.MY_REQUESTS',
@@ -271,17 +299,14 @@ export default class PermissionsListComponent
           this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
           return;
         } else {
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) =>
-            isIncomingPermissions
-              ? this.mapIncomingRequestsToExcelRow(item)
-              : this.mapModelToExcelRow(item)
+          const transformedData = this.addSequenceToExcelRows(
+            fullList.map((item) =>
+              isIncomingPermissions
+                ? this.mapIncomingRequestsToExcelRow(item)
+                : this.mapModelToExcelRow(item)
+            )
           );
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
+          this.writeExcelFile(transformedData, fileName);
         }
       },
       error: (_) => {

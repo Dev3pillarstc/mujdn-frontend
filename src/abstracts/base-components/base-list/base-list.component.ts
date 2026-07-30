@@ -8,7 +8,7 @@ import { PaginatorState } from 'primeng/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
-import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx-js-style';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
@@ -243,13 +243,8 @@ export abstract class BaseListComponent<
           this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
           return;
         } else {
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
+          const transformedData = this.mapModelsToExcelRows(fullList);
+          this.writeExcelFile(transformedData, fileName);
         }
       },
       error: (_) => {
@@ -341,6 +336,45 @@ export abstract class BaseListComponent<
   }[];
 
   protected abstract mapModelToExcelRow(model: Model): { [key: string]: any };
+
+  protected mapModelsToExcelRows(models: Model[]): { [key: string]: any }[] {
+    return this.addSequenceToExcelRows(models.map((item) => this.mapModelToExcelRow(item)));
+  }
+
+  protected addSequenceToExcelRows(rows: { [key: string]: any }[]): { [key: string]: any }[] {
+    const sequenceHeader = this.translateService.instant('COMMON.SEQUENCE');
+    return rows.map((row, index) => ({
+      [sequenceHeader]: index + 1,
+      ...row,
+    }));
+  }
+
+  protected writeExcelFile(rows: { [key: string]: any }[], fileName: string): void {
+    const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const sheetRange = XLSX.utils.decode_range(ws['!ref']!);
+
+    for (let row = sheetRange.s.r; row <= sheetRange.e.r; row++) {
+      for (let column = sheetRange.s.c; column <= sheetRange.e.c; column++) {
+        const cell = ws[XLSX.utils.encode_cell({ r: row, c: column })];
+        if (cell) {
+          cell.s = {
+            ...cell.s,
+            alignment: {
+              ...cell.s?.alignment,
+              horizontal: 'center',
+              vertical: 'center',
+            },
+          };
+        }
+      }
+    }
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    wb.Workbook = { Views: [{ RTL: isRTL }] };
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, fileName);
+  }
 
   protected mapModelToPdfRow(model: Model): { [key: string]: any } {
     return this.mapModelToExcelRow(model);

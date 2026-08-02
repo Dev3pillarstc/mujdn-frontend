@@ -15,6 +15,7 @@ import { WorkDaysSettingService } from '@/services/features/setting/work-days-se
 import { WeekDaysEnum } from '@/enums/week-days-enum';
 import { AlertService } from '@/services/shared/alert.service';
 import { NOTIFICATIONS_SETTINGS_TABS_ENUM } from '@/enums/notifications-settings-tabs-enum';
+import { InputText } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-notification-channels',
@@ -26,6 +27,7 @@ import { NOTIFICATIONS_SETTINGS_TABS_ENUM } from '@/enums/notifications-settings
     TranslatePipe,
     TabsModule,
     RouterModule,
+    InputText
   ],
   templateUrl: './notification-settings.component.html',
   styleUrls: ['./notification-settings.component.scss'],

@@ -550,7 +550,13 @@
     "WEDNESDAY": "Wednesday",
     "THURSDAY": "Thursday",
     "FRIDAY": "Friday",
-    "WORKING_DAYS": "Official working Days"
+    "WORKING_DAYS": "Official working Days",
+    "MONTHLY_PERMISSION_LIMIT": "Monthly Permission Limit",
+    "MAX_PERMISSIONS_PER_MONTH": "Maximum Permissions per Month",
+    "GRACE_MINUTES": "Grace Minutes",
+    "MONTHLY_GRACE_MINUTES": "Monthly Grace Minutes",
+    "DAILY_MAX_GRACE_MINUTES": "Maximum Daily Grace Minutes",
+    "SETTINGS_STALE_RELOAD": "Settings are stale or incomplete. Reloading the latest values."
   },
   "NOTIFICATIONS_PAGE": {
     "NOTIFICATIONS": "Notifications",

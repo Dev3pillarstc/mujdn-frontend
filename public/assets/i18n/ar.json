@@ -548,7 +548,13 @@
     "WEDNESDAY": "الأربعاء",
     "THURSDAY": "الخميس",
     "FRIDAY": "الجمعة",
-    "WORKING_DAYS": "أيام العمل الرسمية"
+    "WORKING_DAYS": "أيام العمل الرسمية",
+    "MONTHLY_PERMISSION_LIMIT": "الحد الشهري للاستئذانات",
+    "MAX_PERMISSIONS_PER_MONTH": "الحد الأقصى للاستئذانات شهريًا",
+    "GRACE_MINUTES": "دقائق السماحية",
+    "MONTHLY_GRACE_MINUTES": "دقائق السماحية الشهرية",
+    "DAILY_MAX_GRACE_MINUTES": "الحد الأقصى لدقائق السماحية اليومية",
+    "SETTINGS_STALE_RELOAD": "الإعدادات قديمة أو غير مكتملة. جارٍ تحميل أحدث القيم."
   },
   "NOTIFICATIONS_PAGE": {
     "NOTIFICATIONS": "الإشعارات",

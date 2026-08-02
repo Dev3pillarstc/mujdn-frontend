@@ -474,7 +474,7 @@
                         <div class="actions flex gap-2">
                           @if (!permissionsRequest.canTakeAction) {
                             <button
-                              (click)="openDataDialog(permissionsRequest)"
+                              (click)="openDataDialog(permissionsRequest, undefined, true)"
                               class="table-action-gray-btn"
                             >
                               <img alt="" src="assets/icons/view-action.svg" />
@@ -487,11 +487,20 @@
                             permissionsRequest.canTakeAction
                           ) {
                             <button
-                              (click)="openDataDialog(permissionsRequest)"
+                              (click)="openDataDialog(permissionsRequest, undefined, true)"
                               class="table-action-gray-btn !min-w-[75px] text-[161616] font-medium"
                             >
                               <img alt="" src="/assets/icons/edit-action.svg" />
                               <span>{{ 'PERMISSION_PAGE.ACTION' | translate }}</span>
+                            </button>
+                          }
+                          @if (showDownloadPdf(permissionsRequest)) {
+                            <button
+                              (click)="downloadPermissionPdf(permissionsRequest)"
+                              class="table-action-green-btn"
+                              [title]="'PERMISSION_PAGE.DOWNLOAD_AS_FILE' | translate"
+                            >
+                              <img alt="" src="assets/icons/download-qr.svg" />
                             </button>
                           }
                         </div>
@@ -523,4 +532,11 @@
       </p-tabpanels>
     </p-tabs>
   </div>
+
+  <!-- Rendered off-screen only while a permission PDF file is being generated -->
+  @if (pdfPermission) {
+    <div aria-hidden="true" style="position: fixed; top: 0; left: -10000px; width: 800px">
+      <app-permission-details-card [model]="pdfPermission" />
+    </div>
+  }
 </div>

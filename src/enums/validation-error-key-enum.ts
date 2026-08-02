@@ -23,4 +23,5 @@ export enum ValidationErrorKeyEnum {
   DATE_MAX_RANGE_EXCEEDED = 'maxRangeExceeded',
   DUPLICATE_SHIFT = 'duplicateShift',
   SHIFTING_PERIOD_MAX_ONE_YEAR = 'shiftingPeriodMaxOneYear',
+  INVALID_SHIFT_CONFIGURATION = 'invalidShiftConfiguration',
 }

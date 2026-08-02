@@ -20,7 +20,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import * as XLSX from 'xlsx';
 import { WorkDaysPopupComponent } from '../work-days-popup/work-days-popup.component';
 import { WorkDaysSettingService } from '@/services/features/setting/work-days-setting.service';
 import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
@@ -108,13 +107,8 @@ export class MyShiftsViewComponent extends BaseListComponent<
           return;
         }
 
-        const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-        const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
-        const ws = XLSX.utils.json_to_sheet(transformedData);
-        const wb: XLSX.WorkBook = XLSX.utils.book_new();
-        wb.Workbook = { Views: [{ RTL: isRTL }] };
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-        XLSX.writeFile(wb, fileName);
+        const transformedData = this.mapModelsToExcelRows(fullList);
+        this.writeExcelFile(transformedData, fileName);
       },
       error: () => {
         this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
@@ -204,7 +198,13 @@ export class MyShiftsViewComponent extends BaseListComponent<
 
     return this.isArabic
       ? (shiftDay.shiftDetails?.nameAr ?? shiftDay.shiftNameAr ?? shiftDay.nameAr ?? '')
-      : (shiftDay.shiftDetails?.nameEn ?? shiftDay.shiftNameEn ?? shiftDay.nameEn ?? '');
+      : (shiftDay.shiftDetails?.nameEn ??
+        shiftDay.shiftNameEn ??
+        shiftDay.nameEn ??
+        shiftDay.shiftDetails?.nameAr ??
+        shiftDay.shiftNameAr ??
+        shiftDay.nameAr ??
+        '');
   }
 
   getShiftTypeName(type: number): string {

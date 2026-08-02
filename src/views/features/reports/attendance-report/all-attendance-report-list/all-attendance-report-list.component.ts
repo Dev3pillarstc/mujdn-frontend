@@ -7,14 +7,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import AttendanceReport from '@/models/features/attendance/attendance-report/attendance-report';
 import { AttendanceReportFilter } from '@/models/features/attendance/attendance-report/attendance-report-filter';
 import { AttendanceReportService } from '@/services/features/attendance-report.service';
 import { LanguageService } from '@/services/shared/language.service';
-import { CustomValidators } from '@/validators/custom-validators';
-import * as XLSX from 'xlsx';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { DepartmentService } from '@/services/features/lookups/department.service';
@@ -29,6 +28,7 @@ import { UserService } from '@/services/features/user.service';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { ReportDetailsModalComponent } from '../report-details-modal/report-details-modal.component';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
+import { downloadBlobData } from '@/utils/utils';
 @Component({
   selector: 'app-all-attendance-report-list',
   imports: [
@@ -41,6 +41,7 @@ import { DIALOG_ENUM } from '@/enums/dialog-enum';
     DatePickerModule,
     FormsModule,
     Select,
+    MultiSelectModule,
     TranslatePipe,
   ],
   providers: [DatePipe],
@@ -94,12 +95,12 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
     return {
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.EMPLOYEE_NAME')]:
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-          ? model.fullNameEn
+          ? model.fullNameEn || model.fullNameAr
           : model.fullNameAr,
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.NATIONAL_ID')]: model.nationalId,
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.DEPARTMENT')]:
         this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
-          ? model.departmentNameEn
+          ? model.departmentNameEn || model.departmentNameAr
           : model.departmentNameAr,
       [this.translateService.instant('ATTENDANCE_REPORT_PAGE.DATE')]: this.formatDate(
         model.processingDate
@@ -155,34 +156,22 @@ export class AllAttendanceReportListComponent extends BaseListComponent<
     const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
     return formatDateTo12Hour(date, locale);
   }
-  override exportExcel(fileName: string = 'AttendanceReports.xlsx'): void {
-    const allDataParams = {
-      ...this.paginationParams,
-      pageNumber: 1,
-      pageSize: CustomValidators.defaultLengths.INT_MAX,
-    };
+  override exportExcel(fileName: string = ''): void {
+    if (!fileName) {
+      fileName = this.getTranslatedFileName('ATTENDANCE_REPORT_PAGE.TITLE', 'xlsx');
+    }
 
-    this.service
-      .loadPaginated(allDataParams, {
-        ...this.appliedFilterModel!,
-      })
+    this.attendanceReportService
+      .exportExcel(this.langService.getCurrentLanguage(), this.getPdfExportFilterOptions())
       .subscribe({
-        next: (response) => {
-          const fullList = response.list || [];
-          if (fullList.length === 0) {
+        next: (blob) => {
+          if (!blob || blob.size === 0) {
             this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
             return;
           }
-
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
+          downloadBlobData(blob, fileName);
         },
-        error: (_) => {
+        error: () => {
           this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
         },
       });

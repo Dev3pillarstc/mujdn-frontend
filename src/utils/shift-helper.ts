@@ -5,7 +5,7 @@ import { WorkShiftType } from '@/enums/work-shift-type';
  * Determines if a given date is a working day based on the WorkShiftType.
  * Supports:
  * 1. Standard (1): Checks against employee specific working days or organization default settings.
- * 2. WeekOnWeekOff (2) & WeekOnWeekOff24 (3): Follows a 14-day cycle (7 days work / 7 days off).
+ * 2. WeekOnWeekOff (2) & WeekOnWeekOff24 (3): Follows a 28-day cycle (14 days work / 14 days off).
  *
  * @param workShiftType The type of work shift
  * @param startDate The start date of the shift cycle (required for cycle-based shifts)
@@ -62,7 +62,7 @@ export function isShiftWorkingDay(
     return true;
   }
 
-  // Handle Cycle-based Shifts (7-on / 7-off)
+  // Handle Cycle-based Shifts (14-on / 14-off)
   if (
     workShiftType === WorkShiftType.WeekOnWeekOff ||
     workShiftType === WorkShiftType.WeekOnWeekOff24
@@ -80,12 +80,13 @@ export function isShiftWorkingDay(
     const diffTime = check.getTime() - start.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-    const cycleLength = 14;
-    // Normalize cycle index to be positive 0-13
+    const workDaysInCycle = 14;
+    const cycleLength = workDaysInCycle * 2;
+    // Normalize cycle index to be positive 0 to (cycleLength - 1)
     const cycleIndex = ((diffDays % cycleLength) + cycleLength) % cycleLength;
 
-    // Days 0-6 are Work (7 days), Days 7-13 are Off (7 days)
-    return cycleIndex < 7;
+    // Days 0-13 are Work (14 days), Days 14-27 are Off (14 days)
+    return cycleIndex < workDaysInCycle;
   }
 
   return false;

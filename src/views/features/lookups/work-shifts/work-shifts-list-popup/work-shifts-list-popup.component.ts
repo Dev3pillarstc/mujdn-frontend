@@ -1,10 +1,13 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -172,6 +175,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     this.form = this.fb.group(this.model.buildForm(), {
       validators: [
         CustomValidators.crossDateTimeValidator('timeFrom', 'timeTo', 'isCrossDayShift'),
+        this.crossDateShiftEndNotPassNextDayStart(),
       ],
     });
 
@@ -214,6 +218,41 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     this.isCrossDayShiftControl.valueChanges.subscribe(() => {
       this.form.updateValueAndValidity({ onlySelf: false, emitEvent: false });
     });
+  }
+  crossDateShiftEndNotPassNextDayStart(): ValidatorFn {
+    const MS_PER_MINUTE = 60000;
+    const MINUTES_PER_DAY = 24 * 60;
+
+    return (form: AbstractControl): ValidationErrors | null => {
+      const timeFrom = form.get('timeFrom')?.value;
+      const timeTo = form.get('timeTo')?.value;
+
+      if (!timeFrom || !timeTo) {
+        return null;
+      }
+
+      const isCrossDayShift = !!form.get('isCrossDayShift')?.value;
+      const bufferBeforeStart = form.get('attendanceBuffer')?.value || 0;
+      const bufferAfterEnd = form.get('leaveBuffer')?.value || 0;
+
+      const from = new Date(timeFrom);
+      const to = new Date(timeTo);
+      from.setSeconds(0, 0);
+      to.setSeconds(0, 0);
+
+      // A cross-day shift ends on the following day
+      if (isCrossDayShift) {
+        to.setDate(to.getDate() + 1);
+      }
+
+      // Extend the window by the attendance/leave buffers
+      from.setMinutes(from.getMinutes() - bufferBeforeStart);
+      to.setMinutes(to.getMinutes() + bufferAfterEnd);
+
+      const totalMinutes = Math.floor((to.getTime() - from.getTime()) / MS_PER_MINUTE);
+
+      return totalMinutes > MINUTES_PER_DAY ? { invalidShiftConfiguration: true } : null;
+    };
   }
 
   get isCrossDayShiftControl() {

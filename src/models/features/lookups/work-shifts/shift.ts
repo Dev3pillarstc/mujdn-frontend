@@ -65,7 +65,6 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       nameEn: [
         nameEn,
         [
-          Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('ENG_NUM'),

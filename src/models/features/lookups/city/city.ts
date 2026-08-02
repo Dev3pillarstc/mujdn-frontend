@@ -24,7 +24,7 @@ export class City extends BaseCrudModel<City, CityService> {
   }
 
   getName(): string {
-    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH && this.nameEn
       ? this.nameEn
       : this.nameAr;
   }
@@ -44,7 +44,6 @@ export class City extends BaseCrudModel<City, CityService> {
       nameEn: [
         nameEn,
         [
-          Validators.required,
           Validators.maxLength(CustomValidators.defaultLengths.ENGLISH_INPUT_NAME_MAX),
           Validators.minLength(CustomValidators.defaultLengths.MIN_LENGTH),
           CustomValidators.pattern('ENG_NUM'),

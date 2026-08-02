@@ -195,14 +195,14 @@ export class AllVisitRequestListComponent
   // Department name display
   getDepartmentName(visit: Visit): string {
     if (this.isCurrentLanguageEnglish()) {
-      return visit.targetDepartment?.nameEn || '';
+      return visit.targetDepartment?.nameEn || visit.targetDepartment?.nameAr || '';
     }
     return visit.targetDepartment?.nameAr || '';
   }
 
   getVisitCreatorName(visit: Visit): string {
     if (this.isCurrentLanguageEnglish()) {
-      return visit.creationUser?.nameEn || '';
+      return visit.creationUser?.nameEn || visit.creationUser?.nameAr || '';
     }
     return visit.creationUser?.nameAr || '';
   }

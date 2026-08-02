@@ -27,7 +27,7 @@ const defaultLengths = {
   EXPLANATIONS: 1333,
   _500: 500,
   INT_MAX: 2_147_483_647,
-  maxShiftBuffer: 30,
+  maxShiftBuffer: 60,
 };
 
 export function pattern(patternName: customValidationTypes): ValidatorFn {
@@ -203,6 +203,41 @@ export function crossDateTimeValidator(
     // 3) Cross-day shift: from must be after to (wraps past midnight)
     if (isCrossDay && fromMin < toMin) {
       return { timeRangeShouldCrossDay: true };
+    }
+
+    return null;
+  };
+}
+export function crossDateShiftEndNotPassNextDayStart(): ValidatorFn {
+  return (form: AbstractControl): ValidationErrors | null => {
+    let isCrossDayShift = !!form.get('isCrossDayShift')!.value;
+
+    let from = form.get('timeFrom')?.value ? new Date(form.get('timeFrom')?.value) : null;
+    let bufferBeforeStart = form.get('attendanceBuffer')?.value || 0;
+
+    let to = form.get('timeTo')?.value ? new Date(form.get('timeTo')?.value) : null;
+    let bufferAfterEnd = form.get('leaveBuffer')?.value || 0;
+
+    if (!from || !to) {
+      return null;
+    }
+
+    from.setSeconds(0, 0);
+    to.setSeconds(0, 0);
+
+    // Add day if needed
+    if (isCrossDayShift) {
+      to.setDate(to.getDate() + 1);
+    }
+
+    from.setMinutes(from.getMinutes() - bufferBeforeStart);
+    to.setMinutes(to.getMinutes() + bufferAfterEnd);
+
+    let diffMs = to.getTime() - from.getTime();
+
+    const totalMinutes = Math.floor(diffMs / 60000); // ignore seconds
+    if (totalMinutes > 24 * 60) {
+      return { invalidShiftConfiguration: true };
     }
 
     return null;

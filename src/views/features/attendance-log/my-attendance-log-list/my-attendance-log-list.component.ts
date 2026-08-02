@@ -25,7 +25,6 @@ import { BooleanOptionModel } from '@/models/shared/boolean-option';
 import { PROCESSING_STATUS_OPTIONS } from '@/models/shared/processing-status-option';
 import { MyAttendanceLogFilter } from '@/models/features/attendance/attendance-log/my-attendance-log-filter';
 import { CustomValidators } from '@/validators/custom-validators';
-import * as XLSX from 'xlsx';
 import { formatSwipeTime } from '@/utils/general-helper';
 import { Observable } from 'rxjs';
 
@@ -214,13 +213,8 @@ export default class MyAttendanceLogListComponent
           this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
           return;
         } else {
-          const isRTL = this.langService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC;
-          const transformedData = fullList.map((item) => this.mapModelToExcelRow(item));
-          const ws = XLSX.utils.json_to_sheet(transformedData);
-          const wb: XLSX.WorkBook = XLSX.utils.book_new();
-          wb.Workbook = { Views: [{ RTL: isRTL }] };
-          XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-          XLSX.writeFile(wb, fileName);
+          const transformedData = this.mapModelsToExcelRows(fullList);
+          this.writeExcelFile(transformedData, fileName);
         }
       },
       error: (_) => {

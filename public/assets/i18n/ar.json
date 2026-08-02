@@ -11,6 +11,7 @@
     "YES": "نعم",
     "NO": "لا",
     "NEXT": "التالي",
+    "SEQUENCE": "مسلسل",
     "CONFIRM_DELETE": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
     "SAVED_SUCCESSFULLY": "تم الحفظ بنجاح",
     "UPDATED_SUCCESSFULLY": "تم التحديث بنجاح",
@@ -128,6 +129,7 @@
     "LOCATION_NOT_VALID": "أجهزة البصمة غير نشطة بالمواقع المحددة للزيارة",
     "NOT_VALID_USERS_FOR_ASSIGNMENT": "لا يمكن إتمام الطلب لأن حالة بعض الموظفين قد تغيرت وأصبحوا غير مستوفين لمعايير توثيق التواجد.",
     "EXCEL_MISSING_FIELDS": "يجب إدخال الحقول التالية",
+    "DAILY_PERMISSION_LIMIT_EXCEEDED": "تم تجاوز الحد اليومي للاستئذان",
     "FILE_SIZE_CAN_NOT_EXCEED": "يجب الا يتجاوز حجم الملف {size} ميجابايت",
     "DATA_HAS_BEEN_IMPORTED_SUCCESSFULLY": "تم إستيراد البيانات بنجاح",
     "EXCEL_NO_DATA_ROWS": "يجب أن يحتوي ملف الإكسل على صف بيانات واحد على الأقل بعد صف العناوين",
@@ -149,7 +151,8 @@
     "WORK_MISSION_ALL_USERS_CONFLICT": "جميع الموظفين المحددين لديهم مهام متعارضة في نفس الفترة ولم يتم إسنادهم.",
     "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "لا يمكن رفض الزيارة لأنها تحتوي على تسجيل حضور",
     "SWITCH_TO_ATTENDANCE_SYSTEM": "الذهاب إلى نظام الحضور والانصراف",
-    "SWITCH_TO_VISITS_SYSTEM": "الذهاب إلى نظام الزيارات"
+    "SWITCH_TO_VISITS_SYSTEM": "الذهاب إلى نظام الزيارات",
+    "INVALID_SHIFT_CONFIGURATION": "عدد ساعات العمل اليومية (شاملة فترات السماح قبل الحضور وبعد الانصراف) يجب الا يتجاوز 24 ساعة"
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -383,7 +386,9 @@
     "DECLINE": "رفض",
     "UNDER_REVIEW": "قيد المراجعة",
     "EMPLOYEE_NAME": "اسم الموظف",
-    "DEPARTMENT": "الادارة"
+    "DEPARTMENT": "الادارة",
+    "DOWNLOAD_AS_FILE": "تحميل كملف",
+    "PERMISSION_PDF_FILE_NAME": "بيانات الإذن"
   },
   "SHIFTS_VIEW_PAGE": {
     "TITLE": "ورديات الموظفين",
@@ -569,7 +574,8 @@
     "WORKING_DAYS": "أيام العمل الخاصة بالوردية",
     "STANDARD_SHIFT": "وردية بنظام ساعات العمل المعتمدة",
     "SHIFT_HOURS": "ساعات العمل الخاصة بالوردية",
-    "WORK_WEEK_REST_WEEK": "أسبوع عمل/أسبوع راحة",
+    "WORK_WEEK_REST_WEEK": "أسبوع عمل / أسبوع راحة",
+    "WORK_WEEK_REST_2WEEK": "أسبوعين عمل / أسبوعين راحة",
     "SHIFT_24_HOURS": "أسبوع عمل / أسبوع راحة (24 ساعة)",
     "ATTENDANCE_DOCUMENTATION_TIME": "وقت إثبات الحضور اليومي (لنظام الراحات 24 ساعة)",
     "TIME_FROM_PLACEHOLDER": "موعد (من)",
@@ -965,7 +971,7 @@
   },
   "SHIFT_ASSIGNMENT_PANEL": {
     "SHIFT_WORKING_HOURS": "مواعيد العمل بالوردية: ",
-    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "نظام الورديات المتناوبة لساعات العمل (أسبوع عمل / أسبوع راحة)",
+    "ROTATING_SHIFTS_WORK_WEEK_REST_WEEK": "نظام الورديات المتناوبة لساعات العمل (أسبوعين عمل / أسبوعين راحة)",
     "USERS_WILL_BE_ROTATED_BETWEEN_SHIFTS_IN_THE_FOLLOWING_ORDER": "سيتم تناوب الموظفين بين الورديات بالترتيب التالي: ",
     "ON_A_RECURRING_BASIS": "بشكل دوري."
   },

@@ -13,157 +13,166 @@
       </h3>
     </div>
 
-
     <form [formGroup]="generalSettingsForm">
+      <div
+        class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db] mb-4"
+        formGroupName="notificationChannels"
+      >
+        <h4 class="text-lg sm:text-xl font-bold text-[#161616] mb-8 pb-4 border-b border-[#d2d6db]">
+          {{ 'NOTIFICATION.CHOOSE_SUPPORTED_PLATFORMS' | translate }}
+        </h4>
+        <div class="flex flex-wrap gap-8">
+          @for (channel of notificationChannels; track channel.key) {
+            <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+              <input
+                type="checkbox"
+                [formControlName]="channel.key"
+                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              />
+              <svg
+                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span class="text-base font-medium text-[#1f2a37]">
+                {{ channel.labelKey | translate }}
+              </span>
+            </label>
+          }
+        </div>
+      </div>
+
+      <div
+        class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db] mb-4"
+        formGroupName="workDays"
+      >
+        <h4 class="text-lg sm:text-xl font-bold text-[#161616] mb-8 pb-4 border-b border-[#d2d6db]">
+          {{ 'NOTIFICATION.WORKING_DAYS' | translate }}
+        </h4>
+        <div class="flex flex-wrap gap-8">
+          @for (day of weekDays; track day.value) {
+            <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
+              <input
+                type="checkbox"
+                [formControlName]="getFormControlName(day.value)"
+                class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
+              />
+              <svg
+                class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span class="text-base font-medium text-[#1f2a37]">
+                {{ day.labelKey | translate }}
+              </span>
+            </label>
+          }
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db] mb-4">
+        <h4 class="text-lg sm:text-xl font-bold text-[#161616] mb-8 pb-4 border-b border-[#d2d6db]">
+          {{ 'NOTIFICATION.GRACE_MINUTES' | translate }}
+        </h4>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="relative">
+            <label class="label" for="graceMonthlyMinutes">
+              {{ 'NOTIFICATION.MONTHLY_GRACE_MINUTES' | translate }}
+            </label>
+            <p-inputnumber
+              inputId="graceMonthlyMinutes"
+              formControlName="graceMonthlyMinutes"
+              [inputStyle]="{ width: '3rem' }"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              spinnerMode="horizontal"
+              [min]="0"
+              [max]="2147483647"
+              [maxFractionDigits]="0"
+              [useGrouping]="false"
+            >
+              <ng-template #incrementbuttonicon>
+                <span class="pi pi-plus"></span>
+              </ng-template>
+              <ng-template #decrementbuttonicon>
+                <span class="pi pi-minus"></span>
+              </ng-template>
+            </p-inputnumber>
+          </div>
+
+          <div class="relative">
+            <label class="label" for="graceDailyMaxMinutes">
+              {{ 'NOTIFICATION.DAILY_MAX_GRACE_MINUTES' | translate }}
+            </label>
+            <p-inputnumber
+              inputId="graceDailyMaxMinutes"
+              formControlName="graceDailyMaxMinutes"
+              [inputStyle]="{ width: '3rem' }"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              spinnerMode="horizontal"
+              [min]="0"
+              [max]="2147483647"
+              [maxFractionDigits]="0"
+              [useGrouping]="false"
+            >
+              <ng-template #incrementbuttonicon>
+                <span class="pi pi-plus"></span>
+              </ng-template>
+              <ng-template #decrementbuttonicon>
+                <span class="pi pi-minus"></span>
+              </ng-template>
+            </p-inputnumber>
+          </div>
+        </div>
+      </div>
+
       <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
-        <section formGroupName="notificationChannels">
-          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616] mb-6">
-            {{ 'NOTIFICATION.CHOOSE_SUPPORTED_PLATFORMS' | translate }}
-          </h4>
-          <div class="flex flex-wrap gap-8">
-            @for (channel of notificationChannels; track channel.key) {
-              <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-                <input
-                  type="checkbox"
-                  [formControlName]="channel.key"
-                  class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-                />
-                <svg
-                  class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span class="text-base font-medium text-[#1f2a37]">
-                  {{ channel.labelKey | translate }}
-                </span>
-              </label>
-            }
+        <h4 class="text-lg sm:text-xl font-bold text-[#161616] mb-8 pb-4 border-b border-[#d2d6db]">
+          {{ 'NOTIFICATION.MONTHLY_PERMISSION_LIMIT' | translate }}
+        </h4>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="relative">
+            <label class="label" for="monthlyPermissionLimit">
+              {{ 'NOTIFICATION.MAX_PERMISSIONS_PER_MONTH' | translate }}
+            </label>
+            <p-inputnumber
+              inputId="monthlyPermissionLimit"
+              formControlName="monthlyPermissionLimit"
+              [inputStyle]="{ width: '3rem' }"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              spinnerMode="horizontal"
+              [min]="1"
+              [max]="31"
+              [maxFractionDigits]="0"
+              [useGrouping]="false"
+            >
+              <ng-template #incrementbuttonicon>
+                <span class="pi pi-plus"></span>
+              </ng-template>
+              <ng-template #decrementbuttonicon>
+                <span class="pi pi-minus"></span>
+              </ng-template>
+            </p-inputnumber>
           </div>
-        </section>
+        </div>
+      </div>
 
-        <hr class="my-8 border-[#d2d6db]" />
-
-        <section formGroupName="workDays">
-          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616] mb-6">
-            {{ 'NOTIFICATION.WORKING_DAYS' | translate }}
-          </h4>
-          <div class="flex flex-wrap gap-8">
-            @for (day of weekDays; track day.value) {
-              <label class="flex items-center space-x-2 mb-4 cursor-pointer relative">
-                <input
-                  type="checkbox"
-                  [formControlName]="getFormControlName(day.value)"
-                  class="appearance-none w-6 h-6 border border-[#6c737f] rounded-[2px] checked:bg-[#1b8354] checked:border-transparent focus:outline-none peer"
-                />
-                <svg
-                  class="absolute start-1 top-1 w-4 h-4 text-white pointer-events-none scale-0 peer-checked:scale-100 transition-transform"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span class="text-base font-medium text-[#1f2a37]">
-                  {{ day.labelKey | translate }}
-                </span>
-              </label>
-            }
-          </div>
-        </section>
-
-        <hr class="my-8 border-[#d2d6db]" />
-
-        <section>
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            <div>
-              <label class="label" for="monthlyPermissionLimit">
-                {{ 'NOTIFICATION.MAX_PERMISSIONS_PER_MONTH' | translate }}
-              </label>
-              <p-inputnumber
-                inputId="monthlyPermissionLimit"
-                formControlName="monthlyPermissionLimit"
-                [inputStyle]="{ width: '3rem' }"
-                [showButtons]="true"
-                buttonLayout="horizontal"
-                spinnerMode="horizontal"
-                [min]="1"
-                [max]="31"
-                [maxFractionDigits]="0"
-                [useGrouping]="false"
-              >
-                <ng-template #incrementbuttonicon>
-                  <span class="pi pi-plus"></span>
-                </ng-template>
-                <ng-template #decrementbuttonicon>
-                  <span class="pi pi-minus"></span>
-                </ng-template>
-              </p-inputnumber>
-            </div>
-
-            <div>
-              <label class="label" for="graceMonthlyMinutes">
-                {{ 'NOTIFICATION.MONTHLY_GRACE_MINUTES' | translate }}
-              </label>
-              <p-inputnumber
-                inputId="graceMonthlyMinutes"
-                formControlName="graceMonthlyMinutes"
-                [inputStyle]="{ width: '3rem' }"
-                [showButtons]="true"
-                buttonLayout="horizontal"
-                spinnerMode="horizontal"
-                [min]="0"
-                [max]="2147483647"
-                [maxFractionDigits]="0"
-                [useGrouping]="false"
-              >
-                <ng-template #incrementbuttonicon>
-                  <span class="pi pi-plus"></span>
-                </ng-template>
-                <ng-template #decrementbuttonicon>
-                  <span class="pi pi-minus"></span>
-                </ng-template>
-              </p-inputnumber>
-            </div>
-
-            <div>
-              <label class="label" for="graceDailyMaxMinutes">
-                {{ 'NOTIFICATION.DAILY_MAX_GRACE_MINUTES' | translate }}
-              </label>
-              <p-inputnumber
-                inputId="graceDailyMaxMinutes"
-                formControlName="graceDailyMaxMinutes"
-                [inputStyle]="{ width: '3rem' }"
-                [showButtons]="true"
-                buttonLayout="horizontal"
-                spinnerMode="horizontal"
-                [min]="0"
-                [max]="2147483647"
-                [maxFractionDigits]="0"
-                [useGrouping]="false"
-              >
-                <ng-template #incrementbuttonicon>
-                  <span class="pi pi-plus"></span>
-                </ng-template>
-                <ng-template #decrementbuttonicon>
-                  <span class="pi pi-minus"></span>
-                </ng-template>
-              </p-inputnumber>
-            </div>
-          </div>
-        </section>
-
-        <div
-          class="actions mt-8 pt-6 border-t border-[#d2d6db] flex items-center justify-end gap-4"
-        >
+      <div class="bg-white rounded-xl p-4 mt-6">
+        <div class="actions flex items-center justify-between gap-4 ms-auto">
           <button
             type="button"
             class="btn gray-btn !bg-white hover:!bg-[#e5e7eb] border border-[#d2d6db]"

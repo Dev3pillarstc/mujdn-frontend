@@ -289,8 +289,8 @@ export default class EmployeeListComponent
     const formatBoolean = (value: boolean | undefined): string => {
       if (value === undefined || value === null) return '';
       return value
-        ? this.translateService.instant('COMMON.YES')
-        : this.translateService.instant('COMMON.NO');
+        ? this.translateService.instant('COMMON.ACTIVE')
+        : this.translateService.instant('COMMON.INACTIVE');
     };
 
     return {

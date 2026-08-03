@@ -390,6 +390,7 @@
     "EMPLOYEE_NAME": "Employee Name",
     "DEPARTMENT": "Department",
     "DOWNLOAD_AS_FILE": "Download as File",
+    "GENERATING_REPORT": "Generating report...",
     "PERMISSION_PDF_FILE_NAME": "Permission Data"
   },
   "SHIFTS_VIEW_PAGE": {
@@ -587,7 +588,7 @@
     "WORKING_DAYS": "Shift Working Days",
     "STANDARD_SHIFT": "Standard Work Hours Shift",
     "SHIFT_HOURS": "Shift Work Hours",
-    "WORK_WEEK_REST_WEEK": "Work Week / Rest Week",
+    "WORK_WEEK_REST_WEEK": "2 Weeks Work / 2 Weeks Rest",
     "WORK_WEEK_REST_2WEEK": "2 Weeks Work / 2 Weeks Rest",
     "SHIFT_24_HOURS": "24-Hour Rest Shift",
     "ATTENDANCE_DOCUMENTATION_TIME": "Daily attendance proof Time (for 24-hour rest system)",

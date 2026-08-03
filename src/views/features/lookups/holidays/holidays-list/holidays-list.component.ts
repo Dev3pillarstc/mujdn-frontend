@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FluidModule } from 'primeng/fluid';
 import { TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { PaginatorModule } from 'primeng/paginator';
 import { HolidaysPopupComponent } from '../holidays-popup/holidays-popup.component';
@@ -37,6 +37,7 @@ import { NotesPopupComponent } from '../notes-popup/notes-popup/notes-popup.comp
     RouterModule,
   ],
 
+  providers: [DatePipe],
   templateUrl: './holidays-list.component.html',
   styleUrl: './holidays-list.component.scss',
 })
@@ -52,6 +53,7 @@ export default class HolidaysListComponent extends BaseListComponent<
   };
   holidayService = inject(HolidayService);
   authService = inject(AuthService);
+  datePipe = inject(DatePipe);
 
   filterModel: HolidayFilter = new HolidayFilter();
   override get service() {
@@ -76,9 +78,16 @@ export default class HolidaysListComponent extends BaseListComponent<
     return {
       [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ARABIC')]: model.nameAr,
       [this.translateService.instant('HOLIDAYS_PAGE.HOLIDAY_NAME_ENGLISH')]: model.nameEn,
-      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: model.startDate,
-      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: model.endDate,
+      [this.translateService.instant('HOLIDAYS_PAGE.START_DATE')]: this.formatDate(
+        model.startDate
+      ),
+      [this.translateService.instant('HOLIDAYS_PAGE.END_DATE')]: this.formatDate(model.endDate),
     };
+  }
+
+  formatDate(date: string | Date | null | undefined): string {
+    if (!date) return '-';
+    return this.datePipe.transform(new Date(date), 'dd/MM/yyyy') ?? '-';
   }
   showAddEditButtons() {
     return this.authService.isSuperHROfficer;

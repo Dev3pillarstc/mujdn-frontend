@@ -13,9 +13,19 @@
       <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
       <div class="flex gap-2">
         @if (showDownloadPdf) {
-          <button class="btn green-btn" (click)="downloadAsPDF()">
-            <img src="assets/icons/download-qr.svg" alt="" />
-            {{ 'PERMISSION_PAGE.DOWNLOAD_AS_FILE' | translate }}
+          <button
+            class="btn green-btn"
+            (click)="downloadAsPDF()"
+            [disabled]="isDownloadingPdf"
+            [attr.aria-busy]="isDownloadingPdf"
+          >
+            @if (isDownloadingPdf) {
+              <i class="pi pi-spinner pi-spin" aria-hidden="true"></i>
+              {{ 'PERMISSION_PAGE.GENERATING_REPORT' | translate }}
+            } @else {
+              <img src="assets/icons/download-qr.svg" alt="" />
+              {{ 'PERMISSION_PAGE.DOWNLOAD_AS_FILE' | translate }}
+            }
           </button>
         }
         @if (model.canTakeAction) {

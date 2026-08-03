@@ -166,7 +166,8 @@
           </td>
           <td>{{ attendance.remainingMonthlyGraceMinutes ?? '' }}</td> -->
 
-          <td>
+         <td>
+            @if (!attendance.shouldHideLeaveFingerPrintAndStatus()) {
             <div class="px-2 py-1 flex items-center gap-2 rounded-full font-medium text-[14px] w-fit"
               [style.background-color]="getStatusConfig(attendance.attendanceStatus).bgColor"
               [style.color]="getStatusConfig(attendance.attendanceStatus).textColor">
@@ -176,6 +177,7 @@
                 {{ getStatusConfig(attendance.attendanceStatus).labelKey | translate }}
               </span>
             </div>
+            }
           </td>
           <td>
             <button (click)="openDataDialog(attendance)" class="table-action-gray-btn">

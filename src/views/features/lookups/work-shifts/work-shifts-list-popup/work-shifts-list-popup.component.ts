@@ -1,13 +1,10 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -23,7 +20,10 @@ import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
-import { crossDateTimeValidator, CustomValidators } from '@/validators/custom-validators';
+import {
+  crossDateShiftEndNotPassNextDayStart,
+  CustomValidators,
+} from '@/validators/custom-validators';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { dateToTimeString, formatDateTo12Hour, toDateOnly } from '@/utils/general-helper';
 import { ConfirmationService } from '@/services/shared/confirmation.service';
@@ -31,6 +31,7 @@ import { CONFIRMATION_DIALOG_ICONS_ENUM } from '@/enums/confirmation-dialog-icon
 import { AuthService } from '@/services/auth/auth.service';
 import { ConfigService } from '@/services/config.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
+import { calculateBufferedShiftWindow } from '@/utils/shift-helper';
 
 @Component({
   selector: 'app-work-shifts-list-popup',
@@ -89,12 +90,20 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
   get dayBoundaryTimeControl() {
     return this.form.get('dayBoundaryTime') as FormControl;
   }
-  get attendanceBufferControl() {
-    return this.form.get('attendanceBuffer') as FormControl;
+  get beforeAttendanceBufferControl() {
+    return this.form.get('beforeAttendanceBuffer') as FormControl;
   }
 
-  get leaveBufferControl() {
-    return this.form.get('leaveBuffer') as FormControl;
+  get afterAttendanceBufferControl() {
+    return this.form.get('afterAttendanceBuffer') as FormControl;
+  }
+
+  get beforeLeaveBufferControl() {
+    return this.form.get('beforeLeaveBuffer') as FormControl;
+  }
+
+  get afterLeaveBufferControl() {
+    return this.form.get('afterLeaveBuffer') as FormControl;
   }
 
   get shiftLogStartDateControl() {
@@ -175,7 +184,7 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
     this.form = this.fb.group(this.model.buildForm(), {
       validators: [
         CustomValidators.crossDateTimeValidator('timeFrom', 'timeTo', 'isCrossDayShift'),
-        this.crossDateShiftEndNotPassNextDayStart(),
+        crossDateShiftEndNotPassNextDayStart(),
       ],
     });
 
@@ -219,42 +228,6 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       this.form.updateValueAndValidity({ onlySelf: false, emitEvent: false });
     });
   }
-  crossDateShiftEndNotPassNextDayStart(): ValidatorFn {
-    const MS_PER_MINUTE = 60000;
-    const MINUTES_PER_DAY = 24 * 60;
-
-    return (form: AbstractControl): ValidationErrors | null => {
-      const timeFrom = form.get('timeFrom')?.value;
-      const timeTo = form.get('timeTo')?.value;
-
-      if (!timeFrom || !timeTo) {
-        return null;
-      }
-
-      const isCrossDayShift = !!form.get('isCrossDayShift')?.value;
-      const bufferBeforeStart = form.get('attendanceBuffer')?.value || 0;
-      const bufferAfterEnd = form.get('leaveBuffer')?.value || 0;
-
-      const from = new Date(timeFrom);
-      const to = new Date(timeTo);
-      from.setSeconds(0, 0);
-      to.setSeconds(0, 0);
-
-      // A cross-day shift ends on the following day
-      if (isCrossDayShift) {
-        to.setDate(to.getDate() + 1);
-      }
-
-      // Extend the window by the attendance/leave buffers
-      from.setMinutes(from.getMinutes() - bufferBeforeStart);
-      to.setMinutes(to.getMinutes() + bufferAfterEnd);
-
-      const totalMinutes = Math.floor((to.getTime() - from.getTime()) / MS_PER_MINUTE);
-
-      return totalMinutes > MINUTES_PER_DAY ? { invalidShiftConfiguration: true } : null;
-    };
-  }
-
   get isCrossDayShiftControl() {
     return this.form.get('isCrossDayShift') as FormControl;
   }
@@ -437,30 +410,29 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       return '';
     }
 
-    let beforeFrom = +this.attendanceBufferControl.value || 0;
-    let afterTo = +this.leaveBufferControl.value || 0;
-
     // 🔥 FIX: Remove seconds + milliseconds
     from.setSeconds(0, 0);
     to.setSeconds(0, 0);
 
-    // Add day if needed
-    if (this.isCrossDayShiftControl.value) {
-      to.setDate(to.getDate() + 1);
-    }
+    const bufferedWindow = calculateBufferedShiftWindow(
+      from,
+      to,
+      this.isCrossDayShiftControl.value,
+      {
+        beforeAttendanceBuffer: this.beforeAttendanceBufferControl.value,
+        afterAttendanceBuffer: this.afterAttendanceBufferControl.value,
+        beforeLeaveBuffer: this.beforeLeaveBufferControl.value,
+        afterLeaveBuffer: this.afterLeaveBufferControl.value,
+      }
+    );
 
-    let diffMs = to.getTime() - from.getTime();
-
-    const totalMinutes = Math.floor(diffMs / 60000); // ignore seconds
-    const totalWithGracePeriods = totalMinutes + beforeFrom + afterTo;
-
-    if (totalWithGracePeriods > dayMinutesCount) {
+    if (bufferedWindow.totalMinutes > dayMinutesCount) {
       this.dayBoundaryTimeControl.setValue('');
       return '';
     }
 
-    const nonShiftMinutes = dayMinutesCount - totalWithGracePeriods;
-    let dayBoundaryTime = from;
+    const nonShiftMinutes = dayMinutesCount - bufferedWindow.totalMinutes;
+    let dayBoundaryTime = new Date(from);
     const locale = this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG';
 
     if (nonShiftMinutes > this.dayBoundaryMinutes * 2) {
@@ -469,7 +441,8 @@ export class WorkShiftsListPopupComponent extends BasePopupComponent<Shift> impl
       return formatDateTo12Hour(dayBoundaryTime, locale);
     }
 
-    dayBoundaryTime.setMinutes(from.getMinutes() - beforeFrom - Math.floor(nonShiftMinutes / 2));
+    dayBoundaryTime = new Date(bufferedWindow.start);
+    dayBoundaryTime.setMinutes(dayBoundaryTime.getMinutes() - Math.floor(nonShiftMinutes / 2));
 
     this.dayBoundaryTimeControl.setValue(dayBoundaryTime);
     return formatDateTo12Hour(dayBoundaryTime, locale);

@@ -56,15 +56,15 @@
         </div>
         <div>
           <div class="w-full">
-            <label class="label" for="max-attendance-time">{{
-              'WORK_SHIFTS_POPUP.MAX_ATTENDANCE_TIME' | translate
+            <label class="label" for="before-attendance-buffer">{{
+              'WORK_SHIFTS_POPUP.BEFORE_ATTENDANCE_BUFFER' | translate
             }}</label>
             <p-inputnumber
               [inputStyle]="{ width: '3rem' }"
               [showButtons]="true"
               buttonLayout="horizontal"
-              formControlName="attendanceBuffer"
-              id="max-attendance-time"
+              formControlName="beforeAttendanceBuffer"
+              id="before-attendance-buffer"
               spinnerMode="horizontal"
               [min]="0"
               [max]="60"
@@ -76,20 +76,22 @@
                 <span class="pi pi-minus"></span>
               </ng-template>
             </p-inputnumber>
-            <app-validation-messages [control]="attendanceBufferControl"></app-validation-messages>
+            <app-validation-messages
+              [control]="beforeAttendanceBufferControl"
+            ></app-validation-messages>
           </div>
         </div>
         <div>
           <div class="w-full">
-            <label class="label" for="max-leave-time">{{
-              'WORK_SHIFTS.MAX_LEAVE_TIME' | translate
+            <label class="label" for="after-attendance-buffer">{{
+              'WORK_SHIFTS_POPUP.AFTER_ATTENDANCE_BUFFER' | translate
             }}</label>
             <p-inputnumber
               [inputStyle]="{ width: '3rem' }"
               [showButtons]="true"
               buttonLayout="horizontal"
-              formControlName="leaveBuffer"
-              id="max-leave-time"
+              formControlName="afterAttendanceBuffer"
+              id="after-attendance-buffer"
               spinnerMode="horizontal"
               [min]="0"
               [max]="60"
@@ -101,7 +103,59 @@
                 <span class="pi pi-minus"></span>
               </ng-template>
             </p-inputnumber>
-            <app-validation-messages [control]="leaveBufferControl"></app-validation-messages>
+            <app-validation-messages
+              [control]="afterAttendanceBufferControl"
+            ></app-validation-messages>
+          </div>
+        </div>
+        <div>
+          <div class="w-full">
+            <label class="label" for="before-leave-buffer">{{
+              'WORK_SHIFTS_POPUP.BEFORE_LEAVE_BUFFER' | translate
+            }}</label>
+            <p-inputnumber
+              [inputStyle]="{ width: '3rem' }"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              formControlName="beforeLeaveBuffer"
+              id="before-leave-buffer"
+              spinnerMode="horizontal"
+              [min]="0"
+              [max]="60"
+            >
+              <ng-template #incrementbuttonicon>
+                <span class="pi pi-plus"></span>
+              </ng-template>
+              <ng-template #decrementbuttonicon>
+                <span class="pi pi-minus"></span>
+              </ng-template>
+            </p-inputnumber>
+            <app-validation-messages [control]="beforeLeaveBufferControl"></app-validation-messages>
+          </div>
+        </div>
+        <div>
+          <div class="w-full">
+            <label class="label" for="after-leave-buffer">{{
+              'WORK_SHIFTS_POPUP.AFTER_LEAVE_BUFFER' | translate
+            }}</label>
+            <p-inputnumber
+              [inputStyle]="{ width: '3rem' }"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              formControlName="afterLeaveBuffer"
+              id="after-leave-buffer"
+              spinnerMode="horizontal"
+              [min]="0"
+              [max]="60"
+            >
+              <ng-template #incrementbuttonicon>
+                <span class="pi pi-plus"></span>
+              </ng-template>
+              <ng-template #decrementbuttonicon>
+                <span class="pi pi-minus"></span>
+              </ng-template>
+            </p-inputnumber>
+            <app-validation-messages [control]="afterLeaveBufferControl"></app-validation-messages>
           </div>
         </div>
       </div>

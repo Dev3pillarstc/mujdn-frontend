@@ -1,5 +1,58 @@
 import { TranslateService } from '@ngx-translate/core';
 import { WorkShiftType } from '@/enums/work-shift-type';
+import { ShiftBufferValues } from '@/models/features/business/shift-buffer-values';
+import { BufferedShiftWindow } from '@/models/features/business/buffered-shift-window';
+
+/**
+ * Calculates the complete time window covered by the attendance and leave grace periods.
+ */
+export function calculateBufferedShiftWindow(
+  timeFrom: Date,
+  timeTo: Date,
+  isCrossDayShift: boolean,
+  buffers: ShiftBufferValues
+): BufferedShiftWindow {
+  const scheduledAttendance = new Date(timeFrom);
+  const scheduledLeave = new Date(timeTo);
+  scheduledAttendance.setSeconds(0, 0);
+  scheduledLeave.setSeconds(0, 0);
+
+  if (isCrossDayShift) {
+    scheduledLeave.setDate(scheduledLeave.getDate() + 1);
+  }
+
+  const bufferMinutes = (value?: number | null): number => {
+    const numericValue = Number(value ?? 0);
+    return Number.isFinite(numericValue) ? Math.max(0, numericValue) : 0;
+  };
+
+  const attendanceWindowStart = new Date(scheduledAttendance);
+  attendanceWindowStart.setMinutes(
+    attendanceWindowStart.getMinutes() - bufferMinutes(buffers.beforeAttendanceBuffer)
+  );
+
+  const attendanceWindowEnd = new Date(scheduledAttendance);
+  attendanceWindowEnd.setMinutes(
+    attendanceWindowEnd.getMinutes() + bufferMinutes(buffers.afterAttendanceBuffer)
+  );
+
+  const leaveWindowStart = new Date(scheduledLeave);
+  leaveWindowStart.setMinutes(
+    leaveWindowStart.getMinutes() - bufferMinutes(buffers.beforeLeaveBuffer)
+  );
+
+  const leaveWindowEnd = new Date(scheduledLeave);
+  leaveWindowEnd.setMinutes(leaveWindowEnd.getMinutes() + bufferMinutes(buffers.afterLeaveBuffer));
+
+  const start = new Date(Math.min(attendanceWindowStart.getTime(), leaveWindowStart.getTime()));
+  const end = new Date(Math.max(attendanceWindowEnd.getTime(), leaveWindowEnd.getTime()));
+
+  return {
+    start,
+    end,
+    totalMinutes: Math.floor((end.getTime() - start.getTime()) / 60000),
+  };
+}
 
 /**
  * Determines if a given date is a working day based on the WorkShiftType.

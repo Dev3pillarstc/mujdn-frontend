@@ -21,8 +21,10 @@ export default class EmployeeShiftDay extends BaseCrudModel<
   declare timeTo: string;
   declare dayBoundaryTime?: string;
   declare isRestDay: boolean;
-  declare attendanceBuffer?: number;
-  declare leaveBuffer?: number;
+  declare beforeAttendanceBuffer?: number;
+  declare afterAttendanceBuffer?: number;
+  declare beforeLeaveBuffer?: number;
+  declare afterLeaveBuffer?: number;
   declare employeeWorkingDays?: string;
   declare presenceInquiryTime?: string;
   declare presenceInquiryBuffer?: number;

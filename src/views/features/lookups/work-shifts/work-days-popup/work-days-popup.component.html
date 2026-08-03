@@ -66,14 +66,34 @@
         <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">{{ model.formattedTimeTo }}</h5>
       </div>
       <div>
-        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.ATTENDANCE_BUFFER' | translate }}</span>
+        <span class="text-[#6c737f] text-sm">{{
+          'MY_SHIFTS.BEFORE_ATTENDANCE_BUFFER' | translate
+        }}</span>
         <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
-          {{ model.attendanceBuffer || '0' }}
+          {{ model.beforeAttendanceBuffer ?? 0 }}
         </h5>
       </div>
       <div>
-        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.LEAVE_BUFFER' | translate }}</span>
-        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">{{ model.leaveBuffer || '0' }}</h5>
+        <span class="text-[#6c737f] text-sm">{{
+          'MY_SHIFTS.AFTER_ATTENDANCE_BUFFER' | translate
+        }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+          {{ model.afterAttendanceBuffer ?? 0 }}
+        </h5>
+      </div>
+      <div>
+        <span class="text-[#6c737f] text-sm">{{
+          'MY_SHIFTS.BEFORE_LEAVE_BUFFER' | translate
+        }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+          {{ model.beforeLeaveBuffer ?? 0 }}
+        </h5>
+      </div>
+      <div>
+        <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.AFTER_LEAVE_BUFFER' | translate }}</span>
+        <h5 class="text-[#1f2a37] font-[600] text-[16px] mt-2">
+          {{ model.afterLeaveBuffer ?? 0 }}
+        </h5>
       </div>
       <div>
         <span class="text-[#6c737f] text-sm">{{ 'MY_SHIFTS.STARTING_DATE' | translate }}</span>

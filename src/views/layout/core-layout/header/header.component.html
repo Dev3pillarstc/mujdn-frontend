@@ -97,19 +97,37 @@
 
             <div class="flex flex-col gap-1">
               <span class="text-sm text-[#6c737f]">
-                {{ 'MY_SHIFTS.ATTENDANCE_BUFFER' | translate }}
+                {{ 'MY_SHIFTS.BEFORE_ATTENDANCE_BUFFER' | translate }}
               </span>
               <span class="font-[600] text-[#161616]">
-                {{ currentShift.attendanceBuffer ?? 0 }}
+                {{ currentShift.beforeAttendanceBuffer ?? 0 }}
               </span>
             </div>
 
             <div class="flex flex-col gap-1">
               <span class="text-sm text-[#6c737f]">
-                {{ 'MY_SHIFTS.LEAVE_BUFFER' | translate }}
+                {{ 'MY_SHIFTS.AFTER_ATTENDANCE_BUFFER' | translate }}
               </span>
               <span class="font-[600] text-[#161616]">
-                {{ currentShift.leaveBuffer ?? 0 }}
+                {{ currentShift.afterAttendanceBuffer ?? 0 }}
+              </span>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="text-sm text-[#6c737f]">
+                {{ 'MY_SHIFTS.BEFORE_LEAVE_BUFFER' | translate }}
+              </span>
+              <span class="font-[600] text-[#161616]">
+                {{ currentShift.beforeLeaveBuffer ?? 0 }}
+              </span>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="text-sm text-[#6c737f]">
+                {{ 'MY_SHIFTS.AFTER_LEAVE_BUFFER' | translate }}
+              </span>
+              <span class="font-[600] text-[#161616]">
+                {{ currentShift.afterLeaveBuffer ?? 0 }}
               </span>
             </div>
 

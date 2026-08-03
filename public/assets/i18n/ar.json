@@ -388,6 +388,7 @@
     "EMPLOYEE_NAME": "اسم الموظف",
     "DEPARTMENT": "الادارة",
     "DOWNLOAD_AS_FILE": "تحميل كملف",
+    "GENERATING_REPORT": "جارٍ إنشاء التقرير...",
     "PERMISSION_PDF_FILE_NAME": "بيانات الإذن"
   },
   "SHIFTS_VIEW_PAGE": {

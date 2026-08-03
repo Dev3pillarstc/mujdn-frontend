@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -32,8 +32,8 @@ import { PERMISSION_STATUS_ENUM } from '@/enums/permission-status-enum';
 import { PERMISSION_TABS_ENUM } from '@/enums/permission-tabs-enum';
 import { CustomValidators } from '@/validators/custom-validators';
 import { AuthService } from '@/services/auth/auth.service';
-import { Observable } from 'rxjs';
-import { PermissionDetailsCardComponent } from '../components/permission-details-card/permission-details-card.component';
+import { finalize, Observable } from 'rxjs';
+import { downloadBlobData } from '@/utils/utils';
 
 @Component({
   selector: 'app-permissions-list',
@@ -50,7 +50,6 @@ import { PermissionDetailsCardComponent } from '../components/permission-details
     TabsModule,
     InputTextModule,
     TranslatePipe,
-    PermissionDetailsCardComponent,
   ],
 
   templateUrl: './permissions-list.component.html',
@@ -87,12 +86,7 @@ export default class PermissionsListComponent
   viewMode = ViewModeEnum;
   isIncomingPermissions: boolean = false;
   authService = inject(AuthService);
-  changeDetectorRef = inject(ChangeDetectorRef);
-
-  /** Permission rendered off-screen while its PDF file is being generated. */
-  pdfPermission?: Permission;
-
-  @ViewChild(PermissionDetailsCardComponent) pdfCard?: PermissionDetailsCardComponent;
+  downloadingPermissionId?: number;
 
   override get service() {
     return this.permissionService;
@@ -247,16 +241,32 @@ export default class PermissionsListComponent
     return !!this.authService.isDepartmentManager && permission.isAccepted();
   }
 
-  async downloadPermissionPdf(permission: Permission): Promise<void> {
-    this.pdfPermission = permission;
-    this.changeDetectorRef.detectChanges();
+  downloadPermissionPdf(permission: Permission): void {
+    if (this.downloadingPermissionId !== undefined) return;
 
-    try {
-      await this.pdfCard?.downloadAsPDF();
-    } finally {
-      this.pdfPermission = undefined;
-      this.changeDetectorRef.detectChanges();
-    }
+    this.downloadingPermissionId = permission.id;
+    this.service
+      .exportPermissionPdf(this.langService.getCurrentLanguage(), { id: permission.id })
+      .pipe(finalize(() => (this.downloadingPermissionId = undefined)))
+      .subscribe({
+        next: (blob) => {
+          if (!blob || blob.size === 0) {
+            this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+            return;
+          }
+
+          downloadBlobData(blob, this.getPermissionPdfFileName(permission));
+        },
+        error: () => {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+        },
+      });
+  }
+
+  private getPermissionPdfFileName(permission: Permission): string {
+    const title = this.translateService.instant('PERMISSION_PAGE.PERMISSION_PDF_FILE_NAME');
+    const employeeName = permission.getCreationUserName();
+    return `${employeeName ? `${title} - ${employeeName}` : title}.pdf`;
   }
 
   showAddingPermissionButton(): boolean {

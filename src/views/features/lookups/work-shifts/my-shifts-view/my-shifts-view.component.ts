@@ -138,8 +138,10 @@ export class MyShiftsViewComponent extends BaseListComponent<
     shift.formattedTimeTo = formatTimeTo12Hour(item.timeTo, locale);
     shift.startDate = item.dateFrom;
     shift.endDate = item.dateTo;
-    shift.attendanceBuffer = item.attendanceBuffer;
-    shift.leaveBuffer = item.leaveBuffer;
+    shift.beforeAttendanceBuffer = item.beforeAttendanceBuffer;
+    shift.afterAttendanceBuffer = item.afterAttendanceBuffer;
+    shift.beforeLeaveBuffer = item.beforeLeaveBuffer;
+    shift.afterLeaveBuffer = item.afterLeaveBuffer;
     shift.employeeWorkingDays = item.employeeWorkingDays!;
     shift.presenceInquiryTime = item.presenceInquiryTime!;
     shift.presenceInquiryBuffer = item.presenceInquiryBuffer;
@@ -199,12 +201,12 @@ export class MyShiftsViewComponent extends BaseListComponent<
     return this.isArabic
       ? (shiftDay.shiftDetails?.nameAr ?? shiftDay.shiftNameAr ?? shiftDay.nameAr ?? '')
       : (shiftDay.shiftDetails?.nameEn ??
-        shiftDay.shiftNameEn ??
-        shiftDay.nameEn ??
-        shiftDay.shiftDetails?.nameAr ??
-        shiftDay.shiftNameAr ??
-        shiftDay.nameAr ??
-        '');
+          shiftDay.shiftNameEn ??
+          shiftDay.nameEn ??
+          shiftDay.shiftDetails?.nameAr ??
+          shiftDay.shiftNameAr ??
+          shiftDay.nameAr ??
+          '');
   }
 
   getShiftTypeName(type: number): string {

@@ -19,8 +19,10 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
   declare timeFrom?: string;
   declare timeTo?: string;
   declare dayBoundaryTime?: string;
-  declare attendanceBuffer?: number;
-  declare leaveBuffer?: number;
+  declare beforeAttendanceBuffer?: number;
+  declare afterAttendanceBuffer?: number;
+  declare beforeLeaveBuffer?: number;
+  declare afterLeaveBuffer?: number;
   isDefaultShift?: boolean = false;
   declare shiftLogStartDate?: Date | string;
   declare shiftLogId?: number;
@@ -42,8 +44,10 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       timeFrom,
       timeTo,
       dayBoundaryTime,
-      attendanceBuffer,
-      leaveBuffer,
+      beforeAttendanceBuffer,
+      afterAttendanceBuffer,
+      beforeLeaveBuffer,
+      afterLeaveBuffer,
       isCrossDayShift,
       isDefaultShift,
       isDefaultShiftForm,
@@ -73,15 +77,29 @@ export default class Shift extends BaseCrudModel<Shift, ShiftService> {
       timeFrom: [timeFrom ? timeStringToDate(timeFrom) : null, [Validators.required]],
       timeTo: [timeTo ? timeStringToDate(timeTo) : null, [Validators.required]],
       dayBoundaryTime: [],
-      attendanceBuffer: [
-        attendanceBuffer,
+      beforeAttendanceBuffer: [
+        beforeAttendanceBuffer ?? 0,
         [
           CustomValidators.positiveNumber(),
           Validators.max(CustomValidators.defaultLengths.maxShiftBuffer),
         ],
       ],
-      leaveBuffer: [
-        leaveBuffer,
+      afterAttendanceBuffer: [
+        afterAttendanceBuffer ?? 0,
+        [
+          CustomValidators.positiveNumber(),
+          Validators.max(CustomValidators.defaultLengths.maxShiftBuffer),
+        ],
+      ],
+      beforeLeaveBuffer: [
+        beforeLeaveBuffer ?? 0,
+        [
+          CustomValidators.positiveNumber(),
+          Validators.max(CustomValidators.defaultLengths.maxShiftBuffer),
+        ],
+      ],
+      afterLeaveBuffer: [
+        afterLeaveBuffer ?? 0,
         [
           CustomValidators.positiveNumber(),
           Validators.max(CustomValidators.defaultLengths.maxShiftBuffer),

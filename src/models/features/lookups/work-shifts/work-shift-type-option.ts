@@ -16,14 +16,14 @@ export const WORK_SHIFT_TYPE_OPTIONS: WorkShiftTypeOption[] = [
   },
   // {
   //   id: 2,
-  //   nameEn: 'Work Week / Rest Week',
-  //   nameAr: 'أسبوع عمل / أسبوع راحة',
+  //   nameEn: '2 Weeks Work / 2 Weeks Rest',
+  //   nameAr: 'اسبوعين عمل / اسبوعين راحة',
   //   value: WorkShiftType.WeekOnWeekOff,
   // },
   {
     id: 3,
-    nameEn: 'Work Week / Rest Week (24h)',
-    nameAr: 'أسبوع عمل / أسبوع راحة (24 ساعة)',
+    nameEn: '2 Weeks Work / 2 Weeks Rest (24h)',
+    nameAr: 'اسبوعين عمل / اسبوعين راحة (24 ساعة)',
     value: WorkShiftType.WeekOnWeekOff24,
   },
   {

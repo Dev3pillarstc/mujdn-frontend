@@ -137,6 +137,11 @@ export default class AttendanceReport extends BaseCrudModel<
   }
 
   getEffectiveLeaveFingerPrint(): Date | null {
+    const now = new Date();
+    if (this.shouldHideLeaveFingerPrintAndStatus(now)) {
+      return null;
+    }
+
     if (
       this.isGraceApplied &&
       !this.lastLeaveFingerPrint &&
@@ -148,5 +153,24 @@ export default class AttendanceReport extends BaseCrudModel<
       return date;
     }
     return this.lastLeaveFingerPrint ? new Date(this.lastLeaveFingerPrint) : null;
+  }
+
+  shouldHideLeaveFingerPrintAndStatus(now: Date = new Date()): boolean {
+    if (!this.earliestAllowedDepartureDateTime) {
+      return false;
+    }
+
+    const earliestAllowedDeparture = new Date(this.earliestAllowedDepartureDateTime);
+
+    if (Number.isNaN(earliestAllowedDeparture.getTime())) {
+      return false;
+    }
+
+    const isEarliestAllowedDepartureToday =
+      earliestAllowedDeparture.getFullYear() === now.getFullYear() &&
+      earliestAllowedDeparture.getMonth() === now.getMonth() &&
+      earliestAllowedDeparture.getDate() === now.getDate();
+
+    return isEarliestAllowedDepartureToday && now.getTime() <= earliestAllowedDeparture.getTime();
   }
 }

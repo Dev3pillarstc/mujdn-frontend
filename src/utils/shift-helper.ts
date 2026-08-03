@@ -1,18 +1,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { WorkShiftType } from '@/enums/work-shift-type';
-
-export interface ShiftBufferValues {
-  beforeAttendanceBuffer?: number | null;
-  afterAttendanceBuffer?: number | null;
-  beforeLeaveBuffer?: number | null;
-  afterLeaveBuffer?: number | null;
-}
-
-export interface BufferedShiftWindow {
-  start: Date;
-  end: Date;
-  totalMinutes: number;
-}
+import { ShiftBufferValues } from '@/models/features/business/shift-buffer-values';
+import { BufferedShiftWindow } from '@/models/features/business/buffered-shift-window';
 
 /**
  * Calculates the complete time window covered by the attendance and leave grace periods.

@@ -83,4 +83,11 @@ export class PermissionService extends BaseCrudService<Permission> {
   ): Observable<Blob> {
     return this.exportPdfByEndpoint('ExportDepartmentPermissionsPdf', language, filterOptions);
   }
+
+  exportPermissionPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportPermissionPdf', language, filterOptions);
+  }
 }

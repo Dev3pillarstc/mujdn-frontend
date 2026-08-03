@@ -390,6 +390,7 @@
     "EMPLOYEE_NAME": "Employee Name",
     "DEPARTMENT": "Department",
     "DOWNLOAD_AS_FILE": "Download as File",
+    "GENERATING_REPORT": "Generating report...",
     "PERMISSION_PDF_FILE_NAME": "Permission Data"
   },
   "SHIFTS_VIEW_PAGE": {

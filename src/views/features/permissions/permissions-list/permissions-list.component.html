@@ -498,9 +498,20 @@
                             <button
                               (click)="downloadPermissionPdf(permissionsRequest)"
                               class="table-action-green-btn"
-                              [title]="'PERMISSION_PAGE.DOWNLOAD_AS_FILE' | translate"
+                              [disabled]="downloadingPermissionId !== undefined"
+                              [attr.aria-busy]="downloadingPermissionId === permissionsRequest.id"
+                              [title]="
+                                (downloadingPermissionId === permissionsRequest.id
+                                  ? 'PERMISSION_PAGE.GENERATING_REPORT'
+                                  : 'PERMISSION_PAGE.DOWNLOAD_AS_FILE'
+                                ) | translate
+                              "
                             >
-                              <img alt="" src="assets/icons/download-qr.svg" />
+                              @if (downloadingPermissionId === permissionsRequest.id) {
+                                <i class="pi pi-spinner pi-spin" aria-hidden="true"></i>
+                              } @else {
+                                <img alt="" src="assets/icons/download-qr.svg" />
+                              }
                             </button>
                           }
                         </div>
@@ -532,11 +543,4 @@
       </p-tabpanels>
     </p-tabs>
   </div>
-
-  <!-- Rendered off-screen only while a permission PDF file is being generated -->
-  @if (pdfPermission) {
-    <div aria-hidden="true" style="position: fixed; top: 0; left: -10000px; width: 800px">
-      <app-permission-details-card [model]="pdfPermission" />
-    </div>
-  }
 </div>

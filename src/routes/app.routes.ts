@@ -6,7 +6,6 @@ import { permissionReasonResolver } from '@/resolvers/lookups/permission-reason.
 import { cityResolver } from '@/resolvers/lookups/city.resolver';
 import { userResolver } from '@/resolvers/user.resolver';
 import { regionResolver } from '@/resolvers/lookups/region.resolver';
-import { notificationSettingResolver } from '@/resolvers/setting/notification-setting.resolver';
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
@@ -30,6 +29,7 @@ import { employeeShiftDaysResolver } from '@/resolvers/lookups/employee-shift-da
 import { workShiftsAssignmentContainerResolver } from '@/resolvers/lookups/work-shifts-assignment-container.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
 import { chooseSystemResolver } from '@/resolvers/choose-system.resolver';
+import { generalSettingsResolver } from '@/resolvers/setting/general-settings.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -183,7 +183,7 @@ export const routes: Routes = [
         path: 'general-settings',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
-        resolve: { channel: notificationSettingResolver },
+        resolve: { settings: generalSettingsResolver },
         loadComponent: () =>
           import('@/views/features/settings/notification-settings/notification-settings.component'),
       },

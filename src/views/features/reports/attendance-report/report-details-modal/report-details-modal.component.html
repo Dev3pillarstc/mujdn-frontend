@@ -48,7 +48,8 @@
                 {{ 'ATTENDANCE_REPORT_PAGE.DATE' | translate }}
               </span>
               <span class="text-white font-[600]">{{ formatDate(model.processingDate) }}</span>
-            </div>
+           </div>
+            @if (!model.shouldHideLeaveFingerPrintAndStatus()) {
             <!-- Status -->
             <div class="flex flex-col gap-1">
               <span class="text-sm text-white opacity-80">
@@ -66,6 +67,7 @@
                 {{ getStatusConfig(model.attendanceStatus).labelKey | translate }}
               </div>
             </div>
+            }
           </div>
         </div>
 
@@ -79,7 +81,8 @@
                 {{ 'ATTENDANCE_REPORT_PAGE.DATE' | translate }}
               </span>
               <span class="text-white font-[600]">{{ formatDate(model.processingDate) }}</span>
-            </div>
+           </div>
+            @if (!model.shouldHideLeaveFingerPrintAndStatus()) {
             <!-- Status -->
             <div class="flex flex-col gap-1">
               <span class="text-sm text-white opacity-80">
@@ -97,6 +100,7 @@
                 {{ getStatusConfig(model.attendanceStatus).labelKey | translate }}
               </div>
             </div>
+            }
           </div>
         </div>
       }

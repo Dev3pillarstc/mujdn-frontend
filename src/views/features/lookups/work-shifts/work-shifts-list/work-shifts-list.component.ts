@@ -108,8 +108,10 @@ export default class WorkShiftsListComponent
     return {
       [translate.instant('WORK_SHIFTS.SHIFT_NAME_AR')]: model.nameAr,
       [translate.instant('WORK_SHIFTS.SHIFT_NAME_EN')]: model.nameEn,
-      [translate.instant('WORK_SHIFTS.MAX_ATTENDANCE_TIME')]: model.attendanceBuffer,
-      [translate.instant('WORK_SHIFTS.MAX_LEAVE_TIME')]: model.leaveBuffer,
+      [translate.instant('WORK_SHIFTS.BEFORE_ATTENDANCE_BUFFER')]: model.beforeAttendanceBuffer,
+      [translate.instant('WORK_SHIFTS.AFTER_ATTENDANCE_BUFFER')]: model.afterAttendanceBuffer,
+      [translate.instant('WORK_SHIFTS.BEFORE_LEAVE_BUFFER')]: model.beforeLeaveBuffer,
+      [translate.instant('WORK_SHIFTS.AFTER_LEAVE_BUFFER')]: model.afterLeaveBuffer,
       [translate.instant('WORK_SHIFTS.TIME_FROM_TO')]: this.getFormattedTimeRange(
         model.timeFrom || '',
         model.timeTo || ''

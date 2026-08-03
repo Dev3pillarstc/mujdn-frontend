@@ -15,6 +15,7 @@ export class NotificationSetting extends BaseCrudModel<
   isSms: boolean = true;
   isEmail: boolean = true;
   isWeb: boolean = true;
+  concurrencyUpdateVersion = '';
 
   buildForm() {
     const { isSms, isEmail, isWeb } = this;

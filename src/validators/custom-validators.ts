@@ -1,5 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { isValidValue } from '@/utils/utils';
+import { calculateBufferedShiftWindow } from '@/utils/shift-helper';
 
 const defaultLengths = {
   MIN_LENGTH: 3,
@@ -210,33 +211,23 @@ export function crossDateTimeValidator(
 }
 export function crossDateShiftEndNotPassNextDayStart(): ValidatorFn {
   return (form: AbstractControl): ValidationErrors | null => {
-    let isCrossDayShift = !!form.get('isCrossDayShift')!.value;
+    const isCrossDayShift = !!form.get('isCrossDayShift')?.value;
 
-    let from = form.get('timeFrom')?.value ? new Date(form.get('timeFrom')?.value) : null;
-    let bufferBeforeStart = form.get('attendanceBuffer')?.value || 0;
-
-    let to = form.get('timeTo')?.value ? new Date(form.get('timeTo')?.value) : null;
-    let bufferAfterEnd = form.get('leaveBuffer')?.value || 0;
+    const from = form.get('timeFrom')?.value ? new Date(form.get('timeFrom')?.value) : null;
+    const to = form.get('timeTo')?.value ? new Date(form.get('timeTo')?.value) : null;
 
     if (!from || !to) {
       return null;
     }
 
-    from.setSeconds(0, 0);
-    to.setSeconds(0, 0);
+    const bufferedWindow = calculateBufferedShiftWindow(from, to, isCrossDayShift, {
+      beforeAttendanceBuffer: form.get('beforeAttendanceBuffer')?.value,
+      afterAttendanceBuffer: form.get('afterAttendanceBuffer')?.value,
+      beforeLeaveBuffer: form.get('beforeLeaveBuffer')?.value,
+      afterLeaveBuffer: form.get('afterLeaveBuffer')?.value,
+    });
 
-    // Add day if needed
-    if (isCrossDayShift) {
-      to.setDate(to.getDate() + 1);
-    }
-
-    from.setMinutes(from.getMinutes() - bufferBeforeStart);
-    to.setMinutes(to.getMinutes() + bufferAfterEnd);
-
-    let diffMs = to.getTime() - from.getTime();
-
-    const totalMinutes = Math.floor(diffMs / 60000); // ignore seconds
-    if (totalMinutes > 24 * 60) {
+    if (bufferedWindow.totalMinutes > 24 * 60) {
       return { invalidShiftConfiguration: true };
     }
 

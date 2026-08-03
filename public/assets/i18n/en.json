@@ -556,7 +556,8 @@
     "GRACE_MINUTES": "Grace Minutes",
     "MONTHLY_GRACE_MINUTES": "Monthly Grace Minutes",
     "DAILY_MAX_GRACE_MINUTES": "Maximum Daily Grace Minutes",
-    "SETTINGS_STALE_RELOAD": "Settings are stale or incomplete. Reloading the latest values."
+    "SETTINGS_STALE_RELOAD": "Settings are stale or incomplete. Reloading the latest values.",
+    "MONTHLY_GRACE_MUST_COVER_DAILY": "Monthly grace minutes must be greater than or equal to the maximum daily grace minutes."
   },
   "NOTIFICATIONS_PAGE": {
     "NOTIFICATIONS": "Notifications",

@@ -137,6 +137,7 @@
             </p-inputnumber>
           </div>
         </div>
+        <app-validation-messages [control]="generalSettingsForm"></app-validation-messages>
       </div>
 
       <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
@@ -155,7 +156,7 @@
               [showButtons]="true"
               buttonLayout="horizontal"
               spinnerMode="horizontal"
-              [min]="1"
+              [min]="0"
               [max]="31"
               [maxFractionDigits]="0"
               [useGrouping]="false"

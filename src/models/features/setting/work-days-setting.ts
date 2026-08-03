@@ -1,6 +1,5 @@
 import { BaseCrudModel } from '@/abstracts/base-crud-model';
 import { WorkDaysSettingInterceptor } from '@/model-interceptors/setting/work-days-setting.interceptor';
-import { NotificationSettingService } from '@/services/features/setting/notification-setting.service';
 import { WorkDaysSettingService } from '@/services/features/setting/work-days-setting.service';
 import { InterceptModel } from 'cast-response';
 
@@ -16,7 +15,7 @@ export class WorkDaysSetting extends BaseCrudModel<WorkDaysSetting, WorkDaysSett
   thursday: boolean = true;
   friday: boolean = true;
   saturday: boolean = true;
-  declare concurrencyUpdateVersion?: Uint8Array;
+  concurrencyUpdateVersion = '';
 
   buildForm() {
     const { sunday, monday, tuesday, wednesday, thursday, friday, saturday } = this;

@@ -554,7 +554,8 @@
     "GRACE_MINUTES": "دقائق السماحية",
     "MONTHLY_GRACE_MINUTES": "دقائق السماحية الشهرية",
     "DAILY_MAX_GRACE_MINUTES": "الحد الأقصى لدقائق السماحية اليومية",
-    "SETTINGS_STALE_RELOAD": "الإعدادات قديمة أو غير مكتملة. جارٍ تحميل أحدث القيم."
+    "SETTINGS_STALE_RELOAD": "الإعدادات قديمة أو غير مكتملة. جارٍ تحميل أحدث القيم.",
+    "MONTHLY_GRACE_MUST_COVER_DAILY": "يجب أن تكون دقائق السماحية الشهرية أكبر من أو تساوي الحد الأقصى لدقائق السماحية اليومية."
   },
   "NOTIFICATIONS_PAGE": {
     "NOTIFICATIONS": "الإشعارات",

@@ -24,4 +24,5 @@ export enum ValidationErrorKeyEnum {
   DUPLICATE_SHIFT = 'duplicateShift',
   SHIFTING_PERIOD_MAX_ONE_YEAR = 'shiftingPeriodMaxOneYear',
   INVALID_SHIFT_CONFIGURATION = 'invalidShiftConfiguration',
+  GRACE_MONTHLY_LESS_THAN_DAILY = 'graceMonthlyMinutesLessThanDaily',
 }

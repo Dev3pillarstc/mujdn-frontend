@@ -1,23 +1,29 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { WeekDaysEnum } from '@/enums/week-days-enum';
-import {
-  GeneralSettings,
-  GeneralSettingsNotificationChannels,
-  GeneralSettingsWorkDays,
-} from '@/models/features/setting/general-settings';
+import { GeneralSettings } from '@/models/features/setting/general-settings';
 import { GeneralSettingsService } from '@/services/features/setting/general-settings.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { weekDays } from '@/utils/general-helper';
-
+import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
+import { NotificationSetting } from '@/models/features/setting/notification-setting';
+import { WorkDaysSetting } from '@/models/features/setting/work-days-setting';
 
 @Component({
   selector: 'app-notification-channels',
@@ -29,16 +35,31 @@ import { weekDays } from '@/utils/general-helper';
     TranslatePipe,
     RouterModule,
     InputNumberModule,
+    ValidationMessagesComponent,
   ],
   templateUrl: './notification-settings.component.html',
   styleUrls: ['./notification-settings.component.scss'],
 })
 export default class NotificationSettingsComponent implements OnInit, OnDestroy {
+  private readonly graceMinutesValidator: ValidatorFn = (
+    control: AbstractControl
+  ): ValidationErrors | null => {
+    const monthlyMinutes = control.get('graceMonthlyMinutes')?.value;
+    const dailyMaxMinutes = control.get('graceDailyMaxMinutes')?.value;
+
+    if (monthlyMinutes === null || dailyMaxMinutes === null) {
+      return null;
+    }
+
+    return monthlyMinutes >= dailyMaxMinutes ? null : { graceMonthlyMinutesLessThanDaily: true };
+  };
+
   private readonly destroy$ = new Subject<void>();
   private readonly fb = inject(FormBuilder);
   private readonly service = inject(GeneralSettingsService);
   private readonly translateService = inject(TranslateService);
   private readonly alertService = inject(AlertService);
+  private readonly route = inject(ActivatedRoute);
 
   breadcrumbs: MenuItem[] = [];
   home: MenuItem = this.setHomeItem();
@@ -57,7 +78,8 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
 
   ngOnInit(): void {
     this.buildForm();
-    this.loadGeneralSettings();
+    this.setGeneralSettings(this.route.snapshot.data['settings'] as GeneralSettings);
+    this.hasLoadedSettings = true;
 
     this.translateService.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.home = this.setHomeItem();
@@ -187,6 +209,8 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
         [Validators.required, Validators.min(1), Validators.max(31), Validators.pattern(/^\d+$/)],
       ],
     });
+    this.generalSettingsForm.addValidators(this.graceMinutesValidator);
+    this.generalSettingsForm.updateValueAndValidity();
   }
 
   private prepareSettings(): GeneralSettings {
@@ -194,12 +218,12 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
 
     return Object.assign(new GeneralSettings(), {
       workDays: Object.assign(
-        new GeneralSettingsWorkDays(),
+        new WorkDaysSetting(),
         this.generalSettingsModel.workDays,
         value.workDays
       ),
       notificationChannels: Object.assign(
-        new GeneralSettingsNotificationChannels(),
+        new NotificationSetting(),
         this.generalSettingsModel.notificationChannels,
         value.notificationChannels
       ),
@@ -211,11 +235,8 @@ export default class NotificationSettingsComponent implements OnInit, OnDestroy 
 
   private setGeneralSettings(settings: GeneralSettings): void {
     this.generalSettingsModel = Object.assign(new GeneralSettings(), settings, {
-      workDays: Object.assign(new GeneralSettingsWorkDays(), settings.workDays),
-      notificationChannels: Object.assign(
-        new GeneralSettingsNotificationChannels(),
-        settings.notificationChannels
-      ),
+      workDays: Object.assign(new WorkDaysSetting(), settings.workDays),
+      notificationChannels: Object.assign(new NotificationSetting(), settings.notificationChannels),
     });
     this.patchForm(this.generalSettingsModel);
   }

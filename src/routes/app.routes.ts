@@ -29,6 +29,7 @@ import { employeeShiftDaysResolver } from '@/resolvers/lookups/employee-shift-da
 import { workShiftsAssignmentContainerResolver } from '@/resolvers/lookups/work-shifts-assignment-container.resolver';
 import { myShiftsResolver } from '@/resolvers/lookups/my-shifts.resolver';
 import { chooseSystemResolver } from '@/resolvers/choose-system.resolver';
+import { generalSettingsResolver } from '@/resolvers/setting/general-settings.resolver';
 
 export const routes: Routes = [
   // ✅ Protected routes
@@ -182,6 +183,7 @@ export const routes: Routes = [
         path: 'general-settings',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.GENERAL_SETTINGS },
+        resolve: { settings: generalSettingsResolver },
         loadComponent: () =>
           import('@/views/features/settings/notification-settings/notification-settings.component'),
       },

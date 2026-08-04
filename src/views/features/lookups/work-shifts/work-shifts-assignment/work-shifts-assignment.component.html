@@ -135,6 +135,7 @@
                 optionValue="id"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.DEPARTMENT' | translate"
                 [showClear]="true"
+                [filter]="true"
                 (onChange)="onDepartmentChange()"
                 (onClear)="onDepartmentChange()"
               ></p-select>
@@ -156,6 +157,7 @@
                 optionValue="id"
                 [placeholder]="'USER_WORK_SHIFT_PAGE.EMPLOYEE_NAME' | translate"
                 [showClear]="true"
+                [filter]="true"
                 [virtualScroll]="true"
                 [virtualScrollItemSize]="38"
               ></p-select>

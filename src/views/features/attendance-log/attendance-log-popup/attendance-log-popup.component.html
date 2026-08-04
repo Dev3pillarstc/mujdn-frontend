@@ -29,6 +29,7 @@
               name="departmentId"
               optionValue="id"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.DEPARTMENT' | translate }}"
+              [filter]="true"
             >
             </p-select>
             <span
@@ -54,6 +55,7 @@
               name="employeeId"
               optionValue="id"
               placeholder="{{ 'ATTENDANCE_LOG_PAGE.EMPLOYEE_NAME' | translate }}"
+              [filter]="true"
               [virtualScroll]="true"
               [virtualScrollItemSize]="38"
             >

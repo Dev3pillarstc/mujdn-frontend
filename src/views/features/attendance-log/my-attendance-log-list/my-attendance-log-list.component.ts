@@ -181,7 +181,8 @@ export default class MyAttendanceLogListComponent
         model.creatorNameEn ?? 'System',
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR_PDF')]:
         model.creatorNameAr ?? 'النظام',
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: 
+        model.channelName ?? (this.isCurrentLanguageEnglish() ? 'Manual' : 'يدوي'),
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: this.swipeTimeArEn(
         model.swipeTime
       ),
@@ -228,7 +229,8 @@ export default class MyAttendanceLogListComponent
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.SWIPE_TIME')]: this.swipeTimeArEn(
         model.swipeTime
       ),
-      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: model.channelName,
+      [this.translateService.instant('ATTENDANCE_LOG_PAGE.CHANNEL_NAME')]: 
+        model.channelName ?? (this.isCurrentLanguageEnglish() ? 'Manual' : 'يدوي'),
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_EN')]:
         model.creatorNameEn ?? 'System',
       [this.translateService.instant('ATTENDANCE_LOG_PAGE.CREATOR_AR')]:

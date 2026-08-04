@@ -9,7 +9,12 @@ import {
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginationInfo } from '@/models/shared/response/pagination-info';
 import { EmployeeShiftDayService } from '@/services/features/lookups/employee-shift-day.service';
-import { formatDateOnly, formatTimeRange, formatTimeTo12Hour } from '@/utils/general-helper';
+import {
+  formatDateOnly,
+  formatDateTimeForExcel,
+  formatTimeRange,
+  formatTimeTo12Hour,
+} from '@/utils/general-helper';
 import { CustomValidators } from '@/validators/custom-validators';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -156,8 +161,11 @@ export class MyShiftsViewComponent extends BaseListComponent<
 
   protected override mapModelToExcelRow(model: EmployeeShiftDay): { [key: string]: any } {
     return {
-      [this.translateService.instant('SHIFTS_VIEW_PAGE.DATE_TIME')]:
-        `${this.getFormattedDateRange(model.dateFrom, model.dateTo)} ${model.formattedTimeRange ?? ''}`.trim(),
+      [this.translateService.instant('SHIFTS_VIEW_PAGE.DATE_TIME')]: formatDateTimeForExcel(
+        this.getFormattedDateRange(model.dateFrom, model.dateTo),
+        this.getFormattedTimeRange(model),
+        this.isArabic ? 'ar-EG' : 'en-US'
+      ),
       [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_NAME')]: this.getShiftName(model),
       [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_TYPE')]: this.getShiftTypeName(
         model.shiftAssignmentType
@@ -221,11 +229,14 @@ export class MyShiftsViewComponent extends BaseListComponent<
     return from === to ? from : `${from} - ${to}`;
   }
 
+  getFormattedTimeRange(item: EmployeeShiftDay): string {
+    return formatTimeRange(item.timeFrom, item.timeTo, this.isArabic ? 'ar-EG' : 'en-US');
+  }
+
   private applyTimeFormatting(list: EmployeeShiftDay[]): void {
     if (!list) return;
-    const locale = this.isArabic ? 'ar-EG' : 'en-US';
     list.forEach((item) => {
-      item.formattedTimeRange = formatTimeRange(item.timeFrom, item.timeTo, locale);
+      item.formattedTimeRange = this.getFormattedTimeRange(item);
     });
   }
 }

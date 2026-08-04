@@ -21,7 +21,12 @@ import EmployeeShiftDay from '@/models/features/lookups/work-shifts/employee-shi
 import { EmployeeShiftDayFilter } from '@/models/features/lookups/work-shifts/employee-shift-day-filter';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginationInfo } from '@/models/shared/response/pagination-info';
-import { formatDateOnly, formatTimeRange, formatTimeTo12Hour } from '@/utils/general-helper';
+import {
+  formatDateOnly,
+  formatDateTimeForExcel,
+  formatTimeRange,
+  formatTimeTo12Hour,
+} from '@/utils/general-helper';
 import {
   WORK_SHIFT_TYPE_OPTIONS,
   WorkShiftTypeOption,
@@ -150,9 +155,8 @@ export class ShiftsViewComponent extends BaseListComponent<
 
   private applyTimeFormatting(list: EmployeeShiftDay[]): void {
     if (!list) return;
-    const locale = this.isArabic ? 'ar-EG' : 'en-US';
     list.forEach((item) => {
-      item.formattedTimeRange = formatTimeRange(item.timeFrom, item.timeTo, locale);
+      item.formattedTimeRange = this.getFormattedTimeRange(item);
     });
   }
 
@@ -193,8 +197,11 @@ export class ShiftsViewComponent extends BaseListComponent<
     return {
       [this.translateService.instant('SHIFTS_VIEW_PAGE.EMPLOYEE_NAME')]:
         this.getEmployeeName(model),
-      [this.translateService.instant('SHIFTS_VIEW_PAGE.DATE_TIME')]:
-        `${this.getFormattedDateRange(model.dateFrom, model.dateTo)} ${model.formattedTimeRange ?? ''}`.trim(),
+      [this.translateService.instant('SHIFTS_VIEW_PAGE.DATE_TIME')]: formatDateTimeForExcel(
+        this.getFormattedDateRange(model.dateFrom, model.dateTo),
+        this.getFormattedTimeRange(model),
+        this.isArabic ? 'ar-EG' : 'en-US'
+      ),
       [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_NAME')]: this.getShiftName(model),
       [this.translateService.instant('SHIFTS_VIEW_PAGE.SHIFT_TYPE')]: this.getShiftTypeName(
         model.shiftAssignmentType
@@ -274,6 +281,10 @@ export class ShiftsViewComponent extends BaseListComponent<
     const to = formatDateOnly(dateTo);
     return from === to ? from : `${from} - ${to}`;
     // return `${from} - ${to}`;
+  }
+
+  getFormattedTimeRange(item: EmployeeShiftDay): string {
+    return formatTimeRange(item.timeFrom, item.timeTo, this.isArabic ? 'ar-EG' : 'en-US');
   }
 
   get dateFrom(): Date | undefined {

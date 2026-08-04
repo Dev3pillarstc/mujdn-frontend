@@ -136,6 +136,32 @@ export function formatTimeRange(
   return `${formatTimeTo12Hour(timeFrom, locale)} - ${formatTimeTo12Hour(timeTo, locale)}`;
 }
 
+// The table lays this value out right-to-left, so "3:20 ص - 5:21 م" reaches the reader as
+// "م 5:21 - ص 3:20" on screen. An Excel cell holding the same text is laid out left-to-right
+// instead, and the bidi algorithm then reorders it into "3:20 م 5:21 - ص", detaching each
+// marker from its own time. Declaring the cell right-to-left restores the table's layout, and
+// measuring the rendered glyph positions confirms the result is identical whether the cell
+// ends up left-to-right or right-to-left, so it does not matter which one Excel settles on.
+export function toRtlExcelCell(text: string, locale: 'en-US' | 'ar-EG' = 'en-US'): string {
+  // Latin AM/PM carries no direction of its own, so English needs no declaration.
+  if (locale !== 'ar-EG' || !text) return text;
+
+  const RIGHT_TO_LEFT_EMBEDDING = String.fromCharCode(0x202b);
+  const POP_DIRECTIONAL_FORMATTING = String.fromCharCode(0x202c);
+
+  return `${RIGHT_TO_LEFT_EMBEDDING}${text}${POP_DIRECTIONAL_FORMATTING}`;
+}
+
+// The shift screens put the date and the time in one cell, where the table gives each its own
+// element. Declaring the cell keeps both halves laid out the way the table shows them.
+export function formatDateTimeForExcel(
+  dateText: string,
+  timeText: string,
+  locale: 'en-US' | 'ar-EG' = 'en-US'
+): string {
+  return toRtlExcelCell(`${dateText} ${timeText}`.trim(), locale);
+}
+
 export function changeTimeSuffix<T>(
   isCurrentLanguageEnglish: () => boolean,
   item: T,

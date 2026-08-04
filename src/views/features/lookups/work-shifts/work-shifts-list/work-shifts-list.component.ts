@@ -17,7 +17,7 @@ import { LanguageService } from '@/services/shared/language.service';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { formatTimeTo12Hour } from '@/utils/general-helper';
+import { formatTimeTo12Hour, toRtlExcelCell } from '@/utils/general-helper';
 import { AuthService } from '@/services/auth/auth.service';
 
 @Component({
@@ -112,9 +112,9 @@ export default class WorkShiftsListComponent
       [translate.instant('WORK_SHIFTS.AFTER_ATTENDANCE_BUFFER')]: model.afterAttendanceBuffer,
       [translate.instant('WORK_SHIFTS.BEFORE_LEAVE_BUFFER')]: model.beforeLeaveBuffer,
       [translate.instant('WORK_SHIFTS.AFTER_LEAVE_BUFFER')]: model.afterLeaveBuffer,
-      [translate.instant('WORK_SHIFTS.TIME_FROM_TO')]: this.getFormattedTimeRange(
-        model.timeFrom || '',
-        model.timeTo || ''
+      [translate.instant('WORK_SHIFTS.TIME_FROM_TO')]: toRtlExcelCell(
+        this.getFormattedTimeRange(model.timeFrom || '', model.timeTo || ''),
+        this.isCurrentLanguageEnglish() ? 'en-US' : 'ar-EG'
       ),
       [translate.instant('WORK_SHIFTS.DEFAULT_SHIFT')]: this.excelShiftStatus(model),
     };

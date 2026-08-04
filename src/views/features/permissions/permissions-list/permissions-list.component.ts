@@ -12,7 +12,7 @@ import { Permission } from '@/models/features/lookups/permission/permission';
 import { PermissionFilter } from '@/models/features/lookups/permission/permission-filter';
 import { PermissionService } from '@/services/features/lookups/permission.service';
 import { LanguageService } from '@/services/shared/language.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FluidModule } from 'primeng/fluid';
@@ -131,7 +131,7 @@ export default class PermissionsListComponent
       [this.translateService.instant('EMPLOYEES_PAGE.EMPLOYEE_NAME')]: model.getCreationUserName(),
       [this.translateService.instant('DEPARTMENTS_HEADER_PAGE.DEPARTMENT_NAME')]:
         model.getPermissionDepartmentName(),
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: !!model.permissionDate ? formatDate(model.permissionDate, 'd/M/yyyy', 'en-US') : '',
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
         model.getPermissionReasonName(),
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),
@@ -333,7 +333,7 @@ export default class PermissionsListComponent
     return {
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_TYPE')]:
         model.getPermissionTypeName(),
-      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: model.permissionDate,
+      [this.translateService.instant('PERMISSION_PAGE.PERMISSION_DATE')]: !!model.permissionDate ? formatDate(model.permissionDate, 'd/M/yyyy', 'en-US') : '',
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_REASON')]:
         model.getPermissionReasonName(),
       [this.translateService.instant('PERMISSION_PAGE.PERMISSION_STATUS')]: model.getStatusName(),

@@ -95,9 +95,6 @@ export class PermissionsDataPopupComponent implements OnInit {
         this.model = updatedPermission; // optionally update local model
         this.dialogRef.close(DIALOG_ENUM.OK);
       },
-      error: (err) => {
-        this.dialogRef.close(DIALOG_ENUM.OK);
-      },
     });
   }
 

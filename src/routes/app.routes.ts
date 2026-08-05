@@ -233,6 +233,21 @@ export const routes: Routes = [
           import('@/views/features/department/department-list/department-list.component'),
       },
       {
+        path: 'leaves-settings',
+        loadComponent: () =>
+          import('@/views/features/lookups/leaves-settings/leaves-settings.component'),
+      },
+      {
+        path: 'leaves',
+        loadComponent: () =>
+          import('@/views/features/leaves/leaves-container/leaves-container.component'),
+      },
+      {
+        path: 'leaves-confirmations',
+        loadComponent: () =>
+          import('@/views/features/leaves-confirmations/leaves-confirmations.component'),
+      },
+      {
         path: 'work-shifts',
         canActivate: [authGuard],
         data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.WORK_SHIFTS },

@@ -1,0 +1,78 @@
+<div class="p-6" dir="rtl">
+    <!-- Header -->
+    <button (click)="close()" class="block ms-auto">
+        <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="flex-1 text-[#1f2a37] font-semibold text-lg mb-4">بيانات طلب الاجازة</h3>
+
+    <!-- Body -->
+    <div class="bg-[#f3f4f6] rounded-2xl p-4 sm:p-6 flex flex-col gap-6 sm:gap-10 mb-6">
+        <!-- Request status -->
+        <div class="bg-white border-[0.5px] border-[#d2d6db] rounded-2xl px-4 sm:px-6 py-3 flex items-center gap-2">
+            <span class="text-sm text-[#6c737f]">حالة الطلب</span>
+
+            <!-- STATES: keep the tag matching the request status -->
+            <!-- new -->
+            <span
+                class="inline-flex items-center gap-2 px-4 py-0.5 rounded-full bg-[#1570ef] text-white text-base font-medium">
+                جديد
+                <span class="w-[10px] h-[10px] rounded-full bg-[#ffffff99]"></span>
+            </span>
+            <!-- approved -->
+            <span
+                class="inline-flex items-center gap-2 px-4 py-0.5 rounded-full bg-[#067647] text-white text-base font-medium">
+                موافقة
+                <span class="w-[10px] h-[10px] rounded-full bg-[#ffffff99]"></span>
+            </span>
+            <!-- rejected -->
+            <span
+                class="inline-flex items-center gap-2 px-4 py-0.5 rounded-full bg-[#d92d20] text-white text-base font-medium">
+                رفض
+                <span class="w-[10px] h-[10px] rounded-full bg-[#ffffff99]"></span>
+            </span>
+        </div>
+
+        <!-- Request data -->
+        <div class="flex flex-wrap items-center gap-6">
+            <div class="flex flex-1 flex-wrap items-center gap-6">
+                <!-- Leave Type -->
+                <div class="flex flex-col gap-2">
+                    <span class="text-sm text-[#6c737f]">نوع الاجازة</span>
+                    <span class="text-base font-semibold text-[#161616]">اجازة مرضية</span>
+                </div>
+                <!-- Date From -->
+                <div class="flex flex-col gap-2">
+                    <span class="text-sm text-[#6c737f]">تاريخ ( من )</span>
+                    <span class="text-base font-semibold text-[#161616]">3/8/2026</span>
+                </div>
+                <!-- Date To -->
+                <div class="flex flex-col gap-2">
+                    <span class="text-sm text-[#6c737f]">تاريخ ( الى )</span>
+                    <span class="text-base font-semibold text-[#161616]">15/8/2026</span>
+                </div>
+            </div>
+
+            <!-- Attachment -->
+
+        </div>
+
+        <!-- Notes -->
+        <div class="flex flex-col gap-2">
+            <span class="text-sm text-[#6c737f]">ملاحظات</span>
+            <!-- STATES: keep the note matching the request status -->
+            <!-- new / approved -->
+            <span class="text-base font-semibold text-[#161616]">لا يوجد ملاحظات</span>
+            <!-- rejected -->
+            <span class="text-base font-semibold text-[#161616]">تم رفض الطلب بسبب عدم استحقاق الموظف</span>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-between gap-4">
+        <button (click)="close()" class="btn cancel-btn">الغاء</button>
+        <button type="button" class="btn green-btn">
+            <img alt="" src="assets/icons/download-action.svg" class="w-4 h-4" />
+            تنزيل الملف
+        </button>
+    </div>
+</div>

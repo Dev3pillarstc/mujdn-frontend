@@ -192,6 +192,24 @@
                   <img class="invert brightness-0" src="/assets/icons/leading.svg" alt="اسناد" />
                   {{ 'WORK_MISSIONS.ASSIGN_EMPLOYEES' | translate }}
                 </button>
+                <button
+                  (click)="downloadMissionPdf(mission)"
+                  class="table-action-green-btn"
+                  [disabled]="downloadingMissionId !== undefined"
+                  [attr.aria-busy]="downloadingMissionId === mission.id"
+                  [title]="
+                    (downloadingMissionId === mission.id
+                      ? 'WORK_MISSIONS.GENERATING_REPORT'
+                      : 'WORK_MISSIONS.DOWNLOAD_AS_FILE'
+                    ) | translate
+                  "
+                >
+                  @if (downloadingMissionId === mission.id) {
+                    <i class="pi pi-spinner pi-spin" aria-hidden="true"></i>
+                  } @else {
+                    <img alt="" src="assets/icons/download-qr.svg" />
+                  }
+                </button>
                 @if (mission.isMissionCreator) {
                   <p-splitbutton
                     [appendTo]="missionContainer"

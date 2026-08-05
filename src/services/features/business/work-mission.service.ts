@@ -140,4 +140,11 @@ export class WorkMissionService extends LookupBaseService<WorkMission, number> {
 
     return this.exportPdfByEndpoint('ExportMyMissionsPdf', language, processedFilterOptions);
   }
+
+  exportMissionPdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportMissionPdf', language, filterOptions);
+  }
 }

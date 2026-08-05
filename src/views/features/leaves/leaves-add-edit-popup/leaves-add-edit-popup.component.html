@@ -1,0 +1,148 @@
+<div class="p-6" dir="rtl">
+    <!-- Header -->
+    <button (click)="close()" class="block ms-auto">
+        <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37] font-semibold text-lg mb-6">طلب اجازة جديد</h3>
+
+    <!-- Employee Data -->
+    <h4 class="text-base sm:text-lg font-semibold text-[#161616] mb-4">بيانات الموظف</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- Employee Name -->
+        <div class="relative">
+            <label class="label required" for="employeeName">اسم الموظف</label>
+            <p-select id="employeeName" [options]="employees" optionLabel="name" placeholder="اسم الموظف"
+                class="w-full peer" [filter]="true" />
+            <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+        </div>
+
+        <!-- Department -->
+        <div class="relative">
+            <label class="label" for="department">الادارة</label>
+            <p-select id="department" [options]="departments" optionLabel="name" placeholder="اختار الادارة"
+                class="w-full peer" [filter]="true" />
+            <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+        </div>
+    </div>
+
+    <!-- Leave Details -->
+    <h4 class="text-base sm:text-lg font-semibold text-[#161616] mb-4">تفاصيل الاجازة</h4>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-6">
+        <!-- Date From -->
+        <div class="relative">
+            <label class="label required" for="dateFrom">التاريخ (من)</label>
+            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="dateFrom"
+                placeholder="التاريخ (من)">
+                <ng-template pTemplate="inputicon">
+                    <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+            </p-datepicker>
+            <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+        </div>
+
+        <!-- Date To -->
+        <div class="relative">
+            <label class="label required" for="dateTo">التاريخ (الى)</label>
+            <p-datepicker [iconDisplay]="'input'" [showIcon]="true" class="peer block w-full" inputId="dateTo"
+                placeholder="التاريخ (الى)">
+                <ng-template pTemplate="inputicon">
+                    <img alt="" src="assets/icons/calender-icon.svg" />
+                </ng-template>
+            </p-datepicker>
+            <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+        </div>
+
+        <!-- Leave Type -->
+        <div class="relative">
+            <label class="label required" for="leaveType">نوع الاجازة</label>
+            <p-select id="leaveType" [options]="leaveTypes" optionLabel="name" placeholder="نوع الاجازة"
+                class="w-full peer" />
+            <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
+        </div>
+    </div>
+
+    <!-- Attachment -->
+    <div class="flex flex-col">
+        <h4 class="text-base sm:text-lg font-semibold text-[#161616] mb-2">رفع مرفق طلب الاجازة</h4>
+        <p class="text-[#64748b] text-xs mb-4">
+            الحد الأقصى لحجم الملف المسموح به هو 2 ميجابايت، وتشمل الصيغ المدعومة xlsx.
+        </p>
+        <div class="flex justify-start md:justify-end">
+            <label for="leave-attachment" class="btn black-btn w-fit me-auto">تصفح الملفات</label>
+            <input id="leave-attachment" type="file" accept=".xlsx" hidden />
+        </div>
+    </div>
+    <div class="p-4 rounded-2xl border border-[#d2d6db] border-s-[8px] border-s-[#1570ef] mt-6">
+        <div class="flex gap-3">
+            <div class="flex flex-col">
+                <h4 class="font-[600] text-[#1f2a37] mb-2 ">مرفق طلب الاجازة</h4>
+                <p class="text-[#384250] text-sm mb-4">
+                    الحد الأقصى لحجم الملف المسموح به هو 2 ميجابايت، وتشمل الصيغ المدعومة.xlsx
+                </p>
+                <div class="flex gap-2">
+                    <button class="btn gray-btn w-fit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
+                            <path
+                                d="M7.08333 0.625C7.08333 0.279822 6.80351 0 6.45833 0C6.11316 0 5.83333 0.279822 5.83333 0.625L5.83333 7.67661L5.82828 7.67065C5.65272 7.46345 5.48081 7.24448 5.32005 7.03972L5.28278 6.99225C5.12259 6.7883 4.95406 6.57404 4.82318 6.43938C4.58259 6.19186 4.1869 6.18624 3.93938 6.42682C3.69186 6.66741 3.68624 7.0631 3.92682 7.31062C4.00074 7.38667 4.1221 7.53818 4.29976 7.76437L4.33897 7.81431C4.49736 8.01609 4.68318 8.25283 4.87461 8.47874C5.07978 8.72087 5.30943 8.97237 5.53899 9.16789C5.65403 9.26587 5.78369 9.36251 5.92319 9.43716C6.05772 9.50915 6.2431 9.58333 6.45833 9.58333C6.67357 9.58333 6.85895 9.50915 6.99348 9.43716C7.13297 9.36251 7.26264 9.26587 7.37768 9.16789C7.60724 8.97237 7.83688 8.72087 8.04205 8.47874C8.23348 8.25283 8.41928 8.01614 8.57766 7.81436L8.61691 7.76437C8.79457 7.53818 8.91593 7.38667 8.98984 7.31062C9.23043 7.0631 9.22481 6.66741 8.97729 6.42682C8.72976 6.18624 8.33408 6.19186 8.09349 6.43938C7.96261 6.57404 7.79408 6.7883 7.63389 6.99225L7.59663 7.03969C7.43588 7.24446 7.26395 7.46346 7.08838 7.67065L7.08333 7.67661V0.625Z"
+                                fill="#161616" />
+                            <path
+                                d="M0.625 11.6667C0.279822 11.6667 0 11.9465 0 12.2917C0 12.6368 0.279822 12.9167 0.625 12.9167H12.2917C12.6369 12.9167 12.9167 12.6368 12.9167 12.2917C12.9167 11.9465 12.6369 11.6667 12.2917 11.6667H0.625Z"
+                                fill="#161616" />
+                        </svg>
+                        تحميل النموذج
+                    </button>
+                    <button class="btn black-btn w-fit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="15" viewBox="0 0 17 15" fill="none">
+                            <path
+                                d="M8.7502 8.95833C8.7502 9.30351 8.47038 9.58333 8.1252 9.58333C7.78003 9.58333 7.5002 9.30351 7.5002 8.95833V1.90673L7.49515 1.91268C7.31958 2.11988 7.14767 2.33885 6.98691 2.54363L6.94965 2.59109C6.78946 2.79503 6.62093 3.00929 6.49005 3.14395C6.24946 3.39147 5.85377 3.39709 5.60625 3.15651C5.35873 2.91592 5.35311 2.52024 5.59369 2.27271C5.66761 2.19667 5.78897 2.04516 5.96663 1.81897L6.00582 1.76904C6.16421 1.56726 6.35004 1.33052 6.54148 1.10459C6.74665 0.862459 6.9763 0.610965 7.20586 0.415447C7.3209 0.317468 7.45056 0.220826 7.59006 0.146178C7.72459 0.0741831 7.90997 0 8.1252 0C8.34044 0 8.52582 0.0741831 8.66035 0.146178C8.79984 0.220826 8.92951 0.317468 9.04455 0.415447C9.27411 0.610965 9.50375 0.862459 9.70892 1.10459C9.90035 1.3305 10.0861 1.5672 10.2445 1.76897L10.2838 1.81897C10.4614 2.04516 10.5828 2.19667 10.6567 2.27271C10.8973 2.52024 10.8917 2.91592 10.6442 3.15651C10.3966 3.39709 10.0009 3.39147 9.76036 3.14395C9.62947 3.00929 9.46095 2.79503 9.30076 2.59109L9.26349 2.54362C9.10273 2.33885 8.93082 2.11988 8.75525 1.91268L8.7502 1.90673V8.95833Z"
+                                fill="white" />
+                            <path
+                                d="M16.2145 9.16634C16.3294 8.84084 16.1587 8.48384 15.8332 8.36896C15.5077 8.25408 15.1507 8.42481 15.0358 8.75031L14.8409 9.30245C14.457 10.3903 14.1854 11.157 13.9066 11.7318C13.6347 12.2922 13.3818 12.6127 13.0663 12.8359C12.7509 13.0591 12.3645 13.1909 11.7455 13.2607C11.1107 13.3324 10.2973 13.3333 9.1437 13.3333H7.10664C5.95299 13.3333 5.1396 13.3324 4.50484 13.2607C3.88586 13.1909 3.49947 13.0591 3.184 12.8359C2.86853 12.6127 2.61569 12.2922 2.34379 11.7318C2.06495 11.157 1.79337 10.3903 1.40941 9.30245L1.21454 8.75031C1.09966 8.42481 0.742657 8.25408 0.417158 8.36896C0.0916583 8.48384 -0.0790808 8.84084 0.0358014 9.16634L0.243125 9.75376C0.611782 10.7983 0.905958 11.6318 1.21916 12.2774C1.54281 12.9445 1.91222 13.4673 2.46204 13.8563C3.01185 14.2453 3.62783 14.4197 4.36462 14.5029C5.07761 14.5833 5.96152 14.5833 7.06922 14.5833H9.18112C10.2888 14.5833 11.1727 14.5833 11.8857 14.5029C12.6225 14.4197 13.2385 14.2453 13.7883 13.8563C14.3381 13.4673 14.7075 12.9445 15.0312 12.2774C15.3444 11.6318 15.6386 10.7983 16.0072 9.75372L16.2145 9.16634Z"
+                                fill="white" />
+                        </svg>
+                        رفع ملف جديد
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="p-4 rounded-2xl border border-[#d2d6db] border-s-[8px] border-s-[#1570ef] mt-6">
+        <div class="flex gap-3">
+            <div class="flex flex-col">
+                <h4 class="font-[600] text-[#1f2a37] mb-2 ">مرفق طلب الاجازة</h4>
+                <p class="text-[#384250] text-sm mb-4">
+                    الحد الأقصى لحجم الملف المسموح به هو 2 ميجابايت، وتشمل الصيغ المدعومة.xlsx
+                </p>
+                <div class="flex gap-2">
+                    <button class="btn gray-btn w-fit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
+                            <path
+                                d="M7.08333 0.625C7.08333 0.279822 6.80351 0 6.45833 0C6.11316 0 5.83333 0.279822 5.83333 0.625L5.83333 7.67661L5.82828 7.67065C5.65272 7.46345 5.48081 7.24448 5.32005 7.03972L5.28278 6.99225C5.12259 6.7883 4.95406 6.57404 4.82318 6.43938C4.58259 6.19186 4.1869 6.18624 3.93938 6.42682C3.69186 6.66741 3.68624 7.0631 3.92682 7.31062C4.00074 7.38667 4.1221 7.53818 4.29976 7.76437L4.33897 7.81431C4.49736 8.01609 4.68318 8.25283 4.87461 8.47874C5.07978 8.72087 5.30943 8.97237 5.53899 9.16789C5.65403 9.26587 5.78369 9.36251 5.92319 9.43716C6.05772 9.50915 6.2431 9.58333 6.45833 9.58333C6.67357 9.58333 6.85895 9.50915 6.99348 9.43716C7.13297 9.36251 7.26264 9.26587 7.37768 9.16789C7.60724 8.97237 7.83688 8.72087 8.04205 8.47874C8.23348 8.25283 8.41928 8.01614 8.57766 7.81436L8.61691 7.76437C8.79457 7.53818 8.91593 7.38667 8.98984 7.31062C9.23043 7.0631 9.22481 6.66741 8.97729 6.42682C8.72976 6.18624 8.33408 6.19186 8.09349 6.43938C7.96261 6.57404 7.79408 6.7883 7.63389 6.99225L7.59663 7.03969C7.43588 7.24446 7.26395 7.46346 7.08838 7.67065L7.08333 7.67661V0.625Z"
+                                fill="#161616" />
+                            <path
+                                d="M0.625 11.6667C0.279822 11.6667 0 11.9465 0 12.2917C0 12.6368 0.279822 12.9167 0.625 12.9167H12.2917C12.6369 12.9167 12.9167 12.6368 12.9167 12.2917C12.9167 11.9465 12.6369 11.6667 12.2917 11.6667H0.625Z"
+                                fill="#161616" />
+                        </svg>
+                        تحميل المرفق
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions mt-8 flex items-center justify-between gap-4">
+        <button (click)="close()" class="btn cancel-btn">الغاء</button>
+        <div class="flex gap-2">
+            <button class="btn green-btn">ارسال الطلب</button>
+            <button class="btn green-btn">موافقة</button>
+            <button class="btn red-btn">رفض</button>
+
+        </div>
+    </div>
+</div>

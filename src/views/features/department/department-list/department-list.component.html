@@ -155,7 +155,7 @@
                     : selectedDepartment?.nameAr
                 }}
               </h4>
-              <div class="actions flex items-center gap-4 ms-auto">
+              <div class="actions flex flex-wrap items-center gap-4 ms-auto">
                 <button
                   class="table-head-action-btn min-w-[40px]"
                   (click)="exportExcel(getTranslatedDepartmentLabel() + '.xlsx')"
@@ -164,7 +164,7 @@
                 </button>
                 <button
                   (click)="exportPdf(getTranslatedDepartmentLabel() + '.pdf')"
-                  class="table-head-action-btn"
+                  class="table-head-action-btn min-w-[40px]"
                 >
                   <img alt="" src="assets/icons/pdf.svg" />
                 </button>
@@ -179,6 +179,7 @@
                   <span>{{ 'DEPARTMENTS_LIST_PAGE.ADD_NEW_DEPARTMENT' | translate }}</span>
                 </button>
               </div>
+
             </div>
             @if (childDepartments.list && childDepartments.list.length > 0) {
               <p-table [value]="childDepartments.list">

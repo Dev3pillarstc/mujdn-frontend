@@ -176,6 +176,12 @@ export class SideBarLinksService {
           system: SystemTypeEnum.ATTENDANCE,
         },
         {
+          labelKey: 'MENU.LEAVES_SETTINGS',
+          routerLink: ['/attendance/leaves-settings'],
+          routeId: RouteIdsEnum.LEAVES_SETTINGS,
+          system: SystemTypeEnum.ATTENDANCE,
+        },
+        {
           labelKey: 'MENU.NOTIFICATIONS',
           routerLink: ['/attendance/notifications'],
           routeId: RouteIdsEnum.NOTIFICATIONS,

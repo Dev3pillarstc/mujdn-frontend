@@ -9,6 +9,7 @@ import { regionResolver } from '@/resolvers/lookups/region.resolver';
 import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
+import { leaveTypesResolver } from '@/resolvers/lookups/leave-types.resolver';
 import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
@@ -234,6 +235,9 @@ export const routes: Routes = [
       },
       {
         path: 'leaves-settings',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.ADMIN], routeId: RouteIdsEnum.LEAVES_SETTINGS },
+        resolve: { list: leaveTypesResolver },
         loadComponent: () =>
           import('@/views/features/lookups/leaves-settings/leaves-settings.component'),
       },

@@ -1,83 +1,143 @@
 <div class="bg-white">
-    <div class="bg-[#f9fafb] p-3 sm:p-6">
-        <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-            <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
-            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">اعدادات الاجازات</h3>
-        </div>
-        <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
-            <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
-                <div class="flex items-center justify-between">
-                    <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">تصفية البحث</h5>
-                </div>
-                <div class="pt-6">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div>
-                            <label class="label" for="leaveName">اسم الاجازة بالعربية</label>
-                            <input placeholder="اسم الاجازة بالعربية" class="peer" fluid="true" id="leaveName"
-                                pInputText type="text" />
-                            <span
-                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                        </div>
-                        <div>
-                            <label class="label" for="leaveNameEn"> اسم الاجازة بالانجليزية</label>
-                            <input placeholder="اسم الاجازة بالانجليزية" class="peer" fluid="true" id="leaveNameEn"
-                                pInputText type="text" />
-                            <span
-                                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"></span>
-                        </div>
-                    </div>
-
-                    <div class="actions flex items-center gap-4 pt-6">
-                        <button class="btn black-btn">بحث</button>
-                        <button class="btn gray-btn border border-[#d2d6db]">إعادة تعيين</button>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-6">
-                <div
-                    class="flex items-start xl:items-center justify-between justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4">
-                    <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
-                        قائمة الاجازات
-                    </h4>
-                    <div class="actions flex items-center gap-4 ms-auto">
-                        <button class="table-head-action-btn">
-                            <img src="assets/icons/excel.svg" alt="" />
-                        </button>
-                        <button class="btn green-btn">
-                            <img alt="" src="assets/icons/plus.svg" />
-                            إضافة اجازة جديدة
-                        </button>
-                    </div>
-                </div>
-                <p-table [value]="attendance">
-                    <ng-template #header>
-                        <tr>
-                            <th>اسم الاجازة بالعربية</th>
-                            <th>اسم الاجازة بالانجليزية</th>
-                            <th class="w-[36px]">اجراء</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template #body let-attendance>
-                        <tr>
-                            <td>اسم الاجازة</td>
-                            <td>holiday name</td>
-                            <td>
-                                <div class="flex items-center gap-2">
-                                    <button class="table-action-gray-btn">
-                                        <img src="assets/icons/edit-action.svg" alt="تعديل" />
-                                    </button>
-                                    <button class="bg-[#fef3f2] rounded p-2 w-[32px]">
-                                        <img src="assets/icons/delete-action.svg" alt="حذف" />
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-                <p-paginator class="mt-6" (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-                    [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 30]" />
-                <div></div>
-            </div>
-        </div>
+  <div class="bg-[#f9fafb] p-3 sm:p-6">
+    <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <span>{{ item.label | translate }}</span>
+        </ng-template>
+      </p-breadcrumb>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'LEAVE_TYPES_PAGE.LEAVES_SETTINGS' | translate }}
+      </h3>
     </div>
+    <div class="bg-white rounded-2xl p-4 sm:p-8 border border-[#d2d6db]">
+      <div class="p-6 sm:p-8 rounded-2xl bg-[#f3f4f6]">
+        <div class="flex items-center justify-between">
+          <h5 class="text-base sm:text-lg md:text-xl font-bold text-[#161616]">
+            {{ 'COMMON.SEARCH_FILTERS' | translate }}
+          </h5>
+        </div>
+        <div class="pt-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div class="relative">
+              <label class="label" for="leaveTypeAr">{{
+                'LEAVE_TYPES_PAGE.LEAVE_TYPE_IN_ARABIC' | translate
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.nameAr"
+                [placeholder]="'LEAVE_TYPES_PAGE.LEAVE_TYPE_IN_ARABIC' | translate"
+                class="peer"
+                fluid="true"
+                id="leaveTypeAr"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+            <div class="relative">
+              <label class="label" for="leaveTypeEn">{{
+                'LEAVE_TYPES_PAGE.LEAVE_TYPE_IN_ENGLISH' | translate
+              }}</label>
+              <input
+                [(ngModel)]="filterModel.nameEn"
+                [placeholder]="'LEAVE_TYPES_PAGE.LEAVE_TYPE_IN_ENGLISH' | translate"
+                class="peer"
+                fluid="true"
+                id="leaveTypeEn"
+                pInputText
+                type="text"
+              />
+              <span
+                class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+              ></span>
+            </div>
+          </div>
+
+          <div class="actions flex items-center gap-4 pt-6">
+            <button (click)="search()" class="btn black-btn">
+              {{ 'COMMON.SEARCH' | translate }}
+            </button>
+            <button (click)="resetSearch()" class="btn gray-btn border border-[#d2d6db]">
+              {{ 'COMMON.RESET_SEARCH' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div
+          class="flex items-start xl:items-center justify-between flex-col xl:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+        >
+          <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616]">
+            {{ 'LEAVE_TYPES_PAGE.LEAVE_TYPES_LIST' | translate }}
+          </h4>
+          <div class="actions flex items-center gap-4 ms-auto">
+            <button
+              (click)="
+                exportExcel(getTranslatedFileName('LEAVE_TYPES_PAGE.LEAVE_TYPES_LIST', 'xlsx'))
+              "
+              class="table-head-action-btn min-w-[40px]"
+            >
+              <img alt="" src="assets/icons/excel.svg" />
+            </button>
+            <button
+              (click)="exportPdf(getTranslatedFileName('LEAVE_TYPES_PAGE.LEAVE_TYPES_LIST'))"
+              class="table-head-action-btn"
+            >
+              <img alt="" src="assets/icons/pdf.svg" />
+            </button>
+            <button (click)="addOrEditModel()" class="btn green-btn flex items-center">
+              <img alt="" src="assets/icons/plus.svg" />
+              <span>{{ 'LEAVE_TYPES_PAGE.ADD_NEW_LEAVE_TYPE' | translate }}</span>
+            </button>
+          </div>
+        </div>
+        @if (list && list.length > 0) {
+          <p-table [value]="list">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>{{ 'LEAVE_TYPES_PAGE.LEAVE_TYPE_IN_ARABIC' | translate }}</th>
+                <th>{{ 'LEAVE_TYPES_PAGE.LEAVE_TYPE_IN_ENGLISH' | translate }}</th>
+                <th class="w-[36px] whitespace-nowrap">
+                  {{ 'LEAVE_TYPES_PAGE.ACTIONS' | translate }}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-leaveType>
+              <tr>
+                <td>{{ leaveType.nameAr }}</td>
+                <td>{{ leaveType.nameEn }}</td>
+                <td>
+                  <div class="actions flex gap-2">
+                    <button (click)="addOrEditModel(leaveType)" class="table-action-gray-btn">
+                      <img src="assets/icons/edit-action.svg" alt="تعديل" />
+                    </button>
+                    <button (click)="deleteModel(leaveType.id)" class="table-action-red-btn">
+                      <img src="assets/icons/delete-action.svg" alt="حذف" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        } @else {
+          <div class="flex items-center justify-center h-64">
+            <p class="text-gray-500">{{ 'LEAVE_TYPES_PAGE.NO_DATA_TO_SHOW' | translate }}</p>
+          </div>
+        }
+        @if (paginationInfo) {
+          <p-paginator
+            (onPageChange)="onPageChange($event)"
+            [first]="first"
+            [rowsPerPageOptions]="[10, 20, 30]"
+            [rows]="rows"
+            [showCurrentPageReport]="false"
+            [totalRecords]="paginationInfo.totalItems"
+            class="mt-6"
+          />
+        }
+      </div>
+    </div>
+  </div>
 </div>

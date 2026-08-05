@@ -95,6 +95,7 @@
                   <p-select
                     (onChange)="initializeFilteredCities()"
                     [(ngModel)]="filterModel.fkRegionId"
+                    [optionLabel]="getPropertyName()"
                     [options]="regions"
                     [placeholder]="'DEPARTMENTS_LIST_PAGE.REGION' | translate"
                     ariaLabelledBy="region-label"
@@ -116,6 +117,7 @@
                   }}</label>
                   <p-select
                     [(ngModel)]="filterModel.fkCityId"
+                    [optionLabel]="getPropertyName()"
                     [options]="filteredCities"
                     [placeholder]="'DEPARTMENTS_LIST_PAGE.CITY' | translate"
                     ariaLabelledBy="city-label"

@@ -949,7 +949,8 @@
     "ABSENT": "غائب",
     "PRESENT": "حاضر",
     "EXEMPTED": "معفى من البصمة",
-    "REST": "راحة"
+    "REST": "راحة",
+    "LEAVE": "إجازة"
   },
   "VISIT_ATTENDANCE_STATUS": {
     "NOT_ARRIVED": "لم يصل",
@@ -968,6 +969,7 @@
     "LEAVE_NAME": "اسم الإجازة",
     "MISSION_NAME": "اسم المهمة",
     "MISSION_TYPE": "نوع المهمة",
+    "LEAVE_TYPE": "نوع الإجازة",
     "PRESENCE_INQUIRY": "توثيق التواجد",
     "PRESENCE_INQUIRY_SUCCEED": "تم التوثيق",
     "PRESENCE_INQUIRY_FAILED": "لم يتم التوثيق",

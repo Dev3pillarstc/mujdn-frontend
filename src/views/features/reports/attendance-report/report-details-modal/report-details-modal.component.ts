@@ -61,6 +61,10 @@ export class ReportDetailsModalComponent extends BaseAppComponent implements OnI
     return !!(this.model.holidayId || this.model.missionId);
   }
 
+  get hasLeave(): boolean {
+    return !!this.model.leaveId;
+  }
+
   get hasInquiryData(): boolean {
     return (
       (this.model.isShiftPresenceInquirySucceed !== null &&

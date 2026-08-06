@@ -64,6 +64,11 @@ export default class AttendanceReport extends BaseCrudModel<
   declare attendancePermissionId?: number | null;
   declare leavePermissionId?: number | null;
 
+  declare leaveId?: number | null;
+  declare leaveTypeId?: number | null;
+  declare leaveTypeNameEn?: string | null;
+  declare leaveTypeNameAr?: string | null;
+
   declare lateMinutes?: number | null;
   declare earlyLeaveMinutes?: number | null;
   declare graceMinutesUsed?: number | null;
@@ -110,6 +115,11 @@ export default class AttendanceReport extends BaseCrudModel<
     return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
       ? this.holidayNameEn || this.holidayNameAr!
       : this.holidayNameAr!;
+  }
+  getLeaveTypeName(): string {
+    return this.languageService?.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
+      ? this.leaveTypeNameEn || this.leaveTypeNameAr!
+      : this.leaveTypeNameAr!;
   }
 
   isDefaultShift(): boolean {

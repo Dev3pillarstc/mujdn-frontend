@@ -950,7 +950,8 @@
     "ABSENT": "Absent",
     "PRESENT": "Present",
     "EXEMPTED": "Exempted",
-    "REST": "Rest"
+    "REST": "Rest",
+    "LEAVE": "Leave"
   },
   "VISIT_ATTENDANCE_STATUS": {
     "NOT_ARRIVED": "Not Arrived",
@@ -969,6 +970,7 @@
     "LEAVE_NAME": "Holiday Name",
     "MISSION_NAME": "Mission Name",
     "MISSION_TYPE": "Mission Type",
+    "LEAVE_TYPE": "Leave Type",
     "PRESENCE_INQUIRY": "Presence Inquiry",
     "PRESENCE_INQUIRY_SUCCEED": "Presence Inquiry Succeeded",
     "PRESENCE_INQUIRY_FAILED": "Presence Inquiry Failed",

@@ -81,6 +81,22 @@
     }
     <div class="actions mt-6 flex items-center justify-between gap-4">
       <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+      @if (showDownloadPdf) {
+        <button
+          class="btn green-btn"
+          (click)="downloadAsPDF()"
+          [disabled]="isDownloadingPdf"
+          [attr.aria-busy]="isDownloadingPdf"
+        >
+          @if (isDownloadingPdf) {
+            <i class="pi pi-spinner pi-spin" aria-hidden="true"></i>
+            {{ 'WORK_MISSIONS.GENERATING_REPORT' | translate }}
+          } @else {
+            <img src="assets/icons/download-qr.svg" alt="" />
+            {{ 'WORK_MISSIONS.DOWNLOAD_AS_FILE' | translate }}
+          }
+        </button>
+      }
     </div>
   </div>
 </div>

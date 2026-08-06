@@ -1,0 +1,42 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37] font-semibold text-lg mb-6">
+      {{ 'LEAVES_PAGE.REJECT_LEAVE' | translate }}
+    </h3>
+
+    <form [formGroup]="form">
+      <div class="mb-6">
+        <label class="label" for="rejectionNotes-popup">{{
+          'LEAVES_PAGE.REJECTION_NOTES' | translate
+        }}</label>
+        <div class="relative">
+          <textarea
+            formControlName="rejectionNotes"
+            pTextarea
+            rows="3"
+            class="peer w-full"
+            fluid="true"
+            id="rejectionNotes-popup"
+            [placeholder]="'LEAVES_PAGE.REJECTION_NOTES' | translate"
+          ></textarea>
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+        <app-validation-messages [control]="rejectionNotesControl"></app-validation-messages>
+      </div>
+
+      <div class="actions mt-6 flex items-center justify-between gap-4">
+        <button (click)="close()" class="btn gray-btn" type="button">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+        <button (click)="confirm()" class="btn red-btn" type="button">
+          {{ 'LEAVES_PAGE.REJECT' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

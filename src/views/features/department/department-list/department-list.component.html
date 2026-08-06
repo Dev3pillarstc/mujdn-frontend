@@ -144,7 +144,7 @@
           </div>
           <div class="mt-6">
             <div
-              class="flex items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
+              class="flex flex-wrap items-start lg:items-center justify-between justify-between flex-col lg:flex-row gap-4 bg-[#e5e7eb] rounded-lg p-4 sm:p-6 mb-4"
             >
               <h4 class="text-lg sm:text-xl md:text-2xl font-bold text-[#161616] truncate">
                 {{
@@ -162,7 +162,7 @@
                 </button>
                 <button
                   (click)="exportPdf(getTranslatedDepartmentLabel() + '.pdf')"
-                  class="table-head-action-btn"
+                  class="table-head-action-btn min-w-[40px]"
                 >
                   <img alt="" src="assets/icons/pdf.svg" />
                 </button>

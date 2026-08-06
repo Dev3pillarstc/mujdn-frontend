@@ -14,6 +14,8 @@ export const EndPoints = {
   NOTIFICATION_SETTINGS: '/notificationsettings',
   DEPARTMENTS: '/departments',
   HOLIDAYS: '/holidays',
+  LEAVE_TYPES: '/leavetypes',
+  LEAVES: '/leaves',
   PERMISSION_TYPES: '/permissiontypes',
   PERMISSION_STATUS: '/permissionstatuses',
   PERMISSIONS: '/permissions',

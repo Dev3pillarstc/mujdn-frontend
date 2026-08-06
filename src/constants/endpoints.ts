@@ -15,6 +15,7 @@ export const EndPoints = {
   DEPARTMENTS: '/departments',
   HOLIDAYS: '/holidays',
   LEAVE_TYPES: '/leavetypes',
+  LEAVES: '/leaves',
   PERMISSION_TYPES: '/permissiontypes',
   PERMISSION_STATUS: '/permissionstatuses',
   PERMISSIONS: '/permissions',

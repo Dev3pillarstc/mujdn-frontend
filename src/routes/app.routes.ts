@@ -10,6 +10,8 @@ import { RouteIdsEnum } from '@/enums/route-ids-enum';
 import { departmentResolver } from '@/resolvers/lookups/department.resolver';
 import { holidayResolver } from '@/resolvers/lookups/holiday.resolver';
 import { leaveTypesResolver } from '@/resolvers/lookups/leave-types.resolver';
+import { myLeavesResolver } from '@/resolvers/lookups/my-leaves.resolver';
+import { departmentLeavesResolver } from '@/resolvers/lookups/department-leaves.resolver';
 import { permissionResolver } from '@/resolvers/lookups/permission.resolver';
 import { workShiftResolver } from '@/resolvers/lookups/work-shift.resolver';
 import { attendanceResolver } from '@/resolvers/features/attendance-log.resolver';
@@ -243,11 +245,17 @@ export const routes: Routes = [
       },
       {
         path: 'leaves',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.EMPLOYEE], routeId: RouteIdsEnum.LEAVES },
+        resolve: { list: myLeavesResolver },
         loadComponent: () =>
           import('@/views/features/leaves/leaves-container/leaves-container.component'),
       },
       {
         path: 'leaves-confirmations',
+        canActivate: [authGuard],
+        data: { roles: [ROLES_ENUM.HR_OFFICER], routeId: RouteIdsEnum.LEAVES_CONFIRMATIONS },
+        resolve: { list: departmentLeavesResolver },
         loadComponent: () =>
           import('@/views/features/leaves-confirmations/leaves-confirmations.component'),
       },

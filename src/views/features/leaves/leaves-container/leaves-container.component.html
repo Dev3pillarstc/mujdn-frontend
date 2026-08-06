@@ -1,29 +1,34 @@
 <div class="bg-white">
-    <div class="bg-[#f9fafb] p-3 sm:p-6">
-        <!-- Header -->
-        <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
-            <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
-            <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">طلبات الاجازات</h3>
-        </div>
-
-        <!-- Tabs -->
-        <p-tabs [(value)]="activeTabIndex">
-            <p-tablist class="my-6">
-                <p-tab [value]="0">سجل طلباتي</p-tab>
-                <p-tab [value]="1">طلبات الاجازة للموظفين التابعين</p-tab>
-            </p-tablist>
-
-            <p-tabpanels>
-                <!-- My leaves requests -->
-                <p-tabpanel [value]="0">
-                    <app-my-leaves></app-my-leaves>
-                </p-tabpanel>
-
-                <!-- Subordinates leaves requests -->
-                <p-tabpanel [value]="1">
-                    <app-other-leaves></app-other-leaves>
-                </p-tabpanel>
-            </p-tabpanels>
-        </p-tabs>
+  <div class="bg-[#f9fafb] p-3 sm:p-6">
+    <div class="header bg-white rounded-2xl p-4 sm:p-6 mb-6">
+      <p-breadcrumb [home]="home" [model]="breadcrumbs" class="max-w-full">
+        <ng-template let-item pTemplate="item">
+          <span>{{ item.label | translate }}</span>
+        </ng-template>
+      </p-breadcrumb>
+      <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#161616]">
+        {{ 'LEAVES_PAGE.LEAVES' | translate }}
+      </h3>
     </div>
+
+    <p-tabs [(value)]="activeTabIndex" (valueChange)="onTabChange($event)">
+      <p-tablist class="my-6">
+        <p-tab [value]="0">{{ 'LEAVES_PAGE.MY_LEAVES_TAB' | translate }}</p-tab>
+        @if (showOtherLeavesTab()) {
+          <p-tab [value]="1">{{ 'LEAVES_PAGE.OTHER_LEAVES_TAB' | translate }}</p-tab>
+        }
+      </p-tablist>
+
+      <p-tabpanels>
+        <p-tabpanel [value]="0">
+          <app-my-leaves />
+        </p-tabpanel>
+        @if (showOtherLeavesTab()) {
+          <p-tabpanel [value]="1">
+            <app-other-leaves />
+          </p-tabpanel>
+        }
+      </p-tabpanels>
+    </p-tabs>
+  </div>
 </div>

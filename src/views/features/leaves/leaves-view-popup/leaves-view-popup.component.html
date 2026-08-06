@@ -1,0 +1,93 @@
+<div [dir]="direction" class="p-6">
+  <!-- Header -->
+  <button (click)="close()" class="block ms-auto">
+    <i class="pi pi-times close-popup"></i>
+  </button>
+  <h3 class="flex-1 text-[#1f2a37] font-semibold text-lg mb-4">
+    {{ 'LEAVES_PAGE.LEAVE_REQUEST_DATA' | translate }}
+  </h3>
+
+  <!-- Body -->
+  <div class="bg-[#f3f4f6] rounded-2xl p-4 sm:p-6 flex flex-col gap-6 sm:gap-10 mb-6">
+    <!-- Request status -->
+    <div
+      class="bg-white border-[0.5px] border-[#d2d6db] rounded-2xl px-4 sm:px-6 py-3 flex items-center gap-2"
+    >
+      <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.REQUEST_STATUS' | translate }}</span>
+      <span [class]="statusBadgeClass">
+        {{ statusTextKey | translate }}
+        <span class="w-[10px] h-[10px] rounded-full bg-[#ffffff99]"></span>
+      </span>
+    </div>
+
+    <!-- Request data -->
+    <div class="flex flex-wrap items-center gap-6">
+      <div class="flex flex-1 flex-wrap items-center gap-6">
+        @if (model.employee) {
+          <!-- Employee Name -->
+          <div class="flex flex-col gap-2">
+            <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.EMPLOYEE_NAME' | translate }}</span>
+            <span class="text-base font-semibold text-[#161616]">{{ employeeName() }}</span>
+          </div>
+          <!-- Department -->
+          <div class="flex flex-col gap-2">
+            <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.DEPARTMENT' | translate }}</span>
+            <span class="text-base font-semibold text-[#161616]">{{ departmentName() }}</span>
+          </div>
+          <!-- National Id -->
+          <div class="flex flex-col gap-2">
+            <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.NATIONAL_ID' | translate }}</span>
+            <span class="text-base font-semibold text-[#161616]">{{
+              model.employee.nationalId
+            }}</span>
+          </div>
+        }
+        <!-- Leave Type -->
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.LEAVE_TYPE' | translate }}</span>
+          <span class="text-base font-semibold text-[#161616]">{{ leaveTypeName() }}</span>
+        </div>
+        <!-- Date From -->
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.DATE_FROM' | translate }}</span>
+          <span class="text-base font-semibold text-[#161616]">{{
+            model.dateFrom | date: 'dd/MM/yyyy'
+          }}</span>
+        </div>
+        <!-- Date To -->
+        <div class="flex flex-col gap-2">
+          <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.DATE_TO' | translate }}</span>
+          <span class="text-base font-semibold text-[#161616]">{{
+            model.dateTo | date: 'dd/MM/yyyy'
+          }}</span>
+        </div>
+        @if (model.actionDate) {
+          <!-- Action Date -->
+          <div class="flex flex-col gap-2">
+            <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.ACTION_DATE' | translate }}</span>
+            <span class="text-base font-semibold text-[#161616]">{{
+              model.actionDate | date: 'dd/MM/yyyy'
+            }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="flex flex-col gap-2">
+      <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.NOTES' | translate }}</span>
+      @if (model.status === leaveStatusEnum.Rejected && model.rejectionNotes) {
+        <span class="text-base font-semibold text-[#161616]">{{ model.rejectionNotes }}</span>
+      } @else {
+        <span class="text-base font-semibold text-[#161616]">{{
+          'LEAVES_PAGE.NO_NOTES' | translate
+        }}</span>
+      }
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex justify-between gap-4">
+    <button (click)="close()" class="btn cancel-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+  </div>
+</div>

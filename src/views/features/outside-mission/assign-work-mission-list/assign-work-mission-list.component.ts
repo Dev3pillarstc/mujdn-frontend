@@ -41,6 +41,8 @@ import {
   WORK_MISSION_TYPE_OPTIONS,
   WorkMissionTypeOption,
 } from '@/models/features/business/work-mission-type-option';
+import { finalize } from 'rxjs';
+import { downloadBlobData } from '@/utils/utils';
 
 @Component({
   selector: 'app-assign-work-mission-list',
@@ -92,6 +94,7 @@ export class AssignWorkMissionListComponent
   missions: WorkMission[] = [];
   departments: BaseLookupModel[] = [];
   workMissionTypeOptions: WorkMissionTypeOption[] = WORK_MISSION_TYPE_OPTIONS;
+  downloadingMissionId?: number;
 
   // Base class overrides
   override get filterModel(): WorkMissionFilter {
@@ -206,6 +209,34 @@ export class AssignWorkMissionListComponent
 
   setSelectedModel(model: WorkMission) {
     this.selectedModel = model;
+  }
+
+  downloadMissionPdf(mission: WorkMission): void {
+    if (this.downloadingMissionId !== undefined) return;
+
+    this.downloadingMissionId = mission.id;
+    this.service
+      .exportMissionPdf(this.langService.getCurrentLanguage(), { id: mission.id })
+      .pipe(finalize(() => (this.downloadingMissionId = undefined)))
+      .subscribe({
+        next: (blob) => {
+          if (!blob || blob.size === 0) {
+            this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+            return;
+          }
+
+          downloadBlobData(blob, this.getMissionPdfFileName(mission));
+        },
+        error: () => {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+        },
+      });
+  }
+
+  private getMissionPdfFileName(mission: WorkMission): string {
+    const title = this.translateService.instant('WORK_MISSIONS.MISSION_PDF_FILE_NAME');
+    const missionName = this.isCurrentLanguageEnglish() ? mission.nameEn : mission.nameAr;
+    return `${missionName ? `${title} - ${missionName}` : title}.pdf`;
   }
 
   private initializeActionList(): void {

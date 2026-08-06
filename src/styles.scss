@@ -3,12 +3,14 @@
   --p-tabs-tabpanel-padding: 0 !important;
   // end kareem
 }
+
 .menu-list {
-  & > li {
+  &>li {
     border-bottom: 1px solid #d2d6db;
 
     .menu-item {
       color: #161616;
+
       &:hover,
       &.active {
         background-color: #e5e7eb;
@@ -78,11 +80,13 @@
   --p-accordion-content-border-color: #d2d6db !important;
   --p-accordion-content-padding: 0 !important;
 }
+
 .p-iconfield .p-inputicon:last-child {
   inset-inline-end: 0 !important;
   inset-inline-start: 8px !important;
   pointer-events: none;
 }
+
 .p-iconfield .p-inputtext:not(:last-child) {
   padding-inline-end: 16px !important;
   padding-inline-start: 32px !important;
@@ -91,15 +95,20 @@
 .black-table-btn-action {
   background-color: #0d121c;
   color: #fff;
-  font-size: 0.875rem; /* 14px */
-  gap: 0.25rem; /* 4px */
-  padding: 0.5rem 0.75rem; /* py-2 px-3 */
-  border-radius: 0.25rem; /* rounded */
+  font-size: 0.875rem;
+  /* 14px */
+  gap: 0.25rem;
+  /* 4px */
+  padding: 0.5rem 0.75rem;
+  /* py-2 px-3 */
+  border-radius: 0.25rem;
+  /* rounded */
   cursor: pointer;
   font-weight: 500;
   display: flex;
   align-items: center;
   min-width: 75px;
+
   &:hover {
     background-color: #1f2a37;
   }
@@ -110,6 +119,7 @@
     color: #b42318;
   }
 }
+
 // end kareem
 
 .p-password-toggle-mask-icon {
@@ -145,6 +155,49 @@
     background-color: #166a45;
   }
 }
+
+.table-action-black-btn {
+  background-color: #0D121C;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #1f2a37;
+  }
+}
+
+.table-action-red-btn {
+  background-color: #FEF3F2;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  cursor: pointer;
+
+
+  &:hover {
+    background-color: #fee4e2;
+  }
+}
+
+.cancel-btn {
+  border: 1px solid #d2d6db !important;
+  background-color: #fff !important;
+  color: #161616;
+
+  &:hover {
+    background-color: #f3f4f6 !important;
+  }
+}
+
+
 
 // Alert dialogs must appear above the spinner overlay (z-index: 1100)
 // The CDK overlay container wraps all dialogs; we elevate only alert panels

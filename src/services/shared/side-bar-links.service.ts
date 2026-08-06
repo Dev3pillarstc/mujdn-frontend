@@ -107,6 +107,20 @@ export class SideBarLinksService {
       system: SystemTypeEnum.ATTENDANCE,
     },
     {
+      labelKey: 'MENU.LEAVES',
+      iconUrl: 'assets/icons/menu-icons/vacations.svg',
+      routerLink: ['/attendance/leaves'],
+      routeId: RouteIdsEnum.LEAVES,
+      system: SystemTypeEnum.ATTENDANCE,
+    },
+    {
+      labelKey: 'MENU.LEAVES_CONFIRMATIONS',
+      iconUrl: 'assets/icons/menu-icons/vacations.svg',
+      routerLink: ['/attendance/leaves-confirmations'],
+      routeId: RouteIdsEnum.LEAVES_CONFIRMATIONS,
+      system: SystemTypeEnum.ATTENDANCE,
+    },
+    {
       labelKey: 'MENU.VISITS',
       iconUrl: 'assets/icons/menu-icons/visits.svg',
       system: SystemTypeEnum.VISITS,
@@ -173,6 +187,12 @@ export class SideBarLinksService {
           labelKey: 'MENU.PERMISSIONS_SETTINGS',
           routerLink: ['/attendance/permission-reasons'],
           routeId: RouteIdsEnum.PERMISSION_REASONS,
+          system: SystemTypeEnum.ATTENDANCE,
+        },
+        {
+          labelKey: 'MENU.LEAVES_SETTINGS',
+          routerLink: ['/attendance/leaves-settings'],
+          routeId: RouteIdsEnum.LEAVES_SETTINGS,
           system: SystemTypeEnum.ATTENDANCE,
         },
         {

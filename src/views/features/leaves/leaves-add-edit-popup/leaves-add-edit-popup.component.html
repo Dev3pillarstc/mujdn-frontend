@@ -1,0 +1,220 @@
+<div [dir]="direction">
+  <div class="p-6">
+    <!-- Header -->
+    <button (click)="close()" class="block ms-auto">
+      <i class="pi pi-times close-popup"></i>
+    </button>
+    <h3 class="text-[#1f2a37] font-semibold text-lg mb-6">
+      {{
+        (isCreateMode
+          ? 'LEAVES_PAGE.NEW_LEAVE_REQUEST'
+          : isEditMode
+            ? 'LEAVES_PAGE.EDIT_LEAVE'
+            : 'LEAVES_PAGE.LEAVE_REQUEST_DATA'
+        ) | translate
+      }}
+    </h3>
+
+    <form [formGroup]="form">
+      <!-- Employee Data (hidden when editing own leave — the record's employee is the caller) -->
+      @if (!isEditMode || model.employee) {
+        <h4 class="text-base sm:text-lg font-semibold text-[#161616] mb-4">
+          {{ 'LEAVES_PAGE.EMPLOYEE_DATA' | translate }}
+        </h4>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- Department (narrows the employee list; not part of the request payload) -->
+        <div class="relative">
+          <label class="label" for="department-popup">{{
+            'LEAVES_PAGE.DEPARTMENT' | translate
+          }}</label>
+          <p-select
+            [ngModel]="selectedDepartmentId"
+            (ngModelChange)="onDepartmentChange($event)"
+            [ngModelOptions]="{ standalone: true }"
+            [disabled]="isTakeActionMode"
+            [options]="departments"
+            [optionLabel]="optionLabel"
+            optionValue="id"
+            [showClear]="!isTakeActionMode"
+            [filter]="true"
+            [placeholder]="'LEAVES_PAGE.CHOOSE_DEPARTMENT' | translate"
+            class="w-full peer"
+            id="department-popup"
+          />
+          <span
+            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+          ></span>
+        </div>
+
+        <!-- Employee -->
+        <div>
+          <label class="label" for="employee-popup">{{
+            'LEAVES_PAGE.EMPLOYEE_NAME' | translate
+          }}</label>
+          <div class="relative">
+            <p-select
+              formControlName="fkEmployeeId"
+              [options]="filteredEmployees"
+              [optionLabel]="optionLabel"
+              optionValue="id"
+              [filter]="true"
+              [virtualScroll]="true"
+              [virtualScrollItemSize]="38"
+              [placeholder]="'LEAVES_PAGE.EMPLOYEE_NAME' | translate"
+              class="w-full peer"
+              id="employee-popup"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="fkEmployeeIdControl"></app-validation-messages>
+        </div>
+      </div>
+      }
+
+      <!-- Leave Details -->
+      <h4 class="text-base sm:text-lg font-semibold text-[#161616] mb-4">
+        {{ 'LEAVES_PAGE.LEAVE_DETAILS' | translate }}
+      </h4>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-6">
+        <!-- Date From -->
+        <div>
+          <label class="label" for="dateFrom-popup">{{
+            'LEAVES_PAGE.DATE_FROM' | translate
+          }}</label>
+          <div class="relative">
+            <p-datepicker
+              formControlName="dateFrom"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              class="peer block w-full"
+              inputId="dateFrom-popup"
+              id="dateFrom-popup"
+              [placeholder]="'LEAVES_PAGE.DATE_FROM' | translate"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/calender-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="dateFromControl"></app-validation-messages>
+        </div>
+
+        <!-- Date To -->
+        <div>
+          <label class="label" for="dateTo-popup">{{ 'LEAVES_PAGE.DATE_TO' | translate }}</label>
+          <div class="relative">
+            <p-datepicker
+              formControlName="dateTo"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              [minDate]="dateFromControl.value"
+              class="peer block w-full"
+              inputId="dateTo-popup"
+              id="dateTo-popup"
+              [placeholder]="'LEAVES_PAGE.DATE_TO' | translate"
+            >
+              <ng-template pTemplate="inputicon">
+                <img alt="" src="assets/icons/calender-icon.svg" />
+              </ng-template>
+            </p-datepicker>
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="dateToControl"></app-validation-messages>
+        </div>
+
+        <!-- Leave Type -->
+        <div>
+          <label class="label" for="leaveType-popup">{{
+            'LEAVES_PAGE.LEAVE_TYPE' | translate
+          }}</label>
+          <div class="relative">
+            <p-select
+              formControlName="fkLeaveTypeId"
+              [options]="leaveTypes"
+              [optionLabel]="optionLabel"
+              optionValue="id"
+              [filter]="true"
+              [placeholder]="'LEAVES_PAGE.LEAVE_TYPE' | translate"
+              class="w-full peer"
+              id="leaveType-popup"
+            />
+            <span
+              class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-500 peer-focus-within:left-0 peer-focus-within:w-full"
+            ></span>
+          </div>
+          <app-validation-messages [control]="fkLeaveTypeIdControl"></app-validation-messages>
+        </div>
+      </div>
+
+      <!-- Attachment upload (kept for future use; the leaves API has no attachment support yet)
+      <div class="flex flex-col">
+        <h4 class="text-base sm:text-lg font-semibold text-[#161616] mb-2">رفع مرفق طلب الاجازة</h4>
+        <p class="text-[#64748b] text-xs mb-4">
+          الحد الأقصى لحجم الملف المسموح به هو 2 ميجابايت، وتشمل الصيغ المدعومة xlsx.
+        </p>
+        <div class="flex justify-start md:justify-end">
+          <label for="leave-attachment" class="btn black-btn w-fit me-auto">تصفح الملفات</label>
+          <input id="leave-attachment" type="file" accept=".xlsx" hidden />
+        </div>
+      </div>
+      <div class="p-4 rounded-2xl border border-[#d2d6db] border-s-[8px] border-s-[#1570ef] mt-6">
+        <div class="flex gap-3">
+          <div class="flex flex-col">
+            <h4 class="font-[600] text-[#1f2a37] mb-2">مرفق طلب الاجازة</h4>
+            <p class="text-[#384250] text-sm mb-4">
+              الحد الأقصى لحجم الملف المسموح به هو 2 ميجابايت، وتشمل الصيغ المدعومة.xlsx
+            </p>
+            <div class="flex gap-2">
+              <button class="btn gray-btn w-fit" type="button">تحميل النموذج</button>
+              <button class="btn black-btn w-fit" type="button">رفع ملف جديد</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 rounded-2xl border border-[#d2d6db] border-s-[8px] border-s-[#1570ef] mt-6">
+        <div class="flex gap-3">
+          <div class="flex flex-col">
+            <h4 class="font-[600] text-[#1f2a37] mb-2">مرفق طلب الاجازة</h4>
+            <p class="text-[#384250] text-sm mb-4">
+              الحد الأقصى لحجم الملف المسموح به هو 2 ميجابايت، وتشمل الصيغ المدعومة.xlsx
+            </p>
+            <div class="flex gap-2">
+              <button class="btn gray-btn w-fit" type="button">تحميل المرفق</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      -->
+
+      <!-- Actions -->
+      <div class="actions mt-8 flex items-center justify-between gap-4">
+        <button (click)="close()" class="btn gray-btn" type="button">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+        <div class="flex gap-2">
+          @if (isCreateMode || isEditMode) {
+            <button (click)="save$.next()" class="btn green-btn" type="button">
+              {{ (isCreateMode ? 'LEAVES_PAGE.SEND_REQUEST' : 'COMMON.SAVE') | translate }}
+            </button>
+          }
+          @if (isTakeActionMode) {
+            <button (click)="reject()" class="btn red-btn" type="button">
+              {{ 'LEAVES_PAGE.REJECT' | translate }}
+            </button>
+            <button (click)="accept()" class="btn green-btn" type="button">
+              {{ 'LEAVES_PAGE.ACCEPT' | translate }}
+            </button>
+          }
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

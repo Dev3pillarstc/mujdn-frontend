@@ -350,4 +350,10 @@ export default class DepartmentListComponent extends BaseListComponent<
   onTreeClosed() {
     this.showDepartmentTree = false;
   }
+
+  getPropertyName(): string {
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ENGLISH
+      ? 'nameEn'
+      : 'nameAr';
+  }
 }

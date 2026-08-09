@@ -109,16 +109,23 @@ export class SideBarLinksService {
     {
       labelKey: 'MENU.LEAVES',
       iconUrl: 'assets/icons/menu-icons/vacations.svg',
-      routerLink: ['/attendance/leaves'],
-      routeId: RouteIdsEnum.LEAVES,
       system: SystemTypeEnum.ATTENDANCE,
-    },
-    {
-      labelKey: 'MENU.LEAVES_CONFIRMATIONS',
-      iconUrl: 'assets/icons/menu-icons/vacations.svg',
-      routerLink: ['/attendance/leaves-confirmations'],
-      routeId: RouteIdsEnum.LEAVES_CONFIRMATIONS,
-      system: SystemTypeEnum.ATTENDANCE,
+      children: [
+        {
+          labelKey: 'MENU.LEAVES',
+          iconUrl: 'assets/icons/menu-icons/vacations.svg',
+          routerLink: ['/attendance/leaves'],
+          routeId: RouteIdsEnum.LEAVES,
+          system: SystemTypeEnum.ATTENDANCE,
+        },
+        {
+          labelKey: 'MENU.LEAVES_CONFIRMATIONS',
+          iconUrl: 'assets/icons/menu-icons/vacations.svg',
+          routerLink: ['/attendance/leaves-confirmations'],
+          routeId: RouteIdsEnum.LEAVES_CONFIRMATIONS,
+          system: SystemTypeEnum.ATTENDANCE,
+        },
+      ],
     },
     {
       labelKey: 'MENU.VISITS',
@@ -293,7 +300,7 @@ export class SideBarLinksService {
         routeId: item.routeId,
         routerLink: item.routerLink,
         iconUrl: item.iconUrl,
-        system: item.system
+        system: item.system,
       };
 
       if (item.children) {
@@ -342,7 +349,11 @@ export class SideBarLinksService {
 
   isBelongToActiveSystem(menuItem: MenuItem) {
     const firstSegment = this.router.url.split('?')[0].split('/')[1];
-    return menuItem.system == SystemTypeEnum.ATTENDANCE && firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase() ||
-    menuItem.system == SystemTypeEnum.VISITS && firstSegment == SystemTypeEnum.VISITS.toLowerCase()
+    return (
+      (menuItem.system == SystemTypeEnum.ATTENDANCE &&
+        firstSegment == SystemTypeEnum.ATTENDANCE.toLowerCase()) ||
+      (menuItem.system == SystemTypeEnum.VISITS &&
+        firstSegment == SystemTypeEnum.VISITS.toLowerCase())
+    );
   }
 }

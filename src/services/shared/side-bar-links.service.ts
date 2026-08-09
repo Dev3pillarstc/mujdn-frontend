@@ -112,7 +112,7 @@ export class SideBarLinksService {
       system: SystemTypeEnum.ATTENDANCE,
       children: [
         {
-          labelKey: 'MENU.LEAVES',
+          labelKey: 'MENU.LEAVES_REQUESTS',
           iconUrl: 'assets/icons/menu-icons/vacations.svg',
           routerLink: ['/attendance/leaves'],
           routeId: RouteIdsEnum.LEAVES,

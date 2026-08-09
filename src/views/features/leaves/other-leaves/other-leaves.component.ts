@@ -8,8 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { BaseListComponent } from '@/abstracts/base-components/base-list/base-list.component';
+import { AuthService } from '@/services/auth/auth.service';
+import { downloadBlobData } from '@/utils/utils';
 import { Leave } from '@/models/features/lookups/leave/leave';
 import { LeaveFilter } from '@/models/features/lookups/leave/leave-filter';
 import { LeaveService } from '@/services/features/lookups/leave.service';
@@ -52,6 +54,8 @@ export class OtherLeavesComponent
   leaveService = inject(LeaveService);
   leaveTypeService = inject(LeaveTypeService);
   userService = inject(UserService);
+  authService = inject(AuthService);
+  downloadingLeaveId?: number;
   filterModel: LeaveFilter = new LeaveFilter();
   leaveTypes: BaseLookupModel[] = [];
   employees: UsersWithDepartmentLookup[] = [];
@@ -94,7 +98,7 @@ export class OtherLeavesComponent
 
   override openDialog(model: Leave): void {
     const dialogConfig: MatDialogConfig = new MatDialogConfig();
-    dialogConfig.data = { model };
+    dialogConfig.data = { model, isSubordinateLeave: true };
     dialogConfig.width = this.dialogSize.width;
     dialogConfig.maxWidth = this.dialogSize.maxWidth;
     this.matDialog.open(LeavesViewPopupComponent as any, dialogConfig);
@@ -112,6 +116,39 @@ export class OtherLeavesComponent
 
   protected override getBreadcrumbKeys() {
     return [{ labelKey: 'LEAVES_PAGE.OTHER_LEAVES_LIST' }];
+  }
+
+  /** Downloading a leave as a file is offered to department managers, on accepted leaves only. */
+  showDownloadPdf(leave: Leave): boolean {
+    return !!this.authService.isDepartmentManager && leave.isAccepted();
+  }
+
+  downloadLeavePdf(leave: Leave): void {
+    if (this.downloadingLeaveId !== undefined) return;
+
+    this.downloadingLeaveId = leave.id;
+    this.service
+      .exportLeavePdf(this.langService.getCurrentLanguage(), { id: leave.id })
+      .pipe(finalize(() => (this.downloadingLeaveId = undefined)))
+      .subscribe({
+        next: (blob) => {
+          if (!blob || blob.size === 0) {
+            this.alertsService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+            return;
+          }
+
+          downloadBlobData(blob, this.getLeavePdfFileName(leave));
+        },
+        error: () => {
+          this.alertsService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+        },
+      });
+  }
+
+  private getLeavePdfFileName(leave: Leave): string {
+    const title = this.translateService.instant('LEAVES_PAGE.LEAVE_PDF_FILE_NAME');
+    const employeeName = this.employeeName(leave);
+    return `${employeeName ? `${title} - ${employeeName}` : title}.pdf`;
   }
 
   protected override getPdfExportRequest(): Observable<Blob> {

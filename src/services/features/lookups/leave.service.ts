@@ -134,4 +134,11 @@ export class LeaveService extends BaseCrudService<Leave, number> {
   ): Observable<Blob> {
     return this.exportPdfByEndpoint('ExportDepartmentLeavesPdf', language, filterOptions);
   }
+
+  exportLeavePdf(
+    language: LANGUAGE_ENUM | string,
+    filterOptions?: OptionsContract
+  ): Observable<Blob> {
+    return this.exportPdfByEndpoint('ExportLeavePdf', language, filterOptions);
+  }
 }

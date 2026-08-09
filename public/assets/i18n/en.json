@@ -224,7 +224,10 @@
     "NO_NOTES": "No notes",
     "REJECTION_NOTES": "Rejection Notes",
     "ACTION_DATE": "Action Date",
-    "NO_DATA_TO_SHOW": "No data to display"
+    "NO_DATA_TO_SHOW": "No data to display",
+    "DOWNLOAD_AS_FILE": "Download as File",
+    "GENERATING_REPORT": "Generating report...",
+    "LEAVE_PDF_FILE_NAME": "Leave Data"
   },
   "PERMISSION_REASONS_PAGE": {
     "PERMISSION_REASONS_LIST": "Permission Reasons List",
@@ -569,7 +572,8 @@
     "WORK_SHIFT_ASSIGNMENT": "Assign a shift to an employee",
     "HOLIDAYS": "Holidays",
     "LEAVES_SETTINGS": "Leaves Settings",
-    "LEAVES": "Leave Requests",
+    "LEAVES": "Leaves",
+    "LEAVES_REQUESTS": "Leave Requests",
     "LEAVES_CONFIRMATIONS": "Leave Requests Approval",
     "WORK_SHIFT": "Work Shifts",
     "WORK_SHIFT_SETTINGS": "Definition of Work Shifts",

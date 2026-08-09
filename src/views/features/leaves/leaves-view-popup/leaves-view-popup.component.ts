@@ -1,9 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs';
 import { Leave } from '@/models/features/lookups/leave/leave';
+import { AuthService } from '@/services/auth/auth.service';
+import { LeaveService } from '@/services/features/lookups/leave.service';
+import { AlertService } from '@/services/shared/alert.service';
 import { LanguageService } from '@/services/shared/language.service';
+import { downloadBlobData } from '@/utils/utils';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LEAVE_STATUS_ENUM } from '@/enums/leave-status-enum';
@@ -17,13 +22,25 @@ import { LEAVE_STATUS_ENUM } from '@/enums/leave-status-enum';
 export class LeavesViewPopupComponent {
   private dialogRef = inject(MatDialogRef<LeavesViewPopupComponent>);
   private languageService = inject(LanguageService);
+  private translateService = inject(TranslateService);
+  private alertService = inject(AlertService);
+  private authService = inject(AuthService);
+  private service = inject(LeaveService);
 
   model: Leave;
   direction: LAYOUT_DIRECTION_ENUM;
   leaveStatusEnum = LEAVE_STATUS_ENUM;
+  showDownloadPdf: boolean = false;
+  isDownloadingPdf = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.model = data?.model;
+    // Downloading the leave as a file is limited to department managers viewing
+    // accepted subordinate leaves; it is not offered on the HR confirmations view.
+    this.showDownloadPdf =
+      !!this.data?.isSubordinateLeave &&
+      !!this.authService.isDepartmentManager &&
+      !!this.model?.isAccepted();
     this.direction =
       this.languageService.getCurrentLanguage() == LANGUAGE_ENUM.ENGLISH
         ? LAYOUT_DIRECTION_ENUM.LTR
@@ -32,6 +49,34 @@ export class LeavesViewPopupComponent {
 
   close() {
     this.dialogRef.close();
+  }
+
+  downloadAsPDF(): void {
+    if (this.isDownloadingPdf) return;
+
+    this.isDownloadingPdf = true;
+    this.service
+      .exportLeavePdf(this.languageService.getCurrentLanguage(), { id: this.model.id })
+      .pipe(finalize(() => (this.isDownloadingPdf = false)))
+      .subscribe({
+        next: (blob) => {
+          if (!blob || blob.size === 0) {
+            this.alertService.showErrorMessage({ messages: ['COMMON.NO_DATA_TO_EXPORT'] });
+            return;
+          }
+
+          downloadBlobData(blob, this.getLeavePdfFileName());
+        },
+        error: () => {
+          this.alertService.showErrorMessage({ messages: ['COMMON.ERROR'] });
+        },
+      });
+  }
+
+  private getLeavePdfFileName(): string {
+    const title = this.translateService.instant('LEAVES_PAGE.LEAVE_PDF_FILE_NAME');
+    const employeeName = this.employeeName();
+    return `${employeeName ? `${title} - ${employeeName}` : title}.pdf`;
   }
 
   get statusBadgeClass(): string {

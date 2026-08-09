@@ -44,4 +44,8 @@ export class Leave extends BaseCrudModel<Leave, LeaveService> {
   isNew(): boolean {
     return this.status === LEAVE_STATUS_ENUM.New;
   }
+
+  isAccepted(): boolean {
+    return this.status === LEAVE_STATUS_ENUM.Accepted;
+  }
 }

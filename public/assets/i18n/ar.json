@@ -224,7 +224,10 @@
     "NO_NOTES": "لا يوجد ملاحظات",
     "REJECTION_NOTES": "ملاحظات الرفض",
     "ACTION_DATE": "تاريخ الإجراء",
-    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها"
+    "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
+    "DOWNLOAD_AS_FILE": "تحميل كملف",
+    "GENERATING_REPORT": "جارٍ إنشاء التقرير...",
+    "LEAVE_PDF_FILE_NAME": "بيانات الاجازة"
   },
   "PERMISSION_REASONS_PAGE": {
     "PERMISSION_REASONS_LIST": "قائمة أسباب الإذن",
@@ -569,7 +572,8 @@
     "EMPLOYEE_SHIFTS": "الورديات المسندة (فترات)",
     "HOLIDAYS": "قائمة الإجازات والأعياد",
     "LEAVES_SETTINGS": "اعدادات الاجازات",
-    "LEAVES": "طلبات الاجازات",
+    "LEAVES": "الاجازات",
+    "LEAVES_REQUESTS": "طلبات الاجازات",
     "LEAVES_CONFIRMATIONS": "اعتماد طلبات الاجازات",
     "WORK_SHIFT": "ورديات العمل",
     "WORK_SHIFT_SETTINGS": "تعريف ورديات العمل",

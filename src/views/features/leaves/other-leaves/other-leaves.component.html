@@ -231,6 +231,26 @@
                     <img alt="" src="assets/icons/delete-action.svg" />
                   </button>
                 }
+                @if (showDownloadPdf(leave)) {
+                  <button
+                    (click)="downloadLeavePdf(leave)"
+                    class="table-action-green-btn"
+                    [disabled]="downloadingLeaveId !== undefined"
+                    [attr.aria-busy]="downloadingLeaveId === leave.id"
+                    [title]="
+                      (downloadingLeaveId === leave.id
+                        ? 'LEAVES_PAGE.GENERATING_REPORT'
+                        : 'LEAVES_PAGE.DOWNLOAD_AS_FILE'
+                      ) | translate
+                    "
+                  >
+                    @if (downloadingLeaveId === leave.id) {
+                      <i class="pi pi-spinner pi-spin" aria-hidden="true"></i>
+                    } @else {
+                      <img alt="" src="assets/icons/download-qr.svg" />
+                    }
+                  </button>
+                }
               </div>
             </td>
           </tr>

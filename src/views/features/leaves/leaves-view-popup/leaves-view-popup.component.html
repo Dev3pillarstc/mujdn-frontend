@@ -26,7 +26,9 @@
         @if (model.employee) {
           <!-- Employee Name -->
           <div class="flex flex-col gap-2">
-            <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.EMPLOYEE_NAME' | translate }}</span>
+            <span class="text-sm text-[#6c737f]">{{
+              'LEAVES_PAGE.EMPLOYEE_NAME' | translate
+            }}</span>
             <span class="text-base font-semibold text-[#161616]">{{ employeeName() }}</span>
           </div>
           <!-- Department -->
@@ -74,20 +76,37 @@
     </div>
 
     <!-- Notes -->
-    <div class="flex flex-col gap-2">
-      <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.NOTES' | translate }}</span>
-      @if (model.status === leaveStatusEnum.Rejected && model.rejectionNotes) {
+    @if (model.status === leaveStatusEnum.Rejected && model.rejectionNotes) {
+      <div class="flex flex-col gap-2">
+        <span class="text-sm text-[#6c737f]">{{ 'LEAVES_PAGE.NOTES' | translate }}</span>
         <span class="text-base font-semibold text-[#161616]">{{ model.rejectionNotes }}</span>
-      } @else {
+        <!-- @else {
         <span class="text-base font-semibold text-[#161616]">{{
           'LEAVES_PAGE.NO_NOTES' | translate
         }}</span>
-      }
-    </div>
+      } -->
+      </div>
+    }
   </div>
 
   <!-- Actions -->
   <div class="flex justify-between gap-4">
     <button (click)="close()" class="btn cancel-btn">{{ 'COMMON.CANCEL' | translate }}</button>
+    @if (showDownloadPdf) {
+      <button
+        class="btn green-btn"
+        (click)="downloadAsPDF()"
+        [disabled]="isDownloadingPdf"
+        [attr.aria-busy]="isDownloadingPdf"
+      >
+        @if (isDownloadingPdf) {
+          <i class="pi pi-spinner pi-spin" aria-hidden="true"></i>
+          {{ 'LEAVES_PAGE.GENERATING_REPORT' | translate }}
+        } @else {
+          <img src="assets/icons/download-qr.svg" alt="" />
+          {{ 'LEAVES_PAGE.DOWNLOAD_AS_FILE' | translate }}
+        }
+      </button>
+    }
   </div>
 </div>

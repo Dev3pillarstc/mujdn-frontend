@@ -105,6 +105,10 @@ export class OtherLeavesComponent
   }
 
   addOrEditModel(leave?: Leave): void {
+    if (leave?.id && !leave.isNew()) {
+      this.openDialog(leave);
+      return;
+    }
     const model = leave ?? new Leave();
     const viewMode = model.id ? ViewModeEnum.EDIT : ViewModeEnum.CREATE;
     this.openBaseDialog(LeavesAddEditPopupComponent as any, model, viewMode, {

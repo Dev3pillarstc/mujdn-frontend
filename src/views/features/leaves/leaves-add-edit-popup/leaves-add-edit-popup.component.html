@@ -205,10 +205,12 @@
               {{ (isCreateMode ? 'LEAVES_PAGE.SEND_REQUEST' : 'COMMON.SAVE') | translate }}
             </button>
           }
-          @if (isTakeActionMode) {
+          @if (canRejectLeave) {
             <button (click)="reject()" class="btn red-btn" type="button">
               {{ 'LEAVES_PAGE.REJECT' | translate }}
             </button>
+          }
+          @if (canAcceptLeave) {
             <button (click)="accept()" class="btn green-btn" type="button">
               {{ 'LEAVES_PAGE.ACCEPT' | translate }}
             </button>

@@ -83,6 +83,10 @@ export default class LeavesConfirmationsComponent
   }
 
   openTakeActionDialog(model: Leave): void {
+    if (!model.isNew() && !model.isAccepted()) {
+      this.openDialog(model);
+      return;
+    }
     this.openBaseDialog(LeavesAddEditPopupComponent as any, model, ViewModeEnum.TAKE_ACTION, {
       employees: this.employees,
       departments: this.departments,

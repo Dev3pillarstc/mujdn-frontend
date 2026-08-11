@@ -91,11 +91,12 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
 
   override buildForm() {
     if (this.isTakeActionMode) {
+      const datesDisabled = this.isAcceptedLeave;
       this.form = this.fb.group({
         fkEmployeeId: [{ value: this.model.fkEmployeeId, disabled: true }],
         fkLeaveTypeId: [{ value: this.model.fkLeaveTypeId, disabled: true }],
-        dateFrom: [this.model.dateFrom, [Validators.required]],
-        dateTo: [this.model.dateTo, [Validators.required]],
+        dateFrom: [{ value: this.model.dateFrom, disabled: datesDisabled }, [Validators.required]],
+        dateTo: [{ value: this.model.dateTo, disabled: datesDisabled }, [Validators.required]],
       });
     } else {
       this.form = this.fb.group(this.model.buildForm());
@@ -128,6 +129,10 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
   }
 
   accept(): void {
+    if (!this.canAcceptLeave) {
+      this.showAlreadyDecidedError();
+      return;
+    }
     if (!this.validateActionDates()) {
       return;
     }
@@ -141,6 +146,10 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
   }
 
   reject(): void {
+    if (!this.canRejectLeave) {
+      this.showAlreadyDecidedError();
+      return;
+    }
     const dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.maxWidth = '600px';
@@ -157,6 +166,22 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
         },
       });
     });
+  }
+
+  get isAcceptedLeave(): boolean {
+    return this.model?.isAccepted() ?? false;
+  }
+
+  get canAcceptLeave(): boolean {
+    return this.isTakeActionMode && (this.model?.isNew() ?? false);
+  }
+
+  get canRejectLeave(): boolean {
+    return this.isTakeActionMode && (this.model?.isNew() || this.model?.isAccepted());
+  }
+
+  private showAlreadyDecidedError(): void {
+    this.alertService.showErrorMessage({ messages: ['COMMON.LEAVE_ALREADY_DECIDED'] });
   }
 
   private validateActionDates(): boolean {

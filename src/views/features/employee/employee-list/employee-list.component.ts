@@ -389,8 +389,9 @@ export default class EmployeeListComponent
           : this.userService.disableCanLeaveWithoutFingerPrint(user.id);
 
         request$.subscribe({
-          next: () => {
+          next: (updatedUser: User) => {
             user.canLeaveWithoutFingerPrint = newValue;
+            this.updateUserInList(updatedUser);
             this.alertService.showSuccessMessage({
               messages: [
                 newValue
@@ -409,5 +410,20 @@ export default class EmployeeListComponent
         user.canLeaveWithoutFingerPrint = !newValue;
       }
     });
+  }
+
+  private updateUserInList(updatedUser: User): void {
+    if (!updatedUser) return;
+
+    const index = this.list.findIndex((item) => item.id === updatedUser.id);
+    if (index === -1) return;
+
+    // Merge only the values the API returned, so columns the response
+    // omits (department, city, region, ...) keep their current values
+    const returnedValues = Object.entries(updatedUser).filter(
+      ([key, value]) => value !== undefined && key !== 'languageService'
+    );
+    Object.assign(this.list[index], Object.fromEntries(returnedValues));
+    this.list = [...this.list];
   }
 }

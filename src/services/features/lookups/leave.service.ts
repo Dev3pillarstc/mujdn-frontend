@@ -1,15 +1,16 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
-import { Leave } from '@/models/features/lookups/leave/leave';
+import { Leave, LeaveEmployeeLookup } from '@/models/features/lookups/leave/leave';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
+import { ListResponseData } from '@/models/shared/response/list-response-data';
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { OptionsContract } from '@/contracts/options-contract';
 import { genericDateOnlyConvertor, toDateOnly } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { HttpParams } from '@angular/common/http';
-import { Observable, map, catchError } from 'rxjs';
+import { Observable, map, catchError, of, switchMap } from 'rxjs';
 
 @CastResponseContainer({
   $default: {
@@ -19,6 +20,11 @@ import { Observable, map, catchError } from 'rxjs';
     model: () => PaginatedList<Leave>,
     unwrap: 'data',
     shape: { 'list.*': () => Leave },
+  },
+  $employeesLookup: {
+    model: () => LeaveEmployeeLookup,
+    unwrap: 'data',
+    shape: { data: () => LeaveEmployeeLookup },
   },
 })
 @Injectable({
@@ -89,6 +95,20 @@ export class LeaveService extends BaseCrudService<Leave, number> {
       .pipe(
         catchError((err) => {
           throw err;
+        })
+      );
+  }
+
+  // DEPARTMENT_MANAGER only — employees inside the caller's leave scope
+  @CastResponse(undefined, { fallback: '$employeesLookup' })
+  getEmployeesLookup(): Observable<LeaveEmployeeLookup[]> {
+    return this.http
+      .get<ListResponseData<LeaveEmployeeLookup>>(this.getUrlSegment() + '/employees-lookup', {
+        withCredentials: true,
+      })
+      .pipe(
+        switchMap((response: ListResponseData<LeaveEmployeeLookup>) => {
+          return of(response.data);
         })
       );
   }

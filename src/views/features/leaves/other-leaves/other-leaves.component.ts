@@ -82,7 +82,7 @@ export class OtherLeavesComponent
     this.leaveTypeService.getLookup().subscribe((res) => {
       this.leaveTypes = res;
     });
-    this.userService.getMyDepartmentUsersLookup().subscribe((res) => {
+    this.leaveService.getEmployeesLookup().subscribe((res) => {
       this.employees = res;
     });
     this.userService.getMyDepartmentsLookup().subscribe((res) => {

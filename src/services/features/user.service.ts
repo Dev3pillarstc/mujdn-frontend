@@ -10,7 +10,7 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { ResponseData } from '@/models/shared/response/response-data';
 import { Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
-import { of, switchMap, Observable } from 'rxjs';
+import { of, switchMap, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -100,24 +100,32 @@ export class UserService extends LookupBaseService<User, string> {
       );
   }
 
-  enableCanLeaveWithoutFingerPrint(userId: string): Observable<ResponseData<string>> {
-    return this.http.put<ResponseData<string>>(
-      `${this.getUrlSegment()}/can-leave-without-fingerprint/enable?userId=${userId}`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
+  @CastResponse(undefined, { fallback: '$default' })
+  enableCanLeaveWithoutFingerPrint(userId: string): Observable<User> {
+    return this.http
+      .put<ResponseData<User>>(
+        `${this.getUrlSegment()}/can-leave-without-fingerprint/enable`,
+        {},
+        {
+          params: { userId },
+          withCredentials: true,
+        }
+      )
+      .pipe(map((response: ResponseData<User>) => response.data));
   }
 
-  disableCanLeaveWithoutFingerPrint(userId: string): Observable<ResponseData<string>> {
-    return this.http.put<ResponseData<string>>(
-      `${this.getUrlSegment()}/can-leave-without-fingerprint/disable?userId=${userId}`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
+  @CastResponse(undefined, { fallback: '$default' })
+  disableCanLeaveWithoutFingerPrint(userId: string): Observable<User> {
+    return this.http
+      .put<ResponseData<User>>(
+        `${this.getUrlSegment()}/can-leave-without-fingerprint/disable`,
+        {},
+        {
+          params: { userId },
+          withCredentials: true,
+        }
+      )
+      .pipe(map((response: ResponseData<User>) => response.data));
   }
   @CastResponse(undefined, { fallback: '$lookup' })
   getMyDepartmentEmployeesAndFirstLevelManagersLookup(): Observable<UsersWithDepartmentLookup[]> {

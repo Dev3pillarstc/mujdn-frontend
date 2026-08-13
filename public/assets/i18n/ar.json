@@ -85,6 +85,7 @@
     "AUTH_REFRESH_TOKEN_EXPIRED": "انتهت صلاحية جلسة تسجيل الدخول",
     "AUTH_FORBIDDEN_ACCESS": "ليس لديك صلاحية هذا الاجراء",
     "AUTH_FORBIDDEN_ACTION": "ليس لديك صلاحية هذا الاجراء",
+    "AUTH_UNAUTHORIZED_ACCESS": "ليس لديك صلاحية هذا الاجراء",
     "AUTH_PASSWORD_REQUIRED": "كلمة المرور مطلوبة",
     "VALIDATION_FAILED": "فشل في التحقق من صحة حقل واحد أو أكثر",
     "INCIDENT_DRAFT_EXISTS": "المستخدم لديه بالفعل مسودة حادثة",

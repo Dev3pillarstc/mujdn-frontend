@@ -85,6 +85,7 @@
     "AUTH_REFRESH_TOKEN_EXPIRED": "Login session has been expired",
     "AUTH_FORBIDDEN_ACCESS": "You are not authorized to access this resource",
     "AUTH_FORBIDDEN_ACTION": "You are not authorized to perform this action",
+    "AUTH_UNAUTHORIZED_ACCESS": "You are not authorized to perform this action",
     "AUTH_PASSWORD_REQUIRED": "Password is required",
     "VALIDATION_FAILED": "Validation failed for one or more fields",
     "INCIDENT_DRAFT_EXISTS": "User already has a draft incident",

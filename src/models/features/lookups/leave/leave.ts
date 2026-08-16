@@ -36,7 +36,8 @@ export class Leave extends BaseCrudModel<Leave, LeaveService> {
   attachments: Attachment[] = [];
   // Files staged for a leave that does not exist yet. Attachments can only be linked at
   // creation time, so this is write-once: the create payload carries their ids and the
-  // edit payload never mentions them.
+  // edit payload never mentions them — which is why the popup drops this control when
+  // editing rather than leaving a required field nobody can satisfy.
   temporaryUploads: TemporaryUpload[] = [];
 
   buildForm() {
@@ -46,7 +47,8 @@ export class Leave extends BaseCrudModel<Leave, LeaveService> {
       fkLeaveTypeId: [fkLeaveTypeId, [Validators.required]],
       dateFrom: [dateFrom, [Validators.required]],
       dateTo: [dateTo, [Validators.required]],
-      temporaryUploads: [temporaryUploads ?? []],
+      // `required` rejects an empty array, so a leave cannot be created with no file.
+      temporaryUploads: [temporaryUploads ?? [], [Validators.required]],
     };
   }
 

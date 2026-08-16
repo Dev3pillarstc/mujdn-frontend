@@ -107,6 +107,11 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
       });
     } else {
       this.form = this.fb.group(this.model.buildForm());
+      if (!this.isCreateMode) {
+        // Attachments are linked at creation only, so there is nothing to stage when
+        // editing — leaving the required control in place would make the form unsavable.
+        this.form.removeControl('temporaryUploads');
+      }
     }
   }
 

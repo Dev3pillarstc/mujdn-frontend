@@ -1,11 +1,22 @@
-import { Component, forwardRef, inject, input, OnDestroy, signal } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  inject,
+  Injector,
+  input,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
+  NgControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
   Validator,
+  Validators,
 } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
@@ -50,7 +61,9 @@ let nextInputId = 0;
     },
   ],
 })
-export class AttachmentUploadComponent implements ControlValueAccessor, Validator, OnDestroy {
+export class AttachmentUploadComponent
+  implements ControlValueAccessor, Validator, OnInit, OnDestroy
+{
   titleKey = input<string>('ATTACHMENTS.UPLOAD_TITLE');
   maxFiles = input<number>(ATTACHMENT_CONSTRAINTS.MAX_FILES);
   maxFileSizeBytes = input<number>(ATTACHMENT_CONSTRAINTS.MAX_FILE_SIZE_BYTES);
@@ -58,6 +71,7 @@ export class AttachmentUploadComponent implements ControlValueAccessor, Validato
 
   private attachmentService = inject(AttachmentService);
   private translateService = inject(TranslateService);
+  private injector = inject(Injector);
 
   readonly inputId = `attachment-upload-${nextInputId++}`;
   readonly acceptAttribute = ATTACHMENT_ACCEPT_ATTRIBUTE;
@@ -68,10 +82,33 @@ export class AttachmentUploadComponent implements ControlValueAccessor, Validato
   isDisabled = signal(false);
   /** Set once the staged files belong to a saved record and must not be released. */
   private isConsumed = false;
+  /** The control this is bound to, if any — see {@link ngOnInit}. */
+  private ngControl: NgControl | null = null;
 
   private onChange: (value: TemporaryUpload[]) => void = () => {};
   private onTouched: () => void = () => {};
   private onValidatorChange: () => void = () => {};
+
+  /**
+   * Resolved here rather than injected: this component provides its own NG_VALUE_ACCESSOR,
+   * so asking for NgControl at construction time is a circular dependency.
+   */
+  ngOnInit(): void {
+    this.ngControl = this.injector.get(NgControl, null, { optional: true });
+  }
+
+  /**
+   * Read off the bound control rather than a separate input, so the asterisk can never
+   * disagree with the validator that actually blocks the save.
+   */
+  get isRequired(): boolean {
+    return this.ngControl?.control?.hasValidator(Validators.required) ?? false;
+  }
+
+  get showRequiredError(): boolean {
+    const control = this.ngControl?.control;
+    return !!control?.touched && control.hasError('required');
+  }
 
   get canAddMore(): boolean {
     return !this.isDisabled() && !this.isUploading() && this.uploads().length < this.maxFiles();
@@ -163,6 +200,8 @@ export class AttachmentUploadComponent implements ControlValueAccessor, Validato
 
   // --- Validator ---
 
+  // Never read `control` here: RequiredMarkerDirective probes composed validators by
+  // calling them with a bare `{}`, so it is not always a real AbstractControl.
   validate(_control: AbstractControl): ValidationErrors | null {
     return this.isUploading() ? { attachmentsUploading: true } : null;
   }

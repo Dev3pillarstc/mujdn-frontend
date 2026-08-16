@@ -1,6 +1,9 @@
 <div class="flex flex-col">
   <h4 class="text-base sm:text-lg font-semibold text-[#161616] mb-2">
     {{ titleKey() | translate }}
+    @if (isRequired) {
+      <span class="text-[#d92d20]" aria-hidden="true">*</span>
+    }
   </h4>
   <p class="text-[#64748b] text-xs mb-4">{{ hint }}</p>
 
@@ -28,6 +31,10 @@
       (change)="onFilesSelected($event)"
     />
   </div>
+
+  @if (showRequiredError) {
+    <p class="text-[#d92d20] text-xs mt-2">{{ 'ATTACHMENTS.REQUIRED' | translate }}</p>
+  }
 
   @for (error of errors(); track $index) {
     <p class="text-[#d92d20] text-xs mt-2">{{ error }}</p>

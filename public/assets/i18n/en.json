@@ -190,6 +190,7 @@
     "DOWNLOAD": "Download",
     "DOWNLOAD_FAILED": "The file could not be downloaded, or you do not have access to it.",
     "WAIT_FOR_UPLOAD": "Please wait until the file upload is complete.",
+    "REQUIRED": "Attaching at least one file is required.",
     "TOO_MANY_FILES": "You can attach up to {max} files only.",
     "FILE_TOO_LARGE": "{name}: the file size exceeds {size} MB.",
     "BATCH_TOO_LARGE": "The total size of the selected files exceeds {size} MB.",

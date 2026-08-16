@@ -195,6 +195,23 @@
           </div>
           <app-validation-messages [control]="descriptionControl"></app-validation-messages>
         </div>
+
+        <!-- Attachments: the API links them at creation time only, so an existing mission's
+             files are read-only here — assigned employees read them, nobody replaces them. -->
+        <div class="lg:col-span-4">
+          @if (isCreateMode) {
+            <app-attachment-upload
+              formControlName="temporaryUploads"
+              titleKey="WORK_MISSIONS.UPLOAD_ATTACHMENT"
+            />
+          } @else {
+            <app-attachment-list
+              [attachments]="model.attachments"
+              [download]="downloadAttachment"
+              labelKey="WORK_MISSIONS.ATTACHMENTS"
+            />
+          }
+        </div>
       </div>
       <div class="actions mt-6 flex items-center justify-between gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>

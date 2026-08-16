@@ -6,6 +6,8 @@ import { Validators } from '@angular/forms';
 import { InterceptModel } from 'cast-response';
 import { BaseLookupModel } from '../lookups/base-lookup-model';
 import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
+import { Attachment } from '@/models/shared/attachment/attachment';
+import { TemporaryUpload } from '@/models/shared/attachment/temporary-upload';
 
 const { send, receive } = new WorkMissionInterceptor();
 
@@ -23,9 +25,17 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
   declare isMissionCreator: boolean;
   declare isMyMission: boolean;
   workMissionType: WorkMissionTypesEnum = WorkMissionTypesEnum.FullDay;
+  // Files already stored against this mission; always present on read, never sent back
+  attachments: Attachment[] = [];
+  // Files staged for a mission that does not exist yet. The API links attachments at
+  // creation time only, so this is write-once: the create payload carries their ids and the
+  // edit payload never mentions them — which is why the popup drops this control when
+  // editing rather than leaving a field that changes nothing.
+  temporaryUploads: TemporaryUpload[] = [];
 
   buildForm() {
-    const { nameAr, nameEn, startDate, endDate, description, workMissionType } = this;
+    const { nameAr, nameEn, startDate, endDate, description, workMissionType, temporaryUploads } =
+      this;
     return {
       nameAr: [
         nameAr,
@@ -55,6 +65,8 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
         ],
       ],
       workMissionType: [workMissionType ?? WorkMissionTypesEnum.FullDay, [Validators.required]],
+      // Attachments are optional on a mission — the API accepts an empty id list.
+      temporaryUploads: [temporaryUploads ?? []],
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -25,6 +25,11 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
 import { CustomValidators } from '@/validators/custom-validators';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
+import { Attachment } from '@/models/shared/attachment/attachment';
+import { AlertService } from '@/services/shared/alert.service';
+import { WorkMissionService } from '@/services/features/business/work-mission.service';
+import { AttachmentListComponent } from '@/views/shared/attachment-list/attachment-list.component';
+import { AttachmentUploadComponent } from '@/views/shared/attachment-upload/attachment-upload.component';
 
 @Component({
   selector: 'app-add-new-mission-popup',
@@ -41,17 +46,23 @@ import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
     TranslatePipe,
     ValidationMessagesComponent,
     RadioButtonModule,
+    AttachmentUploadComponent,
+    AttachmentListComponent,
   ],
   templateUrl: './add-new-mission-popup.component.html',
   styleUrl: './add-new-mission-popup.component.scss',
 })
 export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission> implements OnInit {
+  // Only rendered while creating — attachments cannot be changed on an existing mission.
+  @ViewChild(AttachmentUploadComponent) attachmentUpload?: AttachmentUploadComponent;
   date2: Date | undefined;
   model!: WorkMission;
   declare form: FormGroup;
   declare viewMode: ViewModeEnum;
   isCreateMode = false;
   translateService = inject(TranslateService);
+  alertService = inject(AlertService);
+  service = inject(WorkMissionService);
   WorkMissionTypesEnum = WorkMissionTypesEnum;
   constructor(
     private fb: FormBuilder,
@@ -68,10 +79,23 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
     this.form = this.fb.group(this.model.buildForm(), {
       validators: [CustomValidators.startBeforeEnd('startDate', 'endDate')],
     });
+    if (!this.isCreateMode) {
+      // Attachments are linked at creation only, so there is nothing to stage when editing —
+      // the update payload never mentions them.
+      this.form.removeControl('temporaryUploads');
+    }
   }
   override saveFail(error: Error): void {}
-  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
+  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {
+    // The mission now owns the staged files, so closing this popup must not cancel them.
+    this.attachmentUpload?.markAsConsumed();
+  }
   override beforeSave(model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
+    // Submitting mid-upload would save the mission without the file just picked.
+    if (this.temporaryUploadsControl?.hasError('attachmentsUploading')) {
+      this.alertService.showErrorMessage({ messages: ['ATTACHMENTS.WAIT_FOR_UPLOAD'] });
+      return false;
+    }
     return form.valid;
   }
   override prepareModel(
@@ -100,4 +124,11 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
   get workMissionTypeControl() {
     return this.form.get('workMissionType') as FormControl;
   }
+  get temporaryUploadsControl() {
+    return this.form.get('temporaryUploads') as FormControl | null;
+  }
+
+  /** Bound as a value, so it has to stay an arrow to keep `this`. */
+  downloadAttachment = (attachment: Attachment): Observable<Blob> =>
+    this.service.downloadAttachment(this.model.id, attachment.id);
 }

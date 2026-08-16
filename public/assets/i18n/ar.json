@@ -897,7 +897,9 @@
     "EMPLOYEES_NOT_AVAILABLE_MESSAGE": ".يرجى العلم أن بعض الموظفين المدرجين في القائمة قد يكونوا غير متاحين للاختيار، وذلك لارتباطهم بمهام أخرى خلال نفس الفترة الزمنية المحددة، وبالتالي لا يمكن إسناد هذه المهمة إليهم",
     "DOWNLOAD_AS_FILE": "تحميل كملف",
     "GENERATING_REPORT": "جارٍ إنشاء التقرير...",
-    "MISSION_PDF_FILE_NAME": "بيانات المهمة"
+    "MISSION_PDF_FILE_NAME": "بيانات المهمة",
+    "UPLOAD_ATTACHMENT": "رفع مرفق المهمة",
+    "ATTACHMENTS": "مرفقات المهمة"
   },
   "VISIT_REQUEST_PAGE": {
     "VISITOR_REQUESTS_LIST": "قائمة طلبات الزيارات",

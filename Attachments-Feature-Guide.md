@@ -284,6 +284,30 @@ The three inputs drive validation _and_ the hint text _and_ the `accept` attribu
 They do not change what the server accepts: tightening them past the backend's config is
 fine, loosening them just means the server rejects the file one round trip later.
 
+### Making an attachment mandatory
+
+Add `Validators.required` to the control in the model's `buildForm()` — an empty array
+counts as empty, so the form stays invalid until the user stages a file:
+
+```ts
+temporaryUploads: [temporaryUploads ?? [], [Validators.required]],
+```
+
+The uploader reads the requirement off the bound control, so the asterisk and the
+"attach at least one file" message appear on their own — there is no separate input to
+keep in sync.
+
+One trap: if your entity links attachments at create time only (as leaves do), the edit
+form must drop the control, or it will be permanently invalid with no way for the user to
+fix it:
+
+```ts
+this.form = this.fb.group(this.model.buildForm());
+if (!this.isCreateMode) {
+  this.form.removeControl('temporaryUploads');
+}
+```
+
 ### Attachments editable after create
 
 The shared layer supports this; the leave API does not, which is why the leave form is
@@ -329,6 +353,10 @@ You then own the cleanup that the component would have done for you.
 - **Blob requests carry `SKIP_ERROR_ALERT`.** The error body of a blob response is itself a
   blob, which the global interceptor cannot parse — it would show "unknown error". Report
   the failure at the call site instead. `AttachmentListComponent` already does.
+- **A `Validator`'s `control` argument is not always a control.** `RequiredMarkerDirective`
+  matches every `[formControlName]` and probes the composed validator by calling it with a
+  bare `{}`. Any `validate()` that touches the argument crashes on it. The uploader gets its
+  control from the injector in `ngOnInit` instead.
 - **Staged files expire after 24h.** Cancellation is a courtesy to storage, not a
   correctness requirement — which is why `releaseUploads()` is fire-and-forget and never
   shows the user an error.

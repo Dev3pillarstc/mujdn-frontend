@@ -6,7 +6,7 @@ import { Permission } from '@/models/features/lookups/permission/permission';
 import { PermissionService } from '@/services/features/lookups/permission.service';
 import { AlertService } from '@/services/shared/alert.service';
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -21,6 +21,9 @@ import { Select } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { Observable } from 'rxjs';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
+import { Attachment } from '@/models/shared/attachment/attachment';
+import { AttachmentListComponent } from '@/views/shared/attachment-list/attachment-list.component';
+import { AttachmentUploadComponent } from '@/views/shared/attachment-upload/attachment-upload.component';
 
 interface Adminstration {
   type: string;
@@ -36,11 +39,15 @@ interface Adminstration {
     ReactiveFormsModule,
     ValidationMessagesComponent,
     RequiredMarkerDirective,
+    AttachmentUploadComponent,
+    AttachmentListComponent,
   ],
   templateUrl: './add-permission-popup.component.html',
   styleUrl: './add-permission-popup.component.scss',
 })
 export class AddPermissionPopupComponent extends BasePopupComponent<Permission> implements OnInit {
+  // Only rendered while creating — attachments cannot be changed on an existing permission.
+  @ViewChild(AttachmentUploadComponent) attachmentUpload?: AttachmentUploadComponent;
   declare model: Permission;
   declare form: FormGroup;
   alertService = inject(AlertService);
@@ -49,6 +56,7 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
   permissionTypes: BaseLookupModel[] | undefined = [];
   prmissionReasons: BaseLookupModel[] | undefined = [];
   data = inject(MAT_DIALOG_DATA);
+  isCreateMode = false;
 
   override saveFail(error: Error): void {
     // logic after error if there
@@ -61,20 +69,32 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
 
   override initPopup() {
     this.model = this.data.model;
+    this.isCreateMode = this.data.viewMode == ViewModeEnum.CREATE;
     this.prmissionReasons = this.data.lookups.prmissionReasons;
     this.permissionTypes = this.data.lookups.permissionTypes;
   }
 
   override buildForm() {
     this.form = this.fb.group(this.model.buildForm());
+    if (!this.isCreateMode) {
+      // Attachments are linked at creation only, so there is nothing to stage when editing —
+      // the update payload never mentions them.
+      this.form.removeControl('temporaryUploads');
+    }
   }
 
   beforeSave(model: Permission, form: FormGroup) {
-    // manipulation before save
+    // Submitting mid-upload would save the permission without the file just picked.
+    if (this.temporaryUploadsControl?.hasError('attachmentsUploading')) {
+      this.alertService.showErrorMessage({ messages: ['ATTACHMENTS.WAIT_FOR_UPLOAD'] });
+      return false;
+    }
     return form.valid;
   }
 
   afterSave() {
+    // The permission now owns the staged files, so closing this popup must not cancel them.
+    this.attachmentUpload?.markAsConsumed();
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
   }
@@ -94,4 +114,12 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
   get descriptionControl() {
     return this.form.get('description') as FormControl;
   }
+
+  get temporaryUploadsControl() {
+    return this.form.get('temporaryUploads') as FormControl | null;
+  }
+
+  /** Bound as a value, so it has to stay an arrow to keep `this`. */
+  downloadAttachment = (attachment: Attachment): Observable<Blob> =>
+    this.service.downloadAttachment(this.model.id, attachment.id);
 }

@@ -101,5 +101,14 @@
         <span>{{ model.description }}</span>
       </span>
     </div>
+
+    <!-- Attachments: renders nothing when the permission has none. -->
+    <div class="lg:col-span-3">
+      <app-attachment-list
+        [attachments]="model.attachments"
+        [download]="downloadAttachment"
+        labelKey="PERMISSION_PAGE.ATTACHMENTS"
+      />
+    </div>
   </div>
 </div>

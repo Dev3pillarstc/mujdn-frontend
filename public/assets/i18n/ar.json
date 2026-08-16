@@ -484,7 +484,9 @@
     "DEPARTMENT": "الادارة",
     "DOWNLOAD_AS_FILE": "تحميل كملف",
     "GENERATING_REPORT": "جارٍ إنشاء التقرير...",
-    "PERMISSION_PDF_FILE_NAME": "بيانات الإذن"
+    "PERMISSION_PDF_FILE_NAME": "بيانات الإذن",
+    "UPLOAD_ATTACHMENT": "رفع مرفق طلب الاستئذان",
+    "ATTACHMENTS": "مرفقات طلب الاستئذان"
   },
   "SHIFTS_VIEW_PAGE": {
     "TITLE": "ورديات الموظفين",

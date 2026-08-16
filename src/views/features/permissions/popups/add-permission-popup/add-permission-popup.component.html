@@ -96,6 +96,24 @@
           <app-validation-messages [control]="descriptionControl"></app-validation-messages>
         </div>
       </div>
+
+      <!-- Attachments: the API links them at creation time only, so an existing permission's
+           files are read-only here — the approver reviews them, nobody replaces them. -->
+      <div class="mt-6">
+        @if (isCreateMode) {
+          <app-attachment-upload
+            formControlName="temporaryUploads"
+            titleKey="PERMISSION_PAGE.UPLOAD_ATTACHMENT"
+          />
+        } @else {
+          <app-attachment-list
+            [attachments]="model.attachments"
+            [download]="downloadAttachment"
+            labelKey="PERMISSION_PAGE.ATTACHMENTS"
+          />
+        }
+      </div>
+
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
         <button (click)="save$.next()" class="btn green-btn">

@@ -486,7 +486,9 @@
     "DEPARTMENT": "Department",
     "DOWNLOAD_AS_FILE": "Download as File",
     "GENERATING_REPORT": "Generating report...",
-    "PERMISSION_PDF_FILE_NAME": "Permission Data"
+    "PERMISSION_PDF_FILE_NAME": "Permission Data",
+    "UPLOAD_ATTACHMENT": "Upload Permission Request Attachment",
+    "ATTACHMENTS": "Permission Request Attachments"
   },
   "SHIFTS_VIEW_PAGE": {
     "TITLE": "Employee Shift Days",

@@ -87,6 +87,13 @@
       } -->
       </div>
     }
+
+    <!-- Attachments -->
+    <app-attachment-list
+      [attachments]="model.attachments"
+      [download]="downloadAttachment"
+      labelKey="LEAVES_PAGE.ATTACHMENTS"
+    />
   </div>
 
   <!-- Actions -->

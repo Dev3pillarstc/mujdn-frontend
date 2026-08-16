@@ -1,5 +1,5 @@
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -26,6 +26,9 @@ import { RequiredMarkerDirective } from '../../../../directives/required-marker.
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { markFormGroupTouched } from '@/utils/general-helper';
 import { LeavesRejectPopupComponent } from '../leaves-reject-popup/leaves-reject-popup.component';
+import { AttachmentUploadComponent } from '@/views/shared/attachment-upload/attachment-upload.component';
+import { AttachmentListComponent } from '@/views/shared/attachment-list/attachment-list.component';
+import { Attachment } from '@/models/shared/attachment/attachment';
 
 @Component({
   selector: 'app-leaves-add-edit-popup',
@@ -38,11 +41,15 @@ import { LeavesRejectPopupComponent } from '../leaves-reject-popup/leaves-reject
     TranslatePipe,
     RequiredMarkerDirective,
     ValidationMessagesComponent,
+    AttachmentUploadComponent,
+    AttachmentListComponent,
   ],
   templateUrl: './leaves-add-edit-popup.component.html',
   styleUrl: './leaves-add-edit-popup.component.scss',
 })
 export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> implements OnInit {
+  // Only rendered while creating — attachments cannot be changed on an existing leave.
+  @ViewChild(AttachmentUploadComponent) attachmentUpload?: AttachmentUploadComponent;
   declare model: Leave;
   declare form: FormGroup;
   alertService = inject(AlertService);
@@ -104,6 +111,11 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
   }
 
   beforeSave(model: Leave, form: FormGroup) {
+    // Submitting mid-upload would send the leave without the file the user just picked.
+    if (this.temporaryUploadsControl?.hasError('attachmentsUploading')) {
+      this.alertService.showErrorMessage({ messages: ['ATTACHMENTS.WAIT_FOR_UPLOAD'] });
+      return false;
+    }
     if (!form.valid) {
       return false;
     }
@@ -120,6 +132,8 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
   }
 
   afterSave() {
+    // The leave now owns the staged files, so closing this popup must not cancel them.
+    this.attachmentUpload?.markAsConsumed();
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
   }
@@ -224,9 +238,7 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
   }
 
   get optionLabel(): string {
-    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
-      ? 'nameAr'
-      : 'nameEn';
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   get fkEmployeeIdControl() {
@@ -244,4 +256,12 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
   get dateToControl() {
     return this.form.get('dateTo') as FormControl;
   }
+
+  get temporaryUploadsControl() {
+    return this.form.get('temporaryUploads') as FormControl | null;
+  }
+
+  /** Bound as a value, so it has to stay an arrow to keep `this`. */
+  downloadAttachment = (attachment: Attachment): Observable<Blob> =>
+    this.service.downloadAttachment(this.model.id, attachment.id);
 }

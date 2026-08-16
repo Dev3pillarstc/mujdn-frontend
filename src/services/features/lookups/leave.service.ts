@@ -1,6 +1,6 @@
 import { BaseCrudService } from '@/abstracts/base-crud-service';
 import { Leave, LeaveEmployeeLookup } from '@/models/features/lookups/leave/leave';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
@@ -11,6 +11,7 @@ import { genericDateOnlyConvertor, toDateOnly } from '@/utils/general-helper';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { HttpParams } from '@angular/common/http';
 import { Observable, map, catchError, of, switchMap } from 'rxjs';
+import { AttachmentService } from '@/services/shared/attachment.service';
 
 @CastResponseContainer({
   $default: {
@@ -32,9 +33,20 @@ import { Observable, map, catchError, of, switchMap } from 'rxjs';
 })
 export class LeaveService extends BaseCrudService<Leave, number> {
   serviceName: string = 'LeaveService';
+  private attachmentService = inject(AttachmentService);
 
   override getUrlSegment(): string {
     return this.urlService.URLS.LEAVES;
+  }
+
+  /**
+   * Streams a stored attachment's bytes. A caller without visibility into the leave gets a
+   * 404 rather than a 403 — that is "not accessible", not "missing", and is not worth a retry.
+   */
+  downloadAttachment(leaveId: number, attachmentId: number): Observable<Blob> {
+    return this.attachmentService.downloadContent(
+      `${this.getUrlSegment()}/${leaveId}/attachments/${attachmentId}/content`
+    );
   }
 
   @CastResponse(undefined, { fallback: '$pagination' })

@@ -1,4 +1,5 @@
 import {
+  HttpContextToken,
   HttpErrorResponse,
   HttpHandlerFn,
   HttpInterceptorFn,
@@ -26,6 +27,18 @@ import { buildTranslationParams } from '@/utils/general-helper';
 //   return excludedErrorPaths.some((path) => cleanUrl.includes(path));
 // }
 
+/**
+ * Per-request context token. Set to `true` to suppress the global error dialog for a
+ * specific request and handle the failure at the call site instead. Use it for requests
+ * whose error body the interceptor cannot read (e.g. `responseType: 'blob'`), or for
+ * best-effort background calls whose failure the user should never be told about.
+ *
+ * Usage:
+ *   const ctx = new HttpContext().set(SKIP_ERROR_ALERT, true);
+ *   this.http.get('/api/...', { context: ctx });
+ */
+export const SKIP_ERROR_ALERT = new HttpContextToken<boolean>(() => false);
+
 export const httpErrorInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
   next: HttpHandlerFn
@@ -33,6 +46,10 @@ export const httpErrorInterceptor: HttpInterceptorFn = (
   const injector = inject(Injector);
   return next(req).pipe(
     catchError((error: any) => {
+      if (req.context.get(SKIP_ERROR_ALERT)) {
+        return throwError(() => error);
+      }
+
       const notAuthorizedErrorKey = BACKEND_ERROR_ENUM.NOT_AUTHORIZED;
       const validationFailedErrorKey = BACKEND_ERROR_ENUM.VALIDATION_FAILED;
       const forbiddenActionErrorKey = BACKEND_ERROR_ENUM.FORBIDDEN_ACTION;

@@ -126,6 +126,27 @@ export function downloadBlobData(data: Blob, fileName: string): void {
 }
 
 /**
+ * @description Renders a byte count as a short human-readable size ("2.4 MB").
+ * Always formatted with Latin digits so it reads the same in both languages.
+ * @param bytes
+ */
+export function formatFileSize(bytes: number): string {
+  if (!bytes || bytes < 0) return '0 KB';
+
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let size = bytes;
+  let unitIndex = 0;
+  while (size >= 1024 && unitIndex < units.length - 1) {
+    size /= 1024;
+    unitIndex++;
+  }
+
+  // Whole bytes never need a decimal; anything larger reads better with one.
+  const rounded = unitIndex === 0 ? size : Math.round(size * 10) / 10;
+  return `${rounded.toLocaleString('en-US')} ${units[unitIndex]}`;
+}
+
+/**
  * @description Checks if given value is valid
  * @param value
  * Value to check for validity

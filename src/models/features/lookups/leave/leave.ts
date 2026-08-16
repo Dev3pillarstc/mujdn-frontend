@@ -6,6 +6,8 @@ import { Validators } from '@angular/forms';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 import { LEAVE_STATUS_ENUM } from '@/enums/leave-status-enum';
+import { Attachment } from '@/models/shared/attachment/attachment';
+import { TemporaryUpload } from '@/models/shared/attachment/temporary-upload';
 
 const { send, receive } = new LeaveInterceptor();
 
@@ -30,14 +32,21 @@ export class Leave extends BaseCrudModel<Leave, LeaveService> {
   declare canTakeAction?: boolean;
   // Opaque Base64 row-version; never generated or edited on the frontend
   declare concurrencyUpdateVersion?: string | null;
+  // Files already stored against this leave; always present on read, never sent back
+  attachments: Attachment[] = [];
+  // Files staged for a leave that does not exist yet. Attachments can only be linked at
+  // creation time, so this is write-once: the create payload carries their ids and the
+  // edit payload never mentions them.
+  temporaryUploads: TemporaryUpload[] = [];
 
   buildForm() {
-    const { fkEmployeeId, fkLeaveTypeId, dateFrom, dateTo } = this;
+    const { fkEmployeeId, fkLeaveTypeId, dateFrom, dateTo, temporaryUploads } = this;
     return {
       fkEmployeeId: [fkEmployeeId, [Validators.required]],
       fkLeaveTypeId: [fkLeaveTypeId, [Validators.required]],
       dateFrom: [dateFrom, [Validators.required]],
       dateTo: [dateTo, [Validators.required]],
+      temporaryUploads: [temporaryUploads ?? []],
     };
   }
 

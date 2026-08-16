@@ -157,7 +157,44 @@
     "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "Cannot reject the visit because it has attendance records",
     "SWITCH_TO_ATTENDANCE_SYSTEM": "Switch To Attendance System",
     "SWITCH_TO_VISITS_SYSTEM": "Switch To Visits System",
-    "INVALID_SHIFT_CONFIGURATION": "The daily working hours (including grace periods before attendance and after leave) should not exceed 24 hours"
+    "INVALID_SHIFT_CONFIGURATION": "The daily working hours (including grace periods before attendance and after leave) should not exceed 24 hours",
+    "ATTACHMENT_FILES_REQUIRED": "Please select at least one file.",
+    "ATTACHMENT_TOO_MANY_FILES": "You can attach up to 3 files only.",
+    "ATTACHMENT_FILE_TOO_LARGE": "The file size must not exceed 5 MB.",
+    "ATTACHMENT_BATCH_TOO_LARGE": "The total size of the selected files must not exceed 15 MB.",
+    "ATTACHMENT_EMPTY_FILE": "The selected file is empty.",
+    "ATTACHMENT_TYPE_NOT_ALLOWED": "Only PDF, JPEG and PNG attachments are allowed.",
+    "ATTACHMENT_SIGNATURE_INVALID": "The file content does not match a valid PDF, JPEG or PNG file. Please select a different file.",
+    "ATTACHMENT_EXTENSION_MISMATCH": "The file content does not match its extension. Please select a different file.",
+    "ATTACHMENT_CONTENT_MALFORMED": "The file appears to be corrupted and could not be read. Please export it again and retry.",
+    "ATTACHMENT_IMAGE_DIMENSIONS_EXCEEDED": "The image dimensions are too large. Please reduce the image size and retry.",
+    "ATTACHMENT_FILE_NAME_INVALID": "The file name is invalid. Please rename the file and retry.",
+    "ATTACHMENT_LENGTH_MISMATCH": "The file was not uploaded completely. Please retry.",
+    "ATTACHMENT_STREAM_NOT_SEEKABLE": "The file could not be read. Please retry.",
+    "ATTACHMENT_OWNER_INVALID": "The attachment could not be linked to the request. Please retry.",
+    "ATTACHMENT_STORAGE_UNAVAILABLE": "The attachment storage service is currently unavailable. Please try again later.",
+    "ATTACHMENT_STORAGE_CAPACITY_LOW": "There is not enough storage space for attachments. Please try again later.",
+    "TEMPORARY_UPLOAD_NOT_FOUND": "One of the attached files is no longer available. Please attach it again.",
+    "TEMPORARY_UPLOAD_ALREADY_CONSUMED": "This file is already attached to a request.",
+    "TEMPORARY_UPLOAD_NOT_AVAILABLE": "One of the attached files has expired. Please attach it again and resubmit.",
+    "TEMPORARY_UPLOAD_FILE_NOT_AVAILABLE": "One of the attached files is no longer available. Please attach it again and resubmit.",
+    "TEMPORARY_UPLOAD_IDS_INVALID": "The attached files are invalid. Please attach them again."
+  },
+  "ATTACHMENTS": {
+    "ATTACHMENTS": "Attachments",
+    "UPLOAD_TITLE": "Upload Attachment",
+    "UPLOAD_HINT": "You can attach up to {max} files, with a maximum size of {size} MB each. Supported formats: {types}",
+    "BROWSE_FILES": "Browse Files",
+    "UPLOADING": "Uploading...",
+    "REMOVE_FILE": "Remove File",
+    "DOWNLOAD": "Download",
+    "DOWNLOAD_FAILED": "The file could not be downloaded, or you do not have access to it.",
+    "WAIT_FOR_UPLOAD": "Please wait until the file upload is complete.",
+    "TOO_MANY_FILES": "You can attach up to {max} files only.",
+    "FILE_TOO_LARGE": "{name}: the file size exceeds {size} MB.",
+    "BATCH_TOO_LARGE": "The total size of the selected files exceeds {size} MB.",
+    "TYPE_NOT_ALLOWED": "{name}: unsupported file type. Supported formats: {types}",
+    "EMPTY_FILE": "{name}: the file is empty."
   },
   "FOOTER": {
     "ALL_RIGHTS": "All rights reserved to the General Directorate of Mujahideen © 2025"
@@ -228,7 +265,9 @@
     "NO_DATA_TO_SHOW": "No data to display",
     "DOWNLOAD_AS_FILE": "Download as File",
     "GENERATING_REPORT": "Generating report...",
-    "LEAVE_PDF_FILE_NAME": "Leave Data"
+    "LEAVE_PDF_FILE_NAME": "Leave Data",
+    "UPLOAD_ATTACHMENT": "Upload Leave Request Attachment",
+    "ATTACHMENTS": "Leave Request Attachments"
   },
   "PERMISSION_REASONS_PAGE": {
     "PERMISSION_REASONS_LIST": "Permission Reasons List",

@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { finalize, Observable } from 'rxjs';
 import { Attachment } from '@/models/shared/attachment/attachment';
@@ -6,7 +6,7 @@ import { AlertService } from '@/services/shared/alert.service';
 import { downloadBlobData } from '@/utils/utils';
 
 /**
- * Read-only list of a record's stored attachments, with a download button per file.
+ * List of a record's stored attachments, with a download button per file.
  *
  * The URL of an attachment belongs to the feature that owns it, so the host passes the
  * request in and this component owns everything around it — busy state, empty-blob guard,
@@ -16,6 +16,11 @@ import { downloadBlobData } from '@/utils/utils';
  *
  *   downloadAttachment = (attachment: Attachment) =>
  *     this.service.downloadAttachment(this.model.id, attachment.id);
+ *
+ * Read-only by default. Set `removable` to add a remove button and handle `remove` — the
+ * component never deletes anything itself, because a stored attachment is only ever removed
+ * by leaving its id out of the next update's keep-list. AttachmentUploadComponent uses this
+ * to render the files an edit form starts with; view screens leave it read-only.
  */
 @Component({
   selector: 'app-attachment-list',
@@ -26,6 +31,10 @@ export class AttachmentListComponent {
   attachments = input<Attachment[]>([]);
   download = input.required<(attachment: Attachment) => Observable<Blob>>();
   labelKey = input<string>('ATTACHMENTS.ATTACHMENTS');
+  removable = input<boolean>(false);
+
+  /** Emitted on a remove click. Nothing is deleted here — the host owns the keep-list. */
+  remove = output<Attachment>();
 
   private alertService = inject(AlertService);
 

@@ -1,11 +1,16 @@
 import { Permission } from '@/models/features/lookups/permission/permission';
 import { toAttachments } from '@/models/shared/attachment/attachment';
+import {
+  keptAttachmentIds,
+  temporaryUploadIds,
+  toAttachmentSelection,
+} from '@/models/shared/attachment/attachment-selection';
 import { toDateTime, toDateOnly } from '@/utils/general-helper';
 import { ModelInterceptorContract } from 'cast-response';
 
 /**
  * The exact body `POST /api/Permissions` accepts. It rejects any property it does not know,
- * so the create payload is built from scratch instead of being stripped down from the model.
+ * so the payload is built from scratch instead of being stripped down from the model.
  */
 interface CreatePermissionRequestPayload {
   permissionDate: string;
@@ -13,6 +18,13 @@ interface CreatePermissionRequestPayload {
   fkPermissionTypeId: number;
   description: string;
   temporaryUploadIds: string[];
+}
+
+/** The exact body `PUT /api/Permissions` accepts — the create fields plus row identity. */
+interface UpdatePermissionRequestPayload extends CreatePermissionRequestPayload {
+  id: number;
+  concurrencyUpdateVersion?: string | null;
+  keptAttachmentIds: number[];
 }
 
 export class PermissionInterceptor implements ModelInterceptorContract<Permission> {
@@ -25,29 +37,33 @@ export class PermissionInterceptor implements ModelInterceptorContract<Permissio
   }
 
   send(model: Partial<Permission>): Partial<Permission> {
+    // An update that never opened the attachment editor keeps what the permission already
+    // has: the keep-list is authoritative, so defaulting to `[]` would wipe every file.
+    const selection = model.attachmentSelection ?? toAttachmentSelection(model.attachments);
+    const payload: CreatePermissionRequestPayload = {
+      permissionDate: toDateOnly(model.permissionDate),
+      fkReasonId: model.fkReasonId!,
+      fkPermissionTypeId: model.fkPermissionTypeId!,
+      description: model.description!,
+      // Always present; `[]` when the user staged nothing.
+      temporaryUploadIds: temporaryUploadIds(selection),
+    };
+
     if (!model.id) {
-      const payload: CreatePermissionRequestPayload = {
-        permissionDate: toDateOnly(model.permissionDate),
-        fkReasonId: model.fkReasonId!,
-        fkPermissionTypeId: model.fkPermissionTypeId!,
-        description: model.description!,
-        // Deduped: the API rejects a list that names the same upload twice.
-        temporaryUploadIds: [...new Set((model.temporaryUploads ?? []).map((upload) => upload.id))],
-      };
       return payload as unknown as Partial<Permission>;
     }
 
-    delete model.permissionReason;
-    delete model.permissionType;
-    delete model.status;
-    delete model.department;
-    delete model.creationUser;
-    // Stored attachments are read-only and staged uploads are linked at creation only, so
-    // neither has any meaning in an update body.
-    delete model.attachments;
-    delete model.temporaryUploads;
-    delete (model as any)['languageService'];
-    model.permissionDate = toDateOnly(model.permissionDate);
-    return model;
+    const updatePayload: UpdatePermissionRequestPayload = {
+      ...payload,
+      id: model.id,
+      // Echoed back exactly as received — reformatting it triggers a false conflict.
+      concurrencyUpdateVersion: model.concurrencyUpdateVersion,
+      // A keep-list, not a delete-list: every stored attachment whose id is missing here is
+      // removed. It is required and must always be sent explicitly — omitting it, or sending
+      // `[]` by accident, deletes every file the permission has.
+      keptAttachmentIds: keptAttachmentIds(selection),
+    };
+
+    return updatePayload as unknown as Partial<Permission>;
   }
 }

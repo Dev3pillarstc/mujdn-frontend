@@ -196,13 +196,15 @@
           <app-validation-messages [control]="descriptionControl"></app-validation-messages>
         </div>
 
-        <!-- Attachments: the API links them at creation time only, so an existing mission's
-             files are read-only here — assigned employees read them, nobody replaces them. -->
+        <!-- Attachments: editable while creating and editing — a file is changed by removing
+             it and picking a new one, and the whole swap travels with the save. -->
         <div class="lg:col-span-4">
-          @if (isCreateMode) {
+          @if (isCreateMode || isEditMode) {
             <app-attachment-upload
-              formControlName="temporaryUploads"
+              formControlName="attachmentSelection"
               titleKey="WORK_MISSIONS.UPLOAD_ATTACHMENT"
+              keptLabelKey="WORK_MISSIONS.ATTACHMENTS"
+              [download]="downloadAttachment"
             />
           } @else {
             <app-attachment-list
@@ -215,7 +217,12 @@
       </div>
       <div class="actions mt-6 flex items-center justify-between gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
-        <button (click)="save$.next()" class="btn green-btn flex items-center">
+        <!-- Saving mid-upload would drop the file whose UUID has not arrived yet. -->
+        <button
+          (click)="save$.next()"
+          class="btn green-btn flex items-center"
+          [disabled]="isUploadingAttachment"
+        >
           {{ 'COMMON.SAVE' | translate }}
         </button>
       </div>

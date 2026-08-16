@@ -7,11 +7,14 @@ import { InterceptModel } from 'cast-response';
 import { BaseLookupModel } from '../lookups/base-lookup-model';
 import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
 import { Attachment } from '@/models/shared/attachment/attachment';
-import { TemporaryUpload } from '@/models/shared/attachment/temporary-upload';
+import {
+  AttachmentSelection,
+  toAttachmentSelection,
+} from '@/models/shared/attachment/attachment-selection';
 
 const { send, receive } = new WorkMissionInterceptor();
 
-@InterceptModel(new WorkMissionInterceptor())
+@InterceptModel({ send, receive })
 export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> {
   override $$__service_name__$$: string = 'WorkMissionService';
   declare nameEn: string;
@@ -21,21 +24,21 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
   declare description: string;
   declare missionCreator?: BaseLookupModel;
   declare assignedEmployees?: BaseLookupModel[];
-  declare concurrencyUpdateVersion?: Uint8Array;
+  // Opaque Base64 row-version; echoed back untouched on update, never generated here
+  declare concurrencyUpdateVersion?: string | null;
   declare isMissionCreator: boolean;
   declare isMyMission: boolean;
   workMissionType: WorkMissionTypesEnum = WorkMissionTypesEnum.FullDay;
-  // Files already stored against this mission; always present on read, never sent back
+  // Files already stored against this mission; always present on read, never sent back as-is
   attachments: Attachment[] = [];
-  // Files staged for a mission that does not exist yet. The API links attachments at
-  // creation time only, so this is write-once: the create payload carries their ids and the
-  // edit payload never mentions them — which is why the popup drops this control when
-  // editing rather than leaving a field that changes nothing.
-  temporaryUploads: TemporaryUpload[] = [];
+  // What the mission's attachments should be once the form is saved: the stored files the
+  // user kept plus anything newly staged. Filled from the form, read by the interceptor —
+  // create sends only the staged ids, update also sends the keep-list. Left undefined on
+  // purpose until a form sets it, so `send()` can tell "not edited" from "removed everything".
+  declare attachmentSelection?: AttachmentSelection;
 
   buildForm() {
-    const { nameAr, nameEn, startDate, endDate, description, workMissionType, temporaryUploads } =
-      this;
+    const { nameAr, nameEn, startDate, endDate, description, workMissionType, attachments } = this;
     return {
       nameAr: [
         nameAr,
@@ -66,7 +69,7 @@ export class WorkMission extends BaseCrudModel<WorkMission, WorkMissionService> 
       ],
       workMissionType: [workMissionType ?? WorkMissionTypesEnum.FullDay, [Validators.required]],
       // Attachments are optional on a mission — the API accepts an empty id list.
-      temporaryUploads: [temporaryUploads ?? []],
+      attachmentSelection: [toAttachmentSelection(attachments)],
     };
   }
 }

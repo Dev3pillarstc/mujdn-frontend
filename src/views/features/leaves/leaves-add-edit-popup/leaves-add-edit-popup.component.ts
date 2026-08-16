@@ -48,7 +48,7 @@ import { Attachment } from '@/models/shared/attachment/attachment';
   styleUrl: './leaves-add-edit-popup.component.scss',
 })
 export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> implements OnInit {
-  // Only rendered while creating — attachments cannot be changed on an existing leave.
+  // Rendered while creating and editing; take-action mode builds its own form without it.
   @ViewChild(AttachmentUploadComponent) attachmentUpload?: AttachmentUploadComponent;
   declare model: Leave;
   declare form: FormGroup;
@@ -106,18 +106,15 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
         dateTo: [{ value: this.model.dateTo, disabled: datesDisabled }, [Validators.required]],
       });
     } else {
+      // The control is seeded from the leave's stored attachments, so editing starts from
+      // what the leave already has and stays valid while the user keeps at least one file.
       this.form = this.fb.group(this.model.buildForm());
-      if (!this.isCreateMode) {
-        // Attachments are linked at creation only, so there is nothing to stage when
-        // editing — leaving the required control in place would make the form unsavable.
-        this.form.removeControl('temporaryUploads');
-      }
     }
   }
 
   beforeSave(model: Leave, form: FormGroup) {
     // Submitting mid-upload would send the leave without the file the user just picked.
-    if (this.temporaryUploadsControl?.hasError('attachmentsUploading')) {
+    if (this.attachmentSelectionControl?.hasError('attachmentsUploading')) {
       this.alertService.showErrorMessage({ messages: ['ATTACHMENTS.WAIT_FOR_UPLOAD'] });
       return false;
     }
@@ -138,6 +135,7 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
 
   afterSave() {
     // The leave now owns the staged files, so closing this popup must not cancel them.
+    // Any attachment the user removed was deleted by the same request.
     this.attachmentUpload?.markAsConsumed();
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
@@ -262,8 +260,13 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
     return this.form.get('dateTo') as FormControl;
   }
 
-  get temporaryUploadsControl() {
-    return this.form.get('temporaryUploads') as FormControl | null;
+  /** Absent in take-action mode, which builds a form of its own. */
+  get attachmentSelectionControl() {
+    return this.form.get('attachmentSelection') as FormControl | null;
+  }
+
+  get isUploadingAttachment(): boolean {
+    return !!this.attachmentSelectionControl?.hasError('attachmentsUploading');
   }
 
   /** Bound as a value, so it has to stay an arrow to keep `this`. */

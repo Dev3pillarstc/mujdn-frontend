@@ -1,12 +1,17 @@
 import { WorkMission } from '@/models/features/business/work-mission';
 import { toAttachments } from '@/models/shared/attachment/attachment';
+import {
+  keptAttachmentIds,
+  temporaryUploadIds,
+  toAttachmentSelection,
+} from '@/models/shared/attachment/attachment-selection';
 import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
 import { toDateOnly, toDateTime } from '@/utils/general-helper';
 import { ModelInterceptorContract } from 'cast-response';
 
 /**
  * The exact body `POST /api/WorkMission` accepts. It rejects any property it does not know,
- * so the create payload is built from scratch instead of being stripped down from the model.
+ * so the payload is built from scratch instead of being stripped down from the model.
  */
 interface CreateWorkMissionRequestPayload {
   nameAr: string;
@@ -18,6 +23,13 @@ interface CreateWorkMissionRequestPayload {
   temporaryUploadIds: string[];
 }
 
+/** The exact body `PUT /api/WorkMission` accepts — the create fields plus row identity. */
+interface UpdateWorkMissionRequestPayload extends CreateWorkMissionRequestPayload {
+  id: number;
+  concurrencyUpdateVersion?: string | null;
+  keptAttachmentIds: number[];
+}
+
 export class WorkMissionInterceptor implements ModelInterceptorContract<WorkMission> {
   receive(model: WorkMission): WorkMission {
     model.endDate = toDateTime(model.endDate);
@@ -25,27 +37,37 @@ export class WorkMissionInterceptor implements ModelInterceptorContract<WorkMiss
     model.attachments = toAttachments(model.attachments);
     return model;
   }
+
   send(model: Partial<WorkMission>): Partial<WorkMission> {
+    // An update that never opened the attachment editor keeps what the mission already has:
+    // the keep-list is authoritative, so defaulting to `[]` would wipe every file.
+    const selection = model.attachmentSelection ?? toAttachmentSelection(model.attachments);
+    const payload: CreateWorkMissionRequestPayload = {
+      nameAr: model.nameAr!,
+      nameEn: model.nameEn ?? null,
+      startDate: toDateOnly(model.startDate),
+      endDate: toDateOnly(model.endDate),
+      description: model.description!,
+      workMissionType: model.workMissionType!,
+      // Always present; `[]` when the user staged nothing.
+      temporaryUploadIds: temporaryUploadIds(selection),
+    };
+
     if (!model.id) {
-      const payload: CreateWorkMissionRequestPayload = {
-        nameAr: model.nameAr!,
-        nameEn: model.nameEn ?? null,
-        startDate: toDateOnly(model.startDate),
-        endDate: toDateOnly(model.endDate),
-        description: model.description!,
-        workMissionType: model.workMissionType!,
-        // Deduped: the API rejects a list that names the same upload twice.
-        temporaryUploadIds: [...new Set((model.temporaryUploads ?? []).map((upload) => upload.id))],
-      };
       return payload as unknown as Partial<WorkMission>;
     }
 
-    // Stored attachments are read-only and staged uploads are linked at creation only, so
-    // neither has any meaning in an update body.
-    delete model.attachments;
-    delete model.temporaryUploads;
-    model.endDate = toDateOnly(model.endDate);
-    model.startDate = toDateOnly(model.startDate);
-    return model;
+    const updatePayload: UpdateWorkMissionRequestPayload = {
+      ...payload,
+      id: model.id,
+      // Echoed back exactly as received — reformatting it triggers a false conflict.
+      concurrencyUpdateVersion: model.concurrencyUpdateVersion,
+      // A keep-list, not a delete-list: every stored attachment whose id is missing here is
+      // removed. It is required and must always be sent explicitly — omitting it, or sending
+      // `[]` by accident, deletes every file the mission has.
+      keptAttachmentIds: keptAttachmentIds(selection),
+    };
+
+    return updatePayload as unknown as Partial<WorkMission>;
   }
 }

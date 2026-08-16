@@ -182,6 +182,7 @@
   },
   "ATTACHMENTS": {
     "ATTACHMENTS": "المرفقات",
+    "CURRENT_FILES": "الملفات المرفقة",
     "UPLOAD_TITLE": "رفع مرفق",
     "UPLOAD_HINT": "يمكنك إرفاق {max} ملفات كحد أقصى، وبحد أقصى {size} ميجابايت لكل ملف، وتشمل الصيغ المدعومة {types}",
     "BROWSE_FILES": "تصفح الملفات",

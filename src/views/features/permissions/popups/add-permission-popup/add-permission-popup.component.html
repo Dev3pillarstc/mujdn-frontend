@@ -97,13 +97,15 @@
         </div>
       </div>
 
-      <!-- Attachments: the API links them at creation time only, so an existing permission's
-           files are read-only here — the approver reviews them, nobody replaces them. -->
+      <!-- Attachments: editable while creating and editing — a file is changed by removing it
+           and picking a new one, and the whole swap travels with the save. -->
       <div class="mt-6">
-        @if (isCreateMode) {
+        @if (isCreateMode || isEditMode) {
           <app-attachment-upload
-            formControlName="temporaryUploads"
+            formControlName="attachmentSelection"
             titleKey="PERMISSION_PAGE.UPLOAD_ATTACHMENT"
+            keptLabelKey="PERMISSION_PAGE.ATTACHMENTS"
+            [download]="downloadAttachment"
           />
         } @else {
           <app-attachment-list
@@ -116,7 +118,8 @@
 
       <div class="actions mt-6 flex items-center justify-end gap-4">
         <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>
-        <button (click)="save$.next()" class="btn green-btn">
+        <!-- Saving mid-upload would drop the file whose UUID has not arrived yet. -->
+        <button (click)="save$.next()" class="btn green-btn" [disabled]="isUploadingAttachment">
           {{ 'COMMON.SAVE' | translate }}
         </button>
       </div>

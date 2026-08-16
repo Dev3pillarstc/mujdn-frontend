@@ -40,7 +40,21 @@
     <p class="text-[#d92d20] text-xs mt-2">{{ error }}</p>
   }
 
-  @for (upload of uploads(); track upload.id) {
+  <!-- Files the record already has. Removing one only drops it from the keep-list; the
+       deletion happens with the save, so cancelling this dialog changes nothing. -->
+  @if (kept().length) {
+    <div class="mt-6">
+      <app-attachment-list
+        [attachments]="kept()"
+        [download]="download()"
+        [labelKey]="keptLabelKey()"
+        [removable]="canRemove"
+        (remove)="removeExisting($event)"
+      />
+    </div>
+  }
+
+  @for (upload of staged(); track upload.id) {
     <div class="p-4 rounded-2xl border border-[#d2d6db] border-s-[8px] border-s-[#1570ef] mt-6">
       <div class="flex items-center gap-3">
         <i class="pi pi-paperclip text-[#1570ef]" aria-hidden="true"></i>
@@ -50,7 +64,7 @@
           </span>
           <span class="text-[#6c737f] text-sm">{{ upload.sizeLabel }}</span>
         </div>
-        @if (!isDisabled()) {
+        @if (canRemove) {
           <button
             type="button"
             class="text-[#d92d20] p-2 shrink-0"

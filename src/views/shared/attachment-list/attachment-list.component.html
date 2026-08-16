@@ -27,6 +27,17 @@
             }
             {{ 'ATTACHMENTS.DOWNLOAD' | translate }}
           </button>
+          @if (removable()) {
+            <button
+              type="button"
+              class="text-[#d92d20] p-2 shrink-0"
+              (click)="remove.emit(attachment)"
+              [attr.aria-label]="'ATTACHMENTS.REMOVE_FILE' | translate"
+              [title]="'ATTACHMENTS.REMOVE_FILE' | translate"
+            >
+              <i class="pi pi-trash" aria-hidden="true"></i>
+            </button>
+          }
         </div>
       </div>
     }

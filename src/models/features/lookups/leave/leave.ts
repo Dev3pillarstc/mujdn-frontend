@@ -7,7 +7,11 @@ import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 import { LEAVE_STATUS_ENUM } from '@/enums/leave-status-enum';
 import { Attachment } from '@/models/shared/attachment/attachment';
-import { TemporaryUpload } from '@/models/shared/attachment/temporary-upload';
+import {
+  AttachmentSelection,
+  attachmentsRequired,
+  toAttachmentSelection,
+} from '@/models/shared/attachment/attachment-selection';
 
 const { send, receive } = new LeaveInterceptor();
 
@@ -32,23 +36,24 @@ export class Leave extends BaseCrudModel<Leave, LeaveService> {
   declare canTakeAction?: boolean;
   // Opaque Base64 row-version; never generated or edited on the frontend
   declare concurrencyUpdateVersion?: string | null;
-  // Files already stored against this leave; always present on read, never sent back
+  // Files already stored against this leave; always present on read, never sent back as-is
   attachments: Attachment[] = [];
-  // Files staged for a leave that does not exist yet. Attachments can only be linked at
-  // creation time, so this is write-once: the create payload carries their ids and the
-  // edit payload never mentions them — which is why the popup drops this control when
-  // editing rather than leaving a required field nobody can satisfy.
-  temporaryUploads: TemporaryUpload[] = [];
+  // What the leave's attachments should be once the form is saved: the stored files the user
+  // kept plus anything newly staged. Filled from the form, read by the interceptor — create
+  // sends only the staged ids, update also sends the keep-list. Left undefined on purpose
+  // until a form sets it, so `send()` can tell "not edited" from "user removed everything".
+  declare attachmentSelection?: AttachmentSelection;
 
   buildForm() {
-    const { fkEmployeeId, fkLeaveTypeId, dateFrom, dateTo, temporaryUploads } = this;
+    const { fkEmployeeId, fkLeaveTypeId, dateFrom, dateTo, attachments } = this;
     return {
       fkEmployeeId: [fkEmployeeId, [Validators.required]],
       fkLeaveTypeId: [fkLeaveTypeId, [Validators.required]],
       dateFrom: [dateFrom, [Validators.required]],
       dateTo: [dateTo, [Validators.required]],
-      // `required` rejects an empty array, so a leave cannot be created with no file.
-      temporaryUploads: [temporaryUploads ?? [], [Validators.required]],
+      // A leave must always carry at least one file — counting the ones it already has, so
+      // an edit that keeps the existing attachment does not demand a pointless re-upload.
+      attachmentSelection: [toAttachmentSelection(attachments), [attachmentsRequired]],
     };
   }
 

@@ -182,6 +182,7 @@
   },
   "ATTACHMENTS": {
     "ATTACHMENTS": "Attachments",
+    "CURRENT_FILES": "Attached files",
     "UPLOAD_TITLE": "Upload Attachment",
     "UPLOAD_HINT": "You can attach up to {max} files, with a maximum size of {size} MB each. Supported formats: {types}",
     "BROWSE_FILES": "Browse Files",

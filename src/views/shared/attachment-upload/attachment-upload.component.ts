@@ -16,36 +16,54 @@ import {
   NG_VALUE_ACCESSOR,
   ValidationErrors,
   Validator,
-  Validators,
 } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs';
+import { EMPTY, finalize, Observable } from 'rxjs';
+import { Attachment } from '@/models/shared/attachment/attachment';
+import {
+  AttachmentSelection,
+  EMPTY_ATTACHMENT_SELECTION,
+} from '@/models/shared/attachment/attachment-selection';
 import { TemporaryUpload } from '@/models/shared/attachment/temporary-upload';
 import { AttachmentService } from '@/services/shared/attachment.service';
 import {
   ATTACHMENT_ACCEPT_ATTRIBUTE,
   ATTACHMENT_CONSTRAINTS,
 } from '@/constants/attachment-constraints';
+import { AttachmentListComponent } from '@/views/shared/attachment-list/attachment-list.component';
 
 let nextInputId = 0;
 
 /**
- * Reusable file-staging control. Bind it like any other form control — its value is the
- * list of {@link TemporaryUpload}s the user has staged, which the owning model turns into
- * the `temporaryUploadIds` the create endpoint expects:
+ * Reusable attachment editor. Bind it like any other form control — its value is an
+ * {@link AttachmentSelection}: the stored attachments the record should keep, plus the files
+ * staged during this session.
  *
- *   <app-attachment-upload formControlName="temporaryUploads" />
+ *   <app-attachment-upload formControlName="attachmentSelection" [download]="downloadAttachment" />
  *
- * Files upload as soon as they are picked, so invalid ones are rejected before the user
- * fills in the rest of the form. The control reports itself invalid while an upload is in
- * flight, which keeps a submit from racing the staging call.
+ * The same control serves create and edit. On create the selection starts empty and only
+ * `staged` ever fills up. On edit it is seeded from the record's `attachments`, and the user
+ * changes a file by removing the old one and picking a new one — which is exactly the shape
+ * the update endpoint wants (`keptAttachmentIds` + `temporaryUploadIds`).
  *
- * Anything still staged when the control is destroyed is released server-side, unless the
- * host called {@link markAsConsumed} after a save that consumed it.
+ * The two halves are removed very differently, and mixing them up is the easy bug here:
+ *
+ * - a **staged** file is released immediately via `DELETE /temporary-uploads/{uuid}`, because
+ *   it belongs to nothing and would otherwise sit on disk for 24h;
+ * - a **stored** attachment is only dropped from the local keep-list. Nothing is sent until
+ *   save, so cancelling the dialog — or a submit that fails validation — leaves the file
+ *   exactly where it was.
+ *
+ * Files upload as soon as they are picked, so invalid ones are rejected before the user fills
+ * in the rest of the form. The control reports itself invalid while an upload is in flight,
+ * which keeps a submit from racing the staging call.
+ *
+ * Anything still staged when the control is destroyed is released, unless the host called
+ * {@link markAsConsumed} after a save that consumed it.
  */
 @Component({
   selector: 'app-attachment-upload',
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, AttachmentListComponent],
   templateUrl: './attachment-upload.component.html',
   styleUrl: './attachment-upload.component.scss',
   providers: [
@@ -65,9 +83,16 @@ export class AttachmentUploadComponent
   implements ControlValueAccessor, Validator, OnInit, OnDestroy
 {
   titleKey = input<string>('ATTACHMENTS.UPLOAD_TITLE');
+  /** Heading above the files the record already has. Only shown when there are any. */
+  keptLabelKey = input<string>('ATTACHMENTS.CURRENT_FILES');
   maxFiles = input<number>(ATTACHMENT_CONSTRAINTS.MAX_FILES);
   maxFileSizeBytes = input<number>(ATTACHMENT_CONSTRAINTS.MAX_FILE_SIZE_BYTES);
   allowedExtensions = input<readonly string[]>(ATTACHMENT_CONSTRAINTS.ALLOWED_EXTENSIONS);
+  /**
+   * Lets the user open a stored attachment before deciding whether to replace it. Optional:
+   * a create form has nothing stored, so nothing to download.
+   */
+  download = input<(attachment: Attachment) => Observable<Blob>>(() => EMPTY);
 
   private attachmentService = inject(AttachmentService);
   private translateService = inject(TranslateService);
@@ -76,7 +101,10 @@ export class AttachmentUploadComponent
   readonly inputId = `attachment-upload-${nextInputId++}`;
   readonly acceptAttribute = ATTACHMENT_ACCEPT_ATTRIBUTE;
 
-  uploads = signal<TemporaryUpload[]>([]);
+  /** Stored attachments the record should still have after the save. */
+  kept = signal<Attachment[]>([]);
+  /** Files staged in this session, not yet linked to anything. */
+  staged = signal<TemporaryUpload[]>([]);
   errors = signal<string[]>([]);
   isUploading = signal(false);
   isDisabled = signal(false);
@@ -85,7 +113,7 @@ export class AttachmentUploadComponent
   /** The control this is bound to, if any — see {@link ngOnInit}. */
   private ngControl: NgControl | null = null;
 
-  private onChange: (value: TemporaryUpload[]) => void = () => {};
+  private onChange: (value: AttachmentSelection) => void = () => {};
   private onTouched: () => void = () => {};
   private onValidatorChange: () => void = () => {};
 
@@ -97,12 +125,23 @@ export class AttachmentUploadComponent
     this.ngControl = this.injector.get(NgControl, null, { optional: true });
   }
 
+  /** Stored + staged. Every limit applies to the record, not to one upload call. */
+  get totalCount(): number {
+    return this.kept().length + this.staged().length;
+  }
+
   /**
    * Read off the bound control rather than a separate input, so the asterisk can never
-   * disagree with the validator that actually blocks the save.
+   * disagree with the validator that actually blocks the save. The rule spans kept + staged,
+   * so it cannot be Angular's `Validators.required` and is probed rather than looked up by
+   * reference.
    */
   get isRequired(): boolean {
-    return this.ngControl?.control?.hasValidator(Validators.required) ?? false;
+    const validator = this.ngControl?.control?.validator;
+    if (!validator) return false;
+    return (
+      validator({ value: EMPTY_ATTACHMENT_SELECTION } as AbstractControl)?.['required'] === true
+    );
   }
 
   get showRequiredError(): boolean {
@@ -111,7 +150,11 @@ export class AttachmentUploadComponent
   }
 
   get canAddMore(): boolean {
-    return !this.isDisabled() && !this.isUploading() && this.uploads().length < this.maxFiles();
+    return !this.isDisabled() && !this.isUploading() && this.totalCount < this.maxFiles();
+  }
+
+  get canRemove(): boolean {
+    return !this.isDisabled();
   }
 
   get hint(): string {
@@ -135,7 +178,8 @@ export class AttachmentUploadComponent
       maxFiles: this.maxFiles(),
       maxFileSizeBytes: this.maxFileSizeBytes(),
       allowedExtensions: this.allowedExtensions(),
-      alreadyStagedCount: this.uploads().length,
+      // Counts what the record already has too: on edit, three stored files leave no room.
+      alreadyStagedCount: this.totalCount,
     });
 
     if (validationErrors.length) {
@@ -151,17 +195,36 @@ export class AttachmentUploadComponent
       .upload(files)
       .pipe(finalize(() => this.setUploading(false)))
       .subscribe({
-        next: (staged) => this.setValue([...this.uploads(), ...staged]),
+        next: (staged) => this.setValue(this.kept(), [...this.staged(), ...staged]),
         // The failure has already been reported by the global error interceptor, which
         // maps the server's ATTACHMENT_* messageKey to a translated message.
         error: () => {},
       });
   }
 
-  removeUpload(upload: TemporaryUpload): void {
-    if (this.isDisabled()) return;
+  /**
+   * Drops a stored attachment from the keep-list. Deliberately makes no request: the removal
+   * travels with the save, so abandoning the dialog or a failed submit costs the user nothing.
+   */
+  removeExisting(attachment: Attachment): void {
+    if (!this.canRemove) return;
 
-    this.setValue(this.uploads().filter((staged) => staged.id !== upload.id));
+    this.setValue(
+      this.kept().filter((existing) => existing.id !== attachment.id),
+      this.staged()
+    );
+    this.errors.set([]);
+    this.onTouched();
+  }
+
+  /** Drops a staged file and releases it server-side — it belongs to no record yet. */
+  removeUpload(upload: TemporaryUpload): void {
+    if (!this.canRemove) return;
+
+    this.setValue(
+      this.kept(),
+      this.staged().filter((staged) => staged.id !== upload.id)
+    );
     this.errors.set([]);
     this.onTouched();
     this.attachmentService.releaseUploads([upload.id]);
@@ -177,16 +240,18 @@ export class AttachmentUploadComponent
 
   ngOnDestroy(): void {
     if (this.isConsumed) return;
-    this.attachmentService.releaseUploads(this.uploads().map((upload) => upload.id));
+    // Only staged files: a stored attachment is not this control's to delete.
+    this.attachmentService.releaseUploads(this.staged().map((upload) => upload.id));
   }
 
   // --- ControlValueAccessor ---
 
-  writeValue(value: TemporaryUpload[] | null): void {
-    this.uploads.set(value ?? []);
+  writeValue(value: AttachmentSelection | null): void {
+    this.kept.set(value?.kept ?? []);
+    this.staged.set(value?.staged ?? []);
   }
 
-  registerOnChange(fn: (value: TemporaryUpload[]) => void): void {
+  registerOnChange(fn: (value: AttachmentSelection) => void): void {
     this.onChange = fn;
   }
 
@@ -210,9 +275,10 @@ export class AttachmentUploadComponent
     this.onValidatorChange = fn;
   }
 
-  private setValue(uploads: TemporaryUpload[]): void {
-    this.uploads.set(uploads);
-    this.onChange(uploads);
+  private setValue(kept: Attachment[], staged: TemporaryUpload[]): void {
+    this.kept.set(kept);
+    this.staged.set(staged);
+    this.onChange({ kept, staged });
   }
 
   private setUploading(isUploading: boolean): void {

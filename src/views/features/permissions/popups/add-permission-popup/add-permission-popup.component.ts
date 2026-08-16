@@ -46,7 +46,8 @@ interface Adminstration {
   styleUrl: './add-permission-popup.component.scss',
 })
 export class AddPermissionPopupComponent extends BasePopupComponent<Permission> implements OnInit {
-  // Only rendered while creating — attachments cannot be changed on an existing permission.
+  // Rendered while creating and editing — a stored file is changed by removing it and
+  // picking a new one, and both halves of that swap travel with the save.
   @ViewChild(AttachmentUploadComponent) attachmentUpload?: AttachmentUploadComponent;
   declare model: Permission;
   declare form: FormGroup;
@@ -57,6 +58,7 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
   prmissionReasons: BaseLookupModel[] | undefined = [];
   data = inject(MAT_DIALOG_DATA);
   isCreateMode = false;
+  isEditMode = false;
 
   override saveFail(error: Error): void {
     // logic after error if there
@@ -70,22 +72,20 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
   override initPopup() {
     this.model = this.data.model;
     this.isCreateMode = this.data.viewMode == ViewModeEnum.CREATE;
+    this.isEditMode = this.data.viewMode == ViewModeEnum.EDIT;
     this.prmissionReasons = this.data.lookups.prmissionReasons;
     this.permissionTypes = this.data.lookups.permissionTypes;
   }
 
   override buildForm() {
+    // The control is seeded from the permission's stored attachments, so editing starts from
+    // what the permission already has rather than from an empty picker.
     this.form = this.fb.group(this.model.buildForm());
-    if (!this.isCreateMode) {
-      // Attachments are linked at creation only, so there is nothing to stage when editing —
-      // the update payload never mentions them.
-      this.form.removeControl('temporaryUploads');
-    }
   }
 
   beforeSave(model: Permission, form: FormGroup) {
     // Submitting mid-upload would save the permission without the file just picked.
-    if (this.temporaryUploadsControl?.hasError('attachmentsUploading')) {
+    if (this.attachmentSelectionControl?.hasError('attachmentsUploading')) {
       this.alertService.showErrorMessage({ messages: ['ATTACHMENTS.WAIT_FOR_UPLOAD'] });
       return false;
     }
@@ -94,6 +94,7 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
 
   afterSave() {
     // The permission now owns the staged files, so closing this popup must not cancel them.
+    // Any attachment the user removed was deleted by the same request.
     this.attachmentUpload?.markAsConsumed();
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
@@ -115,8 +116,12 @@ export class AddPermissionPopupComponent extends BasePopupComponent<Permission> 
     return this.form.get('description') as FormControl;
   }
 
-  get temporaryUploadsControl() {
-    return this.form.get('temporaryUploads') as FormControl | null;
+  get attachmentSelectionControl() {
+    return this.form.get('attachmentSelection') as FormControl | null;
+  }
+
+  get isUploadingAttachment(): boolean {
+    return !!this.attachmentSelectionControl?.hasError('attachmentsUploading');
   }
 
   /** Bound as a value, so it has to stay an arrow to keep `this`. */

@@ -154,12 +154,15 @@
         </div>
       </div>
 
-      <!-- Attachments: the API links them at creation time only, so an existing leave's
-           files are read-only here — the approver reviews them, nobody replaces them. -->
-      @if (isCreateMode) {
+      <!-- Attachments: editable while creating and editing — a file is changed by removing it
+           and picking a new one, and the whole swap travels with the save. Take-action mode is
+           read-only: the approver reviews the evidence, they do not rewrite it. -->
+      @if (isCreateMode || isEditMode) {
         <app-attachment-upload
-          formControlName="temporaryUploads"
+          formControlName="attachmentSelection"
           titleKey="LEAVES_PAGE.UPLOAD_ATTACHMENT"
+          keptLabelKey="LEAVES_PAGE.ATTACHMENTS"
+          [download]="downloadAttachment"
         />
       } @else {
         <app-attachment-list
@@ -176,7 +179,13 @@
         </button>
         <div class="flex gap-2">
           @if (isCreateMode || isEditMode) {
-            <button (click)="save$.next()" class="btn green-btn" type="button">
+            <!-- Saving mid-upload would drop the file whose UUID has not arrived yet. -->
+            <button
+              (click)="save$.next()"
+              class="btn green-btn"
+              type="button"
+              [disabled]="isUploadingAttachment"
+            >
               {{ (isCreateMode ? 'LEAVES_PAGE.SEND_REQUEST' : 'COMMON.SAVE') | translate }}
             </button>
           }

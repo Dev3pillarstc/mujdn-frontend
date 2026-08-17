@@ -179,7 +179,19 @@
         </ng-template>
         <ng-template #body let-mission>
           <tr>
-            <td>{{ mission.nameAr }}</td>
+            <td>
+              <span class="inline-flex items-center gap-1">
+                {{ mission.nameAr }}
+                <!-- Attachments are opened from the mission view; this only flags that there are some. -->
+                @if (mission.attachments?.length) {
+                  <i
+                    class="pi pi-paperclip text-[#1570ef] text-sm"
+                    [title]="'WORK_MISSIONS.ATTACHMENTS' | translate"
+                  ></i>
+                  <span class="text-[#6c737f] text-sm">{{ mission.attachments.length }}</span>
+                }
+              </span>
+            </td>
             <td>
               <div>
                 {{ mission.nameEn }}

@@ -1,0 +1,81 @@
+<div class="flex flex-col">
+  <h4 class="text-base sm:text-lg font-semibold text-[#161616] mb-2">
+    {{ titleKey() | translate }}
+    @if (isRequired) {
+      <span class="text-[#d92d20]" aria-hidden="true">*</span>
+    }
+  </h4>
+  <p class="text-[#64748b] text-xs mb-4">{{ hint }}</p>
+
+  <div class="flex items-center gap-3">
+    <label
+      [attr.for]="canAddMore ? inputId : null"
+      class="btn black-btn w-fit me-auto"
+      [class.disabled-label]="!canAddMore"
+      [attr.aria-disabled]="!canAddMore"
+    >
+      @if (isUploading()) {
+        <i class="pi pi-spinner pi-spin" aria-hidden="true"></i>
+        {{ 'ATTACHMENTS.UPLOADING' | translate }}
+      } @else {
+        {{ 'ATTACHMENTS.BROWSE_FILES' | translate }}
+      }
+    </label>
+    <input
+      [id]="inputId"
+      type="file"
+      multiple
+      hidden
+      [accept]="acceptAttribute"
+      [disabled]="!canAddMore"
+      (change)="onFilesSelected($event)"
+    />
+  </div>
+
+  @if (showRequiredError) {
+    <p class="text-[#d92d20] text-xs mt-2">{{ 'ATTACHMENTS.REQUIRED' | translate }}</p>
+  }
+
+  @for (error of errors(); track $index) {
+    <p class="text-[#d92d20] text-xs mt-2">{{ error }}</p>
+  }
+
+  <!-- Files the record already has. Removing one only drops it from the keep-list; the
+       deletion happens with the save, so cancelling this dialog changes nothing. -->
+  @if (kept().length) {
+    <div class="mt-6">
+      <app-attachment-list
+        [attachments]="kept()"
+        [download]="download()"
+        [labelKey]="keptLabelKey()"
+        [removable]="canRemove"
+        (remove)="removeExisting($event)"
+      />
+    </div>
+  }
+
+  @for (upload of staged(); track upload.id) {
+    <div class="p-4 rounded-2xl border border-[#d2d6db] border-s-[8px] border-s-[#1570ef] mt-6">
+      <div class="flex items-center gap-3">
+        <i class="pi pi-paperclip text-[#1570ef]" aria-hidden="true"></i>
+        <div class="flex flex-col min-w-0 flex-1">
+          <span class="font-[600] text-[#1f2a37] truncate" [title]="upload.originalFileName">
+            {{ upload.originalFileName }}
+          </span>
+          <span class="text-[#6c737f] text-sm">{{ upload.sizeLabel }}</span>
+        </div>
+        @if (canRemove) {
+          <button
+            type="button"
+            class="text-[#d92d20] p-2 shrink-0"
+            (click)="removeUpload(upload)"
+            [attr.aria-label]="'ATTACHMENTS.REMOVE_FILE' | translate"
+            [title]="'ATTACHMENTS.REMOVE_FILE' | translate"
+          >
+            <i class="pi pi-trash" aria-hidden="true"></i>
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { Leave } from '@/models/features/lookups/leave/leave';
 import { AuthService } from '@/services/auth/auth.service';
 import { LeaveService } from '@/services/features/lookups/leave.service';
@@ -12,10 +12,12 @@ import { downloadBlobData } from '@/utils/utils';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
 import { LAYOUT_DIRECTION_ENUM } from '@/enums/layout-direction-enum';
 import { LEAVE_STATUS_ENUM } from '@/enums/leave-status-enum';
+import { Attachment } from '@/models/shared/attachment/attachment';
+import { AttachmentListComponent } from '@/views/shared/attachment-list/attachment-list.component';
 
 @Component({
   selector: 'app-leaves-view-popup',
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, AttachmentListComponent],
   templateUrl: './leaves-view-popup.component.html',
   styleUrl: './leaves-view-popup.component.scss',
 })
@@ -73,6 +75,10 @@ export class LeavesViewPopupComponent {
       });
   }
 
+  /** Bound as a value, so it has to stay an arrow to keep `this`. */
+  downloadAttachment = (attachment: Attachment): Observable<Blob> =>
+    this.service.downloadAttachment(this.model.id, attachment.id);
+
   private getLeavePdfFileName(): string {
     const title = this.translateService.instant('LEAVES_PAGE.LEAVE_PDF_FILE_NAME');
     const employeeName = this.employeeName();
@@ -119,8 +125,8 @@ export class LeavesViewPopupComponent {
     return (
       (lang === LANGUAGE_ENUM.ARABIC
         ? this.model?.employee?.department?.nameAr
-        : (this.model?.employee?.department?.nameEn ??
-          this.model?.employee?.department?.nameAr)) ?? ''
+        : (this.model?.employee?.department?.nameEn ?? this.model?.employee?.department?.nameAr)) ??
+      ''
     );
   }
 

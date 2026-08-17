@@ -12,7 +12,8 @@ import { Component, Inject, inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
+import { Attachment } from '@/models/shared/attachment/attachment';
 import { PermissionDetailsCardComponent } from '../../components/permission-details-card/permission-details-card.component';
 
 @Component({
@@ -82,6 +83,10 @@ export class PermissionsDataPopupComponent implements OnInit {
         },
       });
   }
+
+  /** Bound as a value, so it has to stay an arrow to keep `this`. */
+  downloadAttachment = (attachment: Attachment): Observable<Blob> =>
+    this.service.downloadAttachment(this.model.id, attachment.id);
 
   private getPermissionPdfFileName(): string {
     const title = this.translateService.instant('PERMISSION_PAGE.PERMISSION_PDF_FILE_NAME');

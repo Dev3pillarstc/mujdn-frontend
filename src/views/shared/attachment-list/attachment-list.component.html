@@ -1,0 +1,45 @@
+@if (attachments().length) {
+  <div class="flex flex-col gap-3">
+    <span class="text-sm text-[#6c737f]">{{ labelKey() | translate }}</span>
+    @for (attachment of attachments(); track attachment.id) {
+      <div
+        class="bg-white p-4 rounded-2xl border border-[#d2d6db] border-s-[8px] border-s-[#1570ef]"
+      >
+        <div class="flex items-center gap-3">
+          <i class="pi pi-paperclip text-[#1570ef]" aria-hidden="true"></i>
+          <div class="flex flex-col min-w-0 flex-1">
+            <span class="font-[600] text-[#1f2a37] truncate" [title]="attachment.originalFileName">
+              {{ attachment.originalFileName }}
+            </span>
+            <span class="text-[#6c737f] text-sm">{{ attachment.sizeLabel }}</span>
+          </div>
+          <button
+            type="button"
+            class="btn gray-btn w-fit shrink-0"
+            (click)="downloadAttachment(attachment)"
+            [disabled]="downloadingId() !== undefined"
+            [attr.aria-busy]="downloadingId() === attachment.id"
+          >
+            @if (downloadingId() === attachment.id) {
+              <i class="pi pi-spinner pi-spin" aria-hidden="true"></i>
+            } @else {
+              <i class="pi pi-download" aria-hidden="true"></i>
+            }
+            {{ 'ATTACHMENTS.DOWNLOAD' | translate }}
+          </button>
+          @if (removable()) {
+            <button
+              type="button"
+              class="text-[#d92d20] p-2 shrink-0"
+              (click)="remove.emit(attachment)"
+              [attr.aria-label]="'ATTACHMENTS.REMOVE_FILE' | translate"
+              [title]="'ATTACHMENTS.REMOVE_FILE' | translate"
+            >
+              <i class="pi pi-trash" aria-hidden="true"></i>
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

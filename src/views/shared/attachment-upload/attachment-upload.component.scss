@@ -1,0 +1,7 @@
+// A <label> cannot carry the :disabled state its own control does, so the "no more files
+// can be added" case is styled here and the `for` binding is dropped to stop the click.
+.disabled-label {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

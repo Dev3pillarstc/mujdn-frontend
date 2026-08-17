@@ -1,4 +1,4 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -25,6 +25,11 @@ import { RequiredMarkerDirective } from '../../../../../directives/required-mark
 import { CustomValidators } from '@/validators/custom-validators';
 import { ViewModeEnum } from '@/enums/view-mode-enum';
 import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
+import { Attachment } from '@/models/shared/attachment/attachment';
+import { AlertService } from '@/services/shared/alert.service';
+import { WorkMissionService } from '@/services/features/business/work-mission.service';
+import { AttachmentListComponent } from '@/views/shared/attachment-list/attachment-list.component';
+import { AttachmentUploadComponent } from '@/views/shared/attachment-upload/attachment-upload.component';
 
 @Component({
   selector: 'app-add-new-mission-popup',
@@ -41,17 +46,25 @@ import { WorkMissionTypesEnum } from '@/enums/work-mission-type-enum';
     TranslatePipe,
     ValidationMessagesComponent,
     RadioButtonModule,
+    AttachmentUploadComponent,
+    AttachmentListComponent,
   ],
   templateUrl: './add-new-mission-popup.component.html',
   styleUrl: './add-new-mission-popup.component.scss',
 })
 export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission> implements OnInit {
+  // Rendered while creating and editing — a stored file is changed by removing it and
+  // picking a new one, and both halves of that swap travel with the save.
+  @ViewChild(AttachmentUploadComponent) attachmentUpload?: AttachmentUploadComponent;
   date2: Date | undefined;
   model!: WorkMission;
   declare form: FormGroup;
   declare viewMode: ViewModeEnum;
   isCreateMode = false;
+  isEditMode = false;
   translateService = inject(TranslateService);
+  alertService = inject(AlertService);
+  service = inject(WorkMissionService);
   WorkMissionTypesEnum = WorkMissionTypesEnum;
   constructor(
     private fb: FormBuilder,
@@ -63,15 +76,27 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
     this.model = this.data.model;
     this.viewMode = this.data.viewMode;
     this.isCreateMode = this.viewMode == ViewModeEnum.CREATE;
+    this.isEditMode = this.viewMode == ViewModeEnum.EDIT;
   }
   override buildForm() {
+    // The control is seeded from the mission's stored attachments, so editing starts from
+    // what the mission already has rather than from an empty picker.
     this.form = this.fb.group(this.model.buildForm(), {
       validators: [CustomValidators.startBeforeEnd('startDate', 'endDate')],
     });
   }
   override saveFail(error: Error): void {}
-  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {}
+  override afterSave(model: WorkMission, dialogRef: M<any, any>): void {
+    // The mission now owns the staged files, so closing this popup must not cancel them.
+    // Any attachment the user removed was deleted by the same request.
+    this.attachmentUpload?.markAsConsumed();
+  }
   override beforeSave(model: WorkMission, form: FormGroup): Observable<boolean> | boolean {
+    // Submitting mid-upload would save the mission without the file just picked.
+    if (this.attachmentSelectionControl?.hasError('attachmentsUploading')) {
+      this.alertService.showErrorMessage({ messages: ['ATTACHMENTS.WAIT_FOR_UPLOAD'] });
+      return false;
+    }
     return form.valid;
   }
   override prepareModel(
@@ -100,4 +125,15 @@ export class AddNewMissionPopupComponent extends BasePopupComponent<WorkMission>
   get workMissionTypeControl() {
     return this.form.get('workMissionType') as FormControl;
   }
+  get attachmentSelectionControl() {
+    return this.form.get('attachmentSelection') as FormControl | null;
+  }
+
+  get isUploadingAttachment(): boolean {
+    return !!this.attachmentSelectionControl?.hasError('attachmentsUploading');
+  }
+
+  /** Bound as a value, so it has to stay an arrow to keep `this`. */
+  downloadAttachment = (attachment: Attachment): Observable<Blob> =>
+    this.service.downloadAttachment(this.model.id, attachment.id);
 }

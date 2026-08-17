@@ -11,7 +11,8 @@ import { PaginatedList } from '@/models/shared/response/paginated-list';
 import { PaginatedListResponseData } from '@/models/shared/response/paginated-list-response-data';
 import { toDateOnly } from '@/utils/general-helper';
 import { HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { AttachmentService } from '@/services/shared/attachment.service';
 import { CastResponse, CastResponseContainer } from 'cast-response';
 import { map, Observable } from 'rxjs';
 import { LANGUAGE_ENUM } from '@/enums/language-enum';
@@ -36,9 +37,20 @@ import { LANGUAGE_ENUM } from '@/enums/language-enum';
 })
 export class WorkMissionService extends LookupBaseService<WorkMission, number> {
   override serviceName: string = 'WorkMissionService';
+  private attachmentService = inject(AttachmentService);
 
   override getUrlSegment(): string {
     return this.urlService.URLS.WORK_MISSION;
+  }
+
+  /**
+   * Streams a stored attachment's bytes. A caller without visibility into the mission gets a
+   * 404 rather than a 403 — that is "not accessible", not "missing", and is not worth a retry.
+   */
+  downloadAttachment(workMissionId: number, attachmentId: number): Observable<Blob> {
+    return this.attachmentService.downloadContent(
+      `${this.getUrlSegment()}/${workMissionId}/attachments/${attachmentId}/content`
+    );
   }
 
   @CastResponse(undefined, { fallback: '$lookup' })

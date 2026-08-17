@@ -55,6 +55,15 @@
       <p class="text-[#161616] text-[16px] font-semibold">
         {{ model.description }}
       </p>
+
+      <!-- Attachments: renders nothing when the mission has none. -->
+      <div class="mt-6">
+        <app-attachment-list
+          [attachments]="model.attachments"
+          [download]="downloadAttachment"
+          labelKey="WORK_MISSIONS.ATTACHMENTS"
+        />
+      </div>
     </div>
     @if (model.assignedEmployees && model.assignedEmployees.length > 0) {
       <div class="mt-6 pt-6 border-t border-[#d2d6db]">

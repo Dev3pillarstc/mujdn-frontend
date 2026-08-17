@@ -1,5 +1,5 @@
 import { BasePopupComponent } from '@/abstracts/base-components/base-popup/base-popup.component';
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, Inject, inject, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -26,6 +26,9 @@ import { RequiredMarkerDirective } from '../../../../directives/required-marker.
 import { ValidationMessagesComponent } from '@/views/shared/validation-messages/validation-messages.component';
 import { markFormGroupTouched } from '@/utils/general-helper';
 import { LeavesRejectPopupComponent } from '../leaves-reject-popup/leaves-reject-popup.component';
+import { AttachmentUploadComponent } from '@/views/shared/attachment-upload/attachment-upload.component';
+import { AttachmentListComponent } from '@/views/shared/attachment-list/attachment-list.component';
+import { Attachment } from '@/models/shared/attachment/attachment';
 
 @Component({
   selector: 'app-leaves-add-edit-popup',
@@ -38,11 +41,15 @@ import { LeavesRejectPopupComponent } from '../leaves-reject-popup/leaves-reject
     TranslatePipe,
     RequiredMarkerDirective,
     ValidationMessagesComponent,
+    AttachmentUploadComponent,
+    AttachmentListComponent,
   ],
   templateUrl: './leaves-add-edit-popup.component.html',
   styleUrl: './leaves-add-edit-popup.component.scss',
 })
 export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> implements OnInit {
+  // Rendered while creating and editing; take-action mode builds its own form without it.
+  @ViewChild(AttachmentUploadComponent) attachmentUpload?: AttachmentUploadComponent;
   declare model: Leave;
   declare form: FormGroup;
   alertService = inject(AlertService);
@@ -99,11 +106,18 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
         dateTo: [{ value: this.model.dateTo, disabled: datesDisabled }, [Validators.required]],
       });
     } else {
+      // The control is seeded from the leave's stored attachments, so editing starts from
+      // what the leave already has and stays valid while the user keeps at least one file.
       this.form = this.fb.group(this.model.buildForm());
     }
   }
 
   beforeSave(model: Leave, form: FormGroup) {
+    // Submitting mid-upload would send the leave without the file the user just picked.
+    if (this.attachmentSelectionControl?.hasError('attachmentsUploading')) {
+      this.alertService.showErrorMessage({ messages: ['ATTACHMENTS.WAIT_FOR_UPLOAD'] });
+      return false;
+    }
     if (!form.valid) {
       return false;
     }
@@ -120,6 +134,9 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
   }
 
   afterSave() {
+    // The leave now owns the staged files, so closing this popup must not cancel them.
+    // Any attachment the user removed was deleted by the same request.
+    this.attachmentUpload?.markAsConsumed();
     const successObject = { messages: ['COMMON.SAVED_SUCCESSFULLY'] };
     this.alertService.showSuccessMessage(successObject);
   }
@@ -224,9 +241,7 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
   }
 
   get optionLabel(): string {
-    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC
-      ? 'nameAr'
-      : 'nameEn';
+    return this.languageService.getCurrentLanguage() === LANGUAGE_ENUM.ARABIC ? 'nameAr' : 'nameEn';
   }
 
   get fkEmployeeIdControl() {
@@ -244,4 +259,17 @@ export class LeavesAddEditPopupComponent extends BasePopupComponent<Leave> imple
   get dateToControl() {
     return this.form.get('dateTo') as FormControl;
   }
+
+  /** Absent in take-action mode, which builds a form of its own. */
+  get attachmentSelectionControl() {
+    return this.form.get('attachmentSelection') as FormControl | null;
+  }
+
+  get isUploadingAttachment(): boolean {
+    return !!this.attachmentSelectionControl?.hasError('attachmentsUploading');
+  }
+
+  /** Bound as a value, so it has to stay an arrow to keep `this`. */
+  downloadAttachment = (attachment: Attachment): Observable<Blob> =>
+    this.service.downloadAttachment(this.model.id, attachment.id);
 }

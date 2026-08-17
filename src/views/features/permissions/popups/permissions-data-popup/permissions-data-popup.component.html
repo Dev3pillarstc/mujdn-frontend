@@ -7,7 +7,7 @@
       {{ 'PERMISSION_PAGE.PERMISSION_DATA' | translate }}
     </h3>
 
-    <app-permission-details-card [model]="model" />
+    <app-permission-details-card [model]="model" [downloadAttachment]="downloadAttachment" />
 
     <div class="actions mt-6 flex items-center justify-between gap-4">
       <button (click)="close()" class="btn gray-btn">{{ 'COMMON.CANCEL' | translate }}</button>

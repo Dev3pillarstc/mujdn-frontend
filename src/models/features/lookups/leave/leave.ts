@@ -6,6 +6,12 @@ import { Validators } from '@angular/forms';
 import { BaseLookupModel } from '@/models/features/lookups/base-lookup-model';
 import { UsersWithDepartmentLookup } from '@/models/auth/users-department-lookup';
 import { LEAVE_STATUS_ENUM } from '@/enums/leave-status-enum';
+import { Attachment } from '@/models/shared/attachment/attachment';
+import {
+  AttachmentSelection,
+  attachmentsRequired,
+  toAttachmentSelection,
+} from '@/models/shared/attachment/attachment-selection';
 
 const { send, receive } = new LeaveInterceptor();
 
@@ -30,14 +36,24 @@ export class Leave extends BaseCrudModel<Leave, LeaveService> {
   declare canTakeAction?: boolean;
   // Opaque Base64 row-version; never generated or edited on the frontend
   declare concurrencyUpdateVersion?: string | null;
+  // Files already stored against this leave; always present on read, never sent back as-is
+  attachments: Attachment[] = [];
+  // What the leave's attachments should be once the form is saved: the stored files the user
+  // kept plus anything newly staged. Filled from the form, read by the interceptor — create
+  // sends only the staged ids, update also sends the keep-list. Left undefined on purpose
+  // until a form sets it, so `send()` can tell "not edited" from "user removed everything".
+  declare attachmentSelection?: AttachmentSelection;
 
   buildForm() {
-    const { fkEmployeeId, fkLeaveTypeId, dateFrom, dateTo } = this;
+    const { fkEmployeeId, fkLeaveTypeId, dateFrom, dateTo, attachments } = this;
     return {
       fkEmployeeId: [fkEmployeeId, [Validators.required]],
       fkLeaveTypeId: [fkLeaveTypeId, [Validators.required]],
       dateFrom: [dateFrom, [Validators.required]],
       dateTo: [dateTo, [Validators.required]],
+      // A leave must always carry at least one file — counting the ones it already has, so
+      // an edit that keeps the existing attachment does not demand a pointless re-upload.
+      attachmentSelection: [toAttachmentSelection(attachments), [attachmentsRequired]],
     };
   }
 

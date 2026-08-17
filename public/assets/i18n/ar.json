@@ -157,7 +157,46 @@
     "CANNOT_REJECT_VISIT_WITH_ATTENDANCE": "لا يمكن رفض الزيارة لأنها تحتوي على تسجيل حضور",
     "SWITCH_TO_ATTENDANCE_SYSTEM": "الذهاب إلى نظام الحضور والانصراف",
     "SWITCH_TO_VISITS_SYSTEM": "الذهاب إلى نظام الزيارات",
-    "INVALID_SHIFT_CONFIGURATION": "عدد ساعات العمل اليومية (شاملة فترات السماح قبل الحضور وبعد الانصراف) يجب الا يتجاوز 24 ساعة"
+    "INVALID_SHIFT_CONFIGURATION": "عدد ساعات العمل اليومية (شاملة فترات السماح قبل الحضور وبعد الانصراف) يجب الا يتجاوز 24 ساعة",
+    "ATTACHMENT_FILES_REQUIRED": "يجب اختيار ملف واحد على الأقل.",
+    "ATTACHMENT_TOO_MANY_FILES": "يمكن إرفاق 3 ملفات كحد أقصى.",
+    "ATTACHMENT_FILE_TOO_LARGE": "يجب ألا يتجاوز حجم الملف 5 ميجابايت.",
+    "ATTACHMENT_BATCH_TOO_LARGE": "يجب ألا يتجاوز الحجم الإجمالي للملفات المختارة 15 ميجابايت.",
+    "ATTACHMENT_EMPTY_FILE": "الملف المختار فارغ.",
+    "ATTACHMENT_TYPE_NOT_ALLOWED": "الصيغ المسموح بها هي pdf و jpeg و png فقط.",
+    "ATTACHMENT_SIGNATURE_INVALID": "محتوى الملف لا يطابق ملف pdf أو jpeg أو png صالح. يرجى اختيار ملف آخر.",
+    "ATTACHMENT_EXTENSION_MISMATCH": "محتوى الملف لا يطابق امتداده. يرجى اختيار ملف آخر.",
+    "ATTACHMENT_CONTENT_MALFORMED": "يبدو أن الملف تالف ولا يمكن قراءته. يرجى تصديره مرة أخرى وإعادة المحاولة.",
+    "ATTACHMENT_IMAGE_DIMENSIONS_EXCEEDED": "أبعاد الصورة كبيرة جداً. يرجى تصغير الصورة وإعادة المحاولة.",
+    "ATTACHMENT_FILE_NAME_INVALID": "اسم الملف غير صالح. يرجى إعادة تسمية الملف والمحاولة مرة أخرى.",
+    "ATTACHMENT_LENGTH_MISMATCH": "لم يتم رفع الملف بالكامل. يرجى إعادة المحاولة.",
+    "ATTACHMENT_STREAM_NOT_SEEKABLE": "تعذرت قراءة الملف. يرجى إعادة المحاولة.",
+    "ATTACHMENT_OWNER_INVALID": "تعذر ربط المرفق بالطلب. يرجى إعادة المحاولة.",
+    "ATTACHMENT_STORAGE_UNAVAILABLE": "خدمة تخزين المرفقات غير متاحة حالياً. يرجى المحاولة لاحقاً.",
+    "ATTACHMENT_STORAGE_CAPACITY_LOW": "لا تتوفر مساحة تخزين كافية للمرفقات. يرجى المحاولة لاحقاً.",
+    "TEMPORARY_UPLOAD_NOT_FOUND": "أحد الملفات المرفقة لم يعد متاحاً. يرجى إرفاقه مرة أخرى.",
+    "TEMPORARY_UPLOAD_ALREADY_CONSUMED": "هذا الملف مرتبط بالفعل بأحد الطلبات.",
+    "TEMPORARY_UPLOAD_NOT_AVAILABLE": "انتهت صلاحية أحد الملفات المرفقة. يرجى إرفاقه مرة أخرى وإعادة إرسال الطلب.",
+    "TEMPORARY_UPLOAD_FILE_NOT_AVAILABLE": "أحد الملفات المرفقة لم يعد متاحاً. يرجى إرفاقه مرة أخرى وإعادة إرسال الطلب.",
+    "TEMPORARY_UPLOAD_IDS_INVALID": "الملفات المرفقة غير صالحة. يرجى إرفاقها مرة أخرى."
+  },
+  "ATTACHMENTS": {
+    "ATTACHMENTS": "المرفقات",
+    "CURRENT_FILES": "الملفات المرفقة",
+    "UPLOAD_TITLE": "رفع مرفق",
+    "UPLOAD_HINT": "يمكنك إرفاق {max} ملفات كحد أقصى، وبحد أقصى {size} ميجابايت لكل ملف، وتشمل الصيغ المدعومة {types}",
+    "BROWSE_FILES": "تصفح الملفات",
+    "UPLOADING": "جارٍ الرفع...",
+    "REMOVE_FILE": "حذف الملف",
+    "DOWNLOAD": "تحميل المرفق",
+    "DOWNLOAD_FAILED": "تعذر تحميل الملف، أو لا تملك صلاحية الوصول إليه.",
+    "WAIT_FOR_UPLOAD": "يرجى الانتظار حتى اكتمال رفع الملف.",
+    "REQUIRED": "إرفاق ملف واحد على الأقل مطلوب.",
+    "TOO_MANY_FILES": "يمكنك إرفاق {max} ملفات كحد أقصى.",
+    "FILE_TOO_LARGE": "{name}: حجم الملف يتجاوز {size} ميجابايت.",
+    "BATCH_TOO_LARGE": "الحجم الإجمالي للملفات المختارة يتجاوز {size} ميجابايت.",
+    "TYPE_NOT_ALLOWED": "{name}: صيغة الملف غير مدعومة. الصيغ المدعومة {types}",
+    "EMPTY_FILE": "{name}: الملف فارغ."
   },
   "FOOTER": {
     "ALL_RIGHTS": "جميع الحقوق محفوظة للإدارة العامة للمجاهدين © 2025"
@@ -228,7 +267,9 @@
     "NO_DATA_TO_SHOW": "لا توجد بيانات لعرضها",
     "DOWNLOAD_AS_FILE": "تحميل كملف",
     "GENERATING_REPORT": "جارٍ إنشاء التقرير...",
-    "LEAVE_PDF_FILE_NAME": "بيانات الاجازة"
+    "LEAVE_PDF_FILE_NAME": "بيانات الاجازة",
+    "UPLOAD_ATTACHMENT": "رفع مرفق طلب الاجازة",
+    "ATTACHMENTS": "مرفقات طلب الاجازة"
   },
   "PERMISSION_REASONS_PAGE": {
     "PERMISSION_REASONS_LIST": "قائمة أسباب الإذن",
@@ -444,7 +485,9 @@
     "DEPARTMENT": "الادارة",
     "DOWNLOAD_AS_FILE": "تحميل كملف",
     "GENERATING_REPORT": "جارٍ إنشاء التقرير...",
-    "PERMISSION_PDF_FILE_NAME": "بيانات الإذن"
+    "PERMISSION_PDF_FILE_NAME": "بيانات الإذن",
+    "UPLOAD_ATTACHMENT": "رفع مرفق طلب الاستئذان",
+    "ATTACHMENTS": "مرفقات طلب الاستئذان"
   },
   "SHIFTS_VIEW_PAGE": {
     "TITLE": "ورديات الموظفين",
@@ -855,7 +898,9 @@
     "EMPLOYEES_NOT_AVAILABLE_MESSAGE": ".يرجى العلم أن بعض الموظفين المدرجين في القائمة قد يكونوا غير متاحين للاختيار، وذلك لارتباطهم بمهام أخرى خلال نفس الفترة الزمنية المحددة، وبالتالي لا يمكن إسناد هذه المهمة إليهم",
     "DOWNLOAD_AS_FILE": "تحميل كملف",
     "GENERATING_REPORT": "جارٍ إنشاء التقرير...",
-    "MISSION_PDF_FILE_NAME": "بيانات المهمة"
+    "MISSION_PDF_FILE_NAME": "بيانات المهمة",
+    "UPLOAD_ATTACHMENT": "رفع مرفق المهمة",
+    "ATTACHMENTS": "مرفقات المهمة"
   },
   "VISIT_REQUEST_PAGE": {
     "VISITOR_REQUESTS_LIST": "قائمة طلبات الزيارات",

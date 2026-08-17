@@ -38,6 +38,7 @@ export const EndPoints = {
   IMPORT: '/ImportSheet',
   TEMPORARY_ROLE_ASSIGNMENTS: '/TemporaryRoleAssignments',
   EMPLOYEE_SHIFT_DAYS: '/employee-shift-days',
+  TEMPORARY_UPLOADS: '/temporary-uploads',
 };
 
 export type EndpointsType = typeof EndPoints;

@@ -32,6 +32,7 @@ import { UserWorkShiftService } from '@/services/features/lookups/user-workshift
 import { PaginationParams } from '@/models/shared/pagination-params';
 import { DIALOG_ENUM } from '@/enums/dialog-enum';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
 import { RotationGroup } from '@/models/features/lookups/work-shifts/rotation-group';
 import UserWorkShift from '@/models/features/lookups/work-shifts/user-work-shifts';
 import { WorkShiftType } from '@/enums/work-shift-type';
@@ -49,6 +50,7 @@ import { AuthService } from '@/services/auth/auth.service';
     TranslatePipe,
     ValidationMessagesComponent,
     InputNumberModule,
+    InputTextModule,
     ShiftAssignmentPanelComponent,
     RequiredMarkerDirective,
   ],
@@ -412,6 +414,7 @@ export class WorkShiftsAssignmentPopupComponent
       model.presenceInquiryTime = formValue.presenceInquiryTime;
     }
     model.presenceInquiryBuffer = formValue.presenceInquiryBuffer;
+    model.legacyDaysCount = formValue.legacyDaysCount;
 
     const userIds = formValue.userIdsArray || [];
     model.fkAssignedUserId = userIds.length > 0 ? userIds[0] : null;
@@ -532,6 +535,16 @@ export class WorkShiftsAssignmentPopupComponent
     presenceTimeCtrl?.updateValueAndValidity();
     presenceBufferCtrl?.updateValueAndValidity();
 
+    // Shift / rest duration: shown and required for the rotation based types
+    const legacyDaysCountCtrl = this.form.get('legacyDaysCount');
+    if (isRotating || isWeekOnOff24) {
+      legacyDaysCountCtrl?.setValidators([Validators.required, Validators.min(1)]);
+    } else {
+      legacyDaysCountCtrl?.clearValidators();
+      legacyDaysCountCtrl?.setValue(null, { emitEvent: false });
+    }
+    legacyDaysCountCtrl?.updateValueAndValidity();
+
     // Rotating shift dropdowns: required and must be unique when Rotating type
     (['shift1', 'shift2', 'shift3'] as const).forEach((name) => {
       const ctrl = this.form.get(name);
@@ -634,6 +647,9 @@ export class WorkShiftsAssignmentPopupComponent
   get workShiftTypeControl() {
     return this.form.get('workShiftType') as FormControl;
   }
+  get legacyDaysCountControl() {
+    return this.form.get('legacyDaysCount') as FormControl;
+  }
 
   get isSingleShiftType(): boolean {
     const type = this.form?.get('workShiftType')?.value;
@@ -652,6 +668,11 @@ export class WorkShiftsAssignmentPopupComponent
     return this.form?.get('workShiftType')?.value === WorkShiftType.WeekOnWeekOff24;
   }
 
+  get showShiftPeriodDuration(): boolean {
+    const type = this.form?.get('workShiftType')?.value;
+    return type === WorkShiftType.Rotating || type === WorkShiftType.WeekOnWeekOff24;
+  }
+
   weekDays = weekDays;
 
   getSelectedShiftObject(controlName: string) {
@@ -666,5 +687,4 @@ export class WorkShiftsAssignmentPopupComponent
 
     return rotated.map((id) => this.shifts.find((s) => s.id === id)?.[nameKey] ?? '-').join(',');
   }
-
 }

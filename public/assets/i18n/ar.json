@@ -708,7 +708,9 @@
     "CLONE_ASSIGNMENT": "نسخ الإسناد",
     "DUPLICATE_SHIFT": "هذه الوردية محددة بالفعل في خانة أخرى — يجب أن تكون كل وردية مختلفة",
     "ROTATING_SHIFTS": "ورديات التناوب",
-    "SHIFTING_PERIOD_MAX_ONE_YEAR": "لا يمكن أن تتجاوز فترة الوردية سنة واحدة"
+    "SHIFTING_PERIOD_MAX_ONE_YEAR": "لا يمكن أن تتجاوز فترة الوردية سنة واحدة",
+    "SHIFT_PERIOD_DURATION": "مدة المناوبة / الراحة بالأيام",
+    "DAYS_UNIT": "أيام"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT_TAB": "الورديات المسندة للموظفين التابعين",

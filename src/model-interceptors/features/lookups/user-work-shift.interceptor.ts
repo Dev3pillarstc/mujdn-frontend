@@ -24,6 +24,11 @@ export class UserWorkShiftInterceptor implements ModelInterceptorContract<UserWo
       delete model.employeeWorkingDays;
     }
 
+    // Shift / rest duration applies only to the rotation based types
+    if (model.workShiftType == WorkShiftType.Standard) {
+      delete model.legacyDaysCount;
+    }
+
     if (model.workShiftType === WorkShiftType.Rotating) {
       delete model.shiftDetails;
       delete model.fkShiftId;
@@ -35,6 +40,6 @@ export class UserWorkShiftInterceptor implements ModelInterceptorContract<UserWo
       model.shiftPeriodCount = 3;
     }
 
-return model;
+    return model;
   }
 }

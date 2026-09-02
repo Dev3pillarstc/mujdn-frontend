@@ -691,7 +691,7 @@
     "SHIFT_HOURS": "ساعات العمل الخاصة بالوردية",
     "WORK_WEEK_REST_WEEK": "اسبوعين عمل / اسبوعين راحة",
     "WORK_WEEK_REST_2WEEK": "أسبوعين عمل / أسبوعين راحة",
-    "SHIFT_24_HOURS": "اسبوعين عمل / اسبوعين راحة (24 ساعة)",
+    "SHIFT_24_HOURS": "وردية بنظام الراحات 24 س",
     "ATTENDANCE_DOCUMENTATION_TIME": "وقت إثبات الحضور اليومي (لنظام الراحات 24 ساعة)",
     "TIME_FROM_PLACEHOLDER": "موعد (من)",
     "ATTENDANCE_DOCUMENTATION_GRACE_PERIOD": "فترة السماح لإثبات الحضور اليومي (قبل / بعد)",
@@ -708,7 +708,9 @@
     "CLONE_ASSIGNMENT": "نسخ الإسناد",
     "DUPLICATE_SHIFT": "هذه الوردية محددة بالفعل في خانة أخرى — يجب أن تكون كل وردية مختلفة",
     "ROTATING_SHIFTS": "ورديات التناوب",
-    "SHIFTING_PERIOD_MAX_ONE_YEAR": "لا يمكن أن تتجاوز فترة الوردية سنة واحدة"
+    "SHIFTING_PERIOD_MAX_ONE_YEAR": "لا يمكن أن تتجاوز فترة الوردية سنة واحدة",
+    "SHIFT_PERIOD_DURATION": "مدة المناوبة / الراحة بالأيام",
+    "DAYS_UNIT": "أيام"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT_TAB": "الورديات المسندة للموظفين التابعين",

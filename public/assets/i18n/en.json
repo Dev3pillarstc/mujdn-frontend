@@ -709,7 +709,9 @@
     "CLONE_ASSIGNMENT": "Clone Assignment",
     "DUPLICATE_SHIFT": "This shift is already assigned to another slot — each shift must be unique",
     "ROTATING_SHIFTS": "Rotating Shifts",
-    "SHIFTING_PERIOD_MAX_ONE_YEAR": "Shift period cannot exceed one year"
+    "SHIFTING_PERIOD_MAX_ONE_YEAR": "Shift period cannot exceed one year",
+    "SHIFT_PERIOD_DURATION": "Shift / rest duration in days",
+    "DAYS_UNIT": "days"
   },
   "USER_WORK_SHIFT_PAGE": {
     "WORK_SHIFT_ASSIGNMENT_TAB": "Employees Assigned Work Shifts",

@@ -22,8 +22,8 @@ export const WORK_SHIFT_TYPE_OPTIONS: WorkShiftTypeOption[] = [
   // },
   {
     id: 3,
-    nameEn: '2 Weeks Work / 2 Weeks Rest (24h)',
-    nameAr: 'اسبوعين عمل / اسبوعين راحة (24 ساعة)',
+    nameEn: '24-Hour Rest Shift',
+    nameAr: 'وردية بنظام الراحات 24 س',
     value: WorkShiftType.WeekOnWeekOff24,
   },
   {

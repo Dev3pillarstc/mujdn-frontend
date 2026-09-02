@@ -110,6 +110,19 @@ export function positiveNumber(): ValidatorFn {
   };
 }
 
+// Custom validator for whole numbers only
+export function integerNumber(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!isValidValue(control.value)) {
+      return null;
+    }
+
+    const value = Number(control.value);
+
+    return Number.isInteger(value) ? null : { integerNumber: true };
+  };
+}
+
 // Custom validator for number range
 export function numberRange(min: number, max: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -443,6 +456,7 @@ export const CustomValidators = {
   numberMaxLength,
   numberMinLength,
   positiveNumber,
+  integerNumber,
   numberRange,
   timeFromBeforeTimeTo,
   crossDateTimeValidator,

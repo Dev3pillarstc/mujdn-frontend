@@ -39,6 +39,7 @@ import { WorkShiftType } from '@/enums/work-shift-type';
 import { ShiftAssignmentPanelComponent } from './shift-assignment-panel/shift-assignment-panel.component';
 import { RequiredMarkerDirective } from '../../../../../directives/required-marker.directive';
 import { AuthService } from '@/services/auth/auth.service';
+import { CustomValidators } from '@/validators/custom-validators';
 
 @Component({
   selector: 'app-work-shifts-assignment-popup',
@@ -538,7 +539,12 @@ export class WorkShiftsAssignmentPopupComponent
     // Shift / rest duration: shown and required for the rotation based types
     const legacyDaysCountCtrl = this.form.get('legacyDaysCount');
     if (isRotating || isWeekOnOff24) {
-      legacyDaysCountCtrl?.setValidators([Validators.required, Validators.min(1)]);
+      legacyDaysCountCtrl?.setValidators([
+        Validators.required,
+        Validators.min(1),
+        Validators.max(30),
+        CustomValidators.integerNumber(),
+      ]);
     } else {
       legacyDaysCountCtrl?.clearValidators();
       legacyDaysCountCtrl?.setValue(null, { emitEvent: false });

@@ -17,6 +17,7 @@ export enum ValidationErrorKeyEnum {
   PHONE_NUMBER = 'PHONE_NUMBER',
   FAX = 'FAX',
   POSITIVE_NUMBER = 'positiveNumber',
+  INTEGER_NUMBER = 'integerNumber',
   INVALID_NUMBER = 'invalidNumber',
   NUMBER_RANGE = 'numberRange',
   PASSWORD_MISMATCH = 'passwordMismatch',

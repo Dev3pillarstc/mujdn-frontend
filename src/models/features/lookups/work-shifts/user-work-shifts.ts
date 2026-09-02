@@ -33,6 +33,7 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
   rotationGroups: RotationGroup[] = [];
   declare shiftDetails: ShiftDetails;
   declare shiftPeriodCount: number;
+  declare legacyDaysCount: number;
 
   declare concurrencyUpdateVersion?: Uint8Array;
 
@@ -51,6 +52,7 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
       workShiftType,
       presenceInquiryTime,
       presenceInquiryBuffer,
+      legacyDaysCount,
     } = this;
     return {
       fkShiftId: [fkShiftId, [Validators.required]],
@@ -61,6 +63,7 @@ export default class UserWorkShift extends BaseCrudModel<UserWorkShift, UserWork
       workShiftType: [workShiftType || WorkShiftType.Standard, [Validators.required]],
       presenceInquiryTime: [presenceInquiryTime, []],
       presenceInquiryBuffer: [presenceInquiryBuffer, []],
+      legacyDaysCount: [legacyDaysCount ?? null, []],
     };
   }
 }

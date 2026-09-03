@@ -145,7 +145,7 @@ export default class ReportsProcessingComponent implements OnInit, OnDestroy {
       },
       {
         validators: [
-          CustomValidators.dateRangeValidator(this.minAllowedDate, this.maxAllowedDate, 3),
+          CustomValidators.dateRangeValidator(this.minAllowedDate, this.maxAllowedDate, 1),
         ],
       }
     );
